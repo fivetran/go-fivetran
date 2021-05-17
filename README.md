@@ -8,3 +8,4 @@
 - Naming: REST API user_id => UserID
 - Field ID => Fid, etc...
 - we don't validate business rules (unless it is strictly necessary) // in this case the result would be an empty UserDetails{} with a 200 status code... URL paths are validated.
+- tests
