@@ -10,4 +10,5 @@
 - we don't validate business rules (unless it is strictly necessary) // in this case the result would be an empty UserDetails{} with a 200 status code... URL paths are validated.
 - tests
 - context
-- json annotations, omitempty. When it should be used? 
+- json annotations, omitempty. Explain when it should be used.
+- type DestinationConfig, Fport interface{} // Type should change to int when https://fivetran.height.app/T-97508 fixed
