@@ -126,7 +126,6 @@ func (s *DestinationCreateService) Do(ctx context.Context) (DestinationCreate, e
 		}
 
 	default:
-
 	}
 
 	if respStatus != expectedStatus {
