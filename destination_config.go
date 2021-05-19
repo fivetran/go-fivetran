@@ -1,24 +1,12 @@
 package fivetran
 
 type DestinationConfig struct {
-	Fhost     string `json:"host,omitempty"`
-	Fport     int    `json:"port,omitempty"`
-	Fdatabase string `json:"database,omitempty"`
-	Fauth     string `json:"auth,omitempty"`
-	Fuser     string `json:"user,omitempty"`
-	Fpassword string `json:"password,omitempty"`
-}
-
-// DestinationConfigTemp is a temporary type used to accomodate the field Fport as type string instead of type int.
-// The field should be int but the REST API is returning string.
-// When https://fivetran.height.app/T-97508 is fixed, this temporary type should be removed.
-type DestinationConfigTemp struct {
-	Fhost     string `json:"host,omitempty"`
-	Fport     string `json:"port,omitempty"` // Can use interface{} ? to check...
-	Fdatabase string `json:"database,omitempty"`
-	Fauth     string `json:"auth,omitempty"`
-	Fuser     string `json:"user,omitempty"`
-	Fpassword string `json:"password,omitempty"`
+	Fhost     string      `json:"host,omitempty"`
+	Fport     interface{} `json:"port,omitempty"` // Type should change to int when https://fivetran.height.app/T-97508 fixed.
+	Fdatabase string      `json:"database,omitempty"`
+	Fauth     string      `json:"auth,omitempty"`
+	Fuser     string      `json:"user,omitempty"`
+	Fpassword string      `json:"password,omitempty"`
 }
 
 func NewDestinationConfig() *DestinationConfig {

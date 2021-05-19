@@ -5,6 +5,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"strconv"
 )
 
 // F stands for Field
@@ -36,7 +37,7 @@ type DestinationCreate struct {
 			Status  string `json:"status"`
 			Message string `json:"message"`
 		} `json:"setup_tests"`
-		Config DestinationConfigTemp `json:"config"` // When https://fivetran.height.app/T-97508 is fixed, type should change to DestinationConfig
+		Config DestinationConfig `json:"config"`
 	} `json:"data"`
 }
 
@@ -113,6 +114,19 @@ func (s *DestinationCreateService) Do(ctx context.Context) (DestinationCreate, e
 	var destinationCreate DestinationCreate
 	if err := json.Unmarshal(respBody, &destinationCreate); err != nil {
 		return DestinationCreate{}, err
+	}
+
+	// converts destinationCreate.Data.Config.Fport to int. Should be removed
+	// when https://fivetran.height.app/T-97508 fixed.
+	switch destinationCreate.Data.Config.Fport.(type) {
+	case string:
+		destinationCreate.Data.Config.Fport, err = strconv.Atoi(destinationCreate.Data.Config.Fport.(string))
+		if err != nil {
+			return DestinationCreate{}, err
+		}
+
+	default:
+
 	}
 
 	if respStatus != expectedStatus {
