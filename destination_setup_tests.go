@@ -73,10 +73,6 @@ func (s *DestinationSetupTestsService) Do(ctx context.Context) (DestinationSetup
 		return DestinationSetupTests{}, err
 	}
 
-	fmt.Println("---")
-	fmt.Println("reqBody:", string(reqBody))
-	fmt.Println("---")
-
 	r := Request{
 		method:  "POST",
 		url:     url,
