@@ -1,7 +1,6 @@
 package fivetran
 
 import (
-	"bytes"
 	"context"
 	"encoding/json"
 	"fmt"
@@ -100,7 +99,7 @@ func (s *DestinationModifyService) Do(ctx context.Context) (DestinationModify, e
 	r := Request{
 		method:  "PATCH",
 		url:     url,
-		body:    bytes.NewReader(reqBody),
+		body:    reqBody,
 		queries: nil,
 		headers: headers,
 	}

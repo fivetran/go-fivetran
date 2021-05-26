@@ -1,7 +1,6 @@
 package fivetran
 
 import (
-	"bytes"
 	"context"
 	"encoding/json"
 	"fmt"
@@ -60,7 +59,7 @@ func (s *GroupAddUserService) Do(ctx context.Context) (GroupAddUser, error) {
 	r := Request{
 		method:  "POST",
 		url:     url,
-		body:    bytes.NewReader(reqBody),
+		body:    reqBody,
 		queries: queries,
 		headers: headers,
 	}
