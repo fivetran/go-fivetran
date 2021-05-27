@@ -13,6 +13,8 @@
 - json annotations, omitempty. Explain when it should be used.
 - type DestinationConfig, Fport interface{} // Type should change to int when https://fivetran.height.app/T-97508 fixed
 - sending DestinationID (destination_id), receiveing id ... document
+- pointers
+  - change all requests to pointers...
 
 ## tbd
 
