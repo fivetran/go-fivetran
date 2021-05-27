@@ -12,6 +12,7 @@ import (
 func main() {
 	apiKey := os.Getenv("FIVETRAN_APIKEY")
 	apiSecret := os.Getenv("FIVETRAN_APISECRET")
+	fivetran.Debug(true)
 
 	client := fivetran.NewClient(apiKey, apiSecret)
 

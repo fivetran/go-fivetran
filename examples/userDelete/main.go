@@ -12,6 +12,7 @@ import (
 func main() {
 	apiKey := os.Getenv("FIVETRAN_APIKEY")
 	apiSecret := os.Getenv("FIVETRAN_APISECRET")
+	fivetran.Debug(true)
 
 	value, err := fivetran.NewClient(apiKey, apiSecret).NewUserDeleteService().UserId("pushes_plus").Do(context.Background())
 	checkErr(err, value)
