@@ -11,14 +11,14 @@ import (
 // needs to be exported because of json.Marshal()
 type ConnectorCreateService struct {
 	c                  *Client
-	Fservice           *string          `json:"service"`
-	FgroupID           *string          `json:"group_id"`
-	FtrustCertificates *bool            `json:"trust_certificates"`
-	FtrustFingerprints *bool            `json:"trust_fingerprints"`
-	FrunSetupTests     *bool            `json:"run_setup_tests"`
-	Fpaused            *bool            `json:"paused"`
-	Fconfig            *ConnectorConfig `json:"config"`
-	Fauth              *ConnectorAuth   `json:"auth"`
+	Fservice           *string          `json:"service,omitempty"`
+	FgroupID           *string          `json:"group_id,omitempty"`
+	FtrustCertificates *bool            `json:"trust_certificates,omitempty"`
+	FtrustFingerprints *bool            `json:"trust_fingerprints,omitempty"`
+	FrunSetupTests     *bool            `json:"run_setup_tests,omitempty"`
+	Fpaused            *bool            `json:"paused,omitempty"`
+	Fconfig            *ConnectorConfig `json:"config,omitempty"`
+	Fauth              *ConnectorAuth   `json:"auth,omitempty"`
 }
 
 type ConnectorCreate struct {
