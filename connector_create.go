@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"strconv"
 	"time"
 )
 
@@ -132,6 +133,15 @@ func (s *ConnectorCreateService) Do(ctx context.Context) (ConnectorCreate, error
 	var connectorCreate ConnectorCreate
 	if err := json.Unmarshal(respBody, &connectorCreate); err != nil {
 		return ConnectorCreate{}, err
+	}
+
+	// convert port to int if it is a string // better doc
+	_, isString := connectorCreate.Data.Config.FPort.(string)
+	if isString {
+		connectorCreate.Data.Config.FPort, err = strconv.Atoi(connectorCreate.Data.Config.FPort.(string))
+		if err != nil {
+			return ConnectorCreate{}, err
+		}
 	}
 
 	if respStatus != expectedStatus {

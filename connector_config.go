@@ -90,12 +90,12 @@ type ConnectorConfig struct {
 	FS3Folder                         *string                              `json:"s3folder,omitempty"`
 	FGcsBucket                        *string                              `json:"gcs_bucket,omitempty"`
 	FGcsFolder                        *string                              `json:"gcs_folder,omitempty"`
-	FUserProfiles                     *[]string                            `json:"user_profiles,omitempty"` // continue here
+	FUserProfiles                     *[]string                            `json:"user_profiles,omitempty"`
 	FReportConfigurationIds           *[]string                            `json:"report_configuration_ids,omitempty"`
 	FEnableAllDimensionCombinations   *bool                                `json:"enable_all_dimension_combinations,omitempty"`
 	FInstance                         *string                              `json:"instance,omitempty"`
 	FAwsRegionCode                    *string                              `json:"aws_region_code,omitempty"`
-	FAccounts                         *[]string                            `json:"accounts,omitempty"`
+	FAccounts                         *[]string                            `json:"accounts,omitempty"` // TikTok ads type is []int. Type interface{} should be implemented if https://fivetran.height.app/T-103947 is not implemented.
 	FFields                           *[]string                            `json:"fields,omitempty"`
 	FBreakdowns                       *[]string                            `json:"breakdowns,omitempty"`
 	FActionBreakdowns                 *[]string                            `json:"action_breakdowns,omitempty"`
@@ -109,7 +109,7 @@ type ConnectorConfig struct {
 	FPages                            *[]string                            `json:"pages,omitempty"`
 	FSubdomain                        *string                              `json:"subdomain,omitempty"`
 	FHost                             *string                              `json:"host,omitempty"`
-	FPort                             *int                                 `json:"port,omitempty"` // Fport changed to int to support Postgres; should be type string / interface
+	FPort                             interface{}                          `json:"port,omitempty"` // Fport ! changed to int to support Postgres, Splunk; should be type string / interface
 	FUser                             *string                              `json:"user,omitempty"`
 	FIsSecure                         *string                              `json:"is_secure,omitempty"`
 	FRepositories                     *[]string                            `json:"repositories,omitempty"`
@@ -187,12 +187,10 @@ type ConnectorConfig struct {
 	FUserName                         *string                              `json:"user_name,omitempty"`
 	FReportURL                        *string                              `json:"report_url,omitempty"`
 	FUniqueID                         *string                              `json:"unique_id,omitempty"`
-	// FPort                             *int                                 `json:"port,omitempty"`     // splunk, postgresql
-	// FAccounts                         *[]int                               `json:"accounts,omitempty"` // tiktok ads
-	LatestVersion        *string `json:"latest_version,omitempty"`
-	AuthorizationMethod  *string `json:"authorization_method,omitempty"`
-	ServiceVersion       *string `json:"service_version,omitempty"`
-	LastSyncedChangesUtc *string `json:"last_synced_changes__utc_,omitempty"`
+	LatestVersion                     *string                              `json:"latest_version,omitempty"`
+	AuthorizationMethod               *string                              `json:"authorization_method,omitempty"`
+	ServiceVersion                    *string                              `json:"service_version,omitempty"`
+	LastSyncedChangesUtc              *string                              `json:"last_synced_changes__utc_,omitempty"`
 }
 
 func NewConnectorConfig() *ConnectorConfig {
@@ -734,7 +732,16 @@ func (cc *ConnectorConfig) Host(value string) *ConnectorConfig {
 	return cc
 }
 
-func (cc *ConnectorConfig) Port(value int) *ConnectorConfig {
+// only assigns a value if the received type is int
+// panic if type != int
+// to check
+// document
+func (cc *ConnectorConfig) Port(value interface{}) *ConnectorConfig {
+	_, isInt := value.(int)
+	if !isInt {
+		panic("port expects type int")
+	}
+
 	cc.FPort = &value
 	return cc
 }
