@@ -23,6 +23,7 @@ func main() {
 		Port(5432).
 		Database("fivetran").
 		User("postgres").
+		Port(5432).
 		Password("thisIsMyNewFiveTranP4ssw0rd123").
 		UpdateMethod("XMIN")
 
