@@ -734,8 +734,8 @@ func (cc *ConnectorConfig) Host(value string) *ConnectorConfig {
 
 // only assigns a value if the received type is int
 // panic if type != int
-// to check
 // document
+// checked OK
 func (cc *ConnectorConfig) Port(value interface{}) *ConnectorConfig {
 	_, isInt := value.(int)
 	if !isInt {
