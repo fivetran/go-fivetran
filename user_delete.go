@@ -6,35 +6,36 @@ import (
 	"fmt"
 )
 
-type UserDeleteService struct {
+type userDeleteService struct {
 	c      *Client
-	userId string
+	userID *string
 }
 
-type UserDelete struct {
+type userDeleteResponse struct {
 	Code    string `json:"code"`
 	Message string `json:"message"`
 }
 
-func (c *Client) NewUserDeleteService() *UserDeleteService {
-	return &UserDeleteService{c: c}
+func (c *Client) NewUserDelete() *userDeleteService {
+	return &userDeleteService{c: c}
 }
 
-func (s *UserDeleteService) UserId(userId string) *UserDeleteService {
-	s.userId = userId
+func (s *userDeleteService) UserID(value string) *userDeleteService {
+	s.userID = &value
 	return s
 }
 
-func (s *UserDeleteService) Do(ctx context.Context) (UserDelete, error) {
-	if s.userId == "" { // we don't validate business rules (unless it is strictly necessary) // in this case the result would be an empty UserDetails{} with a 200 status code
-		err := fmt.Errorf("missing required UserId")
-		return UserDelete{}, err
+func (s *userDeleteService) Do(ctx context.Context) (userDeleteResponse, error) {
+	var response userDeleteResponse
+
+	if s.userID == nil {
+		return response, fmt.Errorf("missing required UserId")
 	}
 
-	url := fmt.Sprintf("%v/users/%v", s.c.baseURL, s.userId)
+	url := fmt.Sprintf("%v/users/%v", s.c.baseURL, *s.userID)
 	expectedStatus := 200
-	headers := make(map[string]string)
 
+	headers := make(map[string]string)
 	headers["Authorization"] = s.c.authorization
 
 	r := Request{
@@ -47,18 +48,17 @@ func (s *UserDeleteService) Do(ctx context.Context) (UserDelete, error) {
 
 	respBody, respStatus, err := httpRequest(r, ctx)
 	if err != nil {
-		return UserDelete{}, err
+		return response, err
 	}
 
-	var userDelete UserDelete
-	if err := json.Unmarshal(respBody, &userDelete); err != nil {
-		return UserDelete{}, err
+	if err := json.Unmarshal(respBody, &response); err != nil {
+		return response, err
 	}
 
 	if respStatus != expectedStatus {
 		err := fmt.Errorf("status code: %v; expected %v", respStatus, expectedStatus)
-		return userDelete, err
+		return response, err
 	}
 
-	return userDelete, nil
+	return response, nil
 }

@@ -6,43 +6,42 @@ import (
 	"fmt"
 )
 
-// F stands for Field
-// needs to be exported because of json.Marshal()
-type ConnectorSyncService struct {
+type connectorSyncService struct {
 	c           *Client
 	connectorID *string
 }
 
-type ConnectorSync struct {
+type ConnectorSyncResponse struct {
 	Code    string `json:"code"`
 	Message string `json:"message"`
 }
 
-func (c *Client) NewConnectorSyncService() *ConnectorSyncService {
-	return &ConnectorSyncService{c: c}
+func (c *Client) NewConnectorSync() *connectorSyncService {
+	return &connectorSyncService{c: c}
 }
 
-func (s *ConnectorSyncService) ConnectorID(connectorID string) *ConnectorSyncService {
+func (s *connectorSyncService) ConnectorID(connectorID string) *connectorSyncService {
 	s.connectorID = &connectorID
 	return s
 }
 
-func (s *ConnectorSyncService) Do(ctx context.Context) (ConnectorSync, error) {
-	if s.connectorID == nil { // we don't validate business rules (unless it is strictly necessary)
-		err := fmt.Errorf("missing required ConnectorID")
-		return ConnectorSync{}, err
+func (s *connectorSyncService) Do(ctx context.Context) (ConnectorSyncResponse, error) {
+	var response ConnectorSyncResponse
+
+	if s.connectorID == nil {
+		return response, fmt.Errorf("missing required ConnectorID")
 	}
 
 	url := fmt.Sprintf("%v/connectors/%v/force", s.c.baseURL, *s.connectorID)
 	expectedStatus := 200
-	headers := make(map[string]string)
 
+	headers := make(map[string]string)
 	headers["Authorization"] = s.c.authorization
 	headers["Content-Type"] = "application/json"
 
 	reqBody, err := json.Marshal(s)
 	if err != nil {
-		return ConnectorSync{}, err
+		return response, err
 	}
 
 	r := Request{
@@ -55,18 +54,17 @@ func (s *ConnectorSyncService) Do(ctx context.Context) (ConnectorSync, error) {
 
 	respBody, respStatus, err := httpRequest(r, ctx)
 	if err != nil {
-		return ConnectorSync{}, err
+		return response, err
 	}
 
-	var connectorSync ConnectorSync
-	if err := json.Unmarshal(respBody, &connectorSync); err != nil {
-		return ConnectorSync{}, err
+	if err := json.Unmarshal(respBody, &response); err != nil {
+		return response, err
 	}
 
 	if respStatus != expectedStatus {
 		err := fmt.Errorf("status code: %v; expected %v", respStatus, expectedStatus)
-		return connectorSync, err
+		return response, err
 	}
 
-	return connectorSync, nil
+	return response, nil
 }

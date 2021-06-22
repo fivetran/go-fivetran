@@ -7,13 +7,13 @@ import (
 	"time"
 )
 
-type UsersListService struct {
+type usersListService struct {
 	c      *Client
-	limit  int
-	cursor string
+	limit  *int
+	cursor *string
 }
 
-type UsersList struct {
+type UsersListResponse struct {
 	Code    string `json:"code"`
 	Message string `json:"message"`
 	Data    struct {
@@ -33,34 +33,34 @@ type UsersList struct {
 	} `json:"data"`
 }
 
-func (c *Client) NewUsersListService() *UsersListService {
-	return &UsersListService{c: c}
+func (c *Client) NewUsersList() *usersListService {
+	return &usersListService{c: c}
 }
 
-func (s *UsersListService) Limit(limit int) *UsersListService {
-	s.limit = limit
+func (s *usersListService) Limit(value int) *usersListService {
+	s.limit = &value
 	return s
 }
 
-func (s *UsersListService) Cursor(cursor string) *UsersListService {
-	s.cursor = cursor
+func (s *usersListService) Cursor(value string) *usersListService {
+	s.cursor = &value
 	return s
 }
 
-func (s *UsersListService) Do(ctx context.Context) (UsersList, error) {
+func (s *usersListService) Do(ctx context.Context) (UsersListResponse, error) {
+	var response UsersListResponse
 	url := fmt.Sprintf("%v/users", s.c.baseURL)
 	expectedStatus := 200
-	headers := make(map[string]string)
-	queries := make(map[string]string)
 
+	headers := make(map[string]string)
 	headers["Authorization"] = s.c.authorization
 
-	if s.cursor != "" {
-		queries["cursor"] = s.cursor
+	queries := make(map[string]string)
+	if s.cursor != nil {
+		queries["cursor"] = *s.cursor
 	}
-
-	if s.limit != 0 {
-		queries["limit"] = fmt.Sprint(s.limit)
+	if s.limit != nil {
+		queries["limit"] = fmt.Sprint(*s.limit)
 	}
 
 	r := Request{
@@ -73,18 +73,17 @@ func (s *UsersListService) Do(ctx context.Context) (UsersList, error) {
 
 	respBody, respStatus, err := httpRequest(r, ctx)
 	if err != nil {
-		return UsersList{}, err
+		return response, err
 	}
 
-	var usersList UsersList
-	if err := json.Unmarshal(respBody, &usersList); err != nil {
-		return UsersList{}, err
+	if err := json.Unmarshal(respBody, &response); err != nil {
+		return response, err
 	}
 
 	if respStatus != expectedStatus {
 		err := fmt.Errorf("status code: %v; expected %v", respStatus, expectedStatus)
-		return usersList, err
+		return response, err
 	}
 
-	return usersList, nil
+	return response, nil
 }

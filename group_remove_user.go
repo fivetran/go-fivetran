@@ -6,46 +6,45 @@ import (
 	"fmt"
 )
 
-type GroupRemoveUserService struct {
-	c      *Client
-	id     string
-	userID string
+type groupRemoveUserService struct {
+	c       *Client
+	groupID *string
+	userID  *string
 }
 
-type GroupRemoveUser struct {
+type GroupRemoveUserResponse struct {
 	Code    string `json:"code"`
 	Message string `json:"message"`
 }
 
-func (c *Client) NewGroupRemoveUserService() *GroupRemoveUserService {
-	return &GroupRemoveUserService{c: c}
+func (c *Client) NewGroupRemoveUser() *groupRemoveUserService {
+	return &groupRemoveUserService{c: c}
 }
 
-func (s *GroupRemoveUserService) ID(id string) *GroupRemoveUserService {
-	s.id = id
+func (s *groupRemoveUserService) GroupID(value string) *groupRemoveUserService {
+	s.groupID = &value
 	return s
 }
 
-func (s *GroupRemoveUserService) UserID(userID string) *GroupRemoveUserService {
-	s.userID = userID
+func (s *groupRemoveUserService) UserID(value string) *groupRemoveUserService {
+	s.userID = &value
 	return s
 }
 
-func (s *GroupRemoveUserService) Do(ctx context.Context) (GroupRemoveUser, error) {
-	if s.id == "" {
-		err := fmt.Errorf("missing required ID")
-		return GroupRemoveUser{}, err
+func (s *groupRemoveUserService) Do(ctx context.Context) (GroupRemoveUserResponse, error) {
+	var response GroupRemoveUserResponse
+
+	if s.groupID == nil {
+		return response, fmt.Errorf("missing required GroupID")
+	}
+	if s.userID == nil {
+		return response, fmt.Errorf("missing required UserID")
 	}
 
-	if s.userID == "" {
-		err := fmt.Errorf("missing required UserID")
-		return GroupRemoveUser{}, err
-	}
-
-	url := fmt.Sprintf("%v/groups/%v/users/%v", s.c.baseURL, s.id, s.userID)
+	url := fmt.Sprintf("%v/groups/%v/users/%v", s.c.baseURL, *s.groupID, *s.userID)
 	expectedStatus := 200
-	headers := make(map[string]string)
 
+	headers := make(map[string]string)
 	headers["Authorization"] = s.c.authorization
 
 	r := Request{
@@ -58,18 +57,17 @@ func (s *GroupRemoveUserService) Do(ctx context.Context) (GroupRemoveUser, error
 
 	respBody, respStatus, err := httpRequest(r, ctx)
 	if err != nil {
-		return GroupRemoveUser{}, err
+		return response, err
 	}
 
-	var groupRemoveUser GroupRemoveUser
-	if err := json.Unmarshal(respBody, &groupRemoveUser); err != nil {
-		return GroupRemoveUser{}, err
+	if err := json.Unmarshal(respBody, &response); err != nil {
+		return response, err
 	}
 
 	if respStatus != expectedStatus {
 		err := fmt.Errorf("status code: %v; expected %v", respStatus, expectedStatus)
-		return groupRemoveUser, err
+		return response, err
 	}
 
-	return groupRemoveUser, nil
+	return response, nil
 }

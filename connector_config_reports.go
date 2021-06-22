@@ -1,62 +1,145 @@
 package fivetran
 
 type ConnectorConfigReports struct {
-	FTable          *string   `json:"table,omitempty"`
-	FConfigType     *string   `json:"config_type,omitempty"`
-	FPrebuiltReport *string   `json:"prebuilt_report,omitempty"`
-	FReportType     *string   `json:"report_type,omitempty"`
-	FFields         *[]string `json:"fields,omitempty"`
-	FDimensions     *[]string `json:"dimensions,omitempty"`
-	FMetrics        *[]string `json:"metrics,omitempty"`
-	FSegments       *[]string `json:"segments,omitempty"`
-	FFilter         *string   `json:"filter,omitempty"`
+	table          *string
+	configType     *string
+	prebuiltReport *string
+	reportType     *string
+	fields         *[]string
+	dimensions     *[]string
+	metrics        *[]string
+	segments       *[]string
+	filter         *string
+}
+
+type connectorConfigReportsRequest struct {
+	Table          *string   `json:"table,omitempty"`
+	ConfigType     *string   `json:"config_type,omitempty"`
+	PrebuiltReport *string   `json:"prebuilt_report,omitempty"`
+	ReportType     *string   `json:"report_type,omitempty"`
+	Fields         *[]string `json:"fields,omitempty"`
+	Dimensions     *[]string `json:"dimensions,omitempty"`
+	Metrics        *[]string `json:"metrics,omitempty"`
+	Segments       *[]string `json:"segments,omitempty"`
+	Filter         *string   `json:"filter,omitempty"`
+}
+
+type ConnectorConfigReportsResponse struct {
+	Table          *string   `json:"table"`
+	ConfigType     *string   `json:"config_type"`
+	PrebuiltReport *string   `json:"prebuilt_report"`
+	ReportType     *string   `json:"report_type"`
+	Fields         *[]string `json:"fields"`
+	Dimensions     *[]string `json:"dimensions"`
+	Metrics        *[]string `json:"metrics"`
+	Segments       *[]string `json:"segments"`
+	Filter         *string   `json:"filter"`
 }
 
 func NewConnectorConfigReports() *ConnectorConfigReports {
 	return &ConnectorConfigReports{}
 }
 
+func (r *ConnectorConfigReports) request() *connectorConfigReportsRequest {
+	var table *string
+	if r.table != nil {
+		table = r.table
+	}
+
+	var configType *string
+	if r.configType != nil {
+		configType = r.configType
+	}
+
+	var prebuiltReport *string
+	if r.prebuiltReport != nil {
+		prebuiltReport = r.prebuiltReport
+	}
+
+	var reportType *string
+	if r.reportType != nil {
+		reportType = r.reportType
+	}
+
+	var fields *[]string
+	if r.fields != nil {
+		fields = r.fields
+	}
+
+	var dimensions *[]string
+	if r.dimensions != nil {
+		dimensions = r.dimensions
+	}
+
+	var metrics *[]string
+	if r.metrics != nil {
+		metrics = r.metrics
+	}
+
+	var segments *[]string
+	if r.segments != nil {
+		segments = r.segments
+	}
+
+	var filter *string
+	if r.filter != nil {
+		filter = r.filter
+	}
+
+	return &connectorConfigReportsRequest{
+		Table:          table,
+		ConfigType:     configType,
+		PrebuiltReport: prebuiltReport,
+		ReportType:     reportType,
+		Fields:         fields,
+		Dimensions:     dimensions,
+		Metrics:        metrics,
+		Segments:       segments,
+		Filter:         filter,
+	}
+}
+
 func (r *ConnectorConfigReports) Table(value string) *ConnectorConfigReports {
-	r.FTable = &value
+	r.table = &value
 	return r
 }
 
 func (r *ConnectorConfigReports) ConfigType(value string) *ConnectorConfigReports {
-	r.FConfigType = &value
+	r.configType = &value
 	return r
 }
 
 func (r *ConnectorConfigReports) PrebuiltReport(value string) *ConnectorConfigReports {
-	r.FPrebuiltReport = &value
+	r.prebuiltReport = &value
 	return r
 }
 
 func (r *ConnectorConfigReports) ReportType(value string) *ConnectorConfigReports {
-	r.FReportType = &value
+	r.reportType = &value
 	return r
 }
 
 func (r *ConnectorConfigReports) Fields(value []string) *ConnectorConfigReports {
-	r.FFields = &value
+	r.fields = &value
 	return r
 }
 
 func (r *ConnectorConfigReports) Dimensions(value []string) *ConnectorConfigReports {
-	r.FDimensions = &value
+	r.dimensions = &value
 	return r
 }
 
 func (r *ConnectorConfigReports) Metrics(value []string) *ConnectorConfigReports {
-	r.FMetrics = &value
+	r.metrics = &value
 	return r
 }
 
 func (r *ConnectorConfigReports) Segments(value []string) *ConnectorConfigReports {
-	r.FSegments = &value
+	r.segments = &value
 	return r
 }
 
 func (r *ConnectorConfigReports) Filter(value string) *ConnectorConfigReports {
-	r.FFilter = &value
+	r.filter = &value
 	return r
 }

@@ -1,32 +1,53 @@
 package fivetran
 
-type ConnectorAuth struct {
-	FClientAccess *ConnectorAuthClientAccess `json:"client_access,omitempty"`
-	FRefreshToken *string                    `json:"refresh_token,omitempty"`
-	FAccessToken  *string                    `json:"access_token,omitempty"`
-	FRealmID      *string                    `json:"realm_id,omitempty"`
+type connectorAuth struct {
+	clientAccess *ConnectorAuthClientAccess
+	refreshToken *string
+	accessToken  *string
+	realmID      *string
 }
 
-func NewConnectorAuth() *ConnectorAuth {
-	return &ConnectorAuth{}
+type connectorAuthRequest struct {
+	ClientAccess *connectorAuthClientAccessRequest `json:"client_access,omitempty"`
+	RefreshToken *string                           `json:"refresh_token,omitempty"`
+	AccessToken  *string                           `json:"access_token,omitempty"`
+	RealmID      *string                           `json:"realm_id,omitempty"`
 }
 
-func (a *ConnectorAuth) ClientAccess(value ConnectorAuthClientAccess) *ConnectorAuth {
-	a.FClientAccess = &value
-	return a
+func NewConnectorAuth() *connectorAuth {
+	return &connectorAuth{}
 }
 
-func (a *ConnectorAuth) RefreshToken(value string) *ConnectorAuth {
-	a.FRefreshToken = &value
-	return a
+func (ca *connectorAuth) request() *connectorAuthRequest {
+	var clientAccess *connectorAuthClientAccessRequest
+	if ca.clientAccess != nil {
+		clientAccess = ca.clientAccess.request()
+	}
+
+	return &connectorAuthRequest{
+		ClientAccess: clientAccess,
+		RefreshToken: ca.refreshToken,
+		AccessToken:  ca.accessToken,
+		RealmID:      ca.realmID,
+	}
 }
 
-func (a *ConnectorAuth) AccessToken(value string) *ConnectorAuth {
-	a.FAccessToken = &value
-	return a
+func (ca *connectorAuth) ClientAccess(value *ConnectorAuthClientAccess) *connectorAuth {
+	ca.clientAccess = value
+	return ca
 }
 
-func (a *ConnectorAuth) RealmID(value string) *ConnectorAuth {
-	a.FRealmID = &value
-	return a
+func (ca *connectorAuth) RefreshToken(value string) *connectorAuth {
+	ca.refreshToken = &value
+	return ca
+}
+
+func (ca *connectorAuth) AccessToken(value string) *connectorAuth {
+	ca.accessToken = &value
+	return ca
+}
+
+func (ca *connectorAuth) RealmID(value string) *connectorAuth {
+	ca.realmID = &value
+	return ca
 }

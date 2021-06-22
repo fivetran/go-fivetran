@@ -1,26 +1,61 @@
 package fivetran
 
 type ConnectorConfigProjectCredentials struct {
-	FProject   *string `json:"project,omitempty"`
-	FAPIKey    *string `json:"api_key,omitempty"`
-	FSecretKey *string `json:"secret_key,omitempty"`
+	project   *string
+	apiKey    *string
+	secretKey *string
+}
+
+type connectorConfigProjectCredentialsRequest struct {
+	Project   *string `json:"project,omitempty"`
+	APIKey    *string `json:"api_key,omitempty"`
+	SecretKey *string `json:"secret_key,omitempty"`
+}
+
+type ConnectorConfigProjectCredentialsResponse struct {
+	Project   *string `json:"project"`
+	APIKey    *string `json:"api_key"`
+	SecretKey *string `json:"secret_key"`
 }
 
 func NewConnectorConfigProjectCredentials() *ConnectorConfigProjectCredentials {
 	return &ConnectorConfigProjectCredentials{}
 }
 
+func (pc *ConnectorConfigProjectCredentials) request() *connectorConfigProjectCredentialsRequest {
+	var project *string
+	if pc.project != nil {
+		project = pc.project
+	}
+
+	var apiKey *string
+	if pc.apiKey != nil {
+		apiKey = pc.apiKey
+	}
+
+	var secretKey *string
+	if pc.secretKey != nil {
+		secretKey = pc.secretKey
+	}
+
+	return &connectorConfigProjectCredentialsRequest{
+		Project:   project,
+		APIKey:    apiKey,
+		SecretKey: secretKey,
+	}
+}
+
 func (pc *ConnectorConfigProjectCredentials) Project(value string) *ConnectorConfigProjectCredentials {
-	pc.FProject = &value
+	pc.project = &value
 	return pc
 }
 
 func (pc *ConnectorConfigProjectCredentials) APIKey(value string) *ConnectorConfigProjectCredentials {
-	pc.FAPIKey = &value
+	pc.apiKey = &value
 	return pc
 }
 
 func (pc *ConnectorConfigProjectCredentials) SecretKey(value string) *ConnectorConfigProjectCredentials {
-	pc.FSecretKey = &value
+	pc.secretKey = &value
 	return pc
 }

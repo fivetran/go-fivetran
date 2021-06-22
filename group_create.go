@@ -7,14 +7,16 @@ import (
 	"time"
 )
 
-// F stands for Field
-// needs to be exported because of json.Marshal()
-type GroupCreateService struct {
-	c     *Client
-	Fname string `json:"name,omitempty"`
+type groupCreateService struct {
+	c    *Client
+	name *string
 }
 
-type GroupCreate struct {
+type groupCreateRequest struct {
+	Name *string `json:"name,omitempty"`
+}
+
+type GroupCreateResponse struct {
 	Code    string `json:"code"`
 	Message string `json:"message"`
 	Data    struct {
@@ -24,26 +26,33 @@ type GroupCreate struct {
 	} `json:"data"`
 }
 
-func (c *Client) NewGroupCreateService() *GroupCreateService {
-	return &GroupCreateService{c: c}
+func (c *Client) NewGroupCreate() *groupCreateService {
+	return &groupCreateService{c: c}
 }
 
-func (s *GroupCreateService) Name(name string) *GroupCreateService {
-	s.Fname = name
+func (s *groupCreateService) request() groupCreateRequest {
+	return groupCreateRequest{
+		Name: s.name,
+	}
+}
+
+func (s *groupCreateService) Name(value string) *groupCreateService {
+	s.name = &value
 	return s
 }
 
-func (s *GroupCreateService) Do(ctx context.Context) (GroupCreate, error) {
+func (s *groupCreateService) Do(ctx context.Context) (GroupCreateResponse, error) {
+	var response GroupCreateResponse
 	url := fmt.Sprintf("%v/groups", s.c.baseURL)
-	expectedStatus := 201 // https://fivetran.height.app/T-96892
-	headers := make(map[string]string)
+	expectedStatus := 201
 
+	headers := make(map[string]string)
 	headers["Authorization"] = s.c.authorization
 	headers["Content-Type"] = "application/json"
 
-	reqBody, err := json.Marshal(s)
+	reqBody, err := json.Marshal(s.request())
 	if err != nil {
-		return GroupCreate{}, err
+		return response, err
 	}
 
 	r := Request{
@@ -56,18 +65,17 @@ func (s *GroupCreateService) Do(ctx context.Context) (GroupCreate, error) {
 
 	respBody, respStatus, err := httpRequest(r, ctx)
 	if err != nil {
-		return GroupCreate{}, err
+		return response, err
 	}
 
-	var groupCreate GroupCreate
-	if err := json.Unmarshal(respBody, &groupCreate); err != nil {
-		return GroupCreate{}, err
+	if err := json.Unmarshal(respBody, &response); err != nil {
+		return response, err
 	}
 
 	if respStatus != expectedStatus {
 		err := fmt.Errorf("status code: %v; expected %v", respStatus, expectedStatus)
-		return groupCreate, err
+		return response, err
 	}
 
-	return groupCreate, nil
+	return response, nil
 }

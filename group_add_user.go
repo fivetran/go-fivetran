@@ -6,78 +6,89 @@ import (
 	"fmt"
 )
 
-type GroupAddUserService struct {
-	c      *Client
-	id     string
-	Femail string `json:"email,omitempty"`
-	Frole  string `json:"role,omitempty"`
+type groupAddUserService struct {
+	c       *Client
+	groupID *string
+	email   *string
+	role    *string
 }
 
-type GroupAddUser struct {
+type groupAddUserRequest struct {
+	Email *string `json:"email,omitempty"`
+	Role  *string `json:"role,omitempty"`
+}
+
+type GroupAddUserResponse struct {
 	Code    string `json:"code"`
 	Message string `json:"message"`
 }
 
-func (c *Client) NewGroupAddUserService() *GroupAddUserService {
-	return &GroupAddUserService{c: c}
+func (c *Client) NewGroupAddUser() *groupAddUserService {
+	return &groupAddUserService{c: c}
 }
 
-func (s *GroupAddUserService) ID(id string) *GroupAddUserService {
-	s.id = id
+func (s *groupAddUserService) request() groupAddUserRequest {
+	return groupAddUserRequest{
+		Email: s.email,
+		Role:  s.role,
+	}
+}
+
+func (s *groupAddUserService) GroupID(value string) *groupAddUserService {
+	s.groupID = &value
 	return s
 }
 
-func (s *GroupAddUserService) Email(email string) *GroupAddUserService {
-	s.Femail = email
+func (s *groupAddUserService) Email(value string) *groupAddUserService {
+	s.email = &value
 	return s
 }
 
-func (s *GroupAddUserService) Role(role string) *GroupAddUserService {
-	s.Frole = role
+func (s *groupAddUserService) Role(value string) *groupAddUserService {
+	s.role = &value
 	return s
 }
 
-func (s *GroupAddUserService) Do(ctx context.Context) (GroupAddUser, error) {
-	if s.id == "" {
-		err := fmt.Errorf("missing required ID")
-		return GroupAddUser{}, err
+func (s *groupAddUserService) Do(ctx context.Context) (GroupAddUserResponse, error) {
+	var response GroupAddUserResponse
+
+	if s.groupID == nil {
+		return response, fmt.Errorf("missing required GroupID")
 	}
 
-	url := fmt.Sprintf("%v/groups/%v/users", s.c.baseURL, s.id)
+	url := fmt.Sprintf("%v/groups/%v/users", s.c.baseURL, *s.groupID)
 	expectedStatus := 201
-	headers := make(map[string]string)
-	queries := make(map[string]string)
 
+	headers := make(map[string]string)
 	headers["Authorization"] = s.c.authorization
 	headers["Content-Type"] = "application/json"
 
-	reqBody, err := json.Marshal(s)
+	reqBody, err := json.Marshal(s.request())
 	if err != nil {
-		return GroupAddUser{}, err
+		return response, err
 	}
 
 	r := Request{
 		method:  "POST",
 		url:     url,
 		body:    reqBody,
-		queries: queries,
+		queries: nil,
 		headers: headers,
 	}
 
 	respBody, respStatus, err := httpRequest(r, ctx)
 	if err != nil {
-		return GroupAddUser{}, err
+		return response, err
 	}
 
-	var groupAddUser GroupAddUser
-	if err := json.Unmarshal(respBody, &groupAddUser); err != nil {
-		return GroupAddUser{}, err
+	if err := json.Unmarshal(respBody, &response); err != nil {
+		return response, err
 	}
 
 	if respStatus != expectedStatus {
 		err := fmt.Errorf("status code: %v; expected %v", respStatus, expectedStatus)
-		return groupAddUser, err
+		return response, err
 	}
 
-	return groupAddUser, nil
+	return response, nil
 }

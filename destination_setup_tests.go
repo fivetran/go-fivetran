@@ -4,19 +4,21 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"strconv"
 )
 
-// F stands for Field
-// needs to be exported because of json.Marshal()
-type DestinationSetupTestsService struct {
-	c                  *Client
-	destinationID      string
-	FtrustCertificates *bool `json:"trust_certificates,omitempty"`
-	FtrustFingerprints *bool `json:"trust_fingerprints,omitempty"`
+type destinationSetupTestsService struct {
+	c                 *Client
+	destinationID     *string
+	trustCertificates *bool
+	trustFingerprints *bool
 }
 
-type DestinationSetupTests struct {
+type destinationSetupTestsRequest struct {
+	TrustCertificates *bool `json:"trust_certificates,omitempty"`
+	TrustFingerprints *bool `json:"trust_fingerprints,omitempty"`
+}
+
+type DestinationSetupTestsResponse struct {
 	Code    string `json:"code"`
 	Message string `json:"message"`
 	Data    struct {
@@ -31,45 +33,53 @@ type DestinationSetupTests struct {
 			Status  string `json:"status"`
 			Message string `json:"message"`
 		} `json:"setup_tests"`
-		Config DestinationConfig `json:"config"`
+		Config DestinationConfigResponse `json:"config"`
 	} `json:"data"`
 }
 
-func (c *Client) NewDestinationSetupTests() *DestinationSetupTestsService {
-	return &DestinationSetupTestsService{c: c}
+func (c *Client) NewDestinationSetupTests() *destinationSetupTestsService {
+	return &destinationSetupTestsService{c: c}
 }
 
-func (s *DestinationSetupTestsService) DestinationID(destinationID string) *DestinationSetupTestsService {
-	s.destinationID = destinationID
+func (s *destinationSetupTestsService) request() destinationSetupTestsRequest {
+	return destinationSetupTestsRequest{
+		TrustCertificates: s.trustCertificates,
+		TrustFingerprints: s.trustFingerprints,
+	}
+}
+
+func (s *destinationSetupTestsService) DestinationID(value string) *destinationSetupTestsService {
+	s.destinationID = &value
 	return s
 }
 
-func (s *DestinationSetupTestsService) TrustCertificates(trustCertificates bool) *DestinationSetupTestsService {
-	s.FtrustCertificates = &trustCertificates
+func (s *destinationSetupTestsService) TrustCertificates(value bool) *destinationSetupTestsService {
+	s.trustCertificates = &value
 	return s
 }
 
-func (s *DestinationSetupTestsService) TrustFingerprints(trustFingerprints bool) *DestinationSetupTestsService {
-	s.FtrustFingerprints = &trustFingerprints
+func (s *destinationSetupTestsService) TrustFingerprints(value bool) *destinationSetupTestsService {
+	s.trustFingerprints = &value
 	return s
 }
 
-func (s *DestinationSetupTestsService) Do(ctx context.Context) (DestinationSetupTests, error) {
-	if s.destinationID == "" { // we don't validate business rules (unless it is strictly necessary)
-		err := fmt.Errorf("missing required DestinationID")
-		return DestinationSetupTests{}, err
+func (s *destinationSetupTestsService) Do(ctx context.Context) (DestinationSetupTestsResponse, error) {
+	var response DestinationSetupTestsResponse
+
+	if s.destinationID == nil {
+		return response, fmt.Errorf("missing required DestinationID")
 	}
 
-	url := fmt.Sprintf("%v/destinations/%v/test", s.c.baseURL, s.destinationID)
+	url := fmt.Sprintf("%v/destinations/%v/test", s.c.baseURL, *s.destinationID)
 	expectedStatus := 200
-	headers := make(map[string]string)
 
+	headers := make(map[string]string)
 	headers["Authorization"] = s.c.authorization
 	headers["Content-Type"] = "application/json"
 
-	reqBody, err := json.Marshal(s)
+	reqBody, err := json.Marshal(s.request())
 	if err != nil {
-		return DestinationSetupTests{}, err
+		return response, err
 	}
 
 	r := Request{
@@ -82,30 +92,17 @@ func (s *DestinationSetupTestsService) Do(ctx context.Context) (DestinationSetup
 
 	respBody, respStatus, err := httpRequest(r, ctx)
 	if err != nil {
-		return DestinationSetupTests{}, err
+		return response, err
 	}
 
-	var destinationSetupTests DestinationSetupTests
-	if err := json.Unmarshal(respBody, &destinationSetupTests); err != nil {
-		return DestinationSetupTests{}, err
-	}
-
-	// converts destinationCreate.Data.Config.Fport to int. Should be removed
-	// when https://fivetran.height.app/T-97508 fixed.
-	switch destinationSetupTests.Data.Config.Fport.(type) {
-	case string:
-		destinationSetupTests.Data.Config.Fport, err = strconv.Atoi(destinationSetupTests.Data.Config.Fport.(string))
-		if err != nil {
-			return DestinationSetupTests{}, err
-		}
-
-	default:
+	if err := json.Unmarshal(respBody, &response); err != nil {
+		return response, err
 	}
 
 	if respStatus != expectedStatus {
 		err := fmt.Errorf("status code: %v; expected %v", respStatus, expectedStatus)
-		return destinationSetupTests, err
+		return response, err
 	}
 
-	return destinationSetupTests, nil
+	return response, nil
 }

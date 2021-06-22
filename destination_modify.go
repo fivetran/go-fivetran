@@ -4,23 +4,29 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"strconv"
 )
 
-// F stands for Field
-// needs to be exported because of json.Marshal()
-type DestinationModifyService struct {
-	c                  *Client
-	destinationID      string
-	Fregion            string             `json:"region,omitempty"`
-	FtimeZoneOffset    string             `json:"time_zone_offset,omitempty"`
-	Fconfig            *DestinationConfig `json:"config,omitempty"`
-	FtrustCertificates *bool              `json:"trust_certificates,omitempty"`
-	FtrustFingerprints *bool              `json:"trust_fingerprints,omitempty"`
-	FrunSetupTests     *bool              `json:"run_setup_tests,omitempty"`
+type destinationModifyService struct {
+	c                 *Client
+	destinationID     *string
+	region            *string
+	timeZoneOffset    *string
+	config            *destinationConfig
+	trustCertificates *bool
+	trustFingerprints *bool
+	runSetupTests     *bool
 }
 
-type DestinationModify struct {
+type destinationModifyRequest struct {
+	Region            *string                   `json:"region,omitempty"`
+	TimeZoneOffset    *string                   `json:"time_zone_offset,omitempty"`
+	Config            *destinationConfigRequest `json:"config,omitempty"`
+	TrustCertificates *bool                     `json:"trust_certificates,omitempty"`
+	TrustFingerprints *bool                     `json:"trust_fingerprints,omitempty"`
+	RunSetupTests     *bool                     `json:"run_setup_tests,omitempty"`
+}
+
+type DestinationModifyResponse struct {
 	Code    string `json:"code"`
 	Message string `json:"message"`
 	Data    struct {
@@ -35,65 +41,83 @@ type DestinationModify struct {
 			Status  string `json:"status"`
 			Message string `json:"message"`
 		} `json:"setup_tests"`
-		Config DestinationConfig `json:"config"`
+		Config DestinationConfigResponse `json:"config"`
 	} `json:"data"`
 }
 
-func (c *Client) NewDestinationModifyService() *DestinationModifyService {
-	return &DestinationModifyService{c: c}
+func (c *Client) NewDestinationModify() *destinationModifyService {
+	return &destinationModifyService{c: c}
 }
 
-func (s *DestinationModifyService) DestinationID(destinationID string) *DestinationModifyService {
-	s.destinationID = destinationID
-	return s
-}
+func (s *destinationModifyService) request() destinationModifyRequest {
+	var config *destinationConfigRequest
 
-func (s *DestinationModifyService) Region(region string) *DestinationModifyService {
-	s.Fregion = region
-	return s
-}
-
-func (s *DestinationModifyService) TimeZoneOffset(timeZoneOffset string) *DestinationModifyService {
-	s.FtimeZoneOffset = timeZoneOffset
-	return s
-}
-
-func (s *DestinationModifyService) Config(config *DestinationConfig) *DestinationModifyService {
-	s.Fconfig = config
-	return s
-}
-
-func (s *DestinationModifyService) TrustCertificates(trustCertificates bool) *DestinationModifyService {
-	s.FtrustCertificates = &trustCertificates
-	return s
-}
-
-func (s *DestinationModifyService) TrustFingerprints(trustFingerprints bool) *DestinationModifyService {
-	s.FtrustFingerprints = &trustFingerprints
-	return s
-}
-
-func (s *DestinationModifyService) RunSetupTests(runSetupTests bool) *DestinationModifyService {
-	s.FrunSetupTests = &runSetupTests
-	return s
-}
-
-func (s *DestinationModifyService) Do(ctx context.Context) (DestinationModify, error) {
-	if s.destinationID == "" { // we don't validate business rules (unless it is strictly necessary)
-		err := fmt.Errorf("missing required DestinationID")
-		return DestinationModify{}, err
+	if s.config != nil {
+		config = s.config.request()
 	}
 
-	url := fmt.Sprintf("%v/destinations/%v", s.c.baseURL, s.destinationID)
-	expectedStatus := 200
-	headers := make(map[string]string)
+	return destinationModifyRequest{
+		Region:            s.region,
+		TimeZoneOffset:    s.timeZoneOffset,
+		Config:            config,
+		TrustCertificates: s.trustCertificates,
+		TrustFingerprints: s.trustFingerprints,
+		RunSetupTests:     s.runSetupTests,
+	}
+}
 
+func (s *destinationModifyService) DestinationID(value string) *destinationModifyService {
+	s.destinationID = &value
+	return s
+}
+
+func (s *destinationModifyService) Region(value string) *destinationModifyService {
+	s.region = &value
+	return s
+}
+
+func (s *destinationModifyService) TimeZoneOffset(value string) *destinationModifyService {
+	s.timeZoneOffset = &value
+	return s
+}
+
+func (s *destinationModifyService) Config(value *destinationConfig) *destinationModifyService {
+	s.config = value
+	return s
+}
+
+func (s *destinationModifyService) TrustCertificates(value bool) *destinationModifyService {
+	s.trustCertificates = &value
+	return s
+}
+
+func (s *destinationModifyService) TrustFingerprints(value bool) *destinationModifyService {
+	s.trustFingerprints = &value
+	return s
+}
+
+func (s *destinationModifyService) RunSetupTests(value bool) *destinationModifyService {
+	s.runSetupTests = &value
+	return s
+}
+
+func (s *destinationModifyService) Do(ctx context.Context) (DestinationModifyResponse, error) {
+	var response DestinationModifyResponse
+
+	if s.destinationID == nil {
+		return response, fmt.Errorf("missing required DestinationID")
+	}
+
+	url := fmt.Sprintf("%v/destinations/%v", s.c.baseURL, *s.destinationID)
+	expectedStatus := 200
+
+	headers := make(map[string]string)
 	headers["Authorization"] = s.c.authorization
 	headers["Content-Type"] = "application/json"
 
-	reqBody, err := json.Marshal(s)
+	reqBody, err := json.Marshal(s.request())
 	if err != nil {
-		return DestinationModify{}, err
+		return response, err
 	}
 
 	r := Request{
@@ -106,30 +130,17 @@ func (s *DestinationModifyService) Do(ctx context.Context) (DestinationModify, e
 
 	respBody, respStatus, err := httpRequest(r, ctx)
 	if err != nil {
-		return DestinationModify{}, err
+		return response, err
 	}
 
-	var destinationModify DestinationModify
-	if err := json.Unmarshal(respBody, &destinationModify); err != nil {
-		return DestinationModify{}, err
-	}
-
-	// converts destinationModify.Data.Config.Fport to int. Should be removed
-	// when https://fivetran.height.app/T-97508 fixed.
-	switch destinationModify.Data.Config.Fport.(type) {
-	case string:
-		destinationModify.Data.Config.Fport, err = strconv.Atoi(destinationModify.Data.Config.Fport.(string))
-		if err != nil {
-			return DestinationModify{}, err
-		}
-
-	default:
+	if err := json.Unmarshal(respBody, &response); err != nil {
+		return response, err
 	}
 
 	if respStatus != expectedStatus {
 		err := fmt.Errorf("status code: %v; expected %v", respStatus, expectedStatus)
-		return destinationModify, err
+		return response, err
 	}
 
-	return destinationModify, nil
+	return response, nil
 }

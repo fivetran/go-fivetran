@@ -6,59 +6,54 @@ import (
 	"fmt"
 )
 
-// F stands for Field
-// needs to be exported because of json.Marshal()
-type ConnectorReSyncTableService struct {
+type connectorReSyncTableService struct {
 	c           *Client
 	connectorID *string
 	schema      *string
 	table       *string
 }
 
-type ConnectorReSyncTable struct {
+type ConnectorReSyncTableResponse struct {
 	Code    string `json:"code"`
 	Message string `json:"message"`
 }
 
-func (c *Client) NewConnectorReSyncTableService() *ConnectorReSyncTableService {
-	return &ConnectorReSyncTableService{c: c}
+func (c *Client) NewConnectorReSyncTable() *connectorReSyncTableService {
+	return &connectorReSyncTableService{c: c}
 }
 
-func (s *ConnectorReSyncTableService) ConnectorID(connectorID string) *ConnectorReSyncTableService {
-	s.connectorID = &connectorID
+func (s *connectorReSyncTableService) ConnectorID(value string) *connectorReSyncTableService {
+	s.connectorID = &value
 	return s
 }
 
-func (s *ConnectorReSyncTableService) Schema(schema string) *ConnectorReSyncTableService {
-	s.schema = &schema
+func (s *connectorReSyncTableService) Schema(value string) *connectorReSyncTableService {
+	s.schema = &value
 	return s
 }
 
-func (s *ConnectorReSyncTableService) Table(table string) *ConnectorReSyncTableService {
-	s.table = &table
+func (s *connectorReSyncTableService) Table(value string) *connectorReSyncTableService {
+	s.table = &value
 	return s
 }
 
-func (s *ConnectorReSyncTableService) Do(ctx context.Context) (ConnectorReSyncTable, error) {
-	if s.connectorID == nil { // we don't validate business rules (unless it is strictly necessary)
-		err := fmt.Errorf("missing required ConnectorID")
-		return ConnectorReSyncTable{}, err
+func (s *connectorReSyncTableService) Do(ctx context.Context) (ConnectorReSyncTableResponse, error) {
+	var response ConnectorReSyncTableResponse
+
+	if s.connectorID == nil {
+		return response, fmt.Errorf("missing required ConnectorID")
 	}
-
-	if s.schema == nil { // we don't validate business rules (unless it is strictly necessary)
-		err := fmt.Errorf("missing required Schema")
-		return ConnectorReSyncTable{}, err
+	if s.schema == nil {
+		return response, fmt.Errorf("missing required Schema")
 	}
-
-	if s.table == nil { // we don't validate business rules (unless it is strictly necessary)
-		err := fmt.Errorf("missing required Table")
-		return ConnectorReSyncTable{}, err
+	if s.table == nil {
+		return response, fmt.Errorf("missing required Table")
 	}
 
 	url := fmt.Sprintf("%v/connectors/%v/schemas/%v/tables/%v/resync", s.c.baseURL, *s.connectorID, *s.schema, *s.table)
 	expectedStatus := 200
-	headers := make(map[string]string)
 
+	headers := make(map[string]string)
 	headers["Authorization"] = s.c.authorization
 
 	r := Request{
@@ -71,18 +66,17 @@ func (s *ConnectorReSyncTableService) Do(ctx context.Context) (ConnectorReSyncTa
 
 	respBody, respStatus, err := httpRequest(r, ctx)
 	if err != nil {
-		return ConnectorReSyncTable{}, err
+		return response, err
 	}
 
-	var connectorReSyncTable ConnectorReSyncTable
-	if err := json.Unmarshal(respBody, &connectorReSyncTable); err != nil {
-		return ConnectorReSyncTable{}, err
+	if err := json.Unmarshal(respBody, &response); err != nil {
+		return response, err
 	}
 
 	if respStatus != expectedStatus {
 		err := fmt.Errorf("status code: %v; expected %v", respStatus, expectedStatus)
-		return connectorReSyncTable, err
+		return response, err
 	}
 
-	return connectorReSyncTable, nil
+	return response, nil
 }

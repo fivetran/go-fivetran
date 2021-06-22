@@ -7,19 +7,26 @@ import (
 	"time"
 )
 
-// F stands for Field
-// needs to be exported because of json.Marshal()
-type UserInviteService struct {
-	c           *Client
-	Femail      string `json:"email,omitempty"`
-	FgivenName  string `json:"given_name,omitempty"`
-	FfamilyName string `json:"family_name,omitempty"`
-	Fphone      string `json:"phone,omitempty"`
-	Fpicture    string `json:"picture,omitempty"`
-	Frole       string `json:"role,omitempty"`
+type userInviteService struct {
+	c          *Client
+	email      *string
+	givenName  *string
+	familyName *string
+	phone      *string
+	picture    *string
+	role       *string
 }
 
-type UserInvite struct {
+type userInviteRequest struct {
+	Email      *string `json:"email,omitempty"`
+	GivenName  *string `json:"given_name,omitempty"`
+	FamilyName *string `json:"family_name,omitempty"`
+	Phone      *string `json:"phone,omitempty"`
+	Picture    *string `json:"picture,omitempty"`
+	Role       *string `json:"role,omitempty"`
+}
+
+type UserInviteResponse struct {
 	Code    string `json:"code"`
 	Message string `json:"message"`
 	Data    struct {
@@ -36,51 +43,63 @@ type UserInvite struct {
 	} `json:"data"`
 }
 
-func (c *Client) NewUserInviteService() *UserInviteService {
-	return &UserInviteService{c: c}
+func (c *Client) NewUserInvite() *userInviteService {
+	return &userInviteService{c: c}
 }
 
-func (s *UserInviteService) Email(email string) *UserInviteService {
-	s.Femail = email
+func (s *userInviteService) request() userInviteRequest {
+	return userInviteRequest{
+		Email:      s.email,
+		GivenName:  s.givenName,
+		FamilyName: s.familyName,
+		Phone:      s.phone,
+		Picture:    s.picture,
+		Role:       s.role,
+	}
+}
+
+func (s *userInviteService) Email(value string) *userInviteService {
+	s.email = &value
 	return s
 }
 
-func (s *UserInviteService) GivenName(givenName string) *UserInviteService {
-	s.FgivenName = givenName
+func (s *userInviteService) GivenName(value string) *userInviteService {
+	s.givenName = &value
 	return s
 }
 
-func (s *UserInviteService) FamilyName(familyName string) *UserInviteService {
-	s.FfamilyName = familyName
+func (s *userInviteService) FamilyName(value string) *userInviteService {
+	s.familyName = &value
 	return s
 }
 
-func (s *UserInviteService) Phone(phone string) *UserInviteService {
-	s.Fphone = phone
+func (s *userInviteService) Phone(value string) *userInviteService {
+	s.phone = &value
 	return s
 }
 
-func (s *UserInviteService) Picture(picture string) *UserInviteService {
-	s.Fpicture = picture
+func (s *userInviteService) Picture(value string) *userInviteService {
+	s.picture = &value
 	return s
 }
 
-func (s *UserInviteService) Role(role string) *UserInviteService {
-	s.Frole = role
+func (s *userInviteService) Role(value string) *userInviteService {
+	s.role = &value
 	return s
 }
 
-func (s *UserInviteService) Do(ctx context.Context) (UserInvite, error) {
+func (s *userInviteService) Do(ctx context.Context) (UserInviteResponse, error) {
+	var response UserInviteResponse
 	url := fmt.Sprintf("%v/users", s.c.baseURL)
 	expectedStatus := 201
-	headers := make(map[string]string)
 
+	headers := make(map[string]string)
 	headers["Authorization"] = s.c.authorization
 	headers["Content-Type"] = "application/json"
 
-	reqBody, err := json.Marshal(s)
+	reqBody, err := json.Marshal(s.request())
 	if err != nil {
-		return UserInvite{}, err
+		return response, err
 	}
 
 	r := Request{
@@ -93,18 +112,17 @@ func (s *UserInviteService) Do(ctx context.Context) (UserInvite, error) {
 
 	respBody, respStatus, err := httpRequest(r, ctx)
 	if err != nil {
-		return UserInvite{}, err
+		return response, err
 	}
 
-	var userInvite UserInvite
-	if err := json.Unmarshal(respBody, &userInvite); err != nil {
-		return UserInvite{}, err
+	if err := json.Unmarshal(respBody, &response); err != nil {
+		return response, err
 	}
 
 	if respStatus != expectedStatus {
 		err := fmt.Errorf("status code: %v; expected %v", respStatus, expectedStatus)
-		return userInvite, err
+		return response, err
 	}
 
-	return userInvite, nil
+	return response, nil
 }

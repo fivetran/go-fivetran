@@ -7,71 +7,73 @@ import (
 	"time"
 )
 
-type GroupListUsersService struct {
-	c      *Client
-	id     string
-	limit  int
-	cursor string
+type groupListUsersService struct {
+	c       *Client
+	groupID *string
+	limit   *int
+	cursor  *string
 }
 
-type GroupListUsers struct {
+type GroupListUsersResponse struct {
 	Code    string `json:"code"`
 	Message string `json:"message"`
 	Data    struct {
 		Items []struct {
-			ID         string      `json:"id"`
-			Email      string      `json:"email"`
-			GivenName  string      `json:"given_name"`
-			FamilyName string      `json:"family_name"`
-			Verified   bool        `json:"verified"`
-			Invited    bool        `json:"invited"`
-			Picture    interface{} `json:"picture"`
-			Phone      interface{} `json:"phone"`
-			LoggedInAt time.Time   `json:"logged_in_at"`
-			CreatedAt  time.Time   `json:"created_at"`
+			ID         string `json:"id"`
+			Email      string `json:"email"`
+			GivenName  string `json:"given_name"`
+			FamilyName string `json:"family_name"`
+			Verified   bool   `json:"verified"`
+			Invited    bool   `json:"invited"`
+			// Picture    interface{} `json:"picture"`
+			// Phone      interface{} `json:"phone"`
+			Picture    string    `json:"picture"`
+			Phone      string    `json:"phone"`
+			LoggedInAt time.Time `json:"logged_in_at"`
+			CreatedAt  time.Time `json:"created_at"`
 		} `json:"items"`
 		NextCursor string `json:"next_cursor"`
 	} `json:"data"`
 }
 
-func (c *Client) NewGroupListUsersService() *GroupListUsersService {
-	return &GroupListUsersService{c: c}
+func (c *Client) NewGroupListUsers() *groupListUsersService {
+	return &groupListUsersService{c: c}
 }
 
-func (s *GroupListUsersService) ID(id string) *GroupListUsersService {
-	s.id = id
+func (s *groupListUsersService) GroupID(value string) *groupListUsersService {
+	s.groupID = &value
 	return s
 }
 
-func (s *GroupListUsersService) Limit(limit int) *GroupListUsersService {
-	s.limit = limit
+func (s *groupListUsersService) Limit(value int) *groupListUsersService {
+	s.limit = &value
 	return s
 }
 
-func (s *GroupListUsersService) Cursor(cursor string) *GroupListUsersService {
-	s.cursor = cursor
+func (s *groupListUsersService) Cursor(value string) *groupListUsersService {
+	s.cursor = &value
 	return s
 }
 
-func (s *GroupListUsersService) Do(ctx context.Context) (GroupListUsers, error) {
-	if s.id == "" {
-		err := fmt.Errorf("missing required ID")
-		return GroupListUsers{}, err
+func (s *groupListUsersService) Do(ctx context.Context) (GroupListUsersResponse, error) {
+	var response GroupListUsersResponse
+
+	if s.groupID == nil {
+		return response, fmt.Errorf("missing required GroupID")
 	}
 
-	url := fmt.Sprintf("%v/groups/%v/users", s.c.baseURL, s.id)
+	url := fmt.Sprintf("%v/groups/%v/users", s.c.baseURL, *s.groupID)
 	expectedStatus := 200
-	headers := make(map[string]string)
-	queries := make(map[string]string)
 
+	headers := make(map[string]string)
 	headers["Authorization"] = s.c.authorization
 
-	if s.cursor != "" {
-		queries["cursor"] = s.cursor
+	queries := make(map[string]string)
+	if s.cursor != nil {
+		queries["cursor"] = *s.cursor
 	}
-
-	if s.limit != 0 {
-		queries["limit"] = fmt.Sprint(s.limit)
+	if s.limit != nil {
+		queries["limit"] = fmt.Sprint(*s.limit)
 	}
 
 	r := Request{
@@ -84,18 +86,17 @@ func (s *GroupListUsersService) Do(ctx context.Context) (GroupListUsers, error) 
 
 	respBody, respStatus, err := httpRequest(r, ctx)
 	if err != nil {
-		return GroupListUsers{}, err
+		return response, err
 	}
 
-	var groupListUsers GroupListUsers
-	if err := json.Unmarshal(respBody, &groupListUsers); err != nil {
-		return GroupListUsers{}, err
+	if err := json.Unmarshal(respBody, &response); err != nil {
+		return response, err
 	}
 
 	if respStatus != expectedStatus {
 		err := fmt.Errorf("status code: %v; expected %v", respStatus, expectedStatus)
-		return groupListUsers, err
+		return response, err
 	}
 
-	return groupListUsers, nil
+	return response, nil
 }

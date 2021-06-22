@@ -6,13 +6,13 @@ import (
 	"fmt"
 )
 
-type ConnectorsSourceMetadataService struct {
+type connectorsSourceMetadata struct {
 	c      *Client
 	limit  *int
 	cursor *string
 }
 
-type ConnectorsSourceMetadata struct {
+type ConnectorsSourceMetadataResponse struct {
 	Code    string `json:"code"`
 	Message string `json:"message"`
 	Data    struct {
@@ -29,32 +29,32 @@ type ConnectorsSourceMetadata struct {
 	} `json:"data"`
 }
 
-func (c *Client) NewConnectorsSourceMetadataService() *ConnectorsSourceMetadataService {
-	return &ConnectorsSourceMetadataService{c: c}
+func (c *Client) NewConnectorsSourceMetadata() *connectorsSourceMetadata {
+	return &connectorsSourceMetadata{c: c}
 }
 
-func (s *ConnectorsSourceMetadataService) Limit(limit int) *ConnectorsSourceMetadataService {
-	s.limit = &limit
+func (s *connectorsSourceMetadata) Limit(value int) *connectorsSourceMetadata {
+	s.limit = &value
 	return s
 }
 
-func (s *ConnectorsSourceMetadataService) Cursor(cursor string) *ConnectorsSourceMetadataService {
-	s.cursor = &cursor
+func (s *connectorsSourceMetadata) Cursor(value string) *connectorsSourceMetadata {
+	s.cursor = &value
 	return s
 }
 
-func (s *ConnectorsSourceMetadataService) Do(ctx context.Context) (ConnectorsSourceMetadata, error) {
+func (s *connectorsSourceMetadata) Do(ctx context.Context) (ConnectorsSourceMetadataResponse, error) {
+	var response ConnectorsSourceMetadataResponse
 	url := fmt.Sprintf("%v/metadata/connectors", s.c.baseURL)
 	expectedStatus := 200
-	headers := make(map[string]string)
-	queries := make(map[string]string)
 
+	headers := make(map[string]string)
 	headers["Authorization"] = s.c.authorization
 
+	queries := make(map[string]string)
 	if s.cursor != nil {
 		queries["cursor"] = *s.cursor
 	}
-
 	if s.limit != nil {
 		queries["limit"] = fmt.Sprint(*s.limit)
 	}
@@ -69,18 +69,17 @@ func (s *ConnectorsSourceMetadataService) Do(ctx context.Context) (ConnectorsSou
 
 	respBody, respStatus, err := httpRequest(r, ctx)
 	if err != nil {
-		return ConnectorsSourceMetadata{}, err
+		return response, err
 	}
 
-	var connectorsSourceMetadata ConnectorsSourceMetadata
-	if err := json.Unmarshal(respBody, &connectorsSourceMetadata); err != nil {
-		return ConnectorsSourceMetadata{}, err
+	if err := json.Unmarshal(respBody, &response); err != nil {
+		return response, err
 	}
 
 	if respStatus != expectedStatus {
 		err := fmt.Errorf("status code: %v; expected %v", respStatus, expectedStatus)
-		return connectorsSourceMetadata, err
+		return response, err
 	}
 
-	return connectorsSourceMetadata, nil
+	return response, nil
 }

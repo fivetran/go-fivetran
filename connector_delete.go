@@ -6,35 +6,36 @@ import (
 	"fmt"
 )
 
-type ConnectorDeleteService struct {
+type connectorDeleteService struct {
 	c           *Client
 	connectorID *string
 }
 
-type ConnectorDelete struct {
+type ConnectorDeleteResponse struct {
 	Code    string `json:"code"`
 	Message string `json:"message"`
 }
 
-func (c *Client) NewConnectorDeleteService() *ConnectorDeleteService {
-	return &ConnectorDeleteService{c: c}
+func (c *Client) NewConnectorDelete() *connectorDeleteService {
+	return &connectorDeleteService{c: c}
 }
 
-func (s *ConnectorDeleteService) ConnectorID(connectorID string) *ConnectorDeleteService {
+func (s *connectorDeleteService) ConnectorID(connectorID string) *connectorDeleteService {
 	s.connectorID = &connectorID
 	return s
 }
 
-func (s *ConnectorDeleteService) Do(ctx context.Context) (ConnectorDelete, error) {
-	if s.connectorID == nil { // we don't validate business rules (unless it is strictly necessary)
-		err := fmt.Errorf("missing required ConnectorID")
-		return ConnectorDelete{}, err
+func (s *connectorDeleteService) Do(ctx context.Context) (ConnectorDeleteResponse, error) {
+	var response ConnectorDeleteResponse
+
+	if s.connectorID == nil {
+		return response, fmt.Errorf("missing required ConnectorID")
 	}
 
 	url := fmt.Sprintf("%v/connectors/%v", s.c.baseURL, *s.connectorID)
 	expectedStatus := 200
-	headers := make(map[string]string)
 
+	headers := make(map[string]string)
 	headers["Authorization"] = s.c.authorization
 
 	r := Request{
@@ -47,18 +48,17 @@ func (s *ConnectorDeleteService) Do(ctx context.Context) (ConnectorDelete, error
 
 	respBody, respStatus, err := httpRequest(r, ctx)
 	if err != nil {
-		return ConnectorDelete{}, err
+		return response, err
 	}
 
-	var connectorDelete ConnectorDelete
-	if err := json.Unmarshal(respBody, &connectorDelete); err != nil {
-		return ConnectorDelete{}, err
+	if err := json.Unmarshal(respBody, &response); err != nil {
+		return response, err
 	}
 
 	if respStatus != expectedStatus {
 		err := fmt.Errorf("status code: %v; expected %v", respStatus, expectedStatus)
-		return connectorDelete, err
+		return response, err
 	}
 
-	return connectorDelete, nil
+	return response, nil
 }

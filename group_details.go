@@ -7,12 +7,12 @@ import (
 	"time"
 )
 
-type GroupDetailsService struct {
-	c  *Client
-	id string
+type groupDetailsService struct {
+	c       *Client
+	groupID *string
 }
 
-type GroupDetails struct {
+type GroupDetailsResponse struct {
 	Code    string `json:"code"`
 	Message string `json:"message"`
 	Data    struct {
@@ -22,25 +22,26 @@ type GroupDetails struct {
 	} `json:"data"`
 }
 
-func (c *Client) NewGroupDetailsService() *GroupDetailsService {
-	return &GroupDetailsService{c: c}
+func (c *Client) NewGroupDetails() *groupDetailsService {
+	return &groupDetailsService{c: c}
 }
 
-func (s *GroupDetailsService) ID(id string) *GroupDetailsService {
-	s.id = id
+func (s *groupDetailsService) GroupID(value string) *groupDetailsService {
+	s.groupID = &value
 	return s
 }
 
-func (s *GroupDetailsService) Do(ctx context.Context) (GroupDetails, error) {
-	if s.id == "" {
-		err := fmt.Errorf("missing required ID")
-		return GroupDetails{}, err
+func (s *groupDetailsService) Do(ctx context.Context) (GroupDetailsResponse, error) {
+	var response GroupDetailsResponse
+
+	if s.groupID == nil {
+		return response, fmt.Errorf("missing required GroupID")
 	}
 
-	url := fmt.Sprintf("%v/groups/%v", s.c.baseURL, s.id)
+	url := fmt.Sprintf("%v/groups/%v", s.c.baseURL, *s.groupID)
 	expectedStatus := 200
-	headers := make(map[string]string)
 
+	headers := make(map[string]string)
 	headers["Authorization"] = s.c.authorization
 
 	r := Request{
@@ -53,18 +54,17 @@ func (s *GroupDetailsService) Do(ctx context.Context) (GroupDetails, error) {
 
 	respBody, respStatus, err := httpRequest(r, ctx)
 	if err != nil {
-		return GroupDetails{}, err
+		return response, err
 	}
 
-	var groupDetails GroupDetails
-	if err := json.Unmarshal(respBody, &groupDetails); err != nil {
-		return GroupDetails{}, err
+	if err := json.Unmarshal(respBody, &response); err != nil {
+		return response, err
 	}
 
 	if respStatus != expectedStatus {
 		err := fmt.Errorf("status code: %v; expected %v", respStatus, expectedStatus)
-		return groupDetails, err
+		return response, err
 	}
 
-	return groupDetails, nil
+	return response, nil
 }

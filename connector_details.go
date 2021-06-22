@@ -7,12 +7,12 @@ import (
 	"time"
 )
 
-type ConnectorDetailsService struct {
+type connectorDetailsService struct {
 	c           *Client
 	connectorID *string
 }
 
-type ConnectorDetails struct {
+type ConnectorDetailsResponse struct {
 	Code    string `json:"code"`
 	Message string `json:"message"`
 	Data    struct {
@@ -41,29 +41,30 @@ type ConnectorDetails struct {
 				Message string `json:"message"`
 			} `json:"warnings"`
 		} `json:"status"`
-		Config ConnectorConfig `json:"config"`
+		Config ConnectorConfigResponse `json:"config"`
 	} `json:"data"`
 }
 
-func (c *Client) NewConnectorDetailsService() *ConnectorDetailsService {
-	return &ConnectorDetailsService{c: c}
+func (c *Client) NewConnectorDetails() *connectorDetailsService {
+	return &connectorDetailsService{c: c}
 }
 
-func (s *ConnectorDetailsService) ConnectorID(connectorID string) *ConnectorDetailsService {
-	s.connectorID = &connectorID
+func (s *connectorDetailsService) ConnectorID(value string) *connectorDetailsService {
+	s.connectorID = &value
 	return s
 }
 
-func (s *ConnectorDetailsService) Do(ctx context.Context) (ConnectorDetails, error) {
-	if s.connectorID == nil { // we don't validate business rules (unless it is strictly necessary)
-		err := fmt.Errorf("missing required ConnectorID")
-		return ConnectorDetails{}, err
+func (s *connectorDetailsService) Do(ctx context.Context) (ConnectorDetailsResponse, error) {
+	var response ConnectorDetailsResponse
+
+	if s.connectorID == nil {
+		return response, fmt.Errorf("missing required ConnectorID")
 	}
 
 	url := fmt.Sprintf("%v/connectors/%v", s.c.baseURL, *s.connectorID)
 	expectedStatus := 200
-	headers := make(map[string]string)
 
+	headers := make(map[string]string)
 	headers["Authorization"] = s.c.authorization
 
 	r := Request{
@@ -76,18 +77,17 @@ func (s *ConnectorDetailsService) Do(ctx context.Context) (ConnectorDetails, err
 
 	respBody, respStatus, err := httpRequest(r, ctx)
 	if err != nil {
-		return ConnectorDetails{}, err
+		return response, err
 	}
 
-	var connectorDetails ConnectorDetails
-	if err := json.Unmarshal(respBody, &connectorDetails); err != nil {
-		return ConnectorDetails{}, err
+	if err := json.Unmarshal(respBody, &response); err != nil {
+		return response, err
 	}
 
 	if respStatus != expectedStatus {
 		err := fmt.Errorf("status code: %v; expected %v", respStatus, expectedStatus)
-		return connectorDetails, err
+		return response, err
 	}
 
-	return connectorDetails, nil
+	return response, nil
 }

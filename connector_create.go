@@ -4,25 +4,33 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"strconv"
 	"time"
 )
 
-// F stands for Field
-// needs to be exported because of json.Marshal()
-type ConnectorCreateService struct {
-	c                  *Client
-	Fservice           *string          `json:"service,omitempty"`
-	FgroupID           *string          `json:"group_id,omitempty"`
-	FtrustCertificates *bool            `json:"trust_certificates,omitempty"`
-	FtrustFingerprints *bool            `json:"trust_fingerprints,omitempty"`
-	FrunSetupTests     *bool            `json:"run_setup_tests,omitempty"`
-	Fpaused            *bool            `json:"paused,omitempty"`
-	Fconfig            *ConnectorConfig `json:"config,omitempty"`
-	Fauth              *ConnectorAuth   `json:"auth,omitempty"`
+type connectorCreateService struct {
+	c                 *Client
+	service           *string
+	groupID           *string
+	trustCertificates *bool
+	trustFingerprints *bool
+	runSetupTests     *bool
+	paused            *bool
+	config            *connectorConfig
+	auth              *connectorAuth
 }
 
-type ConnectorCreate struct {
+type connectorCreateRequest struct {
+	Service           *string                 `json:"service,omitempty"`
+	GroupID           *string                 `json:"group_id,omitempty"`
+	TrustCertificates *bool                   `json:"trust_certificates,omitempty"`
+	TrustFingerprints *bool                   `json:"trust_fingerprints,omitempty"`
+	RunSetupTests     *bool                   `json:"run_setup_tests,omitempty"`
+	Paused            *bool                   `json:"paused,omitempty"`
+	Config            *connectorConfigRequest `json:"config,omitempty"`
+	Auth              *connectorAuthRequest   `json:"auth,omitempty"`
+}
+
+type ConnectorCreateResponse struct {
 	Code    string `json:"code"`
 	Message string `json:"message"`
 	Data    struct {
@@ -56,65 +64,89 @@ type ConnectorCreate struct {
 			Status  string `json:"status"`
 			Message string `json:"message"`
 		} `json:"setup_tests"`
-		Config ConnectorConfig `json:"config"`
+		Config ConnectorConfigResponse `json:"config"`
 	} `json:"data"`
 }
 
-func (c *Client) NewConnectorCreateService() *ConnectorCreateService {
-	return &ConnectorCreateService{c: c}
+func (c *Client) NewConnectorCreate() *connectorCreateService {
+	return &connectorCreateService{c: c}
 }
 
-func (s *ConnectorCreateService) Service(service string) *ConnectorCreateService {
-	s.Fservice = &service
+func (s *connectorCreateService) request() *connectorCreateRequest {
+	var config *connectorConfigRequest
+	if s.config != nil {
+		config = s.config.request()
+	}
+
+	var auth *connectorAuthRequest
+	if s.auth != nil {
+		auth = s.auth.request()
+	}
+
+	return &connectorCreateRequest{
+		Service:           s.service,
+		GroupID:           s.groupID,
+		TrustCertificates: s.trustCertificates,
+		TrustFingerprints: s.trustFingerprints,
+		RunSetupTests:     s.runSetupTests,
+		Paused:            s.paused,
+		Config:            config,
+		Auth:              auth,
+	}
+}
+
+func (s *connectorCreateService) Service(value string) *connectorCreateService {
+	s.service = &value
 	return s
 }
 
-func (s *ConnectorCreateService) GroupID(groupID string) *ConnectorCreateService {
-	s.FgroupID = &groupID
+func (s *connectorCreateService) GroupID(value string) *connectorCreateService {
+	s.groupID = &value
 	return s
 }
 
-func (s *ConnectorCreateService) TrustCertificates(trustCertificates bool) *ConnectorCreateService {
-	s.FtrustCertificates = &trustCertificates
+func (s *connectorCreateService) TrustCertificates(value bool) *connectorCreateService {
+	s.trustCertificates = &value
 	return s
 }
 
-func (s *ConnectorCreateService) TrustFingerprints(trustFingerprints bool) *ConnectorCreateService {
-	s.FtrustFingerprints = &trustFingerprints
+func (s *connectorCreateService) TrustFingerprints(value bool) *connectorCreateService {
+	s.trustFingerprints = &value
 	return s
 }
 
-func (s *ConnectorCreateService) RunSetupTests(runSetupTests bool) *ConnectorCreateService {
-	s.FrunSetupTests = &runSetupTests
+func (s *connectorCreateService) RunSetupTests(value bool) *connectorCreateService {
+	s.runSetupTests = &value
 	return s
 }
 
-func (s *ConnectorCreateService) Paused(paused bool) *ConnectorCreateService {
-	s.Fpaused = &paused
+func (s *connectorCreateService) Paused(value bool) *connectorCreateService {
+	s.paused = &value
 	return s
 }
 
-func (s *ConnectorCreateService) Config(config *ConnectorConfig) *ConnectorCreateService {
-	s.Fconfig = config
+func (s *connectorCreateService) Config(value *connectorConfig) *connectorCreateService {
+	s.config = value
 	return s
 }
 
-func (s *ConnectorCreateService) Auth(auth *ConnectorAuth) *ConnectorCreateService {
-	s.Fauth = auth
+func (s *connectorCreateService) Auth(value *connectorAuth) *connectorCreateService {
+	s.auth = value
 	return s
 }
 
-func (s *ConnectorCreateService) Do(ctx context.Context) (ConnectorCreate, error) {
+func (s *connectorCreateService) Do(ctx context.Context) (ConnectorCreateResponse, error) {
+	var response ConnectorCreateResponse
 	url := fmt.Sprintf("%v/connectors", s.c.baseURL)
 	expectedStatus := 201
-	headers := make(map[string]string)
 
+	headers := make(map[string]string)
 	headers["Authorization"] = s.c.authorization
 	headers["Content-Type"] = "application/json"
 
-	reqBody, err := json.Marshal(s)
+	reqBody, err := json.Marshal(s.request())
 	if err != nil {
-		return ConnectorCreate{}, err
+		return response, err
 	}
 
 	r := Request{
@@ -127,27 +159,17 @@ func (s *ConnectorCreateService) Do(ctx context.Context) (ConnectorCreate, error
 
 	respBody, respStatus, err := httpRequest(r, ctx)
 	if err != nil {
-		return ConnectorCreate{}, err
+		return response, err
 	}
 
-	var connectorCreate ConnectorCreate
-	if err := json.Unmarshal(respBody, &connectorCreate); err != nil {
-		return ConnectorCreate{}, err
-	}
-
-	// convert port to int if it is a string // better doc
-	_, isString := connectorCreate.Data.Config.FPort.(string)
-	if isString {
-		connectorCreate.Data.Config.FPort, err = strconv.Atoi(connectorCreate.Data.Config.FPort.(string))
-		if err != nil {
-			return ConnectorCreate{}, err
-		}
+	if err := json.Unmarshal(respBody, &response); err != nil {
+		return response, err
 	}
 
 	if respStatus != expectedStatus {
 		err := fmt.Errorf("status code: %v; expected %v", respStatus, expectedStatus)
-		return connectorCreate, err
+		return response, err
 	}
 
-	return connectorCreate, nil
+	return response, nil
 }

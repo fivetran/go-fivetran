@@ -4,24 +4,32 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"strconv"
 )
 
-// F stands for Field
-// needs to be exported because of json.Marshal()
-type DestinationCreateService struct {
-	c                  *Client
-	FgroupID           string             `json:"group_id,omitempty"`
-	Fservice           string             `json:"service,omitempty"`
-	Fregion            string             `json:"region,omitempty"`
-	FtimeZoneOffset    string             `json:"time_zone_offset,omitempty"`
-	Fconfig            *DestinationConfig `json:"config,omitempty"`
-	FtrustCertificates *bool              `json:"trust_certificates,omitempty"`
-	FtrustFingerprints *bool              `json:"trust_fingerprints,omitempty"`
-	FrunSetupTests     *bool              `json:"run_setup_tests,omitempty"`
+type destinationCreateService struct {
+	c                 *Client
+	groupID           *string
+	service           *string
+	region            *string
+	timeZoneOffset    *string
+	config            *destinationConfig
+	trustCertificates *bool
+	trustFingerprints *bool
+	runSetupTests     *bool
 }
 
-type DestinationCreate struct {
+type destinationCreateRequest struct {
+	GroupID           *string                   `json:"group_id,omitempty"`
+	Service           *string                   `json:"service,omitempty"`
+	Region            *string                   `json:"region,omitempty"`
+	TimeZoneOffset    *string                   `json:"time_zone_offset,omitempty"`
+	Config            *destinationConfigRequest `json:"config,omitempty"`
+	TrustCertificates *bool                     `json:"trust_certificates,omitempty"`
+	TrustFingerprints *bool                     `json:"trust_fingerprints,omitempty"`
+	RunSetupTests     *bool                     `json:"run_setup_tests,omitempty"`
+}
+
+type DestinationCreateResponse struct {
 	Code    string `json:"code"`
 	Message string `json:"message"`
 	Data    struct {
@@ -36,65 +44,85 @@ type DestinationCreate struct {
 			Status  string `json:"status"`
 			Message string `json:"message"`
 		} `json:"setup_tests"`
-		Config DestinationConfig `json:"config"`
+		Config DestinationConfigResponse `json:"config"`
 	} `json:"data"`
 }
 
-func (c *Client) NewDestinationCreateService() *DestinationCreateService {
-	return &DestinationCreateService{c: c}
+func (c *Client) NewDestinationCreate() *destinationCreateService {
+	return &destinationCreateService{c: c}
 }
 
-func (s *DestinationCreateService) GroupID(groupID string) *DestinationCreateService {
-	s.FgroupID = groupID
+func (s *destinationCreateService) request() *destinationCreateRequest {
+	var config *destinationConfigRequest
+
+	if s.config != nil {
+		config = s.config.request()
+	}
+
+	return &destinationCreateRequest{
+		GroupID:           s.groupID,
+		Service:           s.service,
+		Region:            s.region,
+		TimeZoneOffset:    s.timeZoneOffset,
+		Config:            config,
+		TrustCertificates: s.trustCertificates,
+		TrustFingerprints: s.trustFingerprints,
+		RunSetupTests:     s.runSetupTests,
+	}
+}
+
+func (s *destinationCreateService) GroupID(value string) *destinationCreateService {
+	s.groupID = &value
 	return s
 }
 
-func (s *DestinationCreateService) Service(service string) *DestinationCreateService {
-	s.Fservice = service
+func (s *destinationCreateService) Service(value string) *destinationCreateService {
+	s.service = &value
 	return s
 }
 
-func (s *DestinationCreateService) Region(region string) *DestinationCreateService {
-	s.Fregion = region
+func (s *destinationCreateService) Region(value string) *destinationCreateService {
+	s.region = &value
 	return s
 }
 
-func (s *DestinationCreateService) TimeZoneOffset(timeZoneOffset string) *DestinationCreateService {
-	s.FtimeZoneOffset = timeZoneOffset
+func (s *destinationCreateService) TimeZoneOffset(value string) *destinationCreateService {
+	s.timeZoneOffset = &value
 	return s
 }
 
-func (s *DestinationCreateService) Config(config *DestinationConfig) *DestinationCreateService {
-	s.Fconfig = config
+func (s *destinationCreateService) Config(value *destinationConfig) *destinationCreateService {
+	s.config = value
 	return s
 }
 
-func (s *DestinationCreateService) TrustCertificates(trustCertificates bool) *DestinationCreateService {
-	s.FtrustCertificates = &trustCertificates
+func (s *destinationCreateService) TrustCertificates(value bool) *destinationCreateService {
+	s.trustCertificates = &value
 	return s
 }
 
-func (s *DestinationCreateService) TrustFingerprints(trustFingerprints bool) *DestinationCreateService {
-	s.FtrustFingerprints = &trustFingerprints
+func (s *destinationCreateService) TrustFingerprints(value bool) *destinationCreateService {
+	s.trustFingerprints = &value
 	return s
 }
 
-func (s *DestinationCreateService) RunSetupTests(runSetupTests bool) *DestinationCreateService {
-	s.FrunSetupTests = &runSetupTests
+func (s *destinationCreateService) RunSetupTests(value bool) *destinationCreateService {
+	s.runSetupTests = &value
 	return s
 }
 
-func (s *DestinationCreateService) Do(ctx context.Context) (DestinationCreate, error) {
+func (s *destinationCreateService) Do(ctx context.Context) (DestinationCreateResponse, error) {
+	var response DestinationCreateResponse
 	url := fmt.Sprintf("%v/destinations", s.c.baseURL)
 	expectedStatus := 201
-	headers := make(map[string]string)
 
+	headers := make(map[string]string)
 	headers["Authorization"] = s.c.authorization
 	headers["Content-Type"] = "application/json"
 
-	reqBody, err := json.Marshal(s)
+	reqBody, err := json.Marshal(s.request())
 	if err != nil {
-		return DestinationCreate{}, err
+		return response, err
 	}
 
 	r := Request{
@@ -107,30 +135,17 @@ func (s *DestinationCreateService) Do(ctx context.Context) (DestinationCreate, e
 
 	respBody, respStatus, err := httpRequest(r, ctx)
 	if err != nil {
-		return DestinationCreate{}, err
+		return response, err
 	}
 
-	var destinationCreate DestinationCreate
-	if err := json.Unmarshal(respBody, &destinationCreate); err != nil {
-		return DestinationCreate{}, err
-	}
-
-	// converts destinationCreate.Data.Config.Fport to int. Should be removed
-	// when https://fivetran.height.app/T-97508 fixed.
-	switch destinationCreate.Data.Config.Fport.(type) {
-	case string:
-		destinationCreate.Data.Config.Fport, err = strconv.Atoi(destinationCreate.Data.Config.Fport.(string))
-		if err != nil {
-			return DestinationCreate{}, err
-		}
-
-	default:
+	if err := json.Unmarshal(respBody, &response); err != nil {
+		return response, err
 	}
 
 	if respStatus != expectedStatus {
 		err := fmt.Errorf("status code: %v; expected %v", respStatus, expectedStatus)
-		return destinationCreate, err
+		return response, err
 	}
 
-	return destinationCreate, nil
+	return response, nil
 }

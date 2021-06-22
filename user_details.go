@@ -7,12 +7,12 @@ import (
 	"time"
 )
 
-type UserDetailsService struct {
+type userDetailsService struct {
 	c      *Client
-	userId string
+	userID *string
 }
 
-type UserDetails struct {
+type UserDetailsResponse struct {
 	Code    string `json:"code"`
 	Message string `json:"message"`
 	Data    struct {
@@ -29,25 +29,26 @@ type UserDetails struct {
 	} `json:"data"`
 }
 
-func (c *Client) NewUserDetailsService() *UserDetailsService {
-	return &UserDetailsService{c: c}
+func (c *Client) NewUserDetails() *userDetailsService {
+	return &userDetailsService{c: c}
 }
 
-func (s *UserDetailsService) UserId(userId string) *UserDetailsService {
-	s.userId = userId
+func (s *userDetailsService) UserID(value string) *userDetailsService {
+	s.userID = &value
 	return s
 }
 
-func (s *UserDetailsService) Do(ctx context.Context) (UserDetails, error) {
-	if s.userId == "" { // we don't validate business rules (unless it is strictly necessary) // in this case the result would be an empty UserDetails{} with a 200 status code
-		err := fmt.Errorf("missing required UserId")
-		return UserDetails{}, err
+func (s *userDetailsService) Do(ctx context.Context) (UserDetailsResponse, error) {
+	var response UserDetailsResponse
+
+	if s.userID == nil {
+		return response, fmt.Errorf("missing required UserId")
 	}
 
-	url := fmt.Sprintf("%v/users/%v", s.c.baseURL, s.userId)
+	url := fmt.Sprintf("%v/users/%v", s.c.baseURL, *s.userID)
 	expectedStatus := 200
-	headers := make(map[string]string)
 
+	headers := make(map[string]string)
 	headers["Authorization"] = s.c.authorization
 
 	r := Request{
@@ -60,18 +61,17 @@ func (s *UserDetailsService) Do(ctx context.Context) (UserDetails, error) {
 
 	respBody, respStatus, err := httpRequest(r, ctx)
 	if err != nil {
-		return UserDetails{}, err
+		return response, err
 	}
 
-	var userDetails UserDetails
-	if err := json.Unmarshal(respBody, &userDetails); err != nil {
-		return UserDetails{}, err
+	if err := json.Unmarshal(respBody, &response); err != nil {
+		return response, err
 	}
 
 	if respStatus != expectedStatus {
 		err := fmt.Errorf("status code: %v; expected %v", respStatus, expectedStatus)
-		return userDetails, err
+		return response, err
 	}
 
-	return userDetails, nil
+	return response, nil
 }

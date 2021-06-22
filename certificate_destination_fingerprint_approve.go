@@ -55,6 +55,7 @@ func (s *certificateDestinationFingerprintApproveService) Do(ctx context.Context
 	var response CertificateDestinationFingerprintApproveResponse
 	url := fmt.Sprintf("%v/fingerprints", s.c.baseURL)
 	expectedStatus := 200
+
 	headers := make(map[string]string)
 	headers["Authorization"] = s.c.authorization
 	headers["Content-Type"] = "application/json"

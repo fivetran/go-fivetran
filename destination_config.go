@@ -1,128 +1,199 @@
 package fivetran
 
-type DestinationConfig struct {
-	Fhost                 string      `json:"host,omitempty"`
-	Fport                 interface{} `json:"port,omitempty"` // Type should change to int when https://fivetran.height.app/T-97508 fixed.
-	Fdatabase             string      `json:"database,omitempty"`
-	Fauth                 string      `json:"auth,omitempty"`
-	Fuser                 string      `json:"user,omitempty"`
-	Fpassword             string      `json:"password,omitempty"`
-	FconnectionType       string      `json:"connection_type,omitempty"`
-	FtunnelHost           string      `json:"tunnel_host,omitempty"`
-	FtunnelPort           string      `json:"tunnel_port,omitempty"`
-	FtunnelUser           string      `json:"tunnel_user,omitempty"`
-	FprojectID            string      `json:"project_id,omitempty"`
-	FdataSetLocation      string      `json:"data_set_location,omitempty"`
-	Fbucket               string      `json:"bucket,omitempty"`
-	FserverHostName       string      `json:"server_host_name,omitempty"`
-	FhttpPath             string      `json:"http_path,omitempty"`
-	FpersonalAccessToken  string      `json:"personal_access_token,omitempty"`
-	FcreateExternalTables *bool       `json:"create_external_tables,omitempty"`
-	FexternalLocation     string      `json:"external_location,omitempty"`
-	FauthType             string      `json:"auth_type,omitempty"`
-	FroleArn              string      `json:"role_arn,omitempty"`
+type destinationConfig struct {
+	host                 *string
+	port                 *int
+	database             *string
+	auth                 *string
+	user                 *string
+	password             *string
+	connectionType       *string
+	tunnelHost           *string
+	tunnelPort           *string
+	tunnelUser           *string
+	projectID            *string
+	dataSetLocation      *string
+	bucket               *string
+	serverHostName       *string
+	httpPath             *string
+	personalAccessToken  *string
+	createExternalTables *bool
+	externalLocation     *string
+	authType             *string
+	roleArn              *string
 }
 
-func NewDestinationConfig() *DestinationConfig {
-	return &DestinationConfig{}
+type destinationConfigRequest struct {
+	Host                 *string `json:"host,omitempty"`
+	Port                 *int    `json:"port,omitempty"`
+	Database             *string `json:"database,omitempty"`
+	Auth                 *string `json:"auth,omitempty"`
+	User                 *string `json:"user,omitempty"`
+	Password             *string `json:"password,omitempty"`
+	ConnectionType       *string `json:"connection_type,omitempty"`
+	TunnelHost           *string `json:"tunnel_host,omitempty"`
+	TunnelPort           *string `json:"tunnel_port,omitempty"`
+	TunnelUser           *string `json:"tunnel_user,omitempty"`
+	ProjectID            *string `json:"project_id,omitempty"`
+	DataSetLocation      *string `json:"data_set_location,omitempty"`
+	Bucket               *string `json:"bucket,omitempty"`
+	ServerHostName       *string `json:"server_host_name,omitempty"`
+	HTTPPath             *string `json:"http_path,omitempty"`
+	PersonalAccessToken  *string `json:"personal_access_token,omitempty"`
+	CreateExternalTables *bool   `json:"create_external_tables,omitempty"`
+	ExternalLocation     *string `json:"external_location,omitempty"`
+	AuthType             *string `json:"auth_type,omitempty"`
+	RoleArn              *string `json:"role_arn,omitempty"`
 }
 
-func (dc *DestinationConfig) Host(host string) *DestinationConfig {
-	dc.Fhost = host
+type DestinationConfigResponse struct {
+	Host                 string `json:"host"`
+	Port                 string `json:"port"`
+	Database             string `json:"database"`
+	Auth                 string `json:"auth"`
+	User                 string `json:"user"`
+	Password             string `json:"password"`
+	ConnectionType       string `json:"connection_type"`
+	TunnelHost           string `json:"tunnel_host"`
+	TunnelPort           string `json:"tunnel_port"`
+	TunnelUser           string `json:"tunnel_user"`
+	ProjectID            string `json:"project_id"`
+	DataSetLocation      string `json:"data_set_location"`
+	Bucket               string `json:"bucket"`
+	ServerHostName       string `json:"server_host_name"`
+	HTTPPath             string `json:"http_path"`
+	PersonalAccessToken  string `json:"personal_access_token"`
+	CreateExternalTables bool   `json:"create_external_tables"`
+	ExternalLocation     string `json:"external_location"`
+	AuthType             string `json:"auth_type"`
+	RoleArn              string `json:"role_arn"`
+}
+
+func NewDestinationConfig() *destinationConfig {
+	return &destinationConfig{}
+}
+
+func (dc *destinationConfig) request() *destinationConfigRequest {
+	return &destinationConfigRequest{
+		Host:                 dc.host,
+		Port:                 dc.port,
+		Database:             dc.database,
+		Auth:                 dc.auth,
+		User:                 dc.user,
+		Password:             dc.password,
+		ConnectionType:       dc.connectionType,
+		TunnelHost:           dc.tunnelHost,
+		TunnelPort:           dc.tunnelPort,
+		TunnelUser:           dc.tunnelUser,
+		ProjectID:            dc.projectID,
+		DataSetLocation:      dc.dataSetLocation,
+		Bucket:               dc.bucket,
+		ServerHostName:       dc.serverHostName,
+		HTTPPath:             dc.httpPath,
+		PersonalAccessToken:  dc.personalAccessToken,
+		CreateExternalTables: dc.createExternalTables,
+		ExternalLocation:     dc.externalLocation,
+		AuthType:             dc.authType,
+		RoleArn:              dc.roleArn,
+	}
+}
+
+func (dc *destinationConfig) Host(value string) *destinationConfig {
+	dc.host = &value
 	return dc
 }
 
-func (dc *DestinationConfig) Port(port int) *DestinationConfig {
-	dc.Fport = port
+func (dc *destinationConfig) Port(value int) *destinationConfig {
+	dc.port = &value
 	return dc
 }
 
-func (dc *DestinationConfig) Database(database string) *DestinationConfig {
-	dc.Fdatabase = database
+func (dc *destinationConfig) Database(value string) *destinationConfig {
+	dc.database = &value
 	return dc
 }
 
-func (dc *DestinationConfig) Auth(auth string) *DestinationConfig {
-	dc.Fauth = auth
+func (dc *destinationConfig) Auth(value string) *destinationConfig {
+	dc.auth = &value
 	return dc
 }
 
-func (dc *DestinationConfig) User(user string) *DestinationConfig {
-	dc.Fuser = user
+func (dc *destinationConfig) User(value string) *destinationConfig {
+	dc.user = &value
 	return dc
 }
 
-func (dc *DestinationConfig) Password(password string) *DestinationConfig {
-	dc.Fpassword = password
+func (dc *destinationConfig) Password(value string) *destinationConfig {
+	dc.password = &value
 	return dc
 }
 
-func (dc *DestinationConfig) ConnectionType(connectionType string) *DestinationConfig {
-	dc.FconnectionType = connectionType
+func (dc *destinationConfig) ConnectionType(value string) *destinationConfig {
+	dc.connectionType = &value
 	return dc
 }
 
-func (dc *DestinationConfig) TunnelHost(tunnelHost string) *DestinationConfig {
-	dc.FtunnelHost = tunnelHost
+func (dc *destinationConfig) TunnelHost(value string) *destinationConfig {
+	dc.tunnelHost = &value
 	return dc
 }
 
-func (dc *DestinationConfig) TunnelPort(tunnelPort string) *DestinationConfig {
-	dc.FtunnelPort = tunnelPort
+func (dc *destinationConfig) TunnelPort(value string) *destinationConfig {
+	dc.tunnelPort = &value
 	return dc
 }
 
-func (dc *DestinationConfig) TunnelUser(tunnelUser string) *DestinationConfig {
-	dc.FtunnelUser = tunnelUser
+func (dc *destinationConfig) TunnelUser(value string) *destinationConfig {
+	dc.tunnelUser = &value
 	return dc
 }
 
-func (dc *DestinationConfig) ProjectID(projectID string) *DestinationConfig {
-	dc.FprojectID = projectID
+func (dc *destinationConfig) ProjectID(value string) *destinationConfig {
+	dc.projectID = &value
 	return dc
 }
 
-func (dc *DestinationConfig) DataSetLocation(dataSetLocation string) *DestinationConfig {
-	dc.FdataSetLocation = dataSetLocation
+func (dc *destinationConfig) DataSetLocation(value string) *destinationConfig {
+	dc.dataSetLocation = &value
 	return dc
 }
 
-func (dc *DestinationConfig) Bucket(bucket string) *DestinationConfig {
-	dc.Fbucket = bucket
+func (dc *destinationConfig) Bucket(value string) *destinationConfig {
+	dc.bucket = &value
 	return dc
 }
 
-func (dc *DestinationConfig) ServerHostName(serverHostName string) *DestinationConfig {
-	dc.FserverHostName = serverHostName
+func (dc *destinationConfig) ServerHostName(value string) *destinationConfig {
+	dc.serverHostName = &value
 	return dc
 }
 
-func (dc *DestinationConfig) HttpPath(httpPath string) *DestinationConfig {
-	dc.FhttpPath = httpPath
+func (dc *destinationConfig) HTTPPath(value string) *destinationConfig {
+	dc.httpPath = &value
 	return dc
 }
 
-func (dc *DestinationConfig) PersonalAccessToken(personalAccessToken string) *DestinationConfig {
-	dc.FpersonalAccessToken = personalAccessToken
+func (dc *destinationConfig) PersonalAccessToken(value string) *destinationConfig {
+	dc.personalAccessToken = &value
 	return dc
 }
 
-func (dc *DestinationConfig) CreateExternalTables(createExternalTables bool) *DestinationConfig {
-	dc.FcreateExternalTables = &createExternalTables
+func (dc *destinationConfig) CreateExternalTables(value bool) *destinationConfig {
+	dc.createExternalTables = &value
 	return dc
 }
 
-func (dc *DestinationConfig) ExternalLocation(externalLocation string) *DestinationConfig {
-	dc.FexternalLocation = externalLocation
+func (dc *destinationConfig) ExternalLocation(value string) *destinationConfig {
+	dc.externalLocation = &value
 	return dc
 }
 
-func (dc *DestinationConfig) AuthType(authType string) *DestinationConfig {
-	dc.FauthType = authType
+func (dc *destinationConfig) AuthType(value string) *destinationConfig {
+	dc.authType = &value
 	return dc
 }
 
-func (dc *DestinationConfig) RoleArn(roleArn string) *DestinationConfig {
-	dc.FroleArn = roleArn
+func (dc *destinationConfig) RoleArn(value string) *destinationConfig {
+	dc.roleArn = &value
 	return dc
 }

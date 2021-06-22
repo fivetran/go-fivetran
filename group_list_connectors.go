@@ -7,15 +7,15 @@ import (
 	"time"
 )
 
-type GroupListConnectorsService struct {
-	c      *Client
-	id     string
-	limit  int
-	cursor string
-	schema string
+type groupListConnectorsService struct {
+	c       *Client
+	groupID *string
+	limit   *int
+	cursor  *string
+	schema  *string
 }
 
-type GroupListConnectors struct {
+type GroupListConnectorsResponse struct {
 	Code    string `json:"code"`
 	Message string `json:"message"`
 	Data    struct {
@@ -51,53 +51,52 @@ type GroupListConnectors struct {
 	} `json:"data"`
 }
 
-func (c *Client) NewGroupListConnectorsService() *GroupListConnectorsService {
-	return &GroupListConnectorsService{c: c}
+func (c *Client) NewGroupListConnectors() *groupListConnectorsService {
+	return &groupListConnectorsService{c: c}
 }
 
-func (s *GroupListConnectorsService) ID(id string) *GroupListConnectorsService {
-	s.id = id
+func (s *groupListConnectorsService) GroupID(value string) *groupListConnectorsService {
+	s.groupID = &value
 	return s
 }
 
-func (s *GroupListConnectorsService) Limit(limit int) *GroupListConnectorsService {
-	s.limit = limit
+func (s *groupListConnectorsService) Limit(value int) *groupListConnectorsService {
+	s.limit = &value
 	return s
 }
 
-func (s *GroupListConnectorsService) Cursor(cursor string) *GroupListConnectorsService {
-	s.cursor = cursor
+func (s *groupListConnectorsService) Cursor(value string) *groupListConnectorsService {
+	s.cursor = &value
 	return s
 }
 
-func (s *GroupListConnectorsService) Schema(schema string) *GroupListConnectorsService {
-	s.schema = schema
+func (s *groupListConnectorsService) Schema(value string) *groupListConnectorsService {
+	s.schema = &value
 	return s
 }
 
-func (s *GroupListConnectorsService) Do(ctx context.Context) (GroupListConnectors, error) {
-	if s.id == "" {
-		err := fmt.Errorf("missing required ID")
-		return GroupListConnectors{}, err
+func (s *groupListConnectorsService) Do(ctx context.Context) (GroupListConnectorsResponse, error) {
+	var response GroupListConnectorsResponse
+
+	if s.groupID == nil {
+		return response, fmt.Errorf("missing required GroupID")
 	}
 
-	url := fmt.Sprintf("%v/groups/%v/connectors", s.c.baseURL, s.id)
+	url := fmt.Sprintf("%v/groups/%v/connectors", s.c.baseURL, *s.groupID)
 	expectedStatus := 200
-	headers := make(map[string]string)
-	queries := make(map[string]string)
 
+	headers := make(map[string]string)
 	headers["Authorization"] = s.c.authorization
 
-	if s.cursor != "" {
-		queries["cursor"] = s.cursor
+	queries := make(map[string]string)
+	if s.cursor != nil {
+		queries["cursor"] = *s.cursor
 	}
-
-	if s.limit != 0 {
-		queries["limit"] = fmt.Sprint(s.limit)
+	if s.limit != nil {
+		queries["limit"] = fmt.Sprint(*s.limit)
 	}
-
-	if s.schema != "" {
-		queries["schema"] = s.schema
+	if s.schema != nil {
+		queries["schema"] = *s.schema
 	}
 
 	r := Request{
@@ -110,18 +109,17 @@ func (s *GroupListConnectorsService) Do(ctx context.Context) (GroupListConnector
 
 	respBody, respStatus, err := httpRequest(r, ctx)
 	if err != nil {
-		return GroupListConnectors{}, err
+		return response, err
 	}
 
-	var groupListConnectors GroupListConnectors
-	if err := json.Unmarshal(respBody, &groupListConnectors); err != nil {
-		return GroupListConnectors{}, err
+	if err := json.Unmarshal(respBody, &response); err != nil {
+		return response, err
 	}
 
 	if respStatus != expectedStatus {
 		err := fmt.Errorf("status code: %v; expected %v", respStatus, expectedStatus)
-		return groupListConnectors, err
+		return response, err
 	}
 
-	return groupListConnectors, nil
+	return response, nil
 }

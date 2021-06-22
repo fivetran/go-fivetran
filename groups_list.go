@@ -7,13 +7,13 @@ import (
 	"time"
 )
 
-type GroupsListService struct {
+type groupsListService struct {
 	c      *Client
-	limit  int
-	cursor string
+	limit  *int
+	cursor *string
 }
 
-type GroupsList struct {
+type GroupsListResponse struct {
 	Code    string `json:"code"`
 	Message string `json:"message"`
 	Data    struct {
@@ -26,34 +26,34 @@ type GroupsList struct {
 	} `json:"data"`
 }
 
-func (c *Client) NewGroupsListService() *GroupsListService {
-	return &GroupsListService{c: c}
+func (c *Client) NewGroupsList() *groupsListService {
+	return &groupsListService{c: c}
 }
 
-func (s *GroupsListService) Limit(limit int) *GroupsListService {
-	s.limit = limit
+func (s *groupsListService) Limit(value int) *groupsListService {
+	s.limit = &value
 	return s
 }
 
-func (s *GroupsListService) Cursor(cursor string) *GroupsListService {
-	s.cursor = cursor
+func (s *groupsListService) Cursor(value string) *groupsListService {
+	s.cursor = &value
 	return s
 }
 
-func (s *GroupsListService) Do(ctx context.Context) (GroupsList, error) {
+func (s *groupsListService) Do(ctx context.Context) (GroupsListResponse, error) {
+	var response GroupsListResponse
 	url := fmt.Sprintf("%v/groups", s.c.baseURL)
 	expectedStatus := 200
-	headers := make(map[string]string)
-	queries := make(map[string]string)
 
+	headers := make(map[string]string)
 	headers["Authorization"] = s.c.authorization
 
-	if s.cursor != "" {
-		queries["cursor"] = s.cursor
+	queries := make(map[string]string)
+	if s.cursor != nil {
+		queries["cursor"] = *s.cursor
 	}
-
-	if s.limit != 0 {
-		queries["limit"] = fmt.Sprint(s.limit)
+	if s.limit != nil {
+		queries["limit"] = fmt.Sprint(*s.limit)
 	}
 
 	r := Request{
@@ -66,18 +66,17 @@ func (s *GroupsListService) Do(ctx context.Context) (GroupsList, error) {
 
 	respBody, respStatus, err := httpRequest(r, ctx)
 	if err != nil {
-		return GroupsList{}, err
+		return response, err
 	}
 
-	var groupsList GroupsList
-	if err := json.Unmarshal(respBody, &groupsList); err != nil {
-		return GroupsList{}, err
+	if err := json.Unmarshal(respBody, &response); err != nil {
+		return response, err
 	}
 
 	if respStatus != expectedStatus {
 		err := fmt.Errorf("status code: %v; expected %v", respStatus, expectedStatus)
-		return groupsList, err
+		return response, err
 	}
 
-	return groupsList, nil
+	return response, nil
 }

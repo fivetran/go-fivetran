@@ -7,24 +7,35 @@ import (
 	"time"
 )
 
-// F stands for Field
-// needs to be exported because of json.Marshal()
-type ConnectorModifyService struct {
-	c                  *Client
-	connectorID        *string
-	Fpaused            *bool            `json:"paused,omitempty"`
-	FsyncFrequency     *int             `json:"sync_frequency,omitempty"`
-	FdailySyncTime     *string          `json:"daily_sync_time,omitempty"`
-	Fconfig            *ConnectorConfig `json:"config,omitempty"`
-	Fauth              *ConnectorAuth   `json:"auth,omitempty"`
-	FtrustCertificates *bool            `json:"trust_certificates,omitempty"`
-	FtrustFingerprints *bool            `json:"trust_fingerprints,omitempty"`
-	FisHistoricalSync  *bool            `json:"is_historical_sync,omitempty"`
-	FscheduleType      *string          `json:"schedule_type,omitempty"`
-	FrunSetupTests     *bool            `json:"run_setup_tests,omitempty"`
+type connectorModifyService struct {
+	c                 *Client
+	connectorID       *string
+	paused            *bool
+	syncFrequency     *int
+	dailySyncTime     *string
+	config            *connectorConfig
+	auth              *connectorAuth
+	trustCertificates *bool
+	trustFingerprints *bool
+	isHistoricalSync  *bool
+	scheduleType      *string
+	runSetupTests     *bool
 }
 
-type ConnectorModify struct {
+type connectorModifyRequest struct {
+	Paused            *bool                   `json:"paused,omitempty"`
+	SyncFrequency     *int                    `json:"sync_frequency,omitempty"`
+	DailySyncTime     *string                 `json:"daily_sync_time,omitempty"`
+	Config            *connectorConfigRequest `json:"config,omitempty"`
+	Auth              *connectorAuthRequest   `json:"auth,omitempty"`
+	TrustCertificates *bool                   `json:"trust_certificates,omitempty"`
+	TrustFingerprints *bool                   `json:"trust_fingerprints,omitempty"`
+	IsHistoricalSync  *bool                   `json:"is_historical_sync,omitempty"`
+	ScheduleType      *string                 `json:"schedule_type,omitempty"`
+	RunSetupTests     *bool                   `json:"run_setup_tests,omitempty"`
+}
+
+type ConnectorModifyResponse struct {
 	Code    string `json:"code"`
 	Message string `json:"message"`
 	Data    struct {
@@ -58,85 +69,111 @@ type ConnectorModify struct {
 			Status  string `json:"status"`
 			Message string `json:"message"`
 		} `json:"setup_tests"`
-		Config ConnectorConfig `json:"config"`
+		Config ConnectorConfigResponse `json:"config"`
 	} `json:"data"`
 }
 
-func (c *Client) NewConnectorModifyService() *ConnectorModifyService {
-	return &ConnectorModifyService{c: c}
+func (c *Client) NewConnectorModify() *connectorModifyService {
+	return &connectorModifyService{c: c}
 }
 
-func (s *ConnectorModifyService) ConnectorID(connectorID string) *ConnectorModifyService {
-	s.connectorID = &connectorID
+func (s *connectorModifyService) request() *connectorModifyRequest {
+	var config *connectorConfigRequest
+	if s.config != nil {
+		config = s.config.request()
+	}
+
+	var auth *connectorAuthRequest
+	if s.auth != nil {
+		auth = s.auth.request()
+	}
+
+	return &connectorModifyRequest{
+		Paused:            s.paused,
+		SyncFrequency:     s.syncFrequency,
+		DailySyncTime:     s.dailySyncTime,
+		Config:            config,
+		Auth:              auth,
+		TrustCertificates: s.trustCertificates,
+		TrustFingerprints: s.trustFingerprints,
+		IsHistoricalSync:  s.isHistoricalSync,
+		ScheduleType:      s.scheduleType,
+		RunSetupTests:     s.runSetupTests,
+	}
+}
+
+func (s *connectorModifyService) ConnectorID(value string) *connectorModifyService {
+	s.connectorID = &value
 	return s
 }
 
-func (s *ConnectorModifyService) Paused(paused bool) *ConnectorModifyService {
-	s.Fpaused = &paused
+func (s *connectorModifyService) Paused(value bool) *connectorModifyService {
+	s.paused = &value
 	return s
 }
 
-func (s *ConnectorModifyService) SyncFrequency(syncFrequency int) *ConnectorModifyService {
-	s.FsyncFrequency = &syncFrequency
+func (s *connectorModifyService) SyncFrequency(value int) *connectorModifyService {
+	s.syncFrequency = &value
 	return s
 }
 
-func (s *ConnectorModifyService) DailySyncTime(dailySyncTime string) *ConnectorModifyService {
-	s.FdailySyncTime = &dailySyncTime
+func (s *connectorModifyService) DailySyncTime(value string) *connectorModifyService {
+	s.dailySyncTime = &value
 	return s
 }
 
-func (s *ConnectorModifyService) Config(config *ConnectorConfig) *ConnectorModifyService {
-	s.Fconfig = config
+func (s *connectorModifyService) Config(value *connectorConfig) *connectorModifyService {
+	s.config = value
 	return s
 }
 
-func (s *ConnectorModifyService) Auth(auth *ConnectorAuth) *ConnectorModifyService {
-	s.Fauth = auth
+func (s *connectorModifyService) Auth(value *connectorAuth) *connectorModifyService {
+	s.auth = value
 	return s
 }
 
-func (s *ConnectorModifyService) TrustCertificates(trustCertificates bool) *ConnectorModifyService {
-	s.FtrustCertificates = &trustCertificates
+func (s *connectorModifyService) TrustCertificates(value bool) *connectorModifyService {
+	s.trustCertificates = &value
 	return s
 }
 
-func (s *ConnectorModifyService) TrustFingerprints(trustFingerprints bool) *ConnectorModifyService {
-	s.FtrustFingerprints = &trustFingerprints
+func (s *connectorModifyService) TrustFingerprints(value bool) *connectorModifyService {
+	s.trustFingerprints = &value
 	return s
 }
 
-func (s *ConnectorModifyService) IsHistoricalSync(isHistoricalSync bool) *ConnectorModifyService {
-	s.FisHistoricalSync = &isHistoricalSync
+func (s *connectorModifyService) IsHistoricalSync(value bool) *connectorModifyService {
+	s.isHistoricalSync = &value
 	return s
 }
 
-func (s *ConnectorModifyService) ScheduleType(scheduleType string) *ConnectorModifyService {
-	s.FscheduleType = &scheduleType
+func (s *connectorModifyService) ScheduleType(value string) *connectorModifyService {
+	s.scheduleType = &value
 	return s
 }
 
-func (s *ConnectorModifyService) RunSetupTests(runSetupTests bool) *ConnectorModifyService {
-	s.FrunSetupTests = &runSetupTests
+func (s *connectorModifyService) RunSetupTests(value bool) *connectorModifyService {
+	s.runSetupTests = &value
 	return s
 }
 
-func (s *ConnectorModifyService) Do(ctx context.Context) (ConnectorModify, error) {
-	if s.connectorID == nil { // we don't validate business rules (unless it is strictly necessary)
-		err := fmt.Errorf("missing required ConnectorID")
-		return ConnectorModify{}, err
+func (s *connectorModifyService) Do(ctx context.Context) (ConnectorModifyResponse, error) {
+	var response ConnectorModifyResponse
+
+	if s.connectorID == nil {
+		return response, fmt.Errorf("missing required ConnectorID")
 	}
 
 	url := fmt.Sprintf("%v/connectors/%v", s.c.baseURL, *s.connectorID)
 	expectedStatus := 200
-	headers := make(map[string]string)
 
+	headers := make(map[string]string)
 	headers["Authorization"] = s.c.authorization
 	headers["Content-Type"] = "application/json"
 
-	reqBody, err := json.Marshal(s)
+	reqBody, err := json.Marshal(s.request())
 	if err != nil {
-		return ConnectorModify{}, err
+		return response, err
 	}
 
 	r := Request{
@@ -149,18 +186,17 @@ func (s *ConnectorModifyService) Do(ctx context.Context) (ConnectorModify, error
 
 	respBody, respStatus, err := httpRequest(r, ctx)
 	if err != nil {
-		return ConnectorModify{}, err
+		return response, err
 	}
 
-	var connectorModify ConnectorModify
-	if err := json.Unmarshal(respBody, &connectorModify); err != nil {
-		return ConnectorModify{}, err
+	if err := json.Unmarshal(respBody, &response); err != nil {
+		return response, err
 	}
 
 	if respStatus != expectedStatus {
 		err := fmt.Errorf("status code: %v; expected %v", respStatus, expectedStatus)
-		return connectorModify, err
+		return response, err
 	}
 
-	return connectorModify, nil
+	return response, nil
 }

@@ -7,16 +7,19 @@ import (
 	"time"
 )
 
-// F stands for Field
-// needs to be exported because of json.Marshal()
-type ConnectorSetupTestsService struct {
-	c                  *Client
-	connectorID        *string
-	FtrustCertificates *bool `json:"trust_certificates,omitempty"`
-	FtrustFingerprints *bool `json:"trust_fingerprints,omitempty"`
+type connectorSetupTestsService struct {
+	c                 *Client
+	connectorID       *string
+	trustCertificates *bool
+	trustFingerprints *bool
 }
 
-type ConnectorSetupTests struct {
+type connectorSetupTestsRequest struct {
+	TrustCertificates *bool `json:"trust_certificates,omitempty"`
+	TrustFingerprints *bool `json:"trust_fingerprints,omitempty"`
+}
+
+type ConnectorSetupTestsResponse struct {
 	Code    string `json:"code"`
 	Message string `json:"message"`
 	Data    struct {
@@ -50,45 +53,53 @@ type ConnectorSetupTests struct {
 			Status  string `json:"status"`
 			Message string `json:"message"`
 		} `json:"setup_tests"`
-		Config ConnectorConfig `json:"config"`
+		Config ConnectorConfigResponse `json:"config"`
 	} `json:"data"`
 }
 
-func (c *Client) NewConnectorSetupTests() *ConnectorSetupTestsService {
-	return &ConnectorSetupTestsService{c: c}
+func (c *Client) NewConnectorSetupTests() *connectorSetupTestsService {
+	return &connectorSetupTestsService{c: c}
 }
 
-func (s *ConnectorSetupTestsService) ConnectorID(connectorID string) *ConnectorSetupTestsService {
-	s.connectorID = &connectorID
+func (s *connectorSetupTestsService) request() *connectorSetupTestsRequest {
+	return &connectorSetupTestsRequest{
+		TrustCertificates: s.trustCertificates,
+		TrustFingerprints: s.trustFingerprints,
+	}
+}
+
+func (s *connectorSetupTestsService) ConnectorID(value string) *connectorSetupTestsService {
+	s.connectorID = &value
 	return s
 }
 
-func (s *ConnectorSetupTestsService) TrustCertificates(trustCertificates bool) *ConnectorSetupTestsService {
-	s.FtrustCertificates = &trustCertificates
+func (s *connectorSetupTestsService) TrustCertificates(value bool) *connectorSetupTestsService {
+	s.trustCertificates = &value
 	return s
 }
 
-func (s *ConnectorSetupTestsService) TrustFingerprints(trustFingerprints bool) *ConnectorSetupTestsService {
-	s.FtrustFingerprints = &trustFingerprints
+func (s *connectorSetupTestsService) TrustFingerprints(value bool) *connectorSetupTestsService {
+	s.trustFingerprints = &value
 	return s
 }
 
-func (s *ConnectorSetupTestsService) Do(ctx context.Context) (ConnectorSetupTests, error) {
-	if s.connectorID == nil { // we don't validate business rules (unless it is strictly necessary)
-		err := fmt.Errorf("missing required ConnectorID")
-		return ConnectorSetupTests{}, err
+func (s *connectorSetupTestsService) Do(ctx context.Context) (ConnectorSetupTestsResponse, error) {
+	var response ConnectorSetupTestsResponse
+
+	if s.connectorID == nil {
+		return response, fmt.Errorf("missing required ConnectorID")
 	}
 
 	url := fmt.Sprintf("%v/connectors/%v/test", s.c.baseURL, *s.connectorID)
 	expectedStatus := 200
-	headers := make(map[string]string)
 
+	headers := make(map[string]string)
 	headers["Authorization"] = s.c.authorization
 	headers["Content-Type"] = "application/json"
 
-	reqBody, err := json.Marshal(s)
+	reqBody, err := json.Marshal(s.request())
 	if err != nil {
-		return ConnectorSetupTests{}, err
+		return response, err
 	}
 
 	r := Request{
@@ -101,12 +112,11 @@ func (s *ConnectorSetupTestsService) Do(ctx context.Context) (ConnectorSetupTest
 
 	respBody, respStatus, err := httpRequest(r, ctx)
 	if err != nil {
-		return ConnectorSetupTests{}, err
+		return response, err
 	}
 
-	var connectorSetupTests ConnectorSetupTests
-	if err := json.Unmarshal(respBody, &connectorSetupTests); err != nil {
-		return ConnectorSetupTests{}, err
+	if err := json.Unmarshal(respBody, &response); err != nil {
+		return response, err
 	}
 
 	// // converts destinationCreate.Data.Config.Fport to int. Should be removed
@@ -123,8 +133,8 @@ func (s *ConnectorSetupTestsService) Do(ctx context.Context) (ConnectorSetupTest
 
 	if respStatus != expectedStatus {
 		err := fmt.Errorf("status code: %v; expected %v", respStatus, expectedStatus)
-		return connectorSetupTests, err
+		return response, err
 	}
 
-	return connectorSetupTests, nil
+	return response, nil
 }
