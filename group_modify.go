@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-type groupModifyService struct {
+type GroupModifyService struct {
 	c       *Client
 	groupID *string
 	name    *string
@@ -27,27 +27,27 @@ type GroupModifyResponse struct {
 	} `json:"data"`
 }
 
-func (c *Client) NewGroupModify() *groupModifyService {
-	return &groupModifyService{c: c}
+func (c *Client) NewGroupModify() *GroupModifyService {
+	return &GroupModifyService{c: c}
 }
 
-func (s *groupModifyService) request() groupModifyRequest {
+func (s *GroupModifyService) request() groupModifyRequest {
 	return groupModifyRequest{
 		Name: s.name,
 	}
 }
 
-func (s *groupModifyService) GroupID(value string) *groupModifyService {
+func (s *GroupModifyService) GroupID(value string) *GroupModifyService {
 	s.groupID = &value
 	return s
 }
 
-func (s *groupModifyService) Name(value string) *groupModifyService {
+func (s *GroupModifyService) Name(value string) *GroupModifyService {
 	s.name = &value
 	return s
 }
 
-func (s *groupModifyService) Do(ctx context.Context) (GroupModifyResponse, error) {
+func (s *GroupModifyService) Do(ctx context.Context) (GroupModifyResponse, error) {
 	var response GroupModifyResponse
 
 	if s.groupID == nil {
@@ -66,7 +66,7 @@ func (s *groupModifyService) Do(ctx context.Context) (GroupModifyResponse, error
 		return response, err
 	}
 
-	r := Request{
+	r := request{
 		method:  "PATCH",
 		url:     url,
 		body:    reqBody,

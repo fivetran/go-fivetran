@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-type connectorDeleteService struct {
+type ConnectorDeleteService struct {
 	c           *Client
 	connectorID *string
 }
@@ -16,16 +16,16 @@ type ConnectorDeleteResponse struct {
 	Message string `json:"message"`
 }
 
-func (c *Client) NewConnectorDelete() *connectorDeleteService {
-	return &connectorDeleteService{c: c}
+func (c *Client) NewConnectorDelete() *ConnectorDeleteService {
+	return &ConnectorDeleteService{c: c}
 }
 
-func (s *connectorDeleteService) ConnectorID(connectorID string) *connectorDeleteService {
+func (s *ConnectorDeleteService) ConnectorID(connectorID string) *ConnectorDeleteService {
 	s.connectorID = &connectorID
 	return s
 }
 
-func (s *connectorDeleteService) Do(ctx context.Context) (ConnectorDeleteResponse, error) {
+func (s *ConnectorDeleteService) Do(ctx context.Context) (ConnectorDeleteResponse, error) {
 	var response ConnectorDeleteResponse
 
 	if s.connectorID == nil {
@@ -38,7 +38,7 @@ func (s *connectorDeleteService) Do(ctx context.Context) (ConnectorDeleteRespons
 	headers := make(map[string]string)
 	headers["Authorization"] = s.c.authorization
 
-	r := Request{
+	r := request{
 		method:  "DELETE",
 		url:     url,
 		body:    nil,

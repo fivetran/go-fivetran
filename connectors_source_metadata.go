@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-type connectorsSourceMetadata struct {
+type ConnectorsSourceMetadataService struct {
 	c      *Client
 	limit  *int
 	cursor *string
@@ -29,21 +29,21 @@ type ConnectorsSourceMetadataResponse struct {
 	} `json:"data"`
 }
 
-func (c *Client) NewConnectorsSourceMetadata() *connectorsSourceMetadata {
-	return &connectorsSourceMetadata{c: c}
+func (c *Client) NewConnectorsSourceMetadata() *ConnectorsSourceMetadataService {
+	return &ConnectorsSourceMetadataService{c: c}
 }
 
-func (s *connectorsSourceMetadata) Limit(value int) *connectorsSourceMetadata {
+func (s *ConnectorsSourceMetadataService) Limit(value int) *ConnectorsSourceMetadataService {
 	s.limit = &value
 	return s
 }
 
-func (s *connectorsSourceMetadata) Cursor(value string) *connectorsSourceMetadata {
+func (s *ConnectorsSourceMetadataService) Cursor(value string) *ConnectorsSourceMetadataService {
 	s.cursor = &value
 	return s
 }
 
-func (s *connectorsSourceMetadata) Do(ctx context.Context) (ConnectorsSourceMetadataResponse, error) {
+func (s *ConnectorsSourceMetadataService) Do(ctx context.Context) (ConnectorsSourceMetadataResponse, error) {
 	var response ConnectorsSourceMetadataResponse
 	url := fmt.Sprintf("%v/metadata/connectors", s.c.baseURL)
 	expectedStatus := 200
@@ -59,7 +59,7 @@ func (s *connectorsSourceMetadata) Do(ctx context.Context) (ConnectorsSourceMeta
 		queries["limit"] = fmt.Sprint(*s.limit)
 	}
 
-	r := Request{
+	r := request{
 		method:  "GET",
 		url:     url,
 		body:    nil,

@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-type groupDetailsService struct {
+type GroupDetailsService struct {
 	c       *Client
 	groupID *string
 }
@@ -22,16 +22,16 @@ type GroupDetailsResponse struct {
 	} `json:"data"`
 }
 
-func (c *Client) NewGroupDetails() *groupDetailsService {
-	return &groupDetailsService{c: c}
+func (c *Client) NewGroupDetails() *GroupDetailsService {
+	return &GroupDetailsService{c: c}
 }
 
-func (s *groupDetailsService) GroupID(value string) *groupDetailsService {
+func (s *GroupDetailsService) GroupID(value string) *GroupDetailsService {
 	s.groupID = &value
 	return s
 }
 
-func (s *groupDetailsService) Do(ctx context.Context) (GroupDetailsResponse, error) {
+func (s *GroupDetailsService) Do(ctx context.Context) (GroupDetailsResponse, error) {
 	var response GroupDetailsResponse
 
 	if s.groupID == nil {
@@ -44,7 +44,7 @@ func (s *groupDetailsService) Do(ctx context.Context) (GroupDetailsResponse, err
 	headers := make(map[string]string)
 	headers["Authorization"] = s.c.authorization
 
-	r := Request{
+	r := request{
 		method:  "GET",
 		url:     url,
 		body:    nil,

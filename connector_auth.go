@@ -1,6 +1,6 @@
 package fivetran
 
-type connectorAuth struct {
+type ConnectorAuth struct {
 	clientAccess *ConnectorAuthClientAccess
 	refreshToken *string
 	accessToken  *string
@@ -14,11 +14,11 @@ type connectorAuthRequest struct {
 	RealmID      *string                           `json:"realm_id,omitempty"`
 }
 
-func NewConnectorAuth() *connectorAuth {
-	return &connectorAuth{}
+func NewConnectorAuth() *ConnectorAuth {
+	return &ConnectorAuth{}
 }
 
-func (ca *connectorAuth) request() *connectorAuthRequest {
+func (ca *ConnectorAuth) request() *connectorAuthRequest {
 	var clientAccess *connectorAuthClientAccessRequest
 	if ca.clientAccess != nil {
 		clientAccess = ca.clientAccess.request()
@@ -32,22 +32,22 @@ func (ca *connectorAuth) request() *connectorAuthRequest {
 	}
 }
 
-func (ca *connectorAuth) ClientAccess(value *ConnectorAuthClientAccess) *connectorAuth {
+func (ca *ConnectorAuth) ClientAccess(value *ConnectorAuthClientAccess) *ConnectorAuth {
 	ca.clientAccess = value
 	return ca
 }
 
-func (ca *connectorAuth) RefreshToken(value string) *connectorAuth {
+func (ca *ConnectorAuth) RefreshToken(value string) *ConnectorAuth {
 	ca.refreshToken = &value
 	return ca
 }
 
-func (ca *connectorAuth) AccessToken(value string) *connectorAuth {
+func (ca *ConnectorAuth) AccessToken(value string) *ConnectorAuth {
 	ca.accessToken = &value
 	return ca
 }
 
-func (ca *connectorAuth) RealmID(value string) *connectorAuth {
+func (ca *ConnectorAuth) RealmID(value string) *ConnectorAuth {
 	ca.realmID = &value
 	return ca
 }

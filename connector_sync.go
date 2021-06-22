@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-type connectorSyncService struct {
+type ConnectorSyncService struct {
 	c           *Client
 	connectorID *string
 }
@@ -16,16 +16,16 @@ type ConnectorSyncResponse struct {
 	Message string `json:"message"`
 }
 
-func (c *Client) NewConnectorSync() *connectorSyncService {
-	return &connectorSyncService{c: c}
+func (c *Client) NewConnectorSync() *ConnectorSyncService {
+	return &ConnectorSyncService{c: c}
 }
 
-func (s *connectorSyncService) ConnectorID(connectorID string) *connectorSyncService {
+func (s *ConnectorSyncService) ConnectorID(connectorID string) *ConnectorSyncService {
 	s.connectorID = &connectorID
 	return s
 }
 
-func (s *connectorSyncService) Do(ctx context.Context) (ConnectorSyncResponse, error) {
+func (s *ConnectorSyncService) Do(ctx context.Context) (ConnectorSyncResponse, error) {
 	var response ConnectorSyncResponse
 
 	if s.connectorID == nil {
@@ -44,7 +44,7 @@ func (s *connectorSyncService) Do(ctx context.Context) (ConnectorSyncResponse, e
 		return response, err
 	}
 
-	r := Request{
+	r := request{
 		method:  "POST",
 		url:     url,
 		body:    reqBody,

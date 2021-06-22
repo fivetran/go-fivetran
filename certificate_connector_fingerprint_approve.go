@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-type certificateConnectorFingerprintApproveService struct {
+type CertificateConnectorFingerprintApproveService struct {
 	c           *Client
 	connectorID *string
 	hash        *string
@@ -24,11 +24,11 @@ type CertificateConnectorFingerprintApproveResponse struct {
 	Message string `json:"message"`
 }
 
-func (c *Client) NewCertificateConnectorFingerprintApprove() *certificateConnectorFingerprintApproveService {
-	return &certificateConnectorFingerprintApproveService{c: c}
+func (c *Client) NewCertificateConnectorFingerprintApprove() *CertificateConnectorFingerprintApproveService {
+	return &CertificateConnectorFingerprintApproveService{c: c}
 }
 
-func (s *certificateConnectorFingerprintApproveService) request() certificateConnectorFingerprintApproveRequest {
+func (s *CertificateConnectorFingerprintApproveService) request() certificateConnectorFingerprintApproveRequest {
 	return certificateConnectorFingerprintApproveRequest{
 		ConnectorID: s.connectorID,
 		Hash:        s.hash,
@@ -36,22 +36,22 @@ func (s *certificateConnectorFingerprintApproveService) request() certificateCon
 	}
 }
 
-func (s *certificateConnectorFingerprintApproveService) ConnectorID(value string) *certificateConnectorFingerprintApproveService {
+func (s *CertificateConnectorFingerprintApproveService) ConnectorID(value string) *CertificateConnectorFingerprintApproveService {
 	s.connectorID = &value
 	return s
 }
 
-func (s *certificateConnectorFingerprintApproveService) Hash(value string) *certificateConnectorFingerprintApproveService {
+func (s *CertificateConnectorFingerprintApproveService) Hash(value string) *CertificateConnectorFingerprintApproveService {
 	s.hash = &value
 	return s
 }
 
-func (s *certificateConnectorFingerprintApproveService) PublicKey(value string) *certificateConnectorFingerprintApproveService {
+func (s *CertificateConnectorFingerprintApproveService) PublicKey(value string) *CertificateConnectorFingerprintApproveService {
 	s.publicKey = &value
 	return s
 }
 
-func (s *certificateConnectorFingerprintApproveService) Do(ctx context.Context) (CertificateConnectorFingerprintApproveResponse, error) {
+func (s *CertificateConnectorFingerprintApproveService) Do(ctx context.Context) (CertificateConnectorFingerprintApproveResponse, error) {
 	var response CertificateConnectorFingerprintApproveResponse
 	url := fmt.Sprintf("%v/fingerprints", s.c.baseURL)
 	expectedStatus := 200
@@ -65,7 +65,7 @@ func (s *certificateConnectorFingerprintApproveService) Do(ctx context.Context) 
 		return response, err
 	}
 
-	r := Request{
+	r := request{
 		method:  "POST",
 		url:     url,
 		body:    reqBody,

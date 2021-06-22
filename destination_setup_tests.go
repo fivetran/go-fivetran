@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-type destinationSetupTestsService struct {
+type DestinationSetupTestsService struct {
 	c                 *Client
 	destinationID     *string
 	trustCertificates *bool
@@ -37,33 +37,33 @@ type DestinationSetupTestsResponse struct {
 	} `json:"data"`
 }
 
-func (c *Client) NewDestinationSetupTests() *destinationSetupTestsService {
-	return &destinationSetupTestsService{c: c}
+func (c *Client) NewDestinationSetupTests() *DestinationSetupTestsService {
+	return &DestinationSetupTestsService{c: c}
 }
 
-func (s *destinationSetupTestsService) request() destinationSetupTestsRequest {
+func (s *DestinationSetupTestsService) request() destinationSetupTestsRequest {
 	return destinationSetupTestsRequest{
 		TrustCertificates: s.trustCertificates,
 		TrustFingerprints: s.trustFingerprints,
 	}
 }
 
-func (s *destinationSetupTestsService) DestinationID(value string) *destinationSetupTestsService {
+func (s *DestinationSetupTestsService) DestinationID(value string) *DestinationSetupTestsService {
 	s.destinationID = &value
 	return s
 }
 
-func (s *destinationSetupTestsService) TrustCertificates(value bool) *destinationSetupTestsService {
+func (s *DestinationSetupTestsService) TrustCertificates(value bool) *DestinationSetupTestsService {
 	s.trustCertificates = &value
 	return s
 }
 
-func (s *destinationSetupTestsService) TrustFingerprints(value bool) *destinationSetupTestsService {
+func (s *DestinationSetupTestsService) TrustFingerprints(value bool) *DestinationSetupTestsService {
 	s.trustFingerprints = &value
 	return s
 }
 
-func (s *destinationSetupTestsService) Do(ctx context.Context) (DestinationSetupTestsResponse, error) {
+func (s *DestinationSetupTestsService) Do(ctx context.Context) (DestinationSetupTestsResponse, error) {
 	var response DestinationSetupTestsResponse
 
 	if s.destinationID == nil {
@@ -82,7 +82,7 @@ func (s *destinationSetupTestsService) Do(ctx context.Context) (DestinationSetup
 		return response, err
 	}
 
-	r := Request{
+	r := request{
 		method:  "POST",
 		url:     url,
 		body:    reqBody,

@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-type userDetailsService struct {
+type UserDetailsService struct {
 	c      *Client
 	userID *string
 }
@@ -29,16 +29,16 @@ type UserDetailsResponse struct {
 	} `json:"data"`
 }
 
-func (c *Client) NewUserDetails() *userDetailsService {
-	return &userDetailsService{c: c}
+func (c *Client) NewUserDetails() *UserDetailsService {
+	return &UserDetailsService{c: c}
 }
 
-func (s *userDetailsService) UserID(value string) *userDetailsService {
+func (s *UserDetailsService) UserID(value string) *UserDetailsService {
 	s.userID = &value
 	return s
 }
 
-func (s *userDetailsService) Do(ctx context.Context) (UserDetailsResponse, error) {
+func (s *UserDetailsService) Do(ctx context.Context) (UserDetailsResponse, error) {
 	var response UserDetailsResponse
 
 	if s.userID == nil {
@@ -51,7 +51,7 @@ func (s *userDetailsService) Do(ctx context.Context) (UserDetailsResponse, error
 	headers := make(map[string]string)
 	headers["Authorization"] = s.c.authorization
 
-	r := Request{
+	r := request{
 		method:  "GET",
 		url:     url,
 		body:    nil,

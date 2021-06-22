@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-type destinationDetailsService struct {
+type DestinationDetailsService struct {
 	c             *Client
 	destinationID *string
 }
@@ -25,16 +25,16 @@ type DestinationDetailsResponse struct {
 	} `json:"data"`
 }
 
-func (c *Client) NewDestinationDetails() *destinationDetailsService {
-	return &destinationDetailsService{c: c}
+func (c *Client) NewDestinationDetails() *DestinationDetailsService {
+	return &DestinationDetailsService{c: c}
 }
 
-func (s *destinationDetailsService) DestinationID(value string) *destinationDetailsService {
+func (s *DestinationDetailsService) DestinationID(value string) *DestinationDetailsService {
 	s.destinationID = &value
 	return s
 }
 
-func (s *destinationDetailsService) Do(ctx context.Context) (DestinationDetailsResponse, error) {
+func (s *DestinationDetailsService) Do(ctx context.Context) (DestinationDetailsResponse, error) {
 	var response DestinationDetailsResponse
 
 	if s.destinationID == nil {
@@ -47,7 +47,7 @@ func (s *destinationDetailsService) Do(ctx context.Context) (DestinationDetailsR
 	headers := make(map[string]string)
 	headers["Authorization"] = s.c.authorization
 
-	r := Request{
+	r := request{
 		method:  "GET",
 		url:     url,
 		body:    nil,

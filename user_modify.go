@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-type userModifyService struct {
+type UserModifyService struct {
 	c          *Client
 	userID     *string
 	givenName  *string
@@ -42,11 +42,11 @@ type UserModifyResponse struct {
 	} `json:"data"`
 }
 
-func (c *Client) NewUserModify() *userModifyService {
-	return &userModifyService{c: c}
+func (c *Client) NewUserModify() *UserModifyService {
+	return &UserModifyService{c: c}
 }
 
-func (s *userModifyService) request() userModifyRequest {
+func (s *UserModifyService) request() userModifyRequest {
 	return userModifyRequest{
 		GivenName:  s.givenName,
 		FamilyName: s.familyName,
@@ -56,37 +56,37 @@ func (s *userModifyService) request() userModifyRequest {
 	}
 }
 
-func (s *userModifyService) UserID(value string) *userModifyService {
+func (s *UserModifyService) UserID(value string) *UserModifyService {
 	s.userID = &value
 	return s
 }
 
-func (s *userModifyService) GivenName(value string) *userModifyService {
+func (s *UserModifyService) GivenName(value string) *UserModifyService {
 	s.givenName = &value
 	return s
 }
 
-func (s *userModifyService) FamilyName(value string) *userModifyService {
+func (s *UserModifyService) FamilyName(value string) *UserModifyService {
 	s.familyName = &value
 	return s
 }
 
-func (s *userModifyService) Phone(value string) *userModifyService {
+func (s *UserModifyService) Phone(value string) *UserModifyService {
 	s.phone = &value
 	return s
 }
 
-func (s *userModifyService) Picture(value string) *userModifyService {
+func (s *UserModifyService) Picture(value string) *UserModifyService {
 	s.picture = &value
 	return s
 }
 
-func (s *userModifyService) Role(value string) *userModifyService {
+func (s *UserModifyService) Role(value string) *UserModifyService {
 	s.role = &value
 	return s
 }
 
-func (s *userModifyService) Do(ctx context.Context) (UserModifyResponse, error) {
+func (s *UserModifyService) Do(ctx context.Context) (UserModifyResponse, error) {
 	var response UserModifyResponse
 
 	if s.userID == nil {
@@ -105,7 +105,7 @@ func (s *userModifyService) Do(ctx context.Context) (UserModifyResponse, error) 
 		return response, err
 	}
 
-	r := Request{
+	r := request{
 		method:  "PATCH",
 		url:     url,
 		body:    reqBody,

@@ -6,12 +6,12 @@ import (
 	"fmt"
 )
 
-type destinationModifyService struct {
+type DestinationModifyService struct {
 	c                 *Client
 	destinationID     *string
 	region            *string
 	timeZoneOffset    *string
-	config            *destinationConfig
+	config            *DestinationConfig
 	trustCertificates *bool
 	trustFingerprints *bool
 	runSetupTests     *bool
@@ -45,11 +45,11 @@ type DestinationModifyResponse struct {
 	} `json:"data"`
 }
 
-func (c *Client) NewDestinationModify() *destinationModifyService {
-	return &destinationModifyService{c: c}
+func (c *Client) NewDestinationModify() *DestinationModifyService {
+	return &DestinationModifyService{c: c}
 }
 
-func (s *destinationModifyService) request() destinationModifyRequest {
+func (s *DestinationModifyService) request() destinationModifyRequest {
 	var config *destinationConfigRequest
 
 	if s.config != nil {
@@ -66,42 +66,42 @@ func (s *destinationModifyService) request() destinationModifyRequest {
 	}
 }
 
-func (s *destinationModifyService) DestinationID(value string) *destinationModifyService {
+func (s *DestinationModifyService) DestinationID(value string) *DestinationModifyService {
 	s.destinationID = &value
 	return s
 }
 
-func (s *destinationModifyService) Region(value string) *destinationModifyService {
+func (s *DestinationModifyService) Region(value string) *DestinationModifyService {
 	s.region = &value
 	return s
 }
 
-func (s *destinationModifyService) TimeZoneOffset(value string) *destinationModifyService {
+func (s *DestinationModifyService) TimeZoneOffset(value string) *DestinationModifyService {
 	s.timeZoneOffset = &value
 	return s
 }
 
-func (s *destinationModifyService) Config(value *destinationConfig) *destinationModifyService {
+func (s *DestinationModifyService) Config(value *DestinationConfig) *DestinationModifyService {
 	s.config = value
 	return s
 }
 
-func (s *destinationModifyService) TrustCertificates(value bool) *destinationModifyService {
+func (s *DestinationModifyService) TrustCertificates(value bool) *DestinationModifyService {
 	s.trustCertificates = &value
 	return s
 }
 
-func (s *destinationModifyService) TrustFingerprints(value bool) *destinationModifyService {
+func (s *DestinationModifyService) TrustFingerprints(value bool) *DestinationModifyService {
 	s.trustFingerprints = &value
 	return s
 }
 
-func (s *destinationModifyService) RunSetupTests(value bool) *destinationModifyService {
+func (s *DestinationModifyService) RunSetupTests(value bool) *DestinationModifyService {
 	s.runSetupTests = &value
 	return s
 }
 
-func (s *destinationModifyService) Do(ctx context.Context) (DestinationModifyResponse, error) {
+func (s *DestinationModifyService) Do(ctx context.Context) (DestinationModifyResponse, error) {
 	var response DestinationModifyResponse
 
 	if s.destinationID == nil {
@@ -120,7 +120,7 @@ func (s *destinationModifyService) Do(ctx context.Context) (DestinationModifyRes
 		return response, err
 	}
 
-	r := Request{
+	r := request{
 		method:  "PATCH",
 		url:     url,
 		body:    reqBody,

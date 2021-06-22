@@ -1,6 +1,6 @@
 package fivetran
 
-type destinationConfig struct {
+type DestinationConfig struct {
 	host                 *string
 	port                 *int
 	database             *string
@@ -69,11 +69,11 @@ type DestinationConfigResponse struct {
 	RoleArn              string `json:"role_arn"`
 }
 
-func NewDestinationConfig() *destinationConfig {
-	return &destinationConfig{}
+func NewDestinationConfig() *DestinationConfig {
+	return &DestinationConfig{}
 }
 
-func (dc *destinationConfig) request() *destinationConfigRequest {
+func (dc *DestinationConfig) request() *destinationConfigRequest {
 	return &destinationConfigRequest{
 		Host:                 dc.host,
 		Port:                 dc.port,
@@ -98,102 +98,102 @@ func (dc *destinationConfig) request() *destinationConfigRequest {
 	}
 }
 
-func (dc *destinationConfig) Host(value string) *destinationConfig {
+func (dc *DestinationConfig) Host(value string) *DestinationConfig {
 	dc.host = &value
 	return dc
 }
 
-func (dc *destinationConfig) Port(value int) *destinationConfig {
+func (dc *DestinationConfig) Port(value int) *DestinationConfig {
 	dc.port = &value
 	return dc
 }
 
-func (dc *destinationConfig) Database(value string) *destinationConfig {
+func (dc *DestinationConfig) Database(value string) *DestinationConfig {
 	dc.database = &value
 	return dc
 }
 
-func (dc *destinationConfig) Auth(value string) *destinationConfig {
+func (dc *DestinationConfig) Auth(value string) *DestinationConfig {
 	dc.auth = &value
 	return dc
 }
 
-func (dc *destinationConfig) User(value string) *destinationConfig {
+func (dc *DestinationConfig) User(value string) *DestinationConfig {
 	dc.user = &value
 	return dc
 }
 
-func (dc *destinationConfig) Password(value string) *destinationConfig {
+func (dc *DestinationConfig) Password(value string) *DestinationConfig {
 	dc.password = &value
 	return dc
 }
 
-func (dc *destinationConfig) ConnectionType(value string) *destinationConfig {
+func (dc *DestinationConfig) ConnectionType(value string) *DestinationConfig {
 	dc.connectionType = &value
 	return dc
 }
 
-func (dc *destinationConfig) TunnelHost(value string) *destinationConfig {
+func (dc *DestinationConfig) TunnelHost(value string) *DestinationConfig {
 	dc.tunnelHost = &value
 	return dc
 }
 
-func (dc *destinationConfig) TunnelPort(value string) *destinationConfig {
+func (dc *DestinationConfig) TunnelPort(value string) *DestinationConfig {
 	dc.tunnelPort = &value
 	return dc
 }
 
-func (dc *destinationConfig) TunnelUser(value string) *destinationConfig {
+func (dc *DestinationConfig) TunnelUser(value string) *DestinationConfig {
 	dc.tunnelUser = &value
 	return dc
 }
 
-func (dc *destinationConfig) ProjectID(value string) *destinationConfig {
+func (dc *DestinationConfig) ProjectID(value string) *DestinationConfig {
 	dc.projectID = &value
 	return dc
 }
 
-func (dc *destinationConfig) DataSetLocation(value string) *destinationConfig {
+func (dc *DestinationConfig) DataSetLocation(value string) *DestinationConfig {
 	dc.dataSetLocation = &value
 	return dc
 }
 
-func (dc *destinationConfig) Bucket(value string) *destinationConfig {
+func (dc *DestinationConfig) Bucket(value string) *DestinationConfig {
 	dc.bucket = &value
 	return dc
 }
 
-func (dc *destinationConfig) ServerHostName(value string) *destinationConfig {
+func (dc *DestinationConfig) ServerHostName(value string) *DestinationConfig {
 	dc.serverHostName = &value
 	return dc
 }
 
-func (dc *destinationConfig) HTTPPath(value string) *destinationConfig {
+func (dc *DestinationConfig) HTTPPath(value string) *DestinationConfig {
 	dc.httpPath = &value
 	return dc
 }
 
-func (dc *destinationConfig) PersonalAccessToken(value string) *destinationConfig {
+func (dc *DestinationConfig) PersonalAccessToken(value string) *DestinationConfig {
 	dc.personalAccessToken = &value
 	return dc
 }
 
-func (dc *destinationConfig) CreateExternalTables(value bool) *destinationConfig {
+func (dc *DestinationConfig) CreateExternalTables(value bool) *DestinationConfig {
 	dc.createExternalTables = &value
 	return dc
 }
 
-func (dc *destinationConfig) ExternalLocation(value string) *destinationConfig {
+func (dc *DestinationConfig) ExternalLocation(value string) *DestinationConfig {
 	dc.externalLocation = &value
 	return dc
 }
 
-func (dc *destinationConfig) AuthType(value string) *destinationConfig {
+func (dc *DestinationConfig) AuthType(value string) *DestinationConfig {
 	dc.authType = &value
 	return dc
 }
 
-func (dc *destinationConfig) RoleArn(value string) *destinationConfig {
+func (dc *DestinationConfig) RoleArn(value string) *DestinationConfig {
 	dc.roleArn = &value
 	return dc
 }

@@ -1,6 +1,6 @@
 package fivetran
 
-type connectorConfig struct {
+type ConnectorConfig struct {
 	schema                           *string
 	table                            *string
 	sheetID                          *string
@@ -571,11 +571,11 @@ type ConnectorConfigResponse struct {
 	LastSyncedChangesUtc             string                                      `json:"last_synced_changes__utc_"`
 }
 
-func NewConnectorConfig() *connectorConfig {
-	return &connectorConfig{}
+func NewConnectorConfig() *ConnectorConfig {
+	return &ConnectorConfig{}
 }
 
-func (cc *connectorConfig) request() *connectorConfigRequest {
+func (cc *ConnectorConfig) request() *connectorConfigRequest {
 	var projectCredentials []*connectorConfigProjectCredentialsRequest
 	var projectCredentialsP *[]*connectorConfigProjectCredentialsRequest
 	if cc.projectCredentials != nil {
@@ -799,932 +799,932 @@ func (cc *connectorConfig) request() *connectorConfigRequest {
 	}
 }
 
-func (cc *connectorConfig) Schema(value string) *connectorConfig {
+func (cc *ConnectorConfig) Schema(value string) *ConnectorConfig {
 	cc.schema = &value
 	return cc
 }
 
-func (cc *connectorConfig) Table(value string) *connectorConfig {
+func (cc *ConnectorConfig) Table(value string) *ConnectorConfig {
 	cc.table = &value
 	return cc
 }
 
-func (cc *connectorConfig) SheetID(value string) *connectorConfig {
+func (cc *ConnectorConfig) SheetID(value string) *ConnectorConfig {
 	cc.sheetID = &value
 	return cc
 }
 
-func (cc *connectorConfig) NamedRange(value string) *connectorConfig {
+func (cc *ConnectorConfig) NamedRange(value string) *ConnectorConfig {
 	cc.namedRange = &value
 	return cc
 }
 
-func (cc *connectorConfig) ClientID(value string) *connectorConfig {
+func (cc *ConnectorConfig) ClientID(value string) *ConnectorConfig {
 	cc.clientID = &value
 	return cc
 }
 
-func (cc *connectorConfig) ClientSecret(value string) *connectorConfig {
+func (cc *ConnectorConfig) ClientSecret(value string) *ConnectorConfig {
 	cc.clientSecret = &value
 	return cc
 }
 
-func (cc *connectorConfig) TechnicalAccountID(value string) *connectorConfig {
+func (cc *ConnectorConfig) TechnicalAccountID(value string) *ConnectorConfig {
 	cc.technicalAccountID = &value
 	return cc
 }
 
-func (cc *connectorConfig) OrganizationID(value string) *connectorConfig {
+func (cc *ConnectorConfig) OrganizationID(value string) *ConnectorConfig {
 	cc.organizationID = &value
 	return cc
 }
 
-func (cc *connectorConfig) PrivateKey(value string) *connectorConfig {
+func (cc *ConnectorConfig) PrivateKey(value string) *ConnectorConfig {
 	cc.privateKey = &value
 	return cc
 }
 
-func (cc *connectorConfig) SyncMode(value string) *connectorConfig {
+func (cc *ConnectorConfig) SyncMode(value string) *ConnectorConfig {
 	cc.syncMode = &value
 	return cc
 }
 
-func (cc *connectorConfig) ReportSuites(value []string) *connectorConfig {
+func (cc *ConnectorConfig) ReportSuites(value []string) *ConnectorConfig {
 	cc.reportSuites = &value
 	return cc
 }
 
-func (cc *connectorConfig) Elements(value []string) *connectorConfig {
+func (cc *ConnectorConfig) Elements(value []string) *ConnectorConfig {
 	cc.elements = &value
 	return cc
 }
 
-func (cc *connectorConfig) Metrics(value []string) *connectorConfig {
+func (cc *ConnectorConfig) Metrics(value []string) *ConnectorConfig {
 	cc.metrics = &value
 	return cc
 }
 
-func (cc *connectorConfig) DateGranularity(value string) *connectorConfig {
+func (cc *ConnectorConfig) DateGranularity(value string) *ConnectorConfig {
 	cc.dateGranularity = &value
 	return cc
 }
 
-func (cc *connectorConfig) TimeframeMonths(value string) *connectorConfig {
+func (cc *ConnectorConfig) TimeframeMonths(value string) *ConnectorConfig {
 	cc.timeframeMonths = &value
 	return cc
 }
 
-func (cc *connectorConfig) Source(value string) *connectorConfig {
+func (cc *ConnectorConfig) Source(value string) *ConnectorConfig {
 	cc.source = &value
 	return cc
 }
 
-func (cc *connectorConfig) S3Bucket(value string) *connectorConfig {
+func (cc *ConnectorConfig) S3Bucket(value string) *ConnectorConfig {
 	cc.s3Bucket = &value
 	return cc
 }
 
-func (cc *connectorConfig) S3RoleArn(value string) *connectorConfig {
+func (cc *ConnectorConfig) S3RoleArn(value string) *ConnectorConfig {
 	cc.s3RoleArn = &value
 	return cc
 }
 
-func (cc *connectorConfig) ABSConnectionString(value string) *connectorConfig {
+func (cc *ConnectorConfig) ABSConnectionString(value string) *ConnectorConfig {
 	cc.absConnectionString = &value
 	return cc
 }
 
-func (cc *connectorConfig) ABSContainerName(value string) *connectorConfig {
+func (cc *ConnectorConfig) ABSContainerName(value string) *ConnectorConfig {
 	cc.absContainerName = &value
 	return cc
 }
 
-func (cc *connectorConfig) FTPHost(value string) *connectorConfig {
+func (cc *ConnectorConfig) FTPHost(value string) *ConnectorConfig {
 	cc.ftpHost = &value
 	return cc
 }
 
-func (cc *connectorConfig) FTPPort(value int) *connectorConfig {
+func (cc *ConnectorConfig) FTPPort(value int) *ConnectorConfig {
 	cc.ftpPort = &value
 	return cc
 }
 
-func (cc *connectorConfig) FTPUser(value string) *connectorConfig {
+func (cc *ConnectorConfig) FTPUser(value string) *ConnectorConfig {
 	cc.ftpUser = &value
 	return cc
 }
 
-func (cc *connectorConfig) FTPPassword(value string) *connectorConfig {
+func (cc *ConnectorConfig) FTPPassword(value string) *ConnectorConfig {
 	cc.ftpPassword = &value
 	return cc
 }
 
-func (cc *connectorConfig) IsFTPS(value bool) *connectorConfig {
+func (cc *ConnectorConfig) IsFTPS(value bool) *ConnectorConfig {
 	cc.isFTPS = &value
 	return cc
 }
 
-func (cc *connectorConfig) SFTPHost(value string) *connectorConfig {
+func (cc *ConnectorConfig) SFTPHost(value string) *ConnectorConfig {
 	cc.sFTPHost = &value
 	return cc
 }
 
-func (cc *connectorConfig) SFTPPort(value int) *connectorConfig {
+func (cc *ConnectorConfig) SFTPPort(value int) *ConnectorConfig {
 	cc.sFTPPort = &value
 	return cc
 }
 
-func (cc *connectorConfig) SFTPUser(value string) *connectorConfig {
+func (cc *ConnectorConfig) SFTPUser(value string) *ConnectorConfig {
 	cc.sFTPUser = &value
 	return cc
 }
 
-func (cc *connectorConfig) SFTPPassword(value string) *connectorConfig {
+func (cc *ConnectorConfig) SFTPPassword(value string) *ConnectorConfig {
 	cc.sFTPPassword = &value
 	return cc
 }
 
-func (cc *connectorConfig) SFTPIsKeyPair(value bool) *connectorConfig {
+func (cc *ConnectorConfig) SFTPIsKeyPair(value bool) *ConnectorConfig {
 	cc.sFTPIsKeyPair = &value
 	return cc
 }
 
-func (cc *connectorConfig) Advertisables(value []string) *connectorConfig {
+func (cc *ConnectorConfig) Advertisables(value []string) *ConnectorConfig {
 	cc.advertisables = &value
 	return cc
 }
 
-func (cc *connectorConfig) ReportType(value string) *connectorConfig {
+func (cc *ConnectorConfig) ReportType(value string) *ConnectorConfig {
 	cc.reportType = &value
 	return cc
 }
 
-func (cc *connectorConfig) Dimensions(value []string) *connectorConfig {
+func (cc *ConnectorConfig) Dimensions(value []string) *ConnectorConfig {
 	cc.dimensions = &value
 	return cc
 }
 
-func (cc *connectorConfig) SchemaPrefix(value string) *connectorConfig {
+func (cc *ConnectorConfig) SchemaPrefix(value string) *ConnectorConfig {
 	cc.schemaPrefix = &value
 	return cc
 }
 
-func (cc *connectorConfig) APIKey(value string) *connectorConfig {
+func (cc *ConnectorConfig) APIKey(value string) *ConnectorConfig {
 	cc.apiKey = &value
 	return cc
 }
 
-func (cc *connectorConfig) ExternalID(value string) *connectorConfig {
+func (cc *ConnectorConfig) ExternalID(value string) *ConnectorConfig {
 	cc.externalID = &value
 	return cc
 }
 
-func (cc *connectorConfig) RoleArn(value string) *connectorConfig {
+func (cc *ConnectorConfig) RoleArn(value string) *ConnectorConfig {
 	cc.roleArn = &value
 	return cc
 }
 
-func (cc *connectorConfig) Bucket(value string) *connectorConfig {
+func (cc *ConnectorConfig) Bucket(value string) *ConnectorConfig {
 	cc.bucket = &value
 	return cc
 }
 
-func (cc *connectorConfig) Prefix(value string) *connectorConfig {
+func (cc *ConnectorConfig) Prefix(value string) *ConnectorConfig {
 	cc.prefix = &value
 	return cc
 }
 
-func (cc *connectorConfig) Pattern(value string) *connectorConfig {
+func (cc *ConnectorConfig) Pattern(value string) *ConnectorConfig {
 	cc.pattern = &value
 	return cc
 }
 
-func (cc *connectorConfig) FileType(value string) *connectorConfig {
+func (cc *ConnectorConfig) FileType(value string) *ConnectorConfig {
 	cc.fileType = &value
 	return cc
 }
 
-func (cc *connectorConfig) Compression(value string) *connectorConfig {
+func (cc *ConnectorConfig) Compression(value string) *ConnectorConfig {
 	cc.compression = &value
 	return cc
 }
 
-func (cc *connectorConfig) OnError(value string) *connectorConfig {
+func (cc *ConnectorConfig) OnError(value string) *ConnectorConfig {
 	cc.onError = &value
 	return cc
 }
 
-func (cc *connectorConfig) AppendFileOption(value string) *connectorConfig {
+func (cc *ConnectorConfig) AppendFileOption(value string) *ConnectorConfig {
 	cc.appendFileOption = &value
 	return cc
 }
 
-func (cc *connectorConfig) ArchivePattern(value string) *connectorConfig {
+func (cc *ConnectorConfig) ArchivePattern(value string) *ConnectorConfig {
 	cc.archivePattern = &value
 	return cc
 }
 
-func (cc *connectorConfig) NullSequence(value string) *connectorConfig {
+func (cc *ConnectorConfig) NullSequence(value string) *ConnectorConfig {
 	cc.nullSequence = &value
 	return cc
 }
 
-func (cc *connectorConfig) Delimiter(value string) *connectorConfig {
+func (cc *ConnectorConfig) Delimiter(value string) *ConnectorConfig {
 	cc.delimiter = &value
 	return cc
 }
 
-func (cc *connectorConfig) EscapeChar(value string) *connectorConfig {
+func (cc *ConnectorConfig) EscapeChar(value string) *ConnectorConfig {
 	cc.escapeChar = &value
 	return cc
 }
 
-func (cc *connectorConfig) SkipBefore(value string) *connectorConfig {
+func (cc *ConnectorConfig) SkipBefore(value string) *ConnectorConfig {
 	cc.skipBefore = &value
 	return cc
 }
 
-func (cc *connectorConfig) SkipAfter(value string) *connectorConfig {
+func (cc *ConnectorConfig) SkipAfter(value string) *ConnectorConfig {
 	cc.skipAfter = &value
 	return cc
 }
 
-func (cc *connectorConfig) ProjectCredentials(value *[]*ConnectorConfigProjectCredentials) *connectorConfig {
+func (cc *ConnectorConfig) ProjectCredentials(value *[]*ConnectorConfigProjectCredentials) *ConnectorConfig {
 	cc.projectCredentials = value
 	return cc
 }
 
-func (cc *connectorConfig) AuthMode(value string) *connectorConfig {
+func (cc *ConnectorConfig) AuthMode(value string) *ConnectorConfig {
 	cc.authMode = &value
 	return cc
 }
 
-func (cc *connectorConfig) Username(value string) *connectorConfig {
+func (cc *ConnectorConfig) Username(value string) *ConnectorConfig {
 	cc.username = &value
 	return cc
 }
 
-func (cc *connectorConfig) Password(value string) *connectorConfig {
+func (cc *ConnectorConfig) Password(value string) *ConnectorConfig {
 	cc.password = &value
 	return cc
 }
 
-func (cc *connectorConfig) Certificate(value string) *connectorConfig {
+func (cc *ConnectorConfig) Certificate(value string) *ConnectorConfig {
 	cc.certificate = &value
 	return cc
 }
 
-func (cc *connectorConfig) SelectedExports(value []string) *connectorConfig {
+func (cc *ConnectorConfig) SelectedExports(value []string) *ConnectorConfig {
 	cc.selectedExports = &value
 	return cc
 }
 
-func (cc *connectorConfig) ConsumerGroup(value string) *connectorConfig {
+func (cc *ConnectorConfig) ConsumerGroup(value string) *ConnectorConfig {
 	cc.consumerGroup = &value
 	return cc
 }
 
-func (cc *connectorConfig) Servers(value string) *connectorConfig {
+func (cc *ConnectorConfig) Servers(value string) *ConnectorConfig {
 	cc.servers = &value
 	return cc
 }
 
-func (cc *connectorConfig) MessageType(value string) *connectorConfig {
+func (cc *ConnectorConfig) MessageType(value string) *ConnectorConfig {
 	cc.messageType = &value
 	return cc
 }
 
-func (cc *connectorConfig) SyncType(value string) *connectorConfig {
+func (cc *ConnectorConfig) SyncType(value string) *ConnectorConfig {
 	cc.syncType = &value
 	return cc
 }
 
-func (cc *connectorConfig) SecurityProtocol(value string) *connectorConfig {
+func (cc *ConnectorConfig) SecurityProtocol(value string) *ConnectorConfig {
 	cc.securityProtocol = &value
 	return cc
 }
 
-func (cc *connectorConfig) Apps(value []string) *connectorConfig {
+func (cc *ConnectorConfig) Apps(value []string) *ConnectorConfig {
 	cc.apps = &value
 	return cc
 }
 
-func (cc *connectorConfig) SalesAccounts(value []string) *connectorConfig {
+func (cc *ConnectorConfig) SalesAccounts(value []string) *ConnectorConfig {
 	cc.salesAccounts = &value
 	return cc
 }
 
-func (cc *connectorConfig) FinanceAccounts(value []string) *connectorConfig {
+func (cc *ConnectorConfig) FinanceAccounts(value []string) *ConnectorConfig {
 	cc.financeAccounts = &value
 	return cc
 }
 
-func (cc *connectorConfig) AppSyncMode(value string) *connectorConfig {
+func (cc *ConnectorConfig) AppSyncMode(value string) *ConnectorConfig {
 	cc.appSyncMode = &value
 	return cc
 }
 
-func (cc *connectorConfig) SalesAccountSyncMode(value string) *connectorConfig {
+func (cc *ConnectorConfig) SalesAccountSyncMode(value string) *ConnectorConfig {
 	cc.salesAccountSyncMode = &value
 	return cc
 }
 
-func (cc *connectorConfig) FinanceAccountSyncMode(value string) *connectorConfig {
+func (cc *ConnectorConfig) FinanceAccountSyncMode(value string) *ConnectorConfig {
 	cc.financeAccountSyncMode = &value
 	return cc
 }
 
-func (cc *connectorConfig) PEMCertificate(value string) *connectorConfig {
+func (cc *ConnectorConfig) PEMCertificate(value string) *ConnectorConfig {
 	cc.pemCertificate = &value
 	return cc
 }
 
-func (cc *connectorConfig) AccessKeyID(value string) *connectorConfig {
+func (cc *ConnectorConfig) AccessKeyID(value string) *ConnectorConfig {
 	cc.accessKeyID = &value
 	return cc
 }
 
-func (cc *connectorConfig) SecretKey(value string) *connectorConfig {
+func (cc *ConnectorConfig) SecretKey(value string) *ConnectorConfig {
 	cc.secretKey = &value
 	return cc
 }
 
-func (cc *connectorConfig) HomeFolder(value string) *connectorConfig {
+func (cc *ConnectorConfig) HomeFolder(value string) *ConnectorConfig {
 	cc.homeFolder = &value
 	return cc
 }
 
-func (cc *connectorConfig) SyncDataLocker(value bool) *connectorConfig {
+func (cc *ConnectorConfig) SyncDataLocker(value bool) *ConnectorConfig {
 	cc.syncDataLocker = &value
 	return cc
 }
 
-func (cc *connectorConfig) Projects(value []string) *connectorConfig {
+func (cc *ConnectorConfig) Projects(value []string) *ConnectorConfig {
 	cc.projects = &value
 	return cc
 }
 
-func (cc *connectorConfig) Function(value string) *connectorConfig {
+func (cc *ConnectorConfig) Function(value string) *ConnectorConfig {
 	cc.function = &value
 	return cc
 }
 
-func (cc *connectorConfig) Region(value string) *connectorConfig {
+func (cc *ConnectorConfig) Region(value string) *ConnectorConfig {
 	cc.region = &value
 	return cc
 }
 
-func (cc *connectorConfig) Secrets(value string) *connectorConfig {
+func (cc *ConnectorConfig) Secrets(value string) *ConnectorConfig {
 	cc.secrets = &value
 	return cc
 }
 
-func (cc *connectorConfig) ContainerName(value string) *connectorConfig {
+func (cc *ConnectorConfig) ContainerName(value string) *ConnectorConfig {
 	cc.containerName = &value
 	return cc
 }
 
-func (cc *connectorConfig) ConnectionString(value string) *connectorConfig {
+func (cc *ConnectorConfig) ConnectionString(value string) *ConnectorConfig {
 	cc.connectionString = &value
 	return cc
 }
 
-func (cc *connectorConfig) FunctionApp(value string) *connectorConfig {
+func (cc *ConnectorConfig) FunctionApp(value string) *ConnectorConfig {
 	cc.functionApp = &value
 	return cc
 }
 
-func (cc *connectorConfig) FunctionName(value string) *connectorConfig {
+func (cc *ConnectorConfig) FunctionName(value string) *ConnectorConfig {
 	cc.functionName = &value
 	return cc
 }
 
-func (cc *connectorConfig) FunctionKey(value string) *connectorConfig {
+func (cc *ConnectorConfig) FunctionKey(value string) *ConnectorConfig {
 	cc.functionKey = &value
 	return cc
 }
 
-func (cc *connectorConfig) PublicKey(value string) *connectorConfig {
+func (cc *ConnectorConfig) PublicKey(value string) *ConnectorConfig {
 	cc.publicKey = &value
 	return cc
 }
 
-func (cc *connectorConfig) MerchantID(value string) *connectorConfig {
+func (cc *ConnectorConfig) MerchantID(value string) *ConnectorConfig {
 	cc.merchantID = &value
 	return cc
 }
 
-func (cc *connectorConfig) APIURL(value string) *connectorConfig {
+func (cc *ConnectorConfig) APIURL(value string) *ConnectorConfig {
 	cc.apiURL = &value
 	return cc
 }
 
-func (cc *connectorConfig) CloudStorageType(value string) *connectorConfig {
+func (cc *ConnectorConfig) CloudStorageType(value string) *ConnectorConfig {
 	cc.cloudStorageType = &value
 	return cc
 }
 
-func (cc *connectorConfig) S3ExternalID(value string) *connectorConfig {
+func (cc *ConnectorConfig) S3ExternalID(value string) *ConnectorConfig {
 	cc.s3ExternalID = &value
 	return cc
 }
 
-func (cc *connectorConfig) S3Folder(value string) *connectorConfig {
+func (cc *ConnectorConfig) S3Folder(value string) *ConnectorConfig {
 	cc.s3Folder = &value
 	return cc
 }
 
-func (cc *connectorConfig) GCSBucket(value string) *connectorConfig {
+func (cc *ConnectorConfig) GCSBucket(value string) *ConnectorConfig {
 	cc.gcsBucket = &value
 	return cc
 }
 
-func (cc *connectorConfig) GCSFolder(value string) *connectorConfig {
+func (cc *ConnectorConfig) GCSFolder(value string) *ConnectorConfig {
 	cc.gcsFolder = &value
 	return cc
 }
 
-func (cc *connectorConfig) UserProfiles(value []string) *connectorConfig {
+func (cc *ConnectorConfig) UserProfiles(value []string) *ConnectorConfig {
 	cc.userProfiles = &value
 	return cc
 }
 
-func (cc *connectorConfig) ReportConfigurationIDs(value []string) *connectorConfig {
+func (cc *ConnectorConfig) ReportConfigurationIDs(value []string) *ConnectorConfig {
 	cc.reportConfigurationIDs = &value
 	return cc
 }
 
-func (cc *connectorConfig) EnableAllDimensionCombinations(value bool) *connectorConfig {
+func (cc *ConnectorConfig) EnableAllDimensionCombinations(value bool) *ConnectorConfig {
 	cc.enableAllDimensionCombinations = &value
 	return cc
 }
 
-func (cc *connectorConfig) Instance(value string) *connectorConfig {
+func (cc *ConnectorConfig) Instance(value string) *ConnectorConfig {
 	cc.instance = &value
 	return cc
 }
 
-func (cc *connectorConfig) AWSRegionCode(value string) *connectorConfig {
+func (cc *ConnectorConfig) AWSRegionCode(value string) *ConnectorConfig {
 	cc.awsRegionCode = &value
 	return cc
 }
 
-func (cc *connectorConfig) Accounts(value []string) *connectorConfig {
+func (cc *ConnectorConfig) Accounts(value []string) *ConnectorConfig {
 	cc.accounts = &value
 	return cc
 }
 
-func (cc *connectorConfig) Fields(value []string) *connectorConfig {
+func (cc *ConnectorConfig) Fields(value []string) *ConnectorConfig {
 	cc.fields = &value
 	return cc
 }
 
-func (cc *connectorConfig) Breakdowns(value []string) *connectorConfig {
+func (cc *ConnectorConfig) Breakdowns(value []string) *ConnectorConfig {
 	cc.breakdowns = &value
 	return cc
 }
 
-func (cc *connectorConfig) ActionBreakdowns(value []string) *connectorConfig {
+func (cc *ConnectorConfig) ActionBreakdowns(value []string) *ConnectorConfig {
 	cc.actionBreakdowns = &value
 	return cc
 }
 
-func (cc *connectorConfig) Aggregation(value string) *connectorConfig {
+func (cc *ConnectorConfig) Aggregation(value string) *ConnectorConfig {
 	cc.aggregation = &value
 	return cc
 }
 
-func (cc *connectorConfig) ConfigType(value string) *connectorConfig {
+func (cc *ConnectorConfig) ConfigType(value string) *ConnectorConfig {
 	cc.configType = &value
 	return cc
 }
 
-func (cc *connectorConfig) PrebuiltReport(value string) *connectorConfig {
+func (cc *ConnectorConfig) PrebuiltReport(value string) *ConnectorConfig {
 	cc.prebuiltReport = &value
 	return cc
 }
 
-func (cc *connectorConfig) ActionReportTime(value string) *connectorConfig {
+func (cc *ConnectorConfig) ActionReportTime(value string) *ConnectorConfig {
 	cc.actionReportTime = &value
 	return cc
 }
 
-func (cc *connectorConfig) ClickAttributionWindow(value string) *connectorConfig {
+func (cc *ConnectorConfig) ClickAttributionWindow(value string) *ConnectorConfig {
 	cc.clickAttributionWindow = &value
 	return cc
 }
 
-func (cc *connectorConfig) ViewAttributionWindow(value string) *connectorConfig {
+func (cc *ConnectorConfig) ViewAttributionWindow(value string) *ConnectorConfig {
 	cc.viewAttributionWindow = &value
 	return cc
 }
 
-func (cc *connectorConfig) CustomTables(value *[]*ConnectorConfigCustomTables) *connectorConfig {
+func (cc *ConnectorConfig) CustomTables(value *[]*ConnectorConfigCustomTables) *ConnectorConfig {
 	cc.customTables = value
 	return cc
 }
 
-func (cc *connectorConfig) Pages(value []string) *connectorConfig {
+func (cc *ConnectorConfig) Pages(value []string) *ConnectorConfig {
 	cc.pages = &value
 	return cc
 }
 
-func (cc *connectorConfig) Subdomain(value string) *connectorConfig {
+func (cc *ConnectorConfig) Subdomain(value string) *ConnectorConfig {
 	cc.subdomain = &value
 	return cc
 }
 
-func (cc *connectorConfig) Host(value string) *connectorConfig {
+func (cc *ConnectorConfig) Host(value string) *ConnectorConfig {
 	cc.host = &value
 	return cc
 }
 
-func (cc *connectorConfig) Port(value int) *connectorConfig {
+func (cc *ConnectorConfig) Port(value int) *ConnectorConfig {
 	cc.port = &value
 	return cc
 }
 
-func (cc *connectorConfig) User(value string) *connectorConfig {
+func (cc *ConnectorConfig) User(value string) *ConnectorConfig {
 	cc.user = &value
 	return cc
 }
 
-func (cc *connectorConfig) IsSecure(value string) *connectorConfig {
+func (cc *ConnectorConfig) IsSecure(value string) *ConnectorConfig {
 	cc.isSecure = &value
 	return cc
 }
 
-func (cc *connectorConfig) Repositories(value []string) *connectorConfig {
+func (cc *ConnectorConfig) Repositories(value []string) *ConnectorConfig {
 	cc.repositories = &value
 	return cc
 }
 
-func (cc *connectorConfig) UseWebhooks(value bool) *connectorConfig {
+func (cc *ConnectorConfig) UseWebhooks(value bool) *ConnectorConfig {
 	cc.useWebhooks = &value
 	return cc
 }
 
-func (cc *connectorConfig) DimensionAttributes(value []string) *connectorConfig {
+func (cc *ConnectorConfig) DimensionAttributes(value []string) *ConnectorConfig {
 	cc.dimensionAttributes = &value
 	return cc
 }
 
-func (cc *connectorConfig) Columns(value []string) *connectorConfig {
+func (cc *ConnectorConfig) Columns(value []string) *ConnectorConfig {
 	cc.columns = &value
 	return cc
 }
 
-func (cc *connectorConfig) NetworkCode(value string) *connectorConfig {
+func (cc *ConnectorConfig) NetworkCode(value string) *ConnectorConfig {
 	cc.networkCode = &value
 	return cc
 }
 
-func (cc *connectorConfig) CustomerID(value string) *connectorConfig {
+func (cc *ConnectorConfig) CustomerID(value string) *ConnectorConfig {
 	cc.customerID = &value
 	return cc
 }
 
-func (cc *connectorConfig) ManagerAccounts(value []string) *connectorConfig {
+func (cc *ConnectorConfig) ManagerAccounts(value []string) *ConnectorConfig {
 	cc.managerAccounts = &value
 	return cc
 }
 
-func (cc *connectorConfig) Reports(value *[]*ConnectorConfigReports) *connectorConfig {
+func (cc *ConnectorConfig) Reports(value *[]*ConnectorConfigReports) *ConnectorConfig {
 	cc.reports = value
 	return cc
 }
 
-func (cc *connectorConfig) ConversionWindowSize(value int) *connectorConfig {
+func (cc *ConnectorConfig) ConversionWindowSize(value int) *ConnectorConfig {
 	cc.conversionWindowSize = &value
 	return cc
 }
 
-func (cc *connectorConfig) Profiles(value []string) *connectorConfig {
+func (cc *ConnectorConfig) Profiles(value []string) *ConnectorConfig {
 	cc.profiles = &value
 	return cc
 }
 
-func (cc *connectorConfig) ProjectID(value string) *connectorConfig {
+func (cc *ConnectorConfig) ProjectID(value string) *ConnectorConfig {
 	cc.projectID = &value
 	return cc
 }
 
-func (cc *connectorConfig) DatasetID(value string) *connectorConfig {
+func (cc *ConnectorConfig) DatasetID(value string) *ConnectorConfig {
 	cc.datasetID = &value
 	return cc
 }
 
-func (cc *connectorConfig) BucketName(value string) *connectorConfig {
+func (cc *ConnectorConfig) BucketName(value string) *ConnectorConfig {
 	cc.bucketName = &value
 	return cc
 }
 
-func (cc *connectorConfig) FunctionTrigger(value string) *connectorConfig {
+func (cc *ConnectorConfig) FunctionTrigger(value string) *ConnectorConfig {
 	cc.functionTrigger = &value
 	return cc
 }
 
-func (cc *connectorConfig) ConfigMethod(value string) *connectorConfig {
+func (cc *ConnectorConfig) ConfigMethod(value string) *ConnectorConfig {
 	cc.configMethod = &value
 	return cc
 }
 
-func (cc *connectorConfig) QueryID(value string) *connectorConfig {
+func (cc *ConnectorConfig) QueryID(value string) *ConnectorConfig {
 	cc.queryID = &value
 	return cc
 }
 
-func (cc *connectorConfig) UpdateConfigOnEachSync(value bool) *connectorConfig {
+func (cc *ConnectorConfig) UpdateConfigOnEachSync(value bool) *ConnectorConfig {
 	cc.updateConfigOnEachSync = &value
 	return cc
 }
 
-func (cc *connectorConfig) SiteURLs(value []string) *connectorConfig {
+func (cc *ConnectorConfig) SiteURLs(value []string) *ConnectorConfig {
 	cc.siteURLs = &value
 	return cc
 }
 
-func (cc *connectorConfig) Path(value string) *connectorConfig {
+func (cc *ConnectorConfig) Path(value string) *ConnectorConfig {
 	cc.path = &value
 	return cc
 }
 
-func (cc *connectorConfig) OnPremise(value bool) *connectorConfig {
+func (cc *ConnectorConfig) OnPremise(value bool) *ConnectorConfig {
 	cc.onPremise = &value
 	return cc
 }
 
-func (cc *connectorConfig) AccessToken(value string) *connectorConfig {
+func (cc *ConnectorConfig) AccessToken(value string) *ConnectorConfig {
 	cc.accessToken = &value
 	return cc
 }
 
-func (cc *connectorConfig) ViewThroughAttributionWindowSize(value string) *connectorConfig {
+func (cc *ConnectorConfig) ViewThroughAttributionWindowSize(value string) *ConnectorConfig {
 	cc.viewThroughAttributionWindowSize = &value
 	return cc
 }
 
-func (cc *connectorConfig) PostClickAttributionWindowSize(value string) *connectorConfig {
+func (cc *ConnectorConfig) PostClickAttributionWindowSize(value string) *ConnectorConfig {
 	cc.postClickAttributionWindowSize = &value
 	return cc
 }
 
-func (cc *connectorConfig) UseAPIKeys(value string) *connectorConfig {
+func (cc *ConnectorConfig) UseAPIKeys(value string) *ConnectorConfig {
 	cc.useAPIKeys = &value
 	return cc
 }
 
-func (cc *connectorConfig) APIKeys(value string) *connectorConfig {
+func (cc *ConnectorConfig) APIKeys(value string) *ConnectorConfig {
 	cc.apiKeys = &value
 	return cc
 }
 
-func (cc *connectorConfig) Endpoint(value string) *connectorConfig {
+func (cc *ConnectorConfig) Endpoint(value string) *ConnectorConfig {
 	cc.endpoint = &value
 	return cc
 }
 
-func (cc *connectorConfig) Identity(value string) *connectorConfig {
+func (cc *ConnectorConfig) Identity(value string) *ConnectorConfig {
 	cc.identity = &value
 	return cc
 }
 
-func (cc *connectorConfig) APIQuota(value int) *connectorConfig {
+func (cc *ConnectorConfig) APIQuota(value int) *ConnectorConfig {
 	cc.apiQuota = &value
 	return cc
 }
 
-func (cc *connectorConfig) DomainName(value string) *connectorConfig {
+func (cc *ConnectorConfig) DomainName(value string) *ConnectorConfig {
 	cc.domainName = &value
 	return cc
 }
 
-func (cc *connectorConfig) ResourceURL(value string) *connectorConfig {
+func (cc *ConnectorConfig) ResourceURL(value string) *ConnectorConfig {
 	cc.resourceURL = &value
 	return cc
 }
 
-func (cc *connectorConfig) APISecret(value string) *connectorConfig {
+func (cc *ConnectorConfig) APISecret(value string) *ConnectorConfig {
 	cc.apiSecret = &value
 	return cc
 }
 
-func (cc *connectorConfig) Hosts(value []string) *connectorConfig {
+func (cc *ConnectorConfig) Hosts(value []string) *ConnectorConfig {
 	cc.hosts = &value
 	return cc
 }
 
-func (cc *connectorConfig) TunnelHost(value string) *connectorConfig {
+func (cc *ConnectorConfig) TunnelHost(value string) *ConnectorConfig {
 	cc.tunnelHost = &value
 	return cc
 }
 
-func (cc *connectorConfig) TunnelPort(value int) *connectorConfig {
+func (cc *ConnectorConfig) TunnelPort(value int) *ConnectorConfig {
 	cc.tunnelPort = &value
 	return cc
 }
 
-func (cc *connectorConfig) TunnelUser(value string) *connectorConfig {
+func (cc *ConnectorConfig) TunnelUser(value string) *ConnectorConfig {
 	cc.tunnelUser = &value
 	return cc
 }
 
-func (cc *connectorConfig) Database(value string) *connectorConfig {
+func (cc *ConnectorConfig) Database(value string) *ConnectorConfig {
 	cc.database = &value
 	return cc
 }
 
-func (cc *connectorConfig) Datasource(value string) *connectorConfig {
+func (cc *ConnectorConfig) Datasource(value string) *ConnectorConfig {
 	cc.datasource = &value
 	return cc
 }
 
-func (cc *connectorConfig) Account(value string) *connectorConfig {
+func (cc *ConnectorConfig) Account(value string) *ConnectorConfig {
 	cc.account = &value
 	return cc
 }
 
-func (cc *connectorConfig) Role(value string) *connectorConfig {
+func (cc *ConnectorConfig) Role(value string) *ConnectorConfig {
 	cc.role = &value
 	return cc
 }
 
-func (cc *connectorConfig) Email(value string) *connectorConfig {
+func (cc *ConnectorConfig) Email(value string) *ConnectorConfig {
 	cc.email = &value
 	return cc
 }
 
-func (cc *connectorConfig) AccountID(value string) *connectorConfig {
+func (cc *ConnectorConfig) AccountID(value string) *ConnectorConfig {
 	cc.accountID = &value
 	return cc
 }
 
-func (cc *connectorConfig) ServerURL(value string) *connectorConfig {
+func (cc *ConnectorConfig) ServerURL(value string) *ConnectorConfig {
 	cc.serverURL = &value
 	return cc
 }
 
-func (cc *connectorConfig) UserKey(value string) *connectorConfig {
+func (cc *ConnectorConfig) UserKey(value string) *ConnectorConfig {
 	cc.userKey = &value
 	return cc
 }
 
-func (cc *connectorConfig) APIVersion(value string) *connectorConfig {
+func (cc *ConnectorConfig) APIVersion(value string) *ConnectorConfig {
 	cc.apiVersion = &value
 	return cc
 }
 
-func (cc *connectorConfig) DailyAPICallLimit(value int) *connectorConfig {
+func (cc *ConnectorConfig) DailyAPICallLimit(value int) *ConnectorConfig {
 	cc.dailyAPICallLimit = &value
 	return cc
 }
 
-func (cc *connectorConfig) TimeZone(value string) *connectorConfig {
+func (cc *ConnectorConfig) TimeZone(value string) *ConnectorConfig {
 	cc.timeZone = &value
 	return cc
 }
 
-func (cc *connectorConfig) IntegrationKey(value string) *connectorConfig {
+func (cc *ConnectorConfig) IntegrationKey(value string) *ConnectorConfig {
 	cc.integrationKey = &value
 	return cc
 }
 
-func (cc *connectorConfig) Advertisers(value []string) *connectorConfig {
+func (cc *ConnectorConfig) Advertisers(value []string) *ConnectorConfig {
 	cc.advertisers = &value
 	return cc
 }
 
-func (cc *connectorConfig) EngagementAttributionWindow(value string) *connectorConfig {
+func (cc *ConnectorConfig) EngagementAttributionWindow(value string) *ConnectorConfig {
 	cc.engagementAttributionWindow = &value
 	return cc
 }
 
-func (cc *connectorConfig) ConversionReportTime(value string) *connectorConfig {
+func (cc *ConnectorConfig) ConversionReportTime(value string) *ConnectorConfig {
 	cc.conversionReportTime = &value
 	return cc
 }
 
-func (cc *connectorConfig) Domain(value string) *connectorConfig {
+func (cc *ConnectorConfig) Domain(value string) *ConnectorConfig {
 	cc.domain = &value
 	return cc
 }
 
-func (cc *connectorConfig) UpdateMethod(value string) *connectorConfig {
+func (cc *ConnectorConfig) UpdateMethod(value string) *ConnectorConfig {
 	cc.updateMethod = &value
 	return cc
 }
 
-func (cc *connectorConfig) ReplicationSlot(value string) *connectorConfig {
+func (cc *ConnectorConfig) ReplicationSlot(value string) *ConnectorConfig {
 	cc.replicationSlot = &value
 	return cc
 }
 
-func (cc *connectorConfig) DataCenter(value string) *connectorConfig {
+func (cc *ConnectorConfig) DataCenter(value string) *ConnectorConfig {
 	cc.dataCenter = &value
 	return cc
 }
 
-func (cc *connectorConfig) APIToken(value string) *connectorConfig {
+func (cc *ConnectorConfig) APIToken(value string) *ConnectorConfig {
 	cc.apiToken = &value
 	return cc
 }
 
-func (cc *connectorConfig) SubDomain(value string) *connectorConfig {
+func (cc *ConnectorConfig) SubDomain(value string) *ConnectorConfig {
 	cc.subDomain = &value
 	return cc
 }
 
-func (cc *connectorConfig) TestTableName(value string) *connectorConfig {
+func (cc *ConnectorConfig) TestTableName(value string) *ConnectorConfig {
 	cc.testTableName = &value
 	return cc
 }
 
-func (cc *connectorConfig) Shop(value string) *connectorConfig {
+func (cc *ConnectorConfig) Shop(value string) *ConnectorConfig {
 	cc.shop = &value
 	return cc
 }
 
-func (cc *connectorConfig) Organizations(value []string) *connectorConfig {
+func (cc *ConnectorConfig) Organizations(value []string) *ConnectorConfig {
 	cc.organizations = &value
 	return cc
 }
 
-func (cc *connectorConfig) SwipeAttributionWindow(value string) *connectorConfig {
+func (cc *ConnectorConfig) SwipeAttributionWindow(value string) *ConnectorConfig {
 	cc.swipeAttributionWindow = &value
 	return cc
 }
 
-func (cc *connectorConfig) APIAccessToken(value string) *connectorConfig {
+func (cc *ConnectorConfig) APIAccessToken(value string) *ConnectorConfig {
 	cc.apiAccessToken = &value
 	return cc
 }
 
-func (cc *connectorConfig) AccountIDs(value string) *connectorConfig {
+func (cc *ConnectorConfig) AccountIDs(value string) *ConnectorConfig {
 	cc.accountIDs = &value
 	return cc
 }
 
-func (cc *connectorConfig) SID(value string) *connectorConfig {
+func (cc *ConnectorConfig) SID(value string) *ConnectorConfig {
 	cc.sid = &value
 	return cc
 }
 
-func (cc *connectorConfig) Secret(value string) *connectorConfig {
+func (cc *ConnectorConfig) Secret(value string) *ConnectorConfig {
 	cc.secret = &value
 	return cc
 }
 
-func (cc *connectorConfig) OauthToken(value string) *connectorConfig {
+func (cc *ConnectorConfig) OauthToken(value string) *ConnectorConfig {
 	cc.oauthToken = &value
 	return cc
 }
 
-func (cc *connectorConfig) OauthTokenSecret(value string) *connectorConfig {
+func (cc *ConnectorConfig) OauthTokenSecret(value string) *ConnectorConfig {
 	cc.oauthTokenSecret = &value
 	return cc
 }
 
-func (cc *connectorConfig) ConsumerKey(value string) *connectorConfig {
+func (cc *ConnectorConfig) ConsumerKey(value string) *ConnectorConfig {
 	cc.consumerKey = &value
 	return cc
 }
 
-func (cc *connectorConfig) ConsumerSecret(value string) *connectorConfig {
+func (cc *ConnectorConfig) ConsumerSecret(value string) *ConnectorConfig {
 	cc.consumerSecret = &value
 	return cc
 }
 
-func (cc *connectorConfig) Key(value string) *connectorConfig {
+func (cc *ConnectorConfig) Key(value string) *ConnectorConfig {
 	cc.key = &value
 	return cc
 }
 
-func (cc *connectorConfig) AdvertisersID(value []string) *connectorConfig {
+func (cc *ConnectorConfig) AdvertisersID(value []string) *ConnectorConfig {
 	cc.advertisersID = &value
 	return cc
 }
 
-func (cc *connectorConfig) SyncFormat(value string) *connectorConfig {
+func (cc *ConnectorConfig) SyncFormat(value string) *ConnectorConfig {
 	cc.syncFormat = &value
 	return cc
 }
 
-func (cc *connectorConfig) BucketService(value string) *connectorConfig {
+func (cc *ConnectorConfig) BucketService(value string) *ConnectorConfig {
 	cc.bucketService = &value
 	return cc
 }
 
-func (cc *connectorConfig) UserName(value string) *connectorConfig {
+func (cc *ConnectorConfig) UserName(value string) *ConnectorConfig {
 	cc.userName = &value
 	return cc
 }
 
-func (cc *connectorConfig) ReportURL(value string) *connectorConfig {
+func (cc *ConnectorConfig) ReportURL(value string) *ConnectorConfig {
 	cc.reportURL = &value
 	return cc
 }
 
-func (cc *connectorConfig) UniqueID(value string) *connectorConfig {
+func (cc *ConnectorConfig) UniqueID(value string) *ConnectorConfig {
 	cc.uniqueID = &value
 	return cc
 }

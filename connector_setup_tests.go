@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-type connectorSetupTestsService struct {
+type ConnectorSetupTestsService struct {
 	c                 *Client
 	connectorID       *string
 	trustCertificates *bool
@@ -57,33 +57,33 @@ type ConnectorSetupTestsResponse struct {
 	} `json:"data"`
 }
 
-func (c *Client) NewConnectorSetupTests() *connectorSetupTestsService {
-	return &connectorSetupTestsService{c: c}
+func (c *Client) NewConnectorSetupTests() *ConnectorSetupTestsService {
+	return &ConnectorSetupTestsService{c: c}
 }
 
-func (s *connectorSetupTestsService) request() *connectorSetupTestsRequest {
+func (s *ConnectorSetupTestsService) request() *connectorSetupTestsRequest {
 	return &connectorSetupTestsRequest{
 		TrustCertificates: s.trustCertificates,
 		TrustFingerprints: s.trustFingerprints,
 	}
 }
 
-func (s *connectorSetupTestsService) ConnectorID(value string) *connectorSetupTestsService {
+func (s *ConnectorSetupTestsService) ConnectorID(value string) *ConnectorSetupTestsService {
 	s.connectorID = &value
 	return s
 }
 
-func (s *connectorSetupTestsService) TrustCertificates(value bool) *connectorSetupTestsService {
+func (s *ConnectorSetupTestsService) TrustCertificates(value bool) *ConnectorSetupTestsService {
 	s.trustCertificates = &value
 	return s
 }
 
-func (s *connectorSetupTestsService) TrustFingerprints(value bool) *connectorSetupTestsService {
+func (s *ConnectorSetupTestsService) TrustFingerprints(value bool) *ConnectorSetupTestsService {
 	s.trustFingerprints = &value
 	return s
 }
 
-func (s *connectorSetupTestsService) Do(ctx context.Context) (ConnectorSetupTestsResponse, error) {
+func (s *ConnectorSetupTestsService) Do(ctx context.Context) (ConnectorSetupTestsResponse, error) {
 	var response ConnectorSetupTestsResponse
 
 	if s.connectorID == nil {
@@ -102,7 +102,7 @@ func (s *connectorSetupTestsService) Do(ctx context.Context) (ConnectorSetupTest
 		return response, err
 	}
 
-	r := Request{
+	r := request{
 		method:  "POST",
 		url:     url,
 		body:    reqBody,

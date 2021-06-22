@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-type certificateDestinationCertificateApproveService struct {
+type CertificateDestinationCertificateApproveService struct {
 	c             *Client
 	destinationID *string
 	hash          *string
@@ -24,11 +24,11 @@ type CertificateDestinationCertificateApproveResponse struct {
 	Message string `json:"message"`
 }
 
-func (c *Client) NewCertificateDestinationCertificateApprove() *certificateDestinationCertificateApproveService {
-	return &certificateDestinationCertificateApproveService{c: c}
+func (c *Client) NewCertificateDestinationCertificateApprove() *CertificateDestinationCertificateApproveService {
+	return &CertificateDestinationCertificateApproveService{c: c}
 }
 
-func (s *certificateDestinationCertificateApproveService) request() certificateDestinationCertificateApproveRequest {
+func (s *CertificateDestinationCertificateApproveService) request() certificateDestinationCertificateApproveRequest {
 	return certificateDestinationCertificateApproveRequest{
 		DestinationID: s.destinationID,
 		Hash:          s.hash,
@@ -36,22 +36,22 @@ func (s *certificateDestinationCertificateApproveService) request() certificateD
 	}
 }
 
-func (s *certificateDestinationCertificateApproveService) DestinationID(value string) *certificateDestinationCertificateApproveService {
+func (s *CertificateDestinationCertificateApproveService) DestinationID(value string) *CertificateDestinationCertificateApproveService {
 	s.destinationID = &value
 	return s
 }
 
-func (s *certificateDestinationCertificateApproveService) Hash(value string) *certificateDestinationCertificateApproveService {
+func (s *CertificateDestinationCertificateApproveService) Hash(value string) *CertificateDestinationCertificateApproveService {
 	s.hash = &value
 	return s
 }
 
-func (s *certificateDestinationCertificateApproveService) EncodedCert(value string) *certificateDestinationCertificateApproveService {
+func (s *CertificateDestinationCertificateApproveService) EncodedCert(value string) *CertificateDestinationCertificateApproveService {
 	s.encodedCert = &value
 	return s
 }
 
-func (s *certificateDestinationCertificateApproveService) Do(ctx context.Context) (CertificateDestinationCertificateApproveResponse, error) {
+func (s *CertificateDestinationCertificateApproveService) Do(ctx context.Context) (CertificateDestinationCertificateApproveResponse, error) {
 	var response CertificateDestinationCertificateApproveResponse
 	url := fmt.Sprintf("%v/certificates", s.c.baseURL)
 	expectedStatus := 200
@@ -65,7 +65,7 @@ func (s *certificateDestinationCertificateApproveService) Do(ctx context.Context
 		return response, err
 	}
 
-	r := Request{
+	r := request{
 		method:  "POST",
 		url:     url,
 		body:    reqBody,

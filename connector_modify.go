@@ -7,14 +7,14 @@ import (
 	"time"
 )
 
-type connectorModifyService struct {
+type ConnectorModifyService struct {
 	c                 *Client
 	connectorID       *string
 	paused            *bool
 	syncFrequency     *int
 	dailySyncTime     *string
-	config            *connectorConfig
-	auth              *connectorAuth
+	config            *ConnectorConfig
+	auth              *ConnectorAuth
 	trustCertificates *bool
 	trustFingerprints *bool
 	isHistoricalSync  *bool
@@ -73,11 +73,11 @@ type ConnectorModifyResponse struct {
 	} `json:"data"`
 }
 
-func (c *Client) NewConnectorModify() *connectorModifyService {
-	return &connectorModifyService{c: c}
+func (c *Client) NewConnectorModify() *ConnectorModifyService {
+	return &ConnectorModifyService{c: c}
 }
 
-func (s *connectorModifyService) request() *connectorModifyRequest {
+func (s *ConnectorModifyService) request() *connectorModifyRequest {
 	var config *connectorConfigRequest
 	if s.config != nil {
 		config = s.config.request()
@@ -102,62 +102,62 @@ func (s *connectorModifyService) request() *connectorModifyRequest {
 	}
 }
 
-func (s *connectorModifyService) ConnectorID(value string) *connectorModifyService {
+func (s *ConnectorModifyService) ConnectorID(value string) *ConnectorModifyService {
 	s.connectorID = &value
 	return s
 }
 
-func (s *connectorModifyService) Paused(value bool) *connectorModifyService {
+func (s *ConnectorModifyService) Paused(value bool) *ConnectorModifyService {
 	s.paused = &value
 	return s
 }
 
-func (s *connectorModifyService) SyncFrequency(value int) *connectorModifyService {
+func (s *ConnectorModifyService) SyncFrequency(value int) *ConnectorModifyService {
 	s.syncFrequency = &value
 	return s
 }
 
-func (s *connectorModifyService) DailySyncTime(value string) *connectorModifyService {
+func (s *ConnectorModifyService) DailySyncTime(value string) *ConnectorModifyService {
 	s.dailySyncTime = &value
 	return s
 }
 
-func (s *connectorModifyService) Config(value *connectorConfig) *connectorModifyService {
+func (s *ConnectorModifyService) Config(value *ConnectorConfig) *ConnectorModifyService {
 	s.config = value
 	return s
 }
 
-func (s *connectorModifyService) Auth(value *connectorAuth) *connectorModifyService {
+func (s *ConnectorModifyService) Auth(value *ConnectorAuth) *ConnectorModifyService {
 	s.auth = value
 	return s
 }
 
-func (s *connectorModifyService) TrustCertificates(value bool) *connectorModifyService {
+func (s *ConnectorModifyService) TrustCertificates(value bool) *ConnectorModifyService {
 	s.trustCertificates = &value
 	return s
 }
 
-func (s *connectorModifyService) TrustFingerprints(value bool) *connectorModifyService {
+func (s *ConnectorModifyService) TrustFingerprints(value bool) *ConnectorModifyService {
 	s.trustFingerprints = &value
 	return s
 }
 
-func (s *connectorModifyService) IsHistoricalSync(value bool) *connectorModifyService {
+func (s *ConnectorModifyService) IsHistoricalSync(value bool) *ConnectorModifyService {
 	s.isHistoricalSync = &value
 	return s
 }
 
-func (s *connectorModifyService) ScheduleType(value string) *connectorModifyService {
+func (s *ConnectorModifyService) ScheduleType(value string) *ConnectorModifyService {
 	s.scheduleType = &value
 	return s
 }
 
-func (s *connectorModifyService) RunSetupTests(value bool) *connectorModifyService {
+func (s *ConnectorModifyService) RunSetupTests(value bool) *ConnectorModifyService {
 	s.runSetupTests = &value
 	return s
 }
 
-func (s *connectorModifyService) Do(ctx context.Context) (ConnectorModifyResponse, error) {
+func (s *ConnectorModifyService) Do(ctx context.Context) (ConnectorModifyResponse, error) {
 	var response ConnectorModifyResponse
 
 	if s.connectorID == nil {
@@ -176,7 +176,7 @@ func (s *connectorModifyService) Do(ctx context.Context) (ConnectorModifyRespons
 		return response, err
 	}
 
-	r := Request{
+	r := request{
 		method:  "PATCH",
 		url:     url,
 		body:    reqBody,

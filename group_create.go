@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-type groupCreateService struct {
+type GroupCreateService struct {
 	c    *Client
 	name *string
 }
@@ -26,22 +26,22 @@ type GroupCreateResponse struct {
 	} `json:"data"`
 }
 
-func (c *Client) NewGroupCreate() *groupCreateService {
-	return &groupCreateService{c: c}
+func (c *Client) NewGroupCreate() *GroupCreateService {
+	return &GroupCreateService{c: c}
 }
 
-func (s *groupCreateService) request() groupCreateRequest {
+func (s *GroupCreateService) request() groupCreateRequest {
 	return groupCreateRequest{
 		Name: s.name,
 	}
 }
 
-func (s *groupCreateService) Name(value string) *groupCreateService {
+func (s *GroupCreateService) Name(value string) *GroupCreateService {
 	s.name = &value
 	return s
 }
 
-func (s *groupCreateService) Do(ctx context.Context) (GroupCreateResponse, error) {
+func (s *GroupCreateService) Do(ctx context.Context) (GroupCreateResponse, error) {
 	var response GroupCreateResponse
 	url := fmt.Sprintf("%v/groups", s.c.baseURL)
 	expectedStatus := 201
@@ -55,7 +55,7 @@ func (s *groupCreateService) Do(ctx context.Context) (GroupCreateResponse, error
 		return response, err
 	}
 
-	r := Request{
+	r := request{
 		method:  "POST",
 		url:     url,
 		body:    reqBody,

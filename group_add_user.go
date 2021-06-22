@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-type groupAddUserService struct {
+type GroupAddUserService struct {
 	c       *Client
 	groupID *string
 	email   *string
@@ -23,33 +23,33 @@ type GroupAddUserResponse struct {
 	Message string `json:"message"`
 }
 
-func (c *Client) NewGroupAddUser() *groupAddUserService {
-	return &groupAddUserService{c: c}
+func (c *Client) NewGroupAddUser() *GroupAddUserService {
+	return &GroupAddUserService{c: c}
 }
 
-func (s *groupAddUserService) request() groupAddUserRequest {
+func (s *GroupAddUserService) request() groupAddUserRequest {
 	return groupAddUserRequest{
 		Email: s.email,
 		Role:  s.role,
 	}
 }
 
-func (s *groupAddUserService) GroupID(value string) *groupAddUserService {
+func (s *GroupAddUserService) GroupID(value string) *GroupAddUserService {
 	s.groupID = &value
 	return s
 }
 
-func (s *groupAddUserService) Email(value string) *groupAddUserService {
+func (s *GroupAddUserService) Email(value string) *GroupAddUserService {
 	s.email = &value
 	return s
 }
 
-func (s *groupAddUserService) Role(value string) *groupAddUserService {
+func (s *GroupAddUserService) Role(value string) *GroupAddUserService {
 	s.role = &value
 	return s
 }
 
-func (s *groupAddUserService) Do(ctx context.Context) (GroupAddUserResponse, error) {
+func (s *GroupAddUserService) Do(ctx context.Context) (GroupAddUserResponse, error) {
 	var response GroupAddUserResponse
 
 	if s.groupID == nil {
@@ -68,7 +68,7 @@ func (s *groupAddUserService) Do(ctx context.Context) (GroupAddUserResponse, err
 		return response, err
 	}
 
-	r := Request{
+	r := request{
 		method:  "POST",
 		url:     url,
 		body:    reqBody,

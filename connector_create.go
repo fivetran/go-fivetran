@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-type connectorCreateService struct {
+type ConnectorCreateService struct {
 	c                 *Client
 	service           *string
 	groupID           *string
@@ -15,8 +15,8 @@ type connectorCreateService struct {
 	trustFingerprints *bool
 	runSetupTests     *bool
 	paused            *bool
-	config            *connectorConfig
-	auth              *connectorAuth
+	config            *ConnectorConfig
+	auth              *ConnectorAuth
 }
 
 type connectorCreateRequest struct {
@@ -68,11 +68,11 @@ type ConnectorCreateResponse struct {
 	} `json:"data"`
 }
 
-func (c *Client) NewConnectorCreate() *connectorCreateService {
-	return &connectorCreateService{c: c}
+func (c *Client) NewConnectorCreate() *ConnectorCreateService {
+	return &ConnectorCreateService{c: c}
 }
 
-func (s *connectorCreateService) request() *connectorCreateRequest {
+func (s *ConnectorCreateService) request() *connectorCreateRequest {
 	var config *connectorConfigRequest
 	if s.config != nil {
 		config = s.config.request()
@@ -95,47 +95,47 @@ func (s *connectorCreateService) request() *connectorCreateRequest {
 	}
 }
 
-func (s *connectorCreateService) Service(value string) *connectorCreateService {
+func (s *ConnectorCreateService) Service(value string) *ConnectorCreateService {
 	s.service = &value
 	return s
 }
 
-func (s *connectorCreateService) GroupID(value string) *connectorCreateService {
+func (s *ConnectorCreateService) GroupID(value string) *ConnectorCreateService {
 	s.groupID = &value
 	return s
 }
 
-func (s *connectorCreateService) TrustCertificates(value bool) *connectorCreateService {
+func (s *ConnectorCreateService) TrustCertificates(value bool) *ConnectorCreateService {
 	s.trustCertificates = &value
 	return s
 }
 
-func (s *connectorCreateService) TrustFingerprints(value bool) *connectorCreateService {
+func (s *ConnectorCreateService) TrustFingerprints(value bool) *ConnectorCreateService {
 	s.trustFingerprints = &value
 	return s
 }
 
-func (s *connectorCreateService) RunSetupTests(value bool) *connectorCreateService {
+func (s *ConnectorCreateService) RunSetupTests(value bool) *ConnectorCreateService {
 	s.runSetupTests = &value
 	return s
 }
 
-func (s *connectorCreateService) Paused(value bool) *connectorCreateService {
+func (s *ConnectorCreateService) Paused(value bool) *ConnectorCreateService {
 	s.paused = &value
 	return s
 }
 
-func (s *connectorCreateService) Config(value *connectorConfig) *connectorCreateService {
+func (s *ConnectorCreateService) Config(value *ConnectorConfig) *ConnectorCreateService {
 	s.config = value
 	return s
 }
 
-func (s *connectorCreateService) Auth(value *connectorAuth) *connectorCreateService {
+func (s *ConnectorCreateService) Auth(value *ConnectorAuth) *ConnectorCreateService {
 	s.auth = value
 	return s
 }
 
-func (s *connectorCreateService) Do(ctx context.Context) (ConnectorCreateResponse, error) {
+func (s *ConnectorCreateService) Do(ctx context.Context) (ConnectorCreateResponse, error) {
 	var response ConnectorCreateResponse
 	url := fmt.Sprintf("%v/connectors", s.c.baseURL)
 	expectedStatus := 201
@@ -149,7 +149,7 @@ func (s *connectorCreateService) Do(ctx context.Context) (ConnectorCreateRespons
 		return response, err
 	}
 
-	r := Request{
+	r := request{
 		method:  "POST",
 		url:     url,
 		body:    reqBody,

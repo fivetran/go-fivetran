@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-type groupsListService struct {
+type GroupsListService struct {
 	c      *Client
 	limit  *int
 	cursor *string
@@ -26,21 +26,21 @@ type GroupsListResponse struct {
 	} `json:"data"`
 }
 
-func (c *Client) NewGroupsList() *groupsListService {
-	return &groupsListService{c: c}
+func (c *Client) NewGroupsList() *GroupsListService {
+	return &GroupsListService{c: c}
 }
 
-func (s *groupsListService) Limit(value int) *groupsListService {
+func (s *GroupsListService) Limit(value int) *GroupsListService {
 	s.limit = &value
 	return s
 }
 
-func (s *groupsListService) Cursor(value string) *groupsListService {
+func (s *GroupsListService) Cursor(value string) *GroupsListService {
 	s.cursor = &value
 	return s
 }
 
-func (s *groupsListService) Do(ctx context.Context) (GroupsListResponse, error) {
+func (s *GroupsListService) Do(ctx context.Context) (GroupsListResponse, error) {
 	var response GroupsListResponse
 	url := fmt.Sprintf("%v/groups", s.c.baseURL)
 	expectedStatus := 200
@@ -56,7 +56,7 @@ func (s *groupsListService) Do(ctx context.Context) (GroupsListResponse, error) 
 		queries["limit"] = fmt.Sprint(*s.limit)
 	}
 
-	r := Request{
+	r := request{
 		method:  "GET",
 		url:     url,
 		body:    nil,

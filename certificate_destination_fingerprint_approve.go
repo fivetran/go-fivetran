@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-type certificateDestinationFingerprintApproveService struct {
+type CertificateDestinationFingerprintApproveService struct {
 	c             *Client
 	destinationID *string
 	hash          *string
@@ -24,11 +24,11 @@ type CertificateDestinationFingerprintApproveResponse struct {
 	Message string `json:"message"`
 }
 
-func (c *Client) NewCertificateDestinationFingerprintApprove() *certificateDestinationFingerprintApproveService {
-	return &certificateDestinationFingerprintApproveService{c: c}
+func (c *Client) NewCertificateDestinationFingerprintApprove() *CertificateDestinationFingerprintApproveService {
+	return &CertificateDestinationFingerprintApproveService{c: c}
 }
 
-func (s *certificateDestinationFingerprintApproveService) request() certificateDestinationFingerprintApproveRequest {
+func (s *CertificateDestinationFingerprintApproveService) request() certificateDestinationFingerprintApproveRequest {
 	return certificateDestinationFingerprintApproveRequest{
 		DestinationID: s.destinationID,
 		Hash:          s.hash,
@@ -36,22 +36,22 @@ func (s *certificateDestinationFingerprintApproveService) request() certificateD
 	}
 }
 
-func (s *certificateDestinationFingerprintApproveService) DestinationID(value string) *certificateDestinationFingerprintApproveService {
+func (s *CertificateDestinationFingerprintApproveService) DestinationID(value string) *CertificateDestinationFingerprintApproveService {
 	s.destinationID = &value
 	return s
 }
 
-func (s *certificateDestinationFingerprintApproveService) Hash(value string) *certificateDestinationFingerprintApproveService {
+func (s *CertificateDestinationFingerprintApproveService) Hash(value string) *CertificateDestinationFingerprintApproveService {
 	s.hash = &value
 	return s
 }
 
-func (s *certificateDestinationFingerprintApproveService) PublicKey(value string) *certificateDestinationFingerprintApproveService {
+func (s *CertificateDestinationFingerprintApproveService) PublicKey(value string) *CertificateDestinationFingerprintApproveService {
 	s.publicKey = &value
 	return s
 }
 
-func (s *certificateDestinationFingerprintApproveService) Do(ctx context.Context) (CertificateDestinationFingerprintApproveResponse, error) {
+func (s *CertificateDestinationFingerprintApproveService) Do(ctx context.Context) (CertificateDestinationFingerprintApproveResponse, error) {
 	var response CertificateDestinationFingerprintApproveResponse
 	url := fmt.Sprintf("%v/fingerprints", s.c.baseURL)
 	expectedStatus := 200
@@ -65,7 +65,7 @@ func (s *certificateDestinationFingerprintApproveService) Do(ctx context.Context
 		return response, err
 	}
 
-	r := Request{
+	r := request{
 		method:  "POST",
 		url:     url,
 		body:    reqBody,

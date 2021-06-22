@@ -6,13 +6,13 @@ import (
 	"fmt"
 )
 
-type destinationCreateService struct {
+type DestinationCreateService struct {
 	c                 *Client
 	groupID           *string
 	service           *string
 	region            *string
 	timeZoneOffset    *string
-	config            *destinationConfig
+	config            *DestinationConfig
 	trustCertificates *bool
 	trustFingerprints *bool
 	runSetupTests     *bool
@@ -48,11 +48,11 @@ type DestinationCreateResponse struct {
 	} `json:"data"`
 }
 
-func (c *Client) NewDestinationCreate() *destinationCreateService {
-	return &destinationCreateService{c: c}
+func (c *Client) NewDestinationCreate() *DestinationCreateService {
+	return &DestinationCreateService{c: c}
 }
 
-func (s *destinationCreateService) request() *destinationCreateRequest {
+func (s *DestinationCreateService) request() *destinationCreateRequest {
 	var config *destinationConfigRequest
 
 	if s.config != nil {
@@ -71,47 +71,47 @@ func (s *destinationCreateService) request() *destinationCreateRequest {
 	}
 }
 
-func (s *destinationCreateService) GroupID(value string) *destinationCreateService {
+func (s *DestinationCreateService) GroupID(value string) *DestinationCreateService {
 	s.groupID = &value
 	return s
 }
 
-func (s *destinationCreateService) Service(value string) *destinationCreateService {
+func (s *DestinationCreateService) Service(value string) *DestinationCreateService {
 	s.service = &value
 	return s
 }
 
-func (s *destinationCreateService) Region(value string) *destinationCreateService {
+func (s *DestinationCreateService) Region(value string) *DestinationCreateService {
 	s.region = &value
 	return s
 }
 
-func (s *destinationCreateService) TimeZoneOffset(value string) *destinationCreateService {
+func (s *DestinationCreateService) TimeZoneOffset(value string) *DestinationCreateService {
 	s.timeZoneOffset = &value
 	return s
 }
 
-func (s *destinationCreateService) Config(value *destinationConfig) *destinationCreateService {
+func (s *DestinationCreateService) Config(value *DestinationConfig) *DestinationCreateService {
 	s.config = value
 	return s
 }
 
-func (s *destinationCreateService) TrustCertificates(value bool) *destinationCreateService {
+func (s *DestinationCreateService) TrustCertificates(value bool) *DestinationCreateService {
 	s.trustCertificates = &value
 	return s
 }
 
-func (s *destinationCreateService) TrustFingerprints(value bool) *destinationCreateService {
+func (s *DestinationCreateService) TrustFingerprints(value bool) *DestinationCreateService {
 	s.trustFingerprints = &value
 	return s
 }
 
-func (s *destinationCreateService) RunSetupTests(value bool) *destinationCreateService {
+func (s *DestinationCreateService) RunSetupTests(value bool) *DestinationCreateService {
 	s.runSetupTests = &value
 	return s
 }
 
-func (s *destinationCreateService) Do(ctx context.Context) (DestinationCreateResponse, error) {
+func (s *DestinationCreateService) Do(ctx context.Context) (DestinationCreateResponse, error) {
 	var response DestinationCreateResponse
 	url := fmt.Sprintf("%v/destinations", s.c.baseURL)
 	expectedStatus := 201
@@ -125,7 +125,7 @@ func (s *destinationCreateService) Do(ctx context.Context) (DestinationCreateRes
 		return response, err
 	}
 
-	r := Request{
+	r := request{
 		method:  "POST",
 		url:     url,
 		body:    reqBody,

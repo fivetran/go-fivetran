@@ -9,7 +9,7 @@ import (
 )
 
 // Request is a type used to pass http requests to func httpRequest.
-type Request struct {
+type request struct {
 	method  string
 	url     string
 	body    []byte
@@ -20,7 +20,7 @@ type Request struct {
 // httpRequest receives a Request and a context.Context and calls func http.NewRequestWithContext.
 // If the request succeeds, it returns the response body, the response status code, and a nil error.
 // It returns an error if the request fails.
-func httpRequest(req Request, ctx context.Context) ([]byte, int, error) {
+func httpRequest(req request, ctx context.Context) ([]byte, int, error) {
 	client := &http.Client{}
 
 	newReq, err := http.NewRequestWithContext(ctx, req.method, req.url, bytes.NewReader(req.body))

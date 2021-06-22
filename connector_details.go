@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-type connectorDetailsService struct {
+type ConnectorDetailsService struct {
 	c           *Client
 	connectorID *string
 }
@@ -45,16 +45,16 @@ type ConnectorDetailsResponse struct {
 	} `json:"data"`
 }
 
-func (c *Client) NewConnectorDetails() *connectorDetailsService {
-	return &connectorDetailsService{c: c}
+func (c *Client) NewConnectorDetails() *ConnectorDetailsService {
+	return &ConnectorDetailsService{c: c}
 }
 
-func (s *connectorDetailsService) ConnectorID(value string) *connectorDetailsService {
+func (s *ConnectorDetailsService) ConnectorID(value string) *ConnectorDetailsService {
 	s.connectorID = &value
 	return s
 }
 
-func (s *connectorDetailsService) Do(ctx context.Context) (ConnectorDetailsResponse, error) {
+func (s *ConnectorDetailsService) Do(ctx context.Context) (ConnectorDetailsResponse, error) {
 	var response ConnectorDetailsResponse
 
 	if s.connectorID == nil {
@@ -67,7 +67,7 @@ func (s *connectorDetailsService) Do(ctx context.Context) (ConnectorDetailsRespo
 	headers := make(map[string]string)
 	headers["Authorization"] = s.c.authorization
 
-	r := Request{
+	r := request{
 		method:  "GET",
 		url:     url,
 		body:    nil,

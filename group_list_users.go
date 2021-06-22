@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-type groupListUsersService struct {
+type GroupListUsersService struct {
 	c       *Client
 	groupID *string
 	limit   *int
@@ -36,26 +36,26 @@ type GroupListUsersResponse struct {
 	} `json:"data"`
 }
 
-func (c *Client) NewGroupListUsers() *groupListUsersService {
-	return &groupListUsersService{c: c}
+func (c *Client) NewGroupListUsers() *GroupListUsersService {
+	return &GroupListUsersService{c: c}
 }
 
-func (s *groupListUsersService) GroupID(value string) *groupListUsersService {
+func (s *GroupListUsersService) GroupID(value string) *GroupListUsersService {
 	s.groupID = &value
 	return s
 }
 
-func (s *groupListUsersService) Limit(value int) *groupListUsersService {
+func (s *GroupListUsersService) Limit(value int) *GroupListUsersService {
 	s.limit = &value
 	return s
 }
 
-func (s *groupListUsersService) Cursor(value string) *groupListUsersService {
+func (s *GroupListUsersService) Cursor(value string) *GroupListUsersService {
 	s.cursor = &value
 	return s
 }
 
-func (s *groupListUsersService) Do(ctx context.Context) (GroupListUsersResponse, error) {
+func (s *GroupListUsersService) Do(ctx context.Context) (GroupListUsersResponse, error) {
 	var response GroupListUsersResponse
 
 	if s.groupID == nil {
@@ -76,7 +76,7 @@ func (s *groupListUsersService) Do(ctx context.Context) (GroupListUsersResponse,
 		queries["limit"] = fmt.Sprint(*s.limit)
 	}
 
-	r := Request{
+	r := request{
 		method:  "GET",
 		url:     url,
 		body:    nil,

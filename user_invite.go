@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-type userInviteService struct {
+type UserInviteService struct {
 	c          *Client
 	email      *string
 	givenName  *string
@@ -43,11 +43,11 @@ type UserInviteResponse struct {
 	} `json:"data"`
 }
 
-func (c *Client) NewUserInvite() *userInviteService {
-	return &userInviteService{c: c}
+func (c *Client) NewUserInvite() *UserInviteService {
+	return &UserInviteService{c: c}
 }
 
-func (s *userInviteService) request() userInviteRequest {
+func (s *UserInviteService) request() userInviteRequest {
 	return userInviteRequest{
 		Email:      s.email,
 		GivenName:  s.givenName,
@@ -58,37 +58,37 @@ func (s *userInviteService) request() userInviteRequest {
 	}
 }
 
-func (s *userInviteService) Email(value string) *userInviteService {
+func (s *UserInviteService) Email(value string) *UserInviteService {
 	s.email = &value
 	return s
 }
 
-func (s *userInviteService) GivenName(value string) *userInviteService {
+func (s *UserInviteService) GivenName(value string) *UserInviteService {
 	s.givenName = &value
 	return s
 }
 
-func (s *userInviteService) FamilyName(value string) *userInviteService {
+func (s *UserInviteService) FamilyName(value string) *UserInviteService {
 	s.familyName = &value
 	return s
 }
 
-func (s *userInviteService) Phone(value string) *userInviteService {
+func (s *UserInviteService) Phone(value string) *UserInviteService {
 	s.phone = &value
 	return s
 }
 
-func (s *userInviteService) Picture(value string) *userInviteService {
+func (s *UserInviteService) Picture(value string) *UserInviteService {
 	s.picture = &value
 	return s
 }
 
-func (s *userInviteService) Role(value string) *userInviteService {
+func (s *UserInviteService) Role(value string) *UserInviteService {
 	s.role = &value
 	return s
 }
 
-func (s *userInviteService) Do(ctx context.Context) (UserInviteResponse, error) {
+func (s *UserInviteService) Do(ctx context.Context) (UserInviteResponse, error) {
 	var response UserInviteResponse
 	url := fmt.Sprintf("%v/users", s.c.baseURL)
 	expectedStatus := 201
@@ -102,7 +102,7 @@ func (s *userInviteService) Do(ctx context.Context) (UserInviteResponse, error) 
 		return response, err
 	}
 
-	r := Request{
+	r := request{
 		method:  "POST",
 		url:     url,
 		body:    reqBody,

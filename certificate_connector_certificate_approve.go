@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-type certificateConnectorCertificateApproveService struct {
+type CertificateConnectorCertificateApproveService struct {
 	c           *Client
 	connectorID *string
 	hash        *string
@@ -24,11 +24,11 @@ type CertificateConnectorCertificateApproveResponse struct {
 	Message string `json:"message"`
 }
 
-func (c *Client) NewCertificateConnectorCertificateApprove() *certificateConnectorCertificateApproveService {
-	return &certificateConnectorCertificateApproveService{c: c}
+func (c *Client) NewCertificateConnectorCertificateApprove() *CertificateConnectorCertificateApproveService {
+	return &CertificateConnectorCertificateApproveService{c: c}
 }
 
-func (s *certificateConnectorCertificateApproveService) request() certificateConnectorCertificateApproveRequest {
+func (s *CertificateConnectorCertificateApproveService) request() certificateConnectorCertificateApproveRequest {
 	return certificateConnectorCertificateApproveRequest{
 		ConnectorID: s.connectorID,
 		Hash:        s.hash,
@@ -36,22 +36,22 @@ func (s *certificateConnectorCertificateApproveService) request() certificateCon
 	}
 }
 
-func (s *certificateConnectorCertificateApproveService) ConnectorID(value string) *certificateConnectorCertificateApproveService {
+func (s *CertificateConnectorCertificateApproveService) ConnectorID(value string) *CertificateConnectorCertificateApproveService {
 	s.connectorID = &value
 	return s
 }
 
-func (s *certificateConnectorCertificateApproveService) Hash(value string) *certificateConnectorCertificateApproveService {
+func (s *CertificateConnectorCertificateApproveService) Hash(value string) *CertificateConnectorCertificateApproveService {
 	s.hash = &value
 	return s
 }
 
-func (s *certificateConnectorCertificateApproveService) EncodedCert(value string) *certificateConnectorCertificateApproveService {
+func (s *CertificateConnectorCertificateApproveService) EncodedCert(value string) *CertificateConnectorCertificateApproveService {
 	s.encodedCert = &value
 	return s
 }
 
-func (s *certificateConnectorCertificateApproveService) Do(ctx context.Context) (CertificateConnectorCertificateApproveResponse, error) {
+func (s *CertificateConnectorCertificateApproveService) Do(ctx context.Context) (CertificateConnectorCertificateApproveResponse, error) {
 	var response CertificateConnectorCertificateApproveResponse
 	url := fmt.Sprintf("%v/certificates", s.c.baseURL)
 	expectedStatus := 200
@@ -65,7 +65,7 @@ func (s *certificateConnectorCertificateApproveService) Do(ctx context.Context) 
 		return response, err
 	}
 
-	r := Request{
+	r := request{
 		method:  "POST",
 		url:     url,
 		body:    reqBody,

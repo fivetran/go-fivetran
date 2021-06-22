@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-type connectorReSyncTableService struct {
+type ConnectorReSyncTableService struct {
 	c           *Client
 	connectorID *string
 	schema      *string
@@ -18,26 +18,26 @@ type ConnectorReSyncTableResponse struct {
 	Message string `json:"message"`
 }
 
-func (c *Client) NewConnectorReSyncTable() *connectorReSyncTableService {
-	return &connectorReSyncTableService{c: c}
+func (c *Client) NewConnectorReSyncTable() *ConnectorReSyncTableService {
+	return &ConnectorReSyncTableService{c: c}
 }
 
-func (s *connectorReSyncTableService) ConnectorID(value string) *connectorReSyncTableService {
+func (s *ConnectorReSyncTableService) ConnectorID(value string) *ConnectorReSyncTableService {
 	s.connectorID = &value
 	return s
 }
 
-func (s *connectorReSyncTableService) Schema(value string) *connectorReSyncTableService {
+func (s *ConnectorReSyncTableService) Schema(value string) *ConnectorReSyncTableService {
 	s.schema = &value
 	return s
 }
 
-func (s *connectorReSyncTableService) Table(value string) *connectorReSyncTableService {
+func (s *ConnectorReSyncTableService) Table(value string) *ConnectorReSyncTableService {
 	s.table = &value
 	return s
 }
 
-func (s *connectorReSyncTableService) Do(ctx context.Context) (ConnectorReSyncTableResponse, error) {
+func (s *ConnectorReSyncTableService) Do(ctx context.Context) (ConnectorReSyncTableResponse, error) {
 	var response ConnectorReSyncTableResponse
 
 	if s.connectorID == nil {
@@ -56,7 +56,7 @@ func (s *connectorReSyncTableService) Do(ctx context.Context) (ConnectorReSyncTa
 	headers := make(map[string]string)
 	headers["Authorization"] = s.c.authorization
 
-	r := Request{
+	r := request{
 		method:  "POST",
 		url:     url,
 		body:    nil,

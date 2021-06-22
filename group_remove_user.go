@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-type groupRemoveUserService struct {
+type GroupRemoveUserService struct {
 	c       *Client
 	groupID *string
 	userID  *string
@@ -17,21 +17,21 @@ type GroupRemoveUserResponse struct {
 	Message string `json:"message"`
 }
 
-func (c *Client) NewGroupRemoveUser() *groupRemoveUserService {
-	return &groupRemoveUserService{c: c}
+func (c *Client) NewGroupRemoveUser() *GroupRemoveUserService {
+	return &GroupRemoveUserService{c: c}
 }
 
-func (s *groupRemoveUserService) GroupID(value string) *groupRemoveUserService {
+func (s *GroupRemoveUserService) GroupID(value string) *GroupRemoveUserService {
 	s.groupID = &value
 	return s
 }
 
-func (s *groupRemoveUserService) UserID(value string) *groupRemoveUserService {
+func (s *GroupRemoveUserService) UserID(value string) *GroupRemoveUserService {
 	s.userID = &value
 	return s
 }
 
-func (s *groupRemoveUserService) Do(ctx context.Context) (GroupRemoveUserResponse, error) {
+func (s *GroupRemoveUserService) Do(ctx context.Context) (GroupRemoveUserResponse, error) {
 	var response GroupRemoveUserResponse
 
 	if s.groupID == nil {
@@ -47,7 +47,7 @@ func (s *groupRemoveUserService) Do(ctx context.Context) (GroupRemoveUserRespons
 	headers := make(map[string]string)
 	headers["Authorization"] = s.c.authorization
 
-	r := Request{
+	r := request{
 		method:  "DELETE",
 		url:     url,
 		body:    nil,

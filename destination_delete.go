@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-type destinationDeleteService struct {
+type DestinationDeleteService struct {
 	c             *Client
 	destinationID *string
 }
@@ -16,16 +16,16 @@ type DestinationDeleteResponse struct {
 	Message string `json:"message"`
 }
 
-func (c *Client) NewDestinationDelete() *destinationDeleteService {
-	return &destinationDeleteService{c: c}
+func (c *Client) NewDestinationDelete() *DestinationDeleteService {
+	return &DestinationDeleteService{c: c}
 }
 
-func (s *destinationDeleteService) DestinationID(value string) *destinationDeleteService {
+func (s *DestinationDeleteService) DestinationID(value string) *DestinationDeleteService {
 	s.destinationID = &value
 	return s
 }
 
-func (s *destinationDeleteService) Do(ctx context.Context) (DestinationDeleteResponse, error) {
+func (s *DestinationDeleteService) Do(ctx context.Context) (DestinationDeleteResponse, error) {
 	var response DestinationDeleteResponse
 
 	if s.destinationID == nil {
@@ -38,7 +38,7 @@ func (s *destinationDeleteService) Do(ctx context.Context) (DestinationDeleteRes
 	headers := make(map[string]string)
 	headers["Authorization"] = s.c.authorization
 
-	r := Request{
+	r := request{
 		method:  "DELETE",
 		url:     url,
 		body:    nil,

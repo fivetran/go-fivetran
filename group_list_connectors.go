@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-type groupListConnectorsService struct {
+type GroupListConnectorsService struct {
 	c       *Client
 	groupID *string
 	limit   *int
@@ -51,31 +51,31 @@ type GroupListConnectorsResponse struct {
 	} `json:"data"`
 }
 
-func (c *Client) NewGroupListConnectors() *groupListConnectorsService {
-	return &groupListConnectorsService{c: c}
+func (c *Client) NewGroupListConnectors() *GroupListConnectorsService {
+	return &GroupListConnectorsService{c: c}
 }
 
-func (s *groupListConnectorsService) GroupID(value string) *groupListConnectorsService {
+func (s *GroupListConnectorsService) GroupID(value string) *GroupListConnectorsService {
 	s.groupID = &value
 	return s
 }
 
-func (s *groupListConnectorsService) Limit(value int) *groupListConnectorsService {
+func (s *GroupListConnectorsService) Limit(value int) *GroupListConnectorsService {
 	s.limit = &value
 	return s
 }
 
-func (s *groupListConnectorsService) Cursor(value string) *groupListConnectorsService {
+func (s *GroupListConnectorsService) Cursor(value string) *GroupListConnectorsService {
 	s.cursor = &value
 	return s
 }
 
-func (s *groupListConnectorsService) Schema(value string) *groupListConnectorsService {
+func (s *GroupListConnectorsService) Schema(value string) *GroupListConnectorsService {
 	s.schema = &value
 	return s
 }
 
-func (s *groupListConnectorsService) Do(ctx context.Context) (GroupListConnectorsResponse, error) {
+func (s *GroupListConnectorsService) Do(ctx context.Context) (GroupListConnectorsResponse, error) {
 	var response GroupListConnectorsResponse
 
 	if s.groupID == nil {
@@ -99,7 +99,7 @@ func (s *groupListConnectorsService) Do(ctx context.Context) (GroupListConnector
 		queries["schema"] = *s.schema
 	}
 
-	r := Request{
+	r := request{
 		method:  "GET",
 		url:     url,
 		body:    nil,
