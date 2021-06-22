@@ -16,7 +16,7 @@ func main() {
 
 	client := fivetran.NewClient(apiKey, apiSecret)
 
-	svc := client.NewConnectorDetailsService()
+	svc := client.NewConnectorDetails()
 
 	value, err := svc.ConnectorID("pool_cleanse").Do(context.Background())
 	checkErr(err, value)

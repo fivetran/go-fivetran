@@ -16,9 +16,9 @@ func main() {
 
 	client := fivetran.NewClient(apiKey, apiSecret)
 
-	svc := client.NewDestinationDeleteService()
+	svc := client.NewDestinationDelete()
 
-	value, err := svc.DestinationID("replying_ministry").Do(context.Background())
+	value, err := svc.DestinationID("anyplace_silvery").Do(context.Background())
 	checkErr(err, value)
 
 	fmt.Printf("%+v\n", value)

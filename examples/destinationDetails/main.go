@@ -16,7 +16,7 @@ func main() {
 
 	client := fivetran.NewClient(apiKey, apiSecret)
 
-	svc := client.NewDestinationDetailsService()
+	svc := client.NewDestinationDetails()
 
 	value, err := svc.DestinationID("replying_ministry").Do(context.Background())
 	checkErr(err, value)

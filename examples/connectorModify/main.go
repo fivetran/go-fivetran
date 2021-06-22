@@ -16,12 +16,16 @@ func main() {
 
 	client := fivetran.NewClient(apiKey, apiSecret)
 
-	svc := client.NewConnectorModifyService()
+	svc := client.NewConnectorModify()
 
 	connConfig := fivetran.NewConnectorConfig().
 		NamedRange("range1")
 
-	svc.ConnectorID("pack_lingual")
+	cTables1 := fivetran.NewConnectorConfigCustomTables().Aggregation("aggregation1").TableName("theName")
+	cTables2 := fivetran.NewConnectorConfigCustomTables().TableName("theName")
+	connConfig.CustomTables(&[]*fivetran.ConnectorConfigCustomTables{cTables1, cTables2})
+
+	svc.ConnectorID("grateful_vertices")
 	svc.Paused(true)
 	svc.SyncFrequency(5)
 	svc.Config(connConfig)

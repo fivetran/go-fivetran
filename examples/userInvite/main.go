@@ -16,7 +16,7 @@ func main() {
 
 	client := fivetran.NewClient(apiKey, apiSecret)
 
-	svc := client.NewUserInviteService()
+	svc := client.NewUserInvite()
 
 	value, err := svc.
 		Email("sometestuser@fivetran.com").

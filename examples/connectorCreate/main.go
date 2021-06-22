@@ -16,10 +16,10 @@ func main() {
 
 	client := fivetran.NewClient(apiKey, apiSecret)
 
-	svc := client.NewConnectorCreateService()
+	svc := client.NewConnectorCreate()
 
 	connConfig := fivetran.NewConnectorConfig()
-	connConfig.Schema("google_sheets")
+	connConfig.Schema("google_sheets2")
 	connConfig.Table("table")
 	connConfig.SheetID("1Rmq_FN2kTNwWiT4adZKBxHBRmvfeBTIfKWi5B8ii9qk")
 	connConfig.NamedRange("range1")

@@ -14,11 +14,9 @@ func main() {
 	apiSecret := os.Getenv("FIVETRAN_APISECRET")
 	fivetran.Debug(true)
 
-	client := fivetran.NewClient(apiKey, apiSecret)
-
-	svc := client.NewGroupListUsers()
-
-	value, err := svc.GroupID("replying_ministry").Do(context.Background())
+	value, err := fivetran.NewClient(apiKey, apiSecret).NewGroupDelete().
+		GroupID("anyplace_silvery").
+		Do(context.Background())
 	checkErr(err, value)
 
 	fmt.Printf("%+v\n", value)

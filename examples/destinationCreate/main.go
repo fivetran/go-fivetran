@@ -16,7 +16,7 @@ func main() {
 
 	client := fivetran.NewClient(apiKey, apiSecret)
 
-	svc := client.NewDestinationCreateService()
+	svc := client.NewDestinationCreate()
 
 	destConfig := fivetran.NewDestinationConfig().
 		Host("10.20.30.40").
@@ -26,7 +26,7 @@ func main() {
 		Password("myPassword").
 		Auth("PASSWORD")
 
-	svc.GroupID("replying_ministry")
+	svc.GroupID("anyplace_silvery")
 	svc.Service("snowflake")
 	svc.Region("US")
 	svc.TimeZoneOffset("-5")

@@ -15,10 +15,10 @@ func main() {
 	fivetran.Debug(true)
 
 	client := fivetran.NewClient(apiKey, apiSecret)
-	svc := client.NewConnectorCreateService()
+	svc := client.NewConnectorCreate()
 
 	connConfig := fivetran.NewConnectorConfig().
-		SchemaPrefix("test_postgres_terraform_20210601v2").
+		SchemaPrefix("test_postgres_terraform_20210601v4").
 		Host("terraform-pgsql-connector-test.cp0rdhwjbsae.us-east-1.rds.amazonaws.com").
 		Port(5432).
 		Database("fivetran").

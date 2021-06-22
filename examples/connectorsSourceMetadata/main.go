@@ -16,7 +16,7 @@ func main() {
 
 	client := fivetran.NewClient(apiKey, apiSecret)
 
-	svc := client.NewConnectorsSourceMetadataService()
+	svc := client.NewConnectorsSourceMetadata()
 
 	value, err := svc.Limit(3).Cursor("eyJza2lwIjoxMH0").Do(context.Background())
 	checkErr(err, value)

@@ -16,9 +16,9 @@ func main() {
 
 	client := fivetran.NewClient(apiKey, apiSecret)
 
-	svc := client.NewGroupListConnectorsService()
+	svc := client.NewGroupListConnectors()
 
-	svc.ID("replying_ministry")
+	svc.GroupID("replying_ministry")
 
 	value, err := svc.Do(context.Background())
 	checkErr(err, value)

@@ -16,9 +16,9 @@ func main() {
 
 	client := fivetran.NewClient(apiKey, apiSecret)
 
-	svc := client.NewGroupRemoveUserService()
+	svc := client.NewGroupRemoveUser()
 
-	svc.ID("replying_ministry")
+	svc.GroupID("replying_ministry")
 	svc.UserID("rental_gilled")
 
 	value, err := svc.Do(context.Background())

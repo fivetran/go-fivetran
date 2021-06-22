@@ -16,9 +16,11 @@ func main() {
 
 	client := fivetran.NewClient(apiKey, apiSecret)
 
-	svc := client.NewUsersListService()
+	svc := client.NewUsersList()
+	svc.Limit(1)
+	svc.Cursor("eyJza2lwIjoxfQ")
 
-	value, err := svc.Limit(5).Do(context.Background())
+	value, err := svc.Do(context.Background())
 	checkErr(err, value)
 
 	fmt.Printf("%+v\n", value)

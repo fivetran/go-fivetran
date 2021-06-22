@@ -16,7 +16,7 @@ func main() {
 
 	client := fivetran.NewClient(apiKey, apiSecret)
 
-	svc := client.NewConnectorReSyncTableService()
+	svc := client.NewConnectorReSyncTable()
 
 	value, err := svc.ConnectorID("pack_lingual").
 		Table("table1").

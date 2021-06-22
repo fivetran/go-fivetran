@@ -16,9 +16,9 @@ func main() {
 
 	client := fivetran.NewClient(apiKey, apiSecret)
 
-	svc := client.NewGroupAddUserService()
+	svc := client.NewGroupAddUser()
 
-	svc.ID("replying_ministry")
+	svc.GroupID("replying_ministry")
 	svc.Email("sometestuser@fivetran.com")
 	svc.Role("ReadOnly")
 

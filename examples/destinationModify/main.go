@@ -16,7 +16,7 @@ func main() {
 
 	client := fivetran.NewClient(apiKey, apiSecret)
 
-	svc := client.NewDestinationModifyService()
+	svc := client.NewDestinationModify()
 
 	destConfig := fivetran.NewDestinationConfig().
 		Host("10.99.99.99").

@@ -16,9 +16,9 @@ func main() {
 
 	client := fivetran.NewClient(apiKey, apiSecret)
 
-	svc := client.NewUserDetailsService()
+	svc := client.NewUserDetails()
 
-	svc.UserId("expenditure_griminess")
+	svc.UserID("unmindful_search")
 
 	value, err := svc.Do(context.Background())
 	checkErr(err, value)
