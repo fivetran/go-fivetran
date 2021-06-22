@@ -7,6 +7,8 @@ import (
 	"time"
 )
 
+// UsersListService implements the User Management, List All Users API.
+// Ref. https://fivetran.com/docs/rest-api/users#listallusers
 type UsersListService struct {
 	c      *Client
 	limit  *int

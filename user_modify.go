@@ -7,6 +7,8 @@ import (
 	"time"
 )
 
+// UserModifyService implements the User Management, Modify a User API.
+// Ref. https://fivetran.com/docs/rest-api/users#modifyauser
 type UserModifyService struct {
 	c          *Client
 	userID     *string

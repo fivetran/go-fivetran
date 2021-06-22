@@ -6,6 +6,8 @@ import (
 	"fmt"
 )
 
+// CertificateConnectorFingerprintApproveService implements the Certificate Management, Approve a connector fingerprint API.
+// Ref. https://fivetran.com/docs/rest-api/certificates#approveaconnectorfingerprint
 type CertificateConnectorFingerprintApproveService struct {
 	c           *Client
 	connectorID *string

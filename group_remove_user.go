@@ -6,6 +6,8 @@ import (
 	"fmt"
 )
 
+// GroupRemoveUserService implements the Group Management, Remove a User from a Group API.
+// Ref. https://fivetran.com/docs/rest-api/groups#removeauserfromagroup
 type GroupRemoveUserService struct {
 	c       *Client
 	groupID *string

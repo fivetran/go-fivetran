@@ -1,5 +1,7 @@
 package fivetran
 
+// ConnectorConfigCustomTables builds Connector Management, Connector Config Custom Tables.
+// Ref. https://fivetran.com/docs/rest-api/connectors/config
 type ConnectorConfigCustomTables struct {
 	tableName              *string
 	configType             *string

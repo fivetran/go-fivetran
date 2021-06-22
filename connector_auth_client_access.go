@@ -1,5 +1,7 @@
 package fivetran
 
+// ConnectorAuthClientAccess builds Connector Management, Auth Client Access.
+// Ref. https://fivetran.com/docs/rest-api/connectors
 type ConnectorAuthClientAccess struct {
 	clientID       *string
 	clientSecret   *string

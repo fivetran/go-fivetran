@@ -6,6 +6,8 @@ import (
 	"fmt"
 )
 
+// UserDeleteService implements the User Management, Delete a user API.
+// Ref. https://fivetran.com/docs/rest-api/users#deleteauser
 type UserDeleteService struct {
 	c      *Client
 	userID *string

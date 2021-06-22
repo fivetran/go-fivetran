@@ -7,6 +7,8 @@ import (
 	"time"
 )
 
+// GroupModifyService implements the Group Management, Modify a Group API.
+// Ref. https://fivetran.com/docs/rest-api/groups#modifyagroup
 type GroupModifyService struct {
 	c       *Client
 	groupID *string

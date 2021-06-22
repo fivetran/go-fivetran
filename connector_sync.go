@@ -6,6 +6,8 @@ import (
 	"fmt"
 )
 
+// ConnectorSyncService implements the Connector Management, Sync Connector Data API.
+// Ref. https://fivetran.com/docs/rest-api/connectors#syncconnectordata
 type ConnectorSyncService struct {
 	c           *Client
 	connectorID *string

@@ -7,6 +7,8 @@ import (
 	"time"
 )
 
+// ConnectorSetupTestsService implements the Connector Management, Run connector setup tests API.
+// Ref. https://fivetran.com/docs/rest-api/connectors#runconnectorsetuptests
 type ConnectorSetupTestsService struct {
 	c                 *Client
 	connectorID       *string
@@ -118,18 +120,6 @@ func (s *ConnectorSetupTestsService) Do(ctx context.Context) (ConnectorSetupTest
 	if err := json.Unmarshal(respBody, &response); err != nil {
 		return response, err
 	}
-
-	// // converts destinationCreate.Data.Config.Fport to int. Should be removed
-	// // when https://fivetran.height.app/T-97508 fixed.
-	// switch destinationSetupTests.Data.Config.Fport.(type) {
-	// case string:
-	// 	destinationSetupTests.Data.Config.Fport, err = strconv.Atoi(destinationSetupTests.Data.Config.Fport.(string))
-	// 	if err != nil {
-	// 		return DestinationSetupTests{}, err
-	// 	}
-
-	// default:
-	// }
 
 	if respStatus != expectedStatus {
 		err := fmt.Errorf("status code: %v; expected %v", respStatus, expectedStatus)

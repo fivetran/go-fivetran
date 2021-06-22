@@ -6,6 +6,8 @@ import (
 	"fmt"
 )
 
+// GroupDeleteService implements the Group Management, Delete a group API.
+// Ref. https://fivetran.com/docs/rest-api/groups#deleteagroup
 type GroupDeleteService struct {
 	c       *Client
 	groupID *string

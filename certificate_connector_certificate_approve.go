@@ -6,6 +6,8 @@ import (
 	"fmt"
 )
 
+// CertificateConnectorCertificateApproveService implements the Certificate Management, Approve a connector certificate API.
+// Ref. https://fivetran.com/docs/rest-api/certificates#approveaconnectorcertificate
 type CertificateConnectorCertificateApproveService struct {
 	c           *Client
 	connectorID *string

@@ -7,6 +7,8 @@ import (
 	"time"
 )
 
+// GroupCreateService implements the Group Management, Create a Group API.
+// Ref. https://fivetran.com/docs/rest-api/groups#createagroup
 type GroupCreateService struct {
 	c    *Client
 	name *string

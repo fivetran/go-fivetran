@@ -6,6 +6,8 @@ import (
 	"fmt"
 )
 
+// ConnectorDeleteService implements the Connector Management, Delete a Connector API.
+// Ref. https://fivetran.com/docs/rest-api/connectors#deleteaconnector
 type ConnectorDeleteService struct {
 	c           *Client
 	connectorID *string

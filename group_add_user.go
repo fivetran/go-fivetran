@@ -6,6 +6,8 @@ import (
 	"fmt"
 )
 
+// GroupAddUserService implements the Group Management, Add a User to a Group API.
+// Ref. https://fivetran.com/docs/rest-api/groups#addausertoagroup
 type GroupAddUserService struct {
 	c       *Client
 	groupID *string

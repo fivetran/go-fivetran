@@ -6,6 +6,8 @@ import (
 	"fmt"
 )
 
+// ConnectorReSyncTableService implements the Connector Management, Re-sync Connector Table Data API.
+// Ref. https://fivetran.com/docs/rest-api/connectors#resyncconnectortabledata
 type ConnectorReSyncTableService struct {
 	c           *Client
 	connectorID *string

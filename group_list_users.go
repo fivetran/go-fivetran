@@ -7,6 +7,8 @@ import (
 	"time"
 )
 
+// GroupListUsersService implements the Group Management, List All Users within a Group API.
+// Ref. https://fivetran.com/docs/rest-api/groups#listalluserswithinagroup
 type GroupListUsersService struct {
 	c       *Client
 	groupID *string
@@ -19,14 +21,12 @@ type GroupListUsersResponse struct {
 	Message string `json:"message"`
 	Data    struct {
 		Items []struct {
-			ID         string `json:"id"`
-			Email      string `json:"email"`
-			GivenName  string `json:"given_name"`
-			FamilyName string `json:"family_name"`
-			Verified   bool   `json:"verified"`
-			Invited    bool   `json:"invited"`
-			// Picture    interface{} `json:"picture"`
-			// Phone      interface{} `json:"phone"`
+			ID         string    `json:"id"`
+			Email      string    `json:"email"`
+			GivenName  string    `json:"given_name"`
+			FamilyName string    `json:"family_name"`
+			Verified   bool      `json:"verified"`
+			Invited    bool      `json:"invited"`
 			Picture    string    `json:"picture"`
 			Phone      string    `json:"phone"`
 			LoggedInAt time.Time `json:"logged_in_at"`

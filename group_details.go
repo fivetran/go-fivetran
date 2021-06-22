@@ -7,6 +7,8 @@ import (
 	"time"
 )
 
+// GroupDetailsService implements the Group Management, Retrieve Group Details API.
+// Ref. https://fivetran.com/docs/rest-api/groups#retrievegroupdetails
 type GroupDetailsService struct {
 	c       *Client
 	groupID *string

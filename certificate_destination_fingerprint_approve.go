@@ -6,6 +6,8 @@ import (
 	"fmt"
 )
 
+// CertificateDestinationFingerprintApproveService implements the Certificate Management, Approve a destination fingerprint API.
+// Ref. https://fivetran.com/docs/rest-api/certificates#approveadestinationfingerprint
 type CertificateDestinationFingerprintApproveService struct {
 	c             *Client
 	destinationID *string

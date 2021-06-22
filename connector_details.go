@@ -7,6 +7,8 @@ import (
 	"time"
 )
 
+// ConnectorDetailsService implements the Connector Management, Retrieve Connector Details API.
+// Ref. https://fivetran.com/docs/rest-api/connectors#retrieveconnectordetails
 type ConnectorDetailsService struct {
 	c           *Client
 	connectorID *string

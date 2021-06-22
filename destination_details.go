@@ -6,6 +6,8 @@ import (
 	"fmt"
 )
 
+// DestinationDetailsService implements the Destination Management, Retrieve destination details API.
+// Ref. https://fivetran.com/docs/rest-api/destinations#retrievedestinationdetails
 type DestinationDetailsService struct {
 	c             *Client
 	destinationID *string

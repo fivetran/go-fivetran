@@ -1,5 +1,7 @@
 package fivetran
 
+// ConnectorConfigProjectCredentials builds Connector Management, Connector Config Project Credentials.
+// Ref. https://fivetran.com/docs/rest-api/connectors/config
 type ConnectorConfigProjectCredentials struct {
 	project   *string
 	apiKey    *string

@@ -1,5 +1,7 @@
 package fivetran
 
+// ConnectorAuth builds Connector Management, Auth.
+// Ref. https://fivetran.com/docs/rest-api/connectors
 type ConnectorAuth struct {
 	clientAccess *ConnectorAuthClientAccess
 	refreshToken *string

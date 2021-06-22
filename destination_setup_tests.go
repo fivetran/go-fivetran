@@ -6,6 +6,8 @@ import (
 	"fmt"
 )
 
+// DestinationSetupTestsService implements the Destination Management, Run destination setup tests API.
+// Ref. https://fivetran.com/docs/rest-api/destinations#rundestinationsetuptests
 type DestinationSetupTestsService struct {
 	c                 *Client
 	destinationID     *string

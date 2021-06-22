@@ -6,6 +6,8 @@ import (
 	"fmt"
 )
 
+// DestinationModifyService implements the Destination Management, Modify a Destination API.
+// Ref. https://fivetran.com/docs/rest-api/destinations#modifyadestination
 type DestinationModifyService struct {
 	c                 *Client
 	destinationID     *string

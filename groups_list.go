@@ -7,6 +7,8 @@ import (
 	"time"
 )
 
+// GroupsListService implements the Group Management, List All Groups API.
+// Ref. https://fivetran.com/docs/rest-api/groups#listallgroups
 type GroupsListService struct {
 	c      *Client
 	limit  *int

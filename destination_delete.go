@@ -6,6 +6,8 @@ import (
 	"fmt"
 )
 
+// DestinationDeleteService implements the Destination Management, Delete a destination API.
+// Ref. https://fivetran.com/docs/rest-api/destinations#deleteadestination
 type DestinationDeleteService struct {
 	c             *Client
 	destinationID *string

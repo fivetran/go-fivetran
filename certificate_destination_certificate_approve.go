@@ -6,6 +6,8 @@ import (
 	"fmt"
 )
 
+// CertificateDestinationCertificateApproveService implements the Certificate Management, Approve a destination certificate API.
+// Ref. https://fivetran.com/docs/rest-api/certificates#approveadestinationcertificate
 type CertificateDestinationCertificateApproveService struct {
 	c             *Client
 	destinationID *string

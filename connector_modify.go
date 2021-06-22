@@ -7,6 +7,8 @@ import (
 	"time"
 )
 
+// ConnectorModifyService implements the Connector Management, Modify a Connector API.
+// Ref. https://fivetran.com/docs/rest-api/connectors#modifyaconnector
 type ConnectorModifyService struct {
 	c                 *Client
 	connectorID       *string

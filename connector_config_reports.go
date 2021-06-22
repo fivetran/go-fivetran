@@ -1,5 +1,7 @@
 package fivetran
 
+// ConnectorConfigReports builds Connector Management, Connector Config Reports.
+// Ref. https://fivetran.com/docs/rest-api/connectors/config
 type ConnectorConfigReports struct {
 	table          *string
 	configType     *string

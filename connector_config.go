@@ -1,5 +1,7 @@
 package fivetran
 
+// ConnectorConfig builds Connector Management, Connector Config.
+// Ref. https://fivetran.com/docs/rest-api/connectors/config
 type ConnectorConfig struct {
 	schema                           *string
 	table                            *string

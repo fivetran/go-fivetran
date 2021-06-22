@@ -7,6 +7,8 @@ import (
 	"time"
 )
 
+// GroupListConnectorsService implements the Group Management, List All Connectors within a Group API.
+// Ref. https://fivetran.com/docs/rest-api/groups#listallconnectorswithinagroup
 type GroupListConnectorsService struct {
 	c       *Client
 	groupID *string

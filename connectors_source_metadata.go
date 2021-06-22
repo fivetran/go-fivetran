@@ -6,6 +6,8 @@ import (
 	"fmt"
 )
 
+// ConnectorsSourceMetadataService implements the Connector Management, Retrieve source metadata API.
+// Ref. https://fivetran.com/docs/rest-api/connectors#retrievesourcemetadata
 type ConnectorsSourceMetadataService struct {
 	c      *Client
 	limit  *int

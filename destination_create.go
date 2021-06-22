@@ -6,6 +6,8 @@ import (
 	"fmt"
 )
 
+// DestinationCreateService implements the Destination Management, Create a Destination API.
+// Ref. https://fivetran.com/docs/rest-api/destinations#createadestination
 type DestinationCreateService struct {
 	c                 *Client
 	groupID           *string

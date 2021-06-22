@@ -7,6 +7,8 @@ import (
 	"time"
 )
 
+// ConnectorCreateService implements the Connector Management, Create a Connector API.
+// Ref. https://fivetran.com/docs/rest-api/connectors#createaconnector
 type ConnectorCreateService struct {
 	c                 *Client
 	service           *string
