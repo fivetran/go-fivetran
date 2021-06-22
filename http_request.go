@@ -8,7 +8,6 @@ import (
 	"net/http"
 )
 
-// Request is a type used to pass http requests to func httpRequest.
 type request struct {
 	method  string
 	url     string
@@ -17,9 +16,6 @@ type request struct {
 	headers map[string]string
 }
 
-// httpRequest receives a Request and a context.Context and calls func http.NewRequestWithContext.
-// If the request succeeds, it returns the response body, the response status code, and a nil error.
-// It returns an error if the request fails.
 func httpRequest(req request, ctx context.Context) ([]byte, int, error) {
 	client := &http.Client{}
 
@@ -40,7 +36,7 @@ func httpRequest(req request, ctx context.Context) ([]byte, int, error) {
 		newReq.Header.Add(k, v)
 	}
 
-	if debug.debug {
+	if debug.enable {
 		fmt.Printf("---\nDebug:\n  - HTTP Request:\n")
 		fmt.Printf("    - Method: %v\n", req.method)
 		fmt.Printf("    - URL: %v\n", newReq.URL.String())
@@ -48,10 +44,10 @@ func httpRequest(req request, ctx context.Context) ([]byte, int, error) {
 		fmt.Printf("    - Headers:\n")
 		for k, v := range req.headers {
 			if k == "Authorization" {
-				if debug.debugAuth {
+				if debug.authEnable {
 					fmt.Printf("      - %v: %v\n", k, v)
 				}
-				if !debug.debugAuth {
+				if !debug.authEnable {
 					fmt.Printf("      - %v: <omitted>\n", k)
 				}
 				continue
@@ -71,7 +67,7 @@ func httpRequest(req request, ctx context.Context) ([]byte, int, error) {
 		return nil, resp.StatusCode, err
 	}
 
-	if debug.debug {
+	if debug.enable {
 		fmt.Printf("  - HTTP Response:\n")
 		fmt.Printf("    - Status Code: %v\n", resp.StatusCode)
 		fmt.Printf("    - Body: %s\n---\n", respBody)
