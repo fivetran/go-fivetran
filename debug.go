@@ -1,7 +1,14 @@
 package fivetran
 
-var debug bool
+var debug struct {
+	debug     bool
+	debugAuth bool
+}
 
-func Debug(d bool) {
-	debug = d
+func Debug(b bool) {
+	debug.debug = b
+}
+
+func DebugAuth(b bool) {
+	debug.debugAuth = b
 }

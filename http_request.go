@@ -40,13 +40,22 @@ func httpRequest(req Request, ctx context.Context) ([]byte, int, error) {
 		newReq.Header.Add(k, v)
 	}
 
-	if debug {
+	if debug.debug {
 		fmt.Printf("---\nDebug:\n  - HTTP Request:\n")
 		fmt.Printf("    - Method: %v\n", req.method)
 		fmt.Printf("    - URL: %v\n", newReq.URL.String())
 		fmt.Printf("    - Body: %s\n", req.body)
 		fmt.Printf("    - Headers:\n")
 		for k, v := range req.headers {
+			if k == "Authorization" {
+				if debug.debugAuth {
+					fmt.Printf("      - %v: %v\n", k, v)
+				}
+				if !debug.debugAuth {
+					fmt.Printf("      - %v: <omitted>\n", k)
+				}
+				continue
+			}
 			fmt.Printf("      - %v: %v\n", k, v)
 		}
 	}
@@ -62,7 +71,7 @@ func httpRequest(req Request, ctx context.Context) ([]byte, int, error) {
 		return nil, resp.StatusCode, err
 	}
 
-	if debug {
+	if debug.debug {
 		fmt.Printf("  - HTTP Response:\n")
 		fmt.Printf("    - Status Code: %v\n", resp.StatusCode)
 		fmt.Printf("    - Body: %s\n---\n", respBody)
