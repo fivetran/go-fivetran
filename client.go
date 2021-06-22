@@ -21,7 +21,7 @@ func New(apiKey string, apiSecret string) *Client {
 	}
 }
 
-// BaseURL changes Client base REST API endpoint URL.
+// BaseURL changes Client base REST API endpoint URL
 func (c *Client) BaseURL(baseURL string) {
 	c.baseURL = baseURL
 }
