@@ -5,6 +5,7 @@ import (
 	"fmt"
 )
 
+// Client holds client configuration
 type Client struct {
 	baseURL       string
 	authorization string
@@ -12,6 +13,7 @@ type Client struct {
 
 const defaultBaseURL = "https://api.fivetran.com/v1"
 
+// New receives API Key and API Secret, and returns a new Client
 func New(apiKey string, apiSecret string) *Client {
 	return &Client{
 		baseURL:       defaultBaseURL,
@@ -19,6 +21,7 @@ func New(apiKey string, apiSecret string) *Client {
 	}
 }
 
+// BaseURL changes Client base REST API endpoint URL.
 func (c *Client) BaseURL(baseURL string) {
 	c.baseURL = baseURL
 }

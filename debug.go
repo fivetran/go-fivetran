@@ -1,14 +1,16 @@
 package fivetran
 
 var debug struct {
-	debug     bool
-	debugAuth bool
+	enable     bool
+	authEnable bool
 }
 
+// Debug sets debug
 func Debug(b bool) {
-	debug.debug = b
+	debug.enable = b
 }
 
+// DebugAuth sets authentication debug
 func DebugAuth(b bool) {
-	debug.debugAuth = b
+	debug.authEnable = b
 }
