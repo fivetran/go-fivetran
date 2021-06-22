@@ -14,7 +14,7 @@ func main() {
 	apiSecret := os.Getenv("FIVETRAN_APISECRET")
 	fivetran.Debug(true)
 
-	client := fivetran.NewClient(apiKey, apiSecret)
+	client := fivetran.New(apiKey, apiSecret)
 
 	svc := client.NewGroupModify()
 

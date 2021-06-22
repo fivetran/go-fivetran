@@ -14,7 +14,7 @@ func main() {
 	apiSecret := os.Getenv("FIVETRAN_APISECRET")
 	fivetran.Debug(true)
 
-	value, err := fivetran.NewClient(apiKey, apiSecret).NewUserDelete().
+	value, err := fivetran.New(apiKey, apiSecret).NewUserDelete().
 		UserID("petunia_informal").
 		Do(context.Background())
 	checkErr(err, value)

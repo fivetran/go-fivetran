@@ -14,7 +14,7 @@ func main() {
 	apiSecret := os.Getenv("FIVETRAN_APISECRET")
 	fivetran.Debug(true)
 
-	value, err := fivetran.NewClient(apiKey, apiSecret).NewGroupDelete().
+	value, err := fivetran.New(apiKey, apiSecret).NewGroupDelete().
 		GroupID("anyplace_silvery").
 		Do(context.Background())
 	checkErr(err, value)
