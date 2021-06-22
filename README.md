@@ -27,3 +27,5 @@ type DestinationDetails Destination
 type DestionatonModify Destination
 ...
 ```
+
+- remove comments group group_list_users.go
