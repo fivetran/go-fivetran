@@ -14,21 +14,11 @@ func main() {
 	apiSecret := os.Getenv("FIVETRAN_APISECRET")
 	fivetran.Debug(true)
 
-	client := fivetran.New(apiKey, apiSecret)
-
-	svc := client.NewUsersList()
-	svc.Limit(1)
-	svc.Cursor("eyJza2lwIjoxfQ")
-
-	value, err := svc.Do(context.Background())
-	checkErr(err, value)
-
-	fmt.Printf("%+v\n", value)
-}
-
-func checkErr(err error, value interface{}) {
+	resp, err := fivetran.New(apiKey, apiSecret).NewUsersList().Limit(5).Cursor("nextCursor").Do(context.Background())
 	if err != nil {
-		fmt.Printf("%+v\n", value)
+		fmt.Printf("%+v\n", resp)
 		log.Fatal(err)
 	}
+
+	fmt.Printf("%+v\n", resp)
 }
