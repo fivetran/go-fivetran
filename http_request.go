@@ -46,11 +46,9 @@ func httpRequest(req request, ctx context.Context) ([]byte, int, error) {
 			if k == "Authorization" {
 				if debug.authEnable {
 					fmt.Printf("      - %v: %v\n", k, v)
+					continue
 				}
-				if !debug.authEnable {
-					fmt.Printf("      - %v: <omitted>\n", k)
-				}
-				continue
+				fmt.Printf("      - %v: <omitted>\n", k)
 			}
 			fmt.Printf("      - %v: %v\n", k, v)
 		}
