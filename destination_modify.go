@@ -51,14 +51,14 @@ func (c *Client) NewDestinationModify() *DestinationModifyService {
 	return &DestinationModifyService{c: c}
 }
 
-func (s *DestinationModifyService) request() destinationModifyRequest {
+func (s *DestinationModifyService) request() *destinationModifyRequest {
 	var config *destinationConfigRequest
 
 	if s.config != nil {
 		config = s.config.request()
 	}
 
-	return destinationModifyRequest{
+	return &destinationModifyRequest{
 		Region:            s.region,
 		TimeZoneOffset:    s.timeZoneOffset,
 		Config:            config,

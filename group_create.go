@@ -32,8 +32,8 @@ func (c *Client) NewGroupCreate() *GroupCreateService {
 	return &GroupCreateService{c: c}
 }
 
-func (s *GroupCreateService) request() groupCreateRequest {
-	return groupCreateRequest{
+func (s *GroupCreateService) request() *groupCreateRequest {
+	return &groupCreateRequest{
 		Name: s.name,
 	}
 }

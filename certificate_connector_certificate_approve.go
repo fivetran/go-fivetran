@@ -30,8 +30,8 @@ func (c *Client) NewCertificateConnectorCertificateApprove() *CertificateConnect
 	return &CertificateConnectorCertificateApproveService{c: c}
 }
 
-func (s *CertificateConnectorCertificateApproveService) request() certificateConnectorCertificateApproveRequest {
-	return certificateConnectorCertificateApproveRequest{
+func (s *CertificateConnectorCertificateApproveService) request() *certificateConnectorCertificateApproveRequest {
+	return &certificateConnectorCertificateApproveRequest{
 		ConnectorID: s.connectorID,
 		Hash:        s.hash,
 		EncodedCert: s.encodedCert,

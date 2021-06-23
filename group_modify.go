@@ -33,8 +33,8 @@ func (c *Client) NewGroupModify() *GroupModifyService {
 	return &GroupModifyService{c: c}
 }
 
-func (s *GroupModifyService) request() groupModifyRequest {
-	return groupModifyRequest{
+func (s *GroupModifyService) request() *groupModifyRequest {
+	return &groupModifyRequest{
 		Name: s.name,
 	}
 }

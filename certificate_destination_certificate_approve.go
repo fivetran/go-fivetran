@@ -30,8 +30,8 @@ func (c *Client) NewCertificateDestinationCertificateApprove() *CertificateDesti
 	return &CertificateDestinationCertificateApproveService{c: c}
 }
 
-func (s *CertificateDestinationCertificateApproveService) request() certificateDestinationCertificateApproveRequest {
-	return certificateDestinationCertificateApproveRequest{
+func (s *CertificateDestinationCertificateApproveService) request() *certificateDestinationCertificateApproveRequest {
+	return &certificateDestinationCertificateApproveRequest{
 		DestinationID: s.destinationID,
 		Hash:          s.hash,
 		EncodedCert:   s.encodedCert,

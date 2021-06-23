@@ -49,8 +49,8 @@ func (c *Client) NewUserInvite() *UserInviteService {
 	return &UserInviteService{c: c}
 }
 
-func (s *UserInviteService) request() userInviteRequest {
-	return userInviteRequest{
+func (s *UserInviteService) request() *userInviteRequest {
+	return &userInviteRequest{
 		Email:      s.email,
 		GivenName:  s.givenName,
 		FamilyName: s.familyName,

@@ -43,8 +43,8 @@ func (c *Client) NewDestinationSetupTests() *DestinationSetupTestsService {
 	return &DestinationSetupTestsService{c: c}
 }
 
-func (s *DestinationSetupTestsService) request() destinationSetupTestsRequest {
-	return destinationSetupTestsRequest{
+func (s *DestinationSetupTestsService) request() *destinationSetupTestsRequest {
+	return &destinationSetupTestsRequest{
 		TrustCertificates: s.trustCertificates,
 		TrustFingerprints: s.trustFingerprints,
 	}

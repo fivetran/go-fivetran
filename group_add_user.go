@@ -29,8 +29,8 @@ func (c *Client) NewGroupAddUser() *GroupAddUserService {
 	return &GroupAddUserService{c: c}
 }
 
-func (s *GroupAddUserService) request() groupAddUserRequest {
-	return groupAddUserRequest{
+func (s *GroupAddUserService) request() *groupAddUserRequest {
+	return &groupAddUserRequest{
 		Email: s.email,
 		Role:  s.role,
 	}

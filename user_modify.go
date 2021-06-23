@@ -48,8 +48,8 @@ func (c *Client) NewUserModify() *UserModifyService {
 	return &UserModifyService{c: c}
 }
 
-func (s *UserModifyService) request() userModifyRequest {
-	return userModifyRequest{
+func (s *UserModifyService) request() *userModifyRequest {
+	return &userModifyRequest{
 		GivenName:  s.givenName,
 		FamilyName: s.familyName,
 		Phone:      s.phone,

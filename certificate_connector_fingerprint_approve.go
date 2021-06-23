@@ -30,8 +30,8 @@ func (c *Client) NewCertificateConnectorFingerprintApprove() *CertificateConnect
 	return &CertificateConnectorFingerprintApproveService{c: c}
 }
 
-func (s *CertificateConnectorFingerprintApproveService) request() certificateConnectorFingerprintApproveRequest {
-	return certificateConnectorFingerprintApproveRequest{
+func (s *CertificateConnectorFingerprintApproveService) request() *certificateConnectorFingerprintApproveRequest {
+	return &certificateConnectorFingerprintApproveRequest{
 		ConnectorID: s.connectorID,
 		Hash:        s.hash,
 		PublicKey:   s.publicKey,
