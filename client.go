@@ -14,7 +14,7 @@ type Client struct {
 const defaultBaseURL = "https://api.fivetran.com/v1"
 
 // New receives API Key and API Secret, and returns a new Client
-func New(apiKey string, apiSecret string) *Client {
+func New(apiKey, apiSecret string) *Client {
 	return &Client{
 		baseURL:       defaultBaseURL,
 		authorization: fmt.Sprintf("Basic %v", base64.StdEncoding.EncodeToString([]byte(fmt.Sprintf("%v:%v", apiKey, apiSecret)))),
