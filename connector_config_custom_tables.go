@@ -29,16 +29,16 @@ type connectorConfigCustomTablesRequest struct {
 }
 
 type ConnectorConfigCustomTablesResponse struct {
-	TableName              *string  `json:"table_name"`
-	ConfigType             *string  `json:"config_type"`
+	TableName              string   `json:"table_name"`
+	ConfigType             string   `json:"config_type"`
 	Fields                 []string `json:"fields"`
 	Breakdowns             []string `json:"breakdowns"`
 	ActionBreakdowns       []string `json:"action_breakdowns"`
-	Aggregation            *string  `json:"aggregation"`
-	ActionReportTime       *string  `json:"action_report_time"`
-	ClickAttributionWindow *string  `json:"click_attribution_window"`
-	ViewAttributionWindow  *string  `json:"view_attribution_window"`
-	PrebuiltReportName     *string  `json:"prebuilt_report_name"`
+	Aggregation            string   `json:"aggregation"`
+	ActionReportTime       string   `json:"action_report_time"`
+	ClickAttributionWindow string   `json:"click_attribution_window"`
+	ViewAttributionWindow  string   `json:"view_attribution_window"`
+	PrebuiltReportName     string   `json:"prebuilt_report_name"`
 }
 
 func NewConnectorConfigCustomTables() *ConnectorConfigCustomTables {

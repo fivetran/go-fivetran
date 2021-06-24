@@ -15,9 +15,9 @@ type connectorConfigProjectCredentialsRequest struct {
 }
 
 type ConnectorConfigProjectCredentialsResponse struct {
-	Project   *string `json:"project"`
-	APIKey    *string `json:"api_key"`
-	SecretKey *string `json:"secret_key"`
+	Project   string `json:"project"`
+	APIKey    string `json:"api_key"`
+	SecretKey string `json:"secret_key"`
 }
 
 func NewConnectorConfigProjectCredentials() *ConnectorConfigProjectCredentials {

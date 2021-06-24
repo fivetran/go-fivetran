@@ -27,15 +27,15 @@ type connectorConfigReportsRequest struct {
 }
 
 type ConnectorConfigReportsResponse struct {
-	Table          *string  `json:"table"`
-	ConfigType     *string  `json:"config_type"`
-	PrebuiltReport *string  `json:"prebuilt_report"`
-	ReportType     *string  `json:"report_type"`
+	Table          string   `json:"table"`
+	ConfigType     string   `json:"config_type"`
+	PrebuiltReport string   `json:"prebuilt_report"`
+	ReportType     string   `json:"report_type"`
 	Fields         []string `json:"fields"`
 	Dimensions     []string `json:"dimensions"`
 	Metrics        []string `json:"metrics"`
 	Segments       []string `json:"segments"`
-	Filter         *string  `json:"filter"`
+	Filter         string   `json:"filter"`
 }
 
 func NewConnectorConfigReports() *ConnectorConfigReports {
