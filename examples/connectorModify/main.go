@@ -22,8 +22,8 @@ func main() {
 		NamedRange("range1")
 
 	cTables1 := fivetran.NewConnectorConfigCustomTables().Aggregation("aggregation1").TableName("theName")
-	cTables2 := fivetran.NewConnectorConfigCustomTables().TableName("theName")
-	connConfig.CustomTables(&[]*fivetran.ConnectorConfigCustomTables{cTables1, cTables2})
+	cTables2 := fivetran.NewConnectorConfigCustomTables().TableName("theName").Fields([]string{"FIELD ONE", "FIELD TWO"})
+	connConfig.CustomTables([]*fivetran.ConnectorConfigCustomTables{cTables1, cTables2})
 
 	svc.ConnectorID("grateful_vertices")
 	svc.Paused(true)

@@ -7,35 +7,35 @@ type ConnectorConfigReports struct {
 	configType     *string
 	prebuiltReport *string
 	reportType     *string
-	fields         *[]string
-	dimensions     *[]string
-	metrics        *[]string
-	segments       *[]string
+	fields         []string
+	dimensions     []string
+	metrics        []string
+	segments       []string
 	filter         *string
 }
 
 type connectorConfigReportsRequest struct {
-	Table          *string   `json:"table,omitempty"`
-	ConfigType     *string   `json:"config_type,omitempty"`
-	PrebuiltReport *string   `json:"prebuilt_report,omitempty"`
-	ReportType     *string   `json:"report_type,omitempty"`
-	Fields         *[]string `json:"fields,omitempty"`
-	Dimensions     *[]string `json:"dimensions,omitempty"`
-	Metrics        *[]string `json:"metrics,omitempty"`
-	Segments       *[]string `json:"segments,omitempty"`
-	Filter         *string   `json:"filter,omitempty"`
+	Table          *string  `json:"table,omitempty"`
+	ConfigType     *string  `json:"config_type,omitempty"`
+	PrebuiltReport *string  `json:"prebuilt_report,omitempty"`
+	ReportType     *string  `json:"report_type,omitempty"`
+	Fields         []string `json:"fields,omitempty"`
+	Dimensions     []string `json:"dimensions,omitempty"`
+	Metrics        []string `json:"metrics,omitempty"`
+	Segments       []string `json:"segments,omitempty"`
+	Filter         *string  `json:"filter,omitempty"`
 }
 
 type ConnectorConfigReportsResponse struct {
-	Table          *string   `json:"table"`
-	ConfigType     *string   `json:"config_type"`
-	PrebuiltReport *string   `json:"prebuilt_report"`
-	ReportType     *string   `json:"report_type"`
-	Fields         *[]string `json:"fields"`
-	Dimensions     *[]string `json:"dimensions"`
-	Metrics        *[]string `json:"metrics"`
-	Segments       *[]string `json:"segments"`
-	Filter         *string   `json:"filter"`
+	Table          *string  `json:"table"`
+	ConfigType     *string  `json:"config_type"`
+	PrebuiltReport *string  `json:"prebuilt_report"`
+	ReportType     *string  `json:"report_type"`
+	Fields         []string `json:"fields"`
+	Dimensions     []string `json:"dimensions"`
+	Metrics        []string `json:"metrics"`
+	Segments       []string `json:"segments"`
+	Filter         *string  `json:"filter"`
 }
 
 func NewConnectorConfigReports() *ConnectorConfigReports {
@@ -63,26 +63,6 @@ func (r *ConnectorConfigReports) request() *connectorConfigReportsRequest {
 		reportType = r.reportType
 	}
 
-	var fields *[]string
-	if r.fields != nil {
-		fields = r.fields
-	}
-
-	var dimensions *[]string
-	if r.dimensions != nil {
-		dimensions = r.dimensions
-	}
-
-	var metrics *[]string
-	if r.metrics != nil {
-		metrics = r.metrics
-	}
-
-	var segments *[]string
-	if r.segments != nil {
-		segments = r.segments
-	}
-
 	var filter *string
 	if r.filter != nil {
 		filter = r.filter
@@ -93,10 +73,10 @@ func (r *ConnectorConfigReports) request() *connectorConfigReportsRequest {
 		ConfigType:     configType,
 		PrebuiltReport: prebuiltReport,
 		ReportType:     reportType,
-		Fields:         fields,
-		Dimensions:     dimensions,
-		Metrics:        metrics,
-		Segments:       segments,
+		Fields:         r.fields,
+		Dimensions:     r.dimensions,
+		Metrics:        r.metrics,
+		Segments:       r.segments,
 		Filter:         filter,
 	}
 }
@@ -122,22 +102,22 @@ func (r *ConnectorConfigReports) ReportType(value string) *ConnectorConfigReport
 }
 
 func (r *ConnectorConfigReports) Fields(value []string) *ConnectorConfigReports {
-	r.fields = &value
+	r.fields = value
 	return r
 }
 
 func (r *ConnectorConfigReports) Dimensions(value []string) *ConnectorConfigReports {
-	r.dimensions = &value
+	r.dimensions = value
 	return r
 }
 
 func (r *ConnectorConfigReports) Metrics(value []string) *ConnectorConfigReports {
-	r.metrics = &value
+	r.metrics = value
 	return r
 }
 
 func (r *ConnectorConfigReports) Segments(value []string) *ConnectorConfigReports {
-	r.segments = &value
+	r.segments = value
 	return r
 }
 

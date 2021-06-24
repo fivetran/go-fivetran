@@ -13,9 +13,9 @@ type ConnectorConfig struct {
 	organizationID                   *string
 	privateKey                       *string
 	syncMode                         *string
-	reportSuites                     *[]string
-	elements                         *[]string
-	metrics                          *[]string
+	reportSuites                     []string
+	elements                         []string
+	metrics                          []string
 	dateGranularity                  *string
 	timeframeMonths                  *string
 	source                           *string
@@ -33,9 +33,9 @@ type ConnectorConfig struct {
 	sFTPUser                         *string
 	sFTPPassword                     *string
 	sFTPIsKeyPair                    *bool
-	advertisables                    *[]string
+	advertisables                    []string
 	reportType                       *string
-	dimensions                       *[]string
+	dimensions                       []string
 	schemaPrefix                     *string
 	apiKey                           *string
 	externalID                       *string
@@ -53,20 +53,20 @@ type ConnectorConfig struct {
 	escapeChar                       *string
 	skipBefore                       *string
 	skipAfter                        *string
-	projectCredentials               *[]*ConnectorConfigProjectCredentials
+	projectCredentials               []*ConnectorConfigProjectCredentials
 	authMode                         *string
 	username                         *string
 	password                         *string
 	certificate                      *string
-	selectedExports                  *[]string
+	selectedExports                  []string
 	consumerGroup                    *string
 	servers                          *string
 	messageType                      *string
 	syncType                         *string
 	securityProtocol                 *string
-	apps                             *[]string
-	salesAccounts                    *[]string
-	financeAccounts                  *[]string
+	apps                             []string
+	salesAccounts                    []string
+	financeAccounts                  []string
 	appSyncMode                      *string
 	salesAccountSyncMode             *string
 	financeAccountSyncMode           *string
@@ -75,7 +75,7 @@ type ConnectorConfig struct {
 	secretKey                        *string
 	homeFolder                       *string
 	syncDataLocker                   *bool
-	projects                         *[]string
+	projects                         []string
 	function                         *string
 	region                           *string
 	secrets                          *string
@@ -92,38 +92,38 @@ type ConnectorConfig struct {
 	s3Folder                         *string
 	gcsBucket                        *string
 	gcsFolder                        *string
-	userProfiles                     *[]string
-	reportConfigurationIDs           *[]string
+	userProfiles                     []string
+	reportConfigurationIDs           []string
 	enableAllDimensionCombinations   *bool
 	instance                         *string
 	awsRegionCode                    *string
-	accounts                         *[]string
-	fields                           *[]string
-	breakdowns                       *[]string
-	actionBreakdowns                 *[]string
+	accounts                         []string
+	fields                           []string
+	breakdowns                       []string
+	actionBreakdowns                 []string
 	aggregation                      *string
 	configType                       *string
 	prebuiltReport                   *string
 	actionReportTime                 *string
 	clickAttributionWindow           *string
 	viewAttributionWindow            *string
-	customTables                     *[]*ConnectorConfigCustomTables
-	pages                            *[]string
+	customTables                     []*ConnectorConfigCustomTables
+	pages                            []string
 	subdomain                        *string
 	host                             *string
 	port                             *int
 	user                             *string
 	isSecure                         *string
-	repositories                     *[]string
+	repositories                     []string
 	useWebhooks                      *bool
-	dimensionAttributes              *[]string
-	columns                          *[]string
+	dimensionAttributes              []string
+	columns                          []string
 	networkCode                      *string
 	customerID                       *string
-	managerAccounts                  *[]string
-	reports                          *[]*ConnectorConfigReports
+	managerAccounts                  []string
+	reports                          []*ConnectorConfigReports
 	conversionWindowSize             *int
-	profiles                         *[]string
+	profiles                         []string
 	projectID                        *string
 	datasetID                        *string
 	bucketName                       *string
@@ -131,7 +131,7 @@ type ConnectorConfig struct {
 	configMethod                     *string
 	queryID                          *string
 	updateConfigOnEachSync           *bool
-	siteURLs                         *[]string
+	siteURLs                         []string
 	path                             *string
 	onPremise                        *bool
 	accessToken                      *string
@@ -145,7 +145,7 @@ type ConnectorConfig struct {
 	domainName                       *string
 	resourceURL                      *string
 	apiSecret                        *string
-	hosts                            *[]string
+	hosts                            []string
 	tunnelHost                       *string
 	tunnelPort                       *int
 	tunnelUser                       *string
@@ -161,7 +161,7 @@ type ConnectorConfig struct {
 	dailyAPICallLimit                *int
 	timeZone                         *string
 	integrationKey                   *string
-	advertisers                      *[]string
+	advertisers                      []string
 	engagementAttributionWindow      *string
 	conversionReportTime             *string
 	domain                           *string
@@ -172,7 +172,7 @@ type ConnectorConfig struct {
 	subDomain                        *string
 	testTableName                    *string
 	shop                             *string
-	organizations                    *[]string
+	organizations                    []string
 	swipeAttributionWindow           *string
 	apiAccessToken                   *string
 	accountIDs                       *string
@@ -183,7 +183,7 @@ type ConnectorConfig struct {
 	consumerKey                      *string
 	consumerSecret                   *string
 	key                              *string
-	advertisersID                    *[]string
+	advertisersID                    []string
 	syncFormat                       *string
 	bucketService                    *string
 	userName                         *string
@@ -192,192 +192,192 @@ type ConnectorConfig struct {
 }
 
 type connectorConfigRequest struct {
-	Schema                           *string                                      `json:"schema,omitempty"`
-	Table                            *string                                      `json:"table,omitempty"`
-	SheetID                          *string                                      `json:"sheet_id,omitempty"`
-	NamedRange                       *string                                      `json:"named_range,omitempty"`
-	ClientID                         *string                                      `json:"client_id,omitempty"`
-	ClientSecret                     *string                                      `json:"client_secret,omitempty"`
-	TechnicalAccountID               *string                                      `json:"technical_account_id,omitempty"`
-	OrganizationID                   *string                                      `json:"organization_id,omitempty"`
-	PrivateKey                       *string                                      `json:"private_key,omitempty"`
-	SyncMode                         *string                                      `json:"sync_mode,omitempty"`
-	ReportSuites                     *[]string                                    `json:"report_suites,omitempty"`
-	Elements                         *[]string                                    `json:"elements,omitempty"`
-	Metrics                          *[]string                                    `json:"metrics,omitempty"`
-	DateGranularity                  *string                                      `json:"date_granularity,omitempty"`
-	TimeframeMonths                  *string                                      `json:"timeframe_months,omitempty"`
-	Source                           *string                                      `json:"source,omitempty"`
-	S3Bucket                         *string                                      `json:"s3bucket,omitempty"`
-	S3RoleArn                        *string                                      `json:"s3role_arn,omitempty"`
-	ABSConnectionString              *string                                      `json:"abs_connection_string,omitempty"`
-	ABSContainerName                 *string                                      `json:"abs_container_name,omitempty"`
-	FTPHost                          *string                                      `json:"ftp_host,omitempty"`
-	FTPPort                          *int                                         `json:"ftp_port,omitempty"`
-	FTPUser                          *string                                      `json:"ftp_user,omitempty"`
-	FTPPassword                      *string                                      `json:"ftp_password,omitempty"`
-	IsFTPS                           *bool                                        `json:"is_ftps,omitempty"`
-	SFTPHost                         *string                                      `json:"sftp_host,omitempty"`
-	SFTPPort                         *int                                         `json:"sftp_port,omitempty"`
-	SFTPUser                         *string                                      `json:"sftp_user,omitempty"`
-	SFTPPassword                     *string                                      `json:"sftp_password,omitempty"`
-	SFTPIsKeyPair                    *bool                                        `json:"sftp_is_key_pair,omitempty"`
-	Advertisables                    *[]string                                    `json:"advertisables,omitempty"`
-	ReportType                       *string                                      `json:"report_type,omitempty"`
-	Dimensions                       *[]string                                    `json:"dimensions,omitempty"`
-	SchemaPrefix                     *string                                      `json:"schema_prefix,omitempty"`
-	APIKey                           *string                                      `json:"api_key,omitempty"`
-	ExternalID                       *string                                      `json:"external_id,omitempty"`
-	RoleArn                          *string                                      `json:"role_arn,omitempty"`
-	Bucket                           *string                                      `json:"bucket,omitempty"`
-	Prefix                           *string                                      `json:"prefix,omitempty"`
-	Pattern                          *string                                      `json:"pattern,omitempty"`
-	FileType                         *string                                      `json:"file_type,omitempty"`
-	Compression                      *string                                      `json:"compression,omitempty"`
-	OnError                          *string                                      `json:"on_error,omitempty"`
-	AppendFileOption                 *string                                      `json:"append_file_option,omitempty"`
-	ArchivePattern                   *string                                      `json:"archive_pattern,omitempty"`
-	NullSequence                     *string                                      `json:"null_sequence,omitempty"`
-	Delimiter                        *string                                      `json:"delimiter,omitempty"`
-	EscapeChar                       *string                                      `json:"escape_char,omitempty"`
-	SkipBefore                       *string                                      `json:"skip_before,omitempty"`
-	SkipAfter                        *string                                      `json:"skip_after,omitempty"`
-	ProjectCredentials               *[]*connectorConfigProjectCredentialsRequest `json:"project_credentials,omitempty"`
-	AuthMode                         *string                                      `json:"auth_mode,omitempty"`
-	Username                         *string                                      `json:"username,omitempty"`
-	Password                         *string                                      `json:"password,omitempty"`
-	Certificate                      *string                                      `json:"certificate,omitempty"`
-	SelectedExports                  *[]string                                    `json:"selected_exports,omitempty"`
-	ConsumerGroup                    *string                                      `json:"consumer_group,omitempty"`
-	Servers                          *string                                      `json:"servers,omitempty"`
-	MessageType                      *string                                      `json:"message_type,omitempty"`
-	SyncType                         *string                                      `json:"sync_type,omitempty"`
-	SecurityProtocol                 *string                                      `json:"security_protocol,omitempty"`
-	Apps                             *[]string                                    `json:"apps,omitempty"`
-	SalesAccounts                    *[]string                                    `json:"sales_accounts,omitempty"`
-	FinanceAccounts                  *[]string                                    `json:"finance_accounts,omitempty"`
-	AppSyncMode                      *string                                      `json:"app_sync_mode,omitempty"`
-	SalesAccountSyncMode             *string                                      `json:"sales_account_sync_mode,omitempty"`
-	FinanceAccountSyncMode           *string                                      `json:"finance_account_sync_mode,omitempty"`
-	PEMCertificate                   *string                                      `json:"pem_certificate,omitempty"`
-	AccessKeyID                      *string                                      `json:"access_key_id,omitempty"`
-	SecretKey                        *string                                      `json:"secret_key,omitempty"`
-	HomeFolder                       *string                                      `json:"home_folder,omitempty"`
-	SyncDataLocker                   *bool                                        `json:"sync_data_locker,omitempty"`
-	Projects                         *[]string                                    `json:"projects,omitempty"`
-	Function                         *string                                      `json:"function,omitempty"`
-	Region                           *string                                      `json:"region,omitempty"`
-	Secrets                          *string                                      `json:"secrets,omitempty"`
-	ContainerName                    *string                                      `json:"container_name,omitempty"`
-	ConnectionString                 *string                                      `json:"connection_string,omitempty"`
-	FunctionApp                      *string                                      `json:"function_app,omitempty"`
-	FunctionName                     *string                                      `json:"function_name,omitempty"`
-	FunctionKey                      *string                                      `json:"function_key,omitempty"`
-	PublicKey                        *string                                      `json:"public_key,omitempty"`
-	MerchantID                       *string                                      `json:"merchant_id,omitempty"`
-	APIURL                           *string                                      `json:"api_url,omitempty"`
-	CloudStorageType                 *string                                      `json:"cloud_storage_type,omitempty"`
-	S3ExternalID                     *string                                      `json:"s3external_id,omitempty"`
-	S3Folder                         *string                                      `json:"s3folder,omitempty"`
-	GCSBucket                        *string                                      `json:"gcs_bucket,omitempty"`
-	GCSFolder                        *string                                      `json:"gcs_folder,omitempty"`
-	UserProfiles                     *[]string                                    `json:"user_profiles,omitempty"`
-	ReportConfigurationIDs           *[]string                                    `json:"report_configuration_ids,omitempty"`
-	EnableAllDimensionCombinations   *bool                                        `json:"enable_all_dimension_combinations,omitempty"`
-	Instance                         *string                                      `json:"instance,omitempty"`
-	AWSRegionCode                    *string                                      `json:"aws_region_code,omitempty"`
-	Accounts                         *[]string                                    `json:"accounts,omitempty"`
-	Fields                           *[]string                                    `json:"fields,omitempty"`
-	Breakdowns                       *[]string                                    `json:"breakdowns,omitempty"`
-	ActionBreakdowns                 *[]string                                    `json:"action_breakdowns,omitempty"`
-	Aggregation                      *string                                      `json:"aggregation,omitempty"`
-	ConfigType                       *string                                      `json:"config_type,omitempty"`
-	PrebuiltReport                   *string                                      `json:"prebuilt_report,omitempty"`
-	ActionReportTime                 *string                                      `json:"action_report_time,omitempty"`
-	ClickAttributionWindow           *string                                      `json:"click_attribution_window,omitempty"`
-	ViewAttributionWindow            *string                                      `json:"view_attribution_window,omitempty"`
-	CustomTables                     *[]*connectorConfigCustomTablesRequest       `json:"custom_tables,omitempty"`
-	Pages                            *[]string                                    `json:"pages,omitempty"`
-	Subdomain                        *string                                      `json:"subdomain,omitempty"`
-	Host                             *string                                      `json:"host,omitempty"`
-	Port                             *int                                         `json:"port,omitempty"`
-	User                             *string                                      `json:"user,omitempty"`
-	IsSecure                         *string                                      `json:"is_secure,omitempty"`
-	Repositories                     *[]string                                    `json:"repositories,omitempty"`
-	UseWebhooks                      *bool                                        `json:"use_webhooks,omitempty"`
-	DimensionAttributes              *[]string                                    `json:"dimension_attributes,omitempty"`
-	Columns                          *[]string                                    `json:"columns,omitempty"`
-	NetworkCode                      *string                                      `json:"network_code,omitempty"`
-	CustomerID                       *string                                      `json:"customer_id,omitempty"`
-	ManagerAccounts                  *[]string                                    `json:"manager_accounts,omitempty"`
-	Reports                          *[]*connectorConfigReportsRequest            `json:"reports,omitempty"`
-	ConversionWindowSize             *int                                         `json:"conversion_window_size,omitempty"`
-	Profiles                         *[]string                                    `json:"profiles,omitempty"`
-	ProjectID                        *string                                      `json:"project_id,omitempty"`
-	DatasetID                        *string                                      `json:"dataset_id,omitempty"`
-	BucketName                       *string                                      `json:"bucket_name,omitempty"`
-	FunctionTrigger                  *string                                      `json:"function_trigger,omitempty"`
-	ConfigMethod                     *string                                      `json:"config_method,omitempty"`
-	QueryID                          *string                                      `json:"query_id,omitempty"`
-	UpdateConfigOnEachSync           *bool                                        `json:"update_config_on_each_sync,omitempty"`
-	SiteURLs                         *[]string                                    `json:"site_urls,omitempty"`
-	Path                             *string                                      `json:"path,omitempty"`
-	OnPremise                        *bool                                        `json:"on_premise,omitempty"`
-	AccessToken                      *string                                      `json:"access_token,omitempty"`
-	ViewThroughAttributionWindowSize *string                                      `json:"view_through_attribution_window_size,omitempty"`
-	PostClickAttributionWindowSize   *string                                      `json:"post_click_attribution_window_size,omitempty"`
-	UseAPIKeys                       *string                                      `json:"use_api_keys,omitempty"`
-	APIKeys                          *string                                      `json:"api_keys,omitempty"`
-	Endpoint                         *string                                      `json:"endpoint,omitempty"`
-	Identity                         *string                                      `json:"identity,omitempty"`
-	APIQuota                         *int                                         `json:"api_quota,omitempty"`
-	DomainName                       *string                                      `json:"domain_name,omitempty"`
-	ResourceURL                      *string                                      `json:"resource_url,omitempty"`
-	APISecret                        *string                                      `json:"api_secret,omitempty"`
-	Hosts                            *[]string                                    `json:"hosts,omitempty"`
-	TunnelHost                       *string                                      `json:"tunnel_host,omitempty"`
-	TunnelPort                       *int                                         `json:"tunnel_port,omitempty"`
-	TunnelUser                       *string                                      `json:"tunnel_user,omitempty"`
-	Database                         *string                                      `json:"database,omitempty"`
-	Datasource                       *string                                      `json:"datasource,omitempty"`
-	Account                          *string                                      `json:"account,omitempty"`
-	Role                             *string                                      `json:"role,omitempty"`
-	Email                            *string                                      `json:"email,omitempty"`
-	AccountID                        *string                                      `json:"account_id,omitempty"`
-	ServerURL                        *string                                      `json:"server_url,omitempty"`
-	UserKey                          *string                                      `json:"user_key,omitempty"`
-	APIVersion                       *string                                      `json:"api_version,omitempty"`
-	DailyAPICallLimit                *int                                         `json:"daily_api_call_limit,omitempty"`
-	TimeZone                         *string                                      `json:"time_zone,omitempty"`
-	IntegrationKey                   *string                                      `json:"integration_key,omitempty"`
-	Advertisers                      *[]string                                    `json:"advertisers,omitempty"`
-	EngagementAttributionWindow      *string                                      `json:"engagement_attribution_window,omitempty"`
-	ConversionReportTime             *string                                      `json:"conversion_report_time,omitempty"`
-	Domain                           *string                                      `json:"domain,omitempty"`
-	UpdateMethod                     *string                                      `json:"update_method,omitempty"`
-	ReplicationSlot                  *string                                      `json:"replication_slot,omitempty"`
-	DataCenter                       *string                                      `json:"data_center,omitempty"`
-	APIToken                         *string                                      `json:"api_token,omitempty"`
-	SubDomain                        *string                                      `json:"sub_domain,omitempty"`
-	TestTableName                    *string                                      `json:"test_table_name,omitempty"`
-	Shop                             *string                                      `json:"shop,omitempty"`
-	Organizations                    *[]string                                    `json:"organizations,omitempty"`
-	SwipeAttributionWindow           *string                                      `json:"swipe_attribution_window,omitempty"`
-	APIAccessToken                   *string                                      `json:"api_access_token,omitempty"`
-	AccountIDs                       *string                                      `json:"account_ids,omitempty"`
-	SID                              *string                                      `json:"sid,omitempty"`
-	Secret                           *string                                      `json:"secret,omitempty"`
-	OauthToken                       *string                                      `json:"oauth_token,omitempty"`
-	OauthTokenSecret                 *string                                      `json:"oauth_token_secret,omitempty"`
-	ConsumerKey                      *string                                      `json:"consumer_key,omitempty"`
-	ConsumerSecret                   *string                                      `json:"consumer_secret,omitempty"`
-	Key                              *string                                      `json:"key,omitempty"`
-	AdvertisersID                    *[]string                                    `json:"advertisers_id,omitempty"`
-	SyncFormat                       *string                                      `json:"sync_format,omitempty"`
-	BucketService                    *string                                      `json:"bucket_service,omitempty"`
-	UserName                         *string                                      `json:"user_name,omitempty"`
-	ReportURL                        *string                                      `json:"report_url,omitempty"`
-	UniqueID                         *string                                      `json:"unique_id,omitempty"`
+	Schema                           *string                                     `json:"schema,omitempty"`
+	Table                            *string                                     `json:"table,omitempty"`
+	SheetID                          *string                                     `json:"sheet_id,omitempty"`
+	NamedRange                       *string                                     `json:"named_range,omitempty"`
+	ClientID                         *string                                     `json:"client_id,omitempty"`
+	ClientSecret                     *string                                     `json:"client_secret,omitempty"`
+	TechnicalAccountID               *string                                     `json:"technical_account_id,omitempty"`
+	OrganizationID                   *string                                     `json:"organization_id,omitempty"`
+	PrivateKey                       *string                                     `json:"private_key,omitempty"`
+	SyncMode                         *string                                     `json:"sync_mode,omitempty"`
+	ReportSuites                     []string                                    `json:"report_suites,omitempty"`
+	Elements                         []string                                    `json:"elements,omitempty"`
+	Metrics                          []string                                    `json:"metrics,omitempty"`
+	DateGranularity                  *string                                     `json:"date_granularity,omitempty"`
+	TimeframeMonths                  *string                                     `json:"timeframe_months,omitempty"`
+	Source                           *string                                     `json:"source,omitempty"`
+	S3Bucket                         *string                                     `json:"s3bucket,omitempty"`
+	S3RoleArn                        *string                                     `json:"s3role_arn,omitempty"`
+	ABSConnectionString              *string                                     `json:"abs_connection_string,omitempty"`
+	ABSContainerName                 *string                                     `json:"abs_container_name,omitempty"`
+	FTPHost                          *string                                     `json:"ftp_host,omitempty"`
+	FTPPort                          *int                                        `json:"ftp_port,omitempty"`
+	FTPUser                          *string                                     `json:"ftp_user,omitempty"`
+	FTPPassword                      *string                                     `json:"ftp_password,omitempty"`
+	IsFTPS                           *bool                                       `json:"is_ftps,omitempty"`
+	SFTPHost                         *string                                     `json:"sftp_host,omitempty"`
+	SFTPPort                         *int                                        `json:"sftp_port,omitempty"`
+	SFTPUser                         *string                                     `json:"sftp_user,omitempty"`
+	SFTPPassword                     *string                                     `json:"sftp_password,omitempty"`
+	SFTPIsKeyPair                    *bool                                       `json:"sftp_is_key_pair,omitempty"`
+	Advertisables                    []string                                    `json:"advertisables,omitempty"`
+	ReportType                       *string                                     `json:"report_type,omitempty"`
+	Dimensions                       []string                                    `json:"dimensions,omitempty"`
+	SchemaPrefix                     *string                                     `json:"schema_prefix,omitempty"`
+	APIKey                           *string                                     `json:"api_key,omitempty"`
+	ExternalID                       *string                                     `json:"external_id,omitempty"`
+	RoleArn                          *string                                     `json:"role_arn,omitempty"`
+	Bucket                           *string                                     `json:"bucket,omitempty"`
+	Prefix                           *string                                     `json:"prefix,omitempty"`
+	Pattern                          *string                                     `json:"pattern,omitempty"`
+	FileType                         *string                                     `json:"file_type,omitempty"`
+	Compression                      *string                                     `json:"compression,omitempty"`
+	OnError                          *string                                     `json:"on_error,omitempty"`
+	AppendFileOption                 *string                                     `json:"append_file_option,omitempty"`
+	ArchivePattern                   *string                                     `json:"archive_pattern,omitempty"`
+	NullSequence                     *string                                     `json:"null_sequence,omitempty"`
+	Delimiter                        *string                                     `json:"delimiter,omitempty"`
+	EscapeChar                       *string                                     `json:"escape_char,omitempty"`
+	SkipBefore                       *string                                     `json:"skip_before,omitempty"`
+	SkipAfter                        *string                                     `json:"skip_after,omitempty"`
+	ProjectCredentials               []*connectorConfigProjectCredentialsRequest `json:"project_credentials,omitempty"`
+	AuthMode                         *string                                     `json:"auth_mode,omitempty"`
+	Username                         *string                                     `json:"username,omitempty"`
+	Password                         *string                                     `json:"password,omitempty"`
+	Certificate                      *string                                     `json:"certificate,omitempty"`
+	SelectedExports                  []string                                    `json:"selected_exports,omitempty"`
+	ConsumerGroup                    *string                                     `json:"consumer_group,omitempty"`
+	Servers                          *string                                     `json:"servers,omitempty"`
+	MessageType                      *string                                     `json:"message_type,omitempty"`
+	SyncType                         *string                                     `json:"sync_type,omitempty"`
+	SecurityProtocol                 *string                                     `json:"security_protocol,omitempty"`
+	Apps                             []string                                    `json:"apps,omitempty"`
+	SalesAccounts                    []string                                    `json:"sales_accounts,omitempty"`
+	FinanceAccounts                  []string                                    `json:"finance_accounts,omitempty"`
+	AppSyncMode                      *string                                     `json:"app_sync_mode,omitempty"`
+	SalesAccountSyncMode             *string                                     `json:"sales_account_sync_mode,omitempty"`
+	FinanceAccountSyncMode           *string                                     `json:"finance_account_sync_mode,omitempty"`
+	PEMCertificate                   *string                                     `json:"pem_certificate,omitempty"`
+	AccessKeyID                      *string                                     `json:"access_key_id,omitempty"`
+	SecretKey                        *string                                     `json:"secret_key,omitempty"`
+	HomeFolder                       *string                                     `json:"home_folder,omitempty"`
+	SyncDataLocker                   *bool                                       `json:"sync_data_locker,omitempty"`
+	Projects                         []string                                    `json:"projects,omitempty"`
+	Function                         *string                                     `json:"function,omitempty"`
+	Region                           *string                                     `json:"region,omitempty"`
+	Secrets                          *string                                     `json:"secrets,omitempty"`
+	ContainerName                    *string                                     `json:"container_name,omitempty"`
+	ConnectionString                 *string                                     `json:"connection_string,omitempty"`
+	FunctionApp                      *string                                     `json:"function_app,omitempty"`
+	FunctionName                     *string                                     `json:"function_name,omitempty"`
+	FunctionKey                      *string                                     `json:"function_key,omitempty"`
+	PublicKey                        *string                                     `json:"public_key,omitempty"`
+	MerchantID                       *string                                     `json:"merchant_id,omitempty"`
+	APIURL                           *string                                     `json:"api_url,omitempty"`
+	CloudStorageType                 *string                                     `json:"cloud_storage_type,omitempty"`
+	S3ExternalID                     *string                                     `json:"s3external_id,omitempty"`
+	S3Folder                         *string                                     `json:"s3folder,omitempty"`
+	GCSBucket                        *string                                     `json:"gcs_bucket,omitempty"`
+	GCSFolder                        *string                                     `json:"gcs_folder,omitempty"`
+	UserProfiles                     []string                                    `json:"user_profiles,omitempty"`
+	ReportConfigurationIDs           []string                                    `json:"report_configuration_ids,omitempty"`
+	EnableAllDimensionCombinations   *bool                                       `json:"enable_all_dimension_combinations,omitempty"`
+	Instance                         *string                                     `json:"instance,omitempty"`
+	AWSRegionCode                    *string                                     `json:"aws_region_code,omitempty"`
+	Accounts                         []string                                    `json:"accounts,omitempty"`
+	Fields                           []string                                    `json:"fields,omitempty"`
+	Breakdowns                       []string                                    `json:"breakdowns,omitempty"`
+	ActionBreakdowns                 []string                                    `json:"action_breakdowns,omitempty"`
+	Aggregation                      *string                                     `json:"aggregation,omitempty"`
+	ConfigType                       *string                                     `json:"config_type,omitempty"`
+	PrebuiltReport                   *string                                     `json:"prebuilt_report,omitempty"`
+	ActionReportTime                 *string                                     `json:"action_report_time,omitempty"`
+	ClickAttributionWindow           *string                                     `json:"click_attribution_window,omitempty"`
+	ViewAttributionWindow            *string                                     `json:"view_attribution_window,omitempty"`
+	CustomTables                     []*connectorConfigCustomTablesRequest       `json:"custom_tables,omitempty"`
+	Pages                            []string                                    `json:"pages,omitempty"`
+	Subdomain                        *string                                     `json:"subdomain,omitempty"`
+	Host                             *string                                     `json:"host,omitempty"`
+	Port                             *int                                        `json:"port,omitempty"`
+	User                             *string                                     `json:"user,omitempty"`
+	IsSecure                         *string                                     `json:"is_secure,omitempty"`
+	Repositories                     []string                                    `json:"repositories,omitempty"`
+	UseWebhooks                      *bool                                       `json:"use_webhooks,omitempty"`
+	DimensionAttributes              []string                                    `json:"dimension_attributes,omitempty"`
+	Columns                          []string                                    `json:"columns,omitempty"`
+	NetworkCode                      *string                                     `json:"network_code,omitempty"`
+	CustomerID                       *string                                     `json:"customer_id,omitempty"`
+	ManagerAccounts                  []string                                    `json:"manager_accounts,omitempty"`
+	Reports                          []*connectorConfigReportsRequest            `json:"reports,omitempty"`
+	ConversionWindowSize             *int                                        `json:"conversion_window_size,omitempty"`
+	Profiles                         []string                                    `json:"profiles,omitempty"`
+	ProjectID                        *string                                     `json:"project_id,omitempty"`
+	DatasetID                        *string                                     `json:"dataset_id,omitempty"`
+	BucketName                       *string                                     `json:"bucket_name,omitempty"`
+	FunctionTrigger                  *string                                     `json:"function_trigger,omitempty"`
+	ConfigMethod                     *string                                     `json:"config_method,omitempty"`
+	QueryID                          *string                                     `json:"query_id,omitempty"`
+	UpdateConfigOnEachSync           *bool                                       `json:"update_config_on_each_sync,omitempty"`
+	SiteURLs                         []string                                    `json:"site_urls,omitempty"`
+	Path                             *string                                     `json:"path,omitempty"`
+	OnPremise                        *bool                                       `json:"on_premise,omitempty"`
+	AccessToken                      *string                                     `json:"access_token,omitempty"`
+	ViewThroughAttributionWindowSize *string                                     `json:"view_through_attribution_window_size,omitempty"`
+	PostClickAttributionWindowSize   *string                                     `json:"post_click_attribution_window_size,omitempty"`
+	UseAPIKeys                       *string                                     `json:"use_api_keys,omitempty"`
+	APIKeys                          *string                                     `json:"api_keys,omitempty"`
+	Endpoint                         *string                                     `json:"endpoint,omitempty"`
+	Identity                         *string                                     `json:"identity,omitempty"`
+	APIQuota                         *int                                        `json:"api_quota,omitempty"`
+	DomainName                       *string                                     `json:"domain_name,omitempty"`
+	ResourceURL                      *string                                     `json:"resource_url,omitempty"`
+	APISecret                        *string                                     `json:"api_secret,omitempty"`
+	Hosts                            []string                                    `json:"hosts,omitempty"`
+	TunnelHost                       *string                                     `json:"tunnel_host,omitempty"`
+	TunnelPort                       *int                                        `json:"tunnel_port,omitempty"`
+	TunnelUser                       *string                                     `json:"tunnel_user,omitempty"`
+	Database                         *string                                     `json:"database,omitempty"`
+	Datasource                       *string                                     `json:"datasource,omitempty"`
+	Account                          *string                                     `json:"account,omitempty"`
+	Role                             *string                                     `json:"role,omitempty"`
+	Email                            *string                                     `json:"email,omitempty"`
+	AccountID                        *string                                     `json:"account_id,omitempty"`
+	ServerURL                        *string                                     `json:"server_url,omitempty"`
+	UserKey                          *string                                     `json:"user_key,omitempty"`
+	APIVersion                       *string                                     `json:"api_version,omitempty"`
+	DailyAPICallLimit                *int                                        `json:"daily_api_call_limit,omitempty"`
+	TimeZone                         *string                                     `json:"time_zone,omitempty"`
+	IntegrationKey                   *string                                     `json:"integration_key,omitempty"`
+	Advertisers                      []string                                    `json:"advertisers,omitempty"`
+	EngagementAttributionWindow      *string                                     `json:"engagement_attribution_window,omitempty"`
+	ConversionReportTime             *string                                     `json:"conversion_report_time,omitempty"`
+	Domain                           *string                                     `json:"domain,omitempty"`
+	UpdateMethod                     *string                                     `json:"update_method,omitempty"`
+	ReplicationSlot                  *string                                     `json:"replication_slot,omitempty"`
+	DataCenter                       *string                                     `json:"data_center,omitempty"`
+	APIToken                         *string                                     `json:"api_token,omitempty"`
+	SubDomain                        *string                                     `json:"sub_domain,omitempty"`
+	TestTableName                    *string                                     `json:"test_table_name,omitempty"`
+	Shop                             *string                                     `json:"shop,omitempty"`
+	Organizations                    []string                                    `json:"organizations,omitempty"`
+	SwipeAttributionWindow           *string                                     `json:"swipe_attribution_window,omitempty"`
+	APIAccessToken                   *string                                     `json:"api_access_token,omitempty"`
+	AccountIDs                       *string                                     `json:"account_ids,omitempty"`
+	SID                              *string                                     `json:"sid,omitempty"`
+	Secret                           *string                                     `json:"secret,omitempty"`
+	OauthToken                       *string                                     `json:"oauth_token,omitempty"`
+	OauthTokenSecret                 *string                                     `json:"oauth_token_secret,omitempty"`
+	ConsumerKey                      *string                                     `json:"consumer_key,omitempty"`
+	ConsumerSecret                   *string                                     `json:"consumer_secret,omitempty"`
+	Key                              *string                                     `json:"key,omitempty"`
+	AdvertisersID                    []string                                    `json:"advertisers_id,omitempty"`
+	SyncFormat                       *string                                     `json:"sync_format,omitempty"`
+	BucketService                    *string                                     `json:"bucket_service,omitempty"`
+	UserName                         *string                                     `json:"user_name,omitempty"`
+	ReportURL                        *string                                     `json:"report_url,omitempty"`
+	UniqueID                         *string                                     `json:"unique_id,omitempty"`
 }
 
 type ConnectorConfigResponse struct {
@@ -579,36 +579,24 @@ func NewConnectorConfig() *ConnectorConfig {
 
 func (cc *ConnectorConfig) request() *connectorConfigRequest {
 	var projectCredentials []*connectorConfigProjectCredentialsRequest
-	var projectCredentialsP *[]*connectorConfigProjectCredentialsRequest
 	if cc.projectCredentials != nil {
-		for _, pc := range *cc.projectCredentials {
+		for _, pc := range cc.projectCredentials {
 			projectCredentials = append(projectCredentials, pc.request())
 		}
 	}
-	if len(projectCredentials) > 0 {
-		projectCredentialsP = &projectCredentials
-	}
 
 	var customTables []*connectorConfigCustomTablesRequest
-	var customTablesP *[]*connectorConfigCustomTablesRequest
 	if cc.customTables != nil {
-		for _, ct := range *cc.customTables {
+		for _, ct := range cc.customTables {
 			customTables = append(customTables, ct.request())
 		}
 	}
-	if len(customTables) > 0 {
-		customTablesP = &customTables
-	}
 
 	var reports []*connectorConfigReportsRequest
-	var reportsP *[]*connectorConfigReportsRequest
 	if cc.reports != nil {
-		for _, r := range *cc.reports {
+		for _, r := range cc.reports {
 			reports = append(reports, r.request())
 		}
-	}
-	if len(reports) > 0 {
-		reportsP = &reports
 	}
 
 	return &connectorConfigRequest{
@@ -662,7 +650,7 @@ func (cc *ConnectorConfig) request() *connectorConfigRequest {
 		EscapeChar:                       cc.escapeChar,
 		SkipBefore:                       cc.skipBefore,
 		SkipAfter:                        cc.skipAfter,
-		ProjectCredentials:               projectCredentialsP,
+		ProjectCredentials:               projectCredentials,
 		AuthMode:                         cc.authMode,
 		Username:                         cc.username,
 		Password:                         cc.password,
@@ -716,7 +704,7 @@ func (cc *ConnectorConfig) request() *connectorConfigRequest {
 		ActionReportTime:                 cc.actionReportTime,
 		ClickAttributionWindow:           cc.clickAttributionWindow,
 		ViewAttributionWindow:            cc.viewAttributionWindow,
-		CustomTables:                     customTablesP,
+		CustomTables:                     customTables,
 		Pages:                            cc.pages,
 		Subdomain:                        cc.subdomain,
 		Host:                             cc.host,
@@ -730,7 +718,7 @@ func (cc *ConnectorConfig) request() *connectorConfigRequest {
 		NetworkCode:                      cc.networkCode,
 		CustomerID:                       cc.customerID,
 		ManagerAccounts:                  cc.managerAccounts,
-		Reports:                          reportsP,
+		Reports:                          reports,
 		ConversionWindowSize:             cc.conversionWindowSize,
 		Profiles:                         cc.profiles,
 		ProjectID:                        cc.projectID,
@@ -852,17 +840,17 @@ func (cc *ConnectorConfig) SyncMode(value string) *ConnectorConfig {
 }
 
 func (cc *ConnectorConfig) ReportSuites(value []string) *ConnectorConfig {
-	cc.reportSuites = &value
+	cc.reportSuites = value
 	return cc
 }
 
 func (cc *ConnectorConfig) Elements(value []string) *ConnectorConfig {
-	cc.elements = &value
+	cc.elements = value
 	return cc
 }
 
 func (cc *ConnectorConfig) Metrics(value []string) *ConnectorConfig {
-	cc.metrics = &value
+	cc.metrics = value
 	return cc
 }
 
@@ -952,7 +940,7 @@ func (cc *ConnectorConfig) SFTPIsKeyPair(value bool) *ConnectorConfig {
 }
 
 func (cc *ConnectorConfig) Advertisables(value []string) *ConnectorConfig {
-	cc.advertisables = &value
+	cc.advertisables = value
 	return cc
 }
 
@@ -962,7 +950,7 @@ func (cc *ConnectorConfig) ReportType(value string) *ConnectorConfig {
 }
 
 func (cc *ConnectorConfig) Dimensions(value []string) *ConnectorConfig {
-	cc.dimensions = &value
+	cc.dimensions = value
 	return cc
 }
 
@@ -1051,7 +1039,7 @@ func (cc *ConnectorConfig) SkipAfter(value string) *ConnectorConfig {
 	return cc
 }
 
-func (cc *ConnectorConfig) ProjectCredentials(value *[]*ConnectorConfigProjectCredentials) *ConnectorConfig {
+func (cc *ConnectorConfig) ProjectCredentials(value []*ConnectorConfigProjectCredentials) *ConnectorConfig {
 	cc.projectCredentials = value
 	return cc
 }
@@ -1077,7 +1065,7 @@ func (cc *ConnectorConfig) Certificate(value string) *ConnectorConfig {
 }
 
 func (cc *ConnectorConfig) SelectedExports(value []string) *ConnectorConfig {
-	cc.selectedExports = &value
+	cc.selectedExports = value
 	return cc
 }
 
@@ -1107,17 +1095,17 @@ func (cc *ConnectorConfig) SecurityProtocol(value string) *ConnectorConfig {
 }
 
 func (cc *ConnectorConfig) Apps(value []string) *ConnectorConfig {
-	cc.apps = &value
+	cc.apps = value
 	return cc
 }
 
 func (cc *ConnectorConfig) SalesAccounts(value []string) *ConnectorConfig {
-	cc.salesAccounts = &value
+	cc.salesAccounts = value
 	return cc
 }
 
 func (cc *ConnectorConfig) FinanceAccounts(value []string) *ConnectorConfig {
-	cc.financeAccounts = &value
+	cc.financeAccounts = value
 	return cc
 }
 
@@ -1162,7 +1150,7 @@ func (cc *ConnectorConfig) SyncDataLocker(value bool) *ConnectorConfig {
 }
 
 func (cc *ConnectorConfig) Projects(value []string) *ConnectorConfig {
-	cc.projects = &value
+	cc.projects = value
 	return cc
 }
 
@@ -1247,12 +1235,12 @@ func (cc *ConnectorConfig) GCSFolder(value string) *ConnectorConfig {
 }
 
 func (cc *ConnectorConfig) UserProfiles(value []string) *ConnectorConfig {
-	cc.userProfiles = &value
+	cc.userProfiles = value
 	return cc
 }
 
 func (cc *ConnectorConfig) ReportConfigurationIDs(value []string) *ConnectorConfig {
-	cc.reportConfigurationIDs = &value
+	cc.reportConfigurationIDs = value
 	return cc
 }
 
@@ -1272,22 +1260,22 @@ func (cc *ConnectorConfig) AWSRegionCode(value string) *ConnectorConfig {
 }
 
 func (cc *ConnectorConfig) Accounts(value []string) *ConnectorConfig {
-	cc.accounts = &value
+	cc.accounts = value
 	return cc
 }
 
 func (cc *ConnectorConfig) Fields(value []string) *ConnectorConfig {
-	cc.fields = &value
+	cc.fields = value
 	return cc
 }
 
 func (cc *ConnectorConfig) Breakdowns(value []string) *ConnectorConfig {
-	cc.breakdowns = &value
+	cc.breakdowns = value
 	return cc
 }
 
 func (cc *ConnectorConfig) ActionBreakdowns(value []string) *ConnectorConfig {
-	cc.actionBreakdowns = &value
+	cc.actionBreakdowns = value
 	return cc
 }
 
@@ -1321,13 +1309,13 @@ func (cc *ConnectorConfig) ViewAttributionWindow(value string) *ConnectorConfig 
 	return cc
 }
 
-func (cc *ConnectorConfig) CustomTables(value *[]*ConnectorConfigCustomTables) *ConnectorConfig {
+func (cc *ConnectorConfig) CustomTables(value []*ConnectorConfigCustomTables) *ConnectorConfig {
 	cc.customTables = value
 	return cc
 }
 
 func (cc *ConnectorConfig) Pages(value []string) *ConnectorConfig {
-	cc.pages = &value
+	cc.pages = value
 	return cc
 }
 
@@ -1357,7 +1345,7 @@ func (cc *ConnectorConfig) IsSecure(value string) *ConnectorConfig {
 }
 
 func (cc *ConnectorConfig) Repositories(value []string) *ConnectorConfig {
-	cc.repositories = &value
+	cc.repositories = value
 	return cc
 }
 
@@ -1367,12 +1355,12 @@ func (cc *ConnectorConfig) UseWebhooks(value bool) *ConnectorConfig {
 }
 
 func (cc *ConnectorConfig) DimensionAttributes(value []string) *ConnectorConfig {
-	cc.dimensionAttributes = &value
+	cc.dimensionAttributes = value
 	return cc
 }
 
 func (cc *ConnectorConfig) Columns(value []string) *ConnectorConfig {
-	cc.columns = &value
+	cc.columns = value
 	return cc
 }
 
@@ -1387,11 +1375,11 @@ func (cc *ConnectorConfig) CustomerID(value string) *ConnectorConfig {
 }
 
 func (cc *ConnectorConfig) ManagerAccounts(value []string) *ConnectorConfig {
-	cc.managerAccounts = &value
+	cc.managerAccounts = value
 	return cc
 }
 
-func (cc *ConnectorConfig) Reports(value *[]*ConnectorConfigReports) *ConnectorConfig {
+func (cc *ConnectorConfig) Reports(value []*ConnectorConfigReports) *ConnectorConfig {
 	cc.reports = value
 	return cc
 }
@@ -1402,7 +1390,7 @@ func (cc *ConnectorConfig) ConversionWindowSize(value int) *ConnectorConfig {
 }
 
 func (cc *ConnectorConfig) Profiles(value []string) *ConnectorConfig {
-	cc.profiles = &value
+	cc.profiles = value
 	return cc
 }
 
@@ -1442,7 +1430,7 @@ func (cc *ConnectorConfig) UpdateConfigOnEachSync(value bool) *ConnectorConfig {
 }
 
 func (cc *ConnectorConfig) SiteURLs(value []string) *ConnectorConfig {
-	cc.siteURLs = &value
+	cc.siteURLs = value
 	return cc
 }
 
@@ -1512,7 +1500,7 @@ func (cc *ConnectorConfig) APISecret(value string) *ConnectorConfig {
 }
 
 func (cc *ConnectorConfig) Hosts(value []string) *ConnectorConfig {
-	cc.hosts = &value
+	cc.hosts = value
 	return cc
 }
 
@@ -1592,7 +1580,7 @@ func (cc *ConnectorConfig) IntegrationKey(value string) *ConnectorConfig {
 }
 
 func (cc *ConnectorConfig) Advertisers(value []string) *ConnectorConfig {
-	cc.advertisers = &value
+	cc.advertisers = value
 	return cc
 }
 
@@ -1647,7 +1635,7 @@ func (cc *ConnectorConfig) Shop(value string) *ConnectorConfig {
 }
 
 func (cc *ConnectorConfig) Organizations(value []string) *ConnectorConfig {
-	cc.organizations = &value
+	cc.organizations = value
 	return cc
 }
 
@@ -1702,7 +1690,7 @@ func (cc *ConnectorConfig) Key(value string) *ConnectorConfig {
 }
 
 func (cc *ConnectorConfig) AdvertisersID(value []string) *ConnectorConfig {
-	cc.advertisersID = &value
+	cc.advertisersID = value
 	return cc
 }
 
