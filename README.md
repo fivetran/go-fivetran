@@ -132,3 +132,8 @@ REST API Endpoint | SDK Service
 [Approve a connector fingerprint](https://fivetran.com/docs/rest-api/certificates#approveaconnectorfingerprint) | CertificateConnectorFingerprintApproveService
 [Approve a destination certificate](https://fivetran.com/docs/rest-api/certificates#approveadestinationcertificate) | CertificateDestinationCertificateApproveService
 [Approve a destination fingerprint](https://fivetran.com/docs/rest-api/certificates#approveadestinationfingerprint) | CertificateDestinationFingerprintApproveService
+
+## Support
+
+Please get in touch with us through our [Support Portal](https://support.fivetran.com/) if you 
+have any comments, suggestions, support requests, or bug reports.  
