@@ -1,14 +1,34 @@
 # Fivetran SDK for Go
 
-`go-fivetran` is the official Fivetran SDK for the Go programming language. It uses the [Fivetran REST API](https://fivetran.com/docs/rest-api) v1.
+`go-fivetran` is the official Fivetran SDK for the Go programming language.
 
 Checkout our [CHANGELOG](CHANGELOG.md) for information about the latest bug fixes, updates, and features added to the SDK. 
+
+Make sure you read the Fivetran REST API [documentation](https://fivetran.com/docs/rest-api) before using the SDK.
+
+## Installation
+
+```
+go get github.com/fivetran/go-fivetran
+```
+
+## Importing
+
+```go
+import (
+    "github.com/fivetran/go-fivetran"
+)
+```
+
+## Getting started
 
 
 
 ## API List
 
-### User Management API
+The following [Fivetran REST API](https://fivetran.com/docs/rest-api) v1 endpoints are implemented by the Fivetran SDK for Go: 
+
+### [User Management API](https://fivetran.com/docs/rest-api/users)
 
 REST API Endpoint | Service
 --- | ---
@@ -18,7 +38,7 @@ REST API Endpoint | Service
 [Modify a user](https://fivetran.com/docs/rest-api/users#modifyauser) | UserModifyService
 [Delete a user](https://fivetran.com/docs/rest-api/users#deleteauser) | UserDeleteService
 
-### Group Management API
+### [Group Management API](https://fivetran.com/docs/rest-api/groups)
 
 REST API Endpoint | Service
 --- | ---
@@ -32,7 +52,7 @@ REST API Endpoint | Service
 [Remove a user from a group](https://fivetran.com/docs/rest-api/groups#removeauserfromagroup) | GroupRemoveUserService
 [Delete a group](https://fivetran.com/docs/rest-api/groups#deleteagroup) | GroupDeleteService
 
-### Destination Management API
+### [Destination Management API](https://fivetran.com/docs/rest-api/destinations)
 
 REST API Endpoint | Service/Config
 --- | ---
@@ -43,7 +63,7 @@ REST API Endpoint | Service/Config
 [Delete a destination](https://fivetran.com/docs/rest-api/destinations#deleteadestination) | DestinationDeleteService
 [Destination Config](https://fivetran.com/docs/rest-api/destinations/config) | DestinationConfig 
 
-### Connector Management API
+### [Connector Management API](https://fivetran.com/docs/rest-api/connectors)
 
 REST API Endpoint | Service/Config/Auth
 --- | ---
@@ -55,8 +75,21 @@ REST API Endpoint | Service/Config/Auth
 [Re-sync connector table data](https://fivetran.com/docs/rest-api/connectors#resyncconnectortabledata) | ConnectorReSyncTableService
 [Run connector setup tests](https://fivetran.com/docs/rest-api/connectors#runconnectorsetuptests) | ConnectorSetupTestsService
 [Delete a connector](https://fivetran.com/docs/rest-api/connectors#deleteaconnector) | ConnectorDeleteService
-[Connector Config](https://fivetran.com/docs/rest-api/connectors/config) | ConnectorConfig, ConnectorConfigReports, ConnectorConfigProjectCredentials, ConnectorConfigCustomTables
-[Connector Auth](https://fivetran.com/docs/rest-api/connectors) | ConnectorAuth, ConnectorAuthClientAccess
+[Retrieve a connector schema config](https://fivetran.com/docs/rest-api/connectors#retrieveaconnectorschemaconfig) | not implemented
+[Retrieve source table columns config](https://fivetran.com/docs/rest-api/connectors#retrievesourcetablecolumnsconfig) | not implemented
+[Reload a connector schema config](https://fivetran.com/docs/rest-api/connectors#reloadaconnectorschemaconfig) | not implemented
+[Modify a connector schema config](https://fivetran.com/docs/rest-api/connectors#modifyaconnectorschemaconfig) | not implemented
+[Modify a connector database schema config](https://fivetran.com/docs/rest-api/connectors#modifyaconnectordatabaseschemaconfig) | not implemented
+[Modify a connector table config](https://fivetran.com/docs/rest-api/connectors#modifyaconnectortableconfig) | not implemented
+[Modify a connector column config](https://fivetran.com/docs/rest-api/connectors#modifyaconnectorcolumnconfig) | not implemented
+[Connector Config](https://fivetran.com/docs/rest-api/connectors/config) | ConnectorConfig<br> ConnectorConfigReports<br> ConnectorConfigProjectCredentials<br> ConnectorConfigCustomTables
+[Connector Auth](https://fivetran.com/docs/rest-api/connectors) | ConnectorAuth<br> ConnectorAuthClientAccess
+[Connect Card](https://fivetran.com/docs/rest-api/connectors/connect-card) | not implemented
 
-
-- Certificate Management API: Approve a connector certificate, Approve a connector fingerprint, Approve a destination certificate, Approve a destination fingerprint.
+### [Certificate Management API](https://fivetran.com/docs/rest-api/certificates)
+REST API Endpoint | Service
+--- | ---
+[Approve a connector certificate](https://fivetran.com/docs/rest-api/certificates#approveaconnectorcertificate) | CertificateConnectorCertificateApproveService
+[Approve a connector fingerprint](https://fivetran.com/docs/rest-api/certificates#approveaconnectorfingerprint) | CertificateConnectorFingerprintApproveService
+[Approve a destination certificate](https://fivetran.com/docs/rest-api/certificates#approveadestinationcertificate) | CertificateDestinationCertificateApproveService
+[Approve a destination fingerprint](https://fivetran.com/docs/rest-api/certificates#approveadestinationfingerprint) | CertificateDestinationFingerprintApproveService
