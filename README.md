@@ -22,7 +22,46 @@ import (
 
 ## Getting started
 
+Initialize a new Fivetran client: 
 
+```go
+	// get apiKey and apiSecret from environment variables
+	apiKey := os.Getenv("FIVETRAN_APIKEY")
+	apiSecret := os.Getenv("FIVETRAN_APISECRET")
+
+	// initialize a new client
+	client := fivetran.New(apiKey, apiSecret)
+```
+
+Each REST API endpoint has a service. Initialize a new Service: 
+
+```go
+	// initialize a new UsersList service
+	svc := client.NewUsersList()
+```
+
+Call the API:
+
+```go
+	// call the REST API
+	resp, err := svc.Do(context.Background())
+	if err != nil {
+		...
+	}
+```
+
+Or you can simply call API in chain style. Call `Do()` at the end to send an HTTP request to the REST API:
+
+```go
+	resp, err := client.NewUsersList().
+		Limit(3).
+		Do(context.Background())
+
+```
+
+## Examples
+
+You can find examples for all services in the [examples](examples/) directory.
 
 ## API List
 
@@ -30,7 +69,7 @@ The following [Fivetran REST API](https://fivetran.com/docs/rest-api) v1 endpoin
 
 ### [User Management API](https://fivetran.com/docs/rest-api/users)
 
-REST API Endpoint | Service
+REST API Endpoint | SDK Service
 --- | ---
 [List all Users](https://fivetran.com/docs/rest-api/users#listallusers) | UsersListService
 [Retrieve user details](https://fivetran.com/docs/rest-api/users#retrieveuserdetails) | UserDetailsService
@@ -40,7 +79,7 @@ REST API Endpoint | Service
 
 ### [Group Management API](https://fivetran.com/docs/rest-api/groups)
 
-REST API Endpoint | Service
+REST API Endpoint | SDK Service
 --- | ---
 [Create a group](https://fivetran.com/docs/rest-api/groups#createagroup) | GroupCreateService
 [List all groups](https://fivetran.com/docs/rest-api/groups#listallgroups) | GroupsListService
@@ -54,7 +93,7 @@ REST API Endpoint | Service
 
 ### [Destination Management API](https://fivetran.com/docs/rest-api/destinations)
 
-REST API Endpoint | Service/Config
+REST API Endpoint | SDK Service/Config
 --- | ---
 [Create a destination](https://fivetran.com/docs/rest-api/destinations#createadestination) | DestinationCreateService
 [Retrieve destination details](https://fivetran.com/docs/rest-api/destinations#retrievedestinationdetails) | DestinationDetailsService
@@ -65,7 +104,7 @@ REST API Endpoint | Service/Config
 
 ### [Connector Management API](https://fivetran.com/docs/rest-api/connectors)
 
-REST API Endpoint | Service/Config/Auth
+REST API Endpoint | SDK Service/Config/Auth
 --- | ---
 [Retrieve source metadata](https://fivetran.com/docs/rest-api/connectors#retrievesourcemetadata) | ConnectorsSourceMetadataService
 [Create a connector](https://fivetran.com/docs/rest-api/connectors#createaconnector) | ConnectorCreateService
@@ -87,7 +126,7 @@ REST API Endpoint | Service/Config/Auth
 [Connect Card](https://fivetran.com/docs/rest-api/connectors/connect-card) | not implemented
 
 ### [Certificate Management API](https://fivetran.com/docs/rest-api/certificates)
-REST API Endpoint | Service
+REST API Endpoint | SDK Service
 --- | ---
 [Approve a connector certificate](https://fivetran.com/docs/rest-api/certificates#approveaconnectorcertificate) | CertificateConnectorCertificateApproveService
 [Approve a connector fingerprint](https://fivetran.com/docs/rest-api/certificates#approveaconnectorfingerprint) | CertificateConnectorFingerprintApproveService
