@@ -19,18 +19,14 @@ func main() {
 	svc := client.NewGroupAddUser()
 
 	svc.GroupID("replying_ministry")
-	svc.Email("sometestuser@fivetran.com")
+	svc.Email("user@somedomain.com")
 	svc.Role("ReadOnly")
 
 	value, err := svc.Do(context.Background())
-	checkErr(err, value)
-
-	fmt.Printf("%+v\n", value)
-}
-
-func checkErr(err error, value interface{}) {
 	if err != nil {
 		fmt.Printf("%+v\n", value)
 		log.Fatal(err)
 	}
+
+	fmt.Printf("%+v\n", value)
 }

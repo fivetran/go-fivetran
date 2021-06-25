@@ -19,14 +19,10 @@ func main() {
 	svc := client.NewConnectorSync()
 
 	value, err := svc.ConnectorID("pack_lingual").Do(context.Background())
-	checkErr(err, value)
-
-	fmt.Printf("%+v\n", value)
-}
-
-func checkErr(err error, value interface{}) {
 	if err != nil {
 		fmt.Printf("%+v\n", value)
 		log.Fatal(err)
 	}
+
+	fmt.Printf("%+v\n", value)
 }

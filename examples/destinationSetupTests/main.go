@@ -22,14 +22,10 @@ func main() {
 	svc.TrustFingerprints(false)
 
 	value, err := svc.DestinationID("replying_ministry").Do(context.Background())
-	checkErr(err, value)
-
-	fmt.Printf("%+v\n", value)
-}
-
-func checkErr(err error, value interface{}) {
 	if err != nil {
 		fmt.Printf("%+v\n", value)
 		log.Fatal(err)
 	}
+
+	fmt.Printf("%+v\n", value)
 }

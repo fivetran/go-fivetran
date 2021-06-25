@@ -18,13 +18,13 @@ func main() {
 	svc := client.NewConnectorCreate()
 
 	connConfig := fivetran.NewConnectorConfig().
-		SchemaPrefix("test_postgres_terraform_20210601v4").
+		SchemaPrefix("test_postgres_go_1").
 		Host("terraform-pgsql-connector-test.cp0rdhwjbsae.us-east-1.rds.amazonaws.com").
 		Port(5432).
 		Database("fivetran").
 		User("postgres").
 		Port(5432).
-		Password("thisIsMyNewFiveTranP4ssw0rd123").
+		Password("mYP4ssw0rd").
 		UpdateMethod("XMIN")
 
 	svc.GroupID("replying_ministry")
@@ -36,14 +36,10 @@ func main() {
 	svc.RunSetupTests(true)
 
 	value, err := svc.Do(context.Background())
-	checkErr(err, value)
-
-	fmt.Printf("%+v\n", value)
-}
-
-func checkErr(err error, value interface{}) {
 	if err != nil {
 		fmt.Printf("%+v\n", value)
 		log.Fatal(err)
 	}
+
+	fmt.Printf("%+v\n", value)
 }

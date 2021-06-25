@@ -16,7 +16,9 @@ func main() {
 
 	client := fivetran.New(apiKey, apiSecret)
 	svc := client.NewCertificateDestinationFingerprintApprove().
-		DestinationID("relocate_sharpened").Hash("123").PublicKey("123123123")
+		DestinationID("relocate_sharpened").
+		Hash("r+u4QL4MGvZe...").
+		PublicKey("MIID9DCCAtygAwIBAgIBQjANBgkqhkiG9w0BAQUFADCBijELMAkGA1UEBhMCVVMxEzARBgNVBAgMCldhc2hpbmd0b24xEDAOBgNVBAcMB1NlYXR0bGUxIjAgBgNVBAoMGUFtYXpvbiBXZWIgU2VydmljZXMsIEluYy4xEzARBgNVBAsMCkFtYXpvbiBSRFMxGzAZBgNVBAMMEkFtYXpvbiBSRF...")
 
 	value, err := svc.Do(context.Background())
 	if err != nil {

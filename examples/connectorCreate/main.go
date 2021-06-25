@@ -16,31 +16,26 @@ func main() {
 
 	client := fivetran.New(apiKey, apiSecret)
 
-	svc := client.NewConnectorCreate()
+	connConfig := fivetran.NewConnectorConfig().
+		Schema("google_sheets2").
+		Table("table").
+		SheetID("1Rmq_FN2kTNwWiT4adZKBxHBRmvfeBTIfKWi5B8ii9qk").
+		NamedRange("range1")
 
-	connConfig := fivetran.NewConnectorConfig()
-	connConfig.Schema("google_sheets2")
-	connConfig.Table("table")
-	connConfig.SheetID("1Rmq_FN2kTNwWiT4adZKBxHBRmvfeBTIfKWi5B8ii9qk")
-	connConfig.NamedRange("range1")
-
-	svc.GroupID("replying_ministry")
-	svc.Service("google_sheets")
-	svc.Config(connConfig)
-	svc.Paused(false)
-	svc.TrustCertificates(true)
-	svc.TrustFingerprints(true)
-	svc.RunSetupTests(true)
+	svc := client.NewConnectorCreate().
+		GroupID("replying_ministry").
+		Service("google_sheets").
+		Config(connConfig).
+		Paused(false).
+		TrustCertificates(true).
+		TrustFingerprints(true).
+		RunSetupTests(true)
 
 	value, err := svc.Do(context.Background())
-	checkErr(err, value)
-
-	fmt.Printf("%+v\n", value)
-}
-
-func checkErr(err error, value interface{}) {
 	if err != nil {
 		fmt.Printf("%+v\n", value)
 		log.Fatal(err)
 	}
+
+	fmt.Printf("%+v\n", value)
 }

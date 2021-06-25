@@ -16,17 +16,15 @@ func main() {
 
 	client := fivetran.New(apiKey, apiSecret)
 	svc := client.NewCertificateDestinationCertificateApprove().
-		DestinationID("relocate_sharpened").Hash("123").EncodedCert("123123123")
+		DestinationID("relocate_sharpened").
+		Hash("r+u4QL4MGvZe...").
+		EncodedCert("MIID9DCCAtygAwIBAgIBQjANBgkqhkiG9w0BAQUFADCBijELMAkGA1UEBhMCVVMxEzARBgNVBAgMCldhc2hpbmd0b24xEDAOBgNVBAcMB1NlYXR0bGUxIjAgBgNVBAoMGUFtYXpvbiBXZWIgU2VydmljZXMsIEluYy4xEzARBgNVBAsMCkFtYXpvbiBSRFMxGzAZBgNVBAMMEkFtYXpvbiBSRF...")
 
 	value, err := svc.Do(context.Background())
-	checkErr(err, value)
-
-	fmt.Printf("%+v\n", value)
-}
-
-func checkErr(err error, value interface{}) {
 	if err != nil {
 		fmt.Printf("%+v\n", value)
 		log.Fatal(err)
 	}
+
+	fmt.Printf("%+v\n", value)
 }

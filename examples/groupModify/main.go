@@ -19,14 +19,10 @@ func main() {
 	svc := client.NewGroupModify()
 
 	value, err := svc.GroupID("flavorful_guesses").Name("My_new_GRoUP_name").Do(context.Background())
-	checkErr(err, value)
-
-	fmt.Printf("%+v\n", value)
-}
-
-func checkErr(err error, value interface{}) {
 	if err != nil {
 		fmt.Printf("%+v\n", value)
 		log.Fatal(err)
 	}
+
+	fmt.Printf("%+v\n", value)
 }

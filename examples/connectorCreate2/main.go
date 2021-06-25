@@ -23,13 +23,13 @@ func main() {
 	connConfigReport2 := fivetran.NewConnectorConfigReports().ConfigType("cType2")
 	connConfig.Reports([]*fivetran.ConnectorConfigReports{connConfigReport, connConfigReport2})
 
-	pCred1 := fivetran.NewConnectorConfigProjectCredentials().APIKey("myApiKEY").Project("myProject")
-	pCred2 := fivetran.NewConnectorConfigProjectCredentials().APIKey("myApiKEY").Project("myProject").SecretKey("TheSecretKEY")
-	pCred3 := fivetran.NewConnectorConfigProjectCredentials().APIKey("myApiKEY").Project("myProject").SecretKey("YASK")
+	pCred1 := fivetran.NewConnectorConfigProjectCredentials().APIKey("myApiKEY1").Project("myProject1")
+	pCred2 := fivetran.NewConnectorConfigProjectCredentials().APIKey("myApiKEY2").Project("myProject2").SecretKey("TheSecretKEY2")
+	pCred3 := fivetran.NewConnectorConfigProjectCredentials().APIKey("myApiKEY3").Project("myProject3").SecretKey("YASK3")
 	connConfig.ProjectCredentials([]*fivetran.ConnectorConfigProjectCredentials{pCred1, pCred2, pCred3})
 
-	cTables1 := fivetran.NewConnectorConfigCustomTables().Aggregation("aggregation1").TableName("theName")
-	cTables2 := fivetran.NewConnectorConfigCustomTables().TableName("theName")
+	cTables1 := fivetran.NewConnectorConfigCustomTables().Aggregation("aggregation1").TableName("TableNAME1")
+	cTables2 := fivetran.NewConnectorConfigCustomTables().TableName("TableNAME2")
 	connConfig.CustomTables([]*fivetran.ConnectorConfigCustomTables{cTables1, cTables2})
 
 	connConfig.Schema("google_sheets5959").
@@ -59,14 +59,10 @@ func main() {
 	svc.RunSetupTests(true)
 
 	value, err := svc.Do(context.Background())
-	checkErr(err, value)
-
-	fmt.Printf("%+v\n", value)
-}
-
-func checkErr(err error, value interface{}) {
 	if err != nil {
 		fmt.Printf("%+v\n", value)
 		log.Fatal(err)
 	}
+
+	fmt.Printf("%+v\n", value)
 }
