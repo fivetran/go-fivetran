@@ -24,5 +24,5 @@ following some code guidelines:
 - Each subtype has three struct types: The subtype type, Request and Response:
     - Subtype: exported; all fields are pointers.
     - Request: unexported; all fields are pointers.
-    - Response: exported, all fields are values.
+    - Response: exported; all fields are values.
 - Each service must have a valid [example](examples/).
