@@ -59,7 +59,7 @@ func (s *GroupAddUserService) Do(ctx context.Context) (GroupAddUserResponse, err
 	}
 
 	url := fmt.Sprintf("%v/groups/%v/users", s.c.baseURL, *s.groupID)
-	expectedStatus := 201
+	expectedStatus := 200
 
 	headers := make(map[string]string)
 	headers["Authorization"] = s.c.authorization
