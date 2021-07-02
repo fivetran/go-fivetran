@@ -71,7 +71,7 @@ func (s *UserDetailsService) Do(ctx context.Context) (UserDetailsResponse, error
 	}
 
 	if respStatus != expectedStatus {
-		err := fmt.Errorf("status code: %v; expected %v", respStatus, expectedStatus)
+		err := fmt.Errorf("status code: %v; expected: %v", respStatus, expectedStatus)
 		return response, err
 	}
 

@@ -58,7 +58,7 @@ func (s *GroupDeleteService) Do(ctx context.Context) (groupDeleteResponse, error
 	}
 
 	if respStatus != expectedStatus {
-		err := fmt.Errorf("status code: %v; expected %v", respStatus, expectedStatus)
+		err := fmt.Errorf("status code: %v; expected: %v", respStatus, expectedStatus)
 		return response, err
 	}
 

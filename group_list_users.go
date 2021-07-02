@@ -94,7 +94,7 @@ func (s *GroupListUsersService) Do(ctx context.Context) (GroupListUsersResponse,
 	}
 
 	if respStatus != expectedStatus {
-		err := fmt.Errorf("status code: %v; expected %v", respStatus, expectedStatus)
+		err := fmt.Errorf("status code: %v; expected: %v", respStatus, expectedStatus)
 		return response, err
 	}
 

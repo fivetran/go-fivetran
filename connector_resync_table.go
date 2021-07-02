@@ -76,7 +76,7 @@ func (s *ConnectorReSyncTableService) Do(ctx context.Context) (ConnectorReSyncTa
 	}
 
 	if respStatus != expectedStatus {
-		err := fmt.Errorf("status code: %v; expected %v", respStatus, expectedStatus)
+		err := fmt.Errorf("status code: %v; expected: %v", respStatus, expectedStatus)
 		return response, err
 	}
 

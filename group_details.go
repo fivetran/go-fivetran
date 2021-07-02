@@ -64,7 +64,7 @@ func (s *GroupDetailsService) Do(ctx context.Context) (GroupDetailsResponse, err
 	}
 
 	if respStatus != expectedStatus {
-		err := fmt.Errorf("status code: %v; expected %v", respStatus, expectedStatus)
+		err := fmt.Errorf("status code: %v; expected: %v", respStatus, expectedStatus)
 		return response, err
 	}
 

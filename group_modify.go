@@ -86,7 +86,7 @@ func (s *GroupModifyService) Do(ctx context.Context) (GroupModifyResponse, error
 	}
 
 	if respStatus != expectedStatus {
-		err := fmt.Errorf("status code: %v; expected %v", respStatus, expectedStatus)
+		err := fmt.Errorf("status code: %v; expected: %v", respStatus, expectedStatus)
 		return response, err
 	}
 

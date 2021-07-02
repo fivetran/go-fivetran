@@ -169,7 +169,7 @@ func (s *ConnectorCreateService) Do(ctx context.Context) (ConnectorCreateRespons
 	}
 
 	if respStatus != expectedStatus {
-		err := fmt.Errorf("status code: %v; expected %v", respStatus, expectedStatus)
+		err := fmt.Errorf("status code: %v; expected: %v", respStatus, expectedStatus)
 		return response, err
 	}
 

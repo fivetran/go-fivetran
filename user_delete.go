@@ -58,7 +58,7 @@ func (s *UserDeleteService) Do(ctx context.Context) (userDeleteResponse, error) 
 	}
 
 	if respStatus != expectedStatus {
-		err := fmt.Errorf("status code: %v; expected %v", respStatus, expectedStatus)
+		err := fmt.Errorf("status code: %v; expected: %v", respStatus, expectedStatus)
 		return response, err
 	}
 

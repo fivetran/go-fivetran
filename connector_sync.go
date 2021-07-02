@@ -64,7 +64,7 @@ func (s *ConnectorSyncService) Do(ctx context.Context) (ConnectorSyncResponse, e
 	}
 
 	if respStatus != expectedStatus {
-		err := fmt.Errorf("status code: %v; expected %v", respStatus, expectedStatus)
+		err := fmt.Errorf("status code: %v; expected: %v", respStatus, expectedStatus)
 		return response, err
 	}
 

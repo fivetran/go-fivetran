@@ -75,7 +75,7 @@ func (s *GroupCreateService) Do(ctx context.Context) (GroupCreateResponse, error
 	}
 
 	if respStatus != expectedStatus {
-		err := fmt.Errorf("status code: %v; expected %v", respStatus, expectedStatus)
+		err := fmt.Errorf("status code: %v; expected: %v", respStatus, expectedStatus)
 		return response, err
 	}
 

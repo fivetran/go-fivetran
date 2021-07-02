@@ -85,7 +85,7 @@ func (s *CertificateDestinationCertificateApproveService) Do(ctx context.Context
 	}
 
 	if respStatus != expectedStatus {
-		err := fmt.Errorf("status code: %v; expected %v", respStatus, expectedStatus)
+		err := fmt.Errorf("status code: %v; expected: %v", respStatus, expectedStatus)
 		return response, err
 	}
 

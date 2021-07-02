@@ -58,7 +58,7 @@ func (s *ConnectorDeleteService) Do(ctx context.Context) (ConnectorDeleteRespons
 	}
 
 	if respStatus != expectedStatus {
-		err := fmt.Errorf("status code: %v; expected %v", respStatus, expectedStatus)
+		err := fmt.Errorf("status code: %v; expected: %v", respStatus, expectedStatus)
 		return response, err
 	}
 

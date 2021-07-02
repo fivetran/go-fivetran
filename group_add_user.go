@@ -88,7 +88,7 @@ func (s *GroupAddUserService) Do(ctx context.Context) (GroupAddUserResponse, err
 	}
 
 	if respStatus != expectedStatus {
-		err := fmt.Errorf("status code: %v; expected %v", respStatus, expectedStatus)
+		err := fmt.Errorf("status code: %v; expected: %v", respStatus, expectedStatus)
 		return response, err
 	}
 

@@ -140,7 +140,7 @@ func (s *DestinationModifyService) Do(ctx context.Context) (DestinationModifyRes
 	}
 
 	if respStatus != expectedStatus {
-		err := fmt.Errorf("status code: %v; expected %v", respStatus, expectedStatus)
+		err := fmt.Errorf("status code: %v; expected: %v", respStatus, expectedStatus)
 		return response, err
 	}
 

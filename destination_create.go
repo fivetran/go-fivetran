@@ -145,7 +145,7 @@ func (s *DestinationCreateService) Do(ctx context.Context) (DestinationCreateRes
 	}
 
 	if respStatus != expectedStatus {
-		err := fmt.Errorf("status code: %v; expected %v", respStatus, expectedStatus)
+		err := fmt.Errorf("status code: %v; expected: %v", respStatus, expectedStatus)
 		return response, err
 	}
 

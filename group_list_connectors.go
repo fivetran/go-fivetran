@@ -119,7 +119,7 @@ func (s *GroupListConnectorsService) Do(ctx context.Context) (GroupListConnector
 	}
 
 	if respStatus != expectedStatus {
-		err := fmt.Errorf("status code: %v; expected %v", respStatus, expectedStatus)
+		err := fmt.Errorf("status code: %v; expected: %v", respStatus, expectedStatus)
 		return response, err
 	}
 

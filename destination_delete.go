@@ -58,7 +58,7 @@ func (s *DestinationDeleteService) Do(ctx context.Context) (DestinationDeleteRes
 	}
 
 	if respStatus != expectedStatus {
-		err := fmt.Errorf("status code: %v; expected %v", respStatus, expectedStatus)
+		err := fmt.Errorf("status code: %v; expected: %v", respStatus, expectedStatus)
 		return response, err
 	}
 

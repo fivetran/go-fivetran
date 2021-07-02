@@ -196,7 +196,7 @@ func (s *ConnectorModifyService) Do(ctx context.Context) (ConnectorModifyRespons
 	}
 
 	if respStatus != expectedStatus {
-		err := fmt.Errorf("status code: %v; expected %v", respStatus, expectedStatus)
+		err := fmt.Errorf("status code: %v; expected: %v", respStatus, expectedStatus)
 		return response, err
 	}
 

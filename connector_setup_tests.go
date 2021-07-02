@@ -122,7 +122,7 @@ func (s *ConnectorSetupTestsService) Do(ctx context.Context) (ConnectorSetupTest
 	}
 
 	if respStatus != expectedStatus {
-		err := fmt.Errorf("status code: %v; expected %v", respStatus, expectedStatus)
+		err := fmt.Errorf("status code: %v; expected: %v", respStatus, expectedStatus)
 		return response, err
 	}
 
