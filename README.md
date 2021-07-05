@@ -1,5 +1,7 @@
 # Fivetran SDK for Go
 
+[![Go Reference](https://pkg.go.dev/badge/github.com/fivetran/go-fivetran.svg)](https://pkg.go.dev/github.com/fivetran/go-fivetran)
+
 `go-fivetran` is the official Fivetran SDK for the Go programming language.
 
 Checkout our [CHANGELOG](CHANGELOG.md) for information about the latest bug fixes, updates, and features added to the SDK. 
