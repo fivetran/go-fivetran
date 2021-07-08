@@ -55,7 +55,7 @@ type DestinationConfigResponse struct {
 	Auth                 string `json:"auth"`
 	User                 string `json:"user"`
 	Password             string `json:"password"`
-	ConnectionType       string `json:"connection_type"`
+	ConnectionType       string `json:"connection_method"` // REST API returns "connection_method"
 	TunnelHost           string `json:"tunnel_host"`
 	TunnelPort           string `json:"tunnel_port"`
 	TunnelUser           string `json:"tunnel_user"`
