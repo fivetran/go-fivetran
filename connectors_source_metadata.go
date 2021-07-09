@@ -25,7 +25,7 @@ type ConnectorsSourceMetadataResponse struct {
 			Description string `json:"description"`
 			IconURL     string `json:"icon_url"`
 			LinkToDocs  string `json:"link_to_docs"`
-			LinkToErd   string `json:"link_to_erd,omitempty"`
+			LinkToErd   string `json:"link_to_erd"`
 		} `json:"items"`
 		NextCursor string `json:"next_cursor"`
 	} `json:"data"`
