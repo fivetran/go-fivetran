@@ -33,7 +33,7 @@ type ConnectorDetailsResponse struct {
 			SetupState       string `json:"setup_state"`
 			SyncState        string `json:"sync_state"`
 			UpdateState      string `json:"update_state"`
-			IsHistoricalSync bool   `json:"is_historical_sync"`
+			IsHistoricalSync *bool  `json:"is_historical_sync"`
 			Tasks            []struct {
 				Code    string `json:"code"`
 				Message string `json:"message"`
