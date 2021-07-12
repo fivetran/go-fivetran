@@ -405,12 +405,12 @@ type ConnectorConfigResponse struct {
 	FTPPort                          int                                         `json:"ftp_port"`
 	FTPUser                          string                                      `json:"ftp_user"`
 	FTPPassword                      string                                      `json:"ftp_password"`
-	IsFTPS                           bool                                        `json:"is_ftps"`
+	IsFTPS                           *bool                                       `json:"is_ftps"`
 	SFTPHost                         string                                      `json:"sftp_host"`
 	SFTPPort                         int                                         `json:"sftp_port"`
 	SFTPUser                         string                                      `json:"sftp_user"`
 	SFTPPassword                     string                                      `json:"sftp_password"`
-	SFTPIsKeyPair                    bool                                        `json:"sftp_is_key_pair"`
+	SFTPIsKeyPair                    *bool                                       `json:"sftp_is_key_pair"`
 	Advertisables                    []string                                    `json:"advertisables"`
 	ReportType                       string                                      `json:"report_type"`
 	Dimensions                       []string                                    `json:"dimensions"`
@@ -452,7 +452,7 @@ type ConnectorConfigResponse struct {
 	AccessKeyID                      string                                      `json:"access_key_id"`
 	SecretKey                        string                                      `json:"secret_key"`
 	HomeFolder                       string                                      `json:"home_folder"`
-	SyncDataLocker                   bool                                        `json:"sync_data_locker"`
+	SyncDataLocker                   *bool                                       `json:"sync_data_locker"`
 	Projects                         []string                                    `json:"projects"`
 	Function                         string                                      `json:"function"`
 	Region                           string                                      `json:"region"`
@@ -472,7 +472,7 @@ type ConnectorConfigResponse struct {
 	GCSFolder                        string                                      `json:"gcs_folder"`
 	UserProfiles                     []string                                    `json:"user_profiles"`
 	ReportConfigurationIDs           []string                                    `json:"report_configuration_ids"`
-	EnableAllDimensionCombinations   bool                                        `json:"enable_all_dimension_combinations"`
+	EnableAllDimensionCombinations   *bool                                       `json:"enable_all_dimension_combinations"`
 	Instance                         string                                      `json:"instance"`
 	AWSRegionCode                    string                                      `json:"aws_region_code"`
 	Accounts                         []string                                    `json:"accounts"`
@@ -493,7 +493,7 @@ type ConnectorConfigResponse struct {
 	User                             string                                      `json:"user"`
 	IsSecure                         string                                      `json:"is_secure"`
 	Repositories                     []string                                    `json:"repositories"`
-	UseWebhooks                      bool                                        `json:"use_webhooks"`
+	UseWebhooks                      *bool                                       `json:"use_webhooks"`
 	DimensionAttributes              []string                                    `json:"dimension_attributes"`
 	Columns                          []string                                    `json:"columns"`
 	NetworkCode                      string                                      `json:"network_code"`
@@ -508,10 +508,10 @@ type ConnectorConfigResponse struct {
 	FunctionTrigger                  string                                      `json:"function_trigger"`
 	ConfigMethod                     string                                      `json:"config_method"`
 	QueryID                          string                                      `json:"query_id"`
-	UpdateConfigOnEachSync           bool                                        `json:"update_config_on_each_sync"`
+	UpdateConfigOnEachSync           *bool                                       `json:"update_config_on_each_sync"`
 	SiteURLs                         []string                                    `json:"site_urls"`
 	Path                             string                                      `json:"path"`
-	OnPremise                        bool                                        `json:"on_premise"`
+	OnPremise                        *bool                                       `json:"on_premise"`
 	AccessToken                      string                                      `json:"access_token"`
 	ViewThroughAttributionWindowSize string                                      `json:"view_through_attribution_window_size"`
 	PostClickAttributionWindowSize   string                                      `json:"post_click_attribution_window_size"`

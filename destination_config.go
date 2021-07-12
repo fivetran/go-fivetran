@@ -55,7 +55,7 @@ type DestinationConfigResponse struct {
 	Auth                 string `json:"auth"`
 	User                 string `json:"user"`
 	Password             string `json:"password"`
-	ConnectionType       string `json:"connection_type"`
+	ConnectionMethod     string `json:"connection_method"` // REST API response of ConnectionType
 	TunnelHost           string `json:"tunnel_host"`
 	TunnelPort           string `json:"tunnel_port"`
 	TunnelUser           string `json:"tunnel_user"`
@@ -65,7 +65,7 @@ type DestinationConfigResponse struct {
 	ServerHostName       string `json:"server_host_name"`
 	HTTPPath             string `json:"http_path"`
 	PersonalAccessToken  string `json:"personal_access_token"`
-	CreateExternalTables bool   `json:"create_external_tables"`
+	CreateExternalTables *bool  `json:"create_external_tables"`
 	ExternalLocation     string `json:"external_location"`
 	AuthType             string `json:"auth_type"`
 	RoleArn              string `json:"role_arn"`
