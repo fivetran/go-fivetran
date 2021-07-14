@@ -57,7 +57,6 @@ func (s *ConnectorReSyncTableService) Do(ctx context.Context) (ConnectorReSyncTa
 
 	headers := make(map[string]string)
 	headers["Authorization"] = s.c.authorization
-	headers["Accept"] = "application/json;version=2"
 
 	r := request{
 		method:  "POST",
