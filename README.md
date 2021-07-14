@@ -113,8 +113,8 @@ REST API Endpoint | REST API Version | SDK Service/Config/Auth
 [Retrieve connector details](https://fivetran.com/docs/rest-api/connectors#retrieveconnectordetails) | v2 | [ConnectorDetailsService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ConnectorDetailsService)
 [Modify a connector](https://fivetran.com/docs/rest-api/connectors#modifyaconnector) | v2 | [ConnectorModifyService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ConnectorModifyService)
 [Sync connector data](https://fivetran.com/docs/rest-api/connectors#syncconnectordata) | v1 | [ConnectorSyncService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ConnectorSyncService)
-[Re-sync connector table data](https://fivetran.com/docs/rest-api/connectors#resyncconnectortabledata) | v2 | [ConnectorReSyncTableService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ConnectorReSyncTableService)
-[Run connector setup tests](https://fivetran.com/docs/rest-api/connectors#runconnectorsetuptests) | v1 | [ConnectorSetupTestsService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ConnectorSetupTestsService)
+[Re-sync connector table data](https://fivetran.com/docs/rest-api/connectors#resyncconnectortabledata) | v1 | [ConnectorReSyncTableService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ConnectorReSyncTableService)
+[Run connector setup tests](https://fivetran.com/docs/rest-api/connectors#runconnectorsetuptests) | v2 | [ConnectorSetupTestsService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ConnectorSetupTestsService)
 [Delete a connector](https://fivetran.com/docs/rest-api/connectors#deleteaconnector) | v1 | [ConnectorDeleteService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ConnectorDeleteService)
 [Retrieve a connector schema config](https://fivetran.com/docs/rest-api/connectors#retrieveaconnectorschemaconfig) | | not implemented
 [Retrieve source table columns config](https://fivetran.com/docs/rest-api/connectors#retrievesourcetablecolumnsconfig) | | not implemented
