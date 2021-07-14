@@ -45,7 +45,7 @@ type ConnectorDetailsResponse struct {
 		} `json:"status"`
 		Config ConnectorConfigResponse `json:"config"`
 	} `json:"data"`
-	// SourceSyncDetails // TODO
+	// SourceSyncDetails not implemented yet. https://fivetran.height.app/T-114130
 }
 
 func (c *Client) NewConnectorDetails() *ConnectorDetailsService {

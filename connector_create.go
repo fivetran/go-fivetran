@@ -68,7 +68,6 @@ type ConnectorCreateResponse struct {
 		} `json:"setup_tests"`
 		Config ConnectorConfigResponse `json:"config"`
 	} `json:"data"`
-	// SourceSyncDetails // TODO
 }
 
 func (c *Client) NewConnectorCreate() *ConnectorCreateService {
