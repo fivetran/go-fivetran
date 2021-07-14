@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased](https://github.com/fivetran/go-fivetran/compare/v0.1.0...HEAD)
 
 ### Changed
-- All `int` fields of the type `ConnectorConfigResponse` are not `*int`. 
+- All `int` fields of the type `ConnectorConfigResponse` are now `*int`. 
 - All `bool` fields of the types `DestinationConfigResponse`, `ConnectorConfigResponse`, `ConnectorCreateResponse`, `ConnectorDetailsResponse`, `ConnectorModifyResponse`, `ConnectorSetupTestsResponse`, and `ConnectorsSourceMetadataResponse` are now `*bool`.
 
 ### Removed
