@@ -189,6 +189,7 @@ type ConnectorConfig struct {
 	userName                         *string
 	reportURL                        *string
 	uniqueID                         *string
+	authType                         *string
 }
 
 type connectorConfigRequest struct {
@@ -378,6 +379,7 @@ type connectorConfigRequest struct {
 	UserName                         *string                                     `json:"user_name,omitempty"`
 	ReportURL                        *string                                     `json:"report_url,omitempty"`
 	UniqueID                         *string                                     `json:"unique_id,omitempty"`
+	AuthType                         *string                                     `json:"auth_type,omitempty"`
 }
 
 type ConnectorConfigResponse struct {
@@ -567,6 +569,7 @@ type ConnectorConfigResponse struct {
 	UserName                         string                                      `json:"user_name"`
 	ReportURL                        string                                      `json:"report_url"`
 	UniqueID                         string                                      `json:"unique_id"`
+	AuthType                         string                                      `json:"auth_type"`
 	LatestVersion                    string                                      `json:"latest_version"`
 	AuthorizationMethod              string                                      `json:"authorization_method"`
 	ServiceVersion                   string                                      `json:"service_version"`
@@ -786,6 +789,7 @@ func (cc *ConnectorConfig) request() *connectorConfigRequest {
 		UserName:                         cc.userName,
 		ReportURL:                        cc.reportURL,
 		UniqueID:                         cc.uniqueID,
+		AuthType:                         cc.authType,
 	}
 }
 
@@ -1716,5 +1720,10 @@ func (cc *ConnectorConfig) ReportURL(value string) *ConnectorConfig {
 
 func (cc *ConnectorConfig) UniqueID(value string) *ConnectorConfig {
 	cc.uniqueID = &value
+	return cc
+}
+
+func (cc *ConnectorConfig) AuthType(value string) *ConnectorConfig {
+	cc.authType = &value
 	return cc
 }
