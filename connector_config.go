@@ -402,12 +402,12 @@ type ConnectorConfigResponse struct {
 	ABSConnectionString              string                                      `json:"abs_connection_string"`
 	ABSContainerName                 string                                      `json:"abs_container_name"`
 	FTPHost                          string                                      `json:"ftp_host"`
-	FTPPort                          int                                         `json:"ftp_port"`
+	FTPPort                          *int                                        `json:"ftp_port"`
 	FTPUser                          string                                      `json:"ftp_user"`
 	FTPPassword                      string                                      `json:"ftp_password"`
 	IsFTPS                           *bool                                       `json:"is_ftps"`
 	SFTPHost                         string                                      `json:"sftp_host"`
-	SFTPPort                         int                                         `json:"sftp_port"`
+	SFTPPort                         *int                                        `json:"sftp_port"`
 	SFTPUser                         string                                      `json:"sftp_user"`
 	SFTPPassword                     string                                      `json:"sftp_password"`
 	SFTPIsKeyPair                    *bool                                       `json:"sftp_is_key_pair"`
@@ -500,7 +500,7 @@ type ConnectorConfigResponse struct {
 	CustomerID                       string                                      `json:"customer_id"`
 	ManagerAccounts                  []string                                    `json:"manager_accounts"`
 	Reports                          []ConnectorConfigReportsResponse            `json:"reports"`
-	ConversionWindowSize             int                                         `json:"conversion_window_size"`
+	ConversionWindowSize             *int                                        `json:"conversion_window_size"`
 	Profiles                         []string                                    `json:"profiles"`
 	ProjectID                        string                                      `json:"project_id"`
 	DatasetID                        string                                      `json:"dataset_id"`
@@ -519,13 +519,13 @@ type ConnectorConfigResponse struct {
 	APIKeys                          string                                      `json:"api_keys"`
 	Endpoint                         string                                      `json:"endpoint"`
 	Identity                         string                                      `json:"identity"`
-	APIQuota                         int                                         `json:"api_quota"`
+	APIQuota                         *int                                        `json:"api_quota"`
 	DomainName                       string                                      `json:"domain_name"`
 	ResourceURL                      string                                      `json:"resource_url"`
 	APISecret                        string                                      `json:"api_secret"`
 	Hosts                            []string                                    `json:"hosts"`
 	TunnelHost                       string                                      `json:"tunnel_host"`
-	TunnelPort                       int                                         `json:"tunnel_port"`
+	TunnelPort                       *int                                        `json:"tunnel_port"`
 	TunnelUser                       string                                      `json:"tunnel_user"`
 	Database                         string                                      `json:"database"`
 	Datasource                       string                                      `json:"datasource"`
@@ -536,7 +536,7 @@ type ConnectorConfigResponse struct {
 	ServerURL                        string                                      `json:"server_url"`
 	UserKey                          string                                      `json:"user_key"`
 	APIVersion                       string                                      `json:"api_version"`
-	DailyAPICallLimit                int                                         `json:"daily_api_call_limit"`
+	DailyAPICallLimit                *int                                        `json:"daily_api_call_limit"`
 	TimeZone                         string                                      `json:"time_zone"`
 	IntegrationKey                   string                                      `json:"integration_key"`
 	Advertisers                      []string                                    `json:"advertisers"`
