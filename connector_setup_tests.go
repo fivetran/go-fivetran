@@ -28,13 +28,13 @@ type ConnectorSetupTestsResponse struct {
 		ID             string    `json:"id"`
 		GroupID        string    `json:"group_id"`
 		Service        string    `json:"service"`
-		ServiceVersion int       `json:"service_version"`
+		ServiceVersion *int      `json:"service_version"`
 		Schema         string    `json:"schema"`
 		ConnectedBy    string    `json:"connected_by"`
 		CreatedAt      time.Time `json:"created_at"`
 		SucceededAt    time.Time `json:"succeeded_at"`
 		FailedAt       time.Time `json:"failed_at"`
-		SyncFrequency  int       `json:"sync_frequency"`
+		SyncFrequency  *int      `json:"sync_frequency"`
 		ScheduleType   string    `json:"schedule_type"`
 		Status         struct {
 			SetupState       string `json:"setup_state"`

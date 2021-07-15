@@ -45,16 +45,16 @@ type ConnectorCreateResponse struct {
 		ID              string    `json:"id"`
 		GroupID         string    `json:"group_id"`
 		Service         string    `json:"service"`
-		ServiceVersion  int       `json:"service_version"`
+		ServiceVersion  *int      `json:"service_version"`
 		Schema          string    `json:"schema"`
 		ConnectedBy     string    `json:"connected_by"`
 		CreatedAt       time.Time `json:"created_at"`
 		SucceededAt     time.Time `json:"succeeded_at"`
 		FailedAt        time.Time `json:"failed_at"`
-		SyncFrequency   int       `json:"sync_frequency"`
+		SyncFrequency   *int      `json:"sync_frequency"`
 		ScheduleType    string    `json:"schedule_type"`
-		Paused          bool      `json:"paused"`
-		PauseAfterTrial bool      `json:"pause_after_trial"`
+		Paused          *bool     `json:"paused"`
+		PauseAfterTrial *bool     `json:"pause_after_trial"`
 		DailySyncTime   string    `json:"daily_sync_time"`
 		Status          struct {
 			SetupState       string `json:"setup_state"`
@@ -103,6 +103,9 @@ func (s *ConnectorCreateService) request() *connectorCreateRequest {
 		Paused:            s.paused,
 		Config:            config,
 		Auth:              auth,
+		SyncFrequency:     s.syncFrequency,
+		DailySyncTime:     s.dailySyncTime,
+		PauseAfterTrial:   s.pauseAfterTrial,
 	}
 }
 
