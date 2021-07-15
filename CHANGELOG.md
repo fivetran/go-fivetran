@@ -8,7 +8,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased](https://github.com/fivetran/go-fivetran/compare/v0.1.0...HEAD)
 
 ### Added
-- `ConnectorConfig.AuthType` added. 
+- `UsersListResponse.Role`
+- `ConnectorConfig.AuthType` 
+- `ConnectorCreateService.SyncFrequency`
+- `ConnectorCreateService.DailySyncTime`
+- `ConnectorCreateService.PauseAfterTrial`
+- `ConnectorCreateResponse.Data.Paused`
+- `ConnectorCreateResponse.Data.PauseAfterTrial`
+- `ConnectorCreateResponse.Data.DailySyncTime`
+- `ConnectorDetailsResponse.Data.Paused`
+- `ConnectorDetailsResponse.Data.PauseAfterTrial`
+- `ConnectorDetailsResponse.Data.DailySyncTime`
+- `ConnectorModifyService.PauseAfterTrial` 
 
 ### Changed
 - `ConnectorCreateService`, `ConnectorDetailsService`, `ConnectorModifyService`, and `ConnectorSetupTestsService` are now using REST API v2.

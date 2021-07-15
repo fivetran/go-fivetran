@@ -22,6 +22,7 @@ type ConnectorModifyService struct {
 	isHistoricalSync  *bool
 	scheduleType      *string
 	runSetupTests     *bool
+	pauseAfterTrial   *bool
 }
 
 type connectorModifyRequest struct {
@@ -35,6 +36,7 @@ type connectorModifyRequest struct {
 	IsHistoricalSync  *bool                   `json:"is_historical_sync,omitempty"`
 	ScheduleType      *string                 `json:"schedule_type,omitempty"`
 	RunSetupTests     *bool                   `json:"run_setup_tests,omitempty"`
+	PauseAfterTrial   *bool                   `json:"pause_after_trial,omitempty"`
 }
 
 type ConnectorModifyResponse struct {
@@ -156,6 +158,11 @@ func (s *ConnectorModifyService) ScheduleType(value string) *ConnectorModifyServ
 
 func (s *ConnectorModifyService) RunSetupTests(value bool) *ConnectorModifyService {
 	s.runSetupTests = &value
+	return s
+}
+
+func (s *ConnectorModifyService) PauseAfterTrial(value bool) *ConnectorModifyService {
+	s.pauseAfterTrial = &value
 	return s
 }
 

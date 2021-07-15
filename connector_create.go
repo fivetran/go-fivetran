@@ -17,6 +17,9 @@ type ConnectorCreateService struct {
 	trustFingerprints *bool
 	runSetupTests     *bool
 	paused            *bool
+	syncFrequency     *int
+	dailySyncTime     *string
+	pauseAfterTrial   *bool
 	config            *ConnectorConfig
 	auth              *ConnectorAuth
 }
@@ -28,6 +31,9 @@ type connectorCreateRequest struct {
 	TrustFingerprints *bool                   `json:"trust_fingerprints,omitempty"`
 	RunSetupTests     *bool                   `json:"run_setup_tests,omitempty"`
 	Paused            *bool                   `json:"paused,omitempty"`
+	SyncFrequency     *int                    `json:"sync_frequency,omitempty"`    // new TODO: ADD METHOD
+	DailySyncTime     *string                 `json:"daily_sync_time,omitempty"`   // new TODO: ADD METHOD
+	PauseAfterTrial   *bool                   `json:"pause_after_trial,omitempty"` // new TODO: ADD METHOD
 	Config            *connectorConfigRequest `json:"config,omitempty"`
 	Auth              *connectorAuthRequest   `json:"auth,omitempty"`
 }
@@ -36,18 +42,21 @@ type ConnectorCreateResponse struct {
 	Code    string `json:"code"`
 	Message string `json:"message"`
 	Data    struct {
-		ID             string    `json:"id"`
-		GroupID        string    `json:"group_id"`
-		Service        string    `json:"service"`
-		ServiceVersion int       `json:"service_version"`
-		Schema         string    `json:"schema"`
-		ConnectedBy    string    `json:"connected_by"`
-		CreatedAt      time.Time `json:"created_at"`
-		SucceededAt    time.Time `json:"succeeded_at"`
-		FailedAt       time.Time `json:"failed_at"`
-		SyncFrequency  int       `json:"sync_frequency"`
-		ScheduleType   string    `json:"schedule_type"`
-		Status         struct {
+		ID              string    `json:"id"`
+		GroupID         string    `json:"group_id"`
+		Service         string    `json:"service"`
+		ServiceVersion  int       `json:"service_version"`
+		Schema          string    `json:"schema"`
+		ConnectedBy     string    `json:"connected_by"`
+		CreatedAt       time.Time `json:"created_at"`
+		SucceededAt     time.Time `json:"succeeded_at"`
+		FailedAt        time.Time `json:"failed_at"`
+		SyncFrequency   int       `json:"sync_frequency"`
+		ScheduleType    string    `json:"schedule_type"`
+		Paused          bool      `json:"paused"`
+		PauseAfterTrial bool      `json:"pause_after_trial"`
+		DailySyncTime   string    `json:"daily_sync_time"`
+		Status          struct {
 			SetupState       string `json:"setup_state"`
 			SyncState        string `json:"sync_state"`
 			UpdateState      string `json:"update_state"`
@@ -124,6 +133,21 @@ func (s *ConnectorCreateService) RunSetupTests(value bool) *ConnectorCreateServi
 
 func (s *ConnectorCreateService) Paused(value bool) *ConnectorCreateService {
 	s.paused = &value
+	return s
+}
+
+func (s *ConnectorCreateService) SyncFrequency(value int) *ConnectorCreateService {
+	s.syncFrequency = &value
+	return s
+}
+
+func (s *ConnectorCreateService) DailySyncTime(value string) *ConnectorCreateService {
+	s.dailySyncTime = &value
+	return s
+}
+
+func (s *ConnectorCreateService) PauseAfterTrial(value bool) *ConnectorCreateService {
+	s.pauseAfterTrial = &value
 	return s
 }
 
