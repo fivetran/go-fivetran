@@ -31,9 +31,9 @@ type connectorCreateRequest struct {
 	TrustFingerprints *bool                   `json:"trust_fingerprints,omitempty"`
 	RunSetupTests     *bool                   `json:"run_setup_tests,omitempty"`
 	Paused            *bool                   `json:"paused,omitempty"`
-	SyncFrequency     *int                    `json:"sync_frequency,omitempty"`    // new TODO: ADD METHOD
-	DailySyncTime     *string                 `json:"daily_sync_time,omitempty"`   // new TODO: ADD METHOD
-	PauseAfterTrial   *bool                   `json:"pause_after_trial,omitempty"` // new TODO: ADD METHOD
+	SyncFrequency     *int                    `json:"sync_frequency,omitempty"`
+	DailySyncTime     *string                 `json:"daily_sync_time,omitempty"`
+	PauseAfterTrial   *bool                   `json:"pause_after_trial,omitempty"`
 	Config            *connectorConfigRequest `json:"config,omitempty"`
 	Auth              *connectorAuthRequest   `json:"auth,omitempty"`
 }

@@ -9,13 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - `UsersListResponse.Role`
-- `ConnectorConfig.AuthType` 
+- `GroupListUsersResponse.Role`
+- `ConnectorConfig.AuthType`
 - `ConnectorCreateService.SyncFrequency`
 - `ConnectorCreateService.DailySyncTime`
 - `ConnectorCreateService.PauseAfterTrial`
 - `ConnectorCreateResponse.Data.Paused`
-- `ConnectorCreateResponse.Data.PauseAfterTrial`
 - `ConnectorCreateResponse.Data.DailySyncTime`
+- `ConnectorCreateResponse.Data.PauseAfterTrial`
 - `ConnectorDetailsResponse.Data.Paused`
 - `ConnectorDetailsResponse.Data.PauseAfterTrial`
 - `ConnectorDetailsResponse.Data.DailySyncTime`
@@ -23,8 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - `ConnectorCreateService`, `ConnectorDetailsService`, `ConnectorModifyService`, and `ConnectorSetupTestsService` are now using REST API v2.
-- All `int` fields of the type `ConnectorConfigResponse` are now `*int`. 
-- All `bool` fields of the types `DestinationConfigResponse`, `ConnectorConfigResponse`, `ConnectorCreateResponse`, `ConnectorDetailsResponse`, `ConnectorModifyResponse`, `ConnectorSetupTestsResponse`, and `ConnectorsSourceMetadataResponse` are now `*bool`.
+- All `int` and `bool` fields of all response types are now `*int` and `*bool`. 
 
 ### Removed
 - Removed the unnecessary `ConnectorsSourceMetadataResponse.LinkToErd` JSON annotation `omitempty`.
