@@ -8,6 +8,8 @@ Checkout our [CHANGELOG](CHANGELOG.md) for information about the latest bug fixe
 
 Make sure you read the Fivetran REST API [documentation](https://fivetran.com/docs/rest-api) before using the SDK.
 
+**NOTE**: `go-fivetran` is still in [ALPHA](https://en.wikipedia.org/wiki/Software_release_life_cycle#Alpha) development stage. Future versions may introduce breaking changes. 
+
 ## Installation
 
 ```
