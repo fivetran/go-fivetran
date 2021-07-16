@@ -18,18 +18,21 @@ type ConnectorDetailsResponse struct {
 	Code    string `json:"code"`
 	Message string `json:"message"`
 	Data    struct {
-		ID             string    `json:"id"`
-		GroupID        string    `json:"group_id"`
-		Service        string    `json:"service"`
-		ServiceVersion int       `json:"service_version"`
-		Schema         string    `json:"schema"`
-		ConnectedBy    string    `json:"connected_by"`
-		CreatedAt      time.Time `json:"created_at"`
-		SucceededAt    time.Time `json:"succeeded_at"`
-		FailedAt       time.Time `json:"failed_at"`
-		SyncFrequency  int       `json:"sync_frequency"`
-		ScheduleType   string    `json:"schedule_type"`
-		Status         struct {
+		ID              string    `json:"id"`
+		GroupID         string    `json:"group_id"`
+		Service         string    `json:"service"`
+		ServiceVersion  *int      `json:"service_version"`
+		Schema          string    `json:"schema"`
+		ConnectedBy     string    `json:"connected_by"`
+		CreatedAt       time.Time `json:"created_at"`
+		SucceededAt     time.Time `json:"succeeded_at"`
+		FailedAt        time.Time `json:"failed_at"`
+		Paused          *bool     `json:"paused"`
+		PauseAfterTrial *bool     `json:"pause_after_trial"`
+		DailySyncTime   string    `json:"daily_sync_time"`
+		SyncFrequency   *int      `json:"sync_frequency"`
+		ScheduleType    string    `json:"schedule_type"`
+		Status          struct {
 			SetupState       string `json:"setup_state"`
 			SyncState        string `json:"sync_state"`
 			UpdateState      string `json:"update_state"`
@@ -45,6 +48,7 @@ type ConnectorDetailsResponse struct {
 		} `json:"status"`
 		Config ConnectorConfigResponse `json:"config"`
 	} `json:"data"`
+	// SourceSyncDetails not implemented yet. T-114130
 }
 
 func (c *Client) NewConnectorDetails() *ConnectorDetailsService {
@@ -68,6 +72,7 @@ func (s *ConnectorDetailsService) Do(ctx context.Context) (ConnectorDetailsRespo
 
 	headers := make(map[string]string)
 	headers["Authorization"] = s.c.authorization
+	headers["Accept"] = "application/json;version=2"
 
 	r := request{
 		method:  "GET",

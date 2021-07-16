@@ -22,6 +22,7 @@ type ConnectorModifyService struct {
 	isHistoricalSync  *bool
 	scheduleType      *string
 	runSetupTests     *bool
+	pauseAfterTrial   *bool
 }
 
 type connectorModifyRequest struct {
@@ -35,24 +36,27 @@ type connectorModifyRequest struct {
 	IsHistoricalSync  *bool                   `json:"is_historical_sync,omitempty"`
 	ScheduleType      *string                 `json:"schedule_type,omitempty"`
 	RunSetupTests     *bool                   `json:"run_setup_tests,omitempty"`
+	PauseAfterTrial   *bool                   `json:"pause_after_trial,omitempty"`
 }
 
 type ConnectorModifyResponse struct {
 	Code    string `json:"code"`
 	Message string `json:"message"`
 	Data    struct {
-		ID             string    `json:"id"`
-		GroupID        string    `json:"group_id"`
-		Service        string    `json:"service"`
-		ServiceVersion int       `json:"service_version"`
-		Schema         string    `json:"schema"`
-		ConnectedBy    string    `json:"connected_by"`
-		CreatedAt      time.Time `json:"created_at"`
-		SucceededAt    time.Time `json:"succeeded_at"`
-		FailedAt       time.Time `json:"failed_at"`
-		SyncFrequency  int       `json:"sync_frequency"`
-		ScheduleType   string    `json:"schedule_type"`
-		Status         struct {
+		ID              string    `json:"id"`
+		GroupID         string    `json:"group_id"`
+		Service         string    `json:"service"`
+		ServiceVersion  *int      `json:"service_version"`
+		Schema          string    `json:"schema"`
+		ConnectedBy     string    `json:"connected_by"`
+		CreatedAt       time.Time `json:"created_at"`
+		SucceededAt     time.Time `json:"succeeded_at"`
+		FailedAt        time.Time `json:"failed_at"`
+		SyncFrequency   *int      `json:"sync_frequency"`
+		Paused          *bool     `json:"paused"`
+		PauseAfterTrial *bool     `json:"pause_after_trial"`
+		ScheduleType    string    `json:"schedule_type"`
+		Status          struct {
 			SetupState       string `json:"setup_state"`
 			SyncState        string `json:"sync_state"`
 			UpdateState      string `json:"update_state"`
@@ -101,6 +105,7 @@ func (s *ConnectorModifyService) request() *connectorModifyRequest {
 		IsHistoricalSync:  s.isHistoricalSync,
 		ScheduleType:      s.scheduleType,
 		RunSetupTests:     s.runSetupTests,
+		PauseAfterTrial:   s.pauseAfterTrial,
 	}
 }
 
@@ -159,6 +164,11 @@ func (s *ConnectorModifyService) RunSetupTests(value bool) *ConnectorModifyServi
 	return s
 }
 
+func (s *ConnectorModifyService) PauseAfterTrial(value bool) *ConnectorModifyService {
+	s.pauseAfterTrial = &value
+	return s
+}
+
 func (s *ConnectorModifyService) Do(ctx context.Context) (ConnectorModifyResponse, error) {
 	var response ConnectorModifyResponse
 
@@ -172,6 +182,7 @@ func (s *ConnectorModifyService) Do(ctx context.Context) (ConnectorModifyRespons
 	headers := make(map[string]string)
 	headers["Authorization"] = s.c.authorization
 	headers["Content-Type"] = "application/json"
+	headers["Accept"] = "application/json;version=2"
 
 	reqBody, err := json.Marshal(s.request())
 	if err != nil {

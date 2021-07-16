@@ -50,7 +50,7 @@ type destinationConfigRequest struct {
 
 type DestinationConfigResponse struct {
 	Host                 string `json:"host"`
-	Port                 string `json:"port"`
+	Port                 string `json:"port"` // Request `int`, Response `string`
 	Database             string `json:"database"`
 	Auth                 string `json:"auth"`
 	User                 string `json:"user"`

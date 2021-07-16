@@ -24,10 +24,11 @@ type UsersListResponse struct {
 			Email      string    `json:"email"`
 			GivenName  string    `json:"given_name"`
 			FamilyName string    `json:"family_name"`
-			Verified   bool      `json:"verified"`
-			Invited    bool      `json:"invited"`
+			Verified   *bool     `json:"verified"`
+			Invited    *bool     `json:"invited"`
 			Picture    string    `json:"picture"`
 			Phone      string    `json:"phone"`
+			Role       string    `json:"role"`
 			LoggedInAt time.Time `json:"logged_in_at"`
 			CreatedAt  time.Time `json:"created_at"`
 		} `json:"items"`
