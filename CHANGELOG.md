@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased](https://github.com/fivetran/go-fivetran/compare/v0.2.0...HEAD)
 
-## [0.2.0](https://github.com/fivetran/go-fivetran/releases/tag/v0.1.0...v0.2.0) - 2021-07-16
+## [0.2.0](https://github.com/fivetran/go-fivetran/compare/v0.1.0...v0.2.0) - 2021-07-16
 
 ### Added
 - `UsersListResponse.Role`
