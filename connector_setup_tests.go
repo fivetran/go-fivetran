@@ -98,7 +98,7 @@ func (s *ConnectorSetupTestsService) Do(ctx context.Context) (ConnectorSetupTest
 	headers := make(map[string]string)
 	headers["Authorization"] = s.c.authorization
 	headers["Content-Type"] = "application/json"
-	headers["Accept"] = "application/json;version=2"
+	headers["Accept"] = restAPIv2
 
 	reqBody, err := json.Marshal(s.request())
 	if err != nil {
