@@ -72,7 +72,7 @@ func (s *ConnectorDetailsService) Do(ctx context.Context) (ConnectorDetailsRespo
 
 	headers := make(map[string]string)
 	headers["Authorization"] = s.c.authorization
-	headers["Accept"] = "application/json;version=2"
+	headers["Accept"] = restAPIv2
 
 	r := request{
 		method:  "GET",

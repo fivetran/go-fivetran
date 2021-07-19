@@ -12,6 +12,7 @@ type Client struct {
 }
 
 const defaultBaseURL = "https://api.fivetran.com/v1"
+const restAPIv2 = "application/json;version=2"
 
 // New receives API Key and API Secret, and returns a new Client
 func New(apiKey, apiSecret string) *Client {
