@@ -50,12 +50,12 @@ type destinationConfigRequest struct {
 
 type DestinationConfigResponse struct {
 	Host                 string `json:"host"`
-	Port                 string `json:"port"` // Request `int`, Response `string`
+	Port                 string `json:"port"` // Port is sent as `string` but returned as `int`. T-97508
 	Database             string `json:"database"`
 	Auth                 string `json:"auth"`
 	User                 string `json:"user"`
 	Password             string `json:"password"`
-	ConnectionMethod     string `json:"connection_method"` // REST API response of ConnectionType
+	ConnectionMethod     string `json:"connection_method"` // ConnectionMethod is the REST API's response of ConnectionType. T-111758
 	TunnelHost           string `json:"tunnel_host"`
 	TunnelPort           string `json:"tunnel_port"`
 	TunnelUser           string `json:"tunnel_user"`
