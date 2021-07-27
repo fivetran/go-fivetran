@@ -491,7 +491,7 @@ type ConnectorConfigResponse struct {
 	Pages                            []string                                    `json:"pages"`
 	Subdomain                        string                                      `json:"subdomain"`
 	Host                             string                                      `json:"host"`
-	Port                             string                                      `json:"port"`
+	Port                             *int                                        `json:"port"`
 	User                             string                                      `json:"user"`
 	IsSecure                         string                                      `json:"is_secure"`
 	Repositories                     []string                                    `json:"repositories"`
