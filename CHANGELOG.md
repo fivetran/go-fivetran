@@ -5,7 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/fivetran/go-fivetran/compare/v0.2.0...HEAD)
+## [Unreleased](https://github.com/fivetran/go-fivetran/compare/v0.2.1...HEAD)
+
+## [0.2.1](https://github.com/fivetran/go-fivetran/compare/v0.2.0...v0.2.1) - 2021-07-27
+
+## Fixed
+- `ConnectorConfigResponse.Port` type is now *int as the response type has been fixed in the REST API v2.
 
 ## [0.2.0](https://github.com/fivetran/go-fivetran/compare/v0.1.0...v0.2.0) - 2021-07-16
 
