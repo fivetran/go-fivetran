@@ -23,6 +23,7 @@ type DestinationConfig struct {
 	externalLocation     *string
 	authType             *string
 	roleArn              *string
+	secretKey            *string
 }
 
 type destinationConfigRequest struct {
@@ -46,6 +47,7 @@ type destinationConfigRequest struct {
 	ExternalLocation     *string `json:"external_location,omitempty"`
 	AuthType             *string `json:"auth_type,omitempty"`
 	RoleArn              *string `json:"role_arn,omitempty"`
+	SecretKey            *string `json:"secret_key,omitempty"`
 }
 
 type DestinationConfigResponse struct {
@@ -69,6 +71,7 @@ type DestinationConfigResponse struct {
 	ExternalLocation     string `json:"external_location"`
 	AuthType             string `json:"auth_type"`
 	RoleArn              string `json:"role_arn"`
+	SecretKey            string `json:"secret_key"`
 }
 
 func NewDestinationConfig() *DestinationConfig {
@@ -97,6 +100,7 @@ func (dc *DestinationConfig) request() *destinationConfigRequest {
 		ExternalLocation:     dc.externalLocation,
 		AuthType:             dc.authType,
 		RoleArn:              dc.roleArn,
+		SecretKey:            dc.secretKey,
 	}
 }
 
@@ -197,5 +201,10 @@ func (dc *DestinationConfig) AuthType(value string) *DestinationConfig {
 
 func (dc *DestinationConfig) RoleArn(value string) *DestinationConfig {
 	dc.roleArn = &value
+	return dc
+}
+
+func (dc *DestinationConfig) SecretKey(value string) *DestinationConfig {
+	dc.secretKey = &value
 	return dc
 }
