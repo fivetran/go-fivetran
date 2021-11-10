@@ -87,8 +87,7 @@ func (s *GroupListConnectorsService) Do(ctx context.Context) (GroupListConnector
 	url := fmt.Sprintf("%v/groups/%v/connectors", s.c.baseURL, *s.groupID)
 	expectedStatus := 200
 
-	headers := make(map[string]string)
-	headers["Authorization"] = s.c.authorization
+	headers := s.c.fillHeaders()
 
 	queries := make(map[string]string)
 	if s.cursor != nil {

@@ -169,8 +169,7 @@ func (s *ConnectorCreateService) Do(ctx context.Context) (ConnectorCreateRespons
 	url := fmt.Sprintf("%v/connectors", s.c.baseURL)
 	expectedStatus := 201
 
-	headers := make(map[string]string)
-	headers["Authorization"] = s.c.authorization
+	headers := s.c.fillHeaders()
 	headers["Content-Type"] = "application/json"
 	headers["Accept"] = restAPIv2
 

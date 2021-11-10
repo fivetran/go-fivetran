@@ -43,8 +43,7 @@ func (s *GroupDetailsService) Do(ctx context.Context) (GroupDetailsResponse, err
 	url := fmt.Sprintf("%v/groups/%v", s.c.baseURL, *s.groupID)
 	expectedStatus := 200
 
-	headers := make(map[string]string)
-	headers["Authorization"] = s.c.authorization
+	headers := s.c.fillHeaders()
 
 	r := request{
 		method:  "GET",

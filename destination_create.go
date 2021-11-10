@@ -118,8 +118,7 @@ func (s *DestinationCreateService) Do(ctx context.Context) (DestinationCreateRes
 	url := fmt.Sprintf("%v/destinations", s.c.baseURL)
 	expectedStatus := 201
 
-	headers := make(map[string]string)
-	headers["Authorization"] = s.c.authorization
+	headers := s.c.fillHeaders()
 	headers["Content-Type"] = "application/json"
 
 	reqBody, err := json.Marshal(s.request())

@@ -95,8 +95,7 @@ func (s *UserInviteService) Do(ctx context.Context) (UserInviteResponse, error) 
 	url := fmt.Sprintf("%v/users", s.c.baseURL)
 	expectedStatus := 201
 
-	headers := make(map[string]string)
-	headers["Authorization"] = s.c.authorization
+	headers := s.c.fillHeaders()
 	headers["Content-Type"] = "application/json"
 
 	reqBody, err := json.Marshal(s.request())

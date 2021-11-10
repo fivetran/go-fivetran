@@ -46,8 +46,7 @@ func (s *DestinationDetailsService) Do(ctx context.Context) (DestinationDetailsR
 	url := fmt.Sprintf("%v/destinations/%v", s.c.baseURL, *s.destinationID)
 	expectedStatus := 200
 
-	headers := make(map[string]string)
-	headers["Authorization"] = s.c.authorization
+	headers := s.c.fillHeaders()
 
 	r := request{
 		method:  "GET",

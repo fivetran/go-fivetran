@@ -37,8 +37,7 @@ func (s *ConnectorSyncService) Do(ctx context.Context) (ConnectorSyncResponse, e
 	url := fmt.Sprintf("%v/connectors/%v/force", s.c.baseURL, *s.connectorID)
 	expectedStatus := 200
 
-	headers := make(map[string]string)
-	headers["Authorization"] = s.c.authorization
+	headers := s.c.fillHeaders()
 	headers["Content-Type"] = "application/json"
 
 	reqBody, err := json.Marshal(s)

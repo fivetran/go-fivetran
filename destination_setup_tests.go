@@ -75,8 +75,7 @@ func (s *DestinationSetupTestsService) Do(ctx context.Context) (DestinationSetup
 	url := fmt.Sprintf("%v/destinations/%v/test", s.c.baseURL, *s.destinationID)
 	expectedStatus := 200
 
-	headers := make(map[string]string)
-	headers["Authorization"] = s.c.authorization
+	headers := s.c.fillHeaders()
 	headers["Content-Type"] = "application/json"
 
 	reqBody, err := json.Marshal(s.request())
