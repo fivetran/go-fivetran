@@ -7,9 +7,9 @@ import (
 
 // Client holds client configuration
 type Client struct {
-	baseURL       string
-	authorization string
-	userAgent     string
+	baseURL         string
+	authorization   string
+	customUserAgent string
 }
 
 const defaultBaseURL = "https://api.fivetran.com/v1"
@@ -21,9 +21,9 @@ const defaultUserAgent = "Go-Fivetran/0.2.3"
 // New receives API Key and API Secret, and returns a new Client
 func New(apiKey, apiSecret string) *Client {
 	return &Client{
-		baseURL:       defaultBaseURL,
-		authorization: fmt.Sprintf("Basic %v", base64.StdEncoding.EncodeToString([]byte(fmt.Sprintf("%v:%v", apiKey, apiSecret)))),
-		userAgent:     defaultUserAgent,
+		baseURL:         defaultBaseURL,
+		authorization:   fmt.Sprintf("Basic %v", base64.StdEncoding.EncodeToString([]byte(fmt.Sprintf("%v:%v", apiKey, apiSecret)))),
+		customUserAgent: "",
 	}
 }
 
@@ -33,13 +33,19 @@ func (c *Client) BaseURL(baseURL string) {
 }
 
 // UserAgent sets custom User-Agent header in Client requests
-func (c *Client) UserAgent(userAgent string) {
-	c.userAgent = userAgent
+func (c *Client) CustomUserAgent(customUserAgent string) {
+	c.customUserAgent = customUserAgent
 }
 
 func (c *Client) commonHeaders() map[string]string {
+	userAgent := defaultUserAgent
+
+	if c.customUserAgent != "" {
+		userAgent += " " + c.customUserAgent
+	}
+
 	return map[string]string{
 		"Authorization": c.authorization,
-		"User-Agent":    c.userAgent,
+		"User-Agent":    userAgent,
 	}
 }
