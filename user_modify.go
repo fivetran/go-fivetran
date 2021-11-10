@@ -98,8 +98,7 @@ func (s *UserModifyService) Do(ctx context.Context) (UserModifyResponse, error) 
 	url := fmt.Sprintf("%v/users/%v", s.c.baseURL, *s.userID)
 	expectedStatus := 200
 
-	headers := make(map[string]string)
-	headers["Authorization"] = s.c.authorization
+	headers := s.c.commonHeaders()
 	headers["Content-Type"] = "application/json"
 
 	reqBody, err := json.Marshal(s.request())

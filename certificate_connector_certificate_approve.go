@@ -58,8 +58,7 @@ func (s *CertificateConnectorCertificateApproveService) Do(ctx context.Context) 
 	url := fmt.Sprintf("%v/certificates", s.c.baseURL)
 	expectedStatus := 200
 
-	headers := make(map[string]string)
-	headers["Authorization"] = s.c.authorization
+	headers := s.c.commonHeaders()
 	headers["Content-Type"] = "application/json"
 
 	reqBody, err := json.Marshal(s.request())

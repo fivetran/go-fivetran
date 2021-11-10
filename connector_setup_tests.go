@@ -95,8 +95,7 @@ func (s *ConnectorSetupTestsService) Do(ctx context.Context) (ConnectorSetupTest
 	url := fmt.Sprintf("%v/connectors/%v/test", s.c.baseURL, *s.connectorID)
 	expectedStatus := 200
 
-	headers := make(map[string]string)
-	headers["Authorization"] = s.c.authorization
+	headers := s.c.commonHeaders()
 	headers["Content-Type"] = "application/json"
 	headers["Accept"] = restAPIv2
 

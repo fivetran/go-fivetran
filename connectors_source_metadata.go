@@ -50,8 +50,7 @@ func (s *ConnectorsSourceMetadataService) Do(ctx context.Context) (ConnectorsSou
 	url := fmt.Sprintf("%v/metadata/connectors", s.c.baseURL)
 	expectedStatus := 200
 
-	headers := make(map[string]string)
-	headers["Authorization"] = s.c.authorization
+	headers := s.c.commonHeaders()
 
 	queries := make(map[string]string)
 	if s.cursor != nil {

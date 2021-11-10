@@ -46,8 +46,7 @@ func (s *GroupRemoveUserService) Do(ctx context.Context) (GroupRemoveUserRespons
 	url := fmt.Sprintf("%v/groups/%v/users/%v", s.c.baseURL, *s.groupID, *s.userID)
 	expectedStatus := 200
 
-	headers := make(map[string]string)
-	headers["Authorization"] = s.c.authorization
+	headers := s.c.commonHeaders()
 
 	r := request{
 		method:  "DELETE",
