@@ -66,7 +66,7 @@ func (s *GroupListUsersService) Do(ctx context.Context) (GroupListUsersResponse,
 	url := fmt.Sprintf("%v/groups/%v/users", s.c.baseURL, *s.groupID)
 	expectedStatus := 200
 
-	headers := s.c.fillHeaders()
+	headers := s.c.commonHeaders()
 
 	queries := make(map[string]string)
 	if s.cursor != nil {

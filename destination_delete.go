@@ -37,7 +37,7 @@ func (s *DestinationDeleteService) Do(ctx context.Context) (DestinationDeleteRes
 	url := fmt.Sprintf("%v/destinations/%v", s.c.baseURL, *s.destinationID)
 	expectedStatus := 200
 
-	headers := s.c.fillHeaders()
+	headers := s.c.commonHeaders()
 
 	r := request{
 		method:  "DELETE",

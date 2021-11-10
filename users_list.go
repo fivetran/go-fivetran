@@ -55,7 +55,7 @@ func (s *UsersListService) Do(ctx context.Context) (UsersListResponse, error) {
 	url := fmt.Sprintf("%v/users", s.c.baseURL)
 	expectedStatus := 200
 
-	headers := s.c.fillHeaders()
+	headers := s.c.commonHeaders()
 
 	queries := make(map[string]string)
 	if s.cursor != nil {

@@ -55,7 +55,7 @@ func (s *ConnectorReSyncTableService) Do(ctx context.Context) (ConnectorReSyncTa
 	url := fmt.Sprintf("%v/connectors/%v/schemas/%v/tables/%v/resync", s.c.baseURL, *s.connectorID, *s.schema, *s.table)
 	expectedStatus := 200
 
-	headers := s.c.fillHeaders()
+	headers := s.c.commonHeaders()
 
 	r := request{
 		method:  "POST",

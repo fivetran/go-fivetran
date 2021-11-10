@@ -50,7 +50,7 @@ func (s *UserDetailsService) Do(ctx context.Context) (UserDetailsResponse, error
 	url := fmt.Sprintf("%v/users/%v", s.c.baseURL, *s.userID)
 	expectedStatus := 200
 
-	headers := s.c.fillHeaders()
+	headers := s.c.commonHeaders()
 
 	r := request{
 		method:  "GET",

@@ -37,7 +37,7 @@ func (s *UserDeleteService) Do(ctx context.Context) (userDeleteResponse, error) 
 	url := fmt.Sprintf("%v/users/%v", s.c.baseURL, *s.userID)
 	expectedStatus := 200
 
-	headers := s.c.fillHeaders()
+	headers := s.c.commonHeaders()
 
 	r := request{
 		method:  "DELETE",

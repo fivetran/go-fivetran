@@ -37,7 +37,7 @@ func (s *GroupDeleteService) Do(ctx context.Context) (groupDeleteResponse, error
 	url := fmt.Sprintf("%v/groups/%v", s.c.baseURL, *s.groupID)
 	expectedStatus := 200
 
-	headers := s.c.fillHeaders()
+	headers := s.c.commonHeaders()
 
 	r := request{
 		method:  "DELETE",

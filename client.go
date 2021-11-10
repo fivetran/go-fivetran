@@ -37,9 +37,9 @@ func (c *Client) UserAgent(userAgent string) {
 	c.userAgent = userAgent
 }
 
-func (c *Client) fillHeaders() map[string]string {
-	headers := make(map[string]string)
-	headers["Authorization"] = c.authorization
-	headers["User-Agent"] = c.userAgent
-	return headers
+func (c *Client) commonHeaders() map[string]string {
+	return map[string]string{
+		"Authorization": c.authorization,
+		"User-Agent":    c.userAgent,
+	}
 }

@@ -48,7 +48,7 @@ func (s *GroupCreateService) Do(ctx context.Context) (GroupCreateResponse, error
 	url := fmt.Sprintf("%v/groups", s.c.baseURL)
 	expectedStatus := 201
 
-	headers := s.c.fillHeaders()
+	headers := s.c.commonHeaders()
 	headers["Content-Type"] = "application/json"
 
 	reqBody, err := json.Marshal(s.request())

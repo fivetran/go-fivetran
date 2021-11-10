@@ -37,7 +37,7 @@ func (s *ConnectorDeleteService) Do(ctx context.Context) (ConnectorDeleteRespons
 	url := fmt.Sprintf("%v/connectors/%v", s.c.baseURL, *s.connectorID)
 	expectedStatus := 200
 
-	headers := s.c.fillHeaders()
+	headers := s.c.commonHeaders()
 
 	r := request{
 		method:  "DELETE",

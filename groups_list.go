@@ -47,7 +47,7 @@ func (s *GroupsListService) Do(ctx context.Context) (GroupsListResponse, error) 
 	url := fmt.Sprintf("%v/groups", s.c.baseURL)
 	expectedStatus := 200
 
-	headers := s.c.fillHeaders()
+	headers := s.c.commonHeaders()
 
 	queries := make(map[string]string)
 	if s.cursor != nil {

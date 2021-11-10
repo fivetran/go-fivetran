@@ -58,7 +58,7 @@ func (s *CertificateConnectorFingerprintApproveService) Do(ctx context.Context) 
 	url := fmt.Sprintf("%v/fingerprints", s.c.baseURL)
 	expectedStatus := 200
 
-	headers := s.c.fillHeaders()
+	headers := s.c.commonHeaders()
 	headers["Content-Type"] = "application/json"
 
 	reqBody, err := json.Marshal(s.request())

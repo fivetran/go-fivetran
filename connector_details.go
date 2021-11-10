@@ -70,7 +70,7 @@ func (s *ConnectorDetailsService) Do(ctx context.Context) (ConnectorDetailsRespo
 	url := fmt.Sprintf("%v/connectors/%v", s.c.baseURL, *s.connectorID)
 	expectedStatus := 200
 
-	headers := s.c.fillHeaders()
+	headers := s.c.commonHeaders()
 	headers["Accept"] = restAPIv2
 
 	r := request{
