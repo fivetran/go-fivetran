@@ -21,9 +21,8 @@ const defaultUserAgent = "Go-Fivetran/0.2.3"
 // New receives API Key and API Secret, and returns a new Client
 func New(apiKey, apiSecret string) *Client {
 	return &Client{
-		baseURL:         defaultBaseURL,
-		authorization:   fmt.Sprintf("Basic %v", base64.StdEncoding.EncodeToString([]byte(fmt.Sprintf("%v:%v", apiKey, apiSecret)))),
-		customUserAgent: "",
+		baseURL:       defaultBaseURL,
+		authorization: fmt.Sprintf("Basic %v", base64.StdEncoding.EncodeToString([]byte(fmt.Sprintf("%v:%v", apiKey, apiSecret)))),
 	}
 }
 
@@ -32,7 +31,7 @@ func (c *Client) BaseURL(baseURL string) {
 	c.baseURL = baseURL
 }
 
-// UserAgent sets custom User-Agent header in Client requests
+// CustomUserAgent sets custom User-Agent header in Client requests
 func (c *Client) CustomUserAgent(customUserAgent string) {
 	c.customUserAgent = customUserAgent
 }
