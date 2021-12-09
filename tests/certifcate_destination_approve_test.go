@@ -1,0 +1,26 @@
+package tests
+
+import (
+	"context"
+	"testing"
+	"github.com/corbym/gocrest/then"
+	"github.com/corbym/gocrest/is"
+)
+
+func TestCertificateDestinationApprove(t *testing.T) {
+	for _, c := range GetClients() {
+		response, err := c.NewCertificateDestinationCertificateApprove().
+		DestinationID("_test").
+		Hash("LU+tNFWrYTl0Aau7UYki+EM2tn4C/I0tsoOCXEq5gbs=").
+		EncodedCert("MIIE3zCCA8egAwIBAgIQYxgNOPuAl3ip0DWjFhj4QDANBgkqhkiG9w0BAQsFADCByjELMAkGA1UEBhMCVVMxFzAVBgNVBAoTDlZlcmlTaWduLCBJbmMuMR8wHQYDVQQLExZWZXJpU2lnbiBUcnVzdCBOZXR3b3JrMTowOAYDVQQLEzEoYykgMjAwNiBWZXJpU2lnbiwgSW5jLiAtIEZvciBhdXRob3JpemVkIHVzZSBvbmx5MUUwQwYDVQQDEzxWZXJpU2lnbiBDbGFzcyAzIFB1YmxpYyBQcmltYXJ5IENlcnRpZmljYXRpb24gQXV0aG9yaXR5IC0gRzUwHhcNMTcxMTA2MDAwMDAwWhcNMjIxMTA1MjM1OTU5WjBhMQswCQYDVQQGEwJVUzEVMBMGA1UEChMMRGlnaUNlcnQgSW5jMRkwFwYDVQQLExB3d3cuZGlnaWNlcnQuY29tMSAwHgYDVQQDExdEaWdpQ2VydCBHbG9iYWwgUm9vdCBHMjCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBALs3zTTce2vJsmiQrUp1/0a6IQoIjfUZVMn7iNvzrvI6iZE8euarBhprz6wt6F4JJES6Ypp+1qOofuBUdSAFrFC3nGMabDDc2h8Zsdce3v3X4MuUgzeu7B9DTt17LNK9LqUv5Km4rTrUmaS2JembawBgkmD/TyFJGPdnkKthBpyP8rrptOmSMmu181foXRvNjB2rlQSVSfM1LZbjSW3dd+P7SUu0rFUHqY+Vs7Qju0xtRfD2qbKVMLT9TFWMJ0pXFHyCnc1zktMWSgYMjFDRjx4Jvheh5iHK/YPlELyDpQrEZyj2cxQUPUZ2w4cUiSE0Ta8PRQymSaG6u5zFsTODKYUCAwEAAaOCAScwggEjMB0GA1UdDgQWBBROIlQgGJXm427mD/r6uRLtBhePOTAPBgNVHRMBAf8EBTADAQH/MF8GA1UdIARYMFYwVAYEVR0gADBMMCMGCCsGAQUFBwIBFhdodHRwczovL2Quc3ltY2IuY29tL2NwczAlBggrBgEFBQcCAjAZDBdodHRwczovL2Quc3ltY2IuY29tL3JwYTAvBgNVHR8EKDAmMCSgIqAghh5odHRwOi8vcy5zeW1jYi5jb20vcGNhMy1nNS5jcmwwDgYDVR0PAQH/BAQDAgGGMC4GCCsGAQUFBwEBBCIwIDAeBggrBgEFBQcwAYYSaHR0cDovL3Muc3ltY2QuY29tMB8GA1UdIwQYMBaAFH/TZafC3ey78DAJ80M5+gKvMzEzMA0GCSqGSIb3DQEBCwUAA4IBAQBQ3dNWKSUBip6n5X1Nua8bjKLSJzXlnescavPECMpFBlIIKH2mc6mL2Xr/wkSIBDrsqAO3sBcmoJN+n8V30O5JelrtEAFYSyRDXfu78ZlHn6kvV5/jPUFECEM/hdN0x8WdLpGjJMqfs0EG5qHj+UaxpucWD445wea4zlK7hUR+MA8fq0Yd1HEKj4c8TcgaQIHMa4KHr448cQ69e3CPECRhRNg+RAKT2I7SlaVzLvaB/8yym2oMCEsoqiRT8dbXg35aKEYmmzn3O/mnB7bGUd/EUrkIf7FVamgYZd1fSzQeg1cHqf0ja6eHpvq2bTl+cWFHaq/84KlHe5Rh0CsmpZzn").
+		Do(context.Background())
+		
+		if err != nil {
+			t.Logf("%+v\n", response)
+			t.Error(err)
+		}
+
+		then.AssertThat(t, response.Code, is.EqualTo("Success"))
+		then.AssertThat(t, response.Message, is.EqualTo("The certificate has been approved"))
+	}
+}
