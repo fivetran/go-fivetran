@@ -13,7 +13,7 @@ import (
 func TestConnectorsSourceMetadata(t *testing.T) {
 	for v, c := range GetClients() {
 		//supported only for v1 version
-		if(v!="v1"){
+		if v != "v1" {
 			return;
 		}
 
