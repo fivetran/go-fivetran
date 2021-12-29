@@ -237,8 +237,8 @@ func isEmpty(actual interface{}) bool {
 }
 
 func getClients() map[string]*fivetran.Client {
-	apiKey := os.Getenv("FIVETRAN_API_KEY")
-	apiSecret := os.Getenv("FIVETRAN_API_SECRET")
+	apiKey := os.Getenv("FIVETRAN_APIKEY")
+	apiSecret := os.Getenv("FIVETRAN_APISECRET")
 	CertificateHash = os.Getenv("FIVETRAN_TEST_CERTIFICATE_HASH")
 	EncodedCertificate = os.Getenv("FIVETRAN_TEST_CERTIFICATE")
 
