@@ -1,23 +1,25 @@
-name: e2e tests
+name: Go
 
 on:
+  push:
+    branches: [ main ]
   pull_request:
     branches: [ main ]
 
 jobs:
-  e2e_tests:
+
+  build:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v2
+    - uses: actions/checkout@v2
 
     - name: Set up Go
       uses: actions/setup-go@v2
       with:
-        go-version: 1.16
+        go-version: 1.17
 
     - name: Build
       run: go build -v ./...
 
     - name: Test
-      run: go test -v -run 'E2E'
+      run: go test -v ./...
