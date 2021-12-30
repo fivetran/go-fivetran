@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestNewDestinationDeleteIntegration(t *testing.T) {
+func TestNewDestinationDeleteE2E(t *testing.T) {
 	for version, c := range Clients {
 		t.Run(version, func(t *testing.T) {
 			destinationId := CreateDestination(t)

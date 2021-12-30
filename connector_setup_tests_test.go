@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestNewConnectorSetupTestsIntegration(t *testing.T) {
+func TestNewConnectorSetupTestsE2E(t *testing.T) {
 	for version, c := range Clients {
 		t.Run(version, func(t *testing.T) {
 			connectorId := CreateTempConnector(t)

@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestNewConnectorsSourceMetadataIntegration(t *testing.T) {
+func TestNewConnectorsSourceMetadataE2E(t *testing.T) {
 	for version, c := range Clients {
 		t.Run(version, func(t *testing.T) {
 			if version == "v2" {

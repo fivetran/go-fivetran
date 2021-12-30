@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestNewGroupDetailsIntegration(t *testing.T) {
+func TestNewGroupDetailsE2E(t *testing.T) {
 	for version, c := range Clients {
 		t.Run(version, func(t *testing.T) {
 			result, err := c.NewGroupDetails().GroupID(PredefinedGroupId).Do(context.Background())

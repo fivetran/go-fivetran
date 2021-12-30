@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestNewUserInviteIntegration(t *testing.T) {
+func TestNewUserInviteE2E(t *testing.T) {
 	for version, c := range Clients {
 		t.Run(version, func(t *testing.T) {
 			user, err := c.NewUserInvite().

@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestNewCertificateDestinationFingerprintApproveIntegration(t *testing.T) {
+func TestNewCertificateDestinationFingerprintApproveE2E(t *testing.T) {
 	for version, c := range Clients {
 		t.Run(version, func(t *testing.T) {
 			destinationId := CreateTempDestination(t)

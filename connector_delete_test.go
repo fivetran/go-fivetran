@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestNewConnectorDeleteIntegration(t *testing.T) {
+func TestNewConnectorDeleteE2E(t *testing.T) {
 	for version, c := range Clients {
 		t.Run(version, func(t *testing.T) {
 			connectorId := CreateConnector(t)

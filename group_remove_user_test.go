@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestNewGroupRemoveUserIntegration(t *testing.T) {
+func TestNewGroupRemoveUserE2E(t *testing.T) {
 	for version, c := range Clients {
 		t.Run(version, func(t *testing.T) {
 			t.Skip("Account has new RBAC model in place and we can't add a user with a new role names. It will be fix soon")

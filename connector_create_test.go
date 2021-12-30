@@ -7,7 +7,7 @@ import (
 	"github.com/fivetran/go-fivetran"
 )
 
-func TestNewConnectorCreateIntegration(t *testing.T) {
+func TestNewConnectorCreateE2E(t *testing.T) {
 	for version, c := range Clients {
 		t.Run(version, func(t *testing.T) {
 			created, err := c.NewConnectorCreate().

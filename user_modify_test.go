@@ -6,7 +6,7 @@ import (
 )
 
 
-func TestNewUserModifyIntegration(t *testing.T) {
+func TestNewUserModifyE2E(t *testing.T) {
 	for version, c := range Clients {
 		t.Run(version, func(t *testing.T) {
 			userId := CreateTempUser(t)

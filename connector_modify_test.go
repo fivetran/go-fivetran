@@ -7,7 +7,7 @@ import (
 	"github.com/fivetran/go-fivetran"
 )
 
-func TestNewConnectorModifyIntegration(t *testing.T) {
+func TestNewConnectorModifyE2E(t *testing.T) {
 	for version, c := range Clients {
 		t.Run(version, func(t *testing.T) {
 			connectorId := CreateTempConnector(t)

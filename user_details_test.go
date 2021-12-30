@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestNewUserDetailsIntegration(t *testing.T) {
+func TestNewUserDetailsE2E(t *testing.T) {
 	for version, c := range Clients {
 		t.Run(version, func(t *testing.T) {
 			user, err := c.NewUserDetails().UserID(PredefinedUserId).Do(context.Background())

@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestNewGroupModifyIntegration(t *testing.T) {
+func TestNewGroupModifyE2E(t *testing.T) {
 	for version, c := range Clients {
 		t.Run(version, func(t *testing.T) {
 			groupId := CreateTempGroup(t)

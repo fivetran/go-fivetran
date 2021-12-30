@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestNewUserDeleteIntegration(t *testing.T) {
+func TestNewUserDeleteE2E(t *testing.T) {
 	for version, c := range Clients {
 		t.Run(version, func(t *testing.T) {
 			userId := CreateUser(t)

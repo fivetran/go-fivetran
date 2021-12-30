@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestNewCertificateConnectorFingerprintApproveIntegration(t *testing.T) {
+func TestNewCertificateConnectorFingerprintApproveE2E(t *testing.T) {
 	for version, c := range Clients {
 		t.Run(version, func(t *testing.T) {
 			connectorId := CreateTempConnector(t)

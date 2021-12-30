@@ -7,7 +7,7 @@ import (
 	"github.com/fivetran/go-fivetran"
 )
 
-func TestNewDestinationModifyIntegration(t *testing.T) {
+func TestNewDestinationModifyE2E(t *testing.T) {
 	for version, c := range Clients {
 		t.Run(version, func(t *testing.T) {
 			if version == "v2" {
