@@ -23,11 +23,11 @@ func TestNewConnectorSetupTestsIntegration(t *testing.T) {
 
 			AssertEqual(t, details.Code, "Success")
 			AssertEqual(t, details.Data.ID, connectorId)
-			AssertEqual(t, details.Data.GroupID, "climbed_consulted")
+			AssertEqual(t, details.Data.GroupID, PredefinedGroupId)
 			AssertEqual(t, details.Data.Service, "itunes_connect")
 			AssertEqual(t, *details.Data.ServiceVersion, 1)
 			AssertEqual(t, details.Data.Schema, "itunes_e2e_connect")
-			AssertEqual(t, details.Data.ConnectedBy, "cherry_spoilt")
+			AssertEqual(t, details.Data.ConnectedBy, PredefinedUserId)
 			AssertEqual(t, details.Data.CreatedAt.IsZero(), false)
 			AssertEqual(t, details.Data.SucceededAt.IsZero(), true)
 			AssertEqual(t, details.Data.FailedAt.IsZero(), true)

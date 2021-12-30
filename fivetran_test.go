@@ -132,12 +132,14 @@ func CreateDestination(t *testing.T) string {
 }
 
 func CreateTempDestination(t *testing.T) string {
+	t.Helper()
 	destinationId := CreateDestination(t)
 	t.Cleanup(func() { DeleteDestination(t, destinationId) })
 	return destinationId
 }
 
 func CreateConnector(t *testing.T) string {
+	t.Helper()
 	created, err := Clients["v1"].NewConnectorCreate().
 		GroupID("climbed_consulted").
 		Service("itunes_connect").

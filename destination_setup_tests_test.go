@@ -7,13 +7,11 @@ import (
 
 func TestNewDestinationSetupTestsIntegration(t *testing.T) {
 	for version, c := range Clients {
-		//todo: remove it after v2 port fixes
-		if version == "v2" {
-			continue
-		}
 		t.Run(version, func(t *testing.T) {
+			if version == "v2" {
+				t.Skip("Will be tested after port fixes in v2")
+			}
 			destinationId := CreateTempDestination(t)
-
 			response, err := c.NewDestinationSetupTests().DestinationID(destinationId).
 				TrustCertificates(true).
 				TrustFingerprints(true).

@@ -7,12 +7,10 @@ import (
 
 func TestNewDestinationDetailsIntegration(t *testing.T) {
 	for version, c := range Clients {
-		//todo: remove it after v2 fixes
-		if version == "v2" {
-			continue
-		}
-
 		t.Run(version, func(t *testing.T) {
+			if version == "v2" {
+				t.Skip("Will be tested after port fixes in v2")
+			}
 			destinationId := CreateTempDestination(t)
 
 			details, err := c.NewDestinationDetails().DestinationID(destinationId).Do(context.Background())
@@ -23,8 +21,8 @@ func TestNewDestinationDetailsIntegration(t *testing.T) {
 			}
 
 			AssertEqual(t, details.Code, "Success")
-			AssertEqual(t, details.Data.ID, "climbed_consulted")
-			AssertEqual(t, details.Data.GroupID, "climbed_consulted")
+			AssertEqual(t, details.Data.ID, PredefinedGroupId)
+			AssertEqual(t, details.Data.GroupID, PredefinedGroupId)
 			AssertEqual(t, details.Data.Service, "snowflake")
 			AssertEqual(t, details.Data.Region, "US")
 			AssertEqual(t, details.Data.TimeZoneOffset, "+10")

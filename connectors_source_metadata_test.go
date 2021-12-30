@@ -7,12 +7,11 @@ import (
 
 func TestNewConnectorsSourceMetadataIntegration(t *testing.T) {
 	for version, c := range Clients {
-		//supported only for v1 version
-		if version == "v2" {
-			continue
-		}
-
 		t.Run(version, func(t *testing.T) {
+			if version == "v2" {
+				t.Skip("Connectors Source Metadata supported only for v1 version")
+			}
+
 			meta, err := c.NewConnectorsSourceMetadata().Do(context.Background())
 
 			if err != nil {

@@ -6,13 +6,13 @@ import (
 )
 
 func TestNewGroupAddUserIntegration(t *testing.T) {
-	t.Skip("Account has new RBAC model in place and we can't add a user with a new role names. It will be fix soon")
-
 	for version, c := range Clients {
 		t.Run(version, func(t *testing.T) {
+			t.Skip("Account has new RBAC model in place and we can't add a user with a new role names. It will be fix soon")
+			
 			userId := CreateUser(t)
 
-			created, err := c.NewGroupAddUser().GroupID("climbed_consulted").
+			created, err := c.NewGroupAddUser().GroupID(PredefinedGroupId).
 				Email("william_addison.@fivetran.com").
 				Role("Destination Administrator").
 				Do(context.Background())
@@ -25,7 +25,7 @@ func TestNewGroupAddUserIntegration(t *testing.T) {
 			AssertEqual(t, created.Code, "Success")
 			AssertEqual(t, created.Message, "User has been invited to the group")
 
-			t.Cleanup(func() { RemoveUserFromGroup(t, "climbed_consulted", userId) })
+			t.Cleanup(func() { RemoveUserFromGroup(t, PredefinedGroupId, userId) })
 		})
 	}
 }

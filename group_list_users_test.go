@@ -8,7 +8,7 @@ import (
 func TestNewGroupListUsersIntegration(t *testing.T) {
 	for version, c := range Clients {
 		t.Run(version, func(t *testing.T) {
-			users, err := c.NewGroupListUsers().GroupID("climbed_consulted").Do(context.Background())
+			users, err := c.NewGroupListUsers().GroupID(PredefinedGroupId).Do(context.Background())
 
 			if err != nil {
 				t.Logf("%+v\n", users)
@@ -17,7 +17,7 @@ func TestNewGroupListUsersIntegration(t *testing.T) {
 
 			AssertEqual(t, users.Code, "Success")
 			AssertHasLength(t, users.Data.Items, 1)
-			AssertEqual(t, users.Data.Items[0].ID, "cherry_spoilt")
+			AssertEqual(t, users.Data.Items[0].ID, PredefinedUserId)
 			AssertEqual(t, users.Data.Items[0].Email, "testingfivetran@gmail.com")
 			AssertEqual(t, users.Data.Items[0].GivenName, "Andrey")
 			AssertEqual(t, users.Data.Items[0].FamilyName, "Markov")

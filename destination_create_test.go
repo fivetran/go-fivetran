@@ -9,13 +9,12 @@ import (
 
 func TestNewDestinationCreateIntegration(t *testing.T) {
 	for version, c := range Clients {
-		//todo: remove it after v2 fixes
-		if version == "v2" {
-			continue
-		}
 		t.Run(version, func(t *testing.T) {
+			if version == "v2" {
+				t.Skip("Will be tested after port fixes in v2")
+			}
 			created, err := c.NewDestinationCreate().
-				GroupID("climbed_consulted").
+				GroupID(PredefinedGroupId).
 				Service("snowflake").
 				TimeZoneOffset("+10").
 				RunSetupTests(false).
@@ -35,7 +34,7 @@ func TestNewDestinationCreateIntegration(t *testing.T) {
 
 			AssertEqual(t, created.Code, "Success")
 			AssertEqual(t, created.Message, "Destination has been created")
-			AssertEqual(t, created.Data.ID, "climbed_consulted")
+			AssertEqual(t, created.Data.ID, PredefinedGroupId)
 			AssertEqual(t, created.Data.Service, "snowflake")
 			AssertEqual(t, created.Data.Region, "US")
 			AssertEqual(t, created.Data.TimeZoneOffset, "+10")
@@ -47,7 +46,7 @@ func TestNewDestinationCreateIntegration(t *testing.T) {
 			AssertEqual(t, created.Data.Config.User, "fivetran_user")
 			AssertEqual(t, created.Data.Config.Password, "******")
 
-			t.Cleanup(func() { DeleteDestination(t, "climbed_consulted") })
+			t.Cleanup(func() { DeleteDestination(t, PredefinedGroupId) })
 		})
 	}
 }

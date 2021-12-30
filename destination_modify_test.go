@@ -9,14 +9,12 @@ import (
 
 func TestNewDestinationModifyIntegration(t *testing.T) {
 	for version, c := range Clients {
-		//todo: remove it after v2 fixes
-		if version == "v2" {
-			continue
-		}
-
 		t.Run(version, func(t *testing.T) {
-			destinationId := CreateTempDestination(t)
+			if version == "v2" {
+				t.Skip("Will be tested after port fixes in v2")
+			}
 
+			destinationId := CreateTempDestination(t)
 			details, err := c.NewDestinationModify().DestinationID(destinationId).
 				Region("APAC").
 				TimeZoneOffset("+10").

@@ -31,11 +31,11 @@ func TestNewConnectorModifyIntegration(t *testing.T) {
 
 			AssertEqual(t, updated.Code, "Success")
 			AssertEqual(t, updated.Data.ID, connectorId)
-			AssertEqual(t, updated.Data.GroupID, "climbed_consulted")
+			AssertEqual(t, updated.Data.GroupID, PredefinedGroupId)
 			AssertEqual(t, updated.Data.Service, "itunes_connect")
 			AssertEqual(t, *updated.Data.ServiceVersion, 1)
 			AssertEqual(t, updated.Data.Schema, "itunes_e2e_connect")
-			AssertEqual(t, updated.Data.ConnectedBy, "cherry_spoilt")
+			AssertEqual(t, updated.Data.ConnectedBy, PredefinedUserId)
 			AssertEqual(t, updated.Data.CreatedAt.IsZero(), false)
 			AssertEqual(t, updated.Data.SucceededAt.IsZero(), true)
 			AssertEqual(t, updated.Data.FailedAt.IsZero(), true)

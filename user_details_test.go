@@ -8,14 +8,14 @@ import (
 func TestNewUserDetailsIntegration(t *testing.T) {
 	for version, c := range Clients {
 		t.Run(version, func(t *testing.T) {
-			user, err := c.NewUserDetails().UserID("cherry_spoilt").Do(context.Background())
+			user, err := c.NewUserDetails().UserID(PredefinedUserId).Do(context.Background())
 			if err != nil {
 				t.Logf("%+v\n", user)
 				t.Error(err)
 			}
 
 			AssertEqual(t, user.Code, "Success")
-			AssertEqual(t, user.Data.ID, "cherry_spoilt")
+			AssertEqual(t, user.Data.ID, PredefinedUserId)
 			AssertEqual(t, user.Data.Email, "testingfivetran@gmail.com")
 			AssertEqual(t, user.Data.GivenName, "Andrey")
 			AssertEqual(t, user.Data.FamilyName, "Markov")

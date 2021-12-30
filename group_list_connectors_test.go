@@ -9,7 +9,7 @@ func TestNewGroupListConnectorsIntegration(t *testing.T) {
 	for version, c := range Clients {
 		t.Run(version, func(t *testing.T) {
 			connectorId := CreateTempConnector(t)
-			connectors, err := c.NewGroupListConnectors().GroupID("climbed_consulted").Do(context.Background())
+			connectors, err := c.NewGroupListConnectors().GroupID(PredefinedGroupId).Do(context.Background())
 
 			if err != nil {
 				t.Logf("%+v\n", connectors)
@@ -20,11 +20,11 @@ func TestNewGroupListConnectorsIntegration(t *testing.T) {
 			AssertHasLength(t, connectors.Data.Items, 1)
 
 			AssertEqual(t, connectors.Data.Items[0].ID, connectorId)
-			AssertEqual(t, connectors.Data.Items[0].GroupID, "climbed_consulted")
+			AssertEqual(t, connectors.Data.Items[0].GroupID, PredefinedGroupId)
 			AssertEqual(t, connectors.Data.Items[0].Service, "itunes_connect")
 			AssertEqual(t, *connectors.Data.Items[0].ServiceVersion, 1)
 			AssertEqual(t, connectors.Data.Items[0].Schema, "itunes_e2e_connect")
-			AssertEqual(t, connectors.Data.Items[0].ConnectedBy, "cherry_spoilt")
+			AssertEqual(t, connectors.Data.Items[0].ConnectedBy, PredefinedUserId)
 			AssertEqual(t, connectors.Data.Items[0].CreatedAt.IsZero(), false)
 			AssertEqual(t, connectors.Data.Items[0].SucceededAt.IsZero(), true)
 			AssertEqual(t, connectors.Data.Items[0].FailedAt.IsZero(), true)
