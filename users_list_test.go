@@ -16,7 +16,7 @@ func TestNewUsersListE2E(t *testing.T) {
 
 			AssertEqual(t, users.Code, "Success")
 			AssertHasLength(t, users.Data.Items, 1)
-			AssertEqual(t, users.Data.Items[0].ID, "cherry_spoilt")
+			AssertEqual(t, users.Data.Items[0].ID, PredefinedUserId)
 			AssertEqual(t, users.Data.Items[0].Email, "testingfivetran@gmail.com")
 			AssertEqual(t, users.Data.Items[0].GivenName, "Andrey")
 			AssertEqual(t, users.Data.Items[0].FamilyName, "Markov")

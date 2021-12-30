@@ -12,12 +12,18 @@ import (
 
 var Clients map[string]*fivetran.Client
 
+var apiKey string
+var apiSecret string
 var CertificateHash string
 var EncodedCertificate string
 var PredefinedGroupId string = "climbed_consulted"
 var PredefinedUserId string = "cherry_spoilt"
 
 func init() {
+	apiKey = os.Getenv("FIVETRAN_APIKEY")
+	apiSecret = os.Getenv("FIVETRAN_APISECRET")
+	CertificateHash = os.Getenv("FIVETRAN_TEST_CERTIFICATE_HASH")
+	EncodedCertificate = os.Getenv("FIVETRAN_TEST_CERTIFICATE")
 	Clients = getClients()
 }
 
@@ -239,11 +245,6 @@ func isEmpty(actual interface{}) bool {
 }
 
 func getClients() map[string]*fivetran.Client {
-	apiKey := os.Getenv("FIVETRAN_APIKEY")
-	apiSecret := os.Getenv("FIVETRAN_APISECRET")
-	CertificateHash = os.Getenv("FIVETRAN_TEST_CERTIFICATE_HASH")
-	EncodedCertificate = os.Getenv("FIVETRAN_TEST_CERTIFICATE")
-
 	clients := make(map[string]*fivetran.Client)
 
 	versions := [...]string{"v1", "v2"}
