@@ -27,6 +27,4 @@ jobs:
         FIVETRAN_APISECRET : ${{ secrets.FIVETRAN_APISECRET }}
         FIVETRAN_TEST_CERTIFICATE_HASH : ${{ secrets.FIVETRAN_TEST_CERTIFICATE_HASH }}
         FIVETRAN_TEST_CERTIFICATE : ${{ secrets.FIVETRAN_TEST_CERTIFICATE }}
-      run: echo ${FIVETRAN_APIKEY:0:1}
-      run: echo ${FIVETRAN_API_SECRET:0:1}
       run: go test -v ./...
