@@ -11,7 +11,7 @@ import (
 	"github.com/fivetran/go-fivetran"
 )
 
-var Clients map[string]*fivetran.Client
+var Client *fivetran.Client
 
 var apiKey string
 var apiSecret string
@@ -25,13 +25,14 @@ func init() {
 	apiSecret = os.Getenv("FIVETRAN_APISECRET")
 	CertificateHash = os.Getenv("FIVETRAN_TEST_CERTIFICATE_HASH")
 	EncodedCertificate = os.Getenv("FIVETRAN_TEST_CERTIFICATE")
-	Clients = getClients()
+	Client = fivetran.New(apiKey, apiSecret)
+	Client.BaseURL("https://api.fivetran.com/v1")
 	cleanupAccount()
 }
 
 func CreateUser(t *testing.T) string {
 	t.Helper()
-	user, err := Clients["v1"].NewUserInvite().
+	user, err := Client.NewUserInvite().
 		Email("william_addison.@fivetran.com").
 		GivenName("William").
 		FamilyName("Addison").
@@ -55,7 +56,7 @@ func CreateTempUser(t *testing.T) string {
 
 func DeleteUser(t *testing.T, id string) {
 	t.Helper()
-	user, err := Clients["v1"].NewUserDelete().UserID(id).Do(context.Background())
+	user, err := Client.NewUserDelete().UserID(id).Do(context.Background())
 	if err != nil {
 		t.Logf("%+v\n", user)
 		t.Error(err)
@@ -64,7 +65,7 @@ func DeleteUser(t *testing.T, id string) {
 
 func CreateGroup(t *testing.T) string {
 	t.Helper()
-	created, err := Clients["v1"].NewGroupCreate().Name("test").Do(context.Background())
+	created, err := Client.NewGroupCreate().Name("test").Do(context.Background())
 	if err != nil {
 		t.Logf("%+v\n", created)
 		t.Error(err)
@@ -81,7 +82,7 @@ func CreateTempGroup(t *testing.T) string {
 
 func DeleteGroup(t *testing.T, id string) {
 	t.Helper()
-	deleted, err := Clients["v1"].NewGroupDelete().GroupID(id).Do(context.Background())
+	deleted, err := Client.NewGroupDelete().GroupID(id).Do(context.Background())
 	if err != nil {
 		t.Logf("%+v\n", deleted)
 		t.Error(err)
@@ -90,7 +91,7 @@ func DeleteGroup(t *testing.T, id string) {
 
 func AddUserToGroup(t *testing.T, groupId string, email string) {
 	t.Helper()
-	created, err := Clients["v1"].NewGroupAddUser().GroupID(groupId).Email(email).Role("Destination Administrator").Do(context.Background())
+	created, err := Client.NewGroupAddUser().GroupID(groupId).Email(email).Role("Destination Administrator").Do(context.Background())
 	if err != nil {
 		t.Logf("%+v\n", created)
 		t.Error(err)
@@ -99,7 +100,7 @@ func AddUserToGroup(t *testing.T, groupId string, email string) {
 
 func RemoveUserFromGroup(t *testing.T, groupId string, userId string) {
 	t.Helper()
-	deleted, err := Clients["v1"].NewGroupRemoveUser().GroupID(groupId).UserID(userId).Do(context.Background())
+	deleted, err := Client.NewGroupRemoveUser().GroupID(groupId).UserID(userId).Do(context.Background())
 	if err != nil {
 		t.Logf("%+v\n", deleted)
 		t.Error(err)
@@ -108,7 +109,7 @@ func RemoveUserFromGroup(t *testing.T, groupId string, userId string) {
 
 func DeleteDestination(t *testing.T, id string) {
 	t.Helper()
-	deleted, err := Clients["v1"].NewDestinationDelete().DestinationID(id).Do(context.Background())
+	deleted, err := Client.NewDestinationDelete().DestinationID(id).Do(context.Background())
 
 	if err != nil {
 		t.Logf("%+v\n", deleted)
@@ -118,7 +119,7 @@ func DeleteDestination(t *testing.T, id string) {
 
 func CreateDestination(t *testing.T) string {
 	t.Helper()
-	created, err := Clients["v1"].NewDestinationCreate().
+	created, err := Client.NewDestinationCreate().
 		GroupID("climbed_consulted").
 		Service("snowflake").
 		TimeZoneOffset("+10").
@@ -148,7 +149,7 @@ func CreateTempDestination(t *testing.T) string {
 
 func CreateConnector(t *testing.T) string {
 	t.Helper()
-	created, err := Clients["v1"].NewConnectorCreate().
+	created, err := Client.NewConnectorCreate().
 		GroupID("climbed_consulted").
 		Service("itunes_connect").
 		RunSetupTests(false).
@@ -175,7 +176,7 @@ func CreateTempConnector(t *testing.T) string {
 
 func DeleteConnector(t *testing.T, id string) {
 	t.Helper()
-	deleted, err := Clients["v1"].NewConnectorDelete().ConnectorID(id).Do(context.Background())
+	deleted, err := Client.NewConnectorDelete().ConnectorID(id).Do(context.Background())
 
 	if err != nil {
 		t.Logf("%+v\n", deleted)
@@ -246,18 +247,6 @@ func isEmpty(actual interface{}) bool {
 	return isEmpty
 }
 
-func getClients() map[string]*fivetran.Client {
-	clients := make(map[string]*fivetran.Client)
-
-	versions := [...]string{"v1", "v2"}
-	for _, version := range versions {
-		client := fivetran.New(apiKey, apiSecret)
-		client.BaseURL("https://api.fivetran.com/" + version)
-		clients[version] = client
-	}
-	return clients
-}
-
 func cleanupAccount() {
 	cleanupUsers()
 	cleanupDestinations()
@@ -265,13 +254,13 @@ func cleanupAccount() {
 }
 
 func cleanupUsers() {
-	users, err := Clients["v1"].NewUsersList().Do(context.Background())
+	users, err := Client.NewUsersList().Do(context.Background())
 	if err != nil {
 		log.Fatal(err)
 	}
 	for _, user := range users.Data.Items {
 		if user.ID != PredefinedUserId {
-			_, err := Clients["v1"].NewUserDelete().UserID(user.ID).Do(context.Background())
+			_, err := Client.NewUserDelete().UserID(user.ID).Do(context.Background())
 			if err != nil {
 				log.Fatal(err)
 			}
@@ -280,13 +269,13 @@ func cleanupUsers() {
 }
 
 func cleanupDestinations() {
-	groups, err := Clients["v1"].NewGroupsList().Do(context.Background())
+	groups, err := Client.NewGroupsList().Do(context.Background())
 	if err != nil {
 		log.Fatal(err)
 	}
 	for _, group := range groups.Data.Items {
 		if group.ID != PredefinedGroupId {
-			_, err := Clients["v1"].NewDestinationDelete().DestinationID(group.ID).Do(context.Background())
+			_, err := Client.NewDestinationDelete().DestinationID(group.ID).Do(context.Background())
 			if err != nil {
 				log.Fatal(err)
 			}
@@ -295,14 +284,14 @@ func cleanupDestinations() {
 }
 
 func cleanupGroups() {
-	groups, err := Clients["v1"].NewGroupsList().Do(context.Background())
+	groups, err := Client.NewGroupsList().Do(context.Background())
 	if err != nil {
 		log.Fatal(err)
 	}
 	for _, group := range groups.Data.Items {
 		if group.ID != PredefinedGroupId {
 			cleanupConnectors(group.ID)
-			_, err := Clients["v1"].NewGroupDelete().GroupID(group.ID).Do(context.Background())
+			_, err := Client.NewGroupDelete().GroupID(group.ID).Do(context.Background())
 			if err != nil {
 				log.Fatal(err)
 			}
@@ -311,12 +300,12 @@ func cleanupGroups() {
 }
 
 func cleanupConnectors(groupId string) {
-	connectors, err := Clients["v1"].NewGroupListConnectors().GroupID(groupId).Do(context.Background())
+	connectors, err := Client.NewGroupListConnectors().GroupID(groupId).Do(context.Background())
 	if err != nil {
 		log.Fatal(err)
 	}
 	for _, connector := range connectors.Data.Items {
-		_, err := Clients["v1"].NewConnectorDelete().ConnectorID(connector.ID).Do(context.Background())
+		_, err := Client.NewConnectorDelete().ConnectorID(connector.ID).Do(context.Background())
 		if err != nil {
 			log.Fatal(err)
 		}
