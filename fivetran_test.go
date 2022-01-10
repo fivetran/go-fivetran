@@ -3,6 +3,7 @@ package fivetran_test
 import (
 	"context"
 	"fmt"
+	"log"
 	"os"
 	"reflect"
 	"testing"
@@ -25,6 +26,7 @@ func init() {
 	CertificateHash = os.Getenv("FIVETRAN_TEST_CERTIFICATE_HASH")
 	EncodedCertificate = os.Getenv("FIVETRAN_TEST_CERTIFICATE")
 	Clients = getClients()
+	cleanupAccount()
 }
 
 func CreateUser(t *testing.T) string {
@@ -254,4 +256,69 @@ func getClients() map[string]*fivetran.Client {
 		clients[version] = client
 	}
 	return clients
+}
+
+func cleanupAccount() {
+	cleanupUsers()
+	cleanupDestinations()
+	cleanupGroups()
+}
+
+func cleanupUsers() {
+	users, err := Clients["v1"].NewUsersList().Do(context.Background())
+	if err != nil {
+		log.Fatal(err)
+	}
+	for _, user := range users.Data.Items {
+		if user.ID != PredefinedUserId {
+			_, err := Clients["v1"].NewUserDelete().UserID(user.ID).Do(context.Background())
+			if err != nil {
+				log.Fatal(err)
+			}
+		}
+	}
+}
+
+func cleanupDestinations() {
+	groups, err := Clients["v1"].NewGroupsList().Do(context.Background())
+	if err != nil {
+		log.Fatal(err)
+	}
+	for _, group := range groups.Data.Items {
+		if group.ID != PredefinedGroupId {
+			_, err := Clients["v1"].NewDestinationDelete().DestinationID(group.ID).Do(context.Background())
+			if err != nil {
+				log.Fatal(err)
+			}
+		}
+	}
+}
+
+func cleanupGroups() {
+	groups, err := Clients["v1"].NewGroupsList().Do(context.Background())
+	if err != nil {
+		log.Fatal(err)
+	}
+	for _, group := range groups.Data.Items {
+		if group.ID != PredefinedGroupId {
+			cleanupConnectors(group.ID)
+			_, err := Clients["v1"].NewGroupDelete().GroupID(group.ID).Do(context.Background())
+			if err != nil {
+				log.Fatal(err)
+			}
+		}
+	}
+}
+
+func cleanupConnectors(groupId string) {
+	connectors, err := Clients["v1"].NewGroupListConnectors().GroupID(groupId).Do(context.Background())
+	if err != nil {
+		log.Fatal(err)
+	}
+	for _, connector := range connectors.Data.Items {
+		_, err := Clients["v1"].NewConnectorDelete().ConnectorID(connector.ID).Do(context.Background())
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
 }
