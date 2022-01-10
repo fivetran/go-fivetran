@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Added
 - E2E tests. 
-To be sure that SDK is stable and support backward compatibility between different API versions we have added e2e tests which are triggered on each pull request to the main branch. Each e2e test has `E2E` suffix and located in a corresponding `_test.go` file.
+To be sure that SDK is stable we have added e2e tests which are triggered on each pull request to the main branch. Each e2e test has `E2E` suffix and located in a corresponding `_test.go` file.
 - GitHub actions workflow to run tests on a testing account.
 
 ## [0.3.1](https://github.com/fivetran/go-fivetran/compare/v0.3.0...v0.3.1) - 2021-12-08
