@@ -274,11 +274,9 @@ func cleanupDestinations() {
 		log.Fatal(err)
 	}
 	for _, group := range groups.Data.Items {
-		if group.ID != PredefinedGroupId {
-			_, err := Client.NewDestinationDelete().DestinationID(group.ID).Do(context.Background())
-			if err != nil {
-				log.Fatal(err)
-			}
+		_, err := Client.NewDestinationDelete().DestinationID(group.ID).Do(context.Background())
+		if err != nil {
+			log.Fatal(err)
 		}
 	}
 }
@@ -289,8 +287,8 @@ func cleanupGroups() {
 		log.Fatal(err)
 	}
 	for _, group := range groups.Data.Items {
+		cleanupConnectors(group.ID)
 		if group.ID != PredefinedGroupId {
-			cleanupConnectors(group.ID)
 			_, err := Client.NewGroupDelete().GroupID(group.ID).Do(context.Background())
 			if err != nil {
 				log.Fatal(err)
