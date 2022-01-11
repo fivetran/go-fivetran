@@ -275,7 +275,7 @@ func cleanupDestinations() {
 	}
 	for _, group := range groups.Data.Items {
 		_, err := Client.NewDestinationDelete().DestinationID(group.ID).Do(context.Background())
-		if err != nil {
+		if err != nil && err.Error() != "status code: 404; expected: 200" {
 			log.Fatal(err)
 		}
 	}
