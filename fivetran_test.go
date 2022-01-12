@@ -120,7 +120,7 @@ func DeleteDestination(t *testing.T, id string) {
 func CreateDestination(t *testing.T) string {
 	t.Helper()
 	created, err := Client.NewDestinationCreate().
-		GroupID("climbed_consulted").
+		GroupID(PredefinedGroupId).
 		Service("snowflake").
 		TimeZoneOffset("+10").
 		RunSetupTests(false).
@@ -150,7 +150,7 @@ func CreateTempDestination(t *testing.T) string {
 func CreateConnector(t *testing.T) string {
 	t.Helper()
 	created, err := Client.NewConnectorCreate().
-		GroupID("climbed_consulted").
+		GroupID(PredefinedGroupId).
 		Service("itunes_connect").
 		RunSetupTests(false).
 		Config(fivetran.NewConnectorConfig().

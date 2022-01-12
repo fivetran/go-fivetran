@@ -9,7 +9,7 @@ import (
 
 func TestNewConnectorCreateE2E(t *testing.T) {
 	created, err := Client.NewConnectorCreate().
-		GroupID("climbed_consulted").
+		GroupID(PredefinedGroupId).
 		Service("itunes_connect").
 		RunSetupTests(false).
 		Config(fivetran.NewConnectorConfig().
