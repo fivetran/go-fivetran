@@ -17,8 +17,8 @@ var apiKey string
 var apiSecret string
 var CertificateHash string
 var EncodedCertificate string
-var PredefinedGroupId string = "climbed_consulted"
-var PredefinedUserId string = "cherry_spoilt"
+var PredefinedGroupId string = "cam_monetize"
+var PredefinedUserId string = "spoiled_ferric"
 
 func init() {
 	apiKey = os.Getenv("FIVETRAN_APIKEY")
