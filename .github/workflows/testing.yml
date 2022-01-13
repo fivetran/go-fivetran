@@ -1,0 +1,30 @@
+name: Testing
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.16
+
+    - name: Build
+      run: go build -v ./...
+
+    - name: Test
+      env: 
+        FIVETRAN_APIKEY : ${{ secrets.FIVETRAN_APIKEY }}
+        FIVETRAN_APISECRET : ${{ secrets.FIVETRAN_APISECRET }}
+        FIVETRAN_TEST_CERTIFICATE_HASH : ${{ secrets.FIVETRAN_TEST_CERTIFICATE_HASH }}
+        FIVETRAN_TEST_CERTIFICATE : ${{ secrets.FIVETRAN_TEST_CERTIFICATE }}
+      run: go test -v ./...
