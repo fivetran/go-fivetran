@@ -25,6 +25,9 @@ func main() {
 	cTables2 := fivetran.NewConnectorConfigCustomTables().TableName("theName").Fields([]string{"FIELD ONE", "FIELD TWO"})
 	connConfig.CustomTables([]*fivetran.ConnectorConfigCustomTables{cTables1, cTables2})
 
+	adobeAnalyticsConfig1 := fivetran.NewConnectorConfigAdobeAnalyticsConfiguration().SyncMode("syncMode").Elements([]string{"elemet1", "element2"})
+	connConfig.AdobeAnalyticsConfigurations([]*fivetran.ConnectorConfigAdobeAnalyticsConfiguration{adobeAnalyticsConfig1})
+
 	svc.ConnectorID("grateful_vertices")
 	svc.Paused(true)
 	svc.SyncFrequency(5)

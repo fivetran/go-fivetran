@@ -32,6 +32,9 @@ func main() {
 	cTables2 := fivetran.NewConnectorConfigCustomTables().TableName("TableNAME2")
 	connConfig.CustomTables([]*fivetran.ConnectorConfigCustomTables{cTables1, cTables2})
 
+	adobeAnalyticsConfig1 := fivetran.NewConnectorConfigAdobeAnalyticsConfiguration().SyncMode("syncMode").Elements([]string{"elemet1", "element2"})
+	connConfig.AdobeAnalyticsConfigurations([]*fivetran.ConnectorConfigAdobeAnalyticsConfiguration{adobeAnalyticsConfig1})
+
 	connConfig.Schema("google_sheets5959").
 		Table("table").
 		SheetID("1Rmq_FN2kTNwWiT4adZKBxHBRmvfeBTIfKWi5B8ii9qk").
