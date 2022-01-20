@@ -257,7 +257,7 @@ func cleanupAccount() {
 	cleanupGroups()
 }
 
-func isPredefinedUserExist() bool{
+func isPredefinedUserExist() bool {
 	user, err := Client.NewUserDetails().UserID(PredefinedUserId).Do(context.Background())
 	if err != nil {
 		return false
