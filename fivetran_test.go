@@ -27,7 +27,11 @@ func init() {
 	EncodedCertificate = os.Getenv("FIVETRAN_TEST_CERTIFICATE")
 	Client = fivetran.New(apiKey, apiSecret)
 	Client.BaseURL("https://api.fivetran.com/v1")
-	cleanupAccount()
+	if isPredefinedUserExist() {
+		cleanupAccount()
+	} else {
+		log.Fatalln("The predefined user doesn't belong to the Testing account. Make sure that credentials are using in the tests belong to the Testing account.")
+	}
 }
 
 func CreateUser(t *testing.T) string {
@@ -251,6 +255,14 @@ func cleanupAccount() {
 	cleanupUsers()
 	cleanupDestinations()
 	cleanupGroups()
+}
+
+func isPredefinedUserExist() bool {
+	user, err := Client.NewUserDetails().UserID(PredefinedUserId).Do(context.Background())
+	if err != nil {
+		return false
+	}
+	return user.Data.ID == PredefinedUserId
 }
 
 func cleanupUsers() {
