@@ -28,6 +28,7 @@ type UserDetailsResponse struct {
 		Phone      string    `json:"phone"`
 		LoggedInAt time.Time `json:"logged_in_at"`
 		CreatedAt  time.Time `json:"created_at"`
+		Role	   string    `json:"role"`
 	} `json:"data"`
 }
 
