@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased](https://github.com/fivetran/go-fivetran/compare/v0.4.0...HEAD)
 
+## [0.5.0](https://github.com/fivetran/go-fivetran/compare/v0.4.0...v0.5.0) - 2022-01-24
+
+## Added
+The following fields were added to user resource responses
+- UserDetailsResponse.Data.Role - RoleName for user role in account
+- UserInviteResponse.Data.Role - RoleName for user role in account
+- UserModifyResponse.Data.Role - RoleName for user role in account
+
 ## [0.4.0](https://github.com/fivetran/go-fivetran/compare/v0.3.1...v0.4.0) - 2022-01-18
 
 ## Added
