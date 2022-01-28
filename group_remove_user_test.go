@@ -19,7 +19,6 @@ func TestNewGroupRemoveUserE2E(t *testing.T) {
 	AssertEqual(t, deleted.Message, "User with id '"+userId+"' has been removed from the group")
 
 	t.Cleanup(func() {
-		RemoveUserFromGroup(t, PredefinedGroupId, userId)
 		DeleteUser(t, userId)
 	})
 }
