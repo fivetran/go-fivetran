@@ -6,8 +6,6 @@ import (
 )
 
 func TestNewGroupAddUserE2E(t *testing.T) {
-	t.Skip("Account has new RBAC model in place and we can't add a user with a new role names. It will be fixed soon")
-
 	userId := CreateUser(t)
 
 	created, err := Client.NewGroupAddUser().GroupID(PredefinedGroupId).
