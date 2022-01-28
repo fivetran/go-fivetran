@@ -22,8 +22,8 @@ func TestNewUsersListE2E(t *testing.T) {
 	AssertEqual(t, *users.Data.Items[0].Invited, false)
 	AssertEmpty(t, users.Data.Items[0].Picture)
 	AssertEqual(t, users.Data.Items[0].Phone, "89534322340")
-	AssertEqual(t, users.Data.Items[0].Role, "account_administrator")
-	AssertEqual(t, users.Data.Items[0].LoggedInAt.IsZero(), true)
+	AssertEqual(t, users.Data.Items[0].Role, "Account Administrator")
+	AssertEqual(t, users.Data.Items[0].LoggedInAt.IsZero(), false)
 	AssertEqual(t, users.Data.Items[0].CreatedAt.IsZero(), false)
 	AssertEmpty(t, users.Data.NextCursor)
 }
