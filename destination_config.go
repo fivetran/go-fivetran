@@ -61,7 +61,7 @@ type DestinationConfigResponse struct {
 	Auth                 string `json:"auth"`
 	User                 string `json:"user"`
 	Password             string `json:"password"`
-	ConnectionMethod     string `json:"connection_method"` // ConnectionMethod is the REST API's response of ConnectionType. T-111758
+	ConnectionType       string `json:"connection_type"` // ConnectionMethod is the REST API's response of ConnectionType. T-111758
 	TunnelHost           string `json:"tunnel_host"`
 	TunnelPort           string `json:"tunnel_port"`
 	TunnelUser           string `json:"tunnel_user"`

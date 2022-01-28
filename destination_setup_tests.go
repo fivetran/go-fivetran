@@ -77,6 +77,7 @@ func (s *DestinationSetupTestsService) Do(ctx context.Context) (DestinationSetup
 
 	headers := s.c.commonHeaders()
 	headers["Content-Type"] = "application/json"
+	headers["Accept"] = restAPIv2
 
 	reqBody, err := json.Marshal(s.request())
 	if err != nil {
