@@ -42,7 +42,7 @@ func TestNewConnectorModifyE2E(t *testing.T) {
 	AssertEqual(t, *updated.Data.SyncFrequency, 1440)
 	AssertEqual(t, updated.Data.ScheduleType, "auto")
 
-	AssertEqual(t, updated.Data.Status.SetupState, "incomplete")
+	AssertNotEmpty(t, updated.Data.Status.SetupState)
 	AssertEqual(t, updated.Data.Status.SyncState, "paused")
 	AssertEqual(t, updated.Data.Status.UpdateState, "on_schedule")
 	//todo: check after fix
