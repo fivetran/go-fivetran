@@ -192,6 +192,7 @@ type ConnectorConfig struct {
 	uniqueID                         *string
 	authType                         *string
 	isNewPackage                     *bool
+	connectionType                   *string
 }
 
 type connectorConfigRequest struct {
@@ -383,7 +384,8 @@ type connectorConfigRequest struct {
 	ReportURL                        *string                                              `json:"report_url,omitempty"`
 	UniqueID                         *string                                              `json:"unique_id,omitempty"`
 	AuthType                         *string                                              `json:"auth_type,omitempty"`
-	IsNewPackage                     *bool                                                `json:"is_new_package"`
+	IsNewPackage                     *bool                                                `json:"is_new_package,omitempty"`
+	ConnectionType                   *string                                              `json:"connection_type,omitempty"`
 }
 
 type ConnectorConfigResponse struct {
@@ -580,6 +582,7 @@ type ConnectorConfigResponse struct {
 	ServiceVersion                   string                                               `json:"service_version"`
 	LastSyncedChangesUtc             string                                               `json:"last_synced_changes__utc_"`
 	IsNewPackage                     *bool                                                `json:"is_new_package"`
+	ConnectionType                   string                                               `json:"connection_type"`
 }
 
 func NewConnectorConfig() *ConnectorConfig {
@@ -805,6 +808,7 @@ func (cc *ConnectorConfig) request() *connectorConfigRequest {
 		UniqueID:                         cc.uniqueID,
 		AuthType:                         cc.authType,
 		IsNewPackage:                     cc.isNewPackage,
+		ConnectionType:                   cc.connectionType,
 	}
 }
 
@@ -1750,5 +1754,10 @@ func (cc *ConnectorConfig) AuthType(value string) *ConnectorConfig {
 
 func (cc *ConnectorConfig) IsNewPackage(value bool) *ConnectorConfig {
 	cc.isNewPackage = &value
+	return cc
+}
+
+func (cc *ConnectorConfig) ConnectionType(value string) *ConnectorConfig {
+	cc.connectionType = &value
 	return cc
 }
