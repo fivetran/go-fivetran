@@ -21,7 +21,7 @@ func TestNewUserDetailsE2E(t *testing.T) {
 	AssertEqual(t, *user.Data.Invited, false)
 	AssertEmpty(t, user.Data.Picture)
 	AssertEqual(t, user.Data.Phone, "89534322340")
-	//AssertEqual(t, user.Data.Role, "account_administrator")
-	AssertEqual(t, user.Data.LoggedInAt.IsZero(), true)
+	AssertEqual(t, user.Data.Role, "Account Administrator")
+	AssertEqual(t, user.Data.LoggedInAt.IsZero(), false)
 	AssertEqual(t, user.Data.CreatedAt.IsZero(), false)
 }

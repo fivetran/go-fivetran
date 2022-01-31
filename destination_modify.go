@@ -115,6 +115,7 @@ func (s *DestinationModifyService) Do(ctx context.Context) (DestinationModifyRes
 
 	headers := s.c.commonHeaders()
 	headers["Content-Type"] = "application/json"
+	headers["Accept"] = restAPIv2
 
 	reqBody, err := json.Marshal(s.request())
 	if err != nil {

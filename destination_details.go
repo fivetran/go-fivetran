@@ -47,6 +47,7 @@ func (s *DestinationDetailsService) Do(ctx context.Context) (DestinationDetailsR
 	expectedStatus := 200
 
 	headers := s.c.commonHeaders()
+	headers["Accept"] = restAPIv2
 
 	r := request{
 		method:  "GET",

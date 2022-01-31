@@ -120,6 +120,7 @@ func (s *DestinationCreateService) Do(ctx context.Context) (DestinationCreateRes
 
 	headers := s.c.commonHeaders()
 	headers["Content-Type"] = "application/json"
+	headers["Accept"] = restAPIv2
 
 	reqBody, err := json.Marshal(s.request())
 	if err != nil {
