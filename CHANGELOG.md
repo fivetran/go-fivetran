@@ -10,7 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.5.1](https://github.com/fivetran/go-fivetran/compare/v0.5.0...v0.5.1) - 2022-01-31
 
 ## Fixed
-Used `connection_type` key in destination config responses with v2 accept header for consistency.
+- Used `connection_type` key in destination config responses with v2 accept header for consistency.
+- Added `connection_type` missed field to connector config.
 
 ## [0.5.0](https://github.com/fivetran/go-fivetran/compare/v0.4.0...v0.5.0) - 2022-01-24
 
