@@ -193,7 +193,6 @@ type ConnectorConfig struct {
 	authType                         *string
 	isNewPackage                     *bool
 	connectionType                   *string
-	isMultiEntityFeatureEnabled      *bool
 }
 
 type connectorConfigRequest struct {
@@ -387,7 +386,6 @@ type connectorConfigRequest struct {
 	AuthType                         *string                                              `json:"auth_type,omitempty"`
 	IsNewPackage                     *bool                                                `json:"is_new_package,omitempty"`
 	ConnectionType                   *string                                              `json:"connection_type,omitempty"`
-	IsMultiEntityFeatureEnabled      *bool                                                `json:"is_multi_entity_feature_enabled,omitempty"`
 }
 
 type ConnectorConfigResponse struct {
@@ -585,7 +583,6 @@ type ConnectorConfigResponse struct {
 	LastSyncedChangesUtc             string                                               `json:"last_synced_changes__utc_"`
 	IsNewPackage                     *bool                                                `json:"is_new_package"`
 	ConnectionType                   string                                               `json:"connection_type"`
-	IsMultiEntityFeatureEnabled      *bool                                                `json:"is_multi_entity_feature_enabled"`
 }
 
 func NewConnectorConfig() *ConnectorConfig {
@@ -812,7 +809,6 @@ func (cc *ConnectorConfig) request() *connectorConfigRequest {
 		AuthType:                         cc.authType,
 		IsNewPackage:                     cc.isNewPackage,
 		ConnectionType:                   cc.connectionType,
-		IsMultiEntityFeatureEnabled:      cc.isMultiEntityFeatureEnabled,
 	}
 }
 
@@ -1763,10 +1759,5 @@ func (cc *ConnectorConfig) IsNewPackage(value bool) *ConnectorConfig {
 
 func (cc *ConnectorConfig) ConnectionType(value string) *ConnectorConfig {
 	cc.connectionType = &value
-	return cc
-}
-
-func (cc *ConnectorConfig) IsMultiEntityFeatureEnabled(value bool) *ConnectorConfig {
-	cc.isMultiEntityFeatureEnabled = &value
 	return cc
 }
