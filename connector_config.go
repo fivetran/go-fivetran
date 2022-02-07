@@ -194,6 +194,7 @@ type ConnectorConfig struct {
 	isNewPackage                     *bool
 	connectionType                   *string
 	isMultiEntityFeatureEnabled      *bool
+	alwaysEncrypted                  *bool
 }
 
 type connectorConfigRequest struct {
@@ -388,6 +389,7 @@ type connectorConfigRequest struct {
 	IsNewPackage                     *bool                                                `json:"is_new_package,omitempty"`
 	ConnectionType                   *string                                              `json:"connection_type,omitempty"`
 	IsMultiEntityFeatureEnabled      *bool                                                `json:"is_multi_entity_feature_enabled,omitempty"`
+	AlwaysEncrypted                  *bool                                                `json:"always_encrypted,omitempty"`
 }
 
 type ConnectorConfigResponse struct {
@@ -586,6 +588,7 @@ type ConnectorConfigResponse struct {
 	IsNewPackage                     *bool                                                `json:"is_new_package"`
 	ConnectionType                   string                                               `json:"connection_type"`
 	IsMultiEntityFeatureEnabled      *bool                                                `json:"is_multi_entity_feature_enabled"`
+	AlwaysEncrypted                  *bool                                                `json:"always_encrypted"`
 }
 
 func NewConnectorConfig() *ConnectorConfig {
@@ -813,6 +816,7 @@ func (cc *ConnectorConfig) request() *connectorConfigRequest {
 		IsNewPackage:                     cc.isNewPackage,
 		ConnectionType:                   cc.connectionType,
 		IsMultiEntityFeatureEnabled:      cc.isMultiEntityFeatureEnabled,
+		AlwaysEncrypted:                  cc.alwaysEncrypted,
 	}
 }
 
@@ -1768,5 +1772,10 @@ func (cc *ConnectorConfig) ConnectionType(value string) *ConnectorConfig {
 
 func (cc *ConnectorConfig) IsMultiEntityFeatureEnabled(value bool) *ConnectorConfig {
 	cc.isMultiEntityFeatureEnabled = &value
+	return cc
+}
+
+func (cc *ConnectorConfig) AlwaysEncrypted(value bool) *ConnectorConfig {
+	cc.alwaysEncrypted = &value
 	return cc
 }
