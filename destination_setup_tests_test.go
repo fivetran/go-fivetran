@@ -22,7 +22,7 @@ func TestNewDestinationSetupTestsE2E(t *testing.T) {
 	AssertEqual(t, response.Data.ID, destinationId)
 	AssertEqual(t, response.Data.GroupID, destinationId)
 	AssertEqual(t, response.Data.Service, "snowflake")
-	AssertEqual(t, response.Data.Region, "US")
+	AssertEqual(t, response.Data.Region, "GCP_US_EAST4")
 	AssertEqual(t, response.Data.TimeZoneOffset, "+10")
 	AssertEqual(t, response.Data.SetupStatus, "incomplete")
 }

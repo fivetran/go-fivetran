@@ -31,7 +31,7 @@ func TestNewDestinationCreateE2E(t *testing.T) {
 	AssertEqual(t, created.Message, "Destination has been created")
 	AssertEqual(t, created.Data.ID, PredefinedGroupId)
 	AssertEqual(t, created.Data.Service, "snowflake")
-	AssertEqual(t, created.Data.Region, "US")
+	AssertEqual(t, created.Data.Region, "GCP_US_EAST4")
 	AssertEqual(t, created.Data.TimeZoneOffset, "+10")
 	AssertEqual(t, created.Data.SetupStatus, "incomplete")
 	AssertEqual(t, created.Data.Config.Host, "your-account.snowflakecomputing.com")
