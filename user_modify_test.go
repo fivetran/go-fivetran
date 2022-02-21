@@ -22,7 +22,7 @@ func TestNewUserModifyE2E(t *testing.T) {
 	}
 
 	AssertEqual(t, user.Code, "Success")
-	AssertEqual(t, user.Message, "User has been updated")
+	AssertNotEmpty(t, user.Message)
 	AssertEqual(t, user.Data.ID, userId)
 	AssertEqual(t, user.Data.Email, "william_addison.@fivetran.com")
 	AssertEqual(t, user.Data.GivenName, "Steven")

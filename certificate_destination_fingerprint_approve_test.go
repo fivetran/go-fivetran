@@ -19,5 +19,5 @@ func TestNewCertificateDestinationFingerprintApproveE2E(t *testing.T) {
 	}
 
 	AssertEqual(t, response.Code, "Success")
-	AssertEqual(t, response.Message, "The fingerprint has been approved")
+	AssertNotEmpty(t, response.Message)
 }

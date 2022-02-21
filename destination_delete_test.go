@@ -2,6 +2,7 @@ package fivetran_test
 
 import (
 	"context"
+	"strings"
 	"testing"
 )
 
@@ -15,5 +16,6 @@ func TestNewDestinationDeleteE2E(t *testing.T) {
 	}
 
 	AssertEqual(t, deleted.Code, "Success")
-	AssertEqual(t, deleted.Message, "Destination with id '"+destinationId+"' has been deleted")
+	AssertNotEmpty(t, deleted.Message)
+	AssertEqual(t, strings.Contains(deleted.Message, destinationId), true)
 }

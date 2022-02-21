@@ -21,7 +21,7 @@ func TestNewUserInviteE2E(t *testing.T) {
 	}
 
 	AssertEqual(t, user.Code, "Success")
-	AssertEqual(t, user.Message, "User has been invited to the account")
+	AssertNotEmpty(t, user.Message)
 	AssertNotEmpty(t, user.Data.ID)
 	AssertEqual(t, user.Data.Email, "william_addison.@fivetran.com")
 	AssertEqual(t, user.Data.GivenName, "William")
