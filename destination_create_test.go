@@ -28,7 +28,7 @@ func TestNewDestinationCreateE2E(t *testing.T) {
 	}
 
 	AssertEqual(t, created.Code, "Success")
-	AssertEqual(t, created.Message, "Destination has been created")
+	AssertNotEmpty(t, created.Message)
 	AssertEqual(t, created.Data.ID, PredefinedGroupId)
 	AssertEqual(t, created.Data.Service, "snowflake")
 	AssertEqual(t, created.Data.Region, "GCP_US_EAST4")

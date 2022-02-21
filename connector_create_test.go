@@ -24,7 +24,7 @@ func TestNewConnectorCreateE2E(t *testing.T) {
 	}
 
 	AssertEqual(t, created.Code, "Success")
-	AssertEqual(t, created.Message, "Connector has been created")
+	AssertNotEmpty(t, created.Message)
 	AssertNotEmpty(t, created.Data.ID)
 	AssertEqual(t, created.Data.GroupID, PredefinedGroupId)
 	AssertEqual(t, created.Data.Service, "itunes_connect")

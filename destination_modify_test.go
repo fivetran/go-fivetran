@@ -28,7 +28,7 @@ func TestNewDestinationModifyE2E(t *testing.T) {
 	}
 
 	AssertEqual(t, details.Code, "Success")
-	AssertEqual(t, details.Message, "Destination has been updated")
+	AssertNotEmpty(t, details.Message)
 	AssertEqual(t, details.Data.ID, destinationId)
 	AssertEqual(t, details.Data.GroupID, destinationId)
 	AssertEqual(t, details.Data.Service, "snowflake")

@@ -2,6 +2,7 @@ package fivetran_test
 
 import (
 	"context"
+	"strings"
 	"testing"
 )
 
@@ -15,5 +16,6 @@ func TestNewConnectorDeleteE2E(t *testing.T) {
 	}
 
 	AssertEqual(t, deleted.Code, "Success")
-	AssertEqual(t, deleted.Message, "Connector with id '"+connectorId+"' has been deleted")
+	AssertNotEmpty(t, deleted.Message)
+	AssertEqual(t, strings.Contains(deleted.Message, connectorId), true)
 }

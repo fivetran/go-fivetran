@@ -2,6 +2,7 @@ package fivetran_test
 
 import (
 	"context"
+	"strings"
 	"testing"
 )
 
@@ -13,5 +14,6 @@ func TestNewGroupDeleteE2E(t *testing.T) {
 		t.Error(err)
 	}
 	AssertEqual(t, deleted.Code, "Success")
-	AssertEqual(t, deleted.Message, "Group with id '"+groupId+"' has been deleted")
+	AssertNotEmpty(t, deleted.Message)
+	AssertEqual(t, strings.Contains(deleted.Message, groupId), true)
 }
