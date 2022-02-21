@@ -195,6 +195,7 @@ type ConnectorConfig struct {
 	connectionType                   *string
 	isMultiEntityFeatureEnabled      *bool
 	alwaysEncrypted                  *bool
+	apiType                          *string
 }
 
 type connectorConfigRequest struct {
@@ -390,6 +391,7 @@ type connectorConfigRequest struct {
 	ConnectionType                   *string                                              `json:"connection_type,omitempty"`
 	IsMultiEntityFeatureEnabled      *bool                                                `json:"is_multi_entity_feature_enabled,omitempty"`
 	AlwaysEncrypted                  *bool                                                `json:"always_encrypted,omitempty"`
+	ApiType                          *string                                              `json:"api_type,omitempty"`
 }
 
 type ConnectorConfigResponse struct {
@@ -589,6 +591,7 @@ type ConnectorConfigResponse struct {
 	ConnectionType                   string                                               `json:"connection_type"`
 	IsMultiEntityFeatureEnabled      *bool                                                `json:"is_multi_entity_feature_enabled"`
 	AlwaysEncrypted                  *bool                                                `json:"always_encrypted"`
+	ApiType                          string                                               `json:"api_type"`
 }
 
 func NewConnectorConfig() *ConnectorConfig {
@@ -817,6 +820,7 @@ func (cc *ConnectorConfig) request() *connectorConfigRequest {
 		ConnectionType:                   cc.connectionType,
 		IsMultiEntityFeatureEnabled:      cc.isMultiEntityFeatureEnabled,
 		AlwaysEncrypted:                  cc.alwaysEncrypted,
+		ApiType:                          cc.apiType,
 	}
 }
 
@@ -1777,5 +1781,10 @@ func (cc *ConnectorConfig) IsMultiEntityFeatureEnabled(value bool) *ConnectorCon
 
 func (cc *ConnectorConfig) AlwaysEncrypted(value bool) *ConnectorConfig {
 	cc.alwaysEncrypted = &value
+	return cc
+}
+
+func (cc *ConnectorConfig) ApiType(value string) *ConnectorConfig {
+	cc.apiType = &value
 	return cc
 }
