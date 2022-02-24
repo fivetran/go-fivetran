@@ -19,7 +19,7 @@ func TestNewGroupAddUserE2E(t *testing.T) {
 	}
 
 	AssertEqual(t, created.Code, "Success")
-	AssertEqual(t, created.Message, "User has been invited to the group")
+	AssertNotEmpty(t, created.Message)
 
 	t.Cleanup(func() {
 		RemoveUserFromGroup(t, PredefinedGroupId, userId)

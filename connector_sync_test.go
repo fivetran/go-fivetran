@@ -2,6 +2,7 @@ package fivetran_test
 
 import (
 	"context"
+	"strings"
 	"testing"
 )
 
@@ -17,5 +18,6 @@ func TestNewConnectorSyncE2E(t *testing.T) {
 	}
 
 	AssertEqual(t, sync.Code, "Success")
-	AssertEqual(t, sync.Message, "Sync has been successfully triggered for connector with id '"+connectorId+"'")
+	AssertNotEmpty(t, sync.Message)
+	AssertEqual(t, strings.Contains(sync.Message, connectorId), true)
 }

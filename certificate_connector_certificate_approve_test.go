@@ -19,5 +19,5 @@ func TestNewCertificateConnectorCertificateApproveE2E(t *testing.T) {
 	}
 
 	AssertEqual(t, response.Code, "Success")
-	AssertEqual(t, response.Message, "The certificate has been approved")
+	AssertNotEmpty(t, response.Message)
 }

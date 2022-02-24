@@ -10,7 +10,7 @@ import (
 func TestNewDestinationModifyE2E(t *testing.T) {
 	destinationId := CreateTempDestination(t)
 	details, err := Client.NewDestinationModify().DestinationID(destinationId).
-		Region("APAC").
+		Region("GCP_AUSTRALIA_SOUTHEAST1").
 		TimeZoneOffset("+10").
 		RunSetupTests(false).
 		Config(fivetran.NewDestinationConfig().
@@ -28,11 +28,11 @@ func TestNewDestinationModifyE2E(t *testing.T) {
 	}
 
 	AssertEqual(t, details.Code, "Success")
-	AssertEqual(t, details.Message, "Destination has been updated")
+	AssertNotEmpty(t, details.Message)
 	AssertEqual(t, details.Data.ID, destinationId)
 	AssertEqual(t, details.Data.GroupID, destinationId)
 	AssertEqual(t, details.Data.Service, "snowflake")
-	AssertEqual(t, details.Data.Region, "APAC")
+	AssertEqual(t, details.Data.Region, "GCP_AUSTRALIA_SOUTHEAST1")
 	AssertEqual(t, details.Data.TimeZoneOffset, "+10")
 	AssertEqual(t, details.Data.Config.Host, "updated_host.snowflakecomputing.com")
 	AssertEqual(t, details.Data.Config.Port, "444")
