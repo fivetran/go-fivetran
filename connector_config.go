@@ -196,6 +196,8 @@ type ConnectorConfig struct {
 	isMultiEntityFeatureEnabled      *bool
 	alwaysEncrypted                  *bool
 	apiType                          *string
+	baseUrl                          *string
+	entityId                         *string
 }
 
 type connectorConfigRequest struct {
@@ -392,6 +394,8 @@ type connectorConfigRequest struct {
 	IsMultiEntityFeatureEnabled      *bool                                                `json:"is_multi_entity_feature_enabled,omitempty"`
 	AlwaysEncrypted                  *bool                                                `json:"always_encrypted,omitempty"`
 	ApiType                          *string                                              `json:"api_type,omitempty"`
+	BaseUrl                          *string                                              `json:"base_url,omitempty"`
+	EntityId                         *string                                              `json:"entity_id,omitempty"`
 }
 
 type ConnectorConfigResponse struct {
@@ -592,6 +596,8 @@ type ConnectorConfigResponse struct {
 	IsMultiEntityFeatureEnabled      *bool                                                `json:"is_multi_entity_feature_enabled"`
 	AlwaysEncrypted                  *bool                                                `json:"always_encrypted"`
 	ApiType                          string                                               `json:"api_type"`
+	BaseUrl                          string                                               `json:"base_url"`
+	EntityId                         string                                               `json:"entity_id"`
 }
 
 func NewConnectorConfig() *ConnectorConfig {
@@ -821,6 +827,8 @@ func (cc *ConnectorConfig) request() *connectorConfigRequest {
 		IsMultiEntityFeatureEnabled:      cc.isMultiEntityFeatureEnabled,
 		AlwaysEncrypted:                  cc.alwaysEncrypted,
 		ApiType:                          cc.apiType,
+		BaseUrl:                          cc.baseUrl,
+		EntityId:                         cc.entityId,
 	}
 }
 
@@ -1786,5 +1794,15 @@ func (cc *ConnectorConfig) AlwaysEncrypted(value bool) *ConnectorConfig {
 
 func (cc *ConnectorConfig) ApiType(value string) *ConnectorConfig {
 	cc.apiType = &value
+	return cc
+}
+
+func (cc *ConnectorConfig) BaseUrl(value string) *ConnectorConfig {
+	cc.baseUrl = &value
+	return cc
+}
+
+func (cc *ConnectorConfig) EntityId(value string) *ConnectorConfig {
+	cc.entityId = &value
 	return cc
 }
