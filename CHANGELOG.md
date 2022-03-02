@@ -12,6 +12,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Fixed
 - Added `base_url` missed field to connector config.
 - Added `entity_id` missed field to connector config.
+- Added `soap_uri` missed field to connector config.
+- Added `user_id` missed field to connector config.
+- Added `encryption_key` missed field to connector config.
 
 ## [0.5.3](https://github.com/fivetran/go-fivetran/compare/v0.5.2...v0.5.3) - 2022-02-21
 

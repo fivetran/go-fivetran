@@ -198,6 +198,9 @@ type ConnectorConfig struct {
 	apiType                          *string
 	baseUrl                          *string
 	entityId                         *string
+	soapUri                          *string
+	userId                           *string
+	encryptionKey                    *string
 }
 
 type connectorConfigRequest struct {
@@ -396,6 +399,9 @@ type connectorConfigRequest struct {
 	ApiType                          *string                                              `json:"api_type,omitempty"`
 	BaseUrl                          *string                                              `json:"base_url,omitempty"`
 	EntityId                         *string                                              `json:"entity_id,omitempty"`
+	SoapUri                          *string                                              `json:"soap_uri,omitempty"`
+	UserId                           *string                                              `json:"user_id,omitempty"`
+	EncryptionKey                    *string                                              `json:"encryption_key,omitempty"`
 }
 
 type ConnectorConfigResponse struct {
@@ -598,6 +604,9 @@ type ConnectorConfigResponse struct {
 	ApiType                          string                                               `json:"api_type"`
 	BaseUrl                          string                                               `json:"base_url"`
 	EntityId                         string                                               `json:"entity_id"`
+	SoapUri                          string                                               `json:"soap_uri"`
+	UserId                           string                                               `json:"user_id"`
+	EncryptionKey                    string                                               `json:"encryption_key"`
 }
 
 func NewConnectorConfig() *ConnectorConfig {
@@ -829,6 +838,9 @@ func (cc *ConnectorConfig) request() *connectorConfigRequest {
 		ApiType:                          cc.apiType,
 		BaseUrl:                          cc.baseUrl,
 		EntityId:                         cc.entityId,
+		SoapUri:                          cc.soapUri,
+		UserId:                           cc.userId,
+		EncryptionKey:                    cc.encryptionKey,
 	}
 }
 
@@ -1804,5 +1816,20 @@ func (cc *ConnectorConfig) BaseUrl(value string) *ConnectorConfig {
 
 func (cc *ConnectorConfig) EntityId(value string) *ConnectorConfig {
 	cc.entityId = &value
+	return cc
+}
+
+func (cc *ConnectorConfig) SoapUri(value string) *ConnectorConfig {
+	cc.soapUri = &value
+	return cc
+}
+
+func (cc *ConnectorConfig) UserId(value string) *ConnectorConfig {
+	cc.userId = &value
+	return cc
+}
+
+func (cc *ConnectorConfig) EncryptionKey(value string) *ConnectorConfig {
+	cc.encryptionKey = &value
 	return cc
 }
