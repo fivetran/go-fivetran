@@ -24,6 +24,7 @@ type ConnectorConfig struct {
 	s3RoleArn                        *string
 	absConnectionString              *string
 	absContainerName                 *string
+	folderId                         *string
 	ftpHost                          *string
 	ftpPort                          *int
 	ftpUser                          *string
@@ -225,6 +226,7 @@ type connectorConfigRequest struct {
 	S3RoleArn                        *string                                              `json:"s3role_arn,omitempty"`
 	ABSConnectionString              *string                                              `json:"abs_connection_string,omitempty"`
 	ABSContainerName                 *string                                              `json:"abs_container_name,omitempty"`
+	FolderId                         *string                                              `json:"folder_id,omitempty"`
 	FTPHost                          *string                                              `json:"ftp_host,omitempty"`
 	FTPPort                          *int                                                 `json:"ftp_port,omitempty"`
 	FTPUser                          *string                                              `json:"ftp_user,omitempty"`
@@ -426,6 +428,7 @@ type ConnectorConfigResponse struct {
 	S3RoleArn                        string                                               `json:"s3role_arn"`
 	ABSConnectionString              string                                               `json:"abs_connection_string"`
 	ABSContainerName                 string                                               `json:"abs_container_name"`
+	FolderId                         string                                               `json:"folder_id"`
 	FTPHost                          string                                               `json:"ftp_host"`
 	FTPPort                          *int                                                 `json:"ftp_port"`
 	FTPUser                          string                                               `json:"ftp_user"`
@@ -664,6 +667,7 @@ func (cc *ConnectorConfig) request() *connectorConfigRequest {
 		S3RoleArn:                        cc.s3RoleArn,
 		ABSConnectionString:              cc.absConnectionString,
 		ABSContainerName:                 cc.absContainerName,
+		FolderId:                         cc.folderId,
 		FTPHost:                          cc.ftpHost,
 		FTPPort:                          cc.ftpPort,
 		FTPUser:                          cc.ftpUser,
@@ -941,6 +945,11 @@ func (cc *ConnectorConfig) ABSConnectionString(value string) *ConnectorConfig {
 
 func (cc *ConnectorConfig) ABSContainerName(value string) *ConnectorConfig {
 	cc.absContainerName = &value
+	return cc
+}
+
+func (cc *ConnectorConfig) FolderId(value string) *ConnectorConfig {
+	cc.folderId = &value
 	return cc
 }
 
