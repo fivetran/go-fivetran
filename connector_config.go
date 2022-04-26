@@ -140,7 +140,7 @@ type ConnectorConfig struct {
 	viewThroughAttributionWindowSize *string
 	postClickAttributionWindowSize   *string
 	useAPIKeys                       *string
-	apiKeys                          *string
+	apiKeys                          []string
 	endpoint                         *string
 	identity                         *string
 	apiQuota                         *int
@@ -177,7 +177,7 @@ type ConnectorConfig struct {
 	organizations                    []string
 	swipeAttributionWindow           *string
 	apiAccessToken                   *string
-	accountIDs                       *string
+	accountIDs                       []string
 	sid                              *string
 	secret                           *string
 	oauthToken                       *string
@@ -342,7 +342,7 @@ type connectorConfigRequest struct {
 	ViewThroughAttributionWindowSize *string                                              `json:"view_through_attribution_window_size,omitempty"`
 	PostClickAttributionWindowSize   *string                                              `json:"post_click_attribution_window_size,omitempty"`
 	UseAPIKeys                       *string                                              `json:"use_api_keys,omitempty"`
-	APIKeys                          *string                                              `json:"api_keys,omitempty"`
+	APIKeys                          []string                                             `json:"api_keys,omitempty"`
 	Endpoint                         *string                                              `json:"endpoint,omitempty"`
 	Identity                         *string                                              `json:"identity,omitempty"`
 	APIQuota                         *int                                                 `json:"api_quota,omitempty"`
@@ -379,7 +379,7 @@ type connectorConfigRequest struct {
 	Organizations                    []string                                             `json:"organizations,omitempty"`
 	SwipeAttributionWindow           *string                                              `json:"swipe_attribution_window,omitempty"`
 	APIAccessToken                   *string                                              `json:"api_access_token,omitempty"`
-	AccountIDs                       *string                                              `json:"account_ids,omitempty"`
+	AccountIDs                       []string                                             `json:"account_ids,omitempty"`
 	SID                              *string                                              `json:"sid,omitempty"`
 	Secret                           *string                                              `json:"secret,omitempty"`
 	OauthToken                       *string                                              `json:"oauth_token,omitempty"`
@@ -544,7 +544,7 @@ type ConnectorConfigResponse struct {
 	ViewThroughAttributionWindowSize string                                               `json:"view_through_attribution_window_size"`
 	PostClickAttributionWindowSize   string                                               `json:"post_click_attribution_window_size"`
 	UseAPIKeys                       string                                               `json:"use_api_keys"`
-	APIKeys                          string                                               `json:"api_keys"`
+	APIKeys                          []string                                             `json:"api_keys"`
 	Endpoint                         string                                               `json:"endpoint"`
 	Identity                         string                                               `json:"identity"`
 	APIQuota                         *int                                                 `json:"api_quota"`
@@ -581,7 +581,7 @@ type ConnectorConfigResponse struct {
 	Organizations                    []string                                             `json:"organizations"`
 	SwipeAttributionWindow           string                                               `json:"swipe_attribution_window"`
 	APIAccessToken                   string                                               `json:"api_access_token"`
-	AccountIDs                       string                                               `json:"account_ids"`
+	AccountIDs                       []string                                             `json:"account_ids"`
 	SID                              string                                               `json:"sid"`
 	Secret                           string                                               `json:"secret"`
 	OauthToken                       string                                               `json:"oauth_token"`
@@ -1533,8 +1533,8 @@ func (cc *ConnectorConfig) UseAPIKeys(value string) *ConnectorConfig {
 	return cc
 }
 
-func (cc *ConnectorConfig) APIKeys(value string) *ConnectorConfig {
-	cc.apiKeys = &value
+func (cc *ConnectorConfig) APIKeys(value []string) *ConnectorConfig {
+	cc.apiKeys = value
 	return cc
 }
 
@@ -1718,8 +1718,8 @@ func (cc *ConnectorConfig) APIAccessToken(value string) *ConnectorConfig {
 	return cc
 }
 
-func (cc *ConnectorConfig) AccountIDs(value string) *ConnectorConfig {
-	cc.accountIDs = &value
+func (cc *ConnectorConfig) AccountIDs(value []string) *ConnectorConfig {
+	cc.accountIDs = value
 	return cc
 }
 
