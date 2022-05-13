@@ -53,8 +53,8 @@ type ConnectorConfig struct {
 	nullSequence                     *string
 	delimiter                        *string
 	escapeChar                       *string
-	skipBefore                       *string
-	skipAfter                        *string
+	skipBefore                       *int
+	skipAfter                        *int
 	projectCredentials               []*ConnectorConfigProjectCredentials
 	authMode                         *string
 	username                         *string
@@ -255,8 +255,8 @@ type connectorConfigRequest struct {
 	NullSequence                     *string                                              `json:"null_sequence,omitempty"`
 	Delimiter                        *string                                              `json:"delimiter,omitempty"`
 	EscapeChar                       *string                                              `json:"escape_char,omitempty"`
-	SkipBefore                       *string                                              `json:"skip_before,omitempty"`
-	SkipAfter                        *string                                              `json:"skip_after,omitempty"`
+	SkipBefore                       *int                                                 `json:"skip_before,omitempty"`
+	SkipAfter                        *int                                                 `json:"skip_after,omitempty"`
 	ProjectCredentials               []*connectorConfigProjectCredentialsRequest          `json:"project_credentials,omitempty"`
 	AuthMode                         *string                                              `json:"auth_mode,omitempty"`
 	Username                         *string                                              `json:"username,omitempty"`
@@ -457,8 +457,8 @@ type ConnectorConfigResponse struct {
 	NullSequence                     string                                               `json:"null_sequence"`
 	Delimiter                        string                                               `json:"delimiter"`
 	EscapeChar                       string                                               `json:"escape_char"`
-	SkipBefore                       string                                               `json:"skip_before"`
-	SkipAfter                        string                                               `json:"skip_after"`
+	SkipBefore                       int                                                  `json:"skip_before"`
+	SkipAfter                        int                                                  `json:"skip_after"`
 	ProjectCredentials               []ConnectorConfigProjectCredentialsResponse          `json:"project_credentials"`
 	AuthMode                         string                                               `json:"auth_mode"`
 	Username                         string                                               `json:"username"`
@@ -1093,12 +1093,12 @@ func (cc *ConnectorConfig) EscapeChar(value string) *ConnectorConfig {
 	return cc
 }
 
-func (cc *ConnectorConfig) SkipBefore(value string) *ConnectorConfig {
+func (cc *ConnectorConfig) SkipBefore(value int) *ConnectorConfig {
 	cc.skipBefore = &value
 	return cc
 }
 
-func (cc *ConnectorConfig) SkipAfter(value string) *ConnectorConfig {
+func (cc *ConnectorConfig) SkipAfter(value int) *ConnectorConfig {
 	cc.skipAfter = &value
 	return cc
 }
