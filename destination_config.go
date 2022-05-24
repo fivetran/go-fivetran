@@ -71,7 +71,7 @@ type DestinationConfigResponse struct {
 	ServerHostName       string `json:"server_host_name"`
 	HTTPPath             string `json:"http_path"`
 	PersonalAccessToken  string `json:"personal_access_token"`
-	CreateExternalTables *bool  `json:"create_external_tables"`
+	CreateExternalTables string `json:"create_external_tables"`
 	ExternalLocation     string `json:"external_location"`
 	AuthType             string `json:"auth_type"`
 	RoleArn              string `json:"role_arn"`
