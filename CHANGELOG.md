@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased](https://github.com/fivetran/go-fivetran/compare/v0.5.8...HEAD)
 
-## [0.5.7](https://github.com/fivetran/go-fivetran/compare/v0.5.7...v0.5.8) - 2022-05-24
+## [0.5.8](https://github.com/fivetran/go-fivetran/compare/v0.5.7...v0.5.8) - 2022-05-24
 
 ## Fixed 
 - `DestinationConfigResponse.CreateExternalTables` field type updated
