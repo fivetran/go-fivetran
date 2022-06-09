@@ -169,6 +169,7 @@ type ConnectorConfig struct {
 	domain                           *string
 	updateMethod                     *string
 	replicationSlot                  *string
+	publicationName                  *string
 	dataCenter                       *string
 	apiToken                         *string
 	subDomain                        *string
@@ -371,6 +372,7 @@ type connectorConfigRequest struct {
 	Domain                           *string                                              `json:"domain,omitempty"`
 	UpdateMethod                     *string                                              `json:"update_method,omitempty"`
 	ReplicationSlot                  *string                                              `json:"replication_slot,omitempty"`
+	PublicationName                  *string                                              `json:"publication_name,omitempty"`
 	DataCenter                       *string                                              `json:"data_center,omitempty"`
 	APIToken                         *string                                              `json:"api_token,omitempty"`
 	SubDomain                        *string                                              `json:"sub_domain,omitempty"`
@@ -573,6 +575,7 @@ type ConnectorConfigResponse struct {
 	Domain                           string                                               `json:"domain"`
 	UpdateMethod                     string                                               `json:"update_method"`
 	ReplicationSlot                  string                                               `json:"replication_slot"`
+	PublicationName                  string                                               `json:"publication_name"`
 	DataCenter                       string                                               `json:"data_center"`
 	APIToken                         string                                               `json:"api_token"`
 	SubDomain                        string                                               `json:"sub_domain"`
@@ -812,6 +815,7 @@ func (cc *ConnectorConfig) request() *connectorConfigRequest {
 		Domain:                           cc.domain,
 		UpdateMethod:                     cc.updateMethod,
 		ReplicationSlot:                  cc.replicationSlot,
+		PublicationName:                  cc.publicationName,
 		DataCenter:                       cc.dataCenter,
 		APIToken:                         cc.apiToken,
 		SubDomain:                        cc.subDomain,
@@ -1675,6 +1679,11 @@ func (cc *ConnectorConfig) UpdateMethod(value string) *ConnectorConfig {
 
 func (cc *ConnectorConfig) ReplicationSlot(value string) *ConnectorConfig {
 	cc.replicationSlot = &value
+	return cc
+}
+
+func (cc *ConnectorConfig) PublicationName(value string) *ConnectorConfig {
+	cc.publicationName = &value
 	return cc
 }
 
