@@ -203,6 +203,7 @@ type ConnectorConfig struct {
 	soapUri                          *string
 	userId                           *string
 	encryptionKey                    *string
+	euRegion                         *bool
 }
 
 type connectorConfigRequest struct {
@@ -406,6 +407,7 @@ type connectorConfigRequest struct {
 	SoapUri                          *string                                              `json:"soap_uri,omitempty"`
 	UserId                           *string                                              `json:"user_id,omitempty"`
 	EncryptionKey                    *string                                              `json:"encryption_key,omitempty"`
+	EuRegion                         *bool                                                `json:"eu_region,omitempty"`
 }
 
 type ConnectorConfigResponse struct {
@@ -613,6 +615,7 @@ type ConnectorConfigResponse struct {
 	SoapUri                          string                                               `json:"soap_uri"`
 	UserId                           string                                               `json:"user_id"`
 	EncryptionKey                    string                                               `json:"encryption_key"`
+	EuRegion                         *bool                                                `json:"eu_region"`
 }
 
 func NewConnectorConfig() *ConnectorConfig {
@@ -849,6 +852,7 @@ func (cc *ConnectorConfig) request() *connectorConfigRequest {
 		SoapUri:                          cc.soapUri,
 		UserId:                           cc.userId,
 		EncryptionKey:                    cc.encryptionKey,
+		EuRegion:                         cc.euRegion,
 	}
 }
 
@@ -1849,5 +1853,10 @@ func (cc *ConnectorConfig) UserId(value string) *ConnectorConfig {
 
 func (cc *ConnectorConfig) EncryptionKey(value string) *ConnectorConfig {
 	cc.encryptionKey = &value
+	return cc
+}
+
+func (cc *ConnectorConfig) EuRegion(value bool) *ConnectorConfig {
+	cc.euRegion = &value
 	return cc
 }
