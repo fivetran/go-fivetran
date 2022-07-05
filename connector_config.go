@@ -45,6 +45,7 @@ type ConnectorConfig struct {
 	bucket                           *string
 	prefix                           *string
 	pattern                          *string
+	pat                              *string
 	fileType                         *string
 	compression                      *string
 	onError                          *string
@@ -249,6 +250,7 @@ type connectorConfigRequest struct {
 	Bucket                           *string                                              `json:"bucket,omitempty"`
 	Prefix                           *string                                              `json:"prefix,omitempty"`
 	Pattern                          *string                                              `json:"pattern,omitempty"`
+	PAT                              *string                                              `json:"pat,omitempty"`
 	FileType                         *string                                              `json:"file_type,omitempty"`
 	Compression                      *string                                              `json:"compression,omitempty"`
 	OnError                          *string                                              `json:"on_error,omitempty"`
@@ -453,6 +455,7 @@ type ConnectorConfigResponse struct {
 	Bucket                           string                                               `json:"bucket"`
 	Prefix                           string                                               `json:"prefix"`
 	Pattern                          string                                               `json:"pattern"`
+	PAT                              string                                               `json:"pat"`
 	FileType                         string                                               `json:"file_type"`
 	Compression                      string                                               `json:"compression"`
 	OnError                          string                                               `json:"on_error"`
@@ -694,6 +697,7 @@ func (cc *ConnectorConfig) request() *connectorConfigRequest {
 		Bucket:                           cc.bucket,
 		Prefix:                           cc.prefix,
 		Pattern:                          cc.pattern,
+		PAT:                              cc.pat,
 		FileType:                         cc.fileType,
 		Compression:                      cc.compression,
 		OnError:                          cc.onError,
@@ -1058,6 +1062,11 @@ func (cc *ConnectorConfig) Prefix(value string) *ConnectorConfig {
 
 func (cc *ConnectorConfig) Pattern(value string) *ConnectorConfig {
 	cc.pattern = &value
+	return cc
+}
+
+func (cc *ConnectorConfig) PAT(value string) *ConnectorConfig {
+	cc.pat = &value
 	return cc
 }
 
