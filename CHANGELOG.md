@@ -5,7 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/fivetran/go-fivetran/compare/v0.5.11...HEAD)
+## [Unreleased](https://github.com/fivetran/go-fivetran/compare/v0.6.0...HEAD)
+
+## [0.6.0](https://github.com/fivetran/go-fivetran/compare/v0.5.11...v0.6.0) - 2022-07-08
+
+## Added
+Supported the following Fivetran API endpoints:
+- [Retrieve a Connector Schema Config](https://fivetran.com/docs/rest-api/connectors#retrieveaconnectorschemaconfig)
+- [Reload a Connector Schema Config](https://fivetran.com/docs/rest-api/connectors#reloadaconnectorschemaconfig)
+- [Modify a Connector Schema Config](https://fivetran.com/docs/rest-api/connectors#modifyaconnectorschemaconfig)
 
 ## [0.5.11](https://github.com/fivetran/go-fivetran/compare/v0.5.10...v0.5.11) - 2022-07-05
 
