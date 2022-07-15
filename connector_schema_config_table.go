@@ -10,7 +10,7 @@ type connectorSchemaConfigTableRequest struct {
 	Columns map[string]*connectorSchemaConfigColumnRequest `json:"columns,omitempty"`
 }
 
-type connectorSchemaConfigTableResponse struct {
+type ConnectorSchemaConfigTableResponse struct {
 	Enabled *bool                                           `json:"enabled"`
 	Columns map[string]*ConnectorSchemaConfigColumnResponse `json:"columns"`
 }

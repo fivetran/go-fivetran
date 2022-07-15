@@ -12,7 +12,7 @@ type connectorSchemaConfigSchemaRequest struct {
 
 type ConnectorSchemaConfigSchemaResponse struct {
 	Enabled *bool                                          `json:"enabled"`
-	Tables  map[string]*connectorSchemaConfigTableResponse `json:"tables"`
+	Tables  map[string]*ConnectorSchemaConfigTableResponse `json:"tables"`
 }
 
 func NewConnectorSchemaConfigSchema() *ConnectorSchemaConfigSchema {
