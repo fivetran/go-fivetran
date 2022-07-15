@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased](https://github.com/fivetran/go-fivetran/compare/v0.6.0...HEAD)
 
+## [0.6.1](https://github.com/fivetran/go-fivetran/compare/v0.6.0...v0.6.1) - 2022-07-15
+
+## Fixed
+- `ConnectorSchemaConfigTableResponse` type accesibility 
+
 ## [0.6.0](https://github.com/fivetran/go-fivetran/compare/v0.5.11...v0.6.0) - 2022-07-08
 
 ## Added
