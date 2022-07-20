@@ -205,6 +205,8 @@ type ConnectorConfig struct {
 	userId                           *string
 	encryptionKey                    *string
 	euRegion                         *bool
+	tokenKey                         *string
+	tokenSecret                      *string
 }
 
 type connectorConfigRequest struct {
@@ -410,6 +412,8 @@ type connectorConfigRequest struct {
 	UserId                           *string                                              `json:"user_id,omitempty"`
 	EncryptionKey                    *string                                              `json:"encryption_key,omitempty"`
 	EuRegion                         *bool                                                `json:"eu_region,omitempty"`
+	TokenKey                         *string                                              `json:"token_key,omitempty"`
+	TokenSecret                      *string                                              `json:"token_secret,omitempty"`
 }
 
 type ConnectorConfigResponse struct {
@@ -619,6 +623,8 @@ type ConnectorConfigResponse struct {
 	UserId                           string                                               `json:"user_id"`
 	EncryptionKey                    string                                               `json:"encryption_key"`
 	EuRegion                         *bool                                                `json:"eu_region"`
+	TokenKey                         string                                               `json:"token_key"`
+	TokenSecret                      string                                               `json:"token_secret"`
 }
 
 func NewConnectorConfig() *ConnectorConfig {
@@ -857,6 +863,8 @@ func (cc *ConnectorConfig) request() *connectorConfigRequest {
 		UserId:                           cc.userId,
 		EncryptionKey:                    cc.encryptionKey,
 		EuRegion:                         cc.euRegion,
+		TokenKey:                         cc.tokenKey,
+		TokenSecret:                      cc.tokenSecret,
 	}
 }
 
@@ -1867,5 +1875,15 @@ func (cc *ConnectorConfig) EncryptionKey(value string) *ConnectorConfig {
 
 func (cc *ConnectorConfig) EuRegion(value bool) *ConnectorConfig {
 	cc.euRegion = &value
+	return cc
+}
+
+func (cc *ConnectorConfig) TokenKey(value string) *ConnectorConfig {
+	cc.tokenKey = &value
+	return cc
+}
+
+func (cc *ConnectorConfig) TokenSecret(value string) *ConnectorConfig {
+	cc.tokenSecret = &value
 	return cc
 }
