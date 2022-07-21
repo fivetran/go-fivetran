@@ -11,8 +11,14 @@ type connectorSchemaConfigTableRequest struct {
 }
 
 type ConnectorSchemaConfigTableResponse struct {
-	Enabled *bool                                           `json:"enabled"`
-	Columns map[string]*ConnectorSchemaConfigColumnResponse `json:"columns"`
+	NameInDestination    *string                                         `json:"name_in_destination"`
+	Enabled              *bool                                           `json:"enabled"`
+	Columns              map[string]*ConnectorSchemaConfigColumnResponse `json:"columns"`
+	EnabledPatchSettings struct {
+		Allowed    *bool   `json:"allowed"`
+		ReasonCode *string `json:"reason_code"`
+		Reason     *string `json:"reason"`
+	} `json:"enabled_patch_settings"`
 }
 
 func NewConnectorSchemaConfigTable() *ConnectorSchemaConfigTable {
