@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Fixed
 - `ConnectorSchemaConfigTableResponse.EnabledPatchSettings` missing field added
+- `ConnectorSchemaConfigTableResponse.NameInDestination` missing field added
+- `ConnectorSchemaConfigSchemaResponse.NameInDestination` missing field added
 
 ## [0.6.2](https://github.com/fivetran/go-fivetran/compare/v0.6.1...v0.6.2) - 2022-07-20
 

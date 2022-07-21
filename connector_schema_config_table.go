@@ -11,6 +11,7 @@ type connectorSchemaConfigTableRequest struct {
 }
 
 type ConnectorSchemaConfigTableResponse struct {
+	NameInDestination    *string                                         `json:"name_in_destination"`
 	Enabled              *bool                                           `json:"enabled"`
 	Columns              map[string]*ConnectorSchemaConfigColumnResponse `json:"columns"`
 	EnabledPatchSettings struct {

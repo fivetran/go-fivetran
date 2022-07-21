@@ -11,8 +11,9 @@ type connectorSchemaConfigSchemaRequest struct {
 }
 
 type ConnectorSchemaConfigSchemaResponse struct {
-	Enabled *bool                                          `json:"enabled"`
-	Tables  map[string]*ConnectorSchemaConfigTableResponse `json:"tables"`
+	NameInDestination *string                                        `json:"name_in_destination"`
+	Enabled           *bool                                          `json:"enabled"`
+	Tables            map[string]*ConnectorSchemaConfigTableResponse `json:"tables"`
 }
 
 func NewConnectorSchemaConfigSchema() *ConnectorSchemaConfigSchema {
