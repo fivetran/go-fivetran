@@ -42,7 +42,7 @@ type UserInviteResponse struct {
 		Phone      string    `json:"phone"`
 		LoggedInAt time.Time `json:"logged_in_at"`
 		CreatedAt  time.Time `json:"created_at"`
-		Role	   string    `json:"role"`
+		Role       string    `json:"role"`
 	} `json:"data"`
 }
 
@@ -110,9 +110,10 @@ func (s *UserInviteService) Do(ctx context.Context) (UserInviteResponse, error) 
 		body:    reqBody,
 		queries: nil,
 		headers: headers,
+		client:  s.c.httpClient,
 	}
 
-	respBody, respStatus, err := httpRequest(r, ctx)
+	respBody, respStatus, err := r.httpRequest(ctx)
 	if err != nil {
 		return response, err
 	}

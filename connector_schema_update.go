@@ -82,9 +82,10 @@ func (csu *ConnectorSchemaConfigUpdateService) Do(ctx context.Context) (Connecto
 		body:    reqBody,
 		queries: nil,
 		headers: headers,
+		client:  csu.c.httpClient,
 	}
 
-	respBody, respStatus, err := httpRequest(r, ctx)
+	respBody, respStatus, err := r.httpRequest(ctx)
 	if err != nil {
 		return response, err
 	}

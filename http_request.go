@@ -3,6 +3,7 @@ package fivetran
 import (
 	"bytes"
 	"context"
+	"errors"
 	"fmt"
 	"io"
 	"net/http"
@@ -14,10 +15,14 @@ type request struct {
 	body    []byte
 	queries map[string]string
 	headers map[string]string
+	client  HttpClient
 }
 
-func httpRequest(req request, ctx context.Context) ([]byte, int, error) {
-	client := &http.Client{}
+func (req *request) httpRequest(ctx context.Context) ([]byte, int, error) {
+
+	if req.client == nil {
+		return nil, 0, errors.New("HTTP client is not provided")
+	}
 
 	newReq, err := http.NewRequestWithContext(ctx, req.method, req.url, bytes.NewReader(req.body))
 	if err != nil {
@@ -56,7 +61,7 @@ func httpRequest(req request, ctx context.Context) ([]byte, int, error) {
 		}
 	}
 
-	resp, err := client.Do(newReq)
+	resp, err := req.client.Do(newReq)
 	if err != nil {
 		return nil, 0, err
 	}

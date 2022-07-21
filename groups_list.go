@@ -63,9 +63,10 @@ func (s *GroupsListService) Do(ctx context.Context) (GroupsListResponse, error) 
 		body:    nil,
 		queries: queries,
 		headers: headers,
+		client:  s.c.httpClient,
 	}
 
-	respBody, respStatus, err := httpRequest(r, ctx)
+	respBody, respStatus, err := r.httpRequest(ctx)
 	if err != nil {
 		return response, err
 	}

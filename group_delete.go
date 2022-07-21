@@ -45,9 +45,10 @@ func (s *GroupDeleteService) Do(ctx context.Context) (groupDeleteResponse, error
 		body:    nil,
 		queries: nil,
 		headers: headers,
+		client:  s.c.httpClient,
 	}
 
-	respBody, respStatus, err := httpRequest(r, ctx)
+	respBody, respStatus, err := r.httpRequest(ctx)
 	if err != nil {
 		return response, err
 	}

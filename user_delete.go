@@ -45,9 +45,10 @@ func (s *UserDeleteService) Do(ctx context.Context) (userDeleteResponse, error) 
 		body:    nil,
 		queries: nil,
 		headers: headers,
+		client:  s.c.httpClient,
 	}
 
-	respBody, respStatus, err := httpRequest(r, ctx)
+	respBody, respStatus, err := r.httpRequest(ctx)
 	if err != nil {
 		return response, err
 	}
