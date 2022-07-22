@@ -82,9 +82,10 @@ func (s *GroupListUsersService) Do(ctx context.Context) (GroupListUsersResponse,
 		body:    nil,
 		queries: queries,
 		headers: headers,
+		client:  s.c.httpClient,
 	}
 
-	respBody, respStatus, err := httpRequest(r, ctx)
+	respBody, respStatus, err := r.httpRequest(ctx)
 	if err != nil {
 		return response, err
 	}

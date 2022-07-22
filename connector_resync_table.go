@@ -63,9 +63,10 @@ func (s *ConnectorReSyncTableService) Do(ctx context.Context) (ConnectorReSyncTa
 		body:    nil,
 		queries: nil,
 		headers: headers,
+		client:  s.c.httpClient,
 	}
 
-	respBody, respStatus, err := httpRequest(r, ctx)
+	respBody, respStatus, err := r.httpRequest(ctx)
 	if err != nil {
 		return response, err
 	}

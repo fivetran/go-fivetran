@@ -51,9 +51,10 @@ func (s *GroupDetailsService) Do(ctx context.Context) (GroupDetailsResponse, err
 		body:    nil,
 		queries: nil,
 		headers: headers,
+		client:  s.c.httpClient,
 	}
 
-	respBody, respStatus, err := httpRequest(r, ctx)
+	respBody, respStatus, err := r.httpRequest(ctx)
 	if err != nil {
 		return response, err
 	}

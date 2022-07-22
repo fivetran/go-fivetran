@@ -128,9 +128,10 @@ func (s *DestinationModifyService) Do(ctx context.Context) (DestinationModifyRes
 		body:    reqBody,
 		queries: nil,
 		headers: headers,
+		client:  s.c.httpClient,
 	}
 
-	respBody, respStatus, err := httpRequest(r, ctx)
+	respBody, respStatus, err := r.httpRequest(ctx)
 	if err != nil {
 		return response, err
 	}
