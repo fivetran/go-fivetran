@@ -40,7 +40,11 @@ func TestNewCertificateConnectorFingerprintApproveMock(t *testing.T) {
 		t.Error(err)
 	}
 
+	interactions := mockClient.Interactions()
+	assertEqual(t, len(interactions), 1)
+	assertEqual(t, interactions[0].Handler, handler)
 	assertEqual(t, handler.Interactions, 1)
+
 	assertEqual(t, response.Code, "Success")
 	assertNotEmpty(t, response.Message)
 }

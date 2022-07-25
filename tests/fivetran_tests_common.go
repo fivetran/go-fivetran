@@ -1,6 +1,7 @@
 package tests
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -36,6 +37,7 @@ func requestBodyToJson(t *testing.T, req *http.Request) map[string]interface{} {
 		t.Errorf("requestBodyToJson, cannot read request body: %s", err)
 	}
 	req.Body.Close()
+	req.Body = io.NopCloser(bytes.NewReader(bodyBytes))
 
 	result := map[string]interface{}{}
 	err = json.Unmarshal(bodyBytes, &result)

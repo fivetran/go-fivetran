@@ -69,6 +69,8 @@ type HandlerFunc func(req *http.Request) (*http.Response, error)
 type HttpClient struct {
 	handlers   map[stubAddress]*Handler
 	handlersWc map[stubAddress]*Handler
+
+	interactions []Interaction
 }
 
 type Handler struct {
@@ -79,11 +81,15 @@ type Handler struct {
 	Interactions int
 }
 
+type Interaction struct {
+	Handler *Handler
+	Req     *http.Request
+}
+
 func NewHttpClient() *HttpClient {
-	return &HttpClient{
-		handlers:   map[stubAddress]*Handler{},
-		handlersWc: map[stubAddress]*Handler{},
-	}
+	client := new(HttpClient)
+	client.Reset()
+	return client
 }
 
 func NewResponse(req *http.Request, code int, body string) *http.Response {
@@ -119,6 +125,12 @@ func (c *HttpClient) Do(req *http.Request) (*http.Response, error) {
 
 	handler := c.findHandler(req)
 	if handler != nil {
+		interaction := Interaction{
+			Handler: handler,
+			Req:     req,
+		}
+		c.interactions = append(c.interactions, interaction)
+
 		return handler.handle(req)
 	}
 
@@ -129,6 +141,7 @@ func (c *HttpClient) Do(req *http.Request) (*http.Response, error) {
 func (c *HttpClient) Reset() *HttpClient {
 	c.handlers = map[stubAddress]*Handler{}
 	c.handlersWc = map[stubAddress]*Handler{}
+	c.interactions = []Interaction{}
 	return c
 }
 
@@ -155,6 +168,12 @@ func (c *HttpClient) WhenWc(method string, url string) *Handler {
 // any HTTP method
 func (c *HttpClient) WhenAnyMethodWc(url string) *Handler {
 	return c.addHandler("", url, true)
+}
+
+// Interactions returns list of all interactions (handler + request) which
+// were registered by the client
+func (c *HttpClient) Interactions() []Interaction {
+	return c.interactions
 }
 
 func (c *HttpClient) addHandler(method string, url string, wildcard bool) *Handler {
