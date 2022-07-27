@@ -17,8 +17,8 @@ type ConnectorSchemaDetailsResponse struct {
 	Code    string `json:"code"`
 	Message string `json:"message"`
 	Data    struct {
-		SchemaChangeHandling string                                         `json:"schema_change_handling"`
-		Schemas              map[string]ConnectorSchemaConfigSchemaResponse `json:"schemas"`
+		SchemaChangeHandling string                                          `json:"schema_change_handling"`
+		Schemas              map[string]*ConnectorSchemaConfigSchemaResponse `json:"schemas"`
 	} `json:"data"`
 }
 
