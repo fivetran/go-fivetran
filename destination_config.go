@@ -69,6 +69,7 @@ type DestinationConfigResponse struct {
 	TunnelUser           string `json:"tunnel_user"`
 	ProjectID            string `json:"project_id"`
 	DataSetLocation      string `json:"data_set_location"`
+	Location             string `json:"location"` // Big Query returns `data_set_location` as `location` in response (will be fixed with migration to API V2)
 	Bucket               string `json:"bucket"`
 	ServerHostName       string `json:"server_host_name"`
 	HTTPPath             string `json:"http_path"`
