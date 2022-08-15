@@ -87,3 +87,16 @@ func assertEqual(t *testing.T, actual interface{}, expected interface{}) {
 		printError(t, actual, expected)
 	}
 }
+
+func assertKey(t *testing.T, key string, requestPart map[string]interface{}, expectedValue interface{}) {
+	v, ok := requestPart[key]
+	assertEqual(t, ok, true)
+	assertEqual(t, v, expectedValue)
+}
+
+func boolToStr(b bool) string {
+	if b {
+		return "true"
+	}
+	return "false"
+}

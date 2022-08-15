@@ -5,7 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/fivetran/go-fivetran/compare/v0.6.4...HEAD)
+## [Unreleased](https://github.com/fivetran/go-fivetran/compare/v0.6.5...HEAD)
+
+## [0.6.5](https://github.com/fivetran/go-fivetran/compare/v0.6.4...v0.6.5) - 2022-08-15
+
+## Fixed
+- `DestinationConfigResponse.PublicKey` missing field added (field is readonly and represented only in response)
+- `DestinationConfigResponse.PrivateKey` missing field added
 
 ## [0.6.4](https://github.com/fivetran/go-fivetran/compare/v0.6.3...v0.6.4) - 2022-07-27
 
