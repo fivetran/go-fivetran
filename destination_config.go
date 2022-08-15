@@ -24,6 +24,7 @@ type DestinationConfig struct {
 	authType             *string
 	roleArn              *string
 	secretKey            *string
+	privateKey           *string
 	clusterId            *string
 	clusterRegion        *string
 }
@@ -50,6 +51,7 @@ type destinationConfigRequest struct {
 	AuthType             *string `json:"auth_type,omitempty"`
 	RoleArn              *string `json:"role_arn,omitempty"`
 	SecretKey            *string `json:"secret_key,omitempty"`
+	PrivateKey           *string `json:"private_key,omitempty"`
 	ClusterId            *string `json:"cluster_id,omitempty"`
 	ClusterRegion        *string `json:"cluster_region,omitempty"`
 }
@@ -76,6 +78,8 @@ type DestinationConfigResponse struct {
 	AuthType             string `json:"auth_type"`
 	RoleArn              string `json:"role_arn"`
 	SecretKey            string `json:"secret_key"`
+	PublicKey            string `json:"public_key"` // Readonly field
+	PrivateKey           string `json:"private_key"`
 	ClusterId            string `json:"cluster_id"`
 	ClusterRegion        string `json:"cluster_region"`
 }
@@ -107,6 +111,7 @@ func (dc *DestinationConfig) request() *destinationConfigRequest {
 		AuthType:             dc.authType,
 		RoleArn:              dc.roleArn,
 		SecretKey:            dc.secretKey,
+		PrivateKey:           dc.privateKey,
 		ClusterId:            dc.clusterId,
 		ClusterRegion:        dc.clusterRegion,
 	}
@@ -214,6 +219,11 @@ func (dc *DestinationConfig) RoleArn(value string) *DestinationConfig {
 
 func (dc *DestinationConfig) SecretKey(value string) *DestinationConfig {
 	dc.secretKey = &value
+	return dc
+}
+
+func (dc *DestinationConfig) PrivateKey(value string) *DestinationConfig {
+	dc.privateKey = &value
 	return dc
 }
 
