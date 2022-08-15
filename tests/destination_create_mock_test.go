@@ -32,6 +32,7 @@ const (
 	TUNNEL_USER            = "tunnel_user"
 	PROJECT_ID             = "project_id_value"
 	DATA_SET_LOCATION      = "data_Set_location_value"
+	LOCATION               = "data_Set_location_value"
 	BUCKET                 = "your-bucket"
 	SERVER_HOST_NAME       = "server.host.name"
 	HTTP_PATH              = "http.path"
@@ -120,6 +121,7 @@ func prepareResponse() string {
 					"tunnel_user":            "%v",
 					"project_id":             "%v",
 					"data_set_location":      "%v",
+					"location":               "%v",
 					"bucket":                 "%v",
 					"server_host_name":       "%v",
 					"http_path":              "%v",
@@ -157,6 +159,7 @@ func prepareResponse() string {
 		TUNNEL_USER,
 		PROJECT_ID,
 		DATA_SET_LOCATION,
+		LOCATION,
 		BUCKET,
 		SERVER_HOST_NAME,
 		HTTP_PATH,
@@ -282,4 +285,5 @@ func assertResponse(t *testing.T, response fivetran.DestinationCreateResponse) {
 	assertEqual(t, response.Data.Config.TunnelPort, TUNNEL_PORT)
 	assertEqual(t, response.Data.Config.TunnelUser, TUNNEL_USER)
 	assertEqual(t, response.Data.Config.User, USER)
+	assertEqual(t, response.Data.Config.Location, LOCATION)
 }
