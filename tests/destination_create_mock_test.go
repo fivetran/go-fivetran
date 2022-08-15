@@ -53,7 +53,6 @@ const (
 
 func TestNewDestinationCreateFullMappingMock(t *testing.T) {
 	// arrange
-
 	ftClient, mockClient := CreateTestClient()
 	handler := mockClient.When(http.MethodPost, "/v1/destinations").ThenCall(
 
@@ -64,7 +63,7 @@ func TestNewDestinationCreateFullMappingMock(t *testing.T) {
 			return response, nil
 		})
 
-	// act & assert
+	// act
 	response, err := ftClient.NewDestinationCreate().
 		Service(SERVICE).
 		Region(REGION).
@@ -81,11 +80,11 @@ func TestNewDestinationCreateFullMappingMock(t *testing.T) {
 		t.Error(err)
 	}
 
+	// assert
 	interactions := mockClient.Interactions()
 	assertEqual(t, len(interactions), 1)
 	assertEqual(t, interactions[0].Handler, handler)
 	assertEqual(t, handler.Interactions, 1)
-
 	assertResponse(t, response)
 }
 
@@ -161,7 +160,7 @@ func prepareResponse() string {
 		BUCKET,
 		SERVER_HOST_NAME,
 		HTTP_PATH,
-		MASKED, // parsonal_access_token
+		MASKED, // personal_access_token
 		CREATE_EXTERNAL_TABLES,
 		EXTERNAL_LOCATION,
 		AUTH_TYPE,
@@ -241,12 +240,6 @@ func assertRequest(t *testing.T, request map[string]interface{}) {
 	assertKey(t, "cluster_region", config, CLUSTER_REGION)
 }
 
-func assertKey(t *testing.T, key string, requestPart map[string]interface{}, expectedValue interface{}) {
-	v, ok := requestPart[key]
-	assertEqual(t, ok, true)
-	assertEqual(t, v, expectedValue)
-}
-
 func assertResponse(t *testing.T, response fivetran.DestinationCreateResponse) {
 
 	assertEqual(t, response.Code, "Created")
@@ -289,11 +282,4 @@ func assertResponse(t *testing.T, response fivetran.DestinationCreateResponse) {
 	assertEqual(t, response.Data.Config.TunnelPort, TUNNEL_PORT)
 	assertEqual(t, response.Data.Config.TunnelUser, TUNNEL_USER)
 	assertEqual(t, response.Data.Config.User, USER)
-}
-
-func boolToStr(b bool) string {
-	if b == true {
-		return "true"
-	}
-	return "false"
 }
