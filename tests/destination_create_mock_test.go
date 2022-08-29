@@ -60,7 +60,7 @@ func TestNewDestinationCreateFullMappingMock(t *testing.T) {
 		func(req *http.Request) (*http.Response, error) {
 			body := requestBodyToJson(t, req)
 			assertRequest(t, body)
-			response := mock.NewResponse(req, http.StatusCreated, prepareResponse())
+			response := mock.NewResponse(req, http.StatusCreated, prepareDestinationResponse())
 			return response, nil
 		})
 
@@ -89,7 +89,7 @@ func TestNewDestinationCreateFullMappingMock(t *testing.T) {
 	assertResponse(t, response)
 }
 
-func prepareResponse() string {
+func prepareDestinationResponse() string {
 	return fmt.Sprintf(
 		`{
 			"code":"Created",

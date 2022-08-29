@@ -1,18 +1,21 @@
 package fivetran
 
 type ConnectorSchemaConfigTable struct {
-	enabled *bool
-	columns map[string]*ConnectorSchemaConfigColumn
+	enabled  *bool
+	syncMode *string
+	columns  map[string]*ConnectorSchemaConfigColumn
 }
 
 type connectorSchemaConfigTableRequest struct {
-	Enabled *bool                                          `json:"enabled,omitempty"`
-	Columns map[string]*connectorSchemaConfigColumnRequest `json:"columns,omitempty"`
+	Enabled  *bool                                          `json:"enabled,omitempty"`
+	SyncMode *string                                        `json:"sync_mode,omitempty"`
+	Columns  map[string]*connectorSchemaConfigColumnRequest `json:"columns,omitempty"`
 }
 
 type ConnectorSchemaConfigTableResponse struct {
 	NameInDestination    *string                                         `json:"name_in_destination"`
 	Enabled              *bool                                           `json:"enabled"`
+	SyncMode             *string                                         `json:"sync_mode"`
 	Columns              map[string]*ConnectorSchemaConfigColumnResponse `json:"columns"`
 	EnabledPatchSettings struct {
 		Allowed    *bool   `json:"allowed"`
@@ -35,13 +38,19 @@ func (cst *ConnectorSchemaConfigTable) request() *connectorSchemaConfigTableRequ
 	}
 
 	return &connectorSchemaConfigTableRequest{
-		Enabled: cst.enabled,
-		Columns: columns,
+		Enabled:  cst.enabled,
+		SyncMode: cst.syncMode,
+		Columns:  columns,
 	}
 }
 
 func (cst *ConnectorSchemaConfigTable) Enabled(value bool) *ConnectorSchemaConfigTable {
 	cst.enabled = &value
+	return cst
+}
+
+func (cst *ConnectorSchemaConfigTable) SyncMode(value string) *ConnectorSchemaConfigTable {
+	cst.syncMode = &value
 	return cst
 }
 
