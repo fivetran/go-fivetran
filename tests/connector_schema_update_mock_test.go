@@ -22,7 +22,6 @@ func TestConnectorSchemaUpdateFullMappingMock(t *testing.T) {
 			return response, nil
 		})
 
-	//act
 	tableName := "table_1"
 	columnName := "column_2"
 	schemaName := "schema_1"
@@ -40,19 +39,22 @@ func TestConnectorSchemaUpdateFullMappingMock(t *testing.T) {
 		Enabled(true).
 		Table(tableName, table)
 
-	response, err := ftClient.
+	svc := ftClient.
 		NewConnectorSchemaUpdateService().
 		ConnectorID(TEST_CONNECTOR_ID).
 		SchemaChangeHandling("BLOCK_ALL").
-		Schema(schemaName, schema).
+		Schema(schemaName, schema)
+
+	//act
+	response, err := svc.
 		Do(context.Background())
 
+	// assert
 	if err != nil {
 		t.Logf("%+v\n", response)
 		t.Error(err)
 	}
 
-	// assert
 	interactions := mockClient.Interactions()
 	assertEqual(t, len(interactions), 1)
 	assertEqual(t, interactions[0].Handler, handler)
