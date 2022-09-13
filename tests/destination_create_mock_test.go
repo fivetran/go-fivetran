@@ -12,44 +12,47 @@ import (
 )
 
 const (
-	SERVICE                = "test_service"
-	ID                     = "test_id"
-	REGION                 = "GCP_US_EAST4"
-	TIME_ZONE              = "-5"
-	SETUP_STATUS           = "connected"
-	TEST_TITLE             = "Test Title"
-	TEST_STATUS            = "PASSED"
-	TEST_MESSAGE           = "Test message"
-	HOST                   = "your.host"
-	PORT                   = 443
-	DATABASE               = "fivetran"
-	AUTH                   = "PASSWORD"
-	USER                   = "fivetran_user"
-	MASKED                 = "******"
-	CONNECTION_TYPE        = "Directly"
-	TUNNEL_HOST            = "tunnel.host"
-	TUNNEL_PORT            = "334"
-	TUNNEL_USER            = "tunnel_user"
-	PROJECT_ID             = "project_id_value"
-	DATA_SET_LOCATION      = "data_Set_location_value"
-	LOCATION               = "data_Set_location_value"
-	BUCKET                 = "your-bucket"
-	SERVER_HOST_NAME       = "server.host.name"
-	HTTP_PATH              = "http.path"
-	CREATE_EXTERNAL_TABLES = true
-	EXTERNAL_LOCATION      = "group_id"
-	AUTH_TYPE              = "auth_type_value"
-	ROLE_ARN               = "role:arn-xxx"
-	PUBLIC_KEY             = "public_key_value"
-	CLUSTER_ID             = "cluster_id_value"
-	CLUSTER_REGION         = "cluster_region_value"
-	PASSWORD               = "password"
-	PRIVATE_KEY            = "private_key"
-	SECRET_KEY             = "secret_key"
-	TRUST_CERTIFICATES     = true
-	TRUST_FINGERPRINTS     = true
-	RUN_SETUP_TESTS        = true
-	PERSONAL_ACCESS_TOKEN  = "PAT"
+	SERVICE                  = "test_service"
+	ID                       = "test_id"
+	REGION                   = "GCP_US_EAST4"
+	TIME_ZONE                = "-5"
+	SETUP_STATUS             = "connected"
+	TEST_TITLE               = "Test Title"
+	TEST_STATUS              = "PASSED"
+	TEST_MESSAGE             = "Test message"
+	HOST                     = "your.host"
+	PORT                     = 443
+	DATABASE                 = "fivetran"
+	AUTH                     = "PASSWORD"
+	USER                     = "fivetran_user"
+	MASKED                   = "******"
+	CONNECTION_TYPE          = "Directly"
+	TUNNEL_HOST              = "tunnel.host"
+	TUNNEL_PORT              = "334"
+	TUNNEL_USER              = "tunnel_user"
+	PROJECT_ID               = "project_id_value"
+	DATA_SET_LOCATION        = "data_Set_location_value"
+	LOCATION                 = "data_Set_location_value"
+	BUCKET                   = "your-bucket"
+	SERVER_HOST_NAME         = "server.host.name"
+	HTTP_PATH                = "http.path"
+	CREATE_EXTERNAL_TABLES   = true
+	EXTERNAL_LOCATION        = "group_id"
+	AUTH_TYPE                = "auth_type_value"
+	ROLE_ARN                 = "role:arn-xxx"
+	PUBLIC_KEY               = "public_key_value"
+	CLUSTER_ID               = "cluster_id_value"
+	CLUSTER_REGION           = "cluster_region_value"
+	PASSWORD                 = "password"
+	PRIVATE_KEY              = "private_key"
+	SECRET_KEY               = "secret_key"
+	TRUST_CERTIFICATES       = true
+	TRUST_FINGERPRINTS       = true
+	RUN_SETUP_TESTS          = true
+	PERSONAL_ACCESS_TOKEN    = "PAT"
+	ROLE                     = "role"
+	PASSPHRASE               = "passphrase"
+	IS_PRIVATE_KEY_ENCRYPTED = true
 )
 
 func TestNewDestinationCreateFullMappingMock(t *testing.T) {
@@ -95,46 +98,49 @@ func prepareDestinationResponse() string {
 			"code":"Created",
 			"message":"Destination has been created",
 			"data":{
-				"id":"%v",
-				"group_id":"%v",
-				"service":"%v",
-				"region":"%v",
-				"time_zone_offset":"%v",
-				"setup_status":"%v",
+				"id":                           "%v",
+				"group_id":                     "%v",
+				"service":                      "%v",
+				"region":                       "%v",
+				"time_zone_offset":             "%v",
+				"setup_status":                 "%v",
 				"setup_tests":[
 					{
-						"title":"%v",
-						"status":"%v",
-						"message":"%v"
+						"title":                "%v",
+						"status":               "%v",
+						"message":              "%v"
 					}
 				],
 				"config":{
-					"host":                   "%v",
-					"port":                   "%v",
-					"database":               "%v",
-					"auth":                   "%v",
-					"user":                   "%v",
-					"password":               "%v",
-					"connection_type":        "%v",
-					"tunnel_host":            "%v",
-					"tunnel_port":            "%v",
-					"tunnel_user":            "%v",
-					"project_id":             "%v",
-					"data_set_location":      "%v",
-					"location":               "%v",
-					"bucket":                 "%v",
-					"server_host_name":       "%v",
-					"http_path":              "%v",
-					"personal_access_token":  "%v",
-					"create_external_tables": "%v",
-					"external_location":      "%v",
-					"auth_type":              "%v",
-					"role_arn":               "%v",
-					"secret_key":             "%v",
-					"private_key":            "%v",
-					"public_key":             "%v",
-					"cluster_id":             "%v",
-					"cluster_region":         "%v"
+					"host":                     "%v",
+					"port":                     "%v",
+					"database":                 "%v",
+					"auth":                     "%v",
+					"user":                     "%v",
+					"password":                 "%v",
+					"connection_type":          "%v",
+					"tunnel_host":              "%v",
+					"tunnel_port":              "%v",
+					"tunnel_user":              "%v",
+					"project_id":               "%v",
+					"data_set_location":        "%v",
+					"location":                 "%v",
+					"bucket":                   "%v",
+					"server_host_name":         "%v",
+					"http_path":                "%v",
+					"personal_access_token":    "%v",
+					"create_external_tables":   "%v",
+					"external_location":        "%v",
+					"auth_type":                "%v",
+					"role_arn":                 "%v",
+					"secret_key":               "%v",
+					"private_key":              "%v",
+					"public_key":               "%v",
+					"cluster_id":               "%v",
+					"cluster_region":           "%v",
+					"role":                     "%v",
+					"is_private_key_encrypted":  %v,
+					"passphrase":               "%v"
 				}
 			}
 		}`,
@@ -173,6 +179,9 @@ func prepareDestinationResponse() string {
 		PUBLIC_KEY,
 		CLUSTER_ID,
 		CLUSTER_REGION,
+		ROLE,
+		IS_PRIVATE_KEY_ENCRYPTED,
+		PASSPHRASE,
 	)
 }
 
@@ -201,6 +210,9 @@ func prepareConfig() *fivetran.DestinationConfig {
 	config.PrivateKey(PRIVATE_KEY)
 	config.ClusterId(CLUSTER_ID)
 	config.ClusterRegion(CLUSTER_REGION)
+	config.Role(ROLE)
+	config.IsPrivateKeyEncrypted(IS_PRIVATE_KEY_ENCRYPTED)
+	config.Passphrase(PASSPHRASE)
 	return config
 }
 
@@ -241,6 +253,9 @@ func assertRequest(t *testing.T, request map[string]interface{}) {
 	assertKey(t, "private_key", config, PRIVATE_KEY)
 	assertKey(t, "cluster_id", config, CLUSTER_ID)
 	assertKey(t, "cluster_region", config, CLUSTER_REGION)
+	assertKey(t, "role", config, ROLE)
+	assertKey(t, "is_private_key_encrypted", config, IS_PRIVATE_KEY_ENCRYPTED)
+	assertKey(t, "passphrase", config, PASSPHRASE)
 }
 
 func assertResponse(t *testing.T, response fivetran.DestinationCreateResponse) {
@@ -286,4 +301,7 @@ func assertResponse(t *testing.T, response fivetran.DestinationCreateResponse) {
 	assertEqual(t, response.Data.Config.TunnelUser, TUNNEL_USER)
 	assertEqual(t, response.Data.Config.User, USER)
 	assertEqual(t, response.Data.Config.Location, LOCATION)
+	assertEqual(t, response.Data.Config.Role, ROLE)
+	assertEqual(t, response.Data.Config.IsPrivateKeyEncrypted, IS_PRIVATE_KEY_ENCRYPTED)
+	assertEqual(t, response.Data.Config.Passphrase, PASSPHRASE)
 }
