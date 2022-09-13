@@ -3,86 +3,95 @@ package fivetran
 // DestinationConfig builds Destination Management, Destination Config.
 // Ref. https://fivetran.com/docs/rest-api/destinations/config
 type DestinationConfig struct {
-	host                 *string
-	port                 *int
-	database             *string
-	auth                 *string
-	user                 *string
-	password             *string
-	connectionType       *string
-	tunnelHost           *string
-	tunnelPort           *string
-	tunnelUser           *string
-	projectID            *string
-	dataSetLocation      *string
-	bucket               *string
-	serverHostName       *string
-	httpPath             *string
-	personalAccessToken  *string
-	createExternalTables *bool
-	externalLocation     *string
-	authType             *string
-	roleArn              *string
-	secretKey            *string
-	privateKey           *string
-	clusterId            *string
-	clusterRegion        *string
+	host                  *string
+	port                  *int
+	database              *string
+	auth                  *string
+	user                  *string
+	password              *string
+	connectionType        *string
+	tunnelHost            *string
+	tunnelPort            *string
+	tunnelUser            *string
+	projectID             *string
+	dataSetLocation       *string
+	bucket                *string
+	serverHostName        *string
+	httpPath              *string
+	personalAccessToken   *string
+	createExternalTables  *bool
+	externalLocation      *string
+	authType              *string
+	roleArn               *string
+	secretKey             *string
+	privateKey            *string
+	clusterId             *string
+	clusterRegion         *string
+	role                  *string
+	isPrivateKeyEncrypted *bool
+	passphrase            *string
 }
 
 type destinationConfigRequest struct {
-	Host                 *string `json:"host,omitempty"`
-	Port                 *int    `json:"port,omitempty"`
-	Database             *string `json:"database,omitempty"`
-	Auth                 *string `json:"auth,omitempty"`
-	User                 *string `json:"user,omitempty"`
-	Password             *string `json:"password,omitempty"`
-	ConnectionType       *string `json:"connection_type,omitempty"`
-	TunnelHost           *string `json:"tunnel_host,omitempty"`
-	TunnelPort           *string `json:"tunnel_port,omitempty"`
-	TunnelUser           *string `json:"tunnel_user,omitempty"`
-	ProjectID            *string `json:"project_id,omitempty"`
-	DataSetLocation      *string `json:"data_set_location,omitempty"`
-	Bucket               *string `json:"bucket,omitempty"`
-	ServerHostName       *string `json:"server_host_name,omitempty"`
-	HTTPPath             *string `json:"http_path,omitempty"`
-	PersonalAccessToken  *string `json:"personal_access_token,omitempty"`
-	CreateExternalTables *bool   `json:"create_external_tables,omitempty"`
-	ExternalLocation     *string `json:"external_location,omitempty"`
-	AuthType             *string `json:"auth_type,omitempty"`
-	RoleArn              *string `json:"role_arn,omitempty"`
-	SecretKey            *string `json:"secret_key,omitempty"`
-	PrivateKey           *string `json:"private_key,omitempty"`
-	ClusterId            *string `json:"cluster_id,omitempty"`
-	ClusterRegion        *string `json:"cluster_region,omitempty"`
+	Host                  *string `json:"host,omitempty"`
+	Port                  *int    `json:"port,omitempty"`
+	Database              *string `json:"database,omitempty"`
+	Auth                  *string `json:"auth,omitempty"`
+	User                  *string `json:"user,omitempty"`
+	Password              *string `json:"password,omitempty"`
+	ConnectionType        *string `json:"connection_type,omitempty"`
+	TunnelHost            *string `json:"tunnel_host,omitempty"`
+	TunnelPort            *string `json:"tunnel_port,omitempty"`
+	TunnelUser            *string `json:"tunnel_user,omitempty"`
+	ProjectID             *string `json:"project_id,omitempty"`
+	DataSetLocation       *string `json:"data_set_location,omitempty"`
+	Bucket                *string `json:"bucket,omitempty"`
+	ServerHostName        *string `json:"server_host_name,omitempty"`
+	HTTPPath              *string `json:"http_path,omitempty"`
+	PersonalAccessToken   *string `json:"personal_access_token,omitempty"`
+	CreateExternalTables  *bool   `json:"create_external_tables,omitempty"`
+	ExternalLocation      *string `json:"external_location,omitempty"`
+	AuthType              *string `json:"auth_type,omitempty"`
+	RoleArn               *string `json:"role_arn,omitempty"`
+	SecretKey             *string `json:"secret_key,omitempty"`
+	PrivateKey            *string `json:"private_key,omitempty"`
+	ClusterId             *string `json:"cluster_id,omitempty"`
+	ClusterRegion         *string `json:"cluster_region,omitempty"`
+	Role                  *string `json:"role,omitempty"`
+	IsPrivateKeyEncrypted *bool   `json:"is_private_key_encrypted,omitempty"`
+	Passphrase            *string `json:"passphrase,omitempty"`
 }
 
 type DestinationConfigResponse struct {
-	Host                 string `json:"host"`
-	Port                 string `json:"port"` // Port is sent as `string` but returned as `int`. T-97508
-	Database             string `json:"database"`
-	Auth                 string `json:"auth"`
-	User                 string `json:"user"`
-	Password             string `json:"password"`
-	ConnectionType       string `json:"connection_type"` // ConnectionMethod is the REST API's response of ConnectionType. T-111758
-	TunnelHost           string `json:"tunnel_host"`
-	TunnelPort           string `json:"tunnel_port"`
-	TunnelUser           string `json:"tunnel_user"`
-	ProjectID            string `json:"project_id"`
-	DataSetLocation      string `json:"data_set_location"`
-	Location             string `json:"location"` // Big Query returns `data_set_location` as `location` in response (will be fixed with migration to API V2)
-	Bucket               string `json:"bucket"`
-	ServerHostName       string `json:"server_host_name"`
-	HTTPPath             string `json:"http_path"`
-	PersonalAccessToken  string `json:"personal_access_token"`
-	CreateExternalTables string `json:"create_external_tables"`
-	ExternalLocation     string `json:"external_location"`
-	AuthType             string `json:"auth_type"`
-	RoleArn              string `json:"role_arn"`
-	SecretKey            string `json:"secret_key"`
-	PublicKey            string `json:"public_key"` // Readonly field
-	PrivateKey           string `json:"private_key"`
-	ClusterId            string `json:"cluster_id"`
-	ClusterRegion        string `json:"cluster_region"`
+	Host                  string `json:"host"`
+	Port                  string `json:"port"` // Port is sent as `string` but returned as `int`. T-97508
+	Database              string `json:"database"`
+	Auth                  string `json:"auth"`
+	User                  string `json:"user"`
+	Password              string `json:"password"`
+	ConnectionType        string `json:"connection_type"` // ConnectionMethod is the REST API's response of ConnectionType. T-111758
+	TunnelHost            string `json:"tunnel_host"`
+	TunnelPort            string `json:"tunnel_port"`
+	TunnelUser            string `json:"tunnel_user"`
+	ProjectID             string `json:"project_id"`
+	DataSetLocation       string `json:"data_set_location"`
+	Location              string `json:"location"` // Big Query returns `data_set_location` as `location` in response (will be fixed with migration to API V2)
+	Bucket                string `json:"bucket"`
+	ServerHostName        string `json:"server_host_name"`
+	HTTPPath              string `json:"http_path"`
+	PersonalAccessToken   string `json:"personal_access_token"`
+	CreateExternalTables  string `json:"create_external_tables"`
+	ExternalLocation      string `json:"external_location"`
+	AuthType              string `json:"auth_type"`
+	RoleArn               string `json:"role_arn"`
+	SecretKey             string `json:"secret_key"`
+	PublicKey             string `json:"public_key"` // Readonly field
+	PrivateKey            string `json:"private_key"`
+	ClusterId             string `json:"cluster_id"`
+	ClusterRegion         string `json:"cluster_region"`
+	Role                  string `json:"role"`
+	IsPrivateKeyEncrypted bool   `json:"is_private_key_encrypted"`
+	Passphrase            string `json:"passphrase"`
 }
 
 func NewDestinationConfig() *DestinationConfig {
@@ -91,30 +100,33 @@ func NewDestinationConfig() *DestinationConfig {
 
 func (dc *DestinationConfig) request() *destinationConfigRequest {
 	return &destinationConfigRequest{
-		Host:                 dc.host,
-		Port:                 dc.port,
-		Database:             dc.database,
-		Auth:                 dc.auth,
-		User:                 dc.user,
-		Password:             dc.password,
-		ConnectionType:       dc.connectionType,
-		TunnelHost:           dc.tunnelHost,
-		TunnelPort:           dc.tunnelPort,
-		TunnelUser:           dc.tunnelUser,
-		ProjectID:            dc.projectID,
-		DataSetLocation:      dc.dataSetLocation,
-		Bucket:               dc.bucket,
-		ServerHostName:       dc.serverHostName,
-		HTTPPath:             dc.httpPath,
-		PersonalAccessToken:  dc.personalAccessToken,
-		CreateExternalTables: dc.createExternalTables,
-		ExternalLocation:     dc.externalLocation,
-		AuthType:             dc.authType,
-		RoleArn:              dc.roleArn,
-		SecretKey:            dc.secretKey,
-		PrivateKey:           dc.privateKey,
-		ClusterId:            dc.clusterId,
-		ClusterRegion:        dc.clusterRegion,
+		Host:                  dc.host,
+		Port:                  dc.port,
+		Database:              dc.database,
+		Auth:                  dc.auth,
+		User:                  dc.user,
+		Password:              dc.password,
+		ConnectionType:        dc.connectionType,
+		TunnelHost:            dc.tunnelHost,
+		TunnelPort:            dc.tunnelPort,
+		TunnelUser:            dc.tunnelUser,
+		ProjectID:             dc.projectID,
+		DataSetLocation:       dc.dataSetLocation,
+		Bucket:                dc.bucket,
+		ServerHostName:        dc.serverHostName,
+		HTTPPath:              dc.httpPath,
+		PersonalAccessToken:   dc.personalAccessToken,
+		CreateExternalTables:  dc.createExternalTables,
+		ExternalLocation:      dc.externalLocation,
+		AuthType:              dc.authType,
+		RoleArn:               dc.roleArn,
+		SecretKey:             dc.secretKey,
+		PrivateKey:            dc.privateKey,
+		ClusterId:             dc.clusterId,
+		ClusterRegion:         dc.clusterRegion,
+		Role:                  dc.role,
+		IsPrivateKeyEncrypted: dc.isPrivateKeyEncrypted,
+		Passphrase:            dc.passphrase,
 	}
 }
 
@@ -235,5 +247,20 @@ func (dc *DestinationConfig) ClusterId(value string) *DestinationConfig {
 
 func (dc *DestinationConfig) ClusterRegion(value string) *DestinationConfig {
 	dc.clusterRegion = &value
+	return dc
+}
+
+func (dc *DestinationConfig) Role(value string) *DestinationConfig {
+	dc.role = &value
+	return dc
+}
+
+func (dc *DestinationConfig) IsPrivateKeyEncrypted(value bool) *DestinationConfig {
+	dc.isPrivateKeyEncrypted = &value
+	return dc
+}
+
+func (dc *DestinationConfig) Passphrase(value string) *DestinationConfig {
+	dc.passphrase = &value
 	return dc
 }
