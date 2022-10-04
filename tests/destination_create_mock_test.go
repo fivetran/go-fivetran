@@ -139,7 +139,7 @@ func prepareDestinationResponse() string {
 					"cluster_id":               "%v",
 					"cluster_region":           "%v",
 					"role":                     "%v",
-					"is_private_key_encrypted":  %v,
+					"is_private_key_encrypted": "%v",
 					"passphrase":               "%v"
 				}
 			}
@@ -302,6 +302,6 @@ func assertResponse(t *testing.T, response fivetran.DestinationCreateResponse) {
 	assertEqual(t, response.Data.Config.User, USER)
 	assertEqual(t, response.Data.Config.Location, LOCATION)
 	assertEqual(t, response.Data.Config.Role, ROLE)
-	assertEqual(t, response.Data.Config.IsPrivateKeyEncrypted, IS_PRIVATE_KEY_ENCRYPTED)
+	assertEqual(t, response.Data.Config.IsPrivateKeyEncrypted, boolToStr(IS_PRIVATE_KEY_ENCRYPTED))
 	assertEqual(t, response.Data.Config.Passphrase, PASSPHRASE)
 }

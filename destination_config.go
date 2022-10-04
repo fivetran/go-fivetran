@@ -90,7 +90,7 @@ type DestinationConfigResponse struct {
 	ClusterId             string `json:"cluster_id"`
 	ClusterRegion         string `json:"cluster_region"`
 	Role                  string `json:"role"`
-	IsPrivateKeyEncrypted bool   `json:"is_private_key_encrypted"`
+	IsPrivateKeyEncrypted string `json:"is_private_key_encrypted"`
 	Passphrase            string `json:"passphrase"`
 }
 
