@@ -5,7 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/fivetran/go-fivetran/compare/v0.6.9...HEAD)
+## [Unreleased](https://github.com/fivetran/go-fivetran/compare/v0.6.10...HEAD)
+
+## [0.6.9](https://github.com/fivetran/go-fivetran/compare/v0.6.9...v0.6.10) - 2022-11-24
+
+## Fixed
+- `ConnectorConfigResponse.UseAPIKeys` wrong type `string` -> `bool`
+- `ConnectorConfigResponse.IsSecure` wrong type `string` -> `bool`
+- `ConnectorConfigResponse.SkipBefore` wrong type `int` -> `*int`
+- `ConnectorConfigResponse.SkipAfter` wrong type `int` -> `*int`
 
 ## [0.6.9](https://github.com/fivetran/go-fivetran/compare/v0.6.8...v0.6.9) - 2022-10-04
 

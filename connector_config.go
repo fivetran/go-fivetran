@@ -116,7 +116,7 @@ type ConnectorConfig struct {
 	host                             *string
 	port                             *int
 	user                             *string
-	isSecure                         *string
+	isSecure                         *bool
 	repositories                     []string
 	useWebhooks                      *bool
 	dimensionAttributes              []string
@@ -140,7 +140,7 @@ type ConnectorConfig struct {
 	accessToken                      *string
 	viewThroughAttributionWindowSize *string
 	postClickAttributionWindowSize   *string
-	useAPIKeys                       *string
+	useAPIKeys                       *bool
 	apiKeys                          []string
 	endpoint                         *string
 	identity                         *string
@@ -323,7 +323,7 @@ type connectorConfigRequest struct {
 	Host                             *string                                              `json:"host,omitempty"`
 	Port                             *int                                                 `json:"port,omitempty"`
 	User                             *string                                              `json:"user,omitempty"`
-	IsSecure                         *string                                              `json:"is_secure,omitempty"`
+	IsSecure                         *bool                                                `json:"is_secure,omitempty"`
 	Repositories                     []string                                             `json:"repositories,omitempty"`
 	UseWebhooks                      *bool                                                `json:"use_webhooks,omitempty"`
 	DimensionAttributes              []string                                             `json:"dimension_attributes,omitempty"`
@@ -347,7 +347,7 @@ type connectorConfigRequest struct {
 	AccessToken                      *string                                              `json:"access_token,omitempty"`
 	ViewThroughAttributionWindowSize *string                                              `json:"view_through_attribution_window_size,omitempty"`
 	PostClickAttributionWindowSize   *string                                              `json:"post_click_attribution_window_size,omitempty"`
-	UseAPIKeys                       *string                                              `json:"use_api_keys,omitempty"`
+	UseAPIKeys                       *bool                                                `json:"use_api_keys,omitempty"`
 	APIKeys                          []string                                             `json:"api_keys,omitempty"`
 	Endpoint                         *string                                              `json:"endpoint,omitempty"`
 	Identity                         *string                                              `json:"identity,omitempty"`
@@ -468,8 +468,8 @@ type ConnectorConfigResponse struct {
 	NullSequence                     string                                               `json:"null_sequence"`
 	Delimiter                        string                                               `json:"delimiter"`
 	EscapeChar                       string                                               `json:"escape_char"`
-	SkipBefore                       int                                                  `json:"skip_before"`
-	SkipAfter                        int                                                  `json:"skip_after"`
+	SkipBefore                       *int                                                 `json:"skip_before"`
+	SkipAfter                        *int                                                 `json:"skip_after"`
 	ProjectCredentials               []ConnectorConfigProjectCredentialsResponse          `json:"project_credentials"`
 	AuthMode                         string                                               `json:"auth_mode"`
 	Username                         string                                               `json:"username"`
@@ -530,7 +530,7 @@ type ConnectorConfigResponse struct {
 	Host                             string                                               `json:"host"`
 	Port                             *int                                                 `json:"port"`
 	User                             string                                               `json:"user"`
-	IsSecure                         string                                               `json:"is_secure"`
+	IsSecure                         *bool                                                `json:"is_secure"`
 	Repositories                     []string                                             `json:"repositories"`
 	UseWebhooks                      *bool                                                `json:"use_webhooks"`
 	DimensionAttributes              []string                                             `json:"dimension_attributes"`
@@ -554,7 +554,7 @@ type ConnectorConfigResponse struct {
 	AccessToken                      string                                               `json:"access_token"`
 	ViewThroughAttributionWindowSize string                                               `json:"view_through_attribution_window_size"`
 	PostClickAttributionWindowSize   string                                               `json:"post_click_attribution_window_size"`
-	UseAPIKeys                       string                                               `json:"use_api_keys"`
+	UseAPIKeys                       *bool                                                `json:"use_api_keys"`
 	APIKeys                          []string                                             `json:"api_keys"`
 	Endpoint                         string                                               `json:"endpoint"`
 	Identity                         string                                               `json:"identity"`
@@ -1428,7 +1428,7 @@ func (cc *ConnectorConfig) User(value string) *ConnectorConfig {
 	return cc
 }
 
-func (cc *ConnectorConfig) IsSecure(value string) *ConnectorConfig {
+func (cc *ConnectorConfig) IsSecure(value bool) *ConnectorConfig {
 	cc.isSecure = &value
 	return cc
 }
@@ -1553,7 +1553,7 @@ func (cc *ConnectorConfig) PostClickAttributionWindowSize(value string) *Connect
 	return cc
 }
 
-func (cc *ConnectorConfig) UseAPIKeys(value string) *ConnectorConfig {
+func (cc *ConnectorConfig) UseAPIKeys(value bool) *ConnectorConfig {
 	cc.useAPIKeys = &value
 	return cc
 }
