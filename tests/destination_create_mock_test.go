@@ -53,6 +53,7 @@ const (
 	ROLE                     = "role"
 	PASSPHRASE               = "passphrase"
 	IS_PRIVATE_KEY_ENCRYPTED = true
+	CATALOG                  = "catalog"
 )
 
 func TestNewDestinationCreateFullMappingMock(t *testing.T) {
@@ -140,7 +141,8 @@ func prepareDestinationResponse() string {
 					"cluster_region":           "%v",
 					"role":                     "%v",
 					"is_private_key_encrypted": "%v",
-					"passphrase":               "%v"
+					"passphrase":               "%v",
+					"catalog": "%v"
 				}
 			}
 		}`,
@@ -182,6 +184,7 @@ func prepareDestinationResponse() string {
 		ROLE,
 		IS_PRIVATE_KEY_ENCRYPTED,
 		PASSPHRASE,
+		CATALOG,
 	)
 }
 
@@ -213,6 +216,7 @@ func prepareConfig() *fivetran.DestinationConfig {
 	config.Role(ROLE)
 	config.IsPrivateKeyEncrypted(IS_PRIVATE_KEY_ENCRYPTED)
 	config.Passphrase(PASSPHRASE)
+	config.Catalog(CATALOG)
 	return config
 }
 
@@ -256,6 +260,7 @@ func assertRequest(t *testing.T, request map[string]interface{}) {
 	assertKey(t, "role", config, ROLE)
 	assertKey(t, "is_private_key_encrypted", config, IS_PRIVATE_KEY_ENCRYPTED)
 	assertKey(t, "passphrase", config, PASSPHRASE)
+	assertKey(t, "catalog", config, CATALOG)
 }
 
 func assertResponse(t *testing.T, response fivetran.DestinationCreateResponse) {
@@ -304,4 +309,5 @@ func assertResponse(t *testing.T, response fivetran.DestinationCreateResponse) {
 	assertEqual(t, response.Data.Config.Role, ROLE)
 	assertEqual(t, response.Data.Config.IsPrivateKeyEncrypted, boolToStr(IS_PRIVATE_KEY_ENCRYPTED))
 	assertEqual(t, response.Data.Config.Passphrase, PASSPHRASE)
+	assertEqual(t, response.Data.Config.Catalog, CATALOG)
 }

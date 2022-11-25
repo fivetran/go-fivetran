@@ -15,6 +15,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `ConnectorConfigResponse.SkipBefore` wrong type `int` -> `*int`
 - `ConnectorConfigResponse.SkipAfter` wrong type `int` -> `*int`
 
+## Added
+- `DestinationConfigResponse.Catalog` missing field added (Databricks)
+
 ## [0.6.9](https://github.com/fivetran/go-fivetran/compare/v0.6.8...v0.6.9) - 2022-10-04
 
 ## Fixed

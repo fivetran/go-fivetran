@@ -30,6 +30,7 @@ type DestinationConfig struct {
 	role                  *string
 	isPrivateKeyEncrypted *bool
 	passphrase            *string
+	catalog               *string
 }
 
 type destinationConfigRequest struct {
@@ -60,6 +61,7 @@ type destinationConfigRequest struct {
 	Role                  *string `json:"role,omitempty"`
 	IsPrivateKeyEncrypted *bool   `json:"is_private_key_encrypted,omitempty"`
 	Passphrase            *string `json:"passphrase,omitempty"`
+	Catalog               *string `json:"catalog,omitempty"`
 }
 
 type DestinationConfigResponse struct {
@@ -92,6 +94,7 @@ type DestinationConfigResponse struct {
 	Role                  string `json:"role"`
 	IsPrivateKeyEncrypted string `json:"is_private_key_encrypted"`
 	Passphrase            string `json:"passphrase"`
+	Catalog               string `json:"catalog"`
 }
 
 func NewDestinationConfig() *DestinationConfig {
@@ -127,6 +130,7 @@ func (dc *DestinationConfig) request() *destinationConfigRequest {
 		Role:                  dc.role,
 		IsPrivateKeyEncrypted: dc.isPrivateKeyEncrypted,
 		Passphrase:            dc.passphrase,
+		Catalog:               dc.catalog,
 	}
 }
 
@@ -262,5 +266,10 @@ func (dc *DestinationConfig) IsPrivateKeyEncrypted(value bool) *DestinationConfi
 
 func (dc *DestinationConfig) Passphrase(value string) *DestinationConfig {
 	dc.passphrase = &value
+	return dc
+}
+
+func (dc *DestinationConfig) Catalog(value string) *DestinationConfig {
+	dc.catalog = &value
 	return dc
 }
