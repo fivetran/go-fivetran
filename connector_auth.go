@@ -20,6 +20,14 @@ func NewConnectorAuth() *ConnectorAuth {
 	return &ConnectorAuth{}
 }
 
+func (ca *ConnectorAuth) merge(customAuth *map[string]interface{}) (*map[string]interface{}, error) {
+	err := MergeIntoMap(ca.request(), customAuth)
+	if err != nil {
+		return nil, err
+	}
+	return customAuth, nil
+}
+
 func (ca *ConnectorAuth) request() *connectorAuthRequest {
 	var clientAccess *connectorAuthClientAccessRequest
 	if ca.clientAccess != nil {

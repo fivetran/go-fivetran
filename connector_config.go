@@ -35,6 +35,7 @@ type ConnectorConfig struct {
 	sFTPUser                         *string
 	sFTPPassword                     *string
 	sFTPIsKeyPair                    *bool
+	isKeypair                        *bool
 	advertisables                    []string
 	reportType                       *string
 	dimensions                       []string
@@ -56,6 +57,7 @@ type ConnectorConfig struct {
 	escapeChar                       *string
 	skipBefore                       *int
 	skipAfter                        *int
+	secretsList                      []*FunctionSecret
 	projectCredentials               []*ConnectorConfigProjectCredentials
 	authMode                         *string
 	username                         *string
@@ -207,6 +209,7 @@ type ConnectorConfig struct {
 	euRegion                         *bool
 	tokenKey                         *string
 	tokenSecret                      *string
+	shareURL                         *string
 }
 
 type connectorConfigRequest struct {
@@ -242,6 +245,7 @@ type connectorConfigRequest struct {
 	SFTPUser                         *string                                              `json:"sftp_user,omitempty"`
 	SFTPPassword                     *string                                              `json:"sftp_password,omitempty"`
 	SFTPIsKeyPair                    *bool                                                `json:"sftp_is_key_pair,omitempty"`
+	IsKeypair                        *bool                                                `json:"is_keypair,omitempty"`
 	Advertisables                    []string                                             `json:"advertisables,omitempty"`
 	ReportType                       *string                                              `json:"report_type,omitempty"`
 	Dimensions                       []string                                             `json:"dimensions,omitempty"`
@@ -263,6 +267,7 @@ type connectorConfigRequest struct {
 	EscapeChar                       *string                                              `json:"escape_char,omitempty"`
 	SkipBefore                       *int                                                 `json:"skip_before,omitempty"`
 	SkipAfter                        *int                                                 `json:"skip_after,omitempty"`
+	SecretsList                      []*functionSecretRequest                             `json:"secrets_list,omitempty"`
 	ProjectCredentials               []*connectorConfigProjectCredentialsRequest          `json:"project_credentials,omitempty"`
 	AuthMode                         *string                                              `json:"auth_mode,omitempty"`
 	Username                         *string                                              `json:"username,omitempty"`
@@ -414,6 +419,7 @@ type connectorConfigRequest struct {
 	EuRegion                         *bool                                                `json:"eu_region,omitempty"`
 	TokenKey                         *string                                              `json:"token_key,omitempty"`
 	TokenSecret                      *string                                              `json:"token_secret,omitempty"`
+	ShareURL                         *string                                              `json:"share_url,omitempty"`
 }
 
 type ConnectorConfigResponse struct {
@@ -449,6 +455,7 @@ type ConnectorConfigResponse struct {
 	SFTPUser                         string                                               `json:"sftp_user"`
 	SFTPPassword                     string                                               `json:"sftp_password"`
 	SFTPIsKeyPair                    *bool                                                `json:"sftp_is_key_pair"`
+	IsKeypair                        *bool                                                `json:"is_keypair"`
 	Advertisables                    []string                                             `json:"advertisables"`
 	ReportType                       string                                               `json:"report_type"`
 	Dimensions                       []string                                             `json:"dimensions"`
@@ -470,6 +477,7 @@ type ConnectorConfigResponse struct {
 	EscapeChar                       string                                               `json:"escape_char"`
 	SkipBefore                       *int                                                 `json:"skip_before"`
 	SkipAfter                        *int                                                 `json:"skip_after"`
+	SecretsList                      []FunctionSecretResponse                             `json:"secrets_list"`
 	ProjectCredentials               []ConnectorConfigProjectCredentialsResponse          `json:"project_credentials"`
 	AuthMode                         string                                               `json:"auth_mode"`
 	Username                         string                                               `json:"username"`
@@ -625,10 +633,19 @@ type ConnectorConfigResponse struct {
 	EuRegion                         *bool                                                `json:"eu_region"`
 	TokenKey                         string                                               `json:"token_key"`
 	TokenSecret                      string                                               `json:"token_secret"`
+	ShareURL                         string                                               `json:"share_url"`
 }
 
 func NewConnectorConfig() *ConnectorConfig {
 	return &ConnectorConfig{}
+}
+
+func (cc *ConnectorConfig) merge(customConfig *map[string]interface{}) (*map[string]interface{}, error) {
+	err := MergeIntoMap(cc.request(), customConfig)
+	if err != nil {
+		return nil, err
+	}
+	return customConfig, nil
 }
 
 func (cc *ConnectorConfig) request() *connectorConfigRequest {
@@ -657,6 +674,13 @@ func (cc *ConnectorConfig) request() *connectorConfigRequest {
 	if cc.adobeAnalyticsConfigurations != nil {
 		for _, r := range cc.adobeAnalyticsConfigurations {
 			adobeAnalyticsConfigurations = append(adobeAnalyticsConfigurations, r.request())
+		}
+	}
+
+	var functionSecrets []*functionSecretRequest
+	if cc.secretsList != nil {
+		for _, s := range cc.secretsList {
+			functionSecrets = append(functionSecrets, s.request())
 		}
 	}
 
@@ -693,6 +717,7 @@ func (cc *ConnectorConfig) request() *connectorConfigRequest {
 		SFTPUser:                         cc.sFTPUser,
 		SFTPPassword:                     cc.sFTPPassword,
 		SFTPIsKeyPair:                    cc.sFTPIsKeyPair,
+		IsKeypair:                        cc.isKeypair,
 		Advertisables:                    cc.advertisables,
 		ReportType:                       cc.reportType,
 		Dimensions:                       cc.dimensions,
@@ -714,6 +739,7 @@ func (cc *ConnectorConfig) request() *connectorConfigRequest {
 		EscapeChar:                       cc.escapeChar,
 		SkipBefore:                       cc.skipBefore,
 		SkipAfter:                        cc.skipAfter,
+		SecretsList:                      functionSecrets,
 		ProjectCredentials:               projectCredentials,
 		AuthMode:                         cc.authMode,
 		Username:                         cc.username,
@@ -865,6 +891,7 @@ func (cc *ConnectorConfig) request() *connectorConfigRequest {
 		EuRegion:                         cc.euRegion,
 		TokenKey:                         cc.tokenKey,
 		TokenSecret:                      cc.tokenSecret,
+		ShareURL:                         cc.shareURL,
 	}
 }
 
@@ -1023,6 +1050,11 @@ func (cc *ConnectorConfig) SFTPIsKeyPair(value bool) *ConnectorConfig {
 	return cc
 }
 
+func (cc *ConnectorConfig) IsKeypair(value bool) *ConnectorConfig {
+	cc.isKeypair = &value
+	return cc
+}
+
 func (cc *ConnectorConfig) Advertisables(value []string) *ConnectorConfig {
 	cc.advertisables = value
 	return cc
@@ -1125,6 +1157,11 @@ func (cc *ConnectorConfig) SkipBefore(value int) *ConnectorConfig {
 
 func (cc *ConnectorConfig) SkipAfter(value int) *ConnectorConfig {
 	cc.skipAfter = &value
+	return cc
+}
+
+func (cc *ConnectorConfig) SecretsList(value []*FunctionSecret) *ConnectorConfig {
+	cc.secretsList = value
 	return cc
 }
 
@@ -1885,5 +1922,10 @@ func (cc *ConnectorConfig) TokenKey(value string) *ConnectorConfig {
 
 func (cc *ConnectorConfig) TokenSecret(value string) *ConnectorConfig {
 	cc.tokenSecret = &value
+	return cc
+}
+
+func (cc *ConnectorConfig) ShareURL(value string) *ConnectorConfig {
+	cc.shareURL = &value
 	return cc
 }
