@@ -7,7 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased](https://github.com/fivetran/go-fivetran/compare/v0.6.10...HEAD)
 
-## [0.6.9](https://github.com/fivetran/go-fivetran/compare/v0.6.9...v0.6.10) - 2022-11-24
+## [0.7.0](https://github.com/fivetran/go-fivetran/compare/v0.6.10...v0.7.0) - 2022-12-14
+
+## Added
+- `ConnectorConfig.ShareUrl` missing field added
+- `ConnectorConfig.IsKeypair` missing field added
+- `ConnectorConfig.SecretsList` missing field added
+- New approach that allows to pass connector configuration as raw map[string]interface{} 
+    - `Connector<Operation>Service.ConfigCustom(config map[string]interface{})` method
+    - `Connector<Operation>Service.AuthCustom(auth map[string]interface{})` method
+    - `ConnectorCustom<Operation>Response` types 
+    - `NewConnector<Operation>Service.DoCustom()` methods
+
+## [0.6.10](https://github.com/fivetran/go-fivetran/compare/v0.6.9...v0.6.10) - 2022-11-24
 
 ## Fixed
 - `ConnectorConfigResponse.UseAPIKeys` wrong type `string` -> `bool`
