@@ -70,6 +70,22 @@ func isEmpty(actual interface{}) bool {
 	return isEmpty
 }
 
+func assertIsNil(t *testing.T, value interface{}) {
+	t.Helper()
+
+	if value != nil {
+		printError(t, value, "nil")
+	}
+}
+
+func assertIsNotNil(t *testing.T, value interface{}) {
+	t.Helper()
+
+	if value == nil {
+		printError(t, value, "non-nil value")
+	}
+}
+
 func assertNotEmpty(t *testing.T, actual interface{}) {
 	t.Helper()
 
@@ -92,6 +108,31 @@ func assertKey(t *testing.T, key string, requestPart map[string]interface{}, exp
 	v, ok := requestPart[key]
 	assertEqual(t, ok, true)
 	assertEqual(t, v, expectedValue)
+}
+
+func assertHasKey(t *testing.T, source map[string]interface{}, key string) {
+	t.Helper()
+	_, ok := source[key]
+	if !ok {
+		t.Errorf("Expected Key not found in map: %s", key)
+	}
+}
+
+func assertHasNoKey(t *testing.T, source map[string]interface{}, key string) {
+	t.Helper()
+	_, ok := source[key]
+	if ok {
+		t.Errorf("Unexpected Key found in map: %s", key)
+	}
+}
+
+func assertKeyValue(t *testing.T, source map[string]interface{}, key string, expected interface{}) {
+	t.Helper()
+	assertHasKey(t, source, key)
+	actual := source[key]
+	if !reflect.DeepEqual(actual, expected) {
+		printError(t, actual, expected)
+	}
 }
 
 func boolToStr(b bool) string {
