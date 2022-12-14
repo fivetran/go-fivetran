@@ -280,12 +280,12 @@ func (s *ConnectorCreateService) do(ctx context.Context, req, response any) erro
 		return err
 	}
 
-	if respStatus != expectedStatus {
-		err := fmt.Errorf("status code: %v; expected: %v", respStatus, expectedStatus)
+	if err := json.Unmarshal(respBody, &response); err != nil {
 		return err
 	}
 
-	if err := json.Unmarshal(respBody, &response); err != nil {
+	if respStatus != expectedStatus {
+		err := fmt.Errorf("status code: %v; expected: %v", respStatus, expectedStatus)
 		return err
 	}
 

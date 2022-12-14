@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased](https://github.com/fivetran/go-fivetran/compare/v0.6.10...HEAD)
 
+## [0.7.1](https://github.com/fivetran/go-fivetran/compare/v0.7.0...v0.7.1) - 2022-12-14
+
+## Fixed
+- Connector response should be deserialized even if response code doesn't match expected to provide exact error that API returned.
+
 ## [0.7.0](https://github.com/fivetran/go-fivetran/compare/v0.6.10...v0.7.0) - 2022-12-14
 
 ## Added
