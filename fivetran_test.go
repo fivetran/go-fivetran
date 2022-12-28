@@ -13,20 +13,44 @@ import (
 
 var Client *fivetran.Client
 
-var apiKey string
-var apiSecret string
 var CertificateHash string
 var EncodedCertificate string
-var PredefinedGroupId string = "cam_monetize"
-var PredefinedUserId string = "spoiled_ferric"
+
+var PredefinedGroupId string
+var PredefinedUserId string
+var PredefinedUserEmail string
+var PredefinedUserGivenName string
+var PredefinedUserFamilyName string
+var PredefinedUserPhone string
 
 func init() {
-	apiKey = os.Getenv("FIVETRAN_APIKEY")
-	apiSecret = os.Getenv("FIVETRAN_APISECRET")
-	CertificateHash = os.Getenv("FIVETRAN_TEST_CERTIFICATE_HASH")
-	EncodedCertificate = os.Getenv("FIVETRAN_TEST_CERTIFICATE")
+	var apiUrl string
+	var apiKey string
+	var apiSecret string
+
+	valuesToLoad := map[string]*string{
+		"FIVETRAN_API_URL":               &apiUrl,
+		"FIVETRAN_APIKEY":                &apiKey,
+		"FIVETRAN_APISECRET":             &apiSecret,
+		"FIVETRAN_TEST_CERTIFICATE_HASH": &CertificateHash,
+		"FIVETRAN_TEST_CERTIFICATE":      &EncodedCertificate,
+		"FIVETRAN_GROUP_ID":              &PredefinedGroupId,
+		"FIVETRAN_USER_ID":               &PredefinedUserId,
+		"FIVETRAN_USER_EMAIL":            &PredefinedUserEmail,
+		"FIVETRAN_USER_GIVEN_NAME":       &PredefinedUserGivenName,
+		"FIVETRAN_USER_FAMILY_NAME":      &PredefinedUserFamilyName,
+		"FIVETRAN_USER_PHONE":            &PredefinedUserPhone,
+	}
+
+	for name, value := range valuesToLoad {
+		*value = os.Getenv(name)
+		if *value == "" {
+			log.Fatalf("Environment variable %s is not set!\n", name)
+		}
+	}
+
 	Client = fivetran.New(apiKey, apiSecret)
-	Client.BaseURL("https://api.fivetran.com/v1")
+	Client.BaseURL(apiUrl)
 	if isPredefinedUserExist() {
 		cleanupAccount()
 	} else {

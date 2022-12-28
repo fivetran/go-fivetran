@@ -22,9 +22,16 @@ jobs:
       run: go build -v ./...
 
     - name: Test
-      env: 
+      env:
+        FIVETRAN_API_URL : "https://api-staging.fivetran.com/v1"
         FIVETRAN_APIKEY : ${{ secrets.FIVETRAN_APIKEY }}
         FIVETRAN_APISECRET : ${{ secrets.FIVETRAN_APISECRET }}
         FIVETRAN_TEST_CERTIFICATE_HASH : ${{ secrets.FIVETRAN_TEST_CERTIFICATE_HASH }}
         FIVETRAN_TEST_CERTIFICATE : ${{ secrets.FIVETRAN_TEST_CERTIFICATE }}
+        FIVETRAN_GROUP_ID : "sepulchre_settlement"
+        FIVETRAN_USER_ID : "recoup_befell"
+        FIVETRAN_USER_EMAIL : "dev-markov+go-fivetran-sdk@fivetran.com"
+        FIVETRAN_USER_GIVEN_NAME : "Go"
+        FIVETRAN_USER_FAMILY_NAME : "5Tran"
+        FIVETRAN_USER_PHONE : "+1234567890"
       run: go test -v ./...
