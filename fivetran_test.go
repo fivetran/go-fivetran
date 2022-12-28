@@ -13,20 +13,45 @@ import (
 
 var Client *fivetran.Client
 
-var apiKey string
-var apiSecret string
 var CertificateHash string
 var EncodedCertificate string
-var PredefinedGroupId string = "cam_monetize"
-var PredefinedUserId string = "spoiled_ferric"
+
+var PredefinedGroupId string
+var PredefinedUserId string
+
+// Tests should be re-written to not use a pre-defined user and group
+const (
+	PredefinedGroupName      string = "GoSdkTesting"
+	PredefinedUserEmail      string = "dev-markov+go-fivetran-sdk@fivetran.com"
+	PredefinedUserGivenName  string = "Go"
+	PredefinedUserFamilyName string = "5Tran"
+	PredefinedUserPhone      string = "+1234567890"
+)
 
 func init() {
-	apiKey = os.Getenv("FIVETRAN_APIKEY")
-	apiSecret = os.Getenv("FIVETRAN_APISECRET")
-	CertificateHash = os.Getenv("FIVETRAN_TEST_CERTIFICATE_HASH")
-	EncodedCertificate = os.Getenv("FIVETRAN_TEST_CERTIFICATE")
+	var apiUrl string
+	var apiKey string
+	var apiSecret string
+
+	valuesToLoad := map[string]*string{
+		"FIVETRAN_API_URL":               &apiUrl,
+		"FIVETRAN_APIKEY":                &apiKey,
+		"FIVETRAN_APISECRET":             &apiSecret,
+		"FIVETRAN_TEST_CERTIFICATE_HASH": &CertificateHash,
+		"FIVETRAN_TEST_CERTIFICATE":      &EncodedCertificate,
+		"FIVETRAN_GROUP_ID":              &PredefinedGroupId,
+		"FIVETRAN_USER_ID":               &PredefinedUserId,
+	}
+
+	for name, value := range valuesToLoad {
+		*value = os.Getenv(name)
+		if *value == "" {
+			log.Fatalf("Environment variable %s is not set!\n", name)
+		}
+	}
+
 	Client = fivetran.New(apiKey, apiSecret)
-	Client.BaseURL("https://api.fivetran.com/v1")
+	Client.BaseURL(apiUrl)
 	if isPredefinedUserExist() {
 		cleanupAccount()
 	} else {

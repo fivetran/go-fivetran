@@ -16,7 +16,7 @@ func TestNewGroupsListE2E(t *testing.T) {
 	AssertHasLength(t, result.Data.Items, 1)
 	AssertEmpty(t, result.Message)
 	AssertEqual(t, result.Data.Items[0].ID, PredefinedGroupId)
-	AssertEqual(t, result.Data.Items[0].Name, "Warehouse")
+	AssertEqual(t, result.Data.Items[0].Name, PredefinedGroupName)
 	AssertEqual(t, result.Data.Items[0].CreatedAt.IsZero(), false)
 	AssertEmpty(t, result.Data.NextCursor)
 }
