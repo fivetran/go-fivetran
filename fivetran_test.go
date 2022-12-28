@@ -17,12 +17,14 @@ var CertificateHash string
 var EncodedCertificate string
 
 var PredefinedGroupId string
-var PredefinedGroupName string
 var PredefinedUserId string
-var PredefinedUserEmail string
-var PredefinedUserGivenName string
-var PredefinedUserFamilyName string
-var PredefinedUserPhone string
+
+// Tests should be re-written to not use a pre-defined user and group
+var PredefinedGroupName string = "GoSdkTesting"
+var PredefinedUserEmail string = "dev-markov+go-fivetran-sdk@fivetran.com"
+var PredefinedUserGivenName string = "Go"
+var PredefinedUserFamilyName string = "5Tran"
+var PredefinedUserPhone string = "+1234567890"
 
 func init() {
 	var apiUrl string
@@ -36,12 +38,7 @@ func init() {
 		"FIVETRAN_TEST_CERTIFICATE_HASH": &CertificateHash,
 		"FIVETRAN_TEST_CERTIFICATE":      &EncodedCertificate,
 		"FIVETRAN_GROUP_ID":              &PredefinedGroupId,
-		"FIVETRAN_GROUP_NAME":            &PredefinedGroupName,
 		"FIVETRAN_USER_ID":               &PredefinedUserId,
-		"FIVETRAN_USER_EMAIL":            &PredefinedUserEmail,
-		"FIVETRAN_USER_GIVEN_NAME":       &PredefinedUserGivenName,
-		"FIVETRAN_USER_FAMILY_NAME":      &PredefinedUserFamilyName,
-		"FIVETRAN_USER_PHONE":            &PredefinedUserPhone,
 	}
 
 	for name, value := range valuesToLoad {
