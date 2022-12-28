@@ -20,11 +20,13 @@ var PredefinedGroupId string
 var PredefinedUserId string
 
 // Tests should be re-written to not use a pre-defined user and group
-var PredefinedGroupName string = "GoSdkTesting"
-var PredefinedUserEmail string = "dev-markov+go-fivetran-sdk@fivetran.com"
-var PredefinedUserGivenName string = "Go"
-var PredefinedUserFamilyName string = "5Tran"
-var PredefinedUserPhone string = "+1234567890"
+const (
+	PredefinedGroupName      string = "GoSdkTesting"
+	PredefinedUserEmail      string = "dev-markov+go-fivetran-sdk@fivetran.com"
+	PredefinedUserGivenName  string = "Go"
+	PredefinedUserFamilyName string = "5Tran"
+	PredefinedUserPhone      string = "+1234567890"
+)
 
 func init() {
 	var apiUrl string
