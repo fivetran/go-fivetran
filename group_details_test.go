@@ -14,6 +14,6 @@ func TestNewGroupDetailsE2E(t *testing.T) {
 
 	AssertEqual(t, result.Code, "Success")
 	AssertEqual(t, result.Data.ID, PredefinedGroupId)
-	AssertEqual(t, result.Data.Name, "Warehouse")
+	AssertEqual(t, result.Data.Name, PredefinedGroupName)
 	AssertEqual(t, result.Data.CreatedAt.IsZero(), false)
 }

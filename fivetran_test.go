@@ -17,6 +17,7 @@ var CertificateHash string
 var EncodedCertificate string
 
 var PredefinedGroupId string
+var PredefinedGroupName string
 var PredefinedUserId string
 var PredefinedUserEmail string
 var PredefinedUserGivenName string
@@ -35,6 +36,7 @@ func init() {
 		"FIVETRAN_TEST_CERTIFICATE_HASH": &CertificateHash,
 		"FIVETRAN_TEST_CERTIFICATE":      &EncodedCertificate,
 		"FIVETRAN_GROUP_ID":              &PredefinedGroupId,
+		"FIVETRAN_GROUP_NAME":            &PredefinedGroupName,
 		"FIVETRAN_USER_ID":               &PredefinedUserId,
 		"FIVETRAN_USER_EMAIL":            &PredefinedUserEmail,
 		"FIVETRAN_USER_GIVEN_NAME":       &PredefinedUserGivenName,
