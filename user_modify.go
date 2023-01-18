@@ -10,13 +10,15 @@ import (
 // UserModifyService implements the User Management, Modify a User API.
 // Ref. https://fivetran.com/docs/rest-api/users#modifyauser
 type UserModifyService struct {
-	c          *Client
-	userID     *string
-	givenName  *string
-	familyName *string
-	phone      *string
-	picture    *string
-	role       *string
+	c            *Client
+	userID       *string
+	givenName    *string
+	familyName   *string
+	phone        *string
+	picture      *string
+	role         *string
+	clearPicture *bool
+	clearPhone   *bool
 }
 
 type userModifyRequest struct {
@@ -79,8 +81,20 @@ func (s *UserModifyService) Phone(value string) *UserModifyService {
 	return s
 }
 
+func (s *UserModifyService) ClearPhone() *UserModifyService {
+	value := true
+	s.clearPhone = &value
+	return s
+}
+
 func (s *UserModifyService) Picture(value string) *UserModifyService {
 	s.picture = &value
+	return s
+}
+
+func (s *UserModifyService) ClearPicture() *UserModifyService {
+	value := true
+	s.clearPicture = &value
 	return s
 }
 
@@ -105,6 +119,21 @@ func (s *UserModifyService) Do(ctx context.Context) (UserModifyResponse, error) 
 	reqBody, err := json.Marshal(s.request())
 	if err != nil {
 		return response, err
+	}
+
+	if s.clearPhone != nil && s.clearPicture != nil {
+		var bodyMap map[string]interface{}
+		json.Unmarshal(reqBody, &bodyMap)
+		if s.clearPhone != nil && *s.clearPhone {
+			bodyMap["phone"] = nil
+		}
+		if s.clearPicture != nil && *s.clearPicture {
+			bodyMap["picture"] = nil
+		}
+		reqBody, err = json.Marshal(bodyMap)
+		if err != nil {
+			return response, err
+		}
 	}
 
 	r := request{
