@@ -3,6 +3,7 @@ package fivetran
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"time"
 )
@@ -121,13 +122,19 @@ func (s *UserModifyService) Do(ctx context.Context) (UserModifyResponse, error) 
 		return response, err
 	}
 
-	if s.clearPhone != nil && s.clearPicture != nil {
+	if s.clearPhone != nil || s.clearPicture != nil {
 		var bodyMap map[string]interface{}
 		json.Unmarshal(reqBody, &bodyMap)
 		if s.clearPhone != nil && *s.clearPhone {
+			if s.phone != nil {
+				return response, errors.New("can't 'set phone' and 'clear phone' in one request")
+			}
 			bodyMap["phone"] = nil
 		}
 		if s.clearPicture != nil && *s.clearPicture {
+			if s.picture != nil {
+				return response, errors.New("can't 'set picture' and 'clear picture' in one request")
+			}
 			bodyMap["picture"] = nil
 		}
 		reqBody, err = json.Marshal(bodyMap)
