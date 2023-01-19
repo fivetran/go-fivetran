@@ -18,16 +18,16 @@ type UserModifyService struct {
 	phone        *string
 	picture      *string
 	role         *string
-	clearPicture *bool
-	clearPhone   *bool
+	clearPicture bool
+	clearPhone   bool
 }
 
 type userModifyRequest struct {
-	GivenName  *string `json:"given_name,omitempty"`
-	FamilyName *string `json:"family_name,omitempty"`
-	Phone      *string `json:"phone,omitempty"`
-	Picture    *string `json:"picture,omitempty"`
-	Role       *string `json:"role,omitempty"`
+	GivenName  *string         `json:"given_name,omitempty"`
+	FamilyName *string         `json:"family_name,omitempty"`
+	Phone      *nullableString `json:"phone,omitempty"`
+	Picture    *nullableString `json:"picture,omitempty"`
+	Role       *string         `json:"role,omitempty"`
 }
 
 type UserModifyResponse struct {
@@ -48,6 +48,24 @@ type UserModifyResponse struct {
 	} `json:"data"`
 }
 
+type nullableString struct {
+	value *string
+}
+
+func newNullableString(s *string, clear bool) *nullableString {
+	if s == nil && !clear {
+		return nil
+	}
+
+	return &nullableString{
+		value: s,
+	}
+}
+
+func (n *nullableString) MarshalJSON() ([]byte, error) {
+	return json.Marshal(n.value)
+}
+
 func (c *Client) NewUserModify() *UserModifyService {
 	return &UserModifyService{c: c}
 }
@@ -56,8 +74,8 @@ func (s *UserModifyService) request() *userModifyRequest {
 	return &userModifyRequest{
 		GivenName:  s.givenName,
 		FamilyName: s.familyName,
-		Phone:      s.phone,
-		Picture:    s.picture,
+		Phone:      newNullableString(s.phone, s.clearPhone),
+		Picture:    newNullableString(s.picture, s.clearPicture),
 		Role:       s.role,
 	}
 }
@@ -83,8 +101,7 @@ func (s *UserModifyService) Phone(value string) *UserModifyService {
 }
 
 func (s *UserModifyService) ClearPhone() *UserModifyService {
-	value := true
-	s.clearPhone = &value
+	s.clearPhone = true
 	return s
 }
 
@@ -94,8 +111,7 @@ func (s *UserModifyService) Picture(value string) *UserModifyService {
 }
 
 func (s *UserModifyService) ClearPicture() *UserModifyService {
-	value := true
-	s.clearPicture = &value
+	s.clearPicture = true
 	return s
 }
 
@@ -111,37 +127,23 @@ func (s *UserModifyService) Do(ctx context.Context) (UserModifyResponse, error) 
 		return response, fmt.Errorf("missing required UserID")
 	}
 
-	url := fmt.Sprintf("%v/users/%v", s.c.baseURL, *s.userID)
-	expectedStatus := 200
+	if s.clearPhone && s.phone != nil {
+		return response, errors.New("can't 'set phone' and 'clear phone' in one request")
+	}
 
-	headers := s.c.commonHeaders()
-	headers["Content-Type"] = "application/json"
+	if s.clearPicture && s.picture != nil {
+		return response, errors.New("can't 'set picture' and 'clear picture' in one request")
+	}
 
 	reqBody, err := json.Marshal(s.request())
 	if err != nil {
 		return response, err
 	}
 
-	if s.clearPhone != nil || s.clearPicture != nil {
-		var bodyMap map[string]interface{}
-		json.Unmarshal(reqBody, &bodyMap)
-		if s.clearPhone != nil && *s.clearPhone {
-			if s.phone != nil {
-				return response, errors.New("can't 'set phone' and 'clear phone' in one request")
-			}
-			bodyMap["phone"] = nil
-		}
-		if s.clearPicture != nil && *s.clearPicture {
-			if s.picture != nil {
-				return response, errors.New("can't 'set picture' and 'clear picture' in one request")
-			}
-			bodyMap["picture"] = nil
-		}
-		reqBody, err = json.Marshal(bodyMap)
-		if err != nil {
-			return response, err
-		}
-	}
+	url := fmt.Sprintf("%v/users/%v", s.c.baseURL, *s.userID)
+	expectedStatus := 200
+	headers := s.c.commonHeaders()
+	headers["Content-Type"] = "application/json"
 
 	r := request{
 		method:  "PATCH",

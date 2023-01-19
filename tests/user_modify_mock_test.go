@@ -8,6 +8,39 @@ import (
 	"github.com/fivetran/go-fivetran/tests/mock"
 )
 
+func TestUserModifyMock(t *testing.T) {
+	ftClient, mockClient := CreateTestClient()
+	handler := mockClient.When(http.MethodPatch, "/v1/users/user_id").ThenCall(
+
+		func(req *http.Request) (*http.Response, error) {
+			body := requestBodyToJson(t, req)
+			assertFullUserUpdateRequest(t, body)
+			response := mock.NewResponse(req, http.StatusOK, prepareUserUpdateResponse())
+			return response, nil
+		})
+
+	// act
+	response, err := ftClient.NewUserModify().
+		UserID("user_id").
+		GivenName("given_name_value").
+		FamilyName("family_name_value").
+		Phone("12345").
+		Picture("picture_link").
+		Role("some_role").
+		Do(context.Background())
+
+	// assert
+	if err != nil {
+		t.Logf("%+v\n", response)
+		t.Error(err)
+	}
+
+	interactions := mockClient.Interactions()
+	assertEqual(t, len(interactions), 1)
+	assertEqual(t, interactions[0].Handler, handler)
+	assertEqual(t, handler.Interactions, 1)
+}
+
 func TestUserClearPhoneSetPhoneMock(t *testing.T) {
 	ftClient, _ := CreateTestClient()
 
@@ -89,9 +122,15 @@ func prepareUserUpdateResponse() string {
 	}`
 }
 
+func assertFullUserUpdateRequest(t *testing.T, request map[string]interface{}) {
+	assertKeyValue(t, request, "given_name", "given_name_value")
+	assertKeyValue(t, request, "family_name", "family_name_value")
+	assertKeyValue(t, request, "phone", "12345")
+	assertKeyValue(t, request, "picture", "picture_link")
+	assertKeyValue(t, request, "role", "some_role")
+}
+
 func assertUserUpdateRequest(t *testing.T, request map[string]interface{}) {
-	assertHasKey(t, request, "phone")
 	assertKeyValue(t, request, "phone", nil)
-	assertHasKey(t, request, "picture")
 	assertKeyValue(t, request, "picture", nil)
 }
