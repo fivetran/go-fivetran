@@ -3,6 +3,7 @@ package fivetran
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"time"
 )
@@ -10,21 +11,23 @@ import (
 // UserModifyService implements the User Management, Modify a User API.
 // Ref. https://fivetran.com/docs/rest-api/users#modifyauser
 type UserModifyService struct {
-	c          *Client
-	userID     *string
-	givenName  *string
-	familyName *string
-	phone      *string
-	picture    *string
-	role       *string
+	c            *Client
+	userID       *string
+	givenName    *string
+	familyName   *string
+	phone        *string
+	picture      *string
+	role         *string
+	clearPicture bool
+	clearPhone   bool
 }
 
 type userModifyRequest struct {
-	GivenName  *string `json:"given_name,omitempty"`
-	FamilyName *string `json:"family_name,omitempty"`
-	Phone      *string `json:"phone,omitempty"`
-	Picture    *string `json:"picture,omitempty"`
-	Role       *string `json:"role,omitempty"`
+	GivenName  *string         `json:"given_name,omitempty"`
+	FamilyName *string         `json:"family_name,omitempty"`
+	Phone      *nullableString `json:"phone,omitempty"`
+	Picture    *nullableString `json:"picture,omitempty"`
+	Role       *string         `json:"role,omitempty"`
 }
 
 type UserModifyResponse struct {
@@ -53,8 +56,8 @@ func (s *UserModifyService) request() *userModifyRequest {
 	return &userModifyRequest{
 		GivenName:  s.givenName,
 		FamilyName: s.familyName,
-		Phone:      s.phone,
-		Picture:    s.picture,
+		Phone:      newNullableString(s.phone, s.clearPhone),
+		Picture:    newNullableString(s.picture, s.clearPicture),
 		Role:       s.role,
 	}
 }
@@ -79,8 +82,18 @@ func (s *UserModifyService) Phone(value string) *UserModifyService {
 	return s
 }
 
+func (s *UserModifyService) ClearPhone() *UserModifyService {
+	s.clearPhone = true
+	return s
+}
+
 func (s *UserModifyService) Picture(value string) *UserModifyService {
 	s.picture = &value
+	return s
+}
+
+func (s *UserModifyService) ClearPicture() *UserModifyService {
+	s.clearPicture = true
 	return s
 }
 
@@ -96,16 +109,23 @@ func (s *UserModifyService) Do(ctx context.Context) (UserModifyResponse, error) 
 		return response, fmt.Errorf("missing required UserID")
 	}
 
-	url := fmt.Sprintf("%v/users/%v", s.c.baseURL, *s.userID)
-	expectedStatus := 200
+	if s.clearPhone && s.phone != nil {
+		return response, errors.New("can't 'set phone' and 'clear phone' in one request")
+	}
 
-	headers := s.c.commonHeaders()
-	headers["Content-Type"] = "application/json"
+	if s.clearPicture && s.picture != nil {
+		return response, errors.New("can't 'set picture' and 'clear picture' in one request")
+	}
 
 	reqBody, err := json.Marshal(s.request())
 	if err != nil {
 		return response, err
 	}
+
+	url := fmt.Sprintf("%v/users/%v", s.c.baseURL, *s.userID)
+	expectedStatus := 200
+	headers := s.c.commonHeaders()
+	headers["Content-Type"] = "application/json"
 
 	r := request{
 		method:  "PATCH",
