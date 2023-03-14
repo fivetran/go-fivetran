@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased](https://github.com/fivetran/go-fivetran/compare/v0.6.10...HEAD)
 
+## [0.7.2](https://github.com/fivetran/go-fivetran/compare/v0.7.1...v0.7.2) - 2023-03-14
+
+## Added
+- Dbt Transformations Management API: Create a dbt project, Retrieve dbt project details, Modify a dbt project, Delete a dbt project, Create a dbt transformation, Retrieve dbt transformation details, Modify a dbt transformation, Delete a dbt transformation, Dbt transformation schedule.
+
 ## [0.7.1](https://github.com/fivetran/go-fivetran/compare/v0.7.0...v0.7.1) - 2022-12-14
 
 ## Fixed
