@@ -23,13 +23,13 @@ type DbtProjectCreateService struct {
 }
 
 type dbtProjectCreateRequestBase struct {
-	GroupID       *string `json:"groupId,omitempty"`
-	DbtVersion    *string `json:"dbtVersion,omitempty"`
-	GitRemoteUrl  *string `json:"gitRemoteUrl,omitempty"`
-	GitBranch     *string `json:"gitBranch,omitempty"`
-	DefaultSchema *string `json:"defaultSchema,omitempty"`
-	FolderPath    *string `json:"folderPath,omitempty"`
-	TargetName    *string `json:"targetName,omitempty"`
+	GroupID       *string `json:"group_id,omitempty"`
+	DbtVersion    *string `json:"dbt_version,omitempty"`
+	GitRemoteUrl  *string `json:"git_remote_url,omitempty"`
+	GitBranch     *string `json:"git_branch,omitempty"`
+	DefaultSchema *string `json:"default_schema,omitempty"`
+	FolderPath    *string `json:"folder_path,omitempty"`
+	TargetName    *string `json:"target_name,omitempty"`
 	Threads       *int    `json:"threads,omitempty"`
 }
 
