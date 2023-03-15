@@ -24,7 +24,7 @@ type DbtTransformationDetailsDataBase struct {
 	LastRun         time.Time `json:"last_run`
 	NextRun         time.Time `json:"next_run`
 	Status          string    `json:"status"`
-	RunTests        string    `json:"run_tests"`
+	RunTests        bool      `json:"run_tests"`
 	ConnectorsIds   []string  `json:"connector_ids"`
 	ModelIds        []string  `json:"model_ids"`
 }
@@ -52,7 +52,7 @@ func (s *DbtTransformationDetailsService) do(ctx context.Context, response any) 
 		return fmt.Errorf("missing required DbtTransformationID")
 	}
 
-	url := fmt.Sprintf("%v/dbt_transformations/%v", s.c.baseURL, *s.dbtTransformationID)
+	url := fmt.Sprintf("%v/dbt/transformations/%v", s.c.baseURL, *s.dbtTransformationID)
 	expectedStatus := 200
 
 	headers := s.c.commonHeaders()
