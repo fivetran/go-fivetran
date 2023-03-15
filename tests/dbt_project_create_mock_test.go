@@ -65,6 +65,13 @@ func assertDbtProjectResponse(t *testing.T, response fivetran.DbtProjectCreateRe
 
 	assertEqual(t, response.Data.ID, "_moonbeam_project")
 	assertEqual(t, response.Data.GroupID, "_moonbeam_bright")
+	assertEqual(t, response.Data.CreatedById, "_accountworthy")
+	assertEqual(t, response.Data.PublicKey, "ssh-public-key")
+	assertEqual(t, response.Data.GitRemoteUrl, "git@some-host.com/project.git")
+	assertEqual(t, response.Data.GitBranch, "main")
+	assertEqual(t, response.Data.DefaultSchema, "some_schema")
+	assertEqual(t, response.Data.FolderPath, "some-folder-in-git-repo")
+	assertEqual(t, response.Data.TargetName, "some-name")
 }
 
 func prepareDbtProjectResponse() string {
