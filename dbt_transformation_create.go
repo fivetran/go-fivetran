@@ -86,13 +86,18 @@ func (s *DbtTransformationCreateService) DbtModelID(value string) *DbtTransforma
 	return s
 }
 
+func (s *DbtTransformationCreateService) Schedule(value *DbtTransformationSchedule) *DbtTransformationCreateService {
+	s.schedule = value
+	return s
+}
+
 func (s *DbtTransformationCreateService) RunTests(value bool) *DbtTransformationCreateService {
 	s.runTests = &value
 	return s
 }
 
 func (s *DbtTransformationCreateService) do(ctx context.Context, req, response any) error {
-	url := fmt.Sprintf("%v/dbt/projects/%v/transformations", s.c.baseURL, s.dbtProjectID)
+	url := fmt.Sprintf("%v/dbt/projects/%v/transformations", s.c.baseURL, *s.dbtProjectID)
 	expectedStatus := 201
 
 	headers := s.c.commonHeaders()
