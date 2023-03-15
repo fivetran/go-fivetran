@@ -35,7 +35,7 @@ type DbtProjectDetailsResponse struct {
 	} `json:"data"`
 }
 
-func (c *Client) NewDbtProjectDetails() *DbtProjectDetailsService {
+func (c *Client) NewDbtProjectDetailsService() *DbtProjectDetailsService {
 	return &DbtProjectDetailsService{c: c}
 }
 
