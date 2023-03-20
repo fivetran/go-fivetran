@@ -44,9 +44,10 @@ func (s *DbtProjectDetailsService) DbtProjectID(value string) *DbtProjectDetails
 	return s
 }
 
-func (s *DbtProjectDetailsService) do(ctx context.Context, response any) error {
+func (s *DbtProjectDetailsService) Do(ctx context.Context) (DbtProjectDetailsResponse, error) {
+	var response DbtProjectDetailsResponse
 	if s.dbtProjectID == nil {
-		return fmt.Errorf("missing required DbtProjectID")
+		return response, fmt.Errorf("missing required DbtProjectID")
 	}
 
 	url := fmt.Sprintf("%v/dbt/projects/%v", s.c.baseURL, *s.dbtProjectID)
@@ -67,25 +68,17 @@ func (s *DbtProjectDetailsService) do(ctx context.Context, response any) error {
 	respBody, respStatus, err := r.httpRequest(ctx)
 
 	if err != nil {
-		return err
+		return response, err
 	}
 
 	if err := json.Unmarshal(respBody, &response); err != nil {
-		return err
+		return response, err
 	}
 
 	if respStatus != expectedStatus {
 		err := fmt.Errorf("status code: %v; expected: %v", respStatus, expectedStatus)
-		return err
+		return response, err
 	}
 
-	return nil
-}
-
-func (s *DbtProjectDetailsService) Do(ctx context.Context) (DbtProjectDetailsResponse, error) {
-	var response DbtProjectDetailsResponse
-
-	err := s.do(ctx, &response)
-
-	return response, err
+	return response, nil
 }
