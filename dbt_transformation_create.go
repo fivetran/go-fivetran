@@ -4,7 +4,6 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"time"
 )
 
 // DbtTransformationCreateService implements the dbt transformation management,
@@ -29,24 +28,11 @@ type dbtTransformationCreateRequest struct {
 	Schedule *dbtTransformationScheduleRequest `json:"schedule,omitempty"`
 }
 
-type DbtTransformationCreateResponseBase struct {
-	ID              string    `json:"id"`
-	DbtModelID      string    `json:"dbt_model_id"`
-	OutputModelName string    `json:"output_model_name"`
-	DbtProjectID    string    `json:"dbt_project_id"`
-	LastRun         time.Time `json:"last_run"`
-	NextRun         time.Time `json:"next_run"`
-	Status          string    `json:"status"`
-	RunTests        bool      `json:"run_tests"`
-	ConnectorIDs    []string  `json:"connector_ids"`
-	ModelIDs        []string  `json:"model_ids"`
-}
-
 type DbtTransformationCreateResponse struct {
 	Code    string `json:"code"`
 	Message string `json:"message"`
 	Data    struct {
-		DbtTransformationCreateResponseBase
+		DbtTransformationResponseBase
 		Schedule DbtTransformationScheduleResponse
 	} `json:"data"`
 }
