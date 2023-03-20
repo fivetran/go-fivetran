@@ -4,7 +4,6 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"time"
 )
 
 // DbtProjectModifyService implements the dbt management, modify a dbt project api
@@ -38,24 +37,11 @@ type dbtProjectModifyRequest struct {
 	dbtProjectModifyRequestBase
 }
 
-type DbtProjectModifyResponseDataBase struct {
-	ID            string    `json:"id"`
-	GroupID       string    `json:"group_id"`
-	CreatedAt     time.Time `json:"created_at"`
-	CreatedById   string    `json:"created_by_id"`
-	PublicKey     string    `json:"public_key"`
-	GitRemoteUrl  string    `json:"git_remote_url"`
-	GitBranch     string    `json:"git_branch"`
-	DefaultSchema string    `json:"default_schema"`
-	FolderPath    string    `json:"folder_path"`
-	TargetName    string    `json:"target_name"`
-}
-
 type DbtProjectModifyResponse struct {
 	Code    string `json:"code"`
 	Message string `json:"message"`
 	Data    struct {
-		DbtProjectCreateResponseDataBase
+		DbtProjectResponseBase
 	} `json:"data"`
 }
 

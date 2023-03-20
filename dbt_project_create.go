@@ -4,7 +4,6 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"time"
 )
 
 // DbtCreateService implements the dbt project management, create a dbt project api.
@@ -22,7 +21,7 @@ type DbtProjectCreateService struct {
 	threads       *int
 }
 
-type dbtProjectCreateRequestBase struct {
+type dbtProjectCreateRequest struct {
 	GroupID       *string `json:"group_id,omitempty"`
 	DbtVersion    *string `json:"dbt_version,omitempty"`
 	GitRemoteUrl  *string `json:"git_remote_url,omitempty"`
@@ -33,28 +32,11 @@ type dbtProjectCreateRequestBase struct {
 	Threads       *int    `json:"threads,omitempty"`
 }
 
-type dbtProjectCreateRequest struct {
-	dbtProjectCreateRequestBase
-}
-
-type DbtProjectCreateResponseDataBase struct {
-	ID            string    `json:"id"`
-	GroupID       string    `json:"group_id"`
-	CreatedAt     time.Time `json:"created_at"`
-	CreatedById   string    `json:"created_by_id"`
-	PublicKey     string    `json:"public_key"`
-	GitRemoteUrl  string    `json:"git_remote_url"`
-	GitBranch     string    `json:"git_branch"`
-	DefaultSchema string    `json:"default_schema"`
-	FolderPath    string    `json:"folder_path"`
-	TargetName    string    `json:"target_name"`
-}
-
 type DbtProjectCreateResponse struct {
 	Code    string `json:"code"`
 	Message string `json:"message"`
 	Data    struct {
-		DbtProjectCreateResponseDataBase
+		DbtProjectResponseBase
 	} `json:"data"`
 }
 
@@ -62,8 +44,8 @@ func (c *Client) NewDbtProjectCreateService() *DbtProjectCreateService {
 	return &DbtProjectCreateService{c: c}
 }
 
-func (s *DbtProjectCreateService) requestBase() dbtProjectCreateRequestBase {
-	return dbtProjectCreateRequestBase{
+func (s *DbtProjectCreateService) request() dbtProjectCreateRequest {
+	return dbtProjectCreateRequest{
 		GroupID:       s.groupID,
 		DbtVersion:    s.dbtVersion,
 		GitRemoteUrl:  s.gitRemoteUrl,
@@ -73,14 +55,6 @@ func (s *DbtProjectCreateService) requestBase() dbtProjectCreateRequestBase {
 		TargetName:    s.targetName,
 		Threads:       s.threads,
 	}
-}
-
-func (s *DbtProjectCreateService) request() *dbtProjectCreateRequest {
-	r := &dbtProjectCreateRequest{
-		dbtProjectCreateRequestBase: s.requestBase(),
-	}
-
-	return r
 }
 
 func (s *DbtProjectCreateService) GroupID(value string) *DbtProjectCreateService {

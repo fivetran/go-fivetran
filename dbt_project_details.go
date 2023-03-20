@@ -13,25 +13,11 @@ type DbtProjectDetailsService struct {
 	dbtProjectID *string
 }
 
-type DbtProjectDetailsdataBase struct {
-	ID            string `json:"id"`
-	GroupID       string `json:"group_id"`
-	CreatedAt     string `json:"created_at"`
-	CreatedById   string `json:"created_by_id"`
-	PublicKey     string `json:"public_key"`
-	DbtVersion    string `json:"dbt_version"`
-	GitRemoteUrl  string `json:"git_remote_url"`
-	GitBranch     string `json:"git_branch"`
-	DefaultSchema string `json:"default_schema"`
-	FolderPath    string `json:"folder_path"`
-	TargetName    string `json:"target_name"`
-}
-
 type DbtProjectDetailsResponse struct {
 	Code    string `json:"code"`
 	Message string `json:"message"`
 	Data    struct {
-		DbtProjectDetailsdataBase
+		DbtProjectResponseBase
 	} `json:"data"`
 }
 
