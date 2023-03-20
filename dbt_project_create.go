@@ -123,7 +123,8 @@ func (s *DbtProjectCreateService) Threads(value int) *DbtProjectCreateService {
 	return s
 }
 
-func (s *DbtProjectCreateService) do(ctx context.Context, req, response any) error {
+func (s *DbtProjectCreateService) Do(ctx context.Context) (DbtProjectCreateResponse, error) {
+	var response DbtProjectCreateResponse
 	url := fmt.Sprintf("%v/dbt/projects", s.c.baseURL)
 	expectedStatus := 201
 
@@ -131,9 +132,9 @@ func (s *DbtProjectCreateService) do(ctx context.Context, req, response any) err
 	headers["Content-Type"] = "appplication/json"
 	headers["Accept"] = restAPIv2
 
-	reqBody, err := json.Marshal(req)
+	reqBody, err := json.Marshal(s.request())
 	if err != nil {
-		return err
+		return response, err
 	}
 
 	r := request{
@@ -147,25 +148,17 @@ func (s *DbtProjectCreateService) do(ctx context.Context, req, response any) err
 
 	respBody, respStatus, err := r.httpRequest(ctx)
 	if err != nil {
-		return err
+		return response, err
 	}
 
 	if err := json.Unmarshal(respBody, &response); err != nil {
-		return err
+		return response, err
 	}
 
 	if respStatus != expectedStatus {
 		err := fmt.Errorf("status code: %v; expected: %v", respStatus, expectedStatus)
-		return err
+		return response, err
 	}
 
-	return nil
-}
-
-func (s *DbtProjectCreateService) Do(ctx context.Context) (DbtProjectCreateResponse, error) {
-	var response DbtProjectCreateResponse
-
-	err := s.do(ctx, s.request(), &response)
-
-	return response, err
+	return response, nil
 }
