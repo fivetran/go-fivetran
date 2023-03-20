@@ -127,10 +127,10 @@ func (s *DbtProjectModifyService) Threads(value int) *DbtProjectModifyService {
 	return s
 }
 
-func (s *DbtProjectModifyService) do(ctx context.Context, req, response any) error {
-
+func (s *DbtProjectModifyService) Do(ctx context.Context) (DbtProjectModifyResponse, error) {
+	var response DbtProjectModifyResponse
 	if s.dbtProjectID == nil {
-		return fmt.Errorf("missing required DbtID")
+		return response, fmt.Errorf("missing required DbtID")
 	}
 
 	url := fmt.Sprintf("%v/dbt/projects/%v", s.c.baseURL, *s.dbtProjectID)
@@ -140,9 +140,9 @@ func (s *DbtProjectModifyService) do(ctx context.Context, req, response any) err
 	headers["Content-Type"] = "application/json"
 	headers["Accept"] = restAPIv2
 
-	reqBody, err := json.Marshal(req)
+	reqBody, err := json.Marshal(s.request())
 	if err != nil {
-		return err
+		return response, err
 	}
 
 	r := request{
@@ -156,25 +156,17 @@ func (s *DbtProjectModifyService) do(ctx context.Context, req, response any) err
 
 	respBody, respStatus, err := r.httpRequest(ctx)
 	if err != nil {
-		return err
+		return response, err
 	}
 
 	if err := json.Unmarshal(respBody, &response); err != nil {
-		return err
+		return response, err
 	}
 
 	if respStatus != expectedStatus {
 		err := fmt.Errorf("status code: %v; expected: %v", respStatus, expectedStatus)
-		return err
+		return response, err
 	}
 
-	return nil
-}
-
-func (s *DbtProjectModifyService) Do(ctx context.Context) (DbtProjectModifyResponse, error) {
-	var response DbtProjectModifyResponse
-
-	err := s.do(ctx, s.request(), &response)
-
-	return response, err
+	return response, nil
 }
