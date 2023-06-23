@@ -31,6 +31,9 @@ type DestinationConfig struct {
 	isPrivateKeyEncrypted *bool
 	passphrase            *string
 	catalog               *string
+	fivetranRoleArn       *string
+	prefixPath            *string
+	region                *string
 }
 
 type destinationConfigRequest struct {
@@ -62,39 +65,45 @@ type destinationConfigRequest struct {
 	IsPrivateKeyEncrypted *bool   `json:"is_private_key_encrypted,omitempty"`
 	Passphrase            *string `json:"passphrase,omitempty"`
 	Catalog               *string `json:"catalog,omitempty"`
+	FivetranRoleArn       *string `json:"fivetran_role_arn,omitempty"`
+	PrefixPath            *string `json:"prefix_path,omitempty"`
+	Region                *string `json:"region,omitempty"`
 }
 
 type DestinationConfigResponse struct {
-	Host                  string `json:"host"`
-	Port                  string `json:"port"` // Port is sent as `string` but returned as `int`. T-97508
-	Database              string `json:"database"`
-	Auth                  string `json:"auth"`
-	User                  string `json:"user"`
-	Password              string `json:"password"`
-	ConnectionType        string `json:"connection_type"` // ConnectionMethod is the REST API's response of ConnectionType. T-111758
-	TunnelHost            string `json:"tunnel_host"`
-	TunnelPort            string `json:"tunnel_port"`
-	TunnelUser            string `json:"tunnel_user"`
-	ProjectID             string `json:"project_id"`
-	DataSetLocation       string `json:"data_set_location"`
-	Location              string `json:"location"` // Big Query returns `data_set_location` as `location` in response (will be fixed with migration to API V2)
-	Bucket                string `json:"bucket"`
-	ServerHostName        string `json:"server_host_name"`
-	HTTPPath              string `json:"http_path"`
-	PersonalAccessToken   string `json:"personal_access_token"`
-	CreateExternalTables  string `json:"create_external_tables"`
-	ExternalLocation      string `json:"external_location"`
-	AuthType              string `json:"auth_type"`
-	RoleArn               string `json:"role_arn"`
-	SecretKey             string `json:"secret_key"`
-	PublicKey             string `json:"public_key"` // Readonly field
-	PrivateKey            string `json:"private_key"`
-	ClusterId             string `json:"cluster_id"`
-	ClusterRegion         string `json:"cluster_region"`
-	Role                  string `json:"role"`
-	IsPrivateKeyEncrypted string `json:"is_private_key_encrypted"`
-	Passphrase            string `json:"passphrase"`
-	Catalog               string `json:"catalog"`
+	Host                  string  `json:"host"`
+	Port                  string  `json:"port"` // Port is sent as `string` but returned as `int`. T-97508
+	Database              string  `json:"database"`
+	Auth                  string  `json:"auth"`
+	User                  string  `json:"user"`
+	Password              string  `json:"password"`
+	ConnectionType        string  `json:"connection_type"` // ConnectionMethod is the REST API's response of ConnectionType. T-111758
+	TunnelHost            string  `json:"tunnel_host"`
+	TunnelPort            string  `json:"tunnel_port"`
+	TunnelUser            string  `json:"tunnel_user"`
+	ProjectID             string  `json:"project_id"`
+	DataSetLocation       string  `json:"data_set_location"`
+	Location              string  `json:"location"` // Big Query returns `data_set_location` as `location` in response (will be fixed with migration to API V2)
+	Bucket                string  `json:"bucket"`
+	ServerHostName        string  `json:"server_host_name"`
+	HTTPPath              string  `json:"http_path"`
+	PersonalAccessToken   string  `json:"personal_access_token"`
+	CreateExternalTables  string  `json:"create_external_tables"`
+	ExternalLocation      string  `json:"external_location"`
+	AuthType              string  `json:"auth_type"`
+	RoleArn               string  `json:"role_arn"`
+	SecretKey             string  `json:"secret_key"`
+	PublicKey             string  `json:"public_key"` // Readonly field
+	PrivateKey            string  `json:"private_key"`
+	ClusterId             string  `json:"cluster_id"`
+	ClusterRegion         string  `json:"cluster_region"`
+	Role                  string  `json:"role"`
+	IsPrivateKeyEncrypted string  `json:"is_private_key_encrypted"`
+	Passphrase            string  `json:"passphrase"`
+	Catalog               string  `json:"catalog"`
+	FivetranRoleArn       *string `json:"fivetran_role_arn"`
+	PrefixPath            *string `json:"prefix_path"`
+	Region                *string `json:"region"`
 }
 
 func NewDestinationConfig() *DestinationConfig {
@@ -131,6 +140,9 @@ func (dc *DestinationConfig) request() *destinationConfigRequest {
 		IsPrivateKeyEncrypted: dc.isPrivateKeyEncrypted,
 		Passphrase:            dc.passphrase,
 		Catalog:               dc.catalog,
+		FivetranRoleArn:       dc.fivetranRoleArn,
+		PrefixPath:            dc.prefixPath,
+		Region:                dc.region,
 	}
 }
 
@@ -271,5 +283,20 @@ func (dc *DestinationConfig) Passphrase(value string) *DestinationConfig {
 
 func (dc *DestinationConfig) Catalog(value string) *DestinationConfig {
 	dc.catalog = &value
+	return dc
+}
+
+func (dc *DestinationConfig) FivetranRoleArn(value string) *DestinationConfig {
+	dc.fivetranRoleArn = &value
+	return dc
+}
+
+func (dc *DestinationConfig) PrefixPath(value string) *DestinationConfig {
+	dc.prefixPath = &value
+	return dc
+}
+
+func (dc *DestinationConfig) Region(value string) *DestinationConfig {
+	dc.region = &value
 	return dc
 }

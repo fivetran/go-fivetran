@@ -54,6 +54,8 @@ const (
 	PASSPHRASE               = "passphrase"
 	IS_PRIVATE_KEY_ENCRYPTED = true
 	CATALOG                  = "catalog"
+	FIVETRAN_ROLE_ARN        = "fivetran_role_arn"
+	PREFIX_PATH              = "prefix_path"
 )
 
 func TestNewDestinationCreateFullMappingMock(t *testing.T) {
@@ -142,7 +144,10 @@ func prepareDestinationResponse() string {
 					"role":                     "%v",
 					"is_private_key_encrypted": "%v",
 					"passphrase":               "%v",
-					"catalog": "%v"
+					"catalog": "%v",
+					"fivetran_role_arn":"%v",
+					"prefix_path":"%v",
+					"region": "%v",
 				}
 			}
 		}`,
@@ -185,6 +190,9 @@ func prepareDestinationResponse() string {
 		IS_PRIVATE_KEY_ENCRYPTED,
 		PASSPHRASE,
 		CATALOG,
+		FIVETRAN_ROLE_ARN,
+		PREFIX_PATH,
+		REGION,
 	)
 }
 
@@ -217,6 +225,9 @@ func prepareConfig() *fivetran.DestinationConfig {
 	config.IsPrivateKeyEncrypted(IS_PRIVATE_KEY_ENCRYPTED)
 	config.Passphrase(PASSPHRASE)
 	config.Catalog(CATALOG)
+	config.FivetranRoleArn(FIVETRAN_ROLE_ARN)
+	config.PrefixPath(PREFIX_PATH)
+	config.Region(REGION)
 	return config
 }
 
@@ -261,6 +272,9 @@ func assertRequest(t *testing.T, request map[string]interface{}) {
 	assertKey(t, "is_private_key_encrypted", config, IS_PRIVATE_KEY_ENCRYPTED)
 	assertKey(t, "passphrase", config, PASSPHRASE)
 	assertKey(t, "catalog", config, CATALOG)
+	assertKey(t, "fivetran_role_arn", config, FIVETRAN_ROLE_ARN)
+	assertKey(t, "prefix_path", config, PREFIX_PATH)
+	assertKey(t, "region", config, REGION)
 }
 
 func assertResponse(t *testing.T, response fivetran.DestinationCreateResponse) {
@@ -310,4 +324,7 @@ func assertResponse(t *testing.T, response fivetran.DestinationCreateResponse) {
 	assertEqual(t, response.Data.Config.IsPrivateKeyEncrypted, boolToStr(IS_PRIVATE_KEY_ENCRYPTED))
 	assertEqual(t, response.Data.Config.Passphrase, PASSPHRASE)
 	assertEqual(t, response.Data.Config.Catalog, CATALOG)
+	assertEqual(t, response.Data.Config.FivetranRoleArn, FIVETRAN_ROLE_ARN)
+	assertEqual(t, response.Data.Config.PrefixPath, PREFIX_PATH)
+	assertEqual(t, response.Data.Config.Region, REGION)
 }
