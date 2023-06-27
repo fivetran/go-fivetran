@@ -31,6 +31,9 @@ type DestinationConfig struct {
 	isPrivateKeyEncrypted *bool
 	passphrase            *string
 	catalog               *string
+	fivetranRoleArn       *string
+	prefixPath            *string
+	region                *string
 }
 
 type destinationConfigRequest struct {
@@ -62,6 +65,9 @@ type destinationConfigRequest struct {
 	IsPrivateKeyEncrypted *bool   `json:"is_private_key_encrypted,omitempty"`
 	Passphrase            *string `json:"passphrase,omitempty"`
 	Catalog               *string `json:"catalog,omitempty"`
+	FivetranRoleArn       *string `json:"fivetran_role_arn,omitempty"`
+	PrefixPath            *string `json:"prefix_path,omitempty"`
+	Region                *string `json:"region,omitempty"`
 }
 
 type DestinationConfigResponse struct {
@@ -95,6 +101,9 @@ type DestinationConfigResponse struct {
 	IsPrivateKeyEncrypted string `json:"is_private_key_encrypted"`
 	Passphrase            string `json:"passphrase"`
 	Catalog               string `json:"catalog"`
+	FivetranRoleArn       string `json:"fivetran_role_arn"`
+	PrefixPath            string `json:"prefix_path"`
+	Region                string `json:"region"`
 }
 
 func NewDestinationConfig() *DestinationConfig {
@@ -131,6 +140,9 @@ func (dc *DestinationConfig) request() *destinationConfigRequest {
 		IsPrivateKeyEncrypted: dc.isPrivateKeyEncrypted,
 		Passphrase:            dc.passphrase,
 		Catalog:               dc.catalog,
+		FivetranRoleArn:       dc.fivetranRoleArn,
+		PrefixPath:            dc.prefixPath,
+		Region:                dc.region,
 	}
 }
 
@@ -271,5 +283,20 @@ func (dc *DestinationConfig) Passphrase(value string) *DestinationConfig {
 
 func (dc *DestinationConfig) Catalog(value string) *DestinationConfig {
 	dc.catalog = &value
+	return dc
+}
+
+func (dc *DestinationConfig) FivetranRoleArn(value string) *DestinationConfig {
+	dc.fivetranRoleArn = &value
+	return dc
+}
+
+func (dc *DestinationConfig) PrefixPath(value string) *DestinationConfig {
+	dc.prefixPath = &value
+	return dc
+}
+
+func (dc *DestinationConfig) Region(value string) *DestinationConfig {
+	dc.region = &value
 	return dc
 }
