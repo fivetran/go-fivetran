@@ -144,10 +144,10 @@ func prepareDestinationResponse() string {
 					"role":                     "%v",
 					"is_private_key_encrypted": "%v",
 					"passphrase":               "%v",
-					"catalog": "%v",
-					"fivetran_role_arn":"%v",
-					"prefix_path":"%v",
-					"region": "%v",
+					"catalog":                  "%v",
+					"fivetran_role_arn":        "%v",
+					"prefix_path":              "%v",
+					"region":                   "%v"
 				}
 			}
 		}`,
