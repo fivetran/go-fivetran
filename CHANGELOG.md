@@ -5,14 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/fivetran/go-fivetran/compare/v0.7.2...HEAD)
+## [Unreleased](https://github.com/fivetran/go-fivetran/compare/v0.7.3...HEAD)
 
-## [0.7.2](https://github.com/fivetran/go-fivetran/compare/v0.7.1...v0.7.2)
+## [0.7.3](https://github.com/fivetran/go-fivetran/compare/v0.7.2...v0.7.3)
 
 ## Added
 - `DestinationConfigResponse.FivetranRoleArn` missing field added (S3 Data Lake)
 - `DestinationConfigResponse.PrefixPath` missing field added (S3 Data Lake)
 - `DestinationConfigResponse.Region` missing field added (S3 Data Lake)
+
+## [0.7.2](https://github.com/fivetran/go-fivetran/compare/v0.7.1...v0.7.2)
+
+Fix user/picture set to null issue (#55)
+* delete methods for picture and phone
+* tests
+* refactoring of the picture and phone JSON marshalling + full test
+* refactor - move nullableString to common file
 
 ## [0.7.1](https://github.com/fivetran/go-fivetran/compare/v0.7.0...v0.7.1) - 2022-12-14
 
