@@ -37,7 +37,7 @@ func TestConnectorReSyncTableBadRequest(t *testing.T) {
 	assertEqual(t, interactions[0].Handler, handler)
 	assertEqual(t, handler.Interactions, 1)
 
-	assertConnectorReSyncTableResponse(t, response)
+	assertConnectorReSyncTableResponse(t, response, "BadRequest", "Invalid request")
 }
 
 func TestConnectorReSyncTable_WithNilConnectorID(t *testing.T) {
@@ -116,7 +116,7 @@ func TestConnectorReSyncTable(t *testing.T) {
 	assertEqual(t, interactions[0].Handler, handler)
 	assertEqual(t, handler.Interactions, 1)
 
-	assertConnectorReSyncTableResponse(t, response)
+	assertConnectorReSyncTableResponse(t, response, "Success", "Table resync initiated")
 }
 
 func prepareConnectorReSyncTableResponse(code string, message string) string {
@@ -126,9 +126,9 @@ func prepareConnectorReSyncTableResponse(code string, message string) string {
 	}`
 }
 
-func assertConnectorReSyncTableResponse(t *testing.T, response fivetran.ConnectorReSyncTableResponse) {
-	assertEqual(t, response.Code, "Success")
-	if response.Message != "Table resync initiated" {
-		t.Errorf("expected message 'Table resync initiated', got '%s'", response.Message)
+func assertConnectorReSyncTableResponse(t *testing.T, response fivetran.ConnectorReSyncTableResponse, code string, message string) {
+	assertEqual(t, response.Code, code)
+	if response.Message != message {
+		t.Errorf("expected message `%s` , got '%s'", message, response.Message)
 	}
 }
