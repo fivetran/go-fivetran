@@ -26,7 +26,7 @@ func TestConnectorReSyncTableBadRequest(t *testing.T) {
 	// act
 	response, err := service.Do(context.Background())
 
-	if err != nil {
+	if err == nil {
 		t.Logf("%+v\n", response)
 		t.Error(err)
 	}
