@@ -9,7 +9,7 @@ import (
 	"github.com/fivetran/go-fivetran/tests/mock"
 )
 
-func TestConnectorSetupTestsService_Do(t *testing.T) {
+func TestConnectorSetupTests_Do(t *testing.T) {
 	// arrange
 	ftClient, mockClient := CreateTestClient()
 	handler := mockClient.When(http.MethodPost, "/v1/connectors/connector_id/test").ThenCall(
@@ -34,6 +34,33 @@ func TestConnectorSetupTestsService_Do(t *testing.T) {
 
 	// assert
 	assertConnectorSetupTestsResponse(t, response)
+}
+
+func TestConnectorSetupTestsServiceBadRequest(t *testing.T) {
+	// arrange
+	ftClient, mockClient := CreateTestClient()
+	handler := mockClient.When(http.MethodPost, "/v1/connectors/connector_id/test").ThenCall(
+		func(req *http.Request) (*http.Response, error) {
+			response := mock.NewResponse(req, http.StatusBadRequest, prepareConnectorReSyncTableResponse("BadRequest", "Invalid request"))
+			return response, nil
+		})
+
+	service := ftClient.NewConnectorSetupTests().ConnectorID("connector_id").TrustCertificates(true).TrustFingerprints(true)
+
+	// act
+	response, err := service.Do(context.Background())
+
+	if err == nil {
+		t.Logf("%+v\n", response)
+		t.Error(err)
+	}
+
+	// assert
+	interactions := mockClient.Interactions()
+	assertEqual(t, len(interactions), 1)
+	assertEqual(t, interactions[0].Handler, handler)
+	assertEqual(t, handler.Interactions, 1)
+	assertEqual(t, response.Code, "BadRequest")
 }
 
 func assertConnectorSetupTestsResponse(t *testing.T, response fivetran.ConnectorSetupTestsResponse) {
