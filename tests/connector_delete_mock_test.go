@@ -53,7 +53,7 @@ func TestRespStatusConnectorDeleteService(t *testing.T) {
 
 	// assert
 	if err != nil {
-		assertConnectorDeleteResponse(t, response, "NotFound_Integration", "Cannot find entity 'Integration' with id")
+		assertConnectorDeleteResponse(t, response, "NotFound_Integration", "Cannot find entity 'Integration' with id 'connector_id'")
 
 	} else {
 		t.Logf("%+v\n", response)
@@ -65,7 +65,6 @@ func TestRespStatusConnectorDeleteService(t *testing.T) {
 func prepareConnectorDeleteResponse(code string, message string) string {
 	var s = "{\"code\": \"" + code + "\" , \"message\": \"" + message + "\"}"
 	return s
-
 }
 
 func assertConnectorDeleteResponse(t *testing.T, response fivetran.ConnectorDeleteResponse, expectCode string, expectMessage string) {

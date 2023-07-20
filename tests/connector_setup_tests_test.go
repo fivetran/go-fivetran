@@ -9,7 +9,7 @@ import (
 	"github.com/fivetran/go-fivetran/tests/mock"
 )
 
-func TestConnectorSetupTests_Do(t *testing.T) {
+func TestConnectorSetupTestsDo(t *testing.T) {
 	// arrange
 	ftClient, mockClient := CreateTestClient()
 	handler := mockClient.When(http.MethodPost, "/v1/connectors/connector_id/test").ThenCall(
@@ -27,12 +27,12 @@ func TestConnectorSetupTests_Do(t *testing.T) {
 		t.Error(err)
 	}
 
+	// assert
 	interactions := mockClient.Interactions()
 	assertEqual(t, len(interactions), 1)
 	assertEqual(t, interactions[0].Handler, handler)
 	assertEqual(t, handler.Interactions, 1)
 
-	// assert
 	assertConnectorSetupTestsResponse(t, response)
 }
 
@@ -84,7 +84,10 @@ func assertConnectorSetupTestsResponse(t *testing.T, response fivetran.Connector
 		assertNotEmpty(t, test.Message)
 	}
 
-	// Add assertions for specific fields in the ConnectorConfigResponse struct
+	assertEqual(t, response.Data.Config.Username, "newuser")
+	assertEqual(t, response.Data.Config.Password, "******")
+	assertEqual(t, response.Data.Config.APIToken, "******")
+	assertEqual(t, response.Data.Config.ServiceVersion, "0")
 }
 
 func prepareConnectorSetupTestsResponse() string {

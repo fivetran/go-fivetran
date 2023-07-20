@@ -57,7 +57,7 @@ func TestConnectorReSyncTable_WithNilConnectorID(t *testing.T) {
 	assertEqual(t, err.Error(), "missing required ConnectorID")
 }
 
-func TestConnectorReSyncTable_WithNilSchema(t *testing.T) {
+func TestConnectorReSyncTableWithNilSchema(t *testing.T) {
 	// arrange
 	ftClient, mockClient := CreateTestClient()
 
@@ -74,7 +74,7 @@ func TestConnectorReSyncTable_WithNilSchema(t *testing.T) {
 	assertEqual(t, err.Error(), "missing required Schema")
 }
 
-func TestConnectorReSyncTable_WithNilTable(t *testing.T) {
+func TestConnectorReSyncTableWithNilTable(t *testing.T) {
 	// arrange
 	ftClient, mockClient := CreateTestClient()
 
