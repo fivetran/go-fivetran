@@ -8,13 +8,13 @@ import (
 func TestNewDbtProjectCreateE2E(t *testing.T) {
 	created, err := Client.NewDbtProjectCreate().
 		GroupID(PredefinedGroupId).
-		DbtVersion("").
-		GitRemoteUrl("").
-		GitBranch("").
+		DbtVersion("1.3.1").
+		GitRemoteUrl("https://github.com/fivetran/dbt_demo").
+		GitBranch("main").
 		DefaultSchema("").
 		FolderPath("").
 		TargetName("").
-		Threads(0).
+		Threads(4).
 		Do(context.Background())
 
 	if err != nil {
@@ -27,11 +27,11 @@ func TestNewDbtProjectCreateE2E(t *testing.T) {
 	AssertEqual(t, created.Data.ID, PredefinedGroupId)
 	AssertEqual(t, created.Data.GroupID, PredefinedGroupId)
 	AssertEqual(t, created.Data.FolderPath, "")
-	//AssertEqual(t, created.Data.CreatedAt, "")
+	AssertNotEmpty(t, created.Data.CreatedAt)
 	AssertEqual(t, created.Data.TargetName, "")
-	AssertEqual(t, created.Data.GitRemoteUrl, "")
+	AssertEqual(t, created.Data.GitRemoteUrl, "https://github.com/fivetran/dbt_demo")
 	AssertEqual(t, created.Data.DefaultSchema, "")
 	AssertEqual(t, created.Data.PublicKey, "")
 	AssertEqual(t, created.Data.CreatedById, "")
-	AssertEqual(t, created.Data.GitBranch, "")
+	AssertEqual(t, created.Data.GitBranch, "main")
 }
