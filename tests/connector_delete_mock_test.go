@@ -42,7 +42,7 @@ func TestRespStatusConnectorDeleteService(t *testing.T) {
 	ftClient, mockClient := CreateTestClient()
 	mockClient.When(http.MethodDelete, "/v1/connectors/connector_id").ThenCall(
 		func(req *http.Request) (*http.Response, error) {
-			response := mock.NewResponse(req, http.StatusNotFound, prepareConnectorDeleteResponse("NotFound_Integration", "Cannot find entity 'Integration' with id"))
+			response := mock.NewResponse(req, http.StatusNotFound, prepareConnectorDeleteResponse("NotFound_Integration", "Cannot find entity 'Integration' with id 'connector_id'"))
 			return response, nil
 		})
 
