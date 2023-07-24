@@ -40,7 +40,7 @@ func TestConnectorReSyncTableBadRequest(t *testing.T) {
 	assertConnectorReSyncTableResponse(t, response, "BadRequest", "Invalid request")
 }
 
-func TestConnectorReSyncTable_WithNilConnectorID(t *testing.T) {
+func TestConnectorReSyncTableWithNilConnectorID(t *testing.T) {
 	// arrange
 	ftClient, mockClient := CreateTestClient()
 

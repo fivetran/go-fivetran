@@ -59,7 +59,6 @@ func TestRespStatusConnectorDeleteService(t *testing.T) {
 		t.Logf("%+v\n", response)
 		t.Error(err)
 	}
-
 }
 
 func prepareConnectorDeleteResponse(code string, message string) string {
