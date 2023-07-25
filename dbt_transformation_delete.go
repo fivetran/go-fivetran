@@ -32,7 +32,7 @@ func (s *DbtTransformationDeleteService) Do(ctx context.Context) (DbtTransformat
 		return response, fmt.Errorf("missing required transformation id")
 	}
 
-	url := fmt.Sprintf("%v/dbt/transformations", s.c.baseURL, *s.transformationId)
+	url := fmt.Sprintf("%v/dbt/transformations/%v", s.c.baseURL, *s.transformationId)
 	expectedStatus := 200
 
 	headers := s.c.commonHeaders()
