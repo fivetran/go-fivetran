@@ -146,6 +146,18 @@ func DeleteDestination(t *testing.T, id string) {
 	}
 }
 
+func DeleteDbtTransformation(t *testing.T, id string) {
+	t.Helper()
+	deleted, err := Client.NewDbtTransformationDeleteService().
+		TransformationId(id).
+		Do(context.Background())
+
+	if err != nil {
+		t.Logf("%+v\n", deleted)
+		t.Error(err)
+	}
+}
+
 func CreateDestination(t *testing.T) string {
 	t.Helper()
 	created, err := Client.NewDestinationCreate().
