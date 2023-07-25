@@ -38,18 +38,20 @@ func TestDestinationModifyService(t *testing.T) {
 			return response, nil
 		})
 
-	destinationConfig := fivetran.DestinationConfig{}.HOST(DESTINATION_MODIFY_HOST).
-		PORT(DESTINATION_DETAILS_PORT).
-		DATABASE(DESTINATION_MODIFY_DATABASE).
-		AUTH(DESTINATION_MODIFY_AUTH).
-		USER(DESTINATION_MODIFY_USER).
-		PASSWORD(DESTINATION_MODIFY_PASSWORD)
+	destinationConfig := fivetran.NewDestinationConfig()
+	destinationConfig = destinationConfig.
+		Host(DESTINATION_MODIFY_HOST).
+		Port(DESTINATION_DETAILS_PORT).
+		Database(DESTINATION_MODIFY_DATABASE).
+		Auth(DESTINATION_MODIFY_AUTH).
+		User(DESTINATION_MODIFY_USER).
+		Password(DESTINATION_MODIFY_PASSWORD)
 
 	service := ftClient.NewDestinationModify().
 		DestinationID(DESTINATION_MODIFY_ID).
 		Region(DESTINATION_MODIFY_REGION).
 		TimeZoneOffset(DESTINATION_MODIFY_TIME_ZONE_OFFSET).
-		Config(&destinationConfig).
+		Config(destinationConfig).
 		TrustCertificates(TRUST_CERTIFICATES).
 		TrustFingerprints(TRUST_FINGERPRINTS).
 		RunSetupTests(RUN_SETUP_TESTS)
