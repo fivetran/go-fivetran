@@ -79,7 +79,7 @@ func (s *DbtTransformationCreateService) ProjectId(value string) *DbtTransformat
 	return s
 }
 
-func (s *DbtProjectCreateService) Do(ctx context.Context) (DbtTransformationCreateResponse, error) {
+func (s *DbtTransformationCreateService) Do(ctx context.Context) (DbtTransformationCreateResponse, error) {
 	var response DbtTransformationCreateResponse
 	url := fmt.Sprintf("%v/dbt/transformations", s.c.baseURL)
 	expectedStatus := 201
