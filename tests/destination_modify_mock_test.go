@@ -21,7 +21,7 @@ const (
 	DESTINATION_MODIFY_TEST_TITLE_PERM    = "Permission Test"
 	DESTINATION_MODIFY_TEST_STATUS_PASSED = "PASSED"
 	DESTINATION_MODIFY_HOST               = "your-account.snowflakecomputing.com"
-	DESTINATION_MODIFY_PORT               = 1433
+	DESTINATION_MODIFY_PORT               = "1433"
 	DESTINATION_MODIFY_DATABASE           = "fivetran"
 	DESTINATION_MODIFY_AUTH               = "PASSWORD"
 	DESTINATION_MODIFY_USER               = "fivetran_user"
@@ -41,7 +41,7 @@ func TestDestinationModifyService(t *testing.T) {
 	destinationConfig := fivetran.NewDestinationConfig()
 	destinationConfig = destinationConfig.
 		Host(DESTINATION_MODIFY_HOST).
-		Port(DESTINATION_DETAILS_PORT).
+		Port(1433).
 		Database(DESTINATION_MODIFY_DATABASE).
 		Auth(DESTINATION_MODIFY_AUTH).
 		User(DESTINATION_MODIFY_USER).
@@ -103,7 +103,7 @@ func prepareDestinationModifyResponse() string {
 			],
 			"config": {
 				"host": "%s",
-				"port": %d,
+				"port": "%s",
 				"database": "%s",
 				"auth": "%s",
 				"user": "%s",

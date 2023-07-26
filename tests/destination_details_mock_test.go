@@ -16,7 +16,7 @@ const DESTINATION_DETAILS_REGION = "GCP_US_EAST4"
 const DESTINATION_DETAILS_TIME_ZONE = "-5"
 const DESTINATION_DETAILS_SETUP_STATUS = "connected"
 const DESTINATION_DETAILS_HOST = "your-account.snowflakecomputing.com"
-const DESTINATION_DETAILS_PORT = 443
+const DESTINATION_DETAILS_PORT = "443"
 const DESTINATION_DETAILS_DATABASE = "fivetran"
 const DESTINATION_DETAILS_AUTH = "PASSWORD"
 const DESTINATION_DETAILS_USER = "fivetran_user"
@@ -62,7 +62,7 @@ func prepareDestinationDetailsResponse() string {
 			"setup_status": "%s",
 			"config": {
 				"host": "%s",
-				"port": %d,
+				"port": "%s",
 				"database": "%s",
 				"auth": "%s",
 				"user": "%s",

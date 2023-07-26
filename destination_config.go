@@ -72,7 +72,7 @@ type destinationConfigRequest struct {
 
 type DestinationConfigResponse struct {
 	Host                  string `json:"host"`
-	Port                  int    `json:"port"` // Port is sent as `string` but returned as `int`. T-97508
+	Port                  string `json:"port"` // Port is sent as `string` but returned as `int`. T-97508
 	Database              string `json:"database"`
 	Auth                  string `json:"auth"`
 	User                  string `json:"user"`
