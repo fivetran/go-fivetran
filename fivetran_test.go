@@ -146,18 +146,6 @@ func DeleteDestination(t *testing.T, id string) {
 	}
 }
 
-func DeleteDbtTransformation(t *testing.T, id string) {
-	t.Helper()
-	deleted, err := Client.NewDbtTransformationDeleteService().
-		TransformationId(id).
-		Do(context.Background())
-
-	if err != nil {
-		t.Logf("%+v\n", deleted)
-		t.Error(err)
-	}
-}
-
 func CreateDestination(t *testing.T) string {
 	t.Helper()
 	created, err := Client.NewDestinationCreate().
@@ -186,6 +174,45 @@ func CreateTempDestination(t *testing.T) string {
 	destinationId := CreateDestination(t)
 	t.Cleanup(func() { DeleteDestination(t, destinationId) })
 	return destinationId
+}
+
+func CreateDbtTransformation(t *testing.T) string {
+	t.Helper()
+	created, err := Client.NewDbtTransformationCreateService().
+		DbtModelId("").
+		Schedule(*fivetran.NewDbtTransformationSchedule().
+			ScheduleType("INTEGRATED").
+			DaysOfWeek([]string{}).
+			Interval(0).
+			TimeOfDay("")).
+		RunTests(true).
+		ProjectId("").
+		Do(context.Background())
+
+	if err != nil {
+		t.Logf("%+v\n", created)
+		t.Error(err)
+	}
+	return created.Data.ID
+}
+
+func CreateTempDbtTransformation(t *testing.T) string {
+	t.Helper()
+	dbtTransformationId := CreateDbtTransformation(t)
+	t.Cleanup(func() { DeleteDbtTransformation(t, dbtTransformationId) })
+	return dbtTransformationId
+}
+
+func DeleteDbtTransformation(t *testing.T, id string) {
+	t.Helper()
+	deleted, err := Client.NewDbtTransformationDeleteService().
+		TransformationId(id).
+		Do(context.Background())
+
+	if err != nil {
+		t.Logf("%+v\n", deleted)
+		t.Error(err)
+	}
 }
 
 func CreateConnector(t *testing.T) string {

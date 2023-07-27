@@ -8,6 +8,8 @@ import (
 )
 
 func TestNewDbtTransformationCreateE2E(t *testing.T) {
+	t.Skip("Skipping test until we get more info on dbt transformations data which can be used for testing")
+
 	created, err := Client.NewDbtTransformationCreateService().
 		DbtModelId("").
 		Schedule(*fivetran.NewDbtTransformationSchedule().
