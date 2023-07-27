@@ -7,9 +7,10 @@ import (
 )
 
 type DbtTransformationModifyService struct {
-	c        *Client
-	schedule *DbtTransformationSchedule
-	runTests bool
+	c                   *Client
+	dbtTransformationId *string
+	schedule            *DbtTransformationSchedule
+	runTests            bool
 }
 
 type dbtTransformationModifyRequest struct {
@@ -53,6 +54,11 @@ func (s *DbtTransformationModifyService) request() *dbtTransformationModifyReque
 	}
 }
 
+func (s *DbtTransformationModifyService) DbtTransformationId(value string) *DbtTransformationModifyService {
+	s.dbtTransformationId = &value
+	return s
+}
+
 func (s *DbtTransformationModifyService) Schedule(value DbtTransformationSchedule) *DbtTransformationModifyService {
 	s.schedule = &value
 	return s
@@ -65,6 +71,11 @@ func (s *DbtTransformationModifyService) RunTests(value bool) *DbtTransformation
 
 func (s *DbtTransformationModifyService) Do(ctx context.Context) (DbtTransformationModifyResponse, error) {
 	var response DbtTransformationModifyResponse
+
+	if s.dbtTransformationId == nil {
+		return response, fmt.Errorf("missing required dbt transformation ID")
+	}
+
 	url := fmt.Sprintf("%v/dbt/transformations", s.c.baseURL)
 	expectedStatus := 201
 
