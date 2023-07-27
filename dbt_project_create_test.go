@@ -6,6 +6,8 @@ import (
 )
 
 func TestNewDbtProjectCreateE2E(t *testing.T) {
+	t.Skip("Skipping test until we get more info on dbt projects data which can be used for testing")
+
 	created, err := Client.NewDbtProjectCreate().
 		GroupID(PredefinedGroupId).
 		DbtVersion("1.3.1").
