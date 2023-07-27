@@ -15,7 +15,7 @@ type DbtProjectCreateService struct {
 	defaultSchema *string
 	folderPath    *string
 	targetName    *string
-	threads       int
+	threads       *int
 }
 
 type dbtProjectCreateRequest struct {
@@ -26,7 +26,7 @@ type dbtProjectCreateRequest struct {
 	DefaultSchema *string `json:"default_schema,omitempty"`
 	FolderPath    *string `json:"folder_path,omitempty"`
 	TargetName    *string `json:"target_name,omitempty"`
-	Threads       int     `json:"threads,omitempty"`
+	Threads       *int    `json:"threads,omitempty"`
 }
 
 type DbtProjectCreateResponse struct {
@@ -99,7 +99,7 @@ func (s *DbtProjectCreateService) TargetName(value string) *DbtProjectCreateServ
 }
 
 func (s *DbtProjectCreateService) Threads(value int) *DbtProjectCreateService {
-	s.threads = value
+	s.threads = &value
 	return s
 }
 
