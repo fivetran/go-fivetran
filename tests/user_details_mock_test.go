@@ -46,7 +46,7 @@ func TestUserDetailsServiceDo(t *testing.T) {
 	}
 
 	expectedResponse := prepareExpectedUserDetailsResponse()
-	assertUserDetailsResponse(t, response, expectedResponse)
+	assertUserDetailsResponse(t, response, expectedResponse, "Success", "")
 
 	interactions := mockClient.Interactions()
 	assertEqual(t, len(interactions), 1)
@@ -75,8 +75,8 @@ func prepareUserDetailsResponse() string {
 			"family_name": "%s",
 			"verified": %t,
 			"invited": %t,
-			"picture": %s,
-			"phone": %s,
+			"picture": "%s",
+			"phone": "%s",
 			"role": "%s",
 			"logged_in_at": "%s",
 			"created_at": "%s",
@@ -98,23 +98,11 @@ func prepareUserDetailsResponse() string {
 		true)
 }
 
-func prepareExpectedUserDetailsResponse() fivetran.UserDetailsService {
-	return fivetran.UserDetailsService{
+func prepareExpectedUserDetailsResponse() fivetran.UserDetailsResponse {
+	return fivetran.UserDetailsResponse{
 		Code:    EXPECTED_USER_RESPONSE_CODE,
 		Message: "",
-		Data: struct {
-			ID         string
-			Email      string
-			GivenName  string
-			FamilyName string
-			Verified   *bool
-			Invited    *bool
-			Picture    string
-			Phone      string
-			LoggedInAt time.Time
-			CreatedAt  time.Time
-			Role       string
-		}{
+		Data: fivetran.UserDetailsData{
 			ID:         EXPECTED_USER_ID,
 			Email:      EXPECTED_USER_EMAIL,
 			GivenName:  EXPECTED_USER_GIVEN_NAME,
@@ -130,7 +118,11 @@ func prepareExpectedUserDetailsResponse() fivetran.UserDetailsService {
 	}
 }
 
-func assertUserDetailsResponse(t *testing.T, actual, expected UserDetailsResponse, code string, massage string) {
+func assertUserDetailsResponse(t *testing.T,
+	actual fivetran.UserDetailsResponse,
+	expected fivetran.UserDetailsResponse,
+	code string,
+	massage string) {
 	assertEqual(t, actual.Code, code)
 	assertEqual(t, actual.Message, massage)
 	assertEqual(t, actual.Data.ID, expected.Data.ID)
