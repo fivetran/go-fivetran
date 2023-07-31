@@ -12,7 +12,7 @@ func TestNewDbtTransformationCreateE2E(t *testing.T) {
 
 	created, err := Client.NewDbtTransformationCreateService().
 		DbtModelId("").
-		Schedule(*fivetran.NewDbtTransformationSchedule().
+		Schedule(fivetran.NewDbtTransformationSchedule().
 			ScheduleType("INTEGRATED").
 			DaysOfWeek([]string{}).
 			Interval(0).

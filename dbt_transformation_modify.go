@@ -10,30 +10,30 @@ type DbtTransformationModifyService struct {
 	c                   *Client
 	dbtTransformationId *string
 	schedule            *DbtTransformationSchedule
-	runTests            bool
+	runTests            *bool
 }
 
 type dbtTransformationModifyRequest struct {
 	Schedule *dbtTransformationScheduleRequest `json:"schedule,omitempty"`
-	RunTests bool                              `json:"run_tests,omitempty"`
+	RunTests *bool                             `json:"run_tests,omitempty"`
 }
 
 type DbtTransformationModifyResponse struct {
 	Code    string `json:"code"`
 	Message string `json:"message"`
 	Data    struct {
-		ID              string                    `json:"id"`
-		Status          string                    `json:"status"`
-		Schedule        DbtTransformationSchedule `json:"schedule"`
-		LastRun         string                    `json:"last_run"`
-		OutputModelName string                    `json:"output_model_name"`
-		DbtProjectId    string                    `json:"dbt_project_id"`
-		DbtModelId      string                    `json:"dbt_model_id"`
-		NextRun         string                    `json:"next_run"`
-		CreatedAt       string                    `json:"created_at"`
-		RunTests        bool                      `json:"run_tests"`
-		ModelIds        []string                  `json:"model_ids"`
-		ConnectorIds    []string                  `json:"connector_ids"`
+		ID              string                            `json:"id"`
+		Status          string                            `json:"status"`
+		Schedule        dbtTransformationScheduleResponse `json:"schedule"`
+		LastRun         string                            `json:"last_run"`
+		OutputModelName string                            `json:"output_model_name"`
+		DbtProjectId    string                            `json:"dbt_project_id"`
+		DbtModelId      string                            `json:"dbt_model_id"`
+		NextRun         string                            `json:"next_run"`
+		CreatedAt       string                            `json:"created_at"`
+		RunTests        string                            `json:"run_tests"`
+		ModelIds        []string                          `json:"model_ids"`
+		ConnectorIds    []string                          `json:"connector_ids"`
 	} `json:"data"`
 }
 
@@ -59,13 +59,13 @@ func (s *DbtTransformationModifyService) DbtTransformationId(value string) *DbtT
 	return s
 }
 
-func (s *DbtTransformationModifyService) Schedule(value DbtTransformationSchedule) *DbtTransformationModifyService {
-	s.schedule = &value
+func (s *DbtTransformationModifyService) Schedule(value *DbtTransformationSchedule) *DbtTransformationModifyService {
+	s.schedule = value
 	return s
 }
 
 func (s *DbtTransformationModifyService) RunTests(value bool) *DbtTransformationModifyService {
-	s.runTests = value
+	s.runTests = &value
 	return s
 }
 
@@ -76,8 +76,8 @@ func (s *DbtTransformationModifyService) Do(ctx context.Context) (DbtTransformat
 		return response, fmt.Errorf("missing required dbt transformation ID")
 	}
 
-	url := fmt.Sprintf("%v/dbt/transformations", s.c.baseURL)
-	expectedStatus := 201
+	url := fmt.Sprintf("%v/dbt/transformations/%v", s.c.baseURL, *s.dbtTransformationId)
+	expectedStatus := 200
 
 	headers := s.c.commonHeaders()
 	headers["Content-Type"] = "application/json"
@@ -88,7 +88,7 @@ func (s *DbtTransformationModifyService) Do(ctx context.Context) (DbtTransformat
 	}
 
 	r := request{
-		method:  "POST",
+		method:  "PATCH",
 		url:     url,
 		body:    reqBody,
 		queries: nil,
