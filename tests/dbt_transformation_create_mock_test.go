@@ -44,13 +44,20 @@ func TestNewDbtTransformationCreateFullMappingMock(t *testing.T) {
 				return response, nil
 			})
 
-	// act
-	response, err := ftClient.NewDbtTransformationCreateService().
+	schedule := fivetran.NewDbtTransformationSchedule().
+		ScheduleType(SCHEDULE_TYPE).
+		DaysOfWeek(daysOfWeek).
+		Interval(INTERVAL).
+		TimeOfDay(TIME_OF_DAY)
+
+	service := ftClient.NewDbtTransformationCreateService().
 		DbtModelId(DBT_MODEL_ID).
 		RunTests(RUN_TESTS).
 		ProjectId(DBT_PROJECT_ID).
-		Schedule(prepareSchedule()).
-		Do(context.Background())
+		Schedule(schedule)
+
+	// act
+	response, err := service.Do(context.Background())
 
 	if err != nil {
 		t.Logf("%+v\n", response)
@@ -112,15 +119,6 @@ func prepareDbtTransformationResponse() string {
 		MODEL_ID,
 		CONNECTOR_ID,
 	)
-}
-
-func prepareSchedule() *fivetran.DbtTransformationSchedule {
-	schedule := fivetran.NewDbtTransformationSchedule().
-		ScheduleType(SCHEDULE_TYPE).
-		DaysOfWeek(daysOfWeek).
-		Interval(INTERVAL).
-		TimeOfDay(TIME_OF_DAY)
-	return schedule
 }
 
 func assertDbtTransformationRequest(t *testing.T, request map[string]interface{}) {
