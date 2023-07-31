@@ -10,14 +10,14 @@ type DbtTransformationCreateService struct {
 	c          *Client
 	dbtModelId *string
 	schedule   *DbtTransformationSchedule
-	runTests   bool
+	runTests   *bool
 	projectId  *string
 }
 
 type dbtTransformationCreateRequest struct {
 	DbtModelId *string                           `json:"dbt_model_id,omitempty"`
 	Schedule   *dbtTransformationScheduleRequest `json:"schedule,omitempty"`
-	RunTests   bool                              `json:"run_tests,omitempty"`
+	RunTests   *bool                             `json:"run_tests,omitempty"`
 	ProjectId  *string                           `json:"project_id,omitempty"`
 }
 
@@ -25,18 +25,18 @@ type DbtTransformationCreateResponse struct {
 	Code    string `json:"code"`
 	Message string `json:"message"`
 	Data    struct {
-		ID              string                    `json:"id"`
-		Status          string                    `json:"status"`
-		Schedule        DbtTransformationSchedule `json:"schedule"`
-		LastRun         string                    `json:"last_run"`
-		OutputModelName string                    `json:"output_model_name"`
-		DbtProjectId    string                    `json:"dbt_project_id"`
-		DbtModelId      string                    `json:"dbt_model_id"`
-		NextRun         string                    `json:"next_run"`
-		CreatedAt       string                    `json:"created_at"`
-		RunTests        bool                      `json:"run_tests"`
-		ModelIds        []string                  `json:"model_ids"`
-		ConnectorIds    []string                  `json:"connector_ids"`
+		ID              string                            `json:"id"`
+		Status          string                            `json:"status"`
+		Schedule        dbtTransformationScheduleResponse `json:"schedule"`
+		LastRun         string                            `json:"last_run"`
+		OutputModelName string                            `json:"output_model_name"`
+		DbtProjectId    string                            `json:"dbt_project_id"`
+		DbtModelId      string                            `json:"dbt_model_id"`
+		NextRun         string                            `json:"next_run"`
+		CreatedAt       string                            `json:"created_at"`
+		RunTests        string                            `json:"run_tests"`
+		ModelIds        []string                          `json:"model_ids"`
+		ConnectorIds    []string                          `json:"connector_ids"`
 	} `json:"data"`
 }
 
@@ -64,13 +64,13 @@ func (s *DbtTransformationCreateService) DbtModelId(value string) *DbtTransforma
 	return s
 }
 
-func (s *DbtTransformationCreateService) Schedule(value DbtTransformationSchedule) *DbtTransformationCreateService {
-	s.schedule = &value
+func (s *DbtTransformationCreateService) Schedule(value *DbtTransformationSchedule) *DbtTransformationCreateService {
+	s.schedule = value
 	return s
 }
 
 func (s *DbtTransformationCreateService) RunTests(value bool) *DbtTransformationCreateService {
-	s.runTests = value
+	s.runTests = &value
 	return s
 }
 
