@@ -13,7 +13,7 @@ func TestNewDbtTransformationModifyE2E(t *testing.T) {
 	dbtTransformationId := CreateTempDbtTransformation(t)
 	details, err := Client.NewDbtTransformationModifyService().
 		DbtTransformationId(dbtTransformationId).
-		Schedule(*fivetran.NewDbtTransformationSchedule().
+		Schedule(fivetran.NewDbtTransformationSchedule().
 			ScheduleType("INTEGRATED").
 			DaysOfWeek([]string{}).
 			Interval(0).
