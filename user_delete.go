@@ -13,7 +13,7 @@ type UserDeleteService struct {
 	userID *string
 }
 
-type userDeleteResponse struct {
+type UserDeleteResponse struct {
 	Code    string `json:"code"`
 	Message string `json:"message"`
 }
@@ -27,8 +27,8 @@ func (s *UserDeleteService) UserID(value string) *UserDeleteService {
 	return s
 }
 
-func (s *UserDeleteService) Do(ctx context.Context) (userDeleteResponse, error) {
-	var response userDeleteResponse
+func (s *UserDeleteService) Do(ctx context.Context) (UserDeleteResponse, error) {
+	var response UserDeleteResponse
 
 	if s.userID == nil {
 		return response, fmt.Errorf("missing required UserId")

@@ -14,22 +14,24 @@ type UserDetailsService struct {
 	userID *string
 }
 
+type UserDetailsData struct {
+	ID         string    `json:"id"`
+	Email      string    `json:"email"`
+	GivenName  string    `json:"given_name"`
+	FamilyName string    `json:"family_name"`
+	Verified   *bool     `json:"verified"`
+	Invited    *bool     `json:"invited"`
+	Picture    string    `json:"picture"`
+	Phone      string    `json:"phone"`
+	LoggedInAt time.Time `json:"logged_in_at"`
+	CreatedAt  time.Time `json:"created_at"`
+	Role       string    `json:"role"`
+}
+
 type UserDetailsResponse struct {
-	Code    string `json:"code"`
-	Message string `json:"message"`
-	Data    struct {
-		ID         string    `json:"id"`
-		Email      string    `json:"email"`
-		GivenName  string    `json:"given_name"`
-		FamilyName string    `json:"family_name"`
-		Verified   *bool     `json:"verified"`
-		Invited    *bool     `json:"invited"`
-		Picture    string    `json:"picture"`
-		Phone      string    `json:"phone"`
-		LoggedInAt time.Time `json:"logged_in_at"`
-		CreatedAt  time.Time `json:"created_at"`
-		Role       string    `json:"role"`
-	} `json:"data"`
+	Code    string          `json:"code"`
+	Message string          `json:"message"`
+	Data    UserDetailsData `json:"data"`
 }
 
 func (c *Client) NewUserDetails() *UserDetailsService {
