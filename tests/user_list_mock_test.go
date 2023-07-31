@@ -168,14 +168,12 @@ func assertUsersListResponse(t *testing.T, response fivetran.UsersListResponse, 
 	}
 }
 
-// Helper function for comparing nullable boolean values
 func assertNil(t *testing.T, b *bool) {
 	if b != nil {
 		t.Errorf("Expected nil, got: %v", *b)
 	}
 }
 
-// Helper function for comparing time values
 func assertTimeEqual(t *testing.T, actual, expected time.Time) {
 	if !actual.Equal(expected) {
 		t.Errorf("Expected time: %v, got: %v", expected, actual)

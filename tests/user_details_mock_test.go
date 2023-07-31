@@ -18,7 +18,7 @@ const (
 	EXPECTED_USER_GIVEN_NAME    = "John"
 	EXPECTED_USER_FAMILY_NAME   = "White"
 	EXPECTED_USER_VERIFIED      = true
-	EXPECTED_USER_INVITED       = false
+	EXPECTED_USER_INVITED       = true
 	EXPECTED_USER_PICTURE       = "null"
 	EXPECTED_USER_PHONE         = "null"
 	EXPECTED_USER_LOGGED_IN_AT  = "2019-01-03T08:44:45.369Z"
@@ -99,6 +99,7 @@ func prepareUserDetailsResponse() string {
 }
 
 func prepareExpectedUserDetailsResponse() fivetran.UserDetailsResponse {
+	var flag = true
 	return fivetran.UserDetailsResponse{
 		Code:    EXPECTED_USER_RESPONSE_CODE,
 		Message: "",
@@ -107,8 +108,8 @@ func prepareExpectedUserDetailsResponse() fivetran.UserDetailsResponse {
 			Email:      EXPECTED_USER_EMAIL,
 			GivenName:  EXPECTED_USER_GIVEN_NAME,
 			FamilyName: EXPECTED_USER_FAMILY_NAME,
-			Verified:   boolPtr(EXPECTED_USER_VERIFIED),
-			Invited:    boolPtr(EXPECTED_USER_INVITED),
+			Verified:   &flag,
+			Invited:    &flag,
 			Picture:    EXPECTED_USER_PICTURE,
 			Phone:      EXPECTED_USER_PHONE,
 			LoggedInAt: parseTime(EXPECTED_USER_LOGGED_IN_AT),
@@ -136,10 +137,6 @@ func assertUserDetailsResponse(t *testing.T,
 	assertEqual(t, actual.Data.LoggedInAt, expected.Data.LoggedInAt)
 	assertEqual(t, actual.Data.CreatedAt, expected.Data.CreatedAt)
 	assertEqual(t, actual.Data.Role, expected.Data.Role)
-}
-
-func boolPtr(value bool) *bool {
-	return &value
 }
 
 func parseTime(timeStr string) time.Time {
