@@ -9,7 +9,7 @@ import (
 // DbtProjectDetailsService implements the Dbt management, retrive dbt details api
 // Ref. TODO add link
 type DbtProjectDetailsService struct {
-	c     *fivetran.Client
+	c     *Client
 	dbtID *string
 }
 
@@ -48,7 +48,7 @@ func (s *DbtProjectDetailsService) do(ctx context.Context, response any) error {
 		return fmt.Errorf("missing required DbtID")
 	}
 
-	url := fmt.Sprintf("%v/dbt/projects/%v", s.c.BaseURL, *s.dbtID)
+	url := fmt.Sprintf("%v/dbt/projects/%v", s.c.baseURL, *s.dbtID)
 	expectedStatus := 200
 
 	headers := s.c.commonHeaders()
