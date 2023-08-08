@@ -6,29 +6,29 @@ import (
 	"fmt"
 )
 
-// DestinationModifyService implements the Destination Management, Modify a Destination API.
-// Ref. https://fivetran.com/docs/rest-api/destinations#modifyadestination
-type DestinationModifyService struct {
+// ExternalLoggingModifyService implements the Log Management, Modify a Log Service API.
+// Ref. https://fivetran.com/docs/rest-api/log-service-management#updatealogservice
+type ExternalLoggingModifyService struct {
 	c                 *Client
-	destinationID     *string
+	externalLoggingID     *string
 	region            *string
 	timeZoneOffset    *string
-	config            *DestinationConfig
+	config            *ExternalLoggingConfig
 	trustCertificates *bool
 	trustFingerprints *bool
 	runSetupTests     *bool
 }
 
-type destinationModifyRequest struct {
+type externalLoggingModifyRequest struct {
 	Region            *string                   `json:"region,omitempty"`
 	TimeZoneOffset    *string                   `json:"time_zone_offset,omitempty"`
-	Config            *destinationConfigRequest `json:"config,omitempty"`
+	Config            *externalLoggingConfigRequest `json:"config,omitempty"`
 	TrustCertificates *bool                     `json:"trust_certificates,omitempty"`
 	TrustFingerprints *bool                     `json:"trust_fingerprints,omitempty"`
 	RunSetupTests     *bool                     `json:"run_setup_tests,omitempty"`
 }
 
-type DestinationModifyResponse struct {
+type ExternalLoggingModifyResponse struct {
 	Code    string `json:"code"`
 	Message string `json:"message"`
 	Data    struct {
@@ -43,22 +43,22 @@ type DestinationModifyResponse struct {
 			Status  string `json:"status"`
 			Message string `json:"message"`
 		} `json:"setup_tests"`
-		Config DestinationConfigResponse `json:"config"`
+		Config ExternalLoggingConfigResponse `json:"config"`
 	} `json:"data"`
 }
 
-func (c *Client) NewDestinationModify() *DestinationModifyService {
-	return &DestinationModifyService{c: c}
+func (c *Client) NewExternalLoggingModify() *ExternalLoggingModifyService {
+	return &ExternalLoggingModifyService{c: c}
 }
 
-func (s *DestinationModifyService) request() *destinationModifyRequest {
-	var config *destinationConfigRequest
+func (s *ExternalLoggingModifyService) request() *externalLoggingModifyRequest {
+	var config *externalLoggingConfigRequest
 
 	if s.config != nil {
 		config = s.config.request()
 	}
 
-	return &destinationModifyRequest{
+	return &externalLoggingModifyRequest{
 		Region:            s.region,
 		TimeZoneOffset:    s.timeZoneOffset,
 		Config:            config,
@@ -68,49 +68,49 @@ func (s *DestinationModifyService) request() *destinationModifyRequest {
 	}
 }
 
-func (s *DestinationModifyService) DestinationID(value string) *DestinationModifyService {
-	s.destinationID = &value
+func (s *ExternalLoggingModifyService) ExternalLoggingID(value string) *ExternalLoggingModifyService {
+	s.externalLoggingID = &value
 	return s
 }
 
-func (s *DestinationModifyService) Region(value string) *DestinationModifyService {
+func (s *ExternalLoggingModifyService) Region(value string) *ExternalLoggingModifyService {
 	s.region = &value
 	return s
 }
 
-func (s *DestinationModifyService) TimeZoneOffset(value string) *DestinationModifyService {
+func (s *ExternalLoggingModifyService) TimeZoneOffset(value string) *ExternalLoggingModifyService {
 	s.timeZoneOffset = &value
 	return s
 }
 
-func (s *DestinationModifyService) Config(value *DestinationConfig) *DestinationModifyService {
+func (s *ExternalLoggingModifyService) Config(value *ExternalLoggingConfig) *ExternalLoggingModifyService {
 	s.config = value
 	return s
 }
 
-func (s *DestinationModifyService) TrustCertificates(value bool) *DestinationModifyService {
+func (s *ExternalLoggingModifyService) TrustCertificates(value bool) *ExternalLoggingModifyService {
 	s.trustCertificates = &value
 	return s
 }
 
-func (s *DestinationModifyService) TrustFingerprints(value bool) *DestinationModifyService {
+func (s *ExternalLoggingModifyService) TrustFingerprints(value bool) *ExternalLoggingModifyService {
 	s.trustFingerprints = &value
 	return s
 }
 
-func (s *DestinationModifyService) RunSetupTests(value bool) *DestinationModifyService {
+func (s *ExternalLoggingModifyService) RunSetupTests(value bool) *ExternalLoggingModifyService {
 	s.runSetupTests = &value
 	return s
 }
 
-func (s *DestinationModifyService) Do(ctx context.Context) (DestinationModifyResponse, error) {
-	var response DestinationModifyResponse
+func (s *ExternalLoggingModifyService) Do(ctx context.Context) (ExternalLoggingModifyResponse, error) {
+	var response ExternalLoggingModifyResponse
 
-	if s.destinationID == nil {
-		return response, fmt.Errorf("missing required DestinationID")
+	if s.externalLoggingID == nil {
+		return response, fmt.Errorf("missing required ExternalLoggingID")
 	}
 
-	url := fmt.Sprintf("%v/destinations/%v", s.c.baseURL, *s.destinationID)
+	url := fmt.Sprintf("%v/external-logging/%v", s.c.baseURL, *s.externalLoggingID)
 	expectedStatus := 200
 
 	headers := s.c.commonHeaders()

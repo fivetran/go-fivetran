@@ -6,32 +6,25 @@ import (
 	"fmt"
 )
 
-// DestinationCreateService implements the Destination Management, Create a Destination API.
-// Ref. https://fivetran.com/docs/rest-api/destinations#createadestination
-type DestinationCreateService struct {
+// ExternalLoggingCreateService implements the Log Management, Create a Log Service API.
+// Ref. https://fivetran.com/docs/rest-api/log-service-management#createalogservice
+type ExternalLoggingCreateService struct {
 	c                 *Client
 	groupID           *string
 	service           *string
 	region            *string
 	timeZoneOffset    *string
-	config            *DestinationConfig
-	trustCertificates *bool
-	trustFingerprints *bool
-	runSetupTests     *bool
+	enable 			  *bool
+	config            *ExternalLoggingConfig
 }
 
-type destinationCreateRequest struct {
-	GroupID           *string                   `json:"group_id,omitempty"`
-	Service           *string                   `json:"service,omitempty"`
-	Region            *string                   `json:"region,omitempty"`
-	TimeZoneOffset    *string                   `json:"time_zone_offset,omitempty"`
-	Config            *destinationConfigRequest `json:"config,omitempty"`
-	TrustCertificates *bool                     `json:"trust_certificates,omitempty"`
-	TrustFingerprints *bool                     `json:"trust_fingerprints,omitempty"`
-	RunSetupTests     *bool                     `json:"run_setup_tests,omitempty"`
+type externalLoggingCreateRequest struct {
+	GroupID           *string                  		`json:"group_id,omitempty"`
+	Service           *string                  		`json:"service,omitempty"`
+	Config            *externalLoggingConfigRequest `json:"config,omitempty"`
 }
 
-type DestinationCreateResponse struct {
+type ExternalLoggingCreateResponse struct {
 	Code    string `json:"code"`
 	Message string `json:"message"`
 	Data    struct {
@@ -46,22 +39,22 @@ type DestinationCreateResponse struct {
 			Status  string `json:"status"`
 			Message string `json:"message"`
 		} `json:"setup_tests"`
-		Config DestinationConfigResponse `json:"config"`
+		Config ExternalLoggingConfigResponse `json:"config"`
 	} `json:"data"`
 }
 
-func (c *Client) NewDestinationCreate() *DestinationCreateService {
-	return &DestinationCreateService{c: c}
+func (c *Client) NewExternalLoggingCreate() *ExternalLoggingCreateService {
+	return &ExternalLoggingCreateService{c: c}
 }
 
-func (s *DestinationCreateService) request() *destinationCreateRequest {
-	var config *destinationConfigRequest
+func (s *ExternalLoggingCreateService) request() *externalLoggingCreateRequest {
+	var config *externalLoggingConfigRequest
 
 	if s.config != nil {
 		config = s.config.request()
 	}
 
-	return &destinationCreateRequest{
+	return &externalLoggingCreateRequest{
 		GroupID:           s.groupID,
 		Service:           s.service,
 		Region:            s.region,
@@ -73,49 +66,49 @@ func (s *DestinationCreateService) request() *destinationCreateRequest {
 	}
 }
 
-func (s *DestinationCreateService) GroupID(value string) *DestinationCreateService {
+func (s *ExternalLoggingCreateService) GroupID(value string) *ExternalLoggingCreateService {
 	s.groupID = &value
 	return s
 }
 
-func (s *DestinationCreateService) Service(value string) *DestinationCreateService {
+func (s *ExternalLoggingCreateService) Service(value string) *ExternalLoggingCreateService {
 	s.service = &value
 	return s
 }
 
-func (s *DestinationCreateService) Region(value string) *DestinationCreateService {
+func (s *ExternalLoggingCreateService) Region(value string) *ExternalLoggingCreateService {
 	s.region = &value
 	return s
 }
 
-func (s *DestinationCreateService) TimeZoneOffset(value string) *DestinationCreateService {
+func (s *ExternalLoggingCreateService) TimeZoneOffset(value string) *ExternalLoggingCreateService {
 	s.timeZoneOffset = &value
 	return s
 }
 
-func (s *DestinationCreateService) Config(value *DestinationConfig) *DestinationCreateService {
+func (s *ExternalLoggingCreateService) Config(value *ExternalLoggingConfig) *ExternalLoggingCreateService {
 	s.config = value
 	return s
 }
 
-func (s *DestinationCreateService) TrustCertificates(value bool) *DestinationCreateService {
+func (s *ExternalLoggingCreateService) TrustCertificates(value bool) *ExternalLoggingCreateService {
 	s.trustCertificates = &value
 	return s
 }
 
-func (s *DestinationCreateService) TrustFingerprints(value bool) *DestinationCreateService {
+func (s *ExternalLoggingCreateService) TrustFingerprints(value bool) *ExternalLoggingCreateService {
 	s.trustFingerprints = &value
 	return s
 }
 
-func (s *DestinationCreateService) RunSetupTests(value bool) *DestinationCreateService {
+func (s *ExternalLoggingCreateService) RunSetupTests(value bool) *ExternalLoggingCreateService {
 	s.runSetupTests = &value
 	return s
 }
 
-func (s *DestinationCreateService) Do(ctx context.Context) (DestinationCreateResponse, error) {
-	var response DestinationCreateResponse
-	url := fmt.Sprintf("%v/destinations", s.c.baseURL)
+func (s *ExternalLoggingCreateService) Do(ctx context.Context) (ExternalLoggingCreateResponse, error) {
+	var response ExternalLoggingCreateResponse
+	url := fmt.Sprintf("%v/external-logging", s.c.baseURL)
 	expectedStatus := 201
 
 	headers := s.c.commonHeaders()

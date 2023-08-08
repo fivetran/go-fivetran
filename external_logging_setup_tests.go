@@ -6,21 +6,21 @@ import (
 	"fmt"
 )
 
-// DestinationSetupTestsService implements the Destination Management, Run destination setup tests API.
-// Ref. https://fivetran.com/docs/rest-api/destinations#rundestinationsetuptests
-type DestinationSetupTestsService struct {
+// ExternalLoggingSetupTestsService implements the Log Management, Run Log service setup tests API.
+// Ref. https://fivetran.com/docs/rest-api/log-service-management#runlogservicesetuptests
+type ExternalLoggingSetupTestsService struct {
 	c                 *Client
-	destinationID     *string
+	externalLoggingID     *string
 	trustCertificates *bool
 	trustFingerprints *bool
 }
 
-type destinationSetupTestsRequest struct {
+type externalLoggingSetupTestsRequest struct {
 	TrustCertificates *bool `json:"trust_certificates,omitempty"`
 	TrustFingerprints *bool `json:"trust_fingerprints,omitempty"`
 }
 
-type DestinationSetupTestsResponse struct {
+type ExternalLoggingSetupTestsResponse struct {
 	Code    string `json:"code"`
 	Message string `json:"message"`
 	Data    struct {
@@ -35,44 +35,44 @@ type DestinationSetupTestsResponse struct {
 			Status  string `json:"status"`
 			Message string `json:"message"`
 		} `json:"setup_tests"`
-		Config DestinationConfigResponse `json:"config"`
+		Config ExternalLoggingConfigResponse `json:"config"`
 	} `json:"data"`
 }
 
-func (c *Client) NewDestinationSetupTests() *DestinationSetupTestsService {
-	return &DestinationSetupTestsService{c: c}
+func (c *Client) NewExternalLoggingSetupTests() *ExternalLoggingSetupTestsService {
+	return &ExternalLoggingSetupTestsService{c: c}
 }
 
-func (s *DestinationSetupTestsService) request() *destinationSetupTestsRequest {
-	return &destinationSetupTestsRequest{
+func (s *ExternalLoggingSetupTestsService) request() *externalLoggingSetupTestsRequest {
+	return &externalLoggingSetupTestsRequest{
 		TrustCertificates: s.trustCertificates,
 		TrustFingerprints: s.trustFingerprints,
 	}
 }
 
-func (s *DestinationSetupTestsService) DestinationID(value string) *DestinationSetupTestsService {
-	s.destinationID = &value
+func (s *ExternalLoggingSetupTestsService) ExternalLoggingID(value string) *ExternalLoggingSetupTestsService {
+	s.externalLoggingID = &value
 	return s
 }
 
-func (s *DestinationSetupTestsService) TrustCertificates(value bool) *DestinationSetupTestsService {
+func (s *ExternalLoggingSetupTestsService) TrustCertificates(value bool) *ExternalLoggingSetupTestsService {
 	s.trustCertificates = &value
 	return s
 }
 
-func (s *DestinationSetupTestsService) TrustFingerprints(value bool) *DestinationSetupTestsService {
+func (s *ExternalLoggingSetupTestsService) TrustFingerprints(value bool) *ExternalLoggingSetupTestsService {
 	s.trustFingerprints = &value
 	return s
 }
 
-func (s *DestinationSetupTestsService) Do(ctx context.Context) (DestinationSetupTestsResponse, error) {
-	var response DestinationSetupTestsResponse
+func (s *ExternalLoggingSetupTestsService) Do(ctx context.Context) (ExternalLoggingSetupTestsResponse, error) {
+	var response ExternalLoggingSetupTestsResponse
 
-	if s.destinationID == nil {
-		return response, fmt.Errorf("missing required DestinationID")
+	if s.externalLoggingID == nil {
+		return response, fmt.Errorf("missing required ExternalLoggingID")
 	}
 
-	url := fmt.Sprintf("%v/destinations/%v/test", s.c.baseURL, *s.destinationID)
+	url := fmt.Sprintf("%v/external-logging/%v/test", s.c.baseURL, *s.externalLoggingID)
 	expectedStatus := 200
 
 	headers := s.c.commonHeaders()

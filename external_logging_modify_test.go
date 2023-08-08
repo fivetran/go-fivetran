@@ -7,13 +7,13 @@ import (
 	"github.com/fivetran/go-fivetran"
 )
 
-func TestNewDestinationModifyE2E(t *testing.T) {
-	destinationId := CreateTempDestination(t)
-	details, err := Client.NewDestinationModify().DestinationID(destinationId).
+func TestNewExternalLoggingModifyE2E(t *testing.T) {
+	externalLoggingId := CreateTempExternalLogging(t)
+	details, err := Client.NewExternalLoggingModify().ExternalLoggingID(externalLoggingId).
 		Region("GCP_AUSTRALIA_SOUTHEAST1").
 		TimeZoneOffset("+10").
 		RunSetupTests(false).
-		Config(fivetran.NewDestinationConfig().
+		Config(fivetran.NewExternalLoggingConfig().
 			Host("updated_host.snowflakecomputing.com").
 			Port(444).
 			Database("fivetran_updated").
@@ -29,8 +29,8 @@ func TestNewDestinationModifyE2E(t *testing.T) {
 
 	AssertEqual(t, details.Code, "Success")
 	AssertNotEmpty(t, details.Message)
-	AssertEqual(t, details.Data.ID, destinationId)
-	AssertEqual(t, details.Data.GroupID, destinationId)
+	AssertEqual(t, details.Data.ID, externalLoggingId)
+	AssertEqual(t, details.Data.GroupID, externalLoggingId)
 	AssertEqual(t, details.Data.Service, "snowflake")
 	AssertEqual(t, details.Data.Region, "GCP_AUSTRALIA_SOUTHEAST1")
 	AssertEqual(t, details.Data.TimeZoneOffset, "+10")

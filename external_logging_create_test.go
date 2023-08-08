@@ -7,13 +7,13 @@ import (
 	"github.com/fivetran/go-fivetran"
 )
 
-func TestNewDestinationCreateE2E(t *testing.T) {
-	created, err := Client.NewDestinationCreate().
+func TestNewExternalLoggingCreateE2E(t *testing.T) {
+	created, err := Client.NewExternalLoggingCreate().
 		GroupID(PredefinedGroupId).
 		Service("snowflake").
 		TimeZoneOffset("+10").
 		RunSetupTests(false).
-		Config(fivetran.NewDestinationConfig().
+		Config(fivetran.NewExternalLoggingConfig().
 			Host("your-account.snowflakecomputing.com").
 			Port(443).
 			Database("fivetran").
@@ -41,5 +41,5 @@ func TestNewDestinationCreateE2E(t *testing.T) {
 	AssertEqual(t, created.Data.Config.User, "fivetran_user")
 	AssertEqual(t, created.Data.Config.Password, "******")
 
-	t.Cleanup(func() { DeleteDestination(t, PredefinedGroupId) })
+	t.Cleanup(func() { DeleteExternalLogging(t, PredefinedGroupId) })
 }

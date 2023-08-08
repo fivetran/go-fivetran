@@ -6,35 +6,35 @@ import (
 	"fmt"
 )
 
-// DestinationDeleteService implements the Destination Management, Delete a destination API.
-// Ref. https://fivetran.com/docs/rest-api/destinations#deleteadestination
-type DestinationDeleteService struct {
+// ExternalLoggingDeleteService implements the Log Management, Delete a Log Service API.
+// Ref. https://fivetran.com/docs/rest-api/log-service-management#deletealogservice
+type ExternalLoggingDeleteService struct {
 	c             *Client
-	destinationID *string
+	externalLoggingID *string
 }
 
-type DestinationDeleteResponse struct {
+type ExternalLoggingDeleteResponse struct {
 	Code    string `json:"code"`
 	Message string `json:"message"`
 }
 
-func (c *Client) NewDestinationDelete() *DestinationDeleteService {
-	return &DestinationDeleteService{c: c}
+func (c *Client) NewExternalLoggingDelete() *ExternalLoggingDeleteService {
+	return &ExternalLoggingDeleteService{c: c}
 }
 
-func (s *DestinationDeleteService) DestinationID(value string) *DestinationDeleteService {
-	s.destinationID = &value
+func (s *ExternalLoggingDeleteService) ExternalLoggingID(value string) *ExternalLoggingDeleteService {
+	s.externalLoggingID = &value
 	return s
 }
 
-func (s *DestinationDeleteService) Do(ctx context.Context) (DestinationDeleteResponse, error) {
-	var response DestinationDeleteResponse
+func (s *ExternalLoggingDeleteService) Do(ctx context.Context) (ExternalLoggingDeleteResponse, error) {
+	var response ExternalLoggingDeleteResponse
 
-	if s.destinationID == nil {
-		return response, fmt.Errorf("missing required DestinationID")
+	if s.externalLoggingID == nil {
+		return response, fmt.Errorf("missing required ExternalLoggingID")
 	}
 
-	url := fmt.Sprintf("%v/destinations/%v", s.c.baseURL, *s.destinationID)
+	url := fmt.Sprintf("%v/external-logging/%v", s.c.baseURL, *s.externalLoggingID)
 	expectedStatus := 200
 
 	headers := s.c.commonHeaders()

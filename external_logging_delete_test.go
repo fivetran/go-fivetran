@@ -6,9 +6,9 @@ import (
 	"testing"
 )
 
-func TestNewDestinationDeleteE2E(t *testing.T) {
-	destinationId := CreateDestination(t)
-	deleted, err := Client.NewDestinationDelete().DestinationID(destinationId).Do(context.Background())
+func TestNewExternalLoggingDeleteE2E(t *testing.T) {
+	externalLoggingId := CreateExternalLogging(t)
+	deleted, err := Client.NewExternalLoggingDelete().ExternalLoggingID(externalLoggingId).Do(context.Background())
 
 	if err != nil {
 		t.Logf("%+v\n", deleted)
@@ -17,5 +17,5 @@ func TestNewDestinationDeleteE2E(t *testing.T) {
 
 	AssertEqual(t, deleted.Code, "Success")
 	AssertNotEmpty(t, deleted.Message)
-	AssertEqual(t, strings.Contains(deleted.Message, destinationId), true)
+	AssertEqual(t, strings.Contains(deleted.Message, externalLoggingId), true)
 }

@@ -6,14 +6,14 @@ import (
 	"fmt"
 )
 
-// DestinationDetailsService implements the Destination Management, Retrieve destination details API.
-// Ref. https://fivetran.com/docs/rest-api/destinations#retrievedestinationdetails
-type DestinationDetailsService struct {
+// ExternalLoggingDetailsService implements the Log Management, Retrieve Log Service details API.
+// Ref. https://fivetran.com/docs/rest-api/log-service-management#retrievelogservicedetails
+type ExternalLoggingDetailsService struct {
 	c             *Client
-	destinationID *string
+	externalLoggingID *string
 }
 
-type DestinationDetailsResponse struct {
+type ExternalLoggingDetailsResponse struct {
 	Code    string `json:"code"`
 	Message string `json:"message"`
 	Data    struct {
@@ -23,27 +23,27 @@ type DestinationDetailsResponse struct {
 		Region         string                    `json:"region"`
 		TimeZoneOffset string                    `json:"time_zone_offset"`
 		SetupStatus    string                    `json:"setup_status"`
-		Config         DestinationConfigResponse `json:"config"`
+		Config         ExternalLoggingConfigResponse `json:"config"`
 	} `json:"data"`
 }
 
-func (c *Client) NewDestinationDetails() *DestinationDetailsService {
-	return &DestinationDetailsService{c: c}
+func (c *Client) NewExternalLoggingDetails() *ExternalLoggingDetailsService {
+	return &ExternalLoggingDetailsService{c: c}
 }
 
-func (s *DestinationDetailsService) DestinationID(value string) *DestinationDetailsService {
-	s.destinationID = &value
+func (s *ExternalLoggingDetailsService) ExternalLoggingID(value string) *ExternalLoggingDetailsService {
+	s.externalLoggingID = &value
 	return s
 }
 
-func (s *DestinationDetailsService) Do(ctx context.Context) (DestinationDetailsResponse, error) {
-	var response DestinationDetailsResponse
+func (s *ExternalLoggingDetailsService) Do(ctx context.Context) (ExternalLoggingDetailsResponse, error) {
+	var response ExternalLoggingDetailsResponse
 
-	if s.destinationID == nil {
-		return response, fmt.Errorf("missing required DestinationID")
+	if s.externalLoggingID == nil {
+		return response, fmt.Errorf("missing required ExternalLoggingID")
 	}
 
-	url := fmt.Sprintf("%v/destinations/%v", s.c.baseURL, *s.destinationID)
+	url := fmt.Sprintf("%v/external-logging/%v", s.c.baseURL, *s.externalLoggingID)
 	expectedStatus := 200
 
 	headers := s.c.commonHeaders()
