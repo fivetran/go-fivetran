@@ -12,15 +12,14 @@ type ExternalLoggingCreateService struct {
 	c                 *Client
 	groupID           *string
 	service           *string
-	region            *string
-	timeZoneOffset    *string
-	enable 			  *bool
+	enabled 		  *bool
 	config            *ExternalLoggingConfig
 }
 
 type externalLoggingCreateRequest struct {
 	GroupID           *string                  		`json:"group_id,omitempty"`
 	Service           *string                  		`json:"service,omitempty"`
+	Enabled 		  *bool							`json:"enabled,omitempty"` 				
 	Config            *externalLoggingConfigRequest `json:"config,omitempty"`
 }
 
@@ -29,16 +28,8 @@ type ExternalLoggingCreateResponse struct {
 	Message string `json:"message"`
 	Data    struct {
 		ID             string `json:"id"`
-		GroupID        string `json:"group_id"`
 		Service        string `json:"service"`
-		Region         string `json:"region"`
-		TimeZoneOffset string `json:"time_zone_offset"`
-		SetupStatus    string `json:"setup_status"`
-		SetupTests     []struct {
-			Title   string `json:"title"`
-			Status  string `json:"status"`
-			Message string `json:"message"`
-		} `json:"setup_tests"`
+		Enabled        bool   `json:"enabled"`
 		Config ExternalLoggingConfigResponse `json:"config"`
 	} `json:"data"`
 }
@@ -57,12 +48,8 @@ func (s *ExternalLoggingCreateService) request() *externalLoggingCreateRequest {
 	return &externalLoggingCreateRequest{
 		GroupID:           s.groupID,
 		Service:           s.service,
-		Region:            s.region,
-		TimeZoneOffset:    s.timeZoneOffset,
-		Config:            config,
-		TrustCertificates: s.trustCertificates,
-		TrustFingerprints: s.trustFingerprints,
-		RunSetupTests:     s.runSetupTests,
+		Enabled:           s.enabled,
+		Config:            config
 	}
 }
 
@@ -76,33 +63,13 @@ func (s *ExternalLoggingCreateService) Service(value string) *ExternalLoggingCre
 	return s
 }
 
-func (s *ExternalLoggingCreateService) Region(value string) *ExternalLoggingCreateService {
-	s.region = &value
-	return s
-}
-
-func (s *ExternalLoggingCreateService) TimeZoneOffset(value string) *ExternalLoggingCreateService {
-	s.timeZoneOffset = &value
+func (s *ExternalLoggingCreateService) Enabled(value bool) *ExternalLoggingCreateService {
+	s.enabled = &value
 	return s
 }
 
 func (s *ExternalLoggingCreateService) Config(value *ExternalLoggingConfig) *ExternalLoggingCreateService {
 	s.config = value
-	return s
-}
-
-func (s *ExternalLoggingCreateService) TrustCertificates(value bool) *ExternalLoggingCreateService {
-	s.trustCertificates = &value
-	return s
-}
-
-func (s *ExternalLoggingCreateService) TrustFingerprints(value bool) *ExternalLoggingCreateService {
-	s.trustFingerprints = &value
-	return s
-}
-
-func (s *ExternalLoggingCreateService) RunSetupTests(value bool) *ExternalLoggingCreateService {
-	s.runSetupTests = &value
 	return s
 }
 

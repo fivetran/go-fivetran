@@ -5,10 +5,10 @@ import (
 	"testing"
 )
 
-func TestNewDestinationDetailsE2E(t *testing.T) {
-	destinationId := CreateTempDestination(t)
+func TestNewExternalLoggingDetailsE2E(t *testing.T) {
+	externalLoggingId := CreateTempExternalLogging(t)
 
-	details, err := Client.NewDestinationDetails().DestinationID(destinationId).Do(context.Background())
+	details, err := Client.NewExternalLoggingDetails().ExternalLoggingID(externalLoggingId).Do(context.Background())
 
 	if err != nil {
 		t.Logf("%+v\n", details)

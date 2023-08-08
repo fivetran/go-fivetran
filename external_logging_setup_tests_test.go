@@ -5,9 +5,9 @@ import (
 	"testing"
 )
 
-func TestNewDestinationSetupTestsE2E(t *testing.T) {
-	destinationId := CreateTempDestination(t)
-	response, err := Client.NewDestinationSetupTests().DestinationID(destinationId).
+func TestNewExternalLoggingSetupTestsE2E(t *testing.T) {
+	externalLoggingId := CreateTempExternalLogging(t)
+	response, err := Client.NewExternalLoggingSetupTests().ExternalLoggingId(externalLoggingId).
 		TrustCertificates(true).
 		TrustFingerprints(true).
 		Do(context.Background())
@@ -19,8 +19,8 @@ func TestNewDestinationSetupTestsE2E(t *testing.T) {
 
 	AssertEqual(t, response.Code, "Success")
 	AssertNotEmpty(t, response.Message)
-	AssertEqual(t, response.Data.ID, destinationId)
-	AssertEqual(t, response.Data.GroupID, destinationId)
+	AssertEqual(t, response.Data.ID, externalLoggingId)
+	AssertEqual(t, response.Data.GroupID, externalLoggingId)
 	AssertEqual(t, response.Data.Service, "snowflake")
 	AssertEqual(t, response.Data.Region, "GCP_US_EAST4")
 	AssertEqual(t, response.Data.TimeZoneOffset, "+10")

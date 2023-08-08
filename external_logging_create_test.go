@@ -11,15 +11,10 @@ func TestNewExternalLoggingCreateE2E(t *testing.T) {
 	created, err := Client.NewExternalLoggingCreate().
 		GroupID(PredefinedGroupId).
 		Service("snowflake").
-		TimeZoneOffset("+10").
-		RunSetupTests(false).
+		Enabled(true).
 		Config(fivetran.NewExternalLoggingConfig().
-			Host("your-account.snowflakecomputing.com").
-			Port(443).
-			Database("fivetran").
-			Auth("PASSWORD").
-			User("fivetran_user").
-			Password("123456")).
+			WorkspaceId("workspace_id").
+			PrimaryKey("PASSWORD").
 		Do(context.Background())
 
 	if err != nil {
@@ -31,15 +26,9 @@ func TestNewExternalLoggingCreateE2E(t *testing.T) {
 	AssertNotEmpty(t, created.Message)
 	AssertEqual(t, created.Data.ID, PredefinedGroupId)
 	AssertEqual(t, created.Data.Service, "snowflake")
-	AssertEqual(t, created.Data.Region, "GCP_US_EAST4")
-	AssertEqual(t, created.Data.TimeZoneOffset, "+10")
-	AssertEqual(t, created.Data.SetupStatus, "incomplete")
-	AssertEqual(t, created.Data.Config.Host, "your-account.snowflakecomputing.com")
-	AssertEqual(t, created.Data.Config.Port, "443")
-	AssertEqual(t, created.Data.Config.Database, "fivetran")
-	AssertEqual(t, created.Data.Config.Auth, "PASSWORD")
-	AssertEqual(t, created.Data.Config.User, "fivetran_user")
-	AssertEqual(t, created.Data.Config.Password, "******")
-
+	AssertEqual(t, created.Data.Enabled, true)
+	AssertEqual(t, created.Data.Config.WorkspaceId, "workspace_id")
+	AssertEqual(t, created.Data.Config.PrimaryKey, "PASSWORD")
+	
 	t.Cleanup(func() { DeleteExternalLogging(t, PredefinedGroupId) })
 }
