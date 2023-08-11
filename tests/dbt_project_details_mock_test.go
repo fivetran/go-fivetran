@@ -59,7 +59,7 @@ func TestDbtProjectDetailsService(t *testing.T) {
 
 	service := client.NewDbtDetails()
 
-	service.DbtID(dbtProjectID)
+	service.DbtProjectID(dbtProjectID)
 
 	ctx := context.Background()
 
