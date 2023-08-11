@@ -38,8 +38,8 @@ func (c *Client) NewDbtDetails() *DbtProjectDetailsService {
 	return &DbtProjectDetailsService{c: c}
 }
 
-func (s *DbtProjectDetailsService) DbtID(value string) *DbtProjectDetailsService {
-	s.dbtID = &value
+func (s *DbtProjectDetailsService) DbtProjectID(value string) *DbtProjectDetailsService {
+	s.dbtProjectID = &value
 	return s
 }
 
