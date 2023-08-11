@@ -45,7 +45,7 @@ func (s *DbtProjectDetailsService) DbtProjectID(value string) *DbtProjectDetails
 
 func (s *DbtProjectDetailsService) do(ctx context.Context, response any) error {
 	if s.dbtID == nil {
-		return fmt.Errorf("missing required DbtID")
+		return fmt.Errorf("missing required DbtProjectId")
 	}
 
 	url := fmt.Sprintf("%v/dbt/projects/%v", s.c.baseURL, *s.dbtID)
