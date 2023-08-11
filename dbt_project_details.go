@@ -7,7 +7,7 @@ import (
 )
 
 type DbtProjectDetailsService struct {
-	c     *Client
+	c            *Client
 	dbtProjectID *string
 }
 
@@ -42,7 +42,7 @@ func (s *DbtProjectDetailsService) DbtProjectID(value string) *DbtProjectDetails
 }
 
 func (s *DbtProjectDetailsService) do(ctx context.Context, response any) error {
-	if s.dbtID == nil {
+	if s.dbtProjectID == nil {
 		return fmt.Errorf("missing required DbtProjectId")
 	}
 

@@ -116,4 +116,6 @@ func assertDbtProjectDetailsResponse(t *testing.T, actual, expected fivetran.Dbt
 	assertEqual(t, expected.Data.TargetName, actual.Data.TargetName)
 	assertEqual(t, expected.Data.FolderPath, actual.Data.FolderPath)
 	assertEqual(t, expected.Data.GitRemoteUrl, actual.Data.GitRemoteUrl)
+	assertEqual(t, expected.Data.CreatedById, actual.Data.CreatedById)
+	assertEqual(t, expected.Data.GitBranch, actual.Data.GitBranch)
 }
