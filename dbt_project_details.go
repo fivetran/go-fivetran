@@ -48,7 +48,7 @@ func (s *DbtProjectDetailsService) do(ctx context.Context, response any) error {
 		return fmt.Errorf("missing required DbtProjectId")
 	}
 
-	url := fmt.Sprintf("%v/dbt/projects/%v", s.c.baseURL, *s.dbtID)
+	url := fmt.Sprintf("%v/dbt/projects/%v", s.c.baseURL, *s.dbtProjectID)
 	expectedStatus := 200
 
 	headers := s.c.commonHeaders()
