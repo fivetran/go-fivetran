@@ -6,8 +6,6 @@ import (
 	"fmt"
 )
 
-// DbtProjectDetailsService implements the Dbt management, retrive dbt details api
-// Ref. TODO add link
 type DbtProjectDetailsService struct {
 	c     *Client
 	dbtProjectID *string
