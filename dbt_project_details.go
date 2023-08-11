@@ -10,7 +10,7 @@ import (
 // Ref. TODO add link
 type DbtProjectDetailsService struct {
 	c     *Client
-	dbtID *string
+	dbtProjectID *string
 }
 
 type DbtProjectDetailsdataBase struct {
