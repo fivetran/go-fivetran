@@ -26,7 +26,7 @@ const defaultBaseURL = "https://api.fivetran.com/v1"
 const restAPIv2 = "application/json;version=2"
 
 // WARNING: Update Agent version on each release!
-const defaultUserAgent = "Go-Fivetran/0.6.8"
+const defaultUserAgent = "Go-Fivetran/0.7.4"
 
 // New receives API Key and API Secret, and returns a new Client with the
 // default HTTP client
