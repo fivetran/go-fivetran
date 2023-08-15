@@ -23,7 +23,7 @@ func main() {
 		NamedRange("range1")
 
 	svc := client.NewConnectorCreate().
-		GroupID("group_id").
+		GroupID("replying_ministry").
 		Service("google_sheets").
 		Config(connConfig).
 		Paused(false).
