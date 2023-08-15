@@ -4,17 +4,17 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"os"
 
 	"github.com/fivetran/go-fivetran"
 )
 
 func main() {
-	apiKey := "_moonbeam_acc_accountworthy_api_key_rbac"  //os.Getenv("FIVETRAN_APIKEY")
-	apiSecret := "_moonbeam_acc_accountworthy_api_secret" //os.Getenv("FIVETRAN_APISECRET")
+	apiKey := os.Getenv("FIVETRAN_APIKEY")
+	apiSecret := os.Getenv("FIVETRAN_APISECRET")
 	fivetran.Debug(true)
 
 	client := fivetran.New(apiKey, apiSecret)
-	client.BaseURL("http://localhost:8001/v1")
 
 	connConfig := fivetran.NewConnectorConfig().
 		Schema("google_sheets2").
@@ -23,7 +23,7 @@ func main() {
 		NamedRange("range1")
 
 	svc := client.NewConnectorCreate().
-		GroupID("_moonbeam").
+		GroupID("group_id").
 		Service("google_sheets").
 		Config(connConfig).
 		Paused(false).
