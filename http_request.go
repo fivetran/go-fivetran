@@ -7,6 +7,12 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"strconv"
+	"time"
+)
+
+const (
+	DEBUG_BACKOFF_DELAY = 60
 )
 
 type request struct {
@@ -16,9 +22,16 @@ type request struct {
 	queries map[string]string
 	headers map[string]string
 	client  HttpClient
+
+	handleRateLimits bool
+	maxRetryAttempts int
 }
 
 func (req *request) httpRequest(ctx context.Context) ([]byte, int, error) {
+	return req.httpRequestImpl(ctx, 0)
+}
+
+func (req *request) httpRequestImpl(ctx context.Context, attempt int) ([]byte, int, error) {
 
 	if req.client == nil {
 		return nil, 0, errors.New("HTTP client is not provided")
@@ -67,7 +80,27 @@ func (req *request) httpRequest(ctx context.Context) ([]byte, int, error) {
 	}
 	defer resp.Body.Close()
 
+	if resp.StatusCode == 429 && req.handleRateLimits {
+		if attempt > req.maxRetryAttempts {
+			return nil, resp.StatusCode, fmt.Errorf("rate limit retry max attempts count reached")
+		}
+		fmt.Println(resp)
+		retryAfterSeconds, err := strconv.Atoi(resp.Header.Get("Retry-After"))
+		if err != nil {
+			return nil, 0, err
+		}
+		if debug.enable {
+			fmt.Printf("\n\t- Waiting for retry: %v seconds left", retryAfterSeconds)
+		}
+		time.Sleep(time.Duration(retryAfterSeconds) * time.Second)
+		if debug.enable {
+			fmt.Printf("\n\t- Retry attempt: %v", attempt)
+		}
+		return req.httpRequestImpl(ctx, attempt+1)
+	}
+
 	respBody, err := io.ReadAll(resp.Body)
+
 	if err != nil {
 		return nil, resp.StatusCode, err
 	}

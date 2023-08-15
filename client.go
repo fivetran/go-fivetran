@@ -14,10 +14,12 @@ type HttpClient interface {
 
 // Client holds client configuration
 type Client struct {
-	baseURL         string
-	authorization   string
-	customUserAgent string
-	httpClient      HttpClient
+	baseURL          string
+	authorization    string
+	customUserAgent  string
+	httpClient       HttpClient
+	handleRateLimits bool
+	maxRetryAttempts int
 }
 
 const defaultBaseURL = "https://api.fivetran.com/v1"
@@ -31,9 +33,11 @@ const defaultUserAgent = "Go-Fivetran/0.6.8"
 func New(apiKey, apiSecret string) *Client {
 	credentials := fmt.Sprintf("Basic %v", base64.StdEncoding.EncodeToString([]byte(fmt.Sprintf("%v:%v", apiKey, apiSecret))))
 	return &Client{
-		baseURL:       defaultBaseURL,
-		authorization: credentials,
-		httpClient:    &http.Client{},
+		baseURL:          defaultBaseURL,
+		authorization:    credentials,
+		httpClient:       &http.Client{},
+		maxRetryAttempts: 2,
+		handleRateLimits: true,
 	}
 }
 
@@ -50,6 +54,16 @@ func (c *Client) CustomUserAgent(customUserAgent string) {
 // SetHttpClient sets custom HTTP client to perform requests with
 func (c *Client) SetHttpClient(httpClient HttpClient) {
 	c.httpClient = httpClient
+}
+
+// SetHandleRateLimits sets custom HTTP client to handle rate limits automatically
+func (c *Client) SetHandleRateLimits(handleRateLimits bool) {
+	c.handleRateLimits = handleRateLimits
+}
+
+// SetMaxRetryAttempts sets custom HTTP client maximum retry attempts count
+func (c *Client) SetMaxRetryAttempts(maxRetryAttempts int) {
+	c.maxRetryAttempts = maxRetryAttempts
 }
 
 func (c *Client) commonHeaders() map[string]string {

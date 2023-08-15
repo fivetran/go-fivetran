@@ -40,18 +40,15 @@ func (s *ConnectorSyncService) Do(ctx context.Context) (ConnectorSyncResponse, e
 	headers := s.c.commonHeaders()
 	headers["Content-Type"] = "application/json"
 
-	reqBody, err := json.Marshal(s)
-	if err != nil {
-		return response, err
-	}
-
 	r := request{
-		method:  "POST",
-		url:     url,
-		body:    reqBody,
-		queries: nil,
-		headers: headers,
-		client:  s.c.httpClient,
+		method:           "POST",
+		url:              url,
+		body:             nil,
+		queries:          nil,
+		headers:          headers,
+		client:           s.c.httpClient,
+		handleRateLimits: s.c.handleRateLimits,
+		maxRetryAttempts: s.c.maxRetryAttempts,
 	}
 
 	respBody, respStatus, err := r.httpRequest(ctx)

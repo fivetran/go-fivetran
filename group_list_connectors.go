@@ -101,12 +101,14 @@ func (s *GroupListConnectorsService) Do(ctx context.Context) (GroupListConnector
 	}
 
 	r := request{
-		method:  "GET",
-		url:     url,
-		body:    nil,
-		queries: queries,
-		headers: headers,
-		client:  s.c.httpClient,
+		method:           "GET",
+		url:              url,
+		body:             nil,
+		queries:          queries,
+		headers:          headers,
+		client:           s.c.httpClient,
+		handleRateLimits: s.c.handleRateLimits,
+		maxRetryAttempts: s.c.maxRetryAttempts,
 	}
 
 	respBody, respStatus, err := r.httpRequest(ctx)

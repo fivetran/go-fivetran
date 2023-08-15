@@ -77,12 +77,14 @@ func (csu *ConnectorSchemaConfigUpdateService) Do(ctx context.Context) (Connecto
 	headers["Accept"] = restAPIv2
 
 	r := request{
-		method:  "PATCH",
-		url:     url,
-		body:    reqBody,
-		queries: nil,
-		headers: headers,
-		client:  csu.c.httpClient,
+		method:           "PATCH",
+		url:              url,
+		body:             reqBody,
+		queries:          nil,
+		headers:          headers,
+		client:           csu.c.httpClient,
+		handleRateLimits: csu.c.handleRateLimits,
+		maxRetryAttempts: csu.c.maxRetryAttempts,
 	}
 
 	respBody, respStatus, err := r.httpRequest(ctx)

@@ -40,12 +40,14 @@ func (s *GroupDeleteService) Do(ctx context.Context) (groupDeleteResponse, error
 	headers := s.c.commonHeaders()
 
 	r := request{
-		method:  "DELETE",
-		url:     url,
-		body:    nil,
-		queries: nil,
-		headers: headers,
-		client:  s.c.httpClient,
+		method:           "DELETE",
+		url:              url,
+		body:             nil,
+		queries:          nil,
+		headers:          headers,
+		client:           s.c.httpClient,
+		handleRateLimits: s.c.handleRateLimits,
+		maxRetryAttempts: s.c.maxRetryAttempts,
 	}
 
 	respBody, respStatus, err := r.httpRequest(ctx)
