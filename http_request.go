@@ -32,7 +32,6 @@ func (req *request) httpRequest(ctx context.Context) ([]byte, int, error) {
 }
 
 func (req *request) httpRequestImpl(ctx context.Context, attempt int) ([]byte, int, error) {
-
 	if req.client == nil {
 		return nil, 0, errors.New("HTTP client is not provided")
 	}
@@ -92,7 +91,10 @@ func (req *request) httpRequestImpl(ctx context.Context, attempt int) ([]byte, i
 		if debug.enable {
 			fmt.Printf("\n\t- Waiting for retry: %v seconds left", retryAfterSeconds)
 		}
-		time.Sleep(time.Duration(retryAfterSeconds) * time.Second)
+		err = contextDelay(ctx, time.Duration(retryAfterSeconds)*time.Second)
+		if err != nil {
+			return nil, 0, err
+		}
 		if debug.enable {
 			fmt.Printf("\n\t- Retry attempt: %v", attempt)
 		}
@@ -112,4 +114,15 @@ func (req *request) httpRequestImpl(ctx context.Context, attempt int) ([]byte, i
 	}
 
 	return respBody, resp.StatusCode, nil
+}
+
+func contextDelay(ctx context.Context, d time.Duration) error {
+	t := time.NewTimer(d)
+	select {
+	case <-ctx.Done():
+		t.Stop()
+		return fmt.Errorf("interrupted: context deadline exceeded")
+	case <-t.C:
+	}
+	return nil
 }
