@@ -11,10 +11,6 @@ import (
 	"time"
 )
 
-const (
-	DEBUG_BACKOFF_DELAY = 60
-)
-
 type request struct {
 	method  string
 	url     string
