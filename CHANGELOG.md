@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Added
 - Automatic rate-limiting errors handling
+- DBT Transformations API support: create, update, delete, get details
 
 ## [0.7.3](https://github.com/fivetran/go-fivetran/compare/v0.7.2...v0.7.3)
 
