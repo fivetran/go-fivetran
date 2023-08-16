@@ -17,7 +17,7 @@ type dbtTransformationScheduleRequest struct {
 type dbtTransformationScheduleResponse struct {
 	ScheduleType string   `json:"schedule_type"`
 	DaysOfWeek   []string `json:"days_of_week"`
-	Interval     string   `json:"interval"`
+	Interval     int      `json:"interval"`
 	TimeOfDay    string   `json:"time_of_day"`
 }
 

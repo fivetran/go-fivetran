@@ -32,7 +32,6 @@ func TestNewDbtTransformationDetailsE2E(t *testing.T) {
 	AssertEqual(t, details.Data.DbtModelId, "")
 	AssertEqual(t, details.Data.NextRun, "")
 	AssertEqual(t, details.Data.CreatedAt, "")
-	AssertEqual(t, details.Data.RunTests, "")
 	AssertEqual(t, details.Data.ModelIds, "")
 	AssertEqual(t, details.Data.ConnectorIds, "")
 }

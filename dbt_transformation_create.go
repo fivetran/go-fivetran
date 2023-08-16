@@ -34,7 +34,6 @@ type DbtTransformationCreateResponse struct {
 		DbtModelId      string                            `json:"dbt_model_id"`
 		NextRun         string                            `json:"next_run"`
 		CreatedAt       string                            `json:"created_at"`
-		RunTests        string                            `json:"run_tests"`
 		ModelIds        []string                          `json:"model_ids"`
 		ConnectorIds    []string                          `json:"connector_ids"`
 	} `json:"data"`

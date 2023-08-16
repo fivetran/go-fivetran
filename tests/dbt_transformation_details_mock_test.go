@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 	"net/http"
-	"strconv"
 	"testing"
 
 	"github.com/fivetran/go-fivetran"
@@ -52,7 +51,7 @@ func prepareDbtTransformationDetailsResponse() string {
 					"days_of_week": [
 						"%v"
 					],
-					"interval": "%v",
+					"interval": %v,
 					"time_of_day": "%v"
 				},
 				"last_run": "%v",
@@ -61,7 +60,7 @@ func prepareDbtTransformationDetailsResponse() string {
 				"dbt_model_id": "%v",
 				"next_run": "%v",
 				"created_at": "%v",
-				"run_tests": "%v",
+				"run_tests": %v,
 				"model_ids": [
 					"%v"
 				],
@@ -98,12 +97,11 @@ func assertDbtTransformationDetailsResponse(t *testing.T, response fivetran.DbtT
 	assertEqual(t, response.Data.DbtModelId, DBT_MODEL_ID)
 	assertEqual(t, response.Data.NextRun, NEXT_RUN)
 	assertEqual(t, response.Data.CreatedAt, CREATED_AT)
-	assertEqual(t, response.Data.RunTests, boolToStr(RUN_TESTS))
 	assertEqual(t, response.Data.ModelIds[0], MODEL_ID)
 	assertEqual(t, response.Data.ConnectorIds[0], CONNECTOR_ID)
 
 	assertEqual(t, response.Data.Schedule.ScheduleType, SCHEDULE_TYPE)
 	assertEqual(t, response.Data.Schedule.DaysOfWeek, daysOfWeek)
-	assertEqual(t, response.Data.Schedule.Interval, strconv.Itoa(INTERVAL))
+	assertEqual(t, response.Data.Schedule.Interval, INTERVAL)
 	assertEqual(t, response.Data.Schedule.TimeOfDay, TIME_OF_DAY)
 }
