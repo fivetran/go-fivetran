@@ -128,12 +128,14 @@ func (s *DestinationCreateService) Do(ctx context.Context) (DestinationCreateRes
 	}
 
 	r := request{
-		method:  "POST",
-		url:     url,
-		body:    reqBody,
-		queries: nil,
-		headers: headers,
-		client:  s.c.httpClient,
+		method:           "POST",
+		url:              url,
+		body:             reqBody,
+		queries:          nil,
+		headers:          headers,
+		client:           s.c.httpClient,
+		handleRateLimits: s.c.handleRateLimits,
+		maxRetryAttempts: s.c.maxRetryAttempts,
 	}
 
 	respBody, respStatus, err := r.httpRequest(ctx)

@@ -94,12 +94,14 @@ func (s *ConnectorDetailsService) do(ctx context.Context, response any) error {
 	headers["Accept"] = restAPIv2
 
 	r := request{
-		method:  "GET",
-		url:     url,
-		body:    nil,
-		queries: nil,
-		headers: headers,
-		client:  s.c.httpClient,
+		method:           "GET",
+		url:              url,
+		body:             nil,
+		queries:          nil,
+		headers:          headers,
+		client:           s.c.httpClient,
+		handleRateLimits: s.c.handleRateLimits,
+		maxRetryAttempts: s.c.maxRetryAttempts,
 	}
 
 	respBody, respStatus, err := r.httpRequest(ctx)

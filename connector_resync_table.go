@@ -58,12 +58,14 @@ func (s *ConnectorReSyncTableService) Do(ctx context.Context) (ConnectorReSyncTa
 	headers := s.c.commonHeaders()
 
 	r := request{
-		method:  "POST",
-		url:     url,
-		body:    nil,
-		queries: nil,
-		headers: headers,
-		client:  s.c.httpClient,
+		method:           "POST",
+		url:              url,
+		body:             nil,
+		queries:          nil,
+		headers:          headers,
+		client:           s.c.httpClient,
+		handleRateLimits: s.c.handleRateLimits,
+		maxRetryAttempts: s.c.maxRetryAttempts,
 	}
 
 	respBody, respStatus, err := r.httpRequest(ctx)

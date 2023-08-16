@@ -274,12 +274,14 @@ func (s *ConnectorModifyService) do(ctx context.Context, req, response any) erro
 	}
 
 	r := request{
-		method:  "PATCH",
-		url:     url,
-		body:    reqBody,
-		queries: nil,
-		headers: headers,
-		client:  s.c.httpClient,
+		method:           "PATCH",
+		url:              url,
+		body:             reqBody,
+		queries:          nil,
+		headers:          headers,
+		client:           s.c.httpClient,
+		handleRateLimits: s.c.handleRateLimits,
+		maxRetryAttempts: s.c.maxRetryAttempts,
 	}
 
 	respBody, respStatus, err := r.httpRequest(ctx)
