@@ -13,7 +13,7 @@ type ProjectDeleteService struct {
 	projectID *string
 }
 
-type projectDeleteResponse struct {
+type ProjectDeleteResponse struct {
 	Code    string `json:"code"`
 	Message string `json:"message"`
 }
@@ -27,8 +27,8 @@ func (s *ProjectDeleteService) ProjectID(value string) *ProjectDeleteService {
 	return s
 }
 
-func (s *ProjectDeleteService) Do(ctx context.Context) (projectDeleteResponse, error) {
-	var response projectDeleteResponse
+func (s *ProjectDeleteService) Do(ctx context.Context) (ProjectDeleteResponse, error) {
+	var response ProjectDeleteResponse
 
 	if s.projectID == nil {
 		return response, fmt.Errorf("missing required projectID")

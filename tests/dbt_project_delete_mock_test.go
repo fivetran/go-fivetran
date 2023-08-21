@@ -1,4 +1,4 @@
-package test
+package tests
 
 import (
 	"context"
@@ -51,10 +51,4 @@ func prepareProjectDeleteResponse() string {
 func assertProjectDeleteResponse(t *testing.T, response fivetran.ProjectDeleteResponse) {
 	assertEqual(t, response.Code, "Success")
 	assertEqual(t, response.Message, "Project has been deleted")
-}
-
-func assertEqual(t *testing.T, actual, expected interface{}) {
-	if actual != expected {
-		t.Errorf("Expected: %v, but got: %v", expected, actual)
-	}
 }
