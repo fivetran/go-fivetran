@@ -13,7 +13,7 @@ type DbtProjectDeleteService struct {
 	projectID *string
 }
 
-type ProjectDeleteResponse struct {
+type DbtProjectDeleteResponse struct {
 	Code    string `json:"code"`
 	Message string `json:"message"`
 }
