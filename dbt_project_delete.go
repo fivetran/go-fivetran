@@ -8,7 +8,7 @@ import (
 
 // ProjectDeleteService implements the Project Management, Delete a project API.
 // Ref. https://fivetran.com/docs/rest-api/projects#deleteaproject
-type ProjectDeleteService struct {
+type DbtProjectDeleteService struct {
 	c         *Client
 	projectID *string
 }
