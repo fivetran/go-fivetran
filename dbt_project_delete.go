@@ -18,7 +18,7 @@ type DbtProjectDeleteResponse struct {
 	Message string `json:"message"`
 }
 
-func (c *Client) NewprojectDelete() *ProjectDeleteService {
+func (c *Client) NewDbtProjectDelete() *ProjectDeleteService {
 	return &ProjectDeleteService{c: c}
 }
 
