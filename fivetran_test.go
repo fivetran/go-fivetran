@@ -102,6 +102,25 @@ func CreateGroup(t *testing.T) string {
 	return created.Data.ID
 }
 
+func CreateProject(t *testing.T) string {
+	t.Helper()
+	created, err := Client.NewDbtProjectCreate().
+		GroupID(PredefinedGroupId).
+		DbtVersion("1.3.1").
+		GitRemoteUrl("https://github.com/fivetran/dbt_demo").
+		GitBranch("main").
+		DefaultSchema("").
+		FolderPath("").
+		TargetName("").
+		Threads(4).
+		Do(context.Background())
+	if err != nil {
+		t.Logf("%+v\n", created)
+		t.Error(err)
+	}
+	return created.Data.ID
+}
+
 func CreateTempGroup(t *testing.T) string {
 	t.Helper()
 	groupId := CreateGroup(t)
