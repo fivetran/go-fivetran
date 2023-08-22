@@ -20,7 +20,7 @@ type externalLoggingCreateRequest struct {
     GroupId           *string                          `json:"group_id,omitempty"`
     Service           *string                          `json:"service,omitempty"`
     Enabled           *bool                            `json:"enabled,omitempty"`                 
-    Config            *externalLoggingConfigRequest `json:"config,omitempty"`
+    Config            *externalLoggingConfigRequest    `json:"config,omitempty"`
 }
 
 type ExternalLoggingCreateResponse struct {
@@ -49,7 +49,7 @@ func (s *ExternalLoggingCreateService) request() *externalLoggingCreateRequest {
         GroupId:           s.groupId,
         Service:           s.service,
         Enabled:           s.enabled,
-        Config:            config
+        Config:            config,
     }
 }
 

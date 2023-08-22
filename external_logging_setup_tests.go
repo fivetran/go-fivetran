@@ -9,10 +9,8 @@ import (
 // ExternalLoggingSetupTestsService implements the Log Management, Run Log service setup tests API.
 // Ref. https://fivetran.com/docs/rest-api/log-service-management#runlogservicesetuptests
 type ExternalLoggingSetupTestsService struct {
-	c                 *Client
-	externalLoggingID     *string
-	trustCertificates *bool
-	trustFingerprints *bool
+	c                     *Client
+	externalLoggingId     *string
 }
 
 type externalLoggingSetupTestsRequest struct {
@@ -24,18 +22,11 @@ type ExternalLoggingSetupTestsResponse struct {
 	Code    string `json:"code"`
 	Message string `json:"message"`
 	Data    struct {
-		ID             string `json:"id"`
-		GroupID        string `json:"group_id"`
-		Service        string `json:"service"`
-		Region         string `json:"region"`
-		TimeZoneOffset string `json:"time_zone_offset"`
-		SetupStatus    string `json:"setup_status"`
 		SetupTests     []struct {
 			Title   string `json:"title"`
 			Status  string `json:"status"`
 			Message string `json:"message"`
 		} `json:"setup_tests"`
-		Config ExternalLoggingConfigResponse `json:"config"`
 	} `json:"data"`
 }
 
@@ -44,35 +35,22 @@ func (c *Client) NewExternalLoggingSetupTests() *ExternalLoggingSetupTestsServic
 }
 
 func (s *ExternalLoggingSetupTestsService) request() *externalLoggingSetupTestsRequest {
-	return &externalLoggingSetupTestsRequest{
-		TrustCertificates: s.trustCertificates,
-		TrustFingerprints: s.trustFingerprints,
-	}
+	return &externalLoggingSetupTestsRequest{}
 }
 
-func (s *ExternalLoggingSetupTestsService) ExternalLoggingID(value string) *ExternalLoggingSetupTestsService {
-	s.externalLoggingID = &value
-	return s
-}
-
-func (s *ExternalLoggingSetupTestsService) TrustCertificates(value bool) *ExternalLoggingSetupTestsService {
-	s.trustCertificates = &value
-	return s
-}
-
-func (s *ExternalLoggingSetupTestsService) TrustFingerprints(value bool) *ExternalLoggingSetupTestsService {
-	s.trustFingerprints = &value
+func (s *ExternalLoggingSetupTestsService) ExternalLoggingId(value string) *ExternalLoggingSetupTestsService {
+	s.externalLoggingId = &value
 	return s
 }
 
 func (s *ExternalLoggingSetupTestsService) Do(ctx context.Context) (ExternalLoggingSetupTestsResponse, error) {
 	var response ExternalLoggingSetupTestsResponse
 
-	if s.externalLoggingID == nil {
-		return response, fmt.Errorf("missing required ExternalLoggingID")
+	if s.externalLoggingId == nil {
+		return response, fmt.Errorf("missing required externalLoggingId")
 	}
 
-	url := fmt.Sprintf("%v/external-logging/%v/test", s.c.baseURL, *s.externalLoggingID)
+	url := fmt.Sprintf("%v/external-logging/%v/test", s.c.baseURL, *s.externalLoggingId)
 	expectedStatus := 200
 
 	headers := s.c.commonHeaders()

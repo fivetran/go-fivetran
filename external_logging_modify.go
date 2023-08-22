@@ -11,21 +11,13 @@ import (
 type ExternalLoggingModifyService struct {
     c                    *Client
     externalLoggingId    *string
-    region               *string
-    timeZoneOffset       *string
+    enabled              *bool
     config               *ExternalLoggingConfig
-    trustCertificates    *bool
-    trustFingerprints    *bool
-    runSetupTests        *bool
 }
 
 type externalLoggingModifyRequest struct {
-    Region            *string                       `json:"region,omitempty"`
-    TimeZoneOffset    *string                       `json:"time_zone_offset,omitempty"`
+    Enabled           *bool                         `json:"enabled,omitempty"`
     Config            *externalLoggingConfigRequest `json:"config,omitempty"`
-    TrustCertificates *bool                         `json:"trust_certificates,omitempty"`
-    TrustFingerprints *bool                         `json:"trust_fingerprints,omitempty"`
-    RunSetupTests     *bool                         `json:"run_setup_tests,omitempty"`
 }
 
 type ExternalLoggingModifyResponse struct {
@@ -33,17 +25,8 @@ type ExternalLoggingModifyResponse struct {
     Message string `json:"message"`
     Data    struct {
         Id             string `json:"id"`
-        GroupId        string `json:"group_id"`
         Service        string `json:"service"`
-        Region         string `json:"region"`
-        TimeZoneOffset string `json:"time_zone_offset"`
-        SetupStatus    string `json:"setup_status"`
-        SetupTests     []struct {
-            Title   string `json:"title"`
-            Status  string `json:"status"`
-            Message string `json:"message"`
-        } `json:"setup_tests"`
-        Config ExternalLoggingConfigResponse `json:"config"`
+        Enabled        bool   `json:"enabled"`
     } `json:"data"`
 }
 
@@ -59,27 +42,18 @@ func (s *ExternalLoggingModifyService) request() *externalLoggingModifyRequest {
     }
 
     return &externalLoggingModifyRequest{
-        Region:            s.region,
-        TimeZoneOffset:    s.timeZoneOffset,
+        Enabled:           s.enabled,
         Config:            config,
-        TrustCertificates: s.trustCertificates,
-        TrustFingerprints: s.trustFingerprints,
-        RunSetupTests:     s.runSetupTests,
     }
 }
 
-func (s *ExternalLoggingModifyService) ExternalLoggingID(value string) *ExternalLoggingModifyService {
-    s.externalLoggingID = &value
+func (s *ExternalLoggingModifyService) ExternalLoggingId(value string) *ExternalLoggingModifyService {
+    s.externalLoggingId = &value
     return s
 }
 
-func (s *ExternalLoggingModifyService) Region(value string) *ExternalLoggingModifyService {
-    s.region = &value
-    return s
-}
-
-func (s *ExternalLoggingModifyService) TimeZoneOffset(value string) *ExternalLoggingModifyService {
-    s.timeZoneOffset = &value
+func (s *ExternalLoggingModifyService) Enabled(value bool) *ExternalLoggingModifyService {
+    s.enabled = &value
     return s
 }
 
@@ -88,29 +62,14 @@ func (s *ExternalLoggingModifyService) Config(value *ExternalLoggingConfig) *Ext
     return s
 }
 
-func (s *ExternalLoggingModifyService) TrustCertificates(value bool) *ExternalLoggingModifyService {
-    s.trustCertificates = &value
-    return s
-}
-
-func (s *ExternalLoggingModifyService) TrustFingerprints(value bool) *ExternalLoggingModifyService {
-    s.trustFingerprints = &value
-    return s
-}
-
-func (s *ExternalLoggingModifyService) RunSetupTests(value bool) *ExternalLoggingModifyService {
-    s.runSetupTests = &value
-    return s
-}
-
 func (s *ExternalLoggingModifyService) Do(ctx context.Context) (ExternalLoggingModifyResponse, error) {
     var response ExternalLoggingModifyResponse
 
-    if s.externalLoggingID == nil {
+    if s.externalLoggingId == nil {
         return response, fmt.Errorf("missing required ExternalLoggingID")
     }
 
-    url := fmt.Sprintf("%v/external-logging/%v", s.c.baseURL, *s.externalLoggingID)
+    url := fmt.Sprintf("%v/external-logging/%v", s.c.baseURL, *s.externalLoggingId)
     expectedStatus := 200
 
     headers := s.c.commonHeaders()

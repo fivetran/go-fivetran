@@ -8,8 +8,6 @@ import (
 func TestNewExternalLoggingSetupTestsE2E(t *testing.T) {
 	externalLoggingId := CreateTempExternalLogging(t)
 	response, err := Client.NewExternalLoggingSetupTests().ExternalLoggingId(externalLoggingId).
-		TrustCertificates(true).
-		TrustFingerprints(true).
 		Do(context.Background())
 
 	if err != nil {
@@ -21,8 +19,5 @@ func TestNewExternalLoggingSetupTestsE2E(t *testing.T) {
 	AssertNotEmpty(t, response.Message)
 	AssertEqual(t, response.Data.ID, externalLoggingId)
 	AssertEqual(t, response.Data.GroupID, externalLoggingId)
-	AssertEqual(t, response.Data.Service, "snowflake")
-	AssertEqual(t, response.Data.Region, "GCP_US_EAST4")
-	AssertEqual(t, response.Data.TimeZoneOffset, "+10")
-	AssertEqual(t, response.Data.SetupStatus, "incomplete")
+	AssertEqual(t, response.Data.SetupTests.Status, "incomplete")
 }

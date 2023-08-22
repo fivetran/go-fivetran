@@ -59,20 +59,20 @@ func NewExternalLoggingConfig() *ExternalLoggingConfig {
 
 func (elc *ExternalLoggingConfig) request() *externalLoggingConfigRequest {
     return &externalLoggingConfigRequest{
-        WorkspaceId         elc.workspaceId,
-        PrivateKey          elc.privateKey,
-        LogGroupName        elc.logGroupName,
-        RoleArn             elc.roleArn,
-        ExternalId          elc.externalId,
-        Region              elc.region,
-        ApiKey              elc.apiKey,
-        SubDomain           elc.subDomain,
-        Host                elc.host,
-        Hostname            elc.hostname,
-        Channel             elc.channel,
-        EnableSsl           elc.enableSsl,
-        Token               elc.token,
-        Port                elc.port,
+        WorkspaceId:         elc.workspaceId,
+        PrivateKey:          elc.privateKey,
+        LogGroupName:        elc.logGroupName,
+        RoleArn:             elc.roleArn,
+        ExternalId:          elc.externalId,
+        Region:              elc.region,
+        ApiKey:              elc.apiKey,
+        SubDomain:           elc.subDomain,
+        Host:                elc.host,
+        Hostname:            elc.hostname,
+        Channel:             elc.channel,
+        EnableSsl:           elc.enableSsl,
+        Token:               elc.token,
+        Port:                elc.port,
     }
 }
 
@@ -112,7 +112,7 @@ func (elc *ExternalLoggingConfig) ApiKey(value string) *ExternalLoggingConfig {
 }
 
 func (elc *ExternalLoggingConfig) SubDomain(value string) *ExternalLoggingConfig {
-    elc.elc.subDomain = &value
+    elc.subDomain = &value
     return elc
 }
 
@@ -141,7 +141,7 @@ func (elc *ExternalLoggingConfig) Token(value string) *ExternalLoggingConfig {
     return elc
 }
 
-func (elc *ExternalLoggingConfig) Port(value string) *ExternalLoggingConfig {
+func (elc *ExternalLoggingConfig) Port(value int) *ExternalLoggingConfig {
     elc.port = &value
     return elc
 }
