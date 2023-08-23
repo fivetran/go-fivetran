@@ -12,12 +12,14 @@ type ExternalLoggingModifyService struct {
     c                    *Client
     externalLoggingId    *string
     enabled              *bool
+    runSetupTests        *bool
     config               *ExternalLoggingConfig
 }
 
 type externalLoggingModifyRequest struct {
     Enabled           *bool                         `json:"enabled,omitempty"`
     Config            *externalLoggingConfigRequest `json:"config,omitempty"`
+    RunSetupTests     *bool                         `json:"run_setup_tests,omitempty"`
 }
 
 type ExternalLoggingModifyResponse struct {
@@ -59,6 +61,11 @@ func (s *ExternalLoggingModifyService) Enabled(value bool) *ExternalLoggingModif
 
 func (s *ExternalLoggingModifyService) Config(value *ExternalLoggingConfig) *ExternalLoggingModifyService {
     s.config = value
+    return s
+}
+
+func (s *ExternalLoggingModifyService) RunSetupTests(value bool) *ExternalLoggingModifyService {
+    s.runSetupTests = &value
     return s
 }
 

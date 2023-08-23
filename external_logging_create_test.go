@@ -14,7 +14,7 @@ func TestNewExternalLoggingCreateE2E(t *testing.T) {
         Enabled(true).
         Config(fivetran.NewExternalLoggingConfig().
             WorkspaceId("workspace_id").
-            PrimaryKey("PASSWORD").
+            PrimaryKey("PASSWORD")).
         Do(context.Background())
 
     if err != nil {

@@ -12,7 +12,7 @@ func TestNewExternalLoggingModifyE2E(t *testing.T) {
 	details, err := Client.NewExternalLoggingModify().ExternalLoggingId(externalLoggingId).
 		Enabled(true).
 		Config(fivetran.NewExternalLoggingConfig().
-			Workspace_id("test").
+			WorkspaceId("test").
 			PrimaryKey("12345678")).
 		Do(context.Background())
 

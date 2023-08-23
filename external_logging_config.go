@@ -4,7 +4,7 @@ package fivetran
 // Ref. https://fivetran.com/docs/rest-api/log-service-management#logservicesetupconfigurations
 type ExternalLoggingConfig struct {
     workspaceId         *string
-    privateKey          *string
+    primaryKey          *string
     logGroupName        *string
     roleArn             *string
     externalId          *string
@@ -21,7 +21,7 @@ type ExternalLoggingConfig struct {
 
 type externalLoggingConfigRequest struct {
     WorkspaceId         *string `json:"workspace_id,omitempty"`
-    PrivateKey          *string `json:"primary_key,omitempty"`
+    PrimaryKey          *string `json:"primary_key,omitempty"`
     LogGroupName        *string `json:"log_group_name,omitempty"`
     RoleArn             *string `json:"role_arn,omitempty"`
     ExternalId          *string `json:"external_id,omitempty"`
@@ -38,7 +38,7 @@ type externalLoggingConfigRequest struct {
 
 type ExternalLoggingConfigResponse struct {
     WorkspaceId         string `json:"workspace_id"`
-    PrivateKey          string `json:"primary_key"`
+    PrimaryKey          string `json:"primary_key"`
     LogGroupName        string `json:"log_group_name"`
     RoleArn             string `json:"role_arn"`
     ExternalId          string `json:"external_id"`
@@ -60,7 +60,7 @@ func NewExternalLoggingConfig() *ExternalLoggingConfig {
 func (elc *ExternalLoggingConfig) request() *externalLoggingConfigRequest {
     return &externalLoggingConfigRequest{
         WorkspaceId:         elc.workspaceId,
-        PrivateKey:          elc.privateKey,
+        PrimaryKey:          elc.primaryKey,
         LogGroupName:        elc.logGroupName,
         RoleArn:             elc.roleArn,
         ExternalId:          elc.externalId,
@@ -81,8 +81,8 @@ func (elc *ExternalLoggingConfig) WorkspaceId(value string) *ExternalLoggingConf
     return elc
 }
 
-func (elc *ExternalLoggingConfig) PrivateKey(value string) *ExternalLoggingConfig {
-    elc.privateKey = &value
+func (elc *ExternalLoggingConfig) PrimaryKey(value string) *ExternalLoggingConfig {
+    elc.primaryKey = &value
     return elc
 }
 

@@ -18,12 +18,8 @@ type ExternalLoggingDetailsResponse struct {
     Message string `json:"message"`
     Data    struct {
         Id             string                         `json:"id"`
-        GroupId        string                         `json:"group_id"`
         Service        string                         `json:"service"`
-        Region         string                         `json:"region"`
-        TimeZoneOffset string                         `json:"time_zone_offset"`
-        SetupStatus    string                         `json:"setup_status"`
-        Config         ExternalLoggingConfigResponse  `json:"config"`
+        Enabled        bool                           `json:"enabled"`
     } `json:"data"`
 }
 

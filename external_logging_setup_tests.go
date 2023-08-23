@@ -13,11 +13,6 @@ type ExternalLoggingSetupTestsService struct {
 	externalLoggingId     *string
 }
 
-type externalLoggingSetupTestsRequest struct {
-	TrustCertificates *bool `json:"trust_certificates,omitempty"`
-	TrustFingerprints *bool `json:"trust_fingerprints,omitempty"`
-}
-
 type ExternalLoggingSetupTestsResponse struct {
 	Code    string `json:"code"`
 	Message string `json:"message"`
@@ -32,10 +27,6 @@ type ExternalLoggingSetupTestsResponse struct {
 
 func (c *Client) NewExternalLoggingSetupTests() *ExternalLoggingSetupTestsService {
 	return &ExternalLoggingSetupTestsService{c: c}
-}
-
-func (s *ExternalLoggingSetupTestsService) request() *externalLoggingSetupTestsRequest {
-	return &externalLoggingSetupTestsRequest{}
 }
 
 func (s *ExternalLoggingSetupTestsService) ExternalLoggingId(value string) *ExternalLoggingSetupTestsService {
@@ -57,15 +48,9 @@ func (s *ExternalLoggingSetupTestsService) Do(ctx context.Context) (ExternalLogg
 	headers["Content-Type"] = "application/json"
 	headers["Accept"] = restAPIv2
 
-	reqBody, err := json.Marshal(s.request())
-	if err != nil {
-		return response, err
-	}
-
 	r := request{
 		method:  "POST",
 		url:     url,
-		body:    reqBody,
 		queries: nil,
 		headers: headers,
 		client:  s.c.httpClient,

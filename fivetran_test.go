@@ -385,3 +385,38 @@ func cleanupConnectors(groupId string) {
 		}
 	}
 }
+
+func CreateTempExternalLogging(t *testing.T) string {
+	t.Helper()
+	externalLoggingId := CreateExternalLogging(t)
+	t.Cleanup(func() { DeleteExternalLogging(t, externalLoggingId) })
+	return externalLoggingId
+}
+
+func DeleteExternalLogging(t *testing.T, id string) {
+	t.Helper()
+	deleted, err := Client.NewExternalLoggingDelete().ExternalLoggingId(id).Do(context.Background())
+
+	if err != nil {
+		t.Logf("%+v\n", deleted)
+		t.Error(err)
+	}
+}
+
+func CreateExternalLogging(t *testing.T) string {
+	t.Helper()
+	created, err := Client.NewExternalLoggingCreate().
+	    GroupId(PredefinedGroupId).
+        Service("snowflake").
+        Enabled(true).
+        Config(fivetran.NewExternalLoggingConfig().
+            WorkspaceId("workspace_id").
+            PrimaryKey("PASSWORD")).
+		Do(context.Background())
+
+	if err != nil {
+		t.Logf("%+v\n", created)
+		t.Error(err)
+	}
+	return created.Data.Id
+}

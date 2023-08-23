@@ -17,7 +17,5 @@ func TestNewExternalLoggingSetupTestsE2E(t *testing.T) {
 
 	AssertEqual(t, response.Code, "Success")
 	AssertNotEmpty(t, response.Message)
-	AssertEqual(t, response.Data.ID, externalLoggingId)
-	AssertEqual(t, response.Data.GroupID, externalLoggingId)
-	AssertEqual(t, response.Data.SetupTests.Status, "incomplete")
+	AssertEqual(t, response.Data.SetupTests[0].Status, "incomplete")
 }
