@@ -407,7 +407,7 @@ func CreateExternalLogging(t *testing.T) string {
 	t.Helper()
 	created, err := Client.NewExternalLoggingCreate().
 	    GroupId(PredefinedGroupId).
-        Service("snowflake").
+        Service("azure_monitor_log").
         Enabled(true).
         Config(fivetran.NewExternalLoggingConfig().
             WorkspaceId("workspace_id").

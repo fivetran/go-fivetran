@@ -17,6 +17,6 @@ func TestNewExternalLoggingDetailsE2E(t *testing.T) {
 
     AssertEqual(t, details.Code, "Success")
     AssertEqual(t, details.Data.Id, PredefinedGroupId)
-    AssertEqual(t, details.Data.Service, "snowflake")
+    AssertEqual(t, details.Data.Service, "azure_monitor_log")
     AssertEqual(t, details.Data.Enabled, true)
 }

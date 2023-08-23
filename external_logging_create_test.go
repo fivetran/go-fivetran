@@ -10,7 +10,7 @@ import (
 func TestNewExternalLoggingCreateE2E(t *testing.T) {
     created, err := Client.NewExternalLoggingCreate().
         GroupId(PredefinedGroupId).
-        Service("snowflake").
+        Service("azure_monitor_log").
         Enabled(true).
         Config(fivetran.NewExternalLoggingConfig().
             WorkspaceId("workspace_id").
@@ -25,7 +25,7 @@ func TestNewExternalLoggingCreateE2E(t *testing.T) {
     AssertEqual(t, created.Code, "Success")
     AssertNotEmpty(t, created.Message)
     AssertEqual(t, created.Data.Id, PredefinedGroupId)
-    AssertEqual(t, created.Data.Service, "snowflake")
+    AssertEqual(t, created.Data.Service, "azure_monitor_log")
     AssertEqual(t, created.Data.Enabled, true)
     AssertEqual(t, created.Data.Config.WorkspaceId, "workspace_id")
     AssertEqual(t, created.Data.Config.PrimaryKey, "PASSWORD")
