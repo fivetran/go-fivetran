@@ -28,7 +28,7 @@ func TestNewExternalLoggingCreateE2E(t *testing.T) {
     AssertEqual(t, created.Data.Service, "azure_monitor_log")
     AssertEqual(t, created.Data.Enabled, true)
     AssertEqual(t, created.Data.Config.WorkspaceId, "workspace_id")
-    AssertEqual(t, created.Data.Config.PrimaryKey, "PASSWORD")
+    AssertEqual(t, created.Data.Config.PrimaryKey, "******")
     
     t.Cleanup(func() { DeleteExternalLogging(t, PredefinedGroupId) })
 }
