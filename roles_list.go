@@ -43,7 +43,7 @@ func (s *RolesListService) Cursor(value string) *RolesListService {
 
 func (s *RolesListService) Do(ctx context.Context) (RolesListResponse, error) {
     var response RolesListResponse
-    url := fmt.Sprintf("%v/Roles", s.c.baseURL)
+    url := fmt.Sprintf("%v/roles", s.c.baseURL)
     expectedStatus := 200
 
     headers := s.c.commonHeaders()
