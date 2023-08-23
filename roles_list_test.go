@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestNewGroupsListE2E(t *testing.T) {
+func TestNewRolesListE2E(t *testing.T) {
 	result, err := Client.NewRolesList().Do(context.Background())
 	if err != nil {
 		t.Logf("%+v\n", result)
