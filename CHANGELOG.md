@@ -13,6 +13,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Automatic rate-limiting errors handling
 - DBT Transformations API support: create, update, delete, get details
 
+## Added
+Supported the following Fivetran API endpoints:
+- [Create a Log Service](https://fivetran.com/docs/rest-api/log-service-management#createalogservice)
+- [Retrieve Log Service Details](https://fivetran.com/docs/rest-api/log-service-management#retrievelogservicedetails)
+- [Update a Log Service](https://fivetran.com/docs/rest-api/log-service-management#updatealogservice)
+- [Delete a Log Service](https://fivetran.com/docs/rest-api/log-service-management#deletealogservice)
+- [Run Log Service Setup Tests](https://fivetran.com/docs/rest-api/log-service-management#runlogservicesetuptests)
+
 ## [0.7.3](https://github.com/fivetran/go-fivetran/compare/v0.7.2...v0.7.3)
 
 ## Added

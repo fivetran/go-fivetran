@@ -137,6 +137,16 @@ REST API Endpoint | REST API Version | SDK Service
 [Approve a destination certificate](https://fivetran.com/docs/rest-api/certificates#approveadestinationcertificate) | v1 | [CertificateDestinationCertificateApproveService](https://pkg.go.dev/github.com/fivetran/go-fivetran#CertificateDestinationCertificateApproveService)
 [Approve a destination fingerprint](https://fivetran.com/docs/rest-api/certificates#approveadestinationfingerprint) | v1 | [CertificateDestinationFingerprintApproveService](https://pkg.go.dev/github.com/fivetran/go-fivetran#CertificateDestinationFingerprintApproveService)
 
+### [Log Service Management](https://fivetran.com/docs/rest-api/log-service-management)
+
+REST API Endpoint | REST API Version | SDK Service/Config
+--- | --- | ---
+[Create a Log Service](https://fivetran.com/docs/rest-api/log-service-management#createalogservice) | v1 | [ExternalLoggingCreateService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ExternalLoggingCreateService)
+[Retrieve Log Service Details](https://fivetran.com/docs/rest-api/log-service-management#retrievelogservicedetails) | v1 | [ExternalLoggingDetailsService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ExternalLoggingDetailsService)
+[Update a Log Service](https://fivetran.com/docs/rest-api/log-service-management#updatealogservice) | v1 | [ExternalLoggingModifyService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ExternalLoggingModifyService)
+[Delete a Log Service](https://fivetran.com/docs/rest-api/log-service-management#deletealogservice) | v1 | [ExternalLoggingDeleteService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ExternalLoggingDeleteService)
+[Run Log Service Setup Tests](https://fivetran.com/docs/rest-api/log-service-management#runlogservicesetuptests) | v1 | [ExternalLoggingSetupTestsService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ExternalLoggingSetupTestsService)
+
 ## Support
 
 Please get in touch with us through our [Support Portal](https://support.fivetran.com/) if you 
