@@ -18,17 +18,17 @@ type DbtProjectDeleteResponse struct {
 	Message string `json:"message"`
 }
 
-func (c *Client) NewDbtProjectDelete() *ProjectDeleteService {
-	return &ProjectDeleteService{c: c}
+func (c *Client) NewDbtProjectDelete() *DbtProjectDeleteService {
+	return &DbtProjectDeleteService{c: c}
 }
 
-func (s *ProjectDeleteService) ProjectID(value string) *ProjectDeleteService {
+func (s *DbtProjectDeleteService) ProjectID(value string) *DbtProjectDeleteService {
 	s.projectID = &value
 	return s
 }
 
-func (s *ProjectDeleteService) Do(ctx context.Context) (ProjectDeleteResponse, error) {
-	var response ProjectDeleteResponse
+func (s *DbtProjectDeleteService) Do(ctx context.Context) (DbtProjectDeleteResponse, error) {
+	var response DbtProjectDeleteResponse
 
 	if s.projectID == nil {
 		return response, fmt.Errorf("missing required projectID")
