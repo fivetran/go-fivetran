@@ -22,7 +22,7 @@ func TestDbtProjectDeleteServiceDo(t *testing.T) {
 		})
 
 	// act
-	response, err := ftClient.NewprojectDelete().
+	response, err := ftClient.NewDbtProjectDelete().
 		ProjectID(projectID).
 		Do(context.Background())
 
@@ -48,7 +48,7 @@ func prepareProjectDeleteResponse() string {
 		}`)
 }
 
-func assertProjectDeleteResponse(t *testing.T, response fivetran.ProjectDeleteResponse) {
+func assertProjectDeleteResponse(t *testing.T, response fivetran.DbtProjectDeleteResponse) {
 	assertEqual(t, response.Code, "Success")
 	assertEqual(t, response.Message, "Project has been deleted")
 }

@@ -121,6 +121,15 @@ func CreateProject(t *testing.T) string {
 	return created.Data.ID
 }
 
+func DeleteProject(t *testing.T, projectId string) {
+	t.Helper()
+	deleted, err := Client.NewDbtProjectDelete().ProjectID(projectId).Do(context.Background())
+	if err != nil {
+		t.Logf("%+v\n", deleted)
+		t.Error(err)
+	}
+}
+
 func CreateTempGroup(t *testing.T) string {
 	t.Helper()
 	groupId := CreateGroup(t)
