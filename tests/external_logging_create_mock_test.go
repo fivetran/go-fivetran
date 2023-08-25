@@ -1,4 +1,4 @@
-config.package tests
+package tests
 
 import (
     "context"
