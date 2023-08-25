@@ -52,7 +52,7 @@ type ExternalLoggingCreateResponse struct {
     Message string `json:"message"`
     Data    struct {
         ExternalLoggingCreateResponseBase
-        Config ConnectorConfigResponse `json:"config"`
+        Config ExternalLoggingConfigResponse `json:"config"`
     } `json:"data"`
 }
 
@@ -71,7 +71,7 @@ type ExternalLoggingCustomMergedCreateResponse struct {
     Data    struct {
         ExternalLoggingCreateResponseBase
         CustomConfig map[string]interface{}  `json:"config"`
-        Config       ConnectorConfigResponse // no mapping here
+        Config       ExternalLoggingConfigResponse // no mapping here
     } `json:"data"`
 }
 
