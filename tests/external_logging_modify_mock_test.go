@@ -78,7 +78,7 @@ func assertExternalLoggingModifyResponse() string {
 	}`,
     GROUPID,
     SERVICE,
-    ENABLED
+    ENABLED,
     )
 }
 
