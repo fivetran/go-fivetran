@@ -12,24 +12,24 @@ import (
 )
 
 const (
-    GROUPID         = "group_id"
-    SERVICE         = "service"
-    ENABLED         = true
+    EXTLOG_GROUPID         = "group_id"
+    EXTLOG_SERVICE         = "service"
+    EXTLOG_ENABLED         = true
 
-    WORKSPACEID     = "workspace_id"
-    PRIMARYKEY      = "primary_key"
-    LOGGROUPNAME    = "log_group_name"
-    ROLEARN         = "role_arn"
-    EXTERNALID      = "external_id"
-    REGION          = "region"
-    APIKEY          = "api_key"
-    SUBDOMAIN       = "sub_domain"
-    HOST            = "host"
-    HOSTNAME        = "hostname"
-    CHANNEL         = "channel"
-    ENABLESSL       = "enable_ssl"
-    TOKEN           = "token"
-    PORT            = 443
+    EXTLOG_WORKSPACEID     = "workspace_id"
+    EXTLOG_PRIMARYKEY      = "primary_key"
+    EXTLOG_LOGGROUPNAME    = "log_group_name"
+    EXTLOG_ROLEARN         = "role_arn"
+    EXTLOG_EXTERNALID      = "external_id"
+    EXTLOG_REGION          = "region"
+    EXTLOG_APIKEY          = "api_key"
+    EXTLOG_SUBDOMAIN       = "sub_domain"
+    EXTLOG_HOST            = "host"
+    EXTLOG_HOSTNAME        = "hostname"
+    EXTLOG_CHANNEL         = "channel"
+    EXTLOG_ENABLESSL       = "enable_ssl"
+    EXTLOG_TOKEN           = "token"
+    EXTLOG_PORT            = 443
 )
 
 func TestNewExternalLoggingCreateFullMappingMock(t *testing.T) {
@@ -46,9 +46,9 @@ func TestNewExternalLoggingCreateFullMappingMock(t *testing.T) {
 
     // act
     response, err := ftClient.NewExternalLoggingCreate().
-        GroupID(GROUPID).
-        Service(SERVICE).
-        Enabled(ENABLED).
+        GroupID(EXTLOG_GROUPID).
+        Service(EXTLOG_SERVICE).
+        Enabled(EXTLOG_ENABLED).
         Config(prepareConfig()).
         Do(context.Background())
 
@@ -76,55 +76,55 @@ func prepareExternalLoggingResponse() string {
                 "enabled":                      "%v"
             }
         }`,
-        GROUPID,
-        SERVICE,
-        ENABLED,
+        EXTLOG_GROUPID,
+        EXTLOG_SERVICE,
+        EXTLOG_ENABLED,
     )
 }
 
 func prepareConfig() *fivetran.ExternalLoggingConfig {
     config := fivetran.NewExternalLoggingConfig()
-    config.WorkspaceId(WORKSPACEID)
-    config.PrimaryKey(PRIMARYKEY)
-    config.LogGroupName(LOGGROUPNAME)
-    config.RoleArn(ROLEARN)
-    config.ExternalId(EXTERNALID)
-    config.Region(REGION)
-    config.ApiKey(APIKEY)
-    config.SubDomain(SUBDOMAIN)
-    config.Host(HOST)
-    config.Hostname(HOSTNAME)
-    config.Channel(CHANNEL)
-    config.EnableSsl(ENABLESSL)
-    config.Token(TOKEN)
-    config.Port(PORT)
+    config.WorkspaceId(EXTLOG_WORKSPACEID)
+    config.PrimaryKey(EXTLOG_PRIMARYKEY)
+    config.LogGroupName(EXTLOG_LOGGROUPNAME)
+    config.RoleArn(EXTLOG_ROLEARN)
+    config.ExternalId(EXTLOG_EXTERNALID)
+    config.Region(EXTLOG_REGION)
+    config.ApiKey(EXTLOG_APIKEY)
+    config.SubDomain(EXTLOG_SUBDOMAIN)
+    config.Host(EXTLOG_HOST)
+    config.Hostname(EXTLOG_HOSTNAME)
+    config.Channel(EXTLOG_CHANNEL)
+    config.EnableSsl(EXTLOG_ENABLESSL)
+    config.Token(EXTLOG_TOKEN)
+    config.Port(EXTLOG_PORT)
     return config
 }
 
 func assertRequest(t *testing.T, request map[string]interface{}) {
-    assertKey(t, "service", request, SERVICE)
-    assertKey(t, "group_id", request, GROUPID)
-    assertKey(t, "enabled", request, ENABLED)
+    assertKey(t, "service", request, EXTLOG_SERVICE)
+    assertKey(t, "group_id", request, EXTLOG_GROUPID)
+    assertKey(t, "enabled", request, EXTLOG_ENABLED)
 
     c, ok := request["config"]
     assertEqual(t, ok, true)
     config, ok := c.(map[string]interface{})
     assertEqual(t, ok, true)
 
-    assertKey(t, "workspace_id", config, WORKSPACEID)
-    assertKey(t, "primary_key", config, PRIMARYKEY)     
-    assertKey(t, "log_group_name", config, LOGGROUPNAME)
-    assertKey(t, "role_arn", config, ROLEARN)       
-    assertKey(t, "external_id", config, EXTERNALID) 
-    assertKey(t, "region", config, REGION)          
-    assertKey(t, "api_key", config, APIKEY)          
-    assertKey(t, "sub_domain", config, SUBDOMAIN)     
-    assertKey(t, "host", config, HOST)
-    assertKey(t, "hostname", config, HOSTNAME)
-    assertKey(t, "channel", config, CHANNEL)
-    assertKey(t, "enable_ssl", config, ENABLESSL)
-    assertKey(t, "token", config, TOKEN)
-    assertKey(t, "port", config, float64(PORT)) // json marshalling stores all numbers as float64
+    assertKey(t, "workspace_id", config, EXTLOG_WORKSPACEID)
+    assertKey(t, "primary_key", config, EXTLOG_PRIMARYKEY)     
+    assertKey(t, "log_group_name", config, EXTLOG_LOGGROUPNAME)
+    assertKey(t, "role_arn", config, EXTLOG_ROLEARN)       
+    assertKey(t, "external_id", config, EXTLOG_EXTERNALID) 
+    assertKey(t, "region", config, EXTLOG_REGION)          
+    assertKey(t, "api_key", config, EXTLOG_APIKEY)          
+    assertKey(t, "sub_domain", config, EXTLOG_SUBDOMAIN)     
+    assertKey(t, "host", config, EXTLOG_HOST)
+    assertKey(t, "hostname", config, EXTLOG_HOSTNAME)
+    assertKey(t, "channel", config, EXTLOG_CHANNEL)
+    assertKey(t, "enable_ssl", config, EXTLOG_ENABLESSL)
+    assertKey(t, "token", config, EXTLOG_TOKEN)
+    assertKey(t, "port", config, float64(EXTLOG_PORT)) // json marshalling stores all numbers as float64
 }
 
 func assertResponse(t *testing.T, response fivetran.ExternalLoggingCreateResponse) {

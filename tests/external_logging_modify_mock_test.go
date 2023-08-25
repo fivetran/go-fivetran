@@ -10,27 +10,6 @@ import (
 	"github.com/fivetran/go-fivetran/tests/mock"
 )
 
-const (
-    GROUPID         = "group_id"
-    SERVICE         = "service"
-    ENABLED         = true
-
-    WORKSPACEID     = "workspace_id"
-    PRIMARYKEY      = "primary_key"
-    LOGGROUPNAME    = "log_group_name"
-    ROLEARN         = "role_arn"
-    EXTERNALID      = "external_id"
-    REGION          = "region"
-    APIKEY          = "api_key"
-    SUBDOMAIN       = "sub_domain"
-    HOST            = "host"
-    HOSTNAME        = "hostname"
-    CHANNEL         = "channel"
-    ENABLESSL       = "enable_ssl"
-    TOKEN           = "token"
-    PORT            = 443
-)
-
 func TestExternalLoggingModifyService(t *testing.T) {
 	// arrange
 	ftClient, mockClient := CreateTestClient()
@@ -42,8 +21,8 @@ func TestExternalLoggingModifyService(t *testing.T) {
 
 	externalLoggingConfig := fivetran.NewExternalLoggingConfig()
 	externalLoggingConfig = externalLoggingConfig.
-			WorkspaceId(WORKSPACEID).
-			PrimaryKey(PRIMARYKEY)
+			WorkspaceId(EXTLOG_WORKSPACEID).
+			PrimaryKey(EXTLOG_PRIMARYKEY)
 
 	service := ftClient.NewExternalLoggingModify().
 		Enabled(true).
@@ -68,24 +47,24 @@ func TestExternalLoggingModifyService(t *testing.T) {
 
 func assertExternalLoggingModifyResponse() string {
 	return fmt.Sprintf(`{
-		"code": "Success",
-		"message": "External logging service has been updated",
-		"data": {
-			"id": "%v",
-			"service": "%v",
-			"enabled": "%v"
-		}
-	}`,
-    GROUPID,
-    SERVICE,
-    ENABLED,
+				"code": "Success",
+				"message": "External logging service has been updated",
+				"data": {
+					"id": "%v",
+					"service": "%v",
+					"enabled": "%v"
+				}
+			}`,
+    	EXTLOG_GROUPID,
+    	EXTLOG_SERVICE,
+    	EXTLOG_ENABLED,
     )
 }
 
 func assertExternalLoggingModifyResponse(t *testing.T, response fivetran.ExternalLoggingModifyResponse) {
 	assertEqual(t, response.Code, "Success")
 	assertEqual(t, response.Message, "External logging service has been updated")
-    assertEqual(t, response.Data.Id, GROUPID)
-    assertEqual(t, response.Data.Service, SERVICE)
-    assertEqual(t, response.Data.Enabled, ENABLED)
+    assertEqual(t, response.Data.Id, EXTLOG_GROUPID)
+    assertEqual(t, response.Data.Service, EXTLOG_SERVICE)
+    assertEqual(t, response.Data.Enabled, EXTLOG_ENABLED)
 }
