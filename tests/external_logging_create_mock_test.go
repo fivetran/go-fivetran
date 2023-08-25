@@ -39,7 +39,7 @@ func TestNewExternalLoggingCreateFullMappingMock(t *testing.T) {
 
         func(req *http.Request) (*http.Response, error) {
             body := requestBodyToJson(t, req)
-            assertRequest(t, body)
+            assertExternalLoggingRequest(t, body)
             response := mock.NewResponse(req, http.StatusCreated, prepareExternalLoggingResponse())
             return response, nil
         })
@@ -49,7 +49,7 @@ func TestNewExternalLoggingCreateFullMappingMock(t *testing.T) {
         GroupID(EXTLOG_GROUPID).
         Service(EXTLOG_SERVICE).
         Enabled(EXTLOG_ENABLED).
-        Config(prepareConfig()).
+        Config(prepareExternalLoggingConfig()).
         Do(context.Background())
 
     if err != nil {
@@ -62,7 +62,7 @@ func TestNewExternalLoggingCreateFullMappingMock(t *testing.T) {
     assertEqual(t, len(interactions), 1)
     assertEqual(t, interactions[0].Handler, handler)
     assertEqual(t, handler.Interactions, 1)
-    assertResponse(t, response)
+    assertExternalLoggingResponse(t, response)
 }
 
 func prepareExternalLoggingResponse() string {
@@ -82,7 +82,7 @@ func prepareExternalLoggingResponse() string {
     )
 }
 
-func prepareConfig() *fivetran.ExternalLoggingConfig {
+func prepareExternalLoggingConfig() *fivetran.ExternalLoggingConfig {
     config := fivetran.NewExternalLoggingConfig()
     config.WorkspaceId(EXTLOG_WORKSPACEID)
     config.PrimaryKey(EXTLOG_PRIMARYKEY)
@@ -101,7 +101,7 @@ func prepareConfig() *fivetran.ExternalLoggingConfig {
     return config
 }
 
-func assertRequest(t *testing.T, request map[string]interface{}) {
+func assertExternalLoggingRequest(t *testing.T, request map[string]interface{}) {
     assertKey(t, "service", request, EXTLOG_SERVICE)
     assertKey(t, "group_id", request, EXTLOG_GROUPID)
     assertKey(t, "enabled", request, EXTLOG_ENABLED)
@@ -127,7 +127,7 @@ func assertRequest(t *testing.T, request map[string]interface{}) {
     assertKey(t, "port", config, float64(EXTLOG_PORT)) // json marshalling stores all numbers as float64
 }
 
-func assertResponse(t *testing.T, response fivetran.ExternalLoggingCreateResponse) {
+func assertExternalLoggingResponse(t *testing.T, response fivetran.ExternalLoggingCreateResponse) {
     assertEqual(t, response.Code, "Created")
     assertNotEmpty(t, response.Message)
 
