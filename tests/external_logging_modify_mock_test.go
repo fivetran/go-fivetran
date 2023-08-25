@@ -52,7 +52,7 @@ func prepareExternalLoggingModifyResponse() string {
 				"data": {
 					"id": "%v",
 					"service": "%v",
-					"enabled": "%v"
+					"enabled": %v
 				}
 			}`,
     	EXTLOG_GROUPID,

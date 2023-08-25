@@ -70,9 +70,9 @@ func prepareExternalLoggingResponse() string {
             "code":"Created",
             "message":"External logging service has been added",
             "data":{
-                "id":                           "%v",
-                "service":                      "%v",
-                "enabled":                      "%v"
+                "id": "%v",
+                "service": "%v",
+                "enabled": %v
             }
         }`,
         EXTLOG_GROUPID,

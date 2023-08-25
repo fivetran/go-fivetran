@@ -50,7 +50,7 @@ func TestExternalLoggingDeleteServiceDoMissingExternalLoggingID(t *testing.T) {
 	_, err := service.Do(context.Background())
 
 	// Check for expected error
-	expectedError := fmt.Errorf("missing required logId")
+	expectedError := fmt.Errorf("missing required ExternalLoggingId")
 	assertEqual(t, err, expectedError)
 }
 
