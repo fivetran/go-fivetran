@@ -25,6 +25,7 @@ func TestExternalLoggingModifyService(t *testing.T) {
 			PrimaryKey(EXTLOG_PRIMARYKEY)
 
 	service := ftClient.NewExternalLoggingModify().
+		ExternalLoggingId("log_id").
 		Enabled(true).
 		Config(externalLoggingConfig)
 
