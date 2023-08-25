@@ -37,14 +37,9 @@ type externalLoggingCustomCreateRequest struct {
 /* responses */
 
 type ExternalLoggingCreateResponseBase struct {
-    Code    string `json:"code"`
-    Message string `json:"message"`
-    Data    struct {
-        Id             string `json:"id"`
-        Service        string `json:"service"`
-        Enabled        bool   `json:"enabled"`
-        Config ExternalLoggingConfigResponse `json:"config"`
-    } `json:"data"`
+    Id             string `json:"id"`
+    Service        string `json:"service"`
+    Enabled        bool   `json:"enabled"`
 }
 
 type ExternalLoggingCreateResponse struct {
