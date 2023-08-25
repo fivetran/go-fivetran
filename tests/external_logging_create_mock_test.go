@@ -111,7 +111,6 @@ func assertRequest(t *testing.T, request map[string]interface{}) {
     config, ok := c.(map[string]interface{})
     assertEqual(t, ok, true)
 
-         = ""
     assertKey(t, "workspace_id", config, WORKSPACEID)
     assertKey(t, "primary_key", config, PRIMARYKEY)     
     assertKey(t, "log_group_name", config, LOGGROUPNAME)
