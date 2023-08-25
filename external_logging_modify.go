@@ -72,23 +72,6 @@ func (s *ExternalLoggingModifyService) requestCustom() *externalLoggingCustomMod
     }
 }
 
-func (s *ExternalLoggingModifyService) requestCustomMerged() (*externalLoggingCustomModifyRequest, error) {
-    currentConfig := s.configCustom
-
-    if s.config != nil {
-        var err error
-        currentConfig, err = s.config.merge(currentConfig)
-        if err != nil {
-            return nil, err
-        }
-    }
-
-    return &externalLoggingCustomModifyRequest{
-        externalLoggingModifyRequestBase: s.requestBase(),
-        Config:                           currentConfig,
-    }, nil
-}
-
 func (s *ExternalLoggingModifyService) ExternalLoggingId(value string) *ExternalLoggingModifyService {
     s.externalLoggingId = &value
     return s
@@ -116,7 +99,7 @@ func (s *ExternalLoggingModifyService) RunSetupTests(value bool) *ExternalLoggin
 
 func (s *ExternalLoggingModifyService) do(ctx context.Context, req, response any) error {
     if s.externalLoggingId == nil {
-        return response, fmt.Errorf("missing required ExternalLoggingID")
+        return fmt.Errorf("missing required externalLoggingId")
     }
 
     url := fmt.Sprintf("%v/external-logging/%v", s.c.baseURL, *s.externalLoggingId)
@@ -165,28 +148,10 @@ func (s *ExternalLoggingModifyService) Do(ctx context.Context) (ExternalLoggingM
     return response, err
 }
 
-func (s *ExternalLoggingModifyService) DoCustom(ctx context.Context) (ExternalLoggingCustomModifyResponse, error) {
-    var response ExternalLoggingCustomModifyResponse
+func (s *ExternalLoggingModifyService) DoCustom(ctx context.Context) (ExternalLoggingModifyResponse, error) {
+    var response ExternalLoggingModifyResponse
 
     err := s.do(ctx, s.requestCustom(), &response)
-
-    return response, err
-}
-
-func (s *ExternalLoggingModifyService) DoCustomMerged(ctx context.Context) (ExternalLoggingCustomMergedModifyResponse, error) {
-    var response ExternalLoggingwCustomMergedModifyResponse
-
-    req, err := s.requestCustomMerged()
-
-    if err != nil {
-        return response, err
-    }
-
-    err = s.do(ctx, req, &response)
-
-    if err == nil {
-        err = FetchFromMap(&response.Data.CustomConfig, &response.Data.Config)
-    }
 
     return response, err
 }
