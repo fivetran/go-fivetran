@@ -45,7 +45,7 @@ func TestExternalLoggingModifyService(t *testing.T) {
 	assertExternalLoggingModifyResponse(t, response)
 }
 
-func assertExternalLoggingModifyResponse() string {
+func prepareExternalLoggingModifyResponse() string {
 	return fmt.Sprintf(`{
 				"code": "Success",
 				"message": "External logging service has been updated",

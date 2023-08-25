@@ -4,7 +4,6 @@ import (
     "context"
     "fmt"
     "net/http"
-    "strconv"
     "testing"
 
     "github.com/fivetran/go-fivetran"
@@ -46,7 +45,7 @@ func TestNewExternalLoggingCreateFullMappingMock(t *testing.T) {
 
     // act
     response, err := ftClient.NewExternalLoggingCreate().
-        GroupID(EXTLOG_GROUPID).
+        GroupId(EXTLOG_GROUPID).
         Service(EXTLOG_SERVICE).
         Enabled(EXTLOG_ENABLED).
         Config(prepareExternalLoggingConfig()).
@@ -131,7 +130,7 @@ func assertExternalLoggingResponse(t *testing.T, response fivetran.ExternalLoggi
     assertEqual(t, response.Code, "Created")
     assertNotEmpty(t, response.Message)
 
-    assertEqual(t, response.Data.Id, GROUPID)
-    assertEqual(t, response.Data.Service, SERVICE)
-    assertEqual(t, response.Data.Enabled, ENABLED)
+    assertEqual(t, response.Data.Id, EXTLOG_GROUPID)
+    assertEqual(t, response.Data.Service, EXTLOG_SERVICE)
+    assertEqual(t, response.Data.Enabled, EXTLOG_ENABLED)
 }
