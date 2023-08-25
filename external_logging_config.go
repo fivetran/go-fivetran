@@ -76,6 +76,14 @@ func (elc *ExternalLoggingConfig) request() *externalLoggingConfigRequest {
     }
 }
 
+func (cc *ExternalLoggingConfig) merge(customConfig *map[string]interface{}) (*map[string]interface{}, error) {
+    err := MergeIntoMap(cc.request(), customConfig)
+    if err != nil {
+        return nil, err
+    }
+    return customConfig, nil
+}
+
 func (elc *ExternalLoggingConfig) WorkspaceId(value string) *ExternalLoggingConfig {
     elc.workspaceId = &value
     return elc

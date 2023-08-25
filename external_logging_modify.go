@@ -14,12 +14,22 @@ type ExternalLoggingModifyService struct {
     enabled              *bool
     runSetupTests        *bool
     config               *ExternalLoggingConfig
+    configCustom         *map[string]interface{}
+}
+
+type externalLoggingModifyRequestBase struct {
+    Enabled           *bool                         `json:"enabled,omitempty"`
+    RunSetupTests     *bool                         `json:"run_setup_tests,omitempty"`
 }
 
 type externalLoggingModifyRequest struct {
-    Enabled           *bool                         `json:"enabled,omitempty"`
+    externalLoggingModifyRequestBase
     Config            *externalLoggingConfigRequest `json:"config,omitempty"`
-    RunSetupTests     *bool                         `json:"run_setup_tests,omitempty"`
+}
+
+type externalLoggingCustomModifyRequest struct {
+    externalLoggingModifyRequestBase
+    Config *map[string]interface{} `json:"config,omitempty"`
 }
 
 type ExternalLoggingModifyResponse struct {
@@ -36,6 +46,12 @@ func (c *Client) NewExternalLoggingModify() *ExternalLoggingModifyService {
     return &ExternalLoggingModifyService{c: c}
 }
 
+func (s *ExternalLoggingModifyService) requestBase() externalLoggingModifyRequestBase {
+    return externalLoggingModifyRequestBase{
+        Enabled:           s.enabled,
+    }
+}
+
 func (s *ExternalLoggingModifyService) request() *externalLoggingModifyRequest {
     var config *externalLoggingConfigRequest
 
@@ -44,9 +60,33 @@ func (s *ExternalLoggingModifyService) request() *externalLoggingModifyRequest {
     }
 
     return &externalLoggingModifyRequest{
-        Enabled:           s.enabled,
-        Config:            config,
+        externalLoggingModifyRequestBase: s.requestBase(),
+        Config:                           config,
     }
+}
+
+func (s *ExternalLoggingModifyService) requestCustom() *externalLoggingCustomModifyRequest {
+    return &externalLoggingCustomModifyRequest{
+        externalLoggingModifyRequestBase: s.requestBase(),
+        Config:                           s.configCustom,
+    }
+}
+
+func (s *ExternalLoggingModifyService) requestCustomMerged() (*externalLoggingCustomModifyRequest, error) {
+    currentConfig := s.configCustom
+
+    if s.config != nil {
+        var err error
+        currentConfig, err = s.config.merge(currentConfig)
+        if err != nil {
+            return nil, err
+        }
+    }
+
+    return &externalLoggingCustomModifyRequest{
+        externalLoggingModifyRequestBase: s.requestBase(),
+        Config:                           currentConfig,
+    }, nil
 }
 
 func (s *ExternalLoggingModifyService) ExternalLoggingId(value string) *ExternalLoggingModifyService {
@@ -64,14 +104,17 @@ func (s *ExternalLoggingModifyService) Config(value *ExternalLoggingConfig) *Ext
     return s
 }
 
+func (s *ExternalLoggingModifyService) ConfigCustom(value *map[string]interface{}) *ExternalLoggingModifyService {
+    s.configCustom = value
+    return s
+}
+
 func (s *ExternalLoggingModifyService) RunSetupTests(value bool) *ExternalLoggingModifyService {
     s.runSetupTests = &value
     return s
 }
 
-func (s *ExternalLoggingModifyService) Do(ctx context.Context) (ExternalLoggingModifyResponse, error) {
-    var response ExternalLoggingModifyResponse
-
+func (s *ExternalLoggingModifyService) do(ctx context.Context, req, response any) error {
     if s.externalLoggingId == nil {
         return response, fmt.Errorf("missing required ExternalLoggingID")
     }
@@ -85,7 +128,7 @@ func (s *ExternalLoggingModifyService) Do(ctx context.Context) (ExternalLoggingM
 
     reqBody, err := json.Marshal(s.request())
     if err != nil {
-        return response, err
+        return err
     }
 
     r := request{
@@ -99,17 +142,51 @@ func (s *ExternalLoggingModifyService) Do(ctx context.Context) (ExternalLoggingM
 
     respBody, respStatus, err := r.httpRequest(ctx)
     if err != nil {
-        return response, err
+        return err
     }
 
     if err := json.Unmarshal(respBody, &response); err != nil {
-        return response, err
+        return err
     }
 
     if respStatus != expectedStatus {
         err := fmt.Errorf("status code: %v; expected: %v", respStatus, expectedStatus)
+        return err
+    }
+
+    return nil
+}
+
+func (s *ExternalLoggingModifyService) Do(ctx context.Context) (ExternalLoggingModifyResponse, error) {
+    var response ExternalLoggingModifyResponse
+
+    err := s.do(ctx, s.request(), &response)
+
+    return response, err
+}
+
+func (s *ExternalLoggingModifyService) DoCustom(ctx context.Context) (ExternalLoggingCustomModifyResponse, error) {
+    var response ExternalLoggingCustomModifyResponse
+
+    err := s.do(ctx, s.requestCustom(), &response)
+
+    return response, err
+}
+
+func (s *ExternalLoggingModifyService) DoCustomMerged(ctx context.Context) (ExternalLoggingCustomMergedModifyResponse, error) {
+    var response ExternalLoggingwCustomMergedModifyResponse
+
+    req, err := s.requestCustomMerged()
+
+    if err != nil {
         return response, err
     }
 
-    return response, nil
+    err = s.do(ctx, req, &response)
+
+    if err == nil {
+        err = FetchFromMap(&response.Data.CustomConfig, &response.Data.Config)
+    }
+
+    return response, err
 }

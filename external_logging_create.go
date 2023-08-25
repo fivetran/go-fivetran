@@ -14,16 +14,29 @@ type ExternalLoggingCreateService struct {
     service           *string
     enabled           *bool
     config            *ExternalLoggingConfig
+    configCustom      *map[string]interface{}
+}
+
+/* requests */
+type externalLoggingCreateRequestBase struct {
+    GroupId           *string                          `json:"group_id,omitempty"`
+    Service           *string                          `json:"service,omitempty"`
+    Enabled           *bool                            `json:"enabled,omitempty"`   
 }
 
 type externalLoggingCreateRequest struct {
-    GroupId           *string                          `json:"group_id,omitempty"`
-    Service           *string                          `json:"service,omitempty"`
-    Enabled           *bool                            `json:"enabled,omitempty"`                 
-    Config            *externalLoggingConfigRequest    `json:"config,omitempty"`
+    externalLoggingCreateRequestBase
+    Config *externalLoggingConfigRequest `json:"config,omitempty"`
 }
 
-type ExternalLoggingCreateResponse struct {
+type externalLoggingCustomCreateRequest struct {
+    externalLoggingCreateRequestBase
+    Config *map[string]interface{} `json:"config,omitempty"`
+}
+
+/* responses */
+
+type ExternalLoggingCreateResponseBase struct {
     Code    string `json:"code"`
     Message string `json:"message"`
     Data    struct {
@@ -34,23 +47,82 @@ type ExternalLoggingCreateResponse struct {
     } `json:"data"`
 }
 
+type ExternalLoggingCreateResponse struct {
+    Code    string `json:"code"`
+    Message string `json:"message"`
+    Data    struct {
+        ExternalLoggingCreateResponseBase
+        Config ConnectorConfigResponse `json:"config"`
+    } `json:"data"`
+}
+
+type ExternalLoggingCustomCreateResponse struct {
+    Code    string `json:"code"`
+    Message string `json:"message"`
+    Data    struct {
+        ExternalLoggingCreateResponseBase
+        Config map[string]interface{} `json:"config"`
+    } `json:"data"`
+}
+
+type ExternalLoggingCustomMergedCreateResponse struct {
+    Code    string `json:"code"`
+    Message string `json:"message"`
+    Data    struct {
+        ExternalLoggingCreateResponseBase
+        CustomConfig map[string]interface{}  `json:"config"`
+        Config       ConnectorConfigResponse // no mapping here
+    } `json:"data"`
+}
+
 func (c *Client) NewExternalLoggingCreate() *ExternalLoggingCreateService {
     return &ExternalLoggingCreateService{c: c}
 }
 
+func (s *ExternalLoggingCreateService) requestBase() externalLoggingCreateRequestBase {
+    return externalLoggingCreateRequestBase{
+        GroupId:           s.groupId,
+        Service:           s.service,
+        Enabled:           s.enabled,
+    }
+}
+
 func (s *ExternalLoggingCreateService) request() *externalLoggingCreateRequest {
     var config *externalLoggingConfigRequest
-
     if s.config != nil {
         config = s.config.request()
     }
 
-    return &externalLoggingCreateRequest{
-        GroupId:           s.groupId,
-        Service:           s.service,
-        Enabled:           s.enabled,
-        Config:            config,
+    r := &externalLoggingCreateRequest{
+        externalLoggingCreateRequestBase: s.requestBase(),
+        Config:                           config,
     }
+
+    return r
+}
+
+func (s *ExternalLoggingCreateService) requestCustom() *externalLoggingCustomCreateRequest {
+    return &externalLoggingCustomCreateRequest{
+        externalLoggingCreateRequestBase: s.requestBase(),
+        Config:                           s.configCustom,
+    }
+}
+
+func (s *ExternalLoggingCreateService) requestCustomMerged() (*externalLoggingCustomCreateRequest, error) {
+    currentConfig := s.configCustom
+
+    if s.config != nil {
+        var err error
+        currentConfig, err = s.config.merge(currentConfig)
+        if err != nil {
+            return nil, err
+        }
+    }
+
+    return &externalLoggingCustomCreateRequest{
+        externalLoggingCreateRequestBase: s.requestBase(),
+        Config:                           currentConfig,
+    }, nil
 }
 
 func (s *ExternalLoggingCreateService) GroupId(value string) *ExternalLoggingCreateService {
@@ -73,8 +145,12 @@ func (s *ExternalLoggingCreateService) Config(value *ExternalLoggingConfig) *Ext
     return s
 }
 
-func (s *ExternalLoggingCreateService) Do(ctx context.Context) (ExternalLoggingCreateResponse, error) {
-    var response ExternalLoggingCreateResponse
+func (s *ExternalLoggingCreateService) ConfigCustom(value *map[string]interface{}) *ExternalLoggingCreateService {
+    s.configCustom = value
+    return s
+}
+
+func (s *ExternalLoggingCreateService) do(ctx context.Context, req, response any) error {
     url := fmt.Sprintf("%v/external-logging", s.c.baseURL)
     expectedStatus := 201
 
@@ -84,7 +160,7 @@ func (s *ExternalLoggingCreateService) Do(ctx context.Context) (ExternalLoggingC
 
     reqBody, err := json.Marshal(s.request())
     if err != nil {
-        return response, err
+        return err
     }
 
     r := request{
@@ -98,17 +174,51 @@ func (s *ExternalLoggingCreateService) Do(ctx context.Context) (ExternalLoggingC
 
     respBody, respStatus, err := r.httpRequest(ctx)
     if err != nil {
-        return response, err
+        return err
     }
 
     if err := json.Unmarshal(respBody, &response); err != nil {
-        return response, err
+        return err
     }
 
     if respStatus != expectedStatus {
         err := fmt.Errorf("status code: %v; expected: %v", respStatus, expectedStatus)
+        return err
+    }
+
+    return nil
+}
+
+func (s *ExternalLoggingCreateService) Do(ctx context.Context) (ExternalLoggingCreateResponse, error) {
+    var response ExternalLoggingCreateResponse
+
+    err := s.do(ctx, s.request(), &response)
+
+    return response, err
+}
+
+func (s *ExternalLoggingCreateService) DoCustom(ctx context.Context) (ExternalLoggingCustomCreateResponse, error) {
+    var response ExternalLoggingCustomCreateResponse
+
+    err := s.do(ctx, s.requestCustom(), &response)
+
+    return response, err
+}
+
+func (s *ExternalLoggingCreateService) DoCustomMerged(ctx context.Context) (ExternalLoggingCustomMergedCreateResponse, error) {
+    var response ExternalLoggingCustomMergedCreateResponse
+
+    req, err := s.requestCustomMerged()
+
+    if err != nil {
         return response, err
     }
 
-    return response, nil
+    err = s.do(ctx, req, &response)
+
+    if err == nil {
+        err = FetchFromMap(&response.Data.CustomConfig, &response.Data.Config)
+    }
+
+    return response, err
 }
