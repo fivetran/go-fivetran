@@ -4,7 +4,6 @@ import (
     "context"
     "net/http"
     "testing"
-    "time"
 
     "github.com/fivetran/go-fivetran"
     "github.com/fivetran/go-fivetran/tests/mock"
@@ -18,7 +17,7 @@ func TestRolesListServiceDo(t *testing.T) {
       "data": {
          "items": [
         {
-            "name": "Account Administrator",
+            "name": ,
             "description": "Can view and change account information, including billing, users, roles, API access, and security settings. Can create, manage, and delete destinations and connectors. Can manage transformations and logs.",
             "is_custom": false,
             "scope": ["ACCOUNT"]
@@ -48,8 +47,7 @@ func TestRolesListServiceDo(t *testing.T) {
         t.Error(err)
     }
 
-    flag := true
-    expectedResponse := fivetran.UsersListResponse{
+    expectedResponse := fivetran.RolesListResponse{
         Code: "Success",
         Data: struct {
             Items []struct {
@@ -59,6 +57,27 @@ func TestRolesListServiceDo(t *testing.T) {
                 Scope           []string  `json:"scope"`
             } `json:"items"`
             NextCursor string `json:"next_cursor"`
+        }{
+            Items: []struct {
+                Name            string    `json:"name"`
+                Description     string    `json:"description"`
+                IsCustom        string    `json:"is_custom"`
+                Scope           []string  `json:"scope"`
+            }{
+                {
+                    Name:           "Account Administrator"
+                    Description:    "Can view and change account information, including billing, users, roles, API access, and security settings. Can create, manage, and delete destinations and connectors. Can manage transformations and logs."
+                    IsCustom:       false
+                    Scope:          []string{"ACCOUNT"}
+                },
+                {
+                    Name:           "Destination Reviewer"
+                    Description:    "Can view the destinations that you are invited to and their associated connectors. Cannot create, delete, or manage destinations or connectors. Cannot access account information."
+                    IsCustom:       false
+                    Scope:          []string{"DESTINATION"}
+                },
+            },
+            NextCursor: "eyJza2lwIjoxfQ",
         },
     }
 
