@@ -11,13 +11,13 @@ type DbtTransformationDetailsService struct {
 	transformationId *string
 }
 
-type DbtTransformationDetailsResponse struct {
+type DbtTransformationResponse struct {
 	Code    string `json:"code"`
 	Message string `json:"message"`
 	Data    struct {
 		ID              string                            `json:"id"`
 		Status          string                            `json:"status"`
-		Schedule        dbtTransformationScheduleResponse `json:"schedule"`
+		Schedule        DbtTransformationScheduleResponse `json:"schedule"`
 		LastRun         string                            `json:"last_run"`
 		OutputModelName string                            `json:"output_model_name"`
 		DbtProjectId    string                            `json:"dbt_project_id"`
@@ -26,6 +26,8 @@ type DbtTransformationDetailsResponse struct {
 		CreatedAt       string                            `json:"created_at"`
 		ModelIds        []string                          `json:"model_ids"`
 		ConnectorIds    []string                          `json:"connector_ids"`
+		RunTests        bool                              `json:"run_tests"`
+		Paused          bool                              `json:"paused"`
 	} `json:"data"`
 }
 
@@ -38,8 +40,8 @@ func (s *DbtTransformationDetailsService) TransformationId(value string) *DbtTra
 	return s
 }
 
-func (s *DbtTransformationDetailsService) Do(ctx context.Context) (DbtTransformationDetailsResponse, error) {
-	var response DbtTransformationDetailsResponse
+func (s *DbtTransformationDetailsService) Do(ctx context.Context) (DbtTransformationResponse, error) {
+	var response DbtTransformationResponse
 
 	if s.transformationId == nil {
 		return response, fmt.Errorf("missing required transformation id")

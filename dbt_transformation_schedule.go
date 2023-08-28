@@ -14,7 +14,7 @@ type dbtTransformationScheduleRequest struct {
 	TimeOfDay    *string  `json:"time_of_day,omitempty"`
 }
 
-type dbtTransformationScheduleResponse struct {
+type DbtTransformationScheduleResponse struct {
 	ScheduleType string   `json:"schedule_type"`
 	DaysOfWeek   []string `json:"days_of_week"`
 	Interval     int      `json:"interval"`

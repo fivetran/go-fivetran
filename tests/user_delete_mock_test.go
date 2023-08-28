@@ -57,13 +57,6 @@ func prepareUserDeleteResponse() string {
 	return fmt.Sprintf(`{"code": "%s", "message": "User has been deleted"}`, EXPECTED_USER_DELETE_RESPONSE_CODE)
 }
 
-func prepareExpectedUserDeleteResponse() fivetran.UserDeleteResponse {
-	return fivetran.UserDeleteResponse{
-		Code:    EXPECTED_USER_DELETE_RESPONSE_CODE,
-		Message: "User has been deleted",
-	}
-}
-
 func assertUserDeleteResponse(t *testing.T, actual fivetran.UserDeleteResponse, code string, message string) {
 	assertEqual(t, actual.Code, code)
 	assertEqual(t, actual.Message, message)

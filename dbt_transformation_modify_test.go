@@ -26,11 +26,12 @@ func TestNewDbtTransformationModifyE2E(t *testing.T) {
 		t.Error(err)
 	}
 
+	// These checks are inconsistent currently, will update it when enable the test
 	AssertEqual(t, details.Code, "Success")
 	AssertNotEmpty(t, details.Message)
 	AssertNotEmpty(t, details.Data.ID)
 	AssertEqual(t, details.Data.Status, "")
-	AssertEqual(t, details.Data.Schedule.DaysOfWeek, "")
+	AssertEmpty(t, details.Data.Schedule.DaysOfWeek)
 	AssertEqual(t, details.Data.Schedule.Interval, "")
 	AssertEqual(t, details.Data.Schedule.ScheduleType, "")
 	AssertEqual(t, details.Data.Schedule.TimeOfDay, "")
@@ -40,6 +41,6 @@ func TestNewDbtTransformationModifyE2E(t *testing.T) {
 	AssertEqual(t, details.Data.DbtModelId, "")
 	AssertEqual(t, details.Data.NextRun, "")
 	AssertEqual(t, details.Data.CreatedAt, "")
-	AssertEqual(t, details.Data.ModelIds, "")
-	AssertEqual(t, details.Data.ConnectorIds, "")
+	AssertNotEmpty(t, details.Data.ModelIds)
+	AssertEmpty(t, details.Data.ConnectorIds)
 }

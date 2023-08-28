@@ -11,32 +11,14 @@ type DbtTransformationCreateService struct {
 	dbtModelId *string
 	schedule   *DbtTransformationSchedule
 	runTests   *bool
-	projectId  *string
+	paused     *bool
 }
 
 type dbtTransformationCreateRequest struct {
 	DbtModelId *string                           `json:"dbt_model_id,omitempty"`
 	Schedule   *dbtTransformationScheduleRequest `json:"schedule,omitempty"`
 	RunTests   *bool                             `json:"run_tests,omitempty"`
-	ProjectId  *string                           `json:"project_id,omitempty"`
-}
-
-type DbtTransformationCreateResponse struct {
-	Code    string `json:"code"`
-	Message string `json:"message"`
-	Data    struct {
-		ID              string                            `json:"id"`
-		Status          string                            `json:"status"`
-		Schedule        dbtTransformationScheduleResponse `json:"schedule"`
-		LastRun         string                            `json:"last_run"`
-		OutputModelName string                            `json:"output_model_name"`
-		DbtProjectId    string                            `json:"dbt_project_id"`
-		DbtModelId      string                            `json:"dbt_model_id"`
-		NextRun         string                            `json:"next_run"`
-		CreatedAt       string                            `json:"created_at"`
-		ModelIds        []string                          `json:"model_ids"`
-		ConnectorIds    []string                          `json:"connector_ids"`
-	} `json:"data"`
+	Paused     *bool                             `json:"paused,omitempty"`
 }
 
 func (c *Client) NewDbtTransformationCreateService() *DbtTransformationCreateService {
@@ -54,7 +36,7 @@ func (s *DbtTransformationCreateService) request() *dbtTransformationCreateReque
 		DbtModelId: s.dbtModelId,
 		Schedule:   schedule,
 		RunTests:   s.runTests,
-		ProjectId:  s.projectId,
+		Paused:     s.paused,
 	}
 }
 
@@ -73,13 +55,13 @@ func (s *DbtTransformationCreateService) RunTests(value bool) *DbtTransformation
 	return s
 }
 
-func (s *DbtTransformationCreateService) ProjectId(value string) *DbtTransformationCreateService {
-	s.projectId = &value
+func (s *DbtTransformationCreateService) Paused(value bool) *DbtTransformationCreateService {
+	s.paused = &value
 	return s
 }
 
-func (s *DbtTransformationCreateService) Do(ctx context.Context) (DbtTransformationCreateResponse, error) {
-	var response DbtTransformationCreateResponse
+func (s *DbtTransformationCreateService) Do(ctx context.Context) (DbtTransformationResponse, error) {
+	var response DbtTransformationResponse
 	url := fmt.Sprintf("%v/dbt/transformations", s.c.baseURL)
 	expectedStatus := 201
 

@@ -15,6 +15,7 @@ const (
 	STATUS            = "SUCCEEDED"
 	DBT_MODEL_ID      = "model_1"
 	RUN_TESTS         = false
+	PAUSED            = true
 	DBT_PROJECT_ID    = "project_1"
 	SCHEDULE_TYPE     = "schedule_type_1"
 	INTERVAL          = 1
@@ -26,53 +27,11 @@ const (
 	NEXT_RUN          = "2023-08-24T14:15:22Z"
 )
 
-var daysOfWeek = []string{
-	"Monday",
-}
-
-func TestNewDbtTransformationCreateFullMappingMock(t *testing.T) {
-	// arrange
-	ftClient, mockClient := CreateTestClient()
-	handler := mockClient.When(http.MethodPost, "/v1/dbt/transformations").
-		ThenCall(
-
-			func(req *http.Request) (*http.Response, error) {
-				body := requestBodyToJson(t, req)
-				assertDbtTransformationRequest(t, body)
-				response := mock.NewResponse(req, http.StatusCreated, prepareDbtTransformationResponse())
-				return response, nil
-			})
-
-	schedule := fivetran.NewDbtTransformationSchedule().
-		ScheduleType(SCHEDULE_TYPE).
-		DaysOfWeek(daysOfWeek).
-		Interval(INTERVAL).
-		TimeOfDay(TIME_OF_DAY)
-
-	service := ftClient.NewDbtTransformationCreateService().
-		DbtModelId(DBT_MODEL_ID).
-		RunTests(RUN_TESTS).
-		ProjectId(DBT_PROJECT_ID).
-		Schedule(schedule)
-
-	// act
-	response, err := service.Do(context.Background())
-
-	if err != nil {
-		t.Logf("%+v\n", response)
-		t.Error(err)
+var (
+	daysOfWeek = []string{
+		"Monday",
 	}
-
-	// assert
-	interactions := mockClient.Interactions()
-	assertEqual(t, len(interactions), 1)
-	assertEqual(t, interactions[0].Handler, handler)
-	assertEqual(t, handler.Interactions, 1)
-	assertDbtTransformationResponse(t, response)
-}
-
-func prepareDbtTransformationResponse() string {
-	return fmt.Sprintf(
+	createResponse = fmt.Sprintf(
 		`{
 			"code": "Created",
 			"message": "Dbt transformation has been created",
@@ -94,6 +53,7 @@ func prepareDbtTransformationResponse() string {
 				"next_run": "%v",
 				"created_at": "%v",
 				"run_tests": %v,
+				"paused": %v,
 				"model_ids": [
 					"%v"
 				],
@@ -115,15 +75,57 @@ func prepareDbtTransformationResponse() string {
 		NEXT_RUN,
 		CREATED_AT,
 		RUN_TESTS,
+		PAUSED,
 		MODEL_ID,
 		CONNECTOR_ID,
 	)
+)
+
+func TestNewDbtTransformationCreateFullMappingMock(t *testing.T) {
+	// arrange
+	ftClient, mockClient := CreateTestClient()
+	handler := mockClient.When(http.MethodPost, "/v1/dbt/transformations").
+		ThenCall(
+
+			func(req *http.Request) (*http.Response, error) {
+				body := requestBodyToJson(t, req)
+				assertDbtTransformationRequest(t, body)
+				response := mock.NewResponse(req, http.StatusCreated, createResponse)
+				return response, nil
+			})
+
+	schedule := fivetran.NewDbtTransformationSchedule().
+		ScheduleType(SCHEDULE_TYPE).
+		DaysOfWeek(daysOfWeek).
+		Interval(INTERVAL).
+		TimeOfDay(TIME_OF_DAY)
+
+	service := ftClient.NewDbtTransformationCreateService().
+		DbtModelId(DBT_MODEL_ID).
+		RunTests(RUN_TESTS).
+		Paused(PAUSED).
+		Schedule(schedule)
+
+	// act
+	response, err := service.Do(context.Background())
+
+	if err != nil {
+		t.Logf("%+v\n", response)
+		t.Error(err)
+	}
+
+	// assert
+	interactions := mockClient.Interactions()
+	assertEqual(t, len(interactions), 1)
+	assertEqual(t, interactions[0].Handler, handler)
+	assertEqual(t, handler.Interactions, 1)
+	assertDbtTransformationResponse(t, response)
 }
 
 func assertDbtTransformationRequest(t *testing.T, request map[string]interface{}) {
 	assertKey(t, "dbt_model_id", request, DBT_MODEL_ID)
 	assertKey(t, "run_tests", request, RUN_TESTS)
-	assertKey(t, "project_id", request, DBT_PROJECT_ID)
+	assertKey(t, "paused", request, true)
 
 	c, ok := request["schedule"]
 	assertEqual(t, ok, true)
@@ -139,7 +141,7 @@ func assertDbtTransformationRequest(t *testing.T, request map[string]interface{}
 	assertKey(t, "time_of_day", schedule, TIME_OF_DAY)
 }
 
-func assertDbtTransformationResponse(t *testing.T, response fivetran.DbtTransformationCreateResponse) {
+func assertDbtTransformationResponse(t *testing.T, response fivetran.DbtTransformationResponse) {
 
 	assertEqual(t, response.Code, "Created")
 	assertNotEmpty(t, response.Message)
@@ -154,7 +156,8 @@ func assertDbtTransformationResponse(t *testing.T, response fivetran.DbtTransfor
 	assertEqual(t, response.Data.CreatedAt, CREATED_AT)
 	assertEqual(t, response.Data.ModelIds[0], MODEL_ID)
 	assertEqual(t, response.Data.ConnectorIds[0], CONNECTOR_ID)
-
+	assertEqual(t, response.Data.RunTests, RUN_TESTS)
+	assertEqual(t, response.Data.Paused, PAUSED)
 	assertEqual(t, response.Data.Schedule.ScheduleType, SCHEDULE_TYPE)
 	assertEqual(t, response.Data.Schedule.DaysOfWeek, daysOfWeek)
 	assertEqual(t, response.Data.Schedule.Interval, INTERVAL)

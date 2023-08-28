@@ -186,7 +186,7 @@ func CreateDbtTransformation(t *testing.T) string {
 			Interval(0).
 			TimeOfDay("")).
 		RunTests(true).
-		ProjectId("").
+		Paused(true).
 		Do(context.Background())
 
 	if err != nil {
@@ -406,12 +406,12 @@ func DeleteExternalLogging(t *testing.T, id string) {
 func CreateExternalLogging(t *testing.T) string {
 	t.Helper()
 	created, err := Client.NewExternalLoggingCreate().
-	    GroupId(PredefinedGroupId).
-        Service("azure_monitor_log").
-        Enabled(true).
-        Config(fivetran.NewExternalLoggingConfig().
-            WorkspaceId("workspace_id").
-            PrimaryKey("PASSWORD")).
+		GroupId(PredefinedGroupId).
+		Service("azure_monitor_log").
+		Enabled(true).
+		Config(fivetran.NewExternalLoggingConfig().
+			WorkspaceId("workspace_id").
+			PrimaryKey("PASSWORD")).
 		Do(context.Background())
 
 	if err != nil {
