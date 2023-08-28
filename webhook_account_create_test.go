@@ -7,7 +7,7 @@ import (
 
 func TestNewWebhookAccountCreateE2E(t *testing.T) {
     created, err := Client.NewWebhookAccountCreate().
-        Url("https://webhook.site/abe96072-249c-40bc-a12d-8b92750175e2").
+        Url("https://webhook.site/abe96072-249c-40bc-a12d-8b92750175e2").           // Unstable test url
         Secret("my_secret").
         Active(true).
         Events([]string{"sync_start","sync_end"}).
@@ -27,7 +27,7 @@ func TestNewWebhookAccountCreateE2E(t *testing.T) {
     AssertEqual(t, created.Data.Type, "account")
     AssertEqual(t, created.Data.Active, true)
     AssertEqual(t, created.Data.Secret, "******")
-    AssertEqual(t, created.Data.Url, "https://webhook.site/abe96072-249c-40bc-a12d-8b92750175e2")
+    AssertEqual(t, created.Data.Url, "https://webhook.site/abe96072-249c-40bc-a12d-8b92750175e2")           // Unstable test url
     
     t.Cleanup(func() { DeleteWebhook(t, created.Data.Id) })
 }

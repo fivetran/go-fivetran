@@ -11,7 +11,7 @@ import (
 )
 
 const (
-    WEBHOOK_URL         = "https://webhook.site/abe96072-249c-40bc-a12d-8b92750175e2"
+    WEBHOOK_URL         = "https://webhook.site/abe96072-249c-40bc-a12d-8b92750175e2"           // Unstable test url
     WEBHOOK_EVENT       = "sync_start"
     WEBHOOK_ACTIVE      = true
     WEBHOOK_SECRET      = "my_secret"
@@ -25,7 +25,7 @@ func TestNewWebhookAccountCreate(t *testing.T) {
 
         func(req *http.Request) (*http.Response, error) {
             body := requestBodyToJson(t, req)
-            assertRequest(t, body)
+            assertWebhookAccountRequest(t, body)
             response := mock.NewResponse(req, http.StatusCreated, prepareWebhookAccountResponse())
             return response, nil
         })
@@ -58,7 +58,7 @@ func TestNewWebhookGroupCreate(t *testing.T) {
 
         func(req *http.Request) (*http.Response, error) {
             body := requestBodyToJson(t, req)
-            assertRequest(t, body)
+            assertWebhookGroupRequest(t, body)
             response := mock.NewResponse(req, http.StatusCreated, prepareWebhookGroupResponse())
             return response, nil
         })

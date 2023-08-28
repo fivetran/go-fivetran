@@ -75,7 +75,7 @@ func (s *WebhookAccountCreateService) Events(value []string) *WebhookAccountCrea
 func (s *WebhookAccountCreateService) Do(ctx context.Context) (WebhookAccountCreateResponse, error) {
     var response WebhookAccountCreateResponse
     url := fmt.Sprintf("%v/webhooks/account", s.c.baseURL)
-    expectedStatus := 201
+    expectedStatus := 200
 
     headers := s.c.commonHeaders()
     headers["Content-Type"] = "application/json"

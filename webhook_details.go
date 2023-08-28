@@ -45,7 +45,7 @@ func (s *WebhookDetailsService) Do(ctx context.Context) (WebhookDetailsResponse,
     }
 
     url := fmt.Sprintf("%v/webhooks/%v", s.c.baseURL, *s.webhookId)
-    expectedStatus := 201
+    expectedStatus := 200
 
     headers := s.c.commonHeaders()
     headers["Content-Type"] = "application/json"

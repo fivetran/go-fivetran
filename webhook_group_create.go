@@ -88,7 +88,7 @@ func (s *WebhookGroupCreateService) Do(ctx context.Context) (WebhookGroupCreateR
 
 
     url := fmt.Sprintf("%v/webhooks/group/%v", s.c.baseURL, *s.groupId)
-    expectedStatus := 201
+    expectedStatus := 200
 
     headers := s.c.commonHeaders()
     headers["Content-Type"] = "application/json"

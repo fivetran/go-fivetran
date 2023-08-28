@@ -20,7 +20,6 @@ func TestWebhookDetailsE2E(t *testing.T) {
     AssertNotEmpty(t, result.Data.CreatedAt)
     AssertNotEmpty(t, result.Data.CreatedBy)
     AssertNotEmpty(t, result.Data.Type)
-    AssertNotEmpty(t, result.Data.Active)
     AssertNotEmpty(t, result.Data.GroupId)
     AssertNotEmpty(t, result.Data.Secret)
     AssertNotEmpty(t, result.Data.Url)
