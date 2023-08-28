@@ -420,3 +420,36 @@ func CreateExternalLogging(t *testing.T) string {
 	}
 	return created.Data.Id
 }
+
+func CreateTempWebhook(t *testing.T) string {
+	t.Helper()
+	webhookId := CreateWebhookAccount(t)
+	t.Cleanup(func() { DeleteWebhook(t, webhookId) })
+	return webhookId
+}
+
+func DeleteWebhook(t *testing.T, id string) {
+	t.Helper()
+	deleted, err := Client.NewWebhookDelete().WebhookId(id).Do(context.Background())
+
+	if err != nil {
+		t.Logf("%+v\n", deleted)
+		t.Error(err)
+	}
+}
+
+func CreateWebhookAccount(t *testing.T) string {
+	t.Helper()
+	created, err := Client.NewWebhookAccountCreate().
+        Url("https://your-host.your-domain/webhook").
+        Secret("my_secret").
+        Active(true).
+        Events([]string{"sync_start","sync_end"}).
+        Do(context.Background())
+
+	if err != nil {
+		t.Logf("%+v\n", created)
+		t.Error(err)
+	}
+	return created.Data.Id
+}
