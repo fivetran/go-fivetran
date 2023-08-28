@@ -48,7 +48,7 @@ func TestNewWebhookAccountCreate(t *testing.T) {
     assertEqual(t, len(interactions), 1)
     assertEqual(t, interactions[0].Handler, handler)
     assertEqual(t, handler.Interactions, 1)
-    assertResponse(t, response)
+    assertWebhookAccountResponse(t, response)
 }
 
 func TestNewWebhookGroupCreate(t *testing.T) {
@@ -82,7 +82,7 @@ func TestNewWebhookGroupCreate(t *testing.T) {
     assertEqual(t, len(interactions), 1)
     assertEqual(t, interactions[0].Handler, handler)
     assertEqual(t, handler.Interactions, 1)
-    assertResponse(t, response)
+    assertWebhookGroupResponse(t, response)
 }
 
 func prepareWebhookGroupResponse() string {

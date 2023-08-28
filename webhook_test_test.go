@@ -7,6 +7,7 @@ import (
 
 func TestWebhookTestE2E(t *testing.T) {
 	webhookId := CreateTempWebhook(t)
+	
 	response, err := Client.NewWebhookTest().
 			WebhookId(webhookId).
 			Event("sync_start").
@@ -21,4 +22,6 @@ func TestWebhookTestE2E(t *testing.T) {
 	AssertEqual(t, response.Data.Succeed, false)
 	AssertEqual(t, response.Data.Status, 200)
 	AssertEqual(t, response.Data.Message, "SUCCESS")
+
+	t.Cleanup(func() { DeleteWebhook(t, webhookId) })
 }

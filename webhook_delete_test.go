@@ -8,6 +8,7 @@ import (
 
 func TestNewWebhookDeleteE2E(t *testing.T) {
     webhookId := CreateWebhookAccount(t)
+
     deleted, err := Client.NewWebhookDelete().WebhookId(webhookId).Do(context.Background())
 
     if err != nil {

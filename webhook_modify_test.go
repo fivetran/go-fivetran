@@ -32,4 +32,6 @@ func TestWebhookModifyE2E(t *testing.T) {
     AssertEqual(t, updated.Data.Active, true)
     AssertEqual(t, updated.Data.Secret, "******")
     AssertEqual(t, updated.Data.Url, "https://webhook.site/abe96072-249c-40bc-a12d-8b92750175e2")
+
+    t.Cleanup(func() { DeleteWebhook(t, webhookId) })
 }

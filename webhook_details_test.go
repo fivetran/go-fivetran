@@ -6,7 +6,9 @@ import (
 )
 
 func TestWebhookDetailsE2E(t *testing.T) {
-	result, err := Client.NewWebhookDetails().WebhookId("recur_readable").Do(context.Background())
+	webhookId := CreateWebhookAccount(t)
+
+	result, err := Client.NewWebhookDetails().WebhookId(webhookId).Do(context.Background())
 	if err != nil {
 		t.Logf("%+v\n", result)
 		t.Error(err)
@@ -22,4 +24,6 @@ func TestWebhookDetailsE2E(t *testing.T) {
     AssertNotEmpty(t, result.Data.GroupId)
     AssertNotEmpty(t, result.Data.Secret)
     AssertNotEmpty(t, result.Data.Url)
+
+    t.Cleanup(func() { DeleteWebhook(t, webhookId) })
 }
