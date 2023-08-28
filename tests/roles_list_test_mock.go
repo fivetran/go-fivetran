@@ -17,7 +17,7 @@ func TestRolesListServiceDo(t *testing.T) {
       "data": {
          "items": [
         {
-            "name": "Account Administrator",
+            "name": ,
             "description": "Can view and change account information, including billing, users, roles, API access, and security settings. Can create, manage, and delete destinations and connectors. Can manage transformations and logs.",
             "is_custom": false,
             "scope": ["ACCOUNT"]
