@@ -20,11 +20,12 @@ func TestWebhookModifyService(t *testing.T) {
 		})
 
 	service := ftClient.NewWebhookModify().
-        WebhookId("webhook_id").
-        Url(WEBHOOK_URL).
-        Secret(WEBHOOK_SECRET).
-        Active(WEBHOOK_ACTIVE).
-        Events([]string{WEBHOOK_EVENT}).
+        	WebhookId("webhook_id").
+        	Url(WEBHOOK_URL).
+        	Secret(WEBHOOK_SECRET).
+        	Active(WEBHOOK_ACTIVE).
+        	Events([]string{WEBHOOK_EVENT}).
+        Do(context.Background())
 
 	// act
 	response, err := service.Do(context.Background())
