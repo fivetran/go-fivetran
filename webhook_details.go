@@ -52,7 +52,7 @@ func (s *WebhookDetailsService) Do(ctx context.Context) (WebhookDetailsResponse,
     headers["Accept"] = restAPIv2
 
     r := request{
-        method:  "POST",
+        method:  "GET",
         url:     url,
         queries: nil,
         headers: headers,
