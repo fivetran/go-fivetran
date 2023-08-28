@@ -60,6 +60,7 @@ func prepareWebhookModifyResponse() string {
                 "secret": "******",
                 "created_at": "2022-04-29T09:41:08.583Z",
                 "created_by": "_airworthy"
+            }
         }`,
         WEBHOOK_GROUP,
         WEBHOOK_URL,

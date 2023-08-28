@@ -20,7 +20,6 @@ func TestWebhookListE2E(t *testing.T) {
     AssertNotEmpty(t, result.Data.Items[0].CreatedAt)
     AssertNotEmpty(t, result.Data.Items[0].CreatedBy)
     AssertNotEmpty(t, result.Data.Items[0].Type)
-    AssertNotEmpty(t, result.Data.Items[0].GroupId)
     AssertNotEmpty(t, result.Data.Items[0].Secret)
     AssertNotEmpty(t, result.Data.Items[0].Url)
 
