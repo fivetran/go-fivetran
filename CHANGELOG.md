@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased](https://github.com/fivetran/go-fivetran/compare/v0.7.5...HEAD)
 
+## Added
+Supported the following Fivetran API endpoints:
+- [List all roles](https://fivetran.com/docs/rest-api/roles#listallroles)
+
 ## [0.7.5](https://github.com/fivetran/go-fivetran/compare/v0.7.4...v0.7.5) Not Published
 
 ## Fixed
@@ -19,8 +23,6 @@ Supported the following Fivetran API endpoints:
 - [Update a Log Service](https://fivetran.com/docs/rest-api/log-service-management#updatealogservice)
 - [Delete a Log Service](https://fivetran.com/docs/rest-api/log-service-management#deletealogservice)
 - [Run Log Service Setup Tests](https://fivetran.com/docs/rest-api/log-service-management#runlogservicesetuptests)
-- [List all roles](https://fivetran.com/docs/rest-api/roles#listallroles)
-
 
 ## [0.7.4](https://github.com/fivetran/go-fivetran/compare/v0.7.3...v0.7.4)
 
