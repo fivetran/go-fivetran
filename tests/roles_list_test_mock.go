@@ -65,16 +65,16 @@ func TestRolesListServiceDo(t *testing.T) {
                 Scope           []string  `json:"scope"`
             }{
                 {
-                    Name:           "Account Administrator"
-                    Description:    "Can view and change account information, including billing, users, roles, API access, and security settings. Can create, manage, and delete destinations and connectors. Can manage transformations and logs."
-                    IsCustom:       false
-                    Scope:          []string{"ACCOUNT"}
+                    Name:           "Account Administrator",
+                    Description:    "Can view and change account information, including billing, users, roles, API access, and security settings. Can create, manage, and delete destinations and connectors. Can manage transformations and logs.",
+                    IsCustom:       false,
+                    Scope:          []string{"ACCOUNT"},
                 },
                 {
-                    Name:           "Destination Reviewer"
-                    Description:    "Can view the destinations that you are invited to and their associated connectors. Cannot create, delete, or manage destinations or connectors. Cannot access account information."
-                    IsCustom:       false
-                    Scope:          []string{"DESTINATION"}
+                    Name:           "Destination Reviewer",
+                    Description:    "Can view the destinations that you are invited to and their associated connectors. Cannot create, delete, or manage destinations or connectors. Cannot access account information.",
+                    IsCustom:       false,
+                    Scope:          []string{"DESTINATION"},
                 },
             },
             NextCursor: "eyJza2lwIjoxfQ",
