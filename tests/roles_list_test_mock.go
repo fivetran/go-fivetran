@@ -47,13 +47,14 @@ func TestRolesListServiceDo(t *testing.T) {
         t.Error(err)
     }
 
+    flag := false
     expectedResponse := fivetran.RolesListResponse{
         Code: "Success",
         Data: struct {
             Items []struct {
                 Name            string    `json:"name"`
                 Description     string    `json:"description"`
-                IsCustom        string    `json:"is_custom"`
+                IsCustom        *bool     `json:"is_custom"`
                 Scope           []string  `json:"scope"`
             } `json:"items"`
             NextCursor string `json:"next_cursor"`
@@ -61,19 +62,19 @@ func TestRolesListServiceDo(t *testing.T) {
             Items: []struct {
                 Name            string    `json:"name"`
                 Description     string    `json:"description"`
-                IsCustom        string    `json:"is_custom"`
+                IsCustom        *bool     `json:"is_custom"`
                 Scope           []string  `json:"scope"`
             }{
                 {
                     Name:           "Account Administrator",
                     Description:    "Can view and change account information, including billing, users, roles, API access, and security settings. Can create, manage, and delete destinations and connectors. Can manage transformations and logs.",
-                    IsCustom:       false,
+                    IsCustom:       &flag,
                     Scope:          []string{"ACCOUNT"},
                 },
                 {
                     Name:           "Destination Reviewer",
                     Description:    "Can view the destinations that you are invited to and their associated connectors. Cannot create, delete, or manage destinations or connectors. Cannot access account information.",
-                    IsCustom:       false,
+                    IsCustom:       &flag,
                     Scope:          []string{"DESTINATION"},
                 },
             },

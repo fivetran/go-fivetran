@@ -20,7 +20,7 @@ type RolesListResponse struct {
         Items []struct {
             Name            string      `json:"name"`
             Description     string      `json:"description"`
-            IsCustom        bool        `json:"is_custom"`
+            IsCustom        *bool       `json:"is_custom"`
             Scope           []string    `json:"scope"`
         } `json:"items"`
         NextCursor string `json:"next_cursor"`
