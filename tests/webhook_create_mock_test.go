@@ -31,7 +31,7 @@ func TestNewWebhookAccountCreate(t *testing.T) {
         })
 
     // act
-    response, err := ftClient.NewWebhokAccountCreate().
+    response, err := ftClient.NewWebhookAccountCreate().
         Url(WEBHOOK_URL).
         Secret(WEBHOOK_SECRET).
         Active(WEBHOOK_ACTIVE).
