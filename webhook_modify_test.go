@@ -31,5 +31,5 @@ func TestWebhookModifyE2E(t *testing.T) {
     AssertNotEmpty(t, updated.Data.Type)
     AssertEqual(t, updated.Data.Active, true)
     AssertEqual(t, updated.Data.Secret, "******")
-    AssertEqual(t, updated.Data.Url, "https://your-host.your-domain/webhook")
+    AssertEqual(t, updated.Data.Url, "https://webhook.site/abe96072-249c-40bc-a12d-8b92750175e2")
 }

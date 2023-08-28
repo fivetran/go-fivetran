@@ -15,6 +15,7 @@ type WebhookModifyService struct {
     events            *[]string
     active            *bool
     secret            *string
+    runTests          *bool
 }
 
 type webhookModifyRequest struct {
@@ -22,6 +23,7 @@ type webhookModifyRequest struct {
     Events            *[]string         `json:"events,omitempty"`
     Active            *bool             `json:"active,omitempty"`
     Secret            *string           `json:"secret,omitempty"`
+    RunTests          *bool             `json:"run_tests,omitempty"`
 }
 
 
@@ -76,6 +78,11 @@ func (s *WebhookModifyService) Events(value []string) *WebhookModifyService {
 
 func (s *WebhookModifyService) WebhookId(value string) *WebhookModifyService {
     s.webhookId = &value
+    return s
+}
+
+func (s *WebhookModifyService) RunTests(value bool) *WebhookModifyService {
+    s.runTests = &value
     return s
 }
 

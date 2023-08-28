@@ -27,7 +27,7 @@ func TestNewWebhookAccountCreateE2E(t *testing.T) {
     AssertEqual(t, created.Data.Type, "account")
     AssertEqual(t, created.Data.Active, true)
     AssertEqual(t, created.Data.Secret, "******")
-    AssertEqual(t, created.Data.Url, "https://your-host.your-domain/webhook")
+    AssertEqual(t, created.Data.Url, "https://webhook.site/abe96072-249c-40bc-a12d-8b92750175e2")
     
     t.Cleanup(func() { DeleteWebhook(t, created.Data.Id) })
 }
