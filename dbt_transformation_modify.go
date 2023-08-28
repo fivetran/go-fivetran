@@ -11,29 +11,13 @@ type DbtTransformationModifyService struct {
 	dbtTransformationId *string
 	schedule            *DbtTransformationSchedule
 	runTests            *bool
+	paused              *bool
 }
 
 type dbtTransformationModifyRequest struct {
 	Schedule *dbtTransformationScheduleRequest `json:"schedule,omitempty"`
 	RunTests *bool                             `json:"run_tests,omitempty"`
-}
-
-type DbtTransformationModifyResponse struct {
-	Code    string `json:"code"`
-	Message string `json:"message"`
-	Data    struct {
-		ID              string                            `json:"id"`
-		Status          string                            `json:"status"`
-		Schedule        dbtTransformationScheduleResponse `json:"schedule"`
-		LastRun         string                            `json:"last_run"`
-		OutputModelName string                            `json:"output_model_name"`
-		DbtProjectId    string                            `json:"dbt_project_id"`
-		DbtModelId      string                            `json:"dbt_model_id"`
-		NextRun         string                            `json:"next_run"`
-		CreatedAt       string                            `json:"created_at"`
-		ModelIds        []string                          `json:"model_ids"`
-		ConnectorIds    []string                          `json:"connector_ids"`
-	} `json:"data"`
+	Paused   *bool                             `json:"paused,omitempty"`
 }
 
 func (c *Client) NewDbtTransformationModifyService() *DbtTransformationModifyService {
@@ -68,8 +52,13 @@ func (s *DbtTransformationModifyService) RunTests(value bool) *DbtTransformation
 	return s
 }
 
-func (s *DbtTransformationModifyService) Do(ctx context.Context) (DbtTransformationModifyResponse, error) {
-	var response DbtTransformationModifyResponse
+func (s *DbtTransformationModifyService) Paused(value bool) *DbtTransformationModifyService {
+	s.paused = &value
+	return s
+}
+
+func (s *DbtTransformationModifyService) Do(ctx context.Context) (DbtTransformationResponse, error) {
+	var response DbtTransformationResponse
 
 	if s.dbtTransformationId == nil {
 		return response, fmt.Errorf("missing required dbt transformation ID")

@@ -14,7 +14,7 @@ const (
 	NEW_RUN_TESTS     = true
 	NEW_SCHEDULE_TYPE = "schedule_type_2"
 	NEW_INTERVAL      = 0
-	NEW_TIME_OF_DAY   = "time_of_day_2"
+	NEW_TIME_OF_DAY   = "12:00"
 )
 
 var newDaysOfWeek = []string{
@@ -82,6 +82,7 @@ func prepareDbtTransformationModifyResponse() string {
 				"next_run": "%v",
 				"created_at": "%v",
 				"run_tests": %v,
+				"paused": %v,
 				"model_ids": [
 					"%v"
 				],
@@ -103,12 +104,13 @@ func prepareDbtTransformationModifyResponse() string {
 		NEXT_RUN,
 		CREATED_AT,
 		NEW_RUN_TESTS,
+		PAUSED,
 		MODEL_ID,
 		CONNECTOR_ID,
 	)
 }
 
-func assertDbtTransformationModifyResponse(t *testing.T, response fivetran.DbtTransformationModifyResponse) {
+func assertDbtTransformationModifyResponse(t *testing.T, response fivetran.DbtTransformationResponse) {
 	assertEqual(t, response.Code, "Success")
 	assertEqual(t, response.Message, "Dbt transformation has been updated")
 
