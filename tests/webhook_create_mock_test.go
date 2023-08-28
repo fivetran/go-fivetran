@@ -26,7 +26,7 @@ func TestNewWebhookAccountCreate(t *testing.T) {
         func(req *http.Request) (*http.Response, error) {
             body := requestBodyToJson(t, req)
             assertWebhookAccountRequest(t, body)
-            response := mock.NewResponse(req, http.StatusCreated, prepareWebhookAccountResponse())
+            response := mock.NewResponse(req, http.StatusOK, prepareWebhookAccountResponse())
             return response, nil
         })
 
@@ -59,7 +59,7 @@ func TestNewWebhookGroupCreate(t *testing.T) {
         func(req *http.Request) (*http.Response, error) {
             body := requestBodyToJson(t, req)
             assertWebhookGroupRequest(t, body)
-            response := mock.NewResponse(req, http.StatusCreated, prepareWebhookGroupResponse())
+            response := mock.NewResponse(req, http.StatusOK, prepareWebhookGroupResponse())
             return response, nil
         })
 
