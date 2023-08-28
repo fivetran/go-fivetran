@@ -50,7 +50,7 @@ func (s *WebhookListService) Do(ctx context.Context) (WebhookListResponse, error
     var response WebhookListResponse
 
     url := fmt.Sprintf("%v/webhooks", s.c.baseURL)
-    expectedStatus := 201
+    expectedStatus := 200
 
     headers := s.c.commonHeaders()
     
