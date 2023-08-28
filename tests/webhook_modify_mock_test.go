@@ -24,8 +24,7 @@ func TestWebhookModifyService(t *testing.T) {
         	Url(WEBHOOK_URL).
         	Secret(WEBHOOK_SECRET).
         	Active(WEBHOOK_ACTIVE).
-        	Events([]string{WEBHOOK_EVENT}).
-        Do(context.Background())
+        	Events([]string{WEBHOOK_EVENT})
 
 	// act
 	response, err := service.Do(context.Background())

@@ -4,7 +4,6 @@ import (
     "context"
     "fmt"
     "net/http"
-    "strconv"
     "testing"
 
     "github.com/fivetran/go-fivetran"
@@ -65,12 +64,12 @@ func TestNewWebhookGroupCreate(t *testing.T) {
         })
 
     // act
-    response, err := ftClient.NewWebhokGroupCreate().
-        Url(WEBHOOK_URL).
-        Secret(WEBHOOK_SECRET).
-        Active(WEBHOOK_ACTIVE).
-        GroupId(PredefinedGroupId).
-        Events([]string{WEBHOOK_EVENT}).
+    response, err := ftClient.NewWebhookGroupCreate().
+            Url(WEBHOOK_URL).
+            Secret(WEBHOOK_SECRET).
+            Active(WEBHOOK_ACTIVE).
+            GroupId(WEBHOOK_GROUP).
+            Events([]string{WEBHOOK_EVENT}).
         Do(context.Background())
 
     if err != nil {
@@ -147,7 +146,7 @@ func assertWebhookGroupRequest(t *testing.T, request map[string]interface{}) {
     assertKey(t, "group_id", request, WEBHOOK_GROUP)
 }
 
-func assertWebhookAccountResponse(t *testing.T, response fivetran.WebhookCreateResponse) {
+func assertWebhookAccountResponse(t *testing.T, response fivetran.WebhookAccountCreateResponse) {
 
     assertEqual(t, response.Code, "Created")
     assertNotEmpty(t, response.Message)
@@ -163,7 +162,7 @@ func assertWebhookAccountResponse(t *testing.T, response fivetran.WebhookCreateR
     assertEqual(t, response.Data.Events[0], WEBHOOK_EVENT)
 }
 
-func assertWebhookGroupResponse(t *testing.T, response fivetran.WebhookCreateResponse) {
+func assertWebhookGroupResponse(t *testing.T, response fivetran.WebhookGroupCreateResponse) {
     assertEqual(t, response.Code, "Created")
     assertNotEmpty(t, response.Message)
 
