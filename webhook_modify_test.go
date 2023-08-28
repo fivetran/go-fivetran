@@ -10,7 +10,7 @@ func TestWebhookModifyE2E(t *testing.T) {
 
 	updated, err := Client.NewWebhookModify().
             WebhookId(webhookId).
-            Url("https://your-host.your-domain/webhook").
+            Url("https://webhook.site/abe96072-249c-40bc-a12d-8b92750175e2").
             Secret("my_secret").
             Active(true).
             Events([]string{"sync_start","sync_end"}).

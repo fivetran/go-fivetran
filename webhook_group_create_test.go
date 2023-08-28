@@ -7,7 +7,7 @@ import (
 
 func TestNewWebhookGroupCreateE2E(t *testing.T) {
     created, err := Client.NewWebhookGroupCreate().
-        Url("https://your-host.your-domain/webhook").
+        Url("https://webhook.site/abe96072-249c-40bc-a12d-8b92750175e2").
         Secret("my_secret").
         GroupId(PredefinedGroupId).
         Active(true).

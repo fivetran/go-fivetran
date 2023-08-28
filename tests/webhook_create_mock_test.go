@@ -12,7 +12,7 @@ import (
 )
 
 const (
-    WEBHOOK_URL         = "https://webhook.site/abe96072-249c-40bc-a12d-8b92750175e2",
+    WEBHOOK_URL         = "https://webhook.site/abe96072-249c-40bc-a12d-8b92750175e2"
     WEBHOOK_EVENT       = "sync_start"
     WEBHOOK_ACTIVE      = true
     WEBHOOK_SECRET      = "my_secret"
