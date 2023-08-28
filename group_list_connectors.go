@@ -17,37 +17,43 @@ type GroupListConnectorsService struct {
 	schema  *string
 }
 
+type ConnectorTasks struct {
+	Code    string `json:"code"`
+	Message string `json:"message"`
+}
+
+type ConnectorWarning struct {
+	Code    string `json:"code"`
+	Message string `json:"message"`
+}
+
+type ConnectorsStatus struct {
+	SetupState       string             `json:"setup_state"`
+	SyncState        string             `json:"sync_state"`
+	UpdateState      string             `json:"update_state"`
+	IsHistoricalSync *bool              `json:"is_historical_sync"`
+	Tasks            []ConnectorTasks   `json:"tasks"`
+	Warnings         []ConnectorWarning `json:"warnings"`
+}
+
 type GroupListConnectorsResponse struct {
 	Code    string `json:"code"`
 	Message string `json:"message"`
 	Data    struct {
 		Items []struct {
-			ID             string    `json:"id"`
-			GroupID        string    `json:"group_id"`
-			Service        string    `json:"service"`
-			ServiceVersion *int      `json:"service_version"`
-			Schema         string    `json:"schema"`
-			ConnectedBy    string    `json:"connected_by"`
-			CreatedAt      time.Time `json:"created_at"`
-			SucceededAt    time.Time `json:"succeeded_at"`
-			FailedAt       time.Time `json:"failed_at"`
-			SyncFrequency  *int      `json:"sync_frequency"`
-			ScheduleType   string    `json:"schedule_type"`
-			Status         struct {
-				SetupState       string `json:"setup_state"`
-				SyncState        string `json:"sync_state"`
-				UpdateState      string `json:"update_state"`
-				IsHistoricalSync *bool  `json:"is_historical_sync"`
-				Tasks            []struct {
-					Code    string `json:"code"`
-					Message string `json:"message"`
-				} `json:"tasks"`
-				Warnings []struct {
-					Code    string `json:"code"`
-					Message string `json:"message"`
-				} `json:"warnings"`
-			} `json:"status"`
-			DailySyncTime string `json:"daily_sync_time"`
+			ID             string           `json:"id"`
+			GroupID        string           `json:"group_id"`
+			Service        string           `json:"service"`
+			ServiceVersion *int             `json:"service_version"`
+			Schema         string           `json:"schema"`
+			ConnectedBy    string           `json:"connected_by"`
+			CreatedAt      time.Time        `json:"created_at"`
+			SucceededAt    time.Time        `json:"succeeded_at"`
+			FailedAt       time.Time        `json:"failed_at"`
+			SyncFrequency  *int             `json:"sync_frequency"`
+			ScheduleType   string           `json:"schedule_type"`
+			Status         ConnectorsStatus `json:"status"`
+			DailySyncTime  string           `json:"daily_sync_time"`
 		} `json:"items"`
 		NextCursor string `json:"next_cursor"`
 	} `json:"data"`
