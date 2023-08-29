@@ -34,6 +34,7 @@ func (s *DbtTransformationModifyService) request() *dbtTransformationModifyReque
 	return &dbtTransformationModifyRequest{
 		Schedule: schedule,
 		RunTests: s.runTests,
+		Paused:   s.paused,
 	}
 }
 
