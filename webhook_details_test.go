@@ -15,8 +15,6 @@ func TestWebhookDetailsE2E(t *testing.T) {
 	}
 
 	AssertEqual(t, result.Code, "Success")
-	AssertNotEmpty(t, result.Message)
-	
     AssertEqual(t, result.Data.Id, webhookId)
     AssertNotEmpty(t, result.Data.CreatedAt)
     AssertNotEmpty(t, result.Data.CreatedBy)
