@@ -13,7 +13,7 @@ import (
 func TestWebhookModifyService(t *testing.T) {
 	// arrange
 	ftClient, mockClient := CreateTestClient()
-	handler := mockClient.When(http.MethodPatch, "v1/webhooks/webhook_id").ThenCall(
+	handler := mockClient.When(http.MethodPatch, "/v1/webhooks/webhook_id").ThenCall(
 		func(req *http.Request) (*http.Response, error) {
 			response := mock.NewResponse(req, http.StatusOK, prepareWebhookModifyResponse())
 			return response, nil
@@ -70,7 +70,7 @@ func prepareWebhookModifyResponse() string {
 }
 
 func assertWebhookModifyResponse(t *testing.T, response fivetran.WebhookModifyResponse) {
-    assertEqual(t, response.Code, "Created")
+    assertEqual(t, response.Code, "Success")
     assertNotEmpty(t, response.Message)
 
     assertNotEmpty(t, response.Data.Id)
@@ -81,6 +81,6 @@ func assertWebhookModifyResponse(t *testing.T, response fivetran.WebhookModifyRe
     assertEqual(t, response.Data.Active, WEBHOOK_ACTIVE)
     assertEqual(t, response.Data.GroupId, WEBHOOK_GROUP)
     assertEqual(t, response.Data.Secret, "******")
-    assertEqual(t, response.Data.Type, "group")
-    assertEqual(t, response.Data.Events[0], WEBHOOK_EVENT)
+    assertEqual(t, response.Data.Type, "account")
+    assertEqual(t, response.Data.Events, []string{WEBHOOK_EVENT})
 }

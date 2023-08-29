@@ -65,7 +65,7 @@ func prepareWebhookDetailsResponse() string {
 }
 
 func assertWebhookDetailsResponse(t *testing.T, response fivetran.WebhookDetailsResponse) {
-    assertEqual(t, response.Code, "Created")
+    assertEqual(t, response.Code, "Success")
 
     assertNotEmpty(t, response.Data.Id)
     assertNotEmpty(t, response.Data.CreatedAt)
@@ -75,6 +75,6 @@ func assertWebhookDetailsResponse(t *testing.T, response fivetran.WebhookDetails
     assertEqual(t, response.Data.Active, WEBHOOK_ACTIVE)
     assertEqual(t, response.Data.GroupId, WEBHOOK_GROUP)
     assertEqual(t, response.Data.Secret, "******")
-    assertEqual(t, response.Data.Type, "group")
+    assertEqual(t, response.Data.Type, "account")
     assertEqual(t, response.Data.Events[0], WEBHOOK_EVENT)
 }
