@@ -11,9 +11,9 @@ import (
 )
 
 const (
-    WEBHOOK_URL         = "https://webhook.site/abe96072-249c-40bc-a12d-8b92750175e2"           // Unstable test url
+    WEBHOOK_URL         = "https://localhost:12345"
     WEBHOOK_EVENT       = "sync_start"
-    WEBHOOK_ACTIVE      = true
+    WEBHOOK_ACTIVE      = false
     WEBHOOK_SECRET      = "my_secret"
     WEBHOOK_GROUP       = "test_group"
 )

@@ -10,9 +10,9 @@ func TestWebhookModifyE2E(t *testing.T) {
 
 	updated, err := Client.NewWebhookModify().
             WebhookId(webhookId).
-            Url("https://webhook.site/abe96072-249c-40bc-a12d-8b92750175e2").                   // Unstable test url
+            Url("https://localhost:12345").
             Secret("my_secret").
-            Active(true).
+            Active(false).
             Events([]string{"sync_start","sync_end"}).
 		Do(context.Background())
 	
@@ -25,13 +25,13 @@ func TestWebhookModifyE2E(t *testing.T) {
     AssertEqual(t, updated.Code, "Success")
     AssertNotEmpty(t, updated.Message)
     AssertEqual(t, updated.Data.Id, webhookId)
-    AssertNotEmpty(t, updated.Data.Events)
     AssertNotEmpty(t, updated.Data.CreatedAt)
     AssertNotEmpty(t, updated.Data.CreatedBy)
     AssertNotEmpty(t, updated.Data.Type)
-    AssertEqual(t, updated.Data.Active, true)
+    AssertEqual(t, updated.Data.Active, false)
     AssertEqual(t, updated.Data.Secret, "******")
-    AssertEqual(t, updated.Data.Url, "https://webhook.site/abe96072-249c-40bc-a12d-8b92750175e2")           // Unstable test url
+    AssertEqual(t, updated.Data.Url, "https://localhost:12345")
+    AssertEqual(t, updated.Data.Events, []string{"sync_start","sync_end"})
 
     t.Cleanup(func() { DeleteWebhook(t, webhookId) })
 }

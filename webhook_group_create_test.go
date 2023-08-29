@@ -7,10 +7,10 @@ import (
 
 func TestNewWebhookGroupCreateE2E(t *testing.T) {
     created, err := Client.NewWebhookGroupCreate().
-        Url("https://webhook.site/abe96072-249c-40bc-a12d-8b92750175e2").                   // Unstable test url
+        Url("https://localhost:12345").
         Secret("my_secret").
         GroupId(PredefinedGroupId).
-        Active(true).
+        Active(false).
         Events([]string{"sync_start","sync_end"}).
         Do(context.Background())
 
@@ -26,10 +26,11 @@ func TestNewWebhookGroupCreateE2E(t *testing.T) {
     AssertNotEmpty(t, created.Data.CreatedAt)
     AssertNotEmpty(t, created.Data.CreatedBy)
     AssertEqual(t, created.Data.Type, "group")
-    AssertEqual(t, created.Data.Active, true)
+    AssertEqual(t, created.Data.Active, false)
     AssertEqual(t, created.Data.GroupId, PredefinedGroupId)
     AssertEqual(t, created.Data.Secret, "******")
-    AssertEqual(t, created.Data.Url, "https://webhook.site/abe96072-249c-40bc-a12d-8b92750175e2")               // Unstable test url
+    AssertEqual(t, created.Data.Url, "https://localhost:12345")
+    AssertEqual(t, created.Data.Events, []string{"sync_start","sync_end"})
     
     t.Cleanup(func() { DeleteWebhook(t, created.Data.Id) })
 }

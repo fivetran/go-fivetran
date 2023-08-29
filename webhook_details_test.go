@@ -15,13 +15,17 @@ func TestWebhookDetailsE2E(t *testing.T) {
 	}
 
 	AssertEqual(t, result.Code, "Success")
-	AssertNotEmpty(t, result.Data.Id)
-    AssertNotEmpty(t, result.Data.Events)
+	AssertNotEmpty(t, result.Message)
+	
+    AssertEqual(t, result.Data.Id, webhookId)
     AssertNotEmpty(t, result.Data.CreatedAt)
     AssertNotEmpty(t, result.Data.CreatedBy)
-    AssertNotEmpty(t, result.Data.Type)
-    AssertNotEmpty(t, result.Data.Secret)
-    AssertNotEmpty(t, result.Data.Url)
+    AssertEmpty(t, result.Data.GroupId)
+    AssertEqual(t, result.Data.Type, "account")
+    AssertEqual(t, result.Data.Secret, "******")
+    AssertEqual(t, result.Data.Url, "https://localhost:12345")
+    AssertEqual(t, result.Data.Events, []string{"sync_start","sync_end"})
+    AssertEqual(t, result.Data.Active, false)    
 
     t.Cleanup(func() { DeleteWebhook(t, webhookId) })
 }
