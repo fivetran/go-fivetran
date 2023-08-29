@@ -19,6 +19,7 @@ type ExternalLoggingCreateService struct {
 
 /* requests */
 type externalLoggingCreateRequestBase struct {
+    Id                *string                          `json:"id,omitempty"`
     GroupId           *string                          `json:"group_id,omitempty"`
     Service           *string                          `json:"service,omitempty"`
     Enabled           *bool                            `json:"enabled,omitempty"`   
@@ -47,7 +48,6 @@ type ExternalLoggingCreateResponse struct {
     Message string `json:"message"`
     Data    struct {
         ExternalLoggingCreateResponseBase
-        Config ExternalLoggingConfigResponse `json:"config"`
     } `json:"data"`
 }
 
@@ -56,7 +56,6 @@ type ExternalLoggingCustomCreateResponse struct {
     Message string `json:"message"`
     Data    struct {
         ExternalLoggingCreateResponseBase
-        Config map[string]interface{} `json:"config"`
     } `json:"data"`
 }
 
@@ -65,8 +64,6 @@ type ExternalLoggingCustomMergedCreateResponse struct {
     Message string `json:"message"`
     Data    struct {
         ExternalLoggingCreateResponseBase
-        CustomConfig map[string]interface{}  `json:"config"`
-        Config       ExternalLoggingConfigResponse // no mapping here
     } `json:"data"`
 }
 
@@ -153,7 +150,7 @@ func (s *ExternalLoggingCreateService) do(ctx context.Context, req, response any
     headers["Content-Type"] = "application/json"
     headers["Accept"] = restAPIv2
 
-    reqBody, err := json.Marshal(s.request())
+    reqBody, err := json.Marshal(req)
     if err != nil {
         return err
     }
@@ -210,10 +207,6 @@ func (s *ExternalLoggingCreateService) DoCustomMerged(ctx context.Context) (Exte
     }
 
     err = s.do(ctx, req, &response)
-
-    if err == nil {
-        err = FetchFromMap(&response.Data.CustomConfig, &response.Data.Config)
-    }
 
     return response, err
 }
