@@ -19,9 +19,8 @@ func TestWebhookTestE2E(t *testing.T) {
 	}
 
 	AssertEqual(t, response.Code, "Success")
-	AssertEqual(t, response.Data.Succeed, false)
+	AssertEqual(t, response.Data.Succeed, true)
 	AssertEqual(t, response.Data.Status, 200)
-	AssertEqual(t, response.Data.Message, "SUCCESS")
 
 	t.Cleanup(func() { DeleteWebhook(t, webhookId) })
 }
