@@ -6,7 +6,7 @@ import (
 )
 
 func TestWebhookTestE2E(t *testing.T) {
-	webhookId := CreateTempWebhook(t)
+	webhookId := CreateWebhookAccount(t)
 	
 	response, err := Client.NewWebhookTest().
 			WebhookId(webhookId).
