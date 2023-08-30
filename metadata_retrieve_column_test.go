@@ -6,7 +6,7 @@ import (
 )
 
 func TestNewMetadataColumnE2E(t *testing.T) {
-    connectorId := CreateTempConnector(t)
+    connectorId := CreateConnector(t)
     details, err := Client.NewMetadataColumnList().ConnectorId(connectorId).Do(context.Background())
 
     if err != nil {
@@ -23,4 +23,6 @@ func TestNewMetadataColumnE2E(t *testing.T) {
     AssertNotEmpty(t, details.Data.Items[0].TypeInDestination)
     AssertNotEmpty(t, details.Data.Items[0].IsPrimaryKey)
     AssertNotEmpty(t, details.Data.Items[0].IsForeignKey)
+
+    t.Cleanup(func() { DeleteConnector(t, connectorId) })    
 }

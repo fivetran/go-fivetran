@@ -6,7 +6,7 @@ import (
 )
 
 func TestNewMetadataSchemaE2E(t *testing.T) {
-    connectorId := CreateTempConnector(t)
+    connectorId := CreateConnector(t)
     details, err := Client.NewMetadataSchemaList().ConnectorId(connectorId).Do(context.Background())
 
     if err != nil {
@@ -18,4 +18,6 @@ func TestNewMetadataSchemaE2E(t *testing.T) {
     AssertNotEmpty(t, details.Data.Items[0].Id)
     AssertNotEmpty(t, details.Data.Items[0].NameInSource)
     AssertNotEmpty(t, details.Data.Items[0].NameInDestination)
+
+    t.Cleanup(func() { DeleteConnector(t, connectorId) })
 }
