@@ -16,8 +16,13 @@ Supported the following Fivetran API endpoints:
 - [Delete webhook](https://fivetran.com/docs/rest-api/webhooks#deletewebhook)
 - [Retrieve the list of webhooks](https://fivetran.com/docs/rest-api/webhooks#retrievethelistofwebhooks)
 - [Test webhook](https://fivetran.com/docs/rest-api/webhooks#testwebhook)
- 
+
 ## [0.7.6](https://github.com/fivetran/go-fivetran/compare/v0.7.5...v0.7.6)
+
+## Fixes 
+- DBT Transformations: `paused` field update issue.
+
+## [0.7.5](https://github.com/fivetran/go-fivetran/compare/v0.7.4...v0.7.5)
 
 ## Fixed
 - DBT Transformations: `paused` field supported.
