@@ -5,13 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/fivetran/go-fivetran/compare/v0.7.5...HEAD)
+## [Unreleased](https://github.com/fivetran/go-fivetran/compare/v0.7.6...HEAD)
 
 ## Added
 Supported the following Fivetran API endpoints:
 - [List all roles](https://fivetran.com/docs/rest-api/roles#listallroles)
 
-## [0.7.5](https://github.com/fivetran/go-fivetran/compare/v0.7.4...v0.7.5) Not Published
+## [0.7.6](https://github.com/fivetran/go-fivetran/compare/v0.7.5...v0.7.6)
+
+## Fixes 
+- DBT Transformations: `paused` field update issue.
+
+## [0.7.5](https://github.com/fivetran/go-fivetran/compare/v0.7.4...v0.7.5)
 
 ## Fixed
 - DBT Transformations: `paused` field supported.
