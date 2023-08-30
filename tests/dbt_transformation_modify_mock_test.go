@@ -12,6 +12,7 @@ import (
 
 const (
 	NEW_RUN_TESTS     = true
+	NEW_PAUSED        = false
 	NEW_SCHEDULE_TYPE = "schedule_type_2"
 	NEW_INTERVAL      = 0
 	NEW_TIME_OF_DAY   = "12:00"
@@ -27,6 +28,8 @@ func TestDbtTransformationModifyService(t *testing.T) {
 	handler := mockClient.When(http.MethodPatch, "/v1/dbt/transformations/"+TRANSFORMATION_ID).
 		ThenCall(
 			func(req *http.Request) (*http.Response, error) {
+				body := requestBodyToJson(t, req)
+				assertTransformationUpdateRequest(t, body)
 				response := mock.NewResponse(req, http.StatusOK, prepareDbtTransformationModifyResponse())
 				return response, nil
 			})
@@ -40,6 +43,7 @@ func TestDbtTransformationModifyService(t *testing.T) {
 	service := ftClient.NewDbtTransformationModifyService().
 		DbtTransformationId(TRANSFORMATION_ID).
 		RunTests(NEW_RUN_TESTS).
+		Paused(NEW_PAUSED).
 		Schedule(newSchedule)
 
 	// act
@@ -57,6 +61,19 @@ func TestDbtTransformationModifyService(t *testing.T) {
 	assertEqual(t, handler.Interactions, 1)
 
 	assertDbtTransformationModifyResponse(t, response)
+}
+
+func assertTransformationUpdateRequest(t *testing.T, request map[string]interface{}) {
+	assertKey(t, "run_tests", request, NEW_RUN_TESTS)
+	assertKey(t, "paused", request, NEW_PAUSED)
+	assertHasKey(t, request, "schedule")
+
+	schedule := request["schedule"].(map[string]interface{})
+
+	assertKey(t, "schedule_type", schedule, NEW_SCHEDULE_TYPE)
+	assertKey(t, "interval", schedule, float64(NEW_INTERVAL))
+	assertKey(t, "days_of_week", schedule, []interface{}{"Tuesday"})
+	assertKey(t, "time_of_day", schedule, NEW_TIME_OF_DAY)
 }
 
 func prepareDbtTransformationModifyResponse() string {
@@ -104,7 +121,7 @@ func prepareDbtTransformationModifyResponse() string {
 		NEXT_RUN,
 		CREATED_AT,
 		NEW_RUN_TESTS,
-		PAUSED,
+		NEW_PAUSED,
 		MODEL_ID,
 		CONNECTOR_ID,
 	)
@@ -124,7 +141,8 @@ func assertDbtTransformationModifyResponse(t *testing.T, response fivetran.DbtTr
 	assertEqual(t, response.Data.CreatedAt, CREATED_AT)
 	assertEqual(t, response.Data.ModelIds[0], MODEL_ID)
 	assertEqual(t, response.Data.ConnectorIds[0], CONNECTOR_ID)
-
+	assertEqual(t, response.Data.RunTests, NEW_RUN_TESTS)
+	assertEqual(t, response.Data.Paused, NEW_PAUSED)
 	assertEqual(t, response.Data.Schedule.ScheduleType, NEW_SCHEDULE_TYPE)
 	assertEqual(t, response.Data.Schedule.DaysOfWeek, newDaysOfWeek)
 	assertEqual(t, response.Data.Schedule.Interval, NEW_INTERVAL)
