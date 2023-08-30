@@ -6,6 +6,8 @@ import (
 )
 
 func TestNewMetadataColumnE2E(t *testing.T) {
+    t.Skip("Skipping test until we will get more information about the status of this API")
+
     connectorId := CreateConnector(t)
     details, err := Client.NewMetadataColumnList().ConnectorId(connectorId).Do(context.Background())
 
