@@ -7,12 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased](https://github.com/fivetran/go-fivetran/compare/v0.7.6...HEAD)
 
+## Added
+Supported the following Fivetran API endpoints:
+- [Create account webhook](https://fivetran.com/docs/rest-api/webhooks#createaccountwebhook)
+- [Create group webhook](https://fivetran.com/docs/rest-api/webhooks#creategroupwebhook)
+- [Retrieve webhook details](https://fivetran.com/docs/rest-api/webhooks#retrievewebhookdetails)
+- [Update webhook](https://fivetran.com/docs/rest-api/webhooks#updatewebhook)
+- [Delete webhook](https://fivetran.com/docs/rest-api/webhooks#deletewebhook)
+- [Retrieve the list of webhooks](https://fivetran.com/docs/rest-api/webhooks#retrievethelistofwebhooks)
+- [Test webhook](https://fivetran.com/docs/rest-api/webhooks#testwebhook)
+ 
 ## [0.7.6](https://github.com/fivetran/go-fivetran/compare/v0.7.5...v0.7.6)
-
-## Fixes 
-- DBT Transformations: `paused` field update issue.
-
-## [0.7.5](https://github.com/fivetran/go-fivetran/compare/v0.7.4...v0.7.5)
 
 ## Fixed
 - DBT Transformations: `paused` field supported.

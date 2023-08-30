@@ -147,6 +147,17 @@ REST API Endpoint | REST API Version | SDK Service/Config
 [Delete a Log Service](https://fivetran.com/docs/rest-api/log-service-management#deletealogservice) | v1 | [ExternalLoggingDeleteService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ExternalLoggingDeleteService)
 [Run Log Service Setup Tests](https://fivetran.com/docs/rest-api/log-service-management#runlogservicesetuptests) | v1 | [ExternalLoggingSetupTestsService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ExternalLoggingSetupTestsService)
 
+### [Webhook Management](https://fivetran.com/docs/rest-api/webhooks#webhookmanagement)
+--- | --- | ---
+[Create account webhook](https://fivetran.com/docs/rest-api/webhooks#createaccountwebhook) | v1 | [WebhookAccountCreateService](https://pkg.go.dev/github.com/fivetran/go-fivetran#WebhookAccountCreateService)
+[Create group webhook](https://fivetran.com/docs/rest-api/webhooks#creategroupwebhook) | v1 | [WebhookGroupCreateService](https://pkg.go.dev/github.com/fivetran/go-fivetran#WebhookGroupCreateService)
+[Retrieve webhook details](https://fivetran.com/docs/rest-api/webhooks#retrievewebhookdetails) | v1 | [WebhookDetailsService](https://pkg.go.dev/github.com/fivetran/go-fivetran#WebhookDetailsService)
+[Update webhook](https://fivetran.com/docs/rest-api/webhooks#updatewebhook) | v1 | [WebhookModifyService](https://pkg.go.dev/github.com/fivetran/go-fivetran#WebhookModifyService)
+[Delete webhook](https://fivetran.com/docs/rest-api/webhooks#deletewebhook) | v1 | [WebhookDeleteService](https://pkg.go.dev/github.com/fivetran/go-fivetran#WebhookDeleteService)
+[Retrieve the list of webhooks](https://fivetran.com/docs/rest-api/webhooks#retrievethelistofwebhooks) | v1 | [WebhookListService](https://pkg.go.dev/github.com/fivetran/go-fivetran#WebhookListService)
+[Test webhook](https://fivetran.com/docs/rest-api/webhooks#testwebhook) | v1 | [WebhookTestService](https://pkg.go.dev/github.com/fivetran/go-fivetran#WebhookTestService)
+
+
 ## Support
 
 Please get in touch with us through our [Support Portal](https://support.fivetran.com/) if you 
