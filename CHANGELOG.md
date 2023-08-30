@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased](https://github.com/fivetran/go-fivetran/compare/v0.7.6...HEAD)
 
+## Added
+Supported the following Fivetran API endpoints:
+- [Retrieve schema metadata](https://fivetran.com/docs/rest-api/metadata#retrieveschemametadata)
+- [Retrieve table metadata](https://fivetran.com/docs/rest-api/metadata#retrievetablemetadata)
+- [Retrieve column metadata](https://fivetran.com/docs/rest-api/metadata#retrievecolumnmetadata)
+
 ## [0.7.6](https://github.com/fivetran/go-fivetran/compare/v0.7.5...v0.7.6)
 
 ## Fixes 
