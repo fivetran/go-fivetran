@@ -11,8 +11,9 @@ import (
 )
 
 const (
-	GroupID           = "decent_dropsy"
-	ExpectedGroupName = "New_Group_Name"
+	GROUP_MODIFY_GROUP_ID            = "decent_dropsy"
+	GROUP_MODIFY_EXPECTED_GROUP_NAME = "New_Group_Name"
+	GROUP_MODIFY_CREATED_TIME        = "2020-05-25T15:26:47.306509Z"
 )
 
 func TestGroupModifyServiceDo(t *testing.T) {
@@ -29,7 +30,7 @@ func TestGroupModifyServiceDo(t *testing.T) {
 	// act
 	response, err := ftClient.NewGroupModify().
 		GroupID(ExpectedGroupID).
-		Name(ExpectedGroupName).
+		Name(GROUP_MODIFY_EXPECTED_GROUP_NAME).
 		Do(context.Background())
 
 	// assert
@@ -51,18 +52,22 @@ func prepareGroupModifyResponse() string {
 		"data": {
 			"id": "%s",
 			"name": "%s",
-			"created_at": "2020-05-25T15:26:47.306509Z"
+			"created_at": "%s"
 		}
-	}`, GroupID, ExpectedGroupName)
+	}`,
+		GROUP_MODIFY_GROUP_ID,
+		GROUP_MODIFY_EXPECTED_GROUP_NAME,
+		GROUP_MODIFY_CREATED_TIME)
 }
 
 func assertGroupModifyRequest(t *testing.T, request map[string]interface{}) {
-	assertKey(t, "name", request, ExpectedGroupName)
+	assertKey(t, "name", request, GROUP_MODIFY_EXPECTED_GROUP_NAME)
 }
 
 func assertGroupModifyResponse(t *testing.T, response fivetran.GroupModifyResponse) {
 	assertEqual(t, response.Code, "Success")
 	assertEqual(t, response.Message, "Group has been updated")
-	assertEqual(t, response.Data.ID, GroupID)
-	assertEqual(t, response.Data.Name, ExpectedGroupName)
+	assertEqual(t, response.Data.ID, GROUP_MODIFY_GROUP_ID)
+	assertEqual(t, response.Data.Name, GROUP_MODIFY_EXPECTED_GROUP_NAME)
+	assertTimeEqual(t, response.Data.CreatedAt, GROUP_MODIFY_CREATED_TIME)
 }

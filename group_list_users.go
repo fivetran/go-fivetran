@@ -32,6 +32,7 @@ type GroupListUsersResponse struct {
 			Role       string    `json:"role"`
 			LoggedInAt time.Time `json:"logged_in_at"`
 			CreatedAt  time.Time `json:"created_at"`
+			Active     *bool     `json:"active"`
 		} `json:"items"`
 		NextCursor string `json:"next_cursor"`
 	} `json:"data"`

@@ -163,8 +163,8 @@ func assertUsersListResponse(t *testing.T, response fivetran.UsersListResponse, 
 		assertEqual(t, item.Picture, expected.Data.Items[i].Picture)
 		assertEqual(t, item.Phone, expected.Data.Items[i].Phone)
 		assertEqual(t, item.Role, expected.Data.Items[i].Role)
-		assertTimeEqual(t, item.LoggedInAt, expected.Data.Items[i].LoggedInAt)
-		assertTimeEqual(t, item.CreatedAt, expected.Data.Items[i].CreatedAt)
+		assertUsersListTimeEqual(t, item.LoggedInAt, expected.Data.Items[i].LoggedInAt)
+		assertUsersListTimeEqual(t, item.CreatedAt, expected.Data.Items[i].CreatedAt)
 	}
 }
 
@@ -174,7 +174,7 @@ func assertNil(t *testing.T, b *bool) {
 	}
 }
 
-func assertTimeEqual(t *testing.T, actual, expected time.Time) {
+func assertUsersListTimeEqual(t *testing.T, actual time.Time, expected time.Time) {
 	if !actual.Equal(expected) {
 		t.Errorf("Expected time: %v, got: %v", expected, actual)
 	}

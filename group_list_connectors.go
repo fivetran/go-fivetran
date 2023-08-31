@@ -121,7 +121,6 @@ func (s *GroupListConnectorsService) Do(ctx context.Context) (GroupListConnector
 	if err != nil {
 		return response, err
 	}
-
 	if err := json.Unmarshal(respBody, &response); err != nil {
 		return response, err
 	}

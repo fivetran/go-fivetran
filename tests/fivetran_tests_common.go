@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"reflect"
 	"testing"
+	"time"
 
 	"github.com/fivetran/go-fivetran"
 	"github.com/fivetran/go-fivetran/tests/mock"
@@ -116,6 +117,11 @@ func assertHasKey(t *testing.T, source map[string]interface{}, key string) {
 	if !ok {
 		t.Errorf("Expected Key not found in map: %s", key)
 	}
+}
+
+func assertTimeEqual(t *testing.T, actualTime time.Time, expectedTime string) {
+	ex, _ := time.Parse(time.RFC3339, expectedTime)
+	assertEqual(t, ex, actualTime)
 }
 
 func assertHasNoKey(t *testing.T, source map[string]interface{}, key string) {

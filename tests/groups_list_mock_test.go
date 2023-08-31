@@ -9,7 +9,7 @@ import (
 	"github.com/fivetran/go-fivetran/tests/mock"
 )
 
-func TestGroupsListService_Do(t *testing.T) {
+func TestGroupsListServiceDo(t *testing.T) {
 	// arrange
 	limit := 10
 	cursor := "some_cursor"

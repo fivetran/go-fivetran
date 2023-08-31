@@ -2,7 +2,6 @@ package tests
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
 	"net/http"
 	"testing"
@@ -20,13 +19,8 @@ func TestGroupAddUserServiceDo(t *testing.T) {
 	ftClient, mockClient := CreateTestClient()
 	handler := mockClient.When(http.MethodPost, fmt.Sprintf("/v1/groups/%s/users", groupID)).
 		ThenCall(func(req *http.Request) (*http.Response, error) {
-			var requestBody fivetran.GroupAddUserRequest
-			err := json.NewDecoder(req.Body).Decode(&requestBody)
-			if err != nil {
-				return nil, err
-			}
-			assertEqual(t, *requestBody.Email, email)
-			assertEqual(t, *requestBody.Role, role)
+			requestBody := requestBodyToJson(t, req)
+			assertGroupAddUserRequest(t, requestBody, email, role)
 
 			response := mock.NewResponse(req, http.StatusOK, `{
 				"code": "Success",
@@ -52,6 +46,14 @@ func TestGroupAddUserServiceDo(t *testing.T) {
 	assertEqual(t, interactions[0].Handler, handler)
 	assertEqual(t, handler.Interactions, 1)
 	assertGroupAddUserResponse(t, response)
+}
+
+func assertGroupAddUserRequest(t *testing.T,
+	body map[string]interface{},
+	expectedEmail string,
+	expectedRole string) {
+	assertKey(t, "email", body, expectedEmail)
+	assertKey(t, "role", body, expectedRole)
 }
 
 func assertGroupAddUserResponse(t *testing.T, response fivetran.GroupAddUserResponse) {

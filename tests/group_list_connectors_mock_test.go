@@ -5,10 +5,26 @@ import (
 	"fmt"
 	"net/http"
 	"testing"
-	"time"
 
 	"github.com/fivetran/go-fivetran"
 	"github.com/fivetran/go-fivetran/tests/mock"
+)
+
+const (
+	LIST_CONNECTORS_ID                 = "iodize_impressive"
+	LIST_CONNECTORS_GROUP_ID           = "projected_sickle"
+	LIST_CONNECTORS_SERVICE            = "salesforce"
+	LIST_CONNECTORS_SERVICE_VERSION    = 1
+	LIST_CONNECTORS_SCHEMA             = "salesforce"
+	LIST_CONNECTORS_CONNECTED_BY       = "concerning_batch"
+	LIST_CONNECTORS_CREATED_AT         = "2018-07-21T22:55:21.724201Z"
+	LIST_CONNECTORS_SUCCEEDED_AT       = "2018-12-26T17:58:18.245Z"
+	LIST_CONNECTORS_FAILED_AT          = "2018-08-24T15:24:58.872491Z"
+	LIST_CONNECTORS_SYNC_FREQUENCY     = 60
+	LIST_CONNECTORS_SETUP_STATE        = "connected"
+	LIST_CONNECTORS_SYNC_STATE         = "paused"
+	LIST_CONNECTORS_UPDATE_STATE       = "delayed"
+	LIST_CONNECTORS_IS_HISTORICAL_SYNC = false
 )
 
 func TestGroupListConnectorsServiceDo(t *testing.T) {
@@ -46,68 +62,72 @@ func TestGroupListConnectorsServiceDo(t *testing.T) {
 }
 
 func prepareGroupListConnectorsResponse() string {
-	return `{
+	value := fmt.Sprintf(`{
 		"code": "Success",
 		"data": {
 			"items": [
 				{
-					"id": "iodize_impressive",
-					"group_id": "projected_sickle",
-					"service": "salesforce",
-					"service_version": 1,
-					"schema": "salesforce",
-					"connected_by": "concerning_batch",
-					"created_at": "2018-07-21T22:55:21.724201Z",
-					"succeeded_at": "2018-12-26T17:58:18.245Z",
-					"failed_at": "2018-08-24T15:24:58.872491Z",
-					"sync_frequency": 60,
+					"id": "%s",
+					"group_id": "%s",
+					"service": "%s",
+					"service_version": %d,
+					"schema": "%s",
+					"connected_by": "%s",
+					"created_at": "%s",
+					"succeeded_at": "%s",
+					"failed_at": "%s",
+					"sync_frequency": %d,
 					"status": {
-						"setup_state": "connected",
-						"sync_state": "paused",
-						"update_state": "delayed",
-						"is_historical_sync": false,
+						"setup_state": "%s",
+						"sync_state": "%s",
+						"update_state": "%s",
+						"is_historical_sync": %t,
 						"tasks": [],
 						"warnings": []
 					}
 				}
-			],
-			"next_cursor": "eyJza2lwIjoxfQ"
-		}
-	}`
+				],
+				"next_cursor": "eyJza2lwIjoxfQ"
+			}		
+			}`,
+		LIST_CONNECTORS_ID,
+		LIST_CONNECTORS_GROUP_ID,
+		LIST_CONNECTORS_SERVICE,
+		LIST_CONNECTORS_SERVICE_VERSION,
+		LIST_CONNECTORS_SCHEMA,
+		LIST_CONNECTORS_CONNECTED_BY,
+		LIST_CONNECTORS_CREATED_AT,
+		LIST_CONNECTORS_SUCCEEDED_AT,
+		LIST_CONNECTORS_FAILED_AT,
+		LIST_CONNECTORS_SYNC_FREQUENCY,
+		LIST_CONNECTORS_SETUP_STATE,
+		LIST_CONNECTORS_SYNC_STATE,
+		LIST_CONNECTORS_UPDATE_STATE,
+		LIST_CONNECTORS_IS_HISTORICAL_SYNC,
+	)
+	return value
 }
 
 func assertGroupListConnectorsResponse(t *testing.T, response fivetran.GroupListConnectorsResponse) {
-	isHistoricalSyncFlag := false
-	createdAt, _ := time.Parse(time.RFC3339, "2018-07-21T22:55:21.724201Z")
-	succeededAt, _ := time.Parse(time.RFC3339, "2018-12-26T17:58:18.245Z")
-	failedAt, _ := time.Parse(time.RFC3339, "2018-08-24T15:24:58.872491Z")
 
 	assertEqual(t, response.Code, "Success")
 	assertEqual(t, len(response.Data.Items), 1)
 	item := response.Data.Items[0]
-	connectorStatus := fivetran.ConnectorsStatus{
-		SetupState:       "connected",
-		SyncState:        "paused",
-		UpdateState:      "delayed",
-		IsHistoricalSync: &(isHistoricalSyncFlag),
-		Tasks:            []fivetran.ConnectorTasks{},
-		Warnings:         []fivetran.ConnectorWarning{},
-	}
 
-	assertEqual(t, item.ID, "iodize_impressive")
-	assertEqual(t, item.GroupID, "projected_sickle")
-	assertEqual(t, item.Service, "salesforce")
-	assertEqual(t, *item.ServiceVersion, 1)
-	assertEqual(t, item.Schema, "salesforce")
-	assertEqual(t, item.ConnectedBy, "concerning_batch")
-	assertEqual(t, item.CreatedAt, createdAt)
-	assertEqual(t, item.SucceededAt, succeededAt)
-	assertEqual(t, item.FailedAt, failedAt)
-	assertEqual(t, *item.SyncFrequency, 60)
-	assertEqual(t, item.Status.IsHistoricalSync, connectorStatus.IsHistoricalSync)
-	assertEqual(t, item.Status.SetupState, connectorStatus.SetupState)
-	assertEqual(t, item.Status.SyncState, connectorStatus.SyncState)
-	assertEqual(t, item.Status.Tasks, connectorStatus.Tasks)
-	assertEqual(t, item.Status.UpdateState, connectorStatus.UpdateState)
-	assertEqual(t, item.Status.Warnings, connectorStatus.Warnings)
+	assertEqual(t, item.ID, LIST_CONNECTORS_ID)
+	assertEqual(t, item.GroupID, LIST_CONNECTORS_GROUP_ID)
+	assertEqual(t, item.Service, LIST_CONNECTORS_SERVICE)
+	assertEqual(t, *item.ServiceVersion, LIST_CONNECTORS_SERVICE_VERSION)
+	assertEqual(t, item.Schema, LIST_CONNECTORS_SCHEMA)
+	assertEqual(t, item.ConnectedBy, LIST_CONNECTORS_CONNECTED_BY)
+	assertTimeEqual(t, item.CreatedAt, LIST_CONNECTORS_CREATED_AT)
+	assertTimeEqual(t, item.SucceededAt, LIST_CONNECTORS_SUCCEEDED_AT)
+	assertTimeEqual(t, item.FailedAt, LIST_CONNECTORS_FAILED_AT)
+	assertEqual(t, *item.SyncFrequency, LIST_CONNECTORS_SYNC_FREQUENCY)
+	assertEqual(t, *item.Status.IsHistoricalSync, LIST_CONNECTORS_IS_HISTORICAL_SYNC)
+	assertEqual(t, item.Status.SetupState, LIST_CONNECTORS_SETUP_STATE)
+	assertEqual(t, item.Status.SyncState, LIST_CONNECTORS_SYNC_STATE)
+	assertEqual(t, item.Status.Tasks, []fivetran.ConnectorTasks{})
+	assertEqual(t, item.Status.UpdateState, LIST_CONNECTORS_UPDATE_STATE)
+	assertEqual(t, item.Status.Warnings, []fivetran.ConnectorWarning{})
 }
