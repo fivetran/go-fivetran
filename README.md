@@ -157,6 +157,11 @@ REST API Endpoint | REST API Version | SDK Service/Config
 [Retrieve the list of webhooks](https://fivetran.com/docs/rest-api/webhooks#retrievethelistofwebhooks) | v1 | [WebhookListService](https://pkg.go.dev/github.com/fivetran/go-fivetran#WebhookListService)
 [Test webhook](https://fivetran.com/docs/rest-api/webhooks#testwebhook) | v1 | [WebhookTestService](https://pkg.go.dev/github.com/fivetran/go-fivetran#WebhookTestService)
 
+### [Role Management](https://fivetran.com/docs/rest-api/roles)
+
+REST API Endpoint | REST API Version | SDK Service/Config
+--- | --- | ---
+[List all roles](https://fivetran.com/docs/rest-api/roles#listallroles) | v1 | [RolesListService](https://pkg.go.dev/github.com/fivetran/go-fivetran#RolesListService)
 
 ## Support
 

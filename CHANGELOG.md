@@ -16,6 +16,7 @@ Supported the following Fivetran API endpoints:
 - [Delete webhook](https://fivetran.com/docs/rest-api/webhooks#deletewebhook)
 - [Retrieve the list of webhooks](https://fivetran.com/docs/rest-api/webhooks#retrievethelistofwebhooks)
 - [Test webhook](https://fivetran.com/docs/rest-api/webhooks#testwebhook)
+- [List all roles](https://fivetran.com/docs/rest-api/roles#listallroles)
 
 ## [0.7.6](https://github.com/fivetran/go-fivetran/compare/v0.7.5...v0.7.6)
 
@@ -34,7 +35,6 @@ Supported the following Fivetran API endpoints:
 - [Update a Log Service](https://fivetran.com/docs/rest-api/log-service-management#updatealogservice)
 - [Delete a Log Service](https://fivetran.com/docs/rest-api/log-service-management#deletealogservice)
 - [Run Log Service Setup Tests](https://fivetran.com/docs/rest-api/log-service-management#runlogservicesetuptests)
-
 
 ## [0.7.4](https://github.com/fivetran/go-fivetran/compare/v0.7.3...v0.7.4)
 
