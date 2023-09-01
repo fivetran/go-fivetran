@@ -155,6 +155,12 @@ REST API Endpoint | REST API Version | SDK Service/Config
 [Retrieve table metadata](https://fivetran.com/docs/rest-api/metadata#retrievetablemetadata) | v1 | [MetadataTableListService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ExternalLoggingCreateService)
 [Retrieve column metadata](https://fivetran.com/docs/rest-api/metadata#retrievecolumnmetadata) | v1 | [MetadataColumnListService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ExternalLoggingCreateService)
 
+### [Role Management](https://fivetran.com/docs/rest-api/roles)
+
+REST API Endpoint | REST API Version | SDK Service/Config
+--- | --- | ---
+[List all roles](https://fivetran.com/docs/rest-api/roles#listallroles) | v1 | [RolesListService](https://pkg.go.dev/github.com/fivetran/go-fivetran#RolesListService)
+
 ## Support
 
 Please get in touch with us through our [Support Portal](https://support.fivetran.com/) if you 

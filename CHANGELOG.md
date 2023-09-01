@@ -12,6 +12,7 @@ Supported the following Fivetran API endpoints:
 - [Retrieve schema metadata](https://fivetran.com/docs/rest-api/metadata#retrieveschemametadata)
 - [Retrieve table metadata](https://fivetran.com/docs/rest-api/metadata#retrievetablemetadata)
 - [Retrieve column metadata](https://fivetran.com/docs/rest-api/metadata#retrievecolumnmetadata)
+- [List all roles](https://fivetran.com/docs/rest-api/roles#listallroles)
 
 ## [0.7.6](https://github.com/fivetran/go-fivetran/compare/v0.7.5...v0.7.6)
 
@@ -30,7 +31,6 @@ Supported the following Fivetran API endpoints:
 - [Update a Log Service](https://fivetran.com/docs/rest-api/log-service-management#updatealogservice)
 - [Delete a Log Service](https://fivetran.com/docs/rest-api/log-service-management#deletealogservice)
 - [Run Log Service Setup Tests](https://fivetran.com/docs/rest-api/log-service-management#runlogservicesetuptests)
-
 
 ## [0.7.4](https://github.com/fivetran/go-fivetran/compare/v0.7.3...v0.7.4)
 
