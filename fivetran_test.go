@@ -429,12 +429,12 @@ func cleanupExternalLogging() {
 }
 
 func cleanupWebhooks() {
-	groups, err := Client.NewGroupsList().Do(context.Background())
+	list, err := Client.NewWebhookList().Do(context.Background())
 	if err != nil {
 		log.Fatal(err)
 	}
-	for _, group := range groups.Data.Items {
-		_, err := Client.NewExternalLoggingDelete().ExternalLoggingId(group.ID).Do(context.Background())
+	for _, webhook := range list.Data.Items {
+		_, err := Client.NewWebhookDelete().WebhookId(webhook.Id).Do(context.Background())
 		if err != nil && err.Error() != "status code: 404; expected: 200" {
 			log.Fatal(err)
 		}
