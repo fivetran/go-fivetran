@@ -19,4 +19,6 @@ func TestNewExternalLoggingDetailsE2E(t *testing.T) {
     AssertEqual(t, details.Data.Id, PredefinedGroupId)
     AssertEqual(t, details.Data.Service, "azure_monitor_log")
     AssertEqual(t, details.Data.Enabled, true)
+    AssertEqual(t, details.Data.Config.WorkspaceId, "workspace_id")
+    AssertEqual(t, details.Data.Config.PrimaryKey, "******")
 }

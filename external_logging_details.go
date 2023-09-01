@@ -20,6 +20,7 @@ type ExternalLoggingDetailsResponse struct {
         Id             string                         `json:"id"`
         Service        string                         `json:"service"`
         Enabled        bool                           `json:"enabled"`
+        Config         ExternalLoggingConfig          `json:"config"`
     } `json:"data"`
 }
 
