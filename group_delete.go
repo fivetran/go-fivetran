@@ -13,7 +13,7 @@ type GroupDeleteService struct {
 	groupID *string
 }
 
-type GroupDeleteResponse struct {
+type groupDeleteResponse struct {
 	Code    string `json:"code"`
 	Message string `json:"message"`
 }
@@ -27,8 +27,8 @@ func (s *GroupDeleteService) GroupID(value string) *GroupDeleteService {
 	return s
 }
 
-func (s *GroupDeleteService) Do(ctx context.Context) (GroupDeleteResponse, error) {
-	var response GroupDeleteResponse
+func (s *GroupDeleteService) Do(ctx context.Context) (groupDeleteResponse, error) {
+	var response groupDeleteResponse
 
 	if s.groupID == nil {
 		return response, fmt.Errorf("missing required GroupID")

@@ -15,7 +15,7 @@ type GroupAddUserService struct {
 	role    *string
 }
 
-type GroupAddUserRequest struct {
+type groupAddUserRequest struct {
 	Email *string `json:"email,omitempty"`
 	Role  *string `json:"role,omitempty"`
 }
@@ -29,8 +29,8 @@ func (c *Client) NewGroupAddUser() *GroupAddUserService {
 	return &GroupAddUserService{c: c}
 }
 
-func (s *GroupAddUserService) request() *GroupAddUserRequest {
-	return &GroupAddUserRequest{
+func (s *GroupAddUserService) request() *groupAddUserRequest {
+	return &groupAddUserRequest{
 		Email: s.email,
 		Role:  s.role,
 	}
