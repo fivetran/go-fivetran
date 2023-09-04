@@ -102,15 +102,16 @@ func CreateGroup(t *testing.T) string {
 	return created.Data.ID
 }
 
-func CreateProject(t *testing.T) string {
+func CreateDbtProject(t *testing.T) string {
 	t.Helper()
 	created, err := Client.NewDbtProjectCreate().
 		GroupID(PredefinedGroupId).
 		DbtVersion("1.3.1").
-		GitRemoteUrl("https://github.com/fivetran/dbt_demo").
-		GitBranch("main").
+		ProjectConfig(fivetran.NewDbtProjectConfig().
+			GitRemoteUrl("https://github.com/fivetran/dbt_demo").
+			FolderPath("").
+			GitBranch("main")).
 		DefaultSchema("").
-		FolderPath("").
 		TargetName("").
 		Threads(4).
 		Do(context.Background())
@@ -121,13 +122,24 @@ func CreateProject(t *testing.T) string {
 	return created.Data.ID
 }
 
-func DeleteProject(t *testing.T, projectId string) {
+func DeleteDbtProject(t *testing.T, projectId string) {
 	t.Helper()
 	deleted, err := Client.NewDbtProjectDelete().ProjectID(projectId).Do(context.Background())
 	if err != nil {
 		t.Logf("%+v\n", deleted)
 		t.Error(err)
 	}
+}
+
+func DeleteDbtProjects(t *testing.T, groupId string) {
+	t.Helper()
+	// Here we should retrive list of projects for passed group and delete them
+
+	// deleted, err := Client.NewDbtProjectDelete().ProjectID(projectId).Do(context.Background())
+	// if err != nil {
+	// 	t.Logf("%+v\n", deleted)
+	// 	t.Error(err)
+	// }
 }
 
 func CreateTempGroup(t *testing.T) string {
@@ -348,6 +360,7 @@ func cleanupAccount() {
 	cleanupDestinations()
 	cleanupGroups()
 	cleanupExternalLogging()
+	//cleanupWebhooks()
 }
 
 func isPredefinedUserExist() bool {
@@ -496,11 +509,11 @@ func DeleteWebhook(t *testing.T, id string) {
 func CreateWebhookAccount(t *testing.T) string {
 	t.Helper()
 	created, err := Client.NewWebhookAccountCreate().
-        Url("https://localhost:12345").
-        Secret("my_secret").
-        Active(false).
-        Events([]string{"sync_start","sync_end"}).
-        Do(context.Background())
+		Url("https://localhost:12345").
+		Secret("my_secret").
+		Active(false).
+		Events([]string{"sync_start", "sync_end"}).
+		Do(context.Background())
 
 	if err != nil {
 		t.Logf("%+v\n", created)

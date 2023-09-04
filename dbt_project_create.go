@@ -7,43 +7,26 @@ import (
 )
 
 type DbtProjectCreateService struct {
-	c             *Client
-	groupID       *string
-	dbtVersion    *string
-	gitRemoteUrl  *string
-	gitBranch     *string
-	defaultSchema *string
-	folderPath    *string
-	targetName    *string
-	threads       *int
+	c               *Client
+	groupID         *string
+	dbtVersion      *string
+	defaultSchema   *string
+	targetName      *string
+	threads         *int
+	projectType     *string
+	environmentVars *[]string
+	projectConfig   *DbtProjectConfig
 }
 
 type dbtProjectCreateRequest struct {
-	GroupID       *string `json:"group_id,omitempty"`
-	DbtVersion    *string `json:"dbt_version,omitempty"`
-	GitRemoteUrl  *string `json:"git_remote_url,omitempty"`
-	GitBranch     *string `json:"git_branch,omitempty"`
-	DefaultSchema *string `json:"default_schema,omitempty"`
-	FolderPath    *string `json:"folder_path,omitempty"`
-	TargetName    *string `json:"target_name,omitempty"`
-	Threads       *int    `json:"threads,omitempty"`
-}
-
-type DbtProjectCreateResponse struct {
-	Code    string `json:"code"`
-	Message string `json:"message"`
-	Data    struct {
-		ID            string `json:"id"`
-		GroupID       string `json:"group_id"`
-		FolderPath    string `json:"folder_path"`
-		CreatedAt     string `json:"created_at"`
-		TargetName    string `json:"target_name"`
-		GitRemoteUrl  string `json:"git_remote_url"`
-		DefaultSchema string `json:"default_schema"`
-		PublicKey     string `json:"public_key"`
-		CreatedById   string `json:"created_by_id"`
-		GitBranch     string `json:"git_branch"`
-	} `json:"data"`
+	GroupID         *string                  `json:"group_id,omitempty"`
+	DbtVersion      *string                  `json:"dbt_version,omitempty"`
+	DefaultSchema   *string                  `json:"default_schema,omitempty"`
+	TargetName      *string                  `json:"target_name,omitempty"`
+	Threads         *int                     `json:"threads,omitempty"`
+	EnvironmentVars *[]string                `json:"environment_vars,omitempty"`
+	Type            *string                  `json:"type,omitempty"`
+	ProjectConfig   *dbtProjectConfigRequest `json:"project_config,omitempty"`
 }
 
 func (c *Client) NewDbtProjectCreate() *DbtProjectCreateService {
@@ -51,15 +34,21 @@ func (c *Client) NewDbtProjectCreate() *DbtProjectCreateService {
 }
 
 func (s *DbtProjectCreateService) request() *dbtProjectCreateRequest {
+	var config *dbtProjectConfigRequest
+
+	if s.projectConfig != nil {
+		config = s.projectConfig.request()
+	}
+
 	return &dbtProjectCreateRequest{
-		GroupID:       s.groupID,
-		DbtVersion:    s.dbtVersion,
-		GitRemoteUrl:  s.gitRemoteUrl,
-		GitBranch:     s.gitBranch,
-		DefaultSchema: s.defaultSchema,
-		FolderPath:    s.folderPath,
-		TargetName:    s.targetName,
-		Threads:       s.threads,
+		GroupID:         s.groupID,
+		DbtVersion:      s.dbtVersion,
+		DefaultSchema:   s.defaultSchema,
+		TargetName:      s.targetName,
+		Threads:         s.threads,
+		Type:            s.projectType,
+		EnvironmentVars: s.environmentVars,
+		ProjectConfig:   config,
 	}
 }
 
@@ -73,23 +62,8 @@ func (s *DbtProjectCreateService) DbtVersion(value string) *DbtProjectCreateServ
 	return s
 }
 
-func (s *DbtProjectCreateService) GitRemoteUrl(value string) *DbtProjectCreateService {
-	s.gitRemoteUrl = &value
-	return s
-}
-
-func (s *DbtProjectCreateService) GitBranch(value string) *DbtProjectCreateService {
-	s.gitBranch = &value
-	return s
-}
-
 func (s *DbtProjectCreateService) DefaultSchema(value string) *DbtProjectCreateService {
 	s.defaultSchema = &value
-	return s
-}
-
-func (s *DbtProjectCreateService) FolderPath(value string) *DbtProjectCreateService {
-	s.folderPath = &value
 	return s
 }
 
@@ -103,8 +77,23 @@ func (s *DbtProjectCreateService) Threads(value int) *DbtProjectCreateService {
 	return s
 }
 
-func (s *DbtProjectCreateService) Do(ctx context.Context) (DbtProjectCreateResponse, error) {
-	var response DbtProjectCreateResponse
+func (s *DbtProjectCreateService) EnvironmentVars(value []string) *DbtProjectCreateService {
+	s.environmentVars = &value
+	return s
+}
+
+func (s *DbtProjectCreateService) ProjectConfig(value *DbtProjectConfig) *DbtProjectCreateService {
+	s.projectConfig = value
+	return s
+}
+
+func (s *DbtProjectCreateService) Type(value string) *DbtProjectCreateService {
+	s.projectType = &value
+	return s
+}
+
+func (s *DbtProjectCreateService) Do(ctx context.Context) (DbtProjectDetailsResponse, error) {
+	var response DbtProjectDetailsResponse
 	url := fmt.Sprintf("%v/dbt/projects", s.c.baseURL)
 	expectedStatus := 201
 

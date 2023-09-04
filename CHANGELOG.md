@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Added
 Supported the following Fivetran API endpoints:
+- [Create dbt project](https://fivetran.com/docs/rest-api/dbt-transformation-management#createdbtproject)
+- [Retrieve dbt project details](https://fivetran.com/docs/rest-api/dbt-transformation-management#retrievedbtprojectdetails)
+- [Update dbt project](https://fivetran.com/docs/rest-api/dbt-transformation-management#modifydbtproject)
+- [Delete dbt project](https://fivetran.com/docs/rest-api/dbt-transformation-management#deletedbtproject)
 - [Retrieve schema metadata](https://fivetran.com/docs/rest-api/metadata#retrieveschemametadata)
 - [Retrieve table metadata](https://fivetran.com/docs/rest-api/metadata#retrievetablemetadata)
 - [Retrieve column metadata](https://fivetran.com/docs/rest-api/metadata#retrievecolumnmetadata)

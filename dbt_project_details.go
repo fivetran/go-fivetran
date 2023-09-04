@@ -11,27 +11,6 @@ type DbtProjectDetailsService struct {
 	dbtProjectID *string
 }
 
-type DbtProjectDetailsdataBase struct {
-	ID            string `json:"id"`
-	GroupID       string `json:"group_id"`
-	CreatedAt     string `json:"created_at"`
-	CreatedById   string `json:"created_by_id"`
-	PublicKey     string `json:"public_key"`
-	GitRemoteUrl  string `json:"git_remote_url"`
-	GitBranch     string `json:"git_branch"`
-	DefaultSchema string `json:"default_schema"`
-	FolderPath    string `json:"folder_path"`
-	TargetName    string `json:"target_name"`
-}
-
-type DbtProjectDetailsResponse struct {
-	Code    string `json:"code"`
-	Message string `json:"message"`
-	Data    struct {
-		DbtProjectDetailsdataBase
-	} `json:"data"`
-}
-
 func (c *Client) NewDbtDetails() *DbtProjectDetailsService {
 	return &DbtProjectDetailsService{c: c}
 }
@@ -41,9 +20,11 @@ func (s *DbtProjectDetailsService) DbtProjectID(value string) *DbtProjectDetails
 	return s
 }
 
-func (s *DbtProjectDetailsService) do(ctx context.Context, response any) error {
+func (s *DbtProjectDetailsService) Do(ctx context.Context) (DbtProjectDetailsResponse, error) {
+	var response DbtProjectDetailsResponse
+
 	if s.dbtProjectID == nil {
-		return fmt.Errorf("missing required DbtProjectId")
+		return response, fmt.Errorf("missing required DbtProjectId")
 	}
 
 	url := fmt.Sprintf("%v/dbt/projects/%v", s.c.baseURL, *s.dbtProjectID)
@@ -64,25 +45,17 @@ func (s *DbtProjectDetailsService) do(ctx context.Context, response any) error {
 	respBody, respStatus, err := r.httpRequest(ctx)
 
 	if err != nil {
-		return err
+		return response, err
 	}
 
 	if err := json.Unmarshal(respBody, &response); err != nil {
-		return err
+		return response, err
 	}
 
 	if respStatus != expectedStatus {
 		err := fmt.Errorf("status code: %v; expected: %v", respStatus, expectedStatus)
-		return err
+		return response, err
 	}
 
-	return nil
-}
-
-func (s *DbtProjectDetailsService) Do(ctx context.Context) (DbtProjectDetailsResponse, error) {
-	var response DbtProjectDetailsResponse
-
-	err := s.do(ctx, &response)
-
-	return response, err
+	return response, nil
 }

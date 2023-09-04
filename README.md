@@ -129,6 +129,18 @@ REST API Endpoint | REST API Version | SDK Service/Config/Auth
 [Connector Auth](https://fivetran.com/docs/rest-api/connectors) | v1 | [ConnectorAuth](https://pkg.go.dev/github.com/fivetran/go-fivetran#ConnectorAuth)<br> [ConnectorAuthClientAccess](https://pkg.go.dev/github.com/fivetran/go-fivetran#ConnectorAuthClientAccess)
 [Connect Card](https://fivetran.com/docs/rest-api/connectors/connect-card) | | not implemented
 
+### [Transformations Management API](https://fivetran.com/docs/rest-api/dbt-transformation-management)
+REST API Endpoint | REST API Version | SDK Service
+--- | --- | ---
+[Create dbt Project](https://fivetran.com/docs/rest-api/dbt-transformation-management#createdbtproject) | v1 | [DbtProjectCreateService](https://pkg.go.dev/github.com/fivetran/go-fivetran#DbtProjectCreateService)
+[Retrieve dbt Project Details](https://fivetran.com/docs/rest-api/dbt-transformation-management#retrievedbtprojectdetails) | v1 | [DbtProjectDetailsService](https://pkg.go.dev/github.com/fivetran/go-fivetran#DbtProjectDetailsService)
+[Update dbt Project](https://fivetran.com/docs/rest-api/dbt-transformation-management#modifydbtproject) | v1 | [DbtProjectModifyService](https://pkg.go.dev/github.com/fivetran/go-fivetran#DbtProjectModifyService)
+[Delete dbt Project](https://fivetran.com/docs/rest-api/dbt-transformation-management#deletedbtproject) | v1 | [DbtProjectDeleteService](https://pkg.go.dev/github.com/fivetran/go-fivetran#DbtProjectDeleteService)
+[Create dbt Transformation](https://fivetran.com/docs/rest-api/dbt-transformation-management#createdbttransformation) | v1 | [DbtTransformationCreateService](https://pkg.go.dev/github.com/fivetran/go-fivetran#DbtTransformationCreateService)
+[Retrieve dbt Transformation Details](https://fivetran.com/docs/rest-api/dbt-transformation-management#retrievedbttransformationdetails) | v1 | [DbtTransformationDetailsService](https://pkg.go.dev/github.com/fivetran/go-fivetran#DbtTransformationDetailsService)
+[Update dbt Transformation](https://fivetran.com/docs/rest-api/dbt-transformation-management#modifydbttransformation) | v1 | [DbtTransformationModifyService](https://pkg.go.dev/github.com/fivetran/go-fivetran#DbtTransformationModifyService)
+[Delete dbt Transformation](https://fivetran.com/docs/rest-api/dbt-transformation-management#deletedbttransformation) | v1 | [DbtTransformationDeleteService](https://pkg.go.dev/github.com/fivetran/go-fivetran#DbtTransformationDeleteService)
+
 ### [Certificate Management API](https://fivetran.com/docs/rest-api/certificates)
 REST API Endpoint | REST API Version | SDK Service
 --- | --- | ---

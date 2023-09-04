@@ -8,7 +8,7 @@ import (
 
 func TestNewProjectDeleteE2E(t *testing.T) {
 	t.Skip("Skip test until api is ready")
-	projectId := CreateProject(t)
+	projectId := CreateDbtProject(t)
 	deleted, err := Client.NewDbtProjectDelete().ProjectID(projectId).Do(context.Background())
 	if err != nil {
 		t.Logf("%+v\n", deleted)
