@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Added
 Supported the following Fivetran API endpoints:
+- [Retrieve schema metadata](https://fivetran.com/docs/rest-api/metadata#retrieveschemametadata)
+- [Retrieve table metadata](https://fivetran.com/docs/rest-api/metadata#retrievetablemetadata)
+- [Retrieve column metadata](https://fivetran.com/docs/rest-api/metadata#retrievecolumnmetadata)
 - [Create account webhook](https://fivetran.com/docs/rest-api/webhooks#createaccountwebhook)
 - [Create group webhook](https://fivetran.com/docs/rest-api/webhooks#creategroupwebhook)
 - [Retrieve webhook details](https://fivetran.com/docs/rest-api/webhooks#retrievewebhookdetails)
