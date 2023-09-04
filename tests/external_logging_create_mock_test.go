@@ -61,6 +61,7 @@ func TestNewExternalLoggingCreateFullMappingMock(t *testing.T) {
     assertEqual(t, len(interactions), 1)
     assertEqual(t, interactions[0].Handler, handler)
     assertEqual(t, handler.Interactions, 1)
+
     assertExternalLoggingResponse(t, response)
 }
 
@@ -94,6 +95,7 @@ func TestNewExternalLoggingCustomMappingMock(t *testing.T) {
     assertEqual(t, len(interactions), 1)
     assertEqual(t, interactions[0].Handler, handler)
     assertEqual(t, handler.Interactions, 1)
+
     assertExternalLoggingCustomResponse(t, response)
 }
 
@@ -105,7 +107,7 @@ func TestNewExternalLoggingCustomMergedMappingMock(t *testing.T) {
         func(req *http.Request) (*http.Response, error) {
             body := requestBodyToJson(t, req)
             assertExternalLoggingCustomRequest(t, body)
-            response := mock.NewResponse(req, http.StatusCreated, prepareExternalLoggingResponse())
+            response := mock.NewResponse(req, http.StatusCreated, prepareExternalLoggingMergedResponse())
             return response, nil
         })
 
@@ -139,31 +141,51 @@ func prepareExternalLoggingResponse() string {
             "data":{
                 "id": "%v",
                 "service": "%v",
-                "enabled": %v
+                "enabled": %v,
+                "config": {
+                    "workspace_id": "%v",
+                    "primary_key": "%v"
+                }
             }
         }`,
         EXTLOG_GROUPID,
         EXTLOG_SERVICE,
         EXTLOG_ENABLED,
+        EXTLOG_WORKSPACEID,
+        EXTLOG_PRIMARYKEY,
     )
 }
+
+func prepareExternalLoggingMergedResponse() string {
+    return fmt.Sprintf(
+        `{
+            "code":"Created",
+            "message":"External logging service has been added",
+            "data":{
+                "id": "%v",
+                "service": "%v",
+                "enabled": %v,
+                "config": {
+                    "workspace_id": "%v",
+                    "primary_key": "%v",
+                    "fake_field": "unmapped-value"
+                }
+            }
+        }`,
+        EXTLOG_GROUPID,
+        EXTLOG_SERVICE,
+        EXTLOG_ENABLED,
+        EXTLOG_WORKSPACEID,
+        EXTLOG_PRIMARYKEY,
+    )
+}
+
 
 func prepareExternalLoggingConfig() *fivetran.ExternalLoggingConfig {
     config := fivetran.NewExternalLoggingConfig()
     config.WorkspaceId(EXTLOG_WORKSPACEID)
     config.PrimaryKey(EXTLOG_PRIMARYKEY)
-    config.LogGroupName(EXTLOG_LOGGROUPNAME)
-    config.RoleArn(EXTLOG_ROLEARN)
-    config.ExternalId(EXTLOG_EXTERNALID)
-    config.Region(EXTLOG_REGION)
-    config.ApiKey(EXTLOG_APIKEY)
-    config.SubDomain(EXTLOG_SUBDOMAIN)
-    config.Host(EXTLOG_HOST)
-    config.Hostname(EXTLOG_HOSTNAME)
-    config.Channel(EXTLOG_CHANNEL)
-    config.EnableSsl(EXTLOG_ENABLESSL)
-    config.Token(EXTLOG_TOKEN)
-    config.Port(EXTLOG_PORT)
+
     return config
 }
 
@@ -185,18 +207,6 @@ func assertExternalLoggingFullRequest(t *testing.T, request map[string]interface
 
     assertKey(t, "workspace_id", config, EXTLOG_WORKSPACEID)
     assertKey(t, "primary_key", config, EXTLOG_PRIMARYKEY)     
-    assertKey(t, "log_group_name", config, EXTLOG_LOGGROUPNAME)
-    assertKey(t, "role_arn", config, EXTLOG_ROLEARN)       
-    assertKey(t, "external_id", config, EXTLOG_EXTERNALID) 
-    assertKey(t, "region", config, EXTLOG_REGION)          
-    assertKey(t, "api_key", config, EXTLOG_APIKEY)          
-    assertKey(t, "sub_domain", config, EXTLOG_SUBDOMAIN)     
-    assertKey(t, "host", config, EXTLOG_HOST)
-    assertKey(t, "hostname", config, EXTLOG_HOSTNAME)
-    assertKey(t, "channel", config, EXTLOG_CHANNEL)
-    assertKey(t, "enable_ssl", config, EXTLOG_ENABLESSL)
-    assertKey(t, "token", config, EXTLOG_TOKEN)
-    assertKey(t, "port", config, float64(EXTLOG_PORT)) // json marshalling stores all numbers as float64
 }
 
 func assertExternalLoggingCustomRequest(t *testing.T, request map[string]interface{}) {
@@ -211,6 +221,20 @@ func assertExternalLoggingCustomRequest(t *testing.T, request map[string]interfa
     assertKey(t, "fake_field", config, "unmapped-value")
 }
 
+func assertExternalLoggingCustomMergedRequest(t *testing.T, request map[string]interface{}) {
+    assertKey(t, "service", request, EXTLOG_SERVICE)
+    assertKey(t, "group_id", request, EXTLOG_GROUPID)
+    assertKey(t, "enabled", request, EXTLOG_ENABLED)
+
+    config, ok := request["config"].(map[string]interface{})
+    
+    assertEqual(t, ok, true)
+
+    assertKey(t, "workspace_id", config, EXTLOG_WORKSPACEID)
+    assertKey(t, "primary_key", config, EXTLOG_PRIMARYKEY)     
+    assertKey(t, "fake_field", config, "unmapped-value")
+}
+
 func assertExternalLoggingResponse(t *testing.T, response fivetran.ExternalLoggingCreateResponse) {
     assertEqual(t, response.Code, "Created")
     assertNotEmpty(t, response.Message)
@@ -218,14 +242,32 @@ func assertExternalLoggingResponse(t *testing.T, response fivetran.ExternalLoggi
     assertEqual(t, response.Data.Id, EXTLOG_GROUPID)
     assertEqual(t, response.Data.Service, EXTLOG_SERVICE)
     assertEqual(t, response.Data.Enabled, EXTLOG_ENABLED)
+
+    assertEqual(t, response.Data.Config.WorkspaceId, EXTLOG_WORKSPACEID)
+    assertEqual(t, response.Data.Config.PrimaryKey, EXTLOG_PRIMARYKEY)
 }
 
 func assertExternalLoggingCustomResponse(t *testing.T, response fivetran.ExternalLoggingCustomCreateResponse) {
     assertEqual(t, response.Code, "Created")
     assertNotEmpty(t, response.Message)
+
+    assertEqual(t, response.Data.Id, EXTLOG_GROUPID)
+    assertEqual(t, response.Data.Service, EXTLOG_SERVICE)
+    assertEqual(t, response.Data.Enabled, EXTLOG_ENABLED)
+
+    assertEqual(t, response.Data.Config.WorkspaceId, EXTLOG_WORKSPACEID)
+    assertEqual(t, response.Data.Config.PrimaryKey, EXTLOG_PRIMARYKEY)
 }
 
 func assertExternalLoggingCustomMergedResponse(t *testing.T, response fivetran.ExternalLoggingCustomMergedCreateResponse) {
     assertEqual(t, response.Code, "Created")
     assertNotEmpty(t, response.Message)
+
+    assertEqual(t, response.Data.Id, EXTLOG_GROUPID)
+    assertEqual(t, response.Data.Service, EXTLOG_SERVICE)
+    assertEqual(t, response.Data.Enabled, EXTLOG_ENABLED)
+
+    assertEqual(t, response.Data.Config.WorkspaceId, EXTLOG_WORKSPACEID)
+    assertEqual(t, response.Data.Config.PrimaryKey, EXTLOG_PRIMARYKEY)
+    assertKey(t, "fake_field", response.Data.CustomConfig, "unmapped-value")
 }

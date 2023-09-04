@@ -27,12 +27,12 @@ type externalLoggingCreateRequestBase struct {
 
 type externalLoggingCreateRequest struct {
     externalLoggingCreateRequestBase
-    Config *externalLoggingConfigRequest `json:"config,omitempty"`
+    Config          *externalLoggingConfigRequest `json:"config,omitempty"`
 }
 
 type externalLoggingCustomCreateRequest struct {
     externalLoggingCreateRequestBase
-    Config *map[string]interface{} `json:"config,omitempty"`
+    Config          *map[string]interface{} `json:"config,omitempty"`
 }
 
 /* responses */
@@ -48,6 +48,7 @@ type ExternalLoggingCreateResponse struct {
     Message string `json:"message"`
     Data    struct {
         ExternalLoggingCreateResponseBase
+        Config            ExternalLoggingConfigResponse     `json:"config"`
     } `json:"data"`
 }
 
@@ -56,6 +57,7 @@ type ExternalLoggingCustomCreateResponse struct {
     Message string `json:"message"`
     Data    struct {
         ExternalLoggingCreateResponseBase
+        Config            ExternalLoggingConfigResponse     `json:"config"`
     } `json:"data"`
 }
 
@@ -64,6 +66,8 @@ type ExternalLoggingCustomMergedCreateResponse struct {
     Message string `json:"message"`
     Data    struct {
         ExternalLoggingCreateResponseBase
+        CustomConfig      map[string]interface{}         `json:"config"`
+        Config            ExternalLoggingConfigResponse // no mapping here
     } `json:"data"`
 }
 
@@ -193,7 +197,7 @@ func (s *ExternalLoggingCreateService) DoCustom(ctx context.Context) (ExternalLo
     var response ExternalLoggingCustomCreateResponse
 
     err := s.do(ctx, s.requestCustom(), &response)
-
+    
     return response, err
 }
 
@@ -207,6 +211,10 @@ func (s *ExternalLoggingCreateService) DoCustomMerged(ctx context.Context) (Exte
     }
 
     err = s.do(ctx, req, &response)
+
+    if err == nil {
+        err = FetchFromMap(&response.Data.CustomConfig, &response.Data.Config)
+    }
 
     return response, err
 }

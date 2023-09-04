@@ -347,6 +347,7 @@ func cleanupAccount() {
 	cleanupUsers()
 	cleanupDestinations()
 	cleanupGroups()
+	cleanupExternalLogging()
 }
 
 func isPredefinedUserExist() bool {
@@ -409,6 +410,32 @@ func cleanupConnectors(groupId string) {
 	for _, connector := range connectors.Data.Items {
 		_, err := Client.NewConnectorDelete().ConnectorID(connector.ID).Do(context.Background())
 		if err != nil {
+			log.Fatal(err)
+		}
+	}
+}
+
+func cleanupExternalLogging() {
+	groups, err := Client.NewGroupsList().Do(context.Background())
+	if err != nil {
+		log.Fatal(err)
+	}
+	for _, group := range groups.Data.Items {
+		_, err := Client.NewExternalLoggingDelete().ExternalLoggingId(group.ID).Do(context.Background())
+		if err != nil && err.Error() != "status code: 404; expected: 200" {
+			log.Fatal(err)
+		}
+	}
+}
+
+func cleanupWebhooks() {
+	list, err := Client.NewWebhookList().Do(context.Background())
+	if err != nil {
+		log.Fatal(err)
+	}
+	for _, webhook := range list.Data.Items {
+		_, err := Client.NewWebhookDelete().WebhookId(webhook.Id).Do(context.Background())
+		if err != nil && err.Error() != "status code: 404; expected: 200" {
 			log.Fatal(err)
 		}
 	}

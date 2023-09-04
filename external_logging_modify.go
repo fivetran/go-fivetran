@@ -29,16 +29,40 @@ type externalLoggingModifyRequest struct {
 
 type externalLoggingCustomModifyRequest struct {
     externalLoggingModifyRequestBase
-    Config *map[string]interface{} `json:"config,omitempty"`
+    Config            *map[string]interface{} `json:"config,omitempty"`
+}
+
+type ExternalLoggingModifyResponseDataBased struct {
+    Id             string                    `json:"id"`
+    Service        string                    `json:"service"`
+    Enabled        bool                      `json:"enabled"`
 }
 
 type ExternalLoggingModifyResponse struct {
     Code    string `json:"code"`
     Message string `json:"message"`
     Data    struct {
-        Id             string `json:"id"`
-        Service        string `json:"service"`
-        Enabled        bool   `json:"enabled"`
+        ExternalLoggingModifyResponseDataBased
+        Config         ExternalLoggingConfigResponse     `json:"config"`
+    } `json:"data"`
+}
+
+type ExternalLoggingModifyCustomResponse struct {
+    Code    string `json:"code"`
+    Message string `json:"message"`
+    Data    struct {
+        ExternalLoggingModifyResponseDataBased
+        Config          map[string]interface{} `json:"config"`
+    } `json:"data"`
+}
+
+type ExternalLoggingModifyCustomMergedResponse struct {
+    Code    string `json:"code"`
+    Message string `json:"message"`
+    Data    struct {
+        ExternalLoggingModifyResponseDataBased
+        CustomConfig map[string]interface{}  `json:"config"`
+        Config       ExternalLoggingConfigResponse // no mapping here
     } `json:"data"`
 }
 
@@ -70,6 +94,23 @@ func (s *ExternalLoggingModifyService) requestCustom() *externalLoggingCustomMod
         externalLoggingModifyRequestBase: s.requestBase(),
         Config:                           s.configCustom,
     }
+}
+
+func (s *ExternalLoggingModifyService) requestCustomMerged() (*externalLoggingCustomModifyRequest, error) {
+    currentConfig := s.configCustom
+
+    if s.config != nil {
+        var err error
+        currentConfig, err = s.config.merge(currentConfig)
+        if err != nil {
+            return nil, err
+        }
+    }
+
+    return &externalLoggingCustomModifyRequest{
+        externalLoggingModifyRequestBase: s.requestBase(),
+        Config:                           currentConfig,
+    }, nil
 }
 
 func (s *ExternalLoggingModifyService) ExternalLoggingId(value string) *ExternalLoggingModifyService {
@@ -109,7 +150,7 @@ func (s *ExternalLoggingModifyService) do(ctx context.Context, req, response any
     headers["Content-Type"] = "application/json"
     headers["Accept"] = restAPIv2
 
-    reqBody, err := json.Marshal(s.request())
+    reqBody, err := json.Marshal(req)
     if err != nil {
         return err
     }
@@ -148,10 +189,28 @@ func (s *ExternalLoggingModifyService) Do(ctx context.Context) (ExternalLoggingM
     return response, err
 }
 
-func (s *ExternalLoggingModifyService) DoCustom(ctx context.Context) (ExternalLoggingModifyResponse, error) {
-    var response ExternalLoggingModifyResponse
+func (s *ExternalLoggingModifyService) DoCustom(ctx context.Context) (ExternalLoggingModifyCustomResponse, error) {
+    var response ExternalLoggingModifyCustomResponse
 
     err := s.do(ctx, s.requestCustom(), &response)
+
+    return response, err
+}
+
+func (s *ExternalLoggingModifyService) DoCustomMerged(ctx context.Context) (ExternalLoggingModifyCustomMergedResponse, error) {
+    var response ExternalLoggingModifyCustomMergedResponse
+
+    req, err := s.requestCustomMerged()
+
+    if err != nil {
+        return response, err
+    }
+
+    err = s.do(ctx, req, &response)
+
+    if err == nil {
+        err = FetchFromMap(&response.Data.CustomConfig, &response.Data.Config)
+    }
 
     return response, err
 }
