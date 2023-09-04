@@ -155,6 +155,16 @@ REST API Endpoint | REST API Version | SDK Service/Config
 [Retrieve table metadata](https://fivetran.com/docs/rest-api/metadata#retrievetablemetadata) | v1 | [MetadataTableListService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ExternalLoggingCreateService)
 [Retrieve column metadata](https://fivetran.com/docs/rest-api/metadata#retrievecolumnmetadata) | v1 | [MetadataColumnListService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ExternalLoggingCreateService)
 
+### [Webhook Management](https://fivetran.com/docs/rest-api/webhooks#webhookmanagement)
+--- | --- | ---
+[Create account webhook](https://fivetran.com/docs/rest-api/webhooks#createaccountwebhook) | v1 | [WebhookAccountCreateService](https://pkg.go.dev/github.com/fivetran/go-fivetran#WebhookAccountCreateService)
+[Create group webhook](https://fivetran.com/docs/rest-api/webhooks#creategroupwebhook) | v1 | [WebhookGroupCreateService](https://pkg.go.dev/github.com/fivetran/go-fivetran#WebhookGroupCreateService)
+[Retrieve webhook details](https://fivetran.com/docs/rest-api/webhooks#retrievewebhookdetails) | v1 | [WebhookDetailsService](https://pkg.go.dev/github.com/fivetran/go-fivetran#WebhookDetailsService)
+[Update webhook](https://fivetran.com/docs/rest-api/webhooks#updatewebhook) | v1 | [WebhookModifyService](https://pkg.go.dev/github.com/fivetran/go-fivetran#WebhookModifyService)
+[Delete webhook](https://fivetran.com/docs/rest-api/webhooks#deletewebhook) | v1 | [WebhookDeleteService](https://pkg.go.dev/github.com/fivetran/go-fivetran#WebhookDeleteService)
+[Retrieve the list of webhooks](https://fivetran.com/docs/rest-api/webhooks#retrievethelistofwebhooks) | v1 | [WebhookListService](https://pkg.go.dev/github.com/fivetran/go-fivetran#WebhookListService)
+[Test webhook](https://fivetran.com/docs/rest-api/webhooks#testwebhook) | v1 | [WebhookTestService](https://pkg.go.dev/github.com/fivetran/go-fivetran#WebhookTestService)
+
 ### [Role Management](https://fivetran.com/docs/rest-api/roles)
 
 REST API Endpoint | REST API Version | SDK Service/Config
