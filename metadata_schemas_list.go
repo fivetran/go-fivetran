@@ -6,50 +6,49 @@ import (
     "fmt"
 )
 
-// MetadataTableListService implements the Metadata Management, Retrieve table metadata
-// Ref. https://fivetran.com/docs/rest-api/metadata#retrievetablemetadata
-type MetadataTableListService struct {
+// MetadataSchemasListService implements the Metadata Management, Retrieve schema metadata
+// Ref. https://fivetran.com/docs/rest-api/metadata#retrieveschemametadata
+type MetadataSchemasListService struct {
     c               *Client
     limit           *int
     cursor          *string
     connectorId     *string
 }
 
-type MetadataTableListResponse struct {
+type MetadataSchemasListResponse struct {
     Code    string `json:"code"`
     Data    struct {
         Items []struct {
-            Id                      string    `json:"id"`
-            ParentId                string    `json:"parent_id"`
-            NameInSource            string    `json:"name_in_source"`
-            NameInDestination       string    `json:"name_in_destination"`
+            Id                     string    `json:"id"`
+            NameInSource           string    `json:"name_in_source"`
+            NameInDestination      string    `json:"name_in_destination"`
         } `json:"items"`
         NextCursor string `json:"next_cursor"`
     } `json:"data"`
 }
 
-func (c *Client) NewMetadataTableList() *MetadataTableListService {
-    return &MetadataTableListService{c: c}
+func (c *Client) NewMetadataSchemasList() *MetadataSchemasListService {
+    return &MetadataSchemasListService{c: c}
 }
 
-func (s *MetadataTableListService) ConnectorId(value string) *MetadataTableListService {
+func (s *MetadataSchemasListService) ConnectorId(value string) *MetadataSchemasListService {
     s.connectorId = &value
     return s
 }
 
-func (s *MetadataTableListService) Limit(value int) *MetadataTableListService {
+func (s *MetadataSchemasListService) Limit(value int) *MetadataSchemasListService {
     s.limit = &value
     return s
 }
 
-func (s *MetadataTableListService) Cursor(value string) *MetadataTableListService {
+func (s *MetadataSchemasListService) Cursor(value string) *MetadataSchemasListService {
     s.cursor = &value
     return s
 }
 
-func (s *MetadataTableListService) Do(ctx context.Context) (MetadataTableListResponse, error) {
-    var response MetadataTableListResponse
-    url := fmt.Sprintf("%v/metadata/connectors/%v/tables", s.c.baseURL, *s.connectorId)
+func (s *MetadataSchemasListService) Do(ctx context.Context) (MetadataSchemasListResponse, error) {
+    var response MetadataSchemasListResponse
+    url := fmt.Sprintf("%v/metadata/connectors/%v/schemas", s.c.baseURL, *s.connectorId)
     expectedStatus := 200
 
     if s.connectorId == nil {

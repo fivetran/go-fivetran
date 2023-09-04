@@ -152,7 +152,7 @@ REST API Endpoint | REST API Version | SDK Service/Config
 REST API Endpoint | REST API Version | SDK Service/Config
 --- | --- | ---
 [Retrieve schema metadata](https://fivetran.com/docs/rest-api/metadata#retrieveschemametadata) | v1 | [MetadataSchemaListService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ExternalLoggingCreateService)
-[Retrieve table metadata](https://fivetran.com/docs/rest-api/metadata#retrievetablemetadata) | v1 | [MetadataTableListService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ExternalLoggingCreateService)
+[Retrieve table metadata](https://fivetran.com/docs/rest-api/metadata#retrievetablemetadata) | v1 | [MetadataTablesListService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ExternalLoggingCreateService)
 [Retrieve column metadata](https://fivetran.com/docs/rest-api/metadata#retrievecolumnmetadata) | v1 | [MetadataColumnListService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ExternalLoggingCreateService)
 
 ### [Webhook Management](https://fivetran.com/docs/rest-api/webhooks#webhookmanagement)

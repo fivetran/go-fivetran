@@ -9,7 +9,7 @@ import (
     "github.com/fivetran/go-fivetran/tests/mock"
 )
 
-func TestMetadataTableListServiceDo(t *testing.T) {
+func TestMetadataTablesListServiceDo(t *testing.T) {
     ftClient, mockClient := CreateTestClient()
 
     responseData := `{
@@ -46,14 +46,14 @@ func TestMetadataTableListServiceDo(t *testing.T) {
         },
     )
 
-    service := ftClient.NewMetadataTableList().ConnectorId("test_connector")
+    service := ftClient.NewMetadataTablesList().ConnectorId("test_connector")
 
     response, err := service.Do(context.Background())
     if err != nil {
         t.Error(err)
     }
 
-    expectedResponse := fivetran.MetadataTableListResponse{
+    expectedResponse := fivetran.MetadataTablesListResponse{
         Code:    "Success",
         Data:    struct {
             Items []struct {
@@ -93,7 +93,7 @@ func TestMetadataTableListServiceDo(t *testing.T) {
         },
     }
 
-    assertMetadataTableListResponse(t, response, expectedResponse)
+    assertMetadataTablesListResponse(t, response, expectedResponse)
 
     interactions := mockClient.Interactions()
     assertEqual(t, len(interactions), 1)
@@ -102,7 +102,7 @@ func TestMetadataTableListServiceDo(t *testing.T) {
 
 }
 
-func assertMetadataTableListResponse(t *testing.T, response fivetran.MetadataTableListResponse, expected fivetran.MetadataTableListResponse) {
+func assertMetadataTablesListResponse(t *testing.T, response fivetran.MetadataTablesListResponse, expected fivetran.MetadataTablesListResponse) {
     assertEqual(t, response.Code, expected.Code)
     assertEqual(t, response.Data.NextCursor, expected.Data.NextCursor)
 

@@ -9,7 +9,7 @@ import (
     "github.com/fivetran/go-fivetran/tests/mock"
 )
 
-func TestMetadataSchemaListServiceDo(t *testing.T) {
+func TestMetadataSchemasListServiceDo(t *testing.T) {
     ftClient, mockClient := CreateTestClient()
 
     responseData := `{
@@ -37,14 +37,14 @@ func TestMetadataSchemaListServiceDo(t *testing.T) {
         },
     )
 
-    service := ftClient.NewMetadataSchemaList().ConnectorId("test_connector")
+    service := ftClient.NewMetadataSchemasList().ConnectorId("test_connector")
 
     response, err := service.Do(context.Background())
     if err != nil {
         t.Error(err)
     }
 
-    expectedResponse := fivetran.MetadataSchemaListResponse{
+    expectedResponse := fivetran.MetadataSchemasListResponse{
         Code:    "Success",
         Data:    struct {
             Items []struct {
@@ -74,7 +74,7 @@ func TestMetadataSchemaListServiceDo(t *testing.T) {
         },
     }
 
-    assertMetadataSchemaListResponse(t, response, expectedResponse)
+    assertMetadataSchemasListResponse(t, response, expectedResponse)
 
     interactions := mockClient.Interactions()
     assertEqual(t, len(interactions), 1)
@@ -83,7 +83,7 @@ func TestMetadataSchemaListServiceDo(t *testing.T) {
 
 }
 
-func assertMetadataSchemaListResponse(t *testing.T, response fivetran.MetadataSchemaListResponse, expected fivetran.MetadataSchemaListResponse) {
+func assertMetadataSchemasListResponse(t *testing.T, response fivetran.MetadataSchemasListResponse, expected fivetran.MetadataSchemasListResponse) {
     assertEqual(t, response.Code, expected.Code)
     assertEqual(t, response.Data.NextCursor, expected.Data.NextCursor)
 

@@ -6,16 +6,16 @@ import (
     "fmt"
 )
 
-// MetadataColumnListService implements the Metadata Management, Retrieve Column metadata
+// MetadataColumnsListService implements the Metadata Management, Retrieve Column metadata
 // Ref. https://fivetran.com/docs/rest-api/metadata#retrievecolumnmetadata
-type MetadataColumnListService struct {
+type MetadataColumnsListService struct {
     c               *Client
     limit           *int
     cursor          *string
     connectorId     *string
 }
 
-type MetadataColumnListResponse struct {
+type MetadataColumnsListResponse struct {
     Code    string `json:"code"`
     Data    struct {
         Items []struct {
@@ -32,27 +32,27 @@ type MetadataColumnListResponse struct {
     } `json:"data"`
 }
 
-func (c *Client) NewMetadataColumnList() *MetadataColumnListService {
-    return &MetadataColumnListService{c: c}
+func (c *Client) NewMetadataColumnsList() *MetadataColumnsListService {
+    return &MetadataColumnsListService{c: c}
 }
 
-func (s *MetadataColumnListService) ConnectorId(value string) *MetadataColumnListService {
+func (s *MetadataColumnsListService) ConnectorId(value string) *MetadataColumnsListService {
     s.connectorId = &value
     return s
 }
 
-func (s *MetadataColumnListService) Limit(value int) *MetadataColumnListService {
+func (s *MetadataColumnsListService) Limit(value int) *MetadataColumnsListService {
     s.limit = &value
     return s
 }
 
-func (s *MetadataColumnListService) Cursor(value string) *MetadataColumnListService {
+func (s *MetadataColumnsListService) Cursor(value string) *MetadataColumnsListService {
     s.cursor = &value
     return s
 }
 
-func (s *MetadataColumnListService) Do(ctx context.Context) (MetadataColumnListResponse, error) {
-    var response MetadataColumnListResponse
+func (s *MetadataColumnsListService) Do(ctx context.Context) (MetadataColumnsListResponse, error) {
+    var response MetadataColumnsListResponse
     url := fmt.Sprintf("%v/metadata/connectors/%v/columns", s.c.baseURL, *s.connectorId)
     expectedStatus := 200
 

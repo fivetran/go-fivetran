@@ -9,7 +9,7 @@ import (
     "github.com/fivetran/go-fivetran/tests/mock"
 )
 
-func TestMetadataColumnListServiceDo(t *testing.T) {
+func TestMetadataColumnsListServiceDo(t *testing.T) {
     ftClient, mockClient := CreateTestClient()
 
     responseData := `{
@@ -58,7 +58,7 @@ func TestMetadataColumnListServiceDo(t *testing.T) {
         },
     )
 
-    service := ftClient.NewMetadataColumnList().ConnectorId("test_connector")
+    service := ftClient.NewMetadataColumnsList().ConnectorId("test_connector")
 
     response, err := service.Do(context.Background())
     if err != nil {
@@ -67,7 +67,7 @@ func TestMetadataColumnListServiceDo(t *testing.T) {
 
     flag_true := true
     flag_false := false
-    expectedResponse := fivetran.MetadataColumnListResponse{
+    expectedResponse := fivetran.MetadataColumnsListResponse{
         Code:    "Success",
         Data:    struct {
             Items []struct {
@@ -127,7 +127,7 @@ func TestMetadataColumnListServiceDo(t *testing.T) {
         },
     }
 
-    assertMetadataColumnListResponse(t, response, expectedResponse)
+    assertMetadataColumnsListResponse(t, response, expectedResponse)
 
     interactions := mockClient.Interactions()
     assertEqual(t, len(interactions), 1)
@@ -136,7 +136,7 @@ func TestMetadataColumnListServiceDo(t *testing.T) {
 
 }
 
-func assertMetadataColumnListResponse(t *testing.T, response fivetran.MetadataColumnListResponse, expected fivetran.MetadataColumnListResponse) {
+func assertMetadataColumnsListResponse(t *testing.T, response fivetran.MetadataColumnsListResponse, expected fivetran.MetadataColumnsListResponse) {
     assertEqual(t, response.Code, expected.Code)
     assertEqual(t, response.Data.NextCursor, expected.Data.NextCursor)
 
