@@ -7,10 +7,11 @@ import (
 	"strconv"
 	"testing"
 
+	"github.com/fivetran/go-fivetran"
 	"github.com/fivetran/go-fivetran/tests/mock"
 )
 
-func TestDbtProjectDetailsService(t *testing.T) {
+func TestNewDbtProjectUpdateFullMappingMock(t *testing.T) {
 	// arrange
 	dbtProjectID := "dbt_project_id"
 	dbtVersion := "dbt_version"
@@ -27,9 +28,10 @@ func TestDbtProjectDetailsService(t *testing.T) {
 	threads := 1
 	projectType := "GIT"
 
-	responseJSON := fmt.Sprintf(
+	projectResponse := fmt.Sprintf(
 		`{
-			"code": "Success",
+			"code": "Updated",
+			"message": "DBT Project updated succesfully",
 			"data": {
 				"id": "%v",
 				"group_id": "%v",
@@ -65,24 +67,44 @@ func TestDbtProjectDetailsService(t *testing.T) {
 		folderPath,
 	)
 
-	client, mockClient := CreateTestClient()
-	handler := mockClient.When(http.MethodGet, fmt.Sprintf("/v1/dbt/projects/%v", dbtProjectID)).
+	ftClient, mockClient := CreateTestClient()
+	handler := mockClient.When(http.MethodPatch, "/v1/dbt/projects/"+dbtProjectID).
 		ThenCall(
+
 			func(req *http.Request) (*http.Response, error) {
-				response := mock.NewResponse(req, http.StatusOK, responseJSON)
+				body := requestBodyToJson(t, req)
+				assertKey(t, "dbt_version", body, dbtVersion)
+				assertKey(t, "target_name", body, targetName)
+				assertKey(t, "threads", body, float64(threads))
+				assertHasKey(t, body, "project_config")
+
+				configRequest := body["project_config"].(map[string]interface{})
+
+				assertHasNoKey(t, configRequest, "git_remote_url")
+				assertKey(t, "git_branch", configRequest, gitBranch)
+				assertKey(t, "folder_path", configRequest, folderPath)
+
+				response := mock.NewResponse(req, http.StatusOK, projectResponse)
 				return response, nil
 			})
 
-	service := client.NewDbtDetails()
-
-	service.DbtProjectID(dbtProjectID)
-
-	ctx := context.Background()
-
 	// act
-	response, err := service.Do(ctx)
+
+	response, err := ftClient.NewDbtProjectModify().
+		ProjectId(dbtProjectID).
+		DbtVersion(dbtVersion).
+		TargetName(targetName).
+		Threads(threads).
+		EnvironmentVars([]string{environmentVar}).
+		ProjectConfig(fivetran.NewDbtProjectConfig().
+			GitRemoteUrl(gitRemoteURL). // This value should not be passed in request
+			FolderPath(folderPath).
+			GitBranch(gitBranch)).
+		Do(context.Background())
+
 	if err != nil {
-		t.Fatalf("failed to get Dbt project details: %v", err)
+		t.Logf("%+v\n", response)
+		t.Error(err)
 	}
 
 	// assert
@@ -91,19 +113,17 @@ func TestDbtProjectDetailsService(t *testing.T) {
 	assertEqual(t, interactions[0].Handler, handler)
 	assertEqual(t, handler.Interactions, 1)
 
-	// Check individual fields of the response
 	assertEqual(t, response.Data.ID, dbtProjectID)
+	assertEqual(t, response.Data.TargetName, targetName)
+	assertEqual(t, response.Data.DefaultSchema, defaultSchema)
 	assertEqual(t, response.Data.GroupID, groupID)
 	assertEqual(t, response.Data.CreatedAt, createdAt)
-	assertEqual(t, response.Data.DefaultSchema, defaultSchema)
-	assertEqual(t, response.Data.TargetName, targetName)
-	assertEqual(t, response.Data.Threads, threads)
-	assertEqual(t, response.Data.EnvironmentVars[0], environmentVar)
 	assertEqual(t, response.Data.CreatedById, createdByID)
-	assertEqual(t, response.Data.DbtVersion, dbtVersion)
-	assertEqual(t, response.Data.Type, projectType)
 	assertEqual(t, response.Data.PublicKey, publicKey)
-	assertEqual(t, response.Data.ProjectConfig.GitBranch, gitBranch)
+	assertEqual(t, response.Data.EnvironmentVars[0], environmentVar)
+	assertEqual(t, response.Data.Type, projectType)
+
 	assertEqual(t, response.Data.ProjectConfig.FolderPath, folderPath)
 	assertEqual(t, response.Data.ProjectConfig.GitRemoteUrl, gitRemoteURL)
+	assertEqual(t, response.Data.ProjectConfig.GitBranch, gitBranch)
 }
