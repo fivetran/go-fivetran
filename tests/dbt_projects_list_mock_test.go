@@ -9,7 +9,7 @@ import (
 	"github.com/fivetran/go-fivetran/tests/mock"
 )
 
-func TestDbtModelsListService(t *testing.T) {
+func TestDbtProjectsListService(t *testing.T) {
 	// arrange
 	limit := 2
 	cursor := "some_cursor"
