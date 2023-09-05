@@ -12,6 +12,7 @@ Supported the following Fivetran API endpoints:
 - [Retrieve dbt model details](https://fivetran.com/docs/rest-api/dbt-transformation-management#retrievedbtprojectmodeldetails)
 - [Retrieve dbt models list](https://fivetran.com/docs/rest-api/dbt-transformation-management#retrievedbtprojectmodels)
 - [Create dbt project](https://fivetran.com/docs/rest-api/dbt-transformation-management#createdbtproject)
+- [Retrieve dbt projects list](https://fivetran.com/docs/rest-api/dbt-transformation-management#retrievedbtprojects)
 - [Retrieve dbt project details](https://fivetran.com/docs/rest-api/dbt-transformation-management#retrievedbtprojectdetails)
 - [Update dbt project](https://fivetran.com/docs/rest-api/dbt-transformation-management#modifydbtproject)
 - [Delete dbt project](https://fivetran.com/docs/rest-api/dbt-transformation-management#deletedbtproject)
