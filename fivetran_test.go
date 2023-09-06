@@ -124,7 +124,7 @@ func CreateDbtProject(t *testing.T) string {
 
 func DeleteDbtProject(t *testing.T, projectId string) {
 	t.Helper()
-	deleted, err := Client.NewDbtProjectDelete().ProjectID(projectId).Do(context.Background())
+	deleted, err := Client.NewDbtProjectDelete().DbtProjectID(projectId).Do(context.Background())
 	if err != nil {
 		t.Logf("%+v\n", deleted)
 		t.Error(err)

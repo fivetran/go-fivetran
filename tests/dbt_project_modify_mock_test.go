@@ -91,7 +91,7 @@ func TestNewDbtProjectUpdateFullMappingMock(t *testing.T) {
 	// act
 
 	response, err := ftClient.NewDbtProjectModify().
-		ProjectId(dbtProjectID).
+		DbtProjectID(dbtProjectID).
 		DbtVersion(dbtVersion).
 		TargetName(targetName).
 		Threads(threads).
