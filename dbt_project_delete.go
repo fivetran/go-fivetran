@@ -9,8 +9,8 @@ import (
 // ProjectDeleteService implements the Project Management, Delete a project API.
 // Ref. https://fivetran.com/docs/rest-api/projects#deleteaproject
 type DbtProjectDeleteService struct {
-	c         *Client
-	projectID *string
+	c            *Client
+	dbtProjectID *string
 }
 
 type DbtProjectDeleteResponse struct {
@@ -22,19 +22,19 @@ func (c *Client) NewDbtProjectDelete() *DbtProjectDeleteService {
 	return &DbtProjectDeleteService{c: c}
 }
 
-func (s *DbtProjectDeleteService) ProjectID(value string) *DbtProjectDeleteService {
-	s.projectID = &value
+func (s *DbtProjectDeleteService) DbtProjectID(value string) *DbtProjectDeleteService {
+	s.dbtProjectID = &value
 	return s
 }
 
 func (s *DbtProjectDeleteService) Do(ctx context.Context) (DbtProjectDeleteResponse, error) {
 	var response DbtProjectDeleteResponse
 
-	if s.projectID == nil {
-		return response, fmt.Errorf("missing required projectID")
+	if s.dbtProjectID == nil {
+		return response, fmt.Errorf("missing required dbtProjectID")
 	}
 
-	url := fmt.Sprintf("%v/projects/%v", s.c.baseURL, *s.projectID)
+	url := fmt.Sprintf("%v/dbt/projects/%v", s.c.baseURL, *s.dbtProjectID)
 	expectedStatus := 200
 
 	headers := s.c.commonHeaders()

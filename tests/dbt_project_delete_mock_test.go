@@ -15,7 +15,7 @@ func TestDbtProjectDeleteServiceDo(t *testing.T) {
 	ftClient, mockClient := CreateTestClient()
 	projectID := "project123"
 
-	handler := mockClient.When(http.MethodDelete, fmt.Sprintf("/v1/projects/%s", projectID)).
+	handler := mockClient.When(http.MethodDelete, fmt.Sprintf("/v1/dbt/projects/%s", projectID)).
 		ThenCall(func(req *http.Request) (*http.Response, error) {
 			response := mock.NewResponse(req, http.StatusOK, prepareProjectDeleteResponse())
 			return response, nil
@@ -23,7 +23,7 @@ func TestDbtProjectDeleteServiceDo(t *testing.T) {
 
 	// act
 	response, err := ftClient.NewDbtProjectDelete().
-		ProjectID(projectID).
+		DbtProjectID(projectID).
 		Do(context.Background())
 
 	// assert

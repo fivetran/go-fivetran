@@ -7,8 +7,8 @@ import (
 )
 
 type DbtProjectModifyService struct {
-	c         *Client
-	projectId *string
+	c            *Client
+	dbtProjectID *string
 
 	dbtVersion      *string
 	targetName      *string
@@ -29,8 +29,8 @@ func (c *Client) NewDbtProjectModify() *DbtProjectModifyService {
 	return &DbtProjectModifyService{c: c}
 }
 
-func (s *DbtProjectModifyService) ProjectId(value string) *DbtProjectModifyService {
-	s.projectId = &value
+func (s *DbtProjectModifyService) DbtProjectID(value string) *DbtProjectModifyService {
+	s.dbtProjectID = &value
 	return s
 }
 
@@ -78,10 +78,10 @@ func (s *DbtProjectModifyService) request() *dbtProjectModifyRequest {
 func (s *DbtProjectModifyService) Do(ctx context.Context) (DbtProjectDetailsResponse, error) {
 	var response DbtProjectDetailsResponse
 
-	if s.projectId == nil {
+	if s.dbtProjectID == nil {
 		return response, fmt.Errorf("missing required dbt project ID")
 	}
-	url := fmt.Sprintf("%v/dbt/projects/%v", s.c.baseURL, *s.projectId)
+	url := fmt.Sprintf("%v/dbt/projects/%v", s.c.baseURL, *s.dbtProjectID)
 	expectedStatus := 200
 
 	headers := s.c.commonHeaders()
