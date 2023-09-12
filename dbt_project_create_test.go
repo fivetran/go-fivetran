@@ -15,7 +15,7 @@ func TestNewDbtProjectCreateE2E(t *testing.T) {
 	defaultSchema := "default_schema"
 	targetName := "target_name"
 	threads := 1
-	variable := "ENV_VAR1=VALUE"
+	variable := "DBT_VARIABLE=VALUE"
 	projectType := "GIT"
 
 	created, err := Client.NewDbtProjectCreate().
