@@ -26,6 +26,8 @@ func TestDbtProjectDetailsService(t *testing.T) {
 	environmentVar := "DBT_VARIABLE_1=VALUE"
 	threads := 1
 	projectType := "GIT"
+	status := "READY"
+	errors := "error"
 
 	responseJSON := fmt.Sprintf(
 		`{
@@ -46,7 +48,9 @@ func TestDbtProjectDetailsService(t *testing.T) {
 					"git_remote_url": "%v",
 					"git_branch": "%v",
 					"folder_path": "%v"
-				}
+				},
+				"status":"%v",
+				"errors":["%v"]
 			}
 		}`,
 		dbtProjectID,
@@ -63,6 +67,8 @@ func TestDbtProjectDetailsService(t *testing.T) {
 		gitRemoteURL,
 		gitBranch,
 		folderPath,
+		status,
+		errors,
 	)
 
 	client, mockClient := CreateTestClient()
@@ -73,7 +79,7 @@ func TestDbtProjectDetailsService(t *testing.T) {
 				return response, nil
 			})
 
-	service := client.NewDbtDetails()
+	service := client.NewDbtProjectDetails()
 
 	service.DbtProjectID(dbtProjectID)
 
@@ -106,4 +112,6 @@ func TestDbtProjectDetailsService(t *testing.T) {
 	assertEqual(t, response.Data.ProjectConfig.GitBranch, gitBranch)
 	assertEqual(t, response.Data.ProjectConfig.FolderPath, folderPath)
 	assertEqual(t, response.Data.ProjectConfig.GitRemoteUrl, gitRemoteURL)
+	assertEqual(t, response.Data.Status, status)
+	assertEqual(t, response.Data.Errors[0], errors)
 }

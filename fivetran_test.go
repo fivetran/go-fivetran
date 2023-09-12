@@ -122,24 +122,47 @@ func CreateDbtProject(t *testing.T) string {
 	return created.Data.ID
 }
 
-func DeleteDbtProject(t *testing.T, projectId string) {
-	t.Helper()
-	deleted, err := Client.NewDbtProjectDelete().DbtProjectID(projectId).Do(context.Background())
+func cleanupDbtProjects() {
+	projects, err := Client.NewDbtProjectsList().Do(context.Background())
 	if err != nil {
-		t.Logf("%+v\n", deleted)
-		t.Error(err)
+		log.Fatal(err)
+	}
+	for _, project := range projects.Data.Items {
+		cleanupDbtTransformations(project.ID, "")
+		_, err := Client.NewDbtProjectDelete().DbtProjectID(project.ID).Do(context.Background())
+		if err != nil && err.Error() != "status code: 404; expected: 200" {
+			log.Fatal(err)
+		}
+	}
+	if projects.Data.NextCursor != "" {
+		cleanupDbtProjects()
 	}
 }
 
-func DeleteDbtProjects(t *testing.T, groupId string) {
-	t.Helper()
-	// Here we should retrive list of projects for passed group and delete them
+func cleanupDbtTransformations(projectId, nextCursor string) {
+	svc := Client.NewDbtModelsList().ProjectId(projectId)
 
-	// deleted, err := Client.NewDbtProjectDelete().ProjectID(projectId).Do(context.Background())
-	// if err != nil {
-	// 	t.Logf("%+v\n", deleted)
-	// 	t.Error(err)
-	// }
+	if nextCursor != "" {
+		svc.Cursor(nextCursor)
+	}
+
+	models, err := svc.Do(context.Background())
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	for _, model := range models.Data.Items {
+		if model.Scheduled {
+			_, err := Client.NewDbtTransformationDeleteService().TransformationId(model.ID).Do(context.Background())
+			if err != nil && err.Error() != "status code: 404; expected: 200" {
+				log.Fatal(err)
+			}
+		}
+	}
+
+	if models.Data.NextCursor != "" {
+		cleanupDbtTransformations(projectId, models.Data.NextCursor)
+	}
 }
 
 func CreateTempGroup(t *testing.T) string {
@@ -358,9 +381,10 @@ func isEmpty(actual interface{}) bool {
 func cleanupAccount() {
 	cleanupUsers()
 	cleanupDestinations()
+	cleanupDbtProjects()
 	cleanupGroups()
 	cleanupExternalLogging()
-	//cleanupWebhooks()
+	cleanupWebhooks()
 }
 
 func isPredefinedUserExist() bool {

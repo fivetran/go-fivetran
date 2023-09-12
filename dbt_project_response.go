@@ -13,6 +13,8 @@ type DbtProjectDetailsData struct {
 	EnvironmentVars []string                 `json:"environment_vars"`
 	Type            string                   `json:"type"`
 	ProjectConfig   DbtProjectConfigResponse `json:"project_config"`
+	Status          string                   `json:"status"`
+	Errors          []string                 `json:"errors"`
 }
 
 type DbtProjectDetailsResponse struct {

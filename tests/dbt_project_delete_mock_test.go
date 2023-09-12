@@ -41,11 +41,10 @@ func TestDbtProjectDeleteServiceDo(t *testing.T) {
 }
 
 func prepareProjectDeleteResponse() string {
-	return fmt.Sprintf(
-		`{
+	return `{
 			"code": "Success",
 			"message": "Project has been deleted"
-		}`)
+			}`
 }
 
 func assertProjectDeleteResponse(t *testing.T, response fivetran.DbtProjectDeleteResponse) {

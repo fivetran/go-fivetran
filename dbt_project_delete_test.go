@@ -7,7 +7,6 @@ import (
 )
 
 func TestNewProjectDeleteE2E(t *testing.T) {
-	t.Skip("Skip test until api is ready")
 	projectId := CreateDbtProject(t)
 	deleted, err := Client.NewDbtProjectDelete().DbtProjectID(projectId).Do(context.Background())
 	if err != nil {
@@ -17,4 +16,11 @@ func TestNewProjectDeleteE2E(t *testing.T) {
 	AssertEqual(t, deleted.Code, "Success")
 	AssertNotEmpty(t, deleted.Message)
 	AssertEqual(t, strings.Contains(deleted.Message, projectId), true)
+
+	resp, err := Client.NewDbtProjectDetails().DbtProjectID(projectId).Do(context.Background())
+
+	AssertEqual(t, err.Error(), "status code: 404; expected: 200")
+	AssertEqual(t, strings.HasPrefix(resp.Code, "NotFound"), true)
+
+	t.Cleanup(func() { cleanupDbtProjects() })
 }

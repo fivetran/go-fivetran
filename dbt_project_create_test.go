@@ -8,20 +8,28 @@ import (
 )
 
 func TestNewDbtProjectCreateE2E(t *testing.T) {
-	t.Skip("Skipping test until we get more info on dbt projects data which can be used for testing")
+	dbtVersion := "1.3.1"
+	gitRemoteUrl := "https://github.com/fivetran/dbt_demo"
+	gitBranch := "main"
+	folderPath := "/folder/path"
+	defaultSchema := "default_schema"
+	targetName := "target_name"
+	threads := 1
+	variable := "DBT_VARIABLE=VALUE"
+	projectType := "GIT"
 
 	created, err := Client.NewDbtProjectCreate().
 		GroupID(PredefinedGroupId).
-		DbtVersion("1.3.1").
+		DbtVersion(dbtVersion).
 		ProjectConfig(fivetran.NewDbtProjectConfig().
-			GitRemoteUrl("https://github.com/fivetran/dbt_demo").
-			GitBranch("main").
-			FolderPath("/path")).
-		DefaultSchema("").
-		TargetName("").
-		Threads(4).
-		EnvironmentVars([]string{"ENV_VAR1=VALUE"}).
-		Type("GIT").
+			GitRemoteUrl(gitRemoteUrl).
+			GitBranch(gitBranch).
+			FolderPath(folderPath)).
+		DefaultSchema(defaultSchema).
+		TargetName(targetName).
+		Threads(threads).
+		EnvironmentVars([]string{variable}).
+		Type(projectType).
 		Do(context.Background())
 
 	if err != nil {
@@ -31,17 +39,22 @@ func TestNewDbtProjectCreateE2E(t *testing.T) {
 
 	AssertEqual(t, created.Code, "Success")
 	AssertNotEmpty(t, created.Message)
-	AssertEqual(t, created.Data.ID, PredefinedGroupId)
+	AssertNotEmpty(t, created.Data.ID)
+
 	AssertEqual(t, created.Data.GroupID, PredefinedGroupId)
 	AssertNotEmpty(t, created.Data.CreatedAt)
-	AssertEqual(t, created.Data.TargetName, "")
-	AssertEqual(t, created.Data.DefaultSchema, "")
-	AssertEqual(t, created.Data.PublicKey, "")
-	AssertEqual(t, created.Data.CreatedById, "")
 
-	//t.Cleanup(func() { DeleteDbtProjects(t, PredefinedGroupId) })
+	AssertEqual(t, created.Data.TargetName, targetName)
+	AssertEqual(t, created.Data.DefaultSchema, defaultSchema)
+	AssertNotEmpty(t, created.Data.PublicKey)
+	AssertEqual(t, created.Data.CreatedById, PredefinedUserId)
 
-	// AssertEqual(t, created.Data.GitBranch, "main")
-	// AssertEqual(t, created.Data.FolderPath, "")
-	// AssertEqual(t, created.Data.GitRemoteUrl, "https://github.com/fivetran/dbt_demo")
+	AssertEqual(t, created.Data.ProjectConfig.GitRemoteUrl, gitRemoteUrl)
+	AssertEqual(t, created.Data.ProjectConfig.GitBranch, gitBranch)
+	AssertEqual(t, created.Data.ProjectConfig.FolderPath, folderPath)
+
+	AssertEqual(t, len(created.Data.EnvironmentVars), 1)
+	AssertEqual(t, created.Data.EnvironmentVars[0], variable)
+
+	t.Cleanup(func() { cleanupDbtProjects() })
 }
