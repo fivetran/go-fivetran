@@ -11,7 +11,7 @@ type DbtProjectDetailsService struct {
 	dbtProjectID *string
 }
 
-func (c *Client) NewDbtDetails() *DbtProjectDetailsService {
+func (c *Client) NewDbtProjectDetails() *DbtProjectDetailsService {
 	return &DbtProjectDetailsService{c: c}
 }
 

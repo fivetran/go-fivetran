@@ -27,6 +27,8 @@ func TestNewDbtProjectCreateFullMappingMock(t *testing.T) {
 	environmentVar := "DBT_VARIABLE_1=VALUE"
 	threads := 1
 	projectType := "GIT"
+	status := "READY"
+	errors := "error"
 
 	projectResponse := fmt.Sprintf(
 		`{
@@ -48,7 +50,9 @@ func TestNewDbtProjectCreateFullMappingMock(t *testing.T) {
 					"git_remote_url": "%v",
 					"git_branch": "%v",
 					"folder_path": "%v"
-				}
+				},
+				"status": "%v",
+				"errors":["%v"]
 			}
 		}`,
 		dbtProjectID,
@@ -65,6 +69,8 @@ func TestNewDbtProjectCreateFullMappingMock(t *testing.T) {
 		gitRemoteURL,
 		gitBranch,
 		folderPath,
+		status,
+		errors,
 	)
 
 	ftClient, mockClient := CreateTestClient()
@@ -131,4 +137,7 @@ func TestNewDbtProjectCreateFullMappingMock(t *testing.T) {
 	assertEqual(t, response.Data.ProjectConfig.FolderPath, folderPath)
 	assertEqual(t, response.Data.ProjectConfig.GitRemoteUrl, gitRemoteURL)
 	assertEqual(t, response.Data.ProjectConfig.GitBranch, gitBranch)
+
+	assertEqual(t, response.Data.Status, status)
+	assertEqual(t, response.Data.Errors[0], errors)
 }
