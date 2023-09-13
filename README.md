@@ -171,6 +171,8 @@ REST API Endpoint | REST API Version | SDK Service/Config
 [Retrieve column metadata](https://fivetran.com/docs/rest-api/metadata#retrievecolumnmetadata) | v1 | [MetadataColumnListService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ExternalLoggingCreateService)
 
 ### [Webhook Management](https://fivetran.com/docs/rest-api/webhooks#webhookmanagement)
+
+REST API Endpoint | REST API Version | SDK Service/Config
 --- | --- | ---
 [Create account webhook](https://fivetran.com/docs/rest-api/webhooks#createaccountwebhook) | v1 | [WebhookAccountCreateService](https://pkg.go.dev/github.com/fivetran/go-fivetran#WebhookAccountCreateService)
 [Create group webhook](https://fivetran.com/docs/rest-api/webhooks#creategroupwebhook) | v1 | [WebhookGroupCreateService](https://pkg.go.dev/github.com/fivetran/go-fivetran#WebhookGroupCreateService)
