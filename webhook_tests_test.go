@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestWebhookTestsE2E(t *testing.T) {
+func TestWebhookTestE2E(t *testing.T) {
 	webhookId := CreateWebhookAccount(t)
 	
 	response, err := Client.NewWebhookTest().
