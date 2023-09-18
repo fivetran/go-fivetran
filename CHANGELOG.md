@@ -7,6 +7,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased](https://github.com/fivetran/go-fivetran/compare/v0.7.9...HEAD)
 
+Supported the following Fivetran API endpoints:
+- Team Management API: [List all teams](https://fivetran.com/docs/rest-api/teams#listallteams)
+- Team Management API: [Retrieve team details](https://fivetran.com/docs/rest-api/teams#retrieveteamdetails)
+- Team Management API: [Create a team](https://fivetran.com/docs/rest-api/teams#createateam)
+- Team Management API: [Modify a team](https://fivetran.com/docs/rest-api/teams#modifyateam)
+- Team Management API: [Delete a team role in the account](https://fivetran.com/docs/rest-api/teams#deleteteamroleinaccount)
+- Team Management API: [Delete a team](https://fivetran.com/docs/rest-api/teams#deleteateam)
+- Team Management API User memberships: [List all user memberships](https://fivetran.com/docs/rest-api/teams#listallusermemberships)
+- Team Management API User memberships: [Retrieve user membership](https://fivetran.com/docs/rest-api/teams#retrieveusermembershipinateam)
+- Team Management API User memberships: [Add a user to a team](https://fivetran.com/docs/rest-api/teams#addausertoateam)
+- Team Management API User memberships: [Modify a user membership](https://fivetran.com/docs/rest-api/teams#modifyausermembership)
+- Team Management API User memberships: [Delete a user from a team](https://fivetran.com/docs/rest-api/teams#deleteauserfromateam)
+- Team Management API Connector memberships: [List all connector memberships](https://fivetran.com/docs/rest-api/teams#listallconnectormemberships)
+- Team Management API Connector memberships: [Retrieve connector membership](https://fivetran.com/docs/rest-api/teams#retrieveconnectormembership)
+- Team Management API Connector memberships: [Add connector membership](https://fivetran.com/docs/rest-api/teams#addconnectormembership)
+- Team Management API Connector memberships: [Update connector membership](https://fivetran.com/docs/rest-api/teams#updateconnectormembership)
+- Team Management API Connector memberships: [Delete connector membership](https://fivetran.com/docs/rest-api/teams#deleteconnectormembership)
+- Team Management API Group memberships: [List all group memberships](https://fivetran.com/docs/rest-api/teams#listallgroupmemberships)
+- Team Management API Group memberships: [Retrieve group membership](https://fivetran.com/docs/rest-api/teams#retrievegroupmembership)
+- Team Management API Group memberships: [Add group membership](https://fivetran.com/docs/rest-api/teams#addgroupmembership)
+- Team Management API Group memberships: [Update group membership](https://fivetran.com/docs/rest-api/teams#updategroupmembership)
+- Team Management API Group memberships: [Delete group membership](https://fivetran.com/docs/rest-api/teams#deletegroupmembership)
+
 ## [0.7.9](https://github.com/fivetran/go-fivetran/compare/v0.7.8...v0.7.9)
 
 ## Added

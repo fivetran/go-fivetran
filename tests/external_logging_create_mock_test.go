@@ -26,7 +26,7 @@ const (
     EXTLOG_HOST            = "host"
     EXTLOG_HOSTNAME        = "hostname"
     EXTLOG_CHANNEL         = "channel"
-    EXTLOG_ENABLESSL       = "enable_ssl"
+    EXTLOG_ENABLESSL       = false
     EXTLOG_TOKEN           = "token"
     EXTLOG_PORT            = 443
 )
