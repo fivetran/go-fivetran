@@ -16,16 +16,20 @@ var Client *fivetran.Client
 var CertificateHash string
 var EncodedCertificate string
 
-var PredefinedGroupId string
-var PredefinedUserId string
-
 // Tests should be re-written to not use a pre-defined user and group
 const (
-	PredefinedGroupName      string = "GoSdkTesting"
-	PredefinedUserEmail      string = "dev-markov+go-fivetran-sdk@fivetran.com"
-	PredefinedUserGivenName  string = "Go"
-	PredefinedUserFamilyName string = "5Tran"
-	PredefinedUserPhone      string = "+1234567890"
+	PredefinedGroupName      = "GoSdkTesting"
+	PredefinedUserEmail      = "dev-markov+go-fivetran-sdk@fivetran.com"
+	PredefinedUserGivenName  = "Go"
+	PredefinedUserFamilyName = "5Tran"
+	PredefinedUserPhone      = "+1234567890"
+	BqProjectId              = "dulcet-yew-246109"
+
+	// ! WARNING !
+	// ! Do not change these values on production ones !
+	// ! When running e2e tests locally endure you're using BLANK ACCOUNT credentials !
+	PredefinedGroupId = "sepulchre_settlement"
+	PredefinedUserId  = "recoup_befell"
 )
 
 func init() {
@@ -39,8 +43,6 @@ func init() {
 		"FIVETRAN_APISECRET":             &apiSecret,
 		"FIVETRAN_TEST_CERTIFICATE_HASH": &CertificateHash,
 		"FIVETRAN_TEST_CERTIFICATE":      &EncodedCertificate,
-		"FIVETRAN_GROUP_ID":              &PredefinedGroupId,
-		"FIVETRAN_USER_ID":               &PredefinedUserId,
 	}
 
 	for name, value := range valuesToLoad {
@@ -52,10 +54,36 @@ func init() {
 
 	Client = fivetran.New(apiKey, apiSecret)
 	Client.BaseURL(apiUrl)
-	if isPredefinedUserExist() {
+	if isPredefinedUserExist() && isPredefinedGroupExist() {
 		cleanupAccount()
 	} else {
 		log.Fatalln("The predefined user doesn't belong to the Testing account. Make sure that credentials are using in the tests belong to the Testing account.")
+	}
+}
+
+func CreateDbtDestination(t *testing.T) {
+	t.Helper()
+	destination, err := Client.NewDestinationCreate().
+		GroupID(PredefinedGroupId).
+		Service("big_query").
+		Region("US").
+		RunSetupTests(true).
+		TimeZoneOffset("-5").
+		Config(
+			fivetran.NewDestinationConfig().
+				ProjectID(BqProjectId).
+				DataSetLocation("US")).
+		Do(context.Background())
+	if err != nil {
+		t.Logf("%+v\n", destination)
+		t.Error(err)
+	}
+}
+
+func deleteDbtDestination() {
+	resp, err := Client.NewDestinationDelete().DestinationID(PredefinedGroupId).Do(context.Background())
+	if err != nil {
+		log.Fatal(resp, err)
 	}
 }
 
@@ -104,6 +132,7 @@ func CreateGroup(t *testing.T) string {
 
 func CreateDbtProject(t *testing.T) string {
 	t.Helper()
+	CreateDbtDestination(t)
 	created, err := Client.NewDbtProjectCreate().
 		GroupID(PredefinedGroupId).
 		DbtVersion("1.3.1").
@@ -392,7 +421,15 @@ func isPredefinedUserExist() bool {
 	if err != nil {
 		return false
 	}
-	return user.Data.ID == PredefinedUserId
+	return user.Data.GivenName == PredefinedUserGivenName
+}
+
+func isPredefinedGroupExist() bool {
+	group, err := Client.NewGroupDetails().GroupID(PredefinedGroupId).Do(context.Background())
+	if err != nil {
+		return false
+	}
+	return group.Data.Name == PredefinedGroupName
 }
 
 func cleanupUsers() {
