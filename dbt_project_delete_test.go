@@ -22,5 +22,8 @@ func TestNewProjectDeleteE2E(t *testing.T) {
 	AssertEqual(t, err.Error(), "status code: 404; expected: 200")
 	AssertEqual(t, strings.HasPrefix(resp.Code, "NotFound"), true)
 
-	t.Cleanup(func() { cleanupDbtProjects() })
+	t.Cleanup(func() {
+		cleanupDbtProjects()
+		deleteDbtDestination()
+	})
 }

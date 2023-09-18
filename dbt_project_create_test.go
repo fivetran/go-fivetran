@@ -18,6 +18,8 @@ func TestNewDbtProjectCreateE2E(t *testing.T) {
 	variable := "DBT_VARIABLE=VALUE"
 	projectType := "GIT"
 
+	CreateDbtDestination(t)
+
 	created, err := Client.NewDbtProjectCreate().
 		GroupID(PredefinedGroupId).
 		DbtVersion(dbtVersion).
@@ -56,5 +58,8 @@ func TestNewDbtProjectCreateE2E(t *testing.T) {
 	AssertEqual(t, len(created.Data.EnvironmentVars), 1)
 	AssertEqual(t, created.Data.EnvironmentVars[0], variable)
 
-	t.Cleanup(func() { cleanupDbtProjects() })
+	t.Cleanup(func() {
+		cleanupDbtProjects()
+		deleteDbtDestination()
+	})
 }
