@@ -5,12 +5,12 @@ import (
     "testing"
 )
 
-func TestNewTeamGroupsDeleteE2E(t *testing.T) {
+func TestNewTeamGroupMembershipDeleteE2E(t *testing.T) {
     groupId := CreateGroup(t)
     teamId := CreateTeam(t)
     CreateTeamGroup(t, teamId,groupId)
 
-    deleted, err := Client.NewTeamGroupsDelete().
+    deleted, err := Client.NewTeamGroupMembershipDelete().
         TeamId(teamId).
         GroupId(groupId).
         Do(context.Background())
