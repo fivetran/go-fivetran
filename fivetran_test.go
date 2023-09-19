@@ -414,7 +414,7 @@ func cleanupAccount() {
 	cleanupGroups()
 	cleanupExternalLogging()
 	cleanupWebhooks()
-	cleanupTeams()
+	cleanupTeams("")
 }
 
 func isPredefinedUserExist() bool {
@@ -517,7 +517,7 @@ func cleanupWebhooks() {
 }
 
 func cleanupTeams(nextCursor string) {
-	svc := Client.NewTeamList()
+	svc := Client.NewTeamsList()
 
 	if nextCursor != "" {
 		svc.Cursor(nextCursor)
@@ -529,7 +529,7 @@ func cleanupTeams(nextCursor string) {
 	}
 
 	for _, team := range list.Data.Items {
-		_, err := Client.NewTeamDelete().TeamId(team.Id).Do(context.Background())
+		_, err := Client.NewTeamsDelete().TeamId(team.Id).Do(context.Background())
 		if err != nil && err.Error() != "status code: 404; expected: 200" {
 			log.Fatal(err)
 		}
@@ -611,7 +611,7 @@ func CreateWebhookAccount(t *testing.T) string {
 /* Begin Team Management */
 func CreateTeam(t *testing.T) string {
 	t.Helper()
-    created, err := Client.NewTeamCreate().
+    created, err := Client.NewTeamsCreate().
         Name("test_team").
         Description("test_description").
         Role("Account Reviewer").
@@ -626,7 +626,7 @@ func CreateTeam(t *testing.T) string {
 
 func DeleteTeamConnector(t *testing.T, teamId string, connectorId string) {
 	t.Helper()
-	deleted, err := Client.NewTeamConnectorsDelete().TeamId(teamId).ConnectorId(connectorId).Do(context.Background())
+	deleted, err := Client.NewTeamConnectorMembershipDelete().TeamId(teamId).ConnectorId(connectorId).Do(context.Background())
 
 	if err != nil {
 		t.Logf("%+v\n", deleted)
@@ -636,7 +636,7 @@ func DeleteTeamConnector(t *testing.T, teamId string, connectorId string) {
 
 func CreateTeamConnector(t *testing.T, teamId string, connectorId string) {
 	t.Helper()
-	created, err := Client.NewTeamConnectorsCreate().
+	created, err := Client.NewTeamConnectorMembershipCreate().
 		TeamId(teamId).
 		ConnectorId(connectorId).
 		Role("Connector Administrator").
@@ -650,7 +650,7 @@ func CreateTeamConnector(t *testing.T, teamId string, connectorId string) {
 
 func DeleteTeamUser(t *testing.T, teamId string, userId string) {
 	t.Helper()
-	deleted, err := Client.NewTeamUsersDelete().
+	deleted, err := Client.NewTeamUserMembershipDelete().
 		TeamId(teamId).
 		UserId(userId).
 		Do(context.Background())
@@ -663,7 +663,7 @@ func DeleteTeamUser(t *testing.T, teamId string, userId string) {
 
 func CreateTeamUser(t *testing.T, teamId string, userId string) {
 	t.Helper()
-	created, err := Client.NewTeamUsersCreate().
+	created, err := Client.NewTeamUserMembershipCreate().
 		TeamId(teamId).
 		UserId(userId).
 		Role("Team Member").
@@ -677,7 +677,7 @@ func CreateTeamUser(t *testing.T, teamId string, userId string) {
 
 func DeleteTeamGroup(t *testing.T, teamId string, groupId string) {
 	t.Helper()
-	deleted, err := Client.NewTeamGroupsDelete().
+	deleted, err := Client.NewTeamGroupMembershipDelete().
 		TeamId(teamId).
 		GroupId(groupId).
 		Do(context.Background())
@@ -690,7 +690,7 @@ func DeleteTeamGroup(t *testing.T, teamId string, groupId string) {
 
 func CreateTeamGroup(t *testing.T, teamId string, groupId string) {
 	t.Helper()
-	created, err := Client.NewTeamGroupsCreate().
+	created, err := Client.NewTeamGroupMembershipCreate().
 		TeamId(teamId).
 		GroupId(groupId).
 		Role("Destination Analyst").
@@ -704,7 +704,7 @@ func CreateTeamGroup(t *testing.T, teamId string, groupId string) {
 
 func DeleteTeam(t *testing.T, id string) {
 	t.Helper()
-	deleted, err := Client.NewTeamDelete().TeamId(id).Do(context.Background())
+	deleted, err := Client.NewTeamsDelete().TeamId(id).Do(context.Background())
 
 	if err != nil {
 		t.Logf("%+v\n", deleted)
