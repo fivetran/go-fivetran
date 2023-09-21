@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/fivetran/go-fivetran/compare/v0.7.9...HEAD)
+## [Unreleased](https://github.com/fivetran/go-fivetran/compare/v0.7.10...HEAD)
 
 Supported the following Fivetran API endpoints:
 - Team Management API: [List all teams](https://fivetran.com/docs/rest-api/teams#listallteams)
@@ -29,6 +29,11 @@ Supported the following Fivetran API endpoints:
 - Team Management API Group memberships: [Add group membership](https://fivetran.com/docs/rest-api/teams#addgroupmembership)
 - Team Management API Group memberships: [Update group membership](https://fivetran.com/docs/rest-api/teams#updategroupmembership)
 - Team Management API Group memberships: [Delete group membership](https://fivetran.com/docs/rest-api/teams#deletegroupmembership)
+
+## [0.7.10](https://github.com/fivetran/go-fivetran/compare/v0.7.9...v0.7.10)
+
+- Fixed export NewWebhookTest method
+- Fixed markup in the README file
 
 ## [0.7.9](https://github.com/fivetran/go-fivetran/compare/v0.7.8...v0.7.9)
 
