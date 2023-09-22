@@ -414,7 +414,7 @@ func cleanupAccount() {
 	cleanupGroups()
 	cleanupExternalLogging()
 	cleanupWebhooks()
-	cleanupTeams("")
+	cleanupTeams()
 }
 
 func isPredefinedUserExist() bool {
@@ -516,14 +516,8 @@ func cleanupWebhooks() {
 	}
 }
 
-func cleanupTeams(nextCursor string) {
-	svc := Client.NewTeamsList()
-
-	if nextCursor != "" {
-		svc.Cursor(nextCursor)
-	}
-
-	list, err := svc.Do(context.Background())
+func cleanupTeams() {
+	list, err := Client.NewTeamsList().Do(context.Background())
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -536,7 +530,7 @@ func cleanupTeams(nextCursor string) {
 	}
 
 	if list.Data.NextCursor != "" {
-		cleanupTeams(list.Data.NextCursor)
+		cleanupTeams()
 	}
 }
 
