@@ -7,7 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased](https://github.com/fivetran/go-fivetran/compare/v0.7.11...HEAD)
 
+## Added
+
+Supported the following Fivetran API endpoints:
+- [Modify a connector database schema config](https://fivetran.com/docs/rest-api/connectors#modifyaconnectordatabaseschemaconfig)
+- [Modify a connector table config](https://fivetran.com/docs/rest-api/connectors#modifyaconnectortableconfig)
+- [Modify a connector column config](https://fivetran.com/docs/rest-api/connectors#modifyaconnectorcolumnconfig)
+- [Connect Card](https://fivetran.com/docs/rest-api/connectors/connect-card)
+- 
 ## [0.7.11](https://github.com/fivetran/go-fivetran/compare/v0.7.10...v0.7.11)
+
+## Added
 
 Supported the following Fivetran API endpoints:
 - Team Management API: [List all teams](https://fivetran.com/docs/rest-api/teams#listallteams)
@@ -33,6 +43,8 @@ Supported the following Fivetran API endpoints:
 - Team Management API Group memberships: [Delete group membership](https://fivetran.com/docs/rest-api/teams#deletegroupmembership)
 
 ## [0.7.10](https://github.com/fivetran/go-fivetran/compare/v0.7.9...v0.7.10)
+
+## Fixed
 
 - Fixed export NewWebhookTest method
 - Fixed markup in the README file
