@@ -414,6 +414,7 @@ func cleanupAccount() {
 	cleanupGroups()
 	cleanupExternalLogging()
 	cleanupWebhooks()
+	cleanupTeams()
 }
 
 func isPredefinedUserExist() bool {
@@ -515,6 +516,24 @@ func cleanupWebhooks() {
 	}
 }
 
+func cleanupTeams() {
+	list, err := Client.NewTeamsList().Do(context.Background())
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	for _, team := range list.Data.Items {
+		_, err := Client.NewTeamsDelete().TeamId(team.Id).Do(context.Background())
+		if err != nil && err.Error() != "status code: 404; expected: 200" {
+			log.Fatal(err)
+		}
+	}
+
+	if list.Data.NextCursor != "" {
+		cleanupTeams()
+	}
+}
+
 func CreateTempExternalLogging(t *testing.T) string {
 	t.Helper()
 	externalLoggingId := CreateExternalLogging(t)
@@ -582,3 +601,108 @@ func CreateWebhookAccount(t *testing.T) string {
 	}
 	return created.Data.Id
 }
+
+/* Begin Team Management */
+func CreateTeam(t *testing.T) string {
+	t.Helper()
+    created, err := Client.NewTeamsCreate().
+        Name("test_team").
+        Description("test_description").
+        Role("Account Reviewer").
+        Do(context.Background())
+
+	if err != nil {
+		t.Logf("%+v\n", created)
+		t.Error(err)
+	}
+	return created.Data.Id
+}
+
+func DeleteTeamConnector(t *testing.T, teamId string, connectorId string) {
+	t.Helper()
+	deleted, err := Client.NewTeamConnectorMembershipDelete().TeamId(teamId).ConnectorId(connectorId).Do(context.Background())
+
+	if err != nil {
+		t.Logf("%+v\n", deleted)
+		t.Error(err)
+	}
+}
+
+func CreateTeamConnector(t *testing.T, teamId string, connectorId string) {
+	t.Helper()
+	created, err := Client.NewTeamConnectorMembershipCreate().
+		TeamId(teamId).
+		ConnectorId(connectorId).
+		Role("Connector Administrator").
+		Do(context.Background())
+
+	if err != nil {
+		t.Logf("%+v\n", created)
+		t.Error(err)
+	}
+}
+
+func DeleteTeamUser(t *testing.T, teamId string, userId string) {
+	t.Helper()
+	deleted, err := Client.NewTeamUserMembershipDelete().
+		TeamId(teamId).
+		UserId(userId).
+		Do(context.Background())
+
+	if err != nil {
+		t.Logf("%+v\n", deleted)
+		t.Error(err)
+	}
+}
+
+func CreateTeamUser(t *testing.T, teamId string, userId string) {
+	t.Helper()
+	created, err := Client.NewTeamUserMembershipCreate().
+		TeamId(teamId).
+		UserId(userId).
+		Role("Team Member").
+		Do(context.Background())
+
+	if err != nil {
+		t.Logf("%+v\n", created)
+		t.Error(err)
+	}
+}
+
+func DeleteTeamGroup(t *testing.T, teamId string, groupId string) {
+	t.Helper()
+	deleted, err := Client.NewTeamGroupMembershipDelete().
+		TeamId(teamId).
+		GroupId(groupId).
+		Do(context.Background())
+
+	if err != nil {
+		t.Logf("%+v\n", deleted)
+		t.Error(err)
+	}
+}
+
+func CreateTeamGroup(t *testing.T, teamId string, groupId string) {
+	t.Helper()
+	created, err := Client.NewTeamGroupMembershipCreate().
+		TeamId(teamId).
+		GroupId(groupId).
+		Role("Destination Analyst").
+		Do(context.Background())
+
+	if err != nil {
+		t.Logf("%+v\n", created)
+		t.Error(err)
+	}
+}
+
+func DeleteTeam(t *testing.T, id string) {
+	t.Helper()
+	deleted, err := Client.NewTeamsDelete().TeamId(id).Do(context.Background())
+
+	if err != nil {
+		t.Logf("%+v\n", deleted)
+		t.Error(err)
+	}
+}
+/* End Team Management */

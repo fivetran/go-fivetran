@@ -188,6 +188,44 @@ REST API Endpoint | REST API Version | SDK Service/Config
 --- | --- | ---
 [List all roles](https://fivetran.com/docs/rest-api/roles#listallroles) | v1 | [RolesListService](https://pkg.go.dev/github.com/fivetran/go-fivetran#RolesListService)
 
+### [Team Management](https://fivetran.com/docs/rest-api/teams)
+
+REST API Endpoint | REST API Version | SDK Service/Config
+--- | --- | ---
+[List all teams](https://fivetran.com/docs/rest-api/teams#listallteams) | v1 | [TeamsListService](https://pkg.go.dev/github.com/fivetran/go-fivetran#TeamsListService)
+[Retrieve team details](https://fivetran.com/docs/rest-api/teams#retrieveteamdetails) | v1 | [TeamsDetailsService](https://pkg.go.dev/github.com/fivetran/go-fivetran#TeamsDetailsService)
+[Create a team](https://fivetran.com/docs/rest-api/teams#createateam) | v1 | [TeamsCreateService](https://pkg.go.dev/github.com/fivetran/go-fivetran#TeamsCreateService)
+[Modify a team](https://fivetran.com/docs/rest-api/teams#modifyateam) | v1 | [TeamsModifyService](https://pkg.go.dev/github.com/fivetran/go-fivetran#TeamsModifyService)
+[Delete a team role in the account](https://fivetran.com/docs/rest-api/teams#deleteteamroleinaccount) | v1 | [TeamsDeleteRoleInAccountService](https://pkg.go.dev/github.com/fivetran/go-fivetran#TeamsDeleteRoleInAccountService)
+[Delete a team](https://fivetran.com/docs/rest-api/teams#deleteateam) | v1 | [TeamsDeleteService](https://pkg.go.dev/github.com/fivetran/go-fivetran#TeamsDeleteService)
+
+### [Team Management User memberships](https://fivetran.com/docs/rest-api/teams#usermemberships)
+REST API Endpoint | REST API Version | SDK Service/Config
+--- | --- | ---
+[List all user memberships](https://fivetran.com/docs/rest-api/teams#listallusermemberships) | v1 | [TeamUserMembershipsListService](https://pkg.go.dev/github.com/fivetran/go-fivetran#TeamUserMembershipsListService)
+[Retrieve user membership](https://fivetran.com/docs/rest-api/teams#retrieveusermembershipinateam) | v1 | [TeamUserMembershipDetailsService](https://pkg.go.dev/github.com/fivetran/go-fivetran#TeamUserMembershipDetailsService)
+[Add a user to a team](https://fivetran.com/docs/rest-api/teams#addausertoateam) | v1 | [TeamUserMembershipCreateService](https://pkg.go.dev/github.com/fivetran/go-fivetran#TeamUserMembershipCreateService)
+[Modify a user membership](https://fivetran.com/docs/rest-api/teams#modifyausermembership) | v1 | [TeamUserMembershipModifyService](https://pkg.go.dev/github.com/fivetran/go-fivetran#TeamUserMembershipModifyService)
+[Delete a user from a team](https://fivetran.com/docs/rest-api/teams#deleteauserfromateam) | v1 | [TeamUserMembershipDeleteService](https://pkg.go.dev/github.com/fivetran/go-fivetran#TeamUserMembershipDeleteService)
+
+### [Team Management Connector memberships](https://fivetran.com/docs/rest-api/teams#connectormemberships)
+REST API Endpoint | REST API Version | SDK Service/Config
+--- | --- | ---
+[List all connector memberships](https://fivetran.com/docs/rest-api/teams#listallconnectormemberships) | v1 | [TeamConnectorMembershipsListService](https://pkg.go.dev/github.com/fivetran/go-fivetran#TeamConnectorMembershipsListService)
+[Retrieve connector membership](https://fivetran.com/docs/rest-api/teams#retrieveconnectormembership) | v1 | [TeamConnectorMembershipDetailsService](https://pkg.go.dev/github.com/fivetran/go-fivetran#TeamConnectorMembershipDetailsService)
+[Add connector membership](https://fivetran.com/docs/rest-api/teams#addconnectormembership) | v1 | [TeamConnectorMembershipCreateService](https://pkg.go.dev/github.com/fivetran/go-fivetran#TeamConnectorMembershipCreateService)
+[Update connector membership](https://fivetran.com/docs/rest-api/teams#updateconnectormembership) | v1 | [TeamConnectorMembershipModifyService](https://pkg.go.dev/github.com/fivetran/go-fivetran#TeamConnectorMembershipModifyService)
+[Delete connector membership](https://fivetran.com/docs/rest-api/teams#deleteconnectormembership) | v1 | [TeamConnectorMembershipDeleteService](https://pkg.go.dev/github.com/fivetran/go-fivetran#TeamConnectorMembershipDeleteService)
+
+### [Team Management Group memberships](https://fivetran.com/docs/rest-api/teams#groupmemberships)
+REST API Endpoint | REST API Version | SDK Service/Config
+--- | --- | ---
+[List all group memberships](https://fivetran.com/docs/rest-api/teams#listallgroupmemberships) | v1 | [TeamGroupMembershipsService](https://pkg.go.dev/github.com/fivetran/go-fivetran#TeamGroupMembershipsService)
+[Retrieve group membership](https://fivetran.com/docs/rest-api/teams#retrievegroupmembership) | v1 | [TeamGroupMembershipDetailsService](https://pkg.go.dev/github.com/fivetran/go-fivetran#TeamGroupMembershipDetailsService)
+[Add group membership](https://fivetran.com/docs/rest-api/teams#addgroupmembership) | v1 | [TeamGroupMembershipCreateService](https://pkg.go.dev/github.com/fivetran/go-fivetran#TeamGroupMembershipCreateService)
+[Update group membership](https://fivetran.com/docs/rest-api/teams#updategroupmembership) | v1 | [TeamGroupMembershipModifyService](https://pkg.go.dev/github.com/fivetran/go-fivetran#TeamGroupMembershipModifyService)
+[Delete group membership](https://fivetran.com/docs/rest-api/teams#deletegroupmembership) | v1 | [TeamGroupMembershipDeleteService](https://pkg.go.dev/github.com/fivetran/go-fivetran#TeamGroupMembershipDeleteService)
+
 ## Support
 
 Please get in touch with us through our [Support Portal](https://support.fivetran.com/) if you 

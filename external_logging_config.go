@@ -14,7 +14,7 @@ type ExternalLoggingConfig struct {
     host                *string
     hostname            *string
     channel             *string
-    enableSsl           *string
+    enableSsl           *bool
     token               *string
     port                *int
 }
@@ -31,7 +31,7 @@ type externalLoggingConfigRequest struct {
     Host                *string `json:"host,omitempty"`
     Hostname            *string `json:"hostname,omitempty"`
     Channel             *string `json:"channel,omitempty"`
-    EnableSsl           *string `json:"enable_ssl,omitempty"`
+    EnableSsl           *bool   `json:"enable_ssl,omitempty"`
     Token               *string `json:"token,omitempty"`
     Port                *int    `json:"port,omitempty"`
 }
@@ -48,7 +48,7 @@ type ExternalLoggingConfigResponse struct {
     Host                string `json:"host"`
     Hostname            string `json:"hostname"`
     Channel             string `json:"channel"`
-    EnableSsl           string `json:"enable_ssl"`
+    EnableSsl           bool   `json:"enable_ssl"`
     Token               string `json:"token"`
     Port                int    `json:"port"`
 }
@@ -139,7 +139,7 @@ func (elc *ExternalLoggingConfig) Channel(value string) *ExternalLoggingConfig {
     return elc
 }
 
-func (elc *ExternalLoggingConfig) EnableSsl(value string) *ExternalLoggingConfig {
+func (elc *ExternalLoggingConfig) EnableSsl(value bool) *ExternalLoggingConfig {
     elc.enableSsl = &value
     return elc
 }
