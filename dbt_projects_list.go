@@ -4,26 +4,14 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+
+	"github.com/fivetran/go-fivetran/dbt"
 )
 
 type DbtProjectsListService struct {
 	c      *Client
 	limit  *int
 	cursor *string
-}
-
-type DbtProjectsListResponse struct {
-	Code    string `json:"code"`
-	Message string `json:"message"`
-	Data    struct {
-		Items []struct {
-			ID          string `json:"id"`
-			GroupId     string `json:"group_id"`
-			CreatedAt   string `json:"created_at"`
-			CreatedById string `json:"created_by_id"`
-		} `json:"items"`
-		NextCursor string `json:"next_cursor"`
-	} `json:"data"`
 }
 
 func (c *Client) NewDbtProjectsList() *DbtProjectsListService {
@@ -40,8 +28,8 @@ func (s *DbtProjectsListService) Cursor(value string) *DbtProjectsListService {
 	return s
 }
 
-func (s *DbtProjectsListService) Do(ctx context.Context) (DbtProjectsListResponse, error) {
-	var response DbtProjectsListResponse
+func (s *DbtProjectsListService) Do(ctx context.Context) (dbt.DbtProjectsListResponse, error) {
+	var response dbt.DbtProjectsListResponse
 	url := fmt.Sprintf("%v/dbt/projects", s.c.baseURL)
 	expectedStatus := 200
 

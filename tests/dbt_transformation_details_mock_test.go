@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/fivetran/go-fivetran"
+	"github.com/fivetran/go-fivetran/dbt"
 	"github.com/fivetran/go-fivetran/tests/mock"
 )
 
@@ -86,7 +86,7 @@ func TestDbtTransformationDetailsService(t *testing.T) {
 	assertDbtTransformationDetailsResponse(t, response)
 }
 
-func assertDbtTransformationDetailsResponse(t *testing.T, response fivetran.DbtTransformationResponse) {
+func assertDbtTransformationDetailsResponse(t *testing.T, response dbt.DbtTransformationResponse) {
 	assertEqual(t, response.Code, "Success")
 
 	assertEqual(t, response.Data.ID, TRANSFORMATION_ID)

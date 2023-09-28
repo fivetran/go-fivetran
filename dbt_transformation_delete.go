@@ -4,16 +4,13 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+
+	"github.com/fivetran/go-fivetran/common"
 )
 
 type DbtTransformationDeleteService struct {
 	c                *Client
 	transformationId *string
-}
-
-type DbtTransformationDeleteResponse struct {
-	Code    string `json:"code"`
-	Message string `json:"message"`
 }
 
 func (c *Client) NewDbtTransformationDeleteService() *DbtTransformationDeleteService {
@@ -25,8 +22,8 @@ func (s *DbtTransformationDeleteService) TransformationId(value string) *DbtTran
 	return s
 }
 
-func (s *DbtTransformationDeleteService) Do(ctx context.Context) (DbtTransformationDeleteResponse, error) {
-	var response DbtTransformationDeleteResponse
+func (s *DbtTransformationDeleteService) Do(ctx context.Context) (common.CommonResponse, error) {
+	var response common.CommonResponse
 
 	if s.transformationId == nil {
 		return response, fmt.Errorf("missing required transformation id")

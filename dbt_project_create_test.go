@@ -44,7 +44,7 @@ func TestNewDbtProjectCreateE2E(t *testing.T) {
 	testutils.AssertNotEmpty(t, created.Message)
 	testutils.AssertNotEmpty(t, created.Data.ID)
 
-	testutils.AssertEqual(t, created.Data.GroupID, testutils.PredefinedGroupId)
+	testutils.AssertEqual(t, created.Data.GroupId, testutils.PredefinedGroupId)
 	testutils.AssertNotEmpty(t, created.Data.CreatedAt)
 
 	testutils.AssertEqual(t, created.Data.TargetName, targetName)

@@ -4,21 +4,13 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+
+	"github.com/fivetran/go-fivetran/dbt"
 )
 
 type DbtModelDetailsService struct {
 	c       *Client
 	modelId *string
-}
-
-type DbtModelDetailsResponse struct {
-	Code    string `json:"code"`
-	Message string `json:"message"`
-	Data    struct {
-		ID        string `json:"id"`
-		ModelName string `json:"model_name"`
-		Scheduled bool   `json:"scheduled"`
-	} `json:"data"`
 }
 
 func (c *Client) NewDbtModelDetails() *DbtModelDetailsService {
@@ -30,8 +22,8 @@ func (s *DbtModelDetailsService) ModelId(value string) *DbtModelDetailsService {
 	return s
 }
 
-func (s *DbtModelDetailsService) Do(ctx context.Context) (DbtModelDetailsResponse, error) {
-	var response DbtModelDetailsResponse
+func (s *DbtModelDetailsService) Do(ctx context.Context) (dbt.DbtModelDetailsResponse, error) {
+	var response dbt.DbtModelDetailsResponse
 
 	if s.modelId == nil {
 		return response, fmt.Errorf("missing required ModelId")

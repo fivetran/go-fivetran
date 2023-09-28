@@ -4,20 +4,22 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+
+	"github.com/fivetran/go-fivetran/dbt"
 )
 
 type DbtTransformationModifyService struct {
 	c                   *Client
 	dbtTransformationId *string
-	schedule            *DbtTransformationSchedule
+	schedule            *dbt.DbtTransformationSchedule
 	runTests            *bool
 	paused              *bool
 }
 
 type dbtTransformationModifyRequest struct {
-	Schedule *dbtTransformationScheduleRequest `json:"schedule,omitempty"`
-	RunTests *bool                             `json:"run_tests,omitempty"`
-	Paused   *bool                             `json:"paused,omitempty"`
+	Schedule any   `json:"schedule,omitempty"`
+	RunTests *bool `json:"run_tests,omitempty"`
+	Paused   *bool `json:"paused,omitempty"`
 }
 
 func (c *Client) NewDbtTransformationModifyService() *DbtTransformationModifyService {
@@ -25,10 +27,10 @@ func (c *Client) NewDbtTransformationModifyService() *DbtTransformationModifySer
 }
 
 func (s *DbtTransformationModifyService) request() *dbtTransformationModifyRequest {
-	var schedule *dbtTransformationScheduleRequest
+	var schedule interface{}
 
 	if s.schedule != nil {
-		schedule = s.schedule.request()
+		schedule = s.schedule.Request()
 	}
 
 	return &dbtTransformationModifyRequest{
@@ -43,7 +45,7 @@ func (s *DbtTransformationModifyService) DbtTransformationId(value string) *DbtT
 	return s
 }
 
-func (s *DbtTransformationModifyService) Schedule(value *DbtTransformationSchedule) *DbtTransformationModifyService {
+func (s *DbtTransformationModifyService) Schedule(value *dbt.DbtTransformationSchedule) *DbtTransformationModifyService {
 	s.schedule = value
 	return s
 }
@@ -58,8 +60,8 @@ func (s *DbtTransformationModifyService) Paused(value bool) *DbtTransformationMo
 	return s
 }
 
-func (s *DbtTransformationModifyService) Do(ctx context.Context) (DbtTransformationResponse, error) {
-	var response DbtTransformationResponse
+func (s *DbtTransformationModifyService) Do(ctx context.Context) (dbt.DbtTransformationResponse, error) {
+	var response dbt.DbtTransformationResponse
 
 	if s.dbtTransformationId == nil {
 		return response, fmt.Errorf("missing required dbt transformation ID")

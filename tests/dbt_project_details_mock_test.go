@@ -99,7 +99,7 @@ func TestDbtProjectDetailsService(t *testing.T) {
 
 	// Check individual fields of the response
 	assertEqual(t, response.Data.ID, dbtProjectID)
-	assertEqual(t, response.Data.GroupID, groupID)
+	assertEqual(t, response.Data.GroupId, groupID)
 	assertEqual(t, response.Data.CreatedAt, createdAt)
 	assertEqual(t, response.Data.DefaultSchema, defaultSchema)
 	assertEqual(t, response.Data.TargetName, targetName)

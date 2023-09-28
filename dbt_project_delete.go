@@ -4,6 +4,8 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+
+	"github.com/fivetran/go-fivetran/common"
 )
 
 // ProjectDeleteService implements the Project Management, Delete a project API.
@@ -11,11 +13,6 @@ import (
 type DbtProjectDeleteService struct {
 	c            *Client
 	dbtProjectID *string
-}
-
-type DbtProjectDeleteResponse struct {
-	Code    string `json:"code"`
-	Message string `json:"message"`
 }
 
 func (c *Client) NewDbtProjectDelete() *DbtProjectDeleteService {
@@ -27,8 +24,8 @@ func (s *DbtProjectDeleteService) DbtProjectID(value string) *DbtProjectDeleteSe
 	return s
 }
 
-func (s *DbtProjectDeleteService) Do(ctx context.Context) (DbtProjectDeleteResponse, error) {
-	var response DbtProjectDeleteResponse
+func (s *DbtProjectDeleteService) Do(ctx context.Context) (common.CommonResponse, error) {
+	var response common.CommonResponse
 
 	if s.dbtProjectID == nil {
 		return response, fmt.Errorf("missing required dbtProjectID")

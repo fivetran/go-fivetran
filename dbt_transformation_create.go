@@ -4,21 +4,23 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+
+	"github.com/fivetran/go-fivetran/dbt"
 )
 
 type DbtTransformationCreateService struct {
 	c          *Client
 	dbtModelId *string
-	schedule   *DbtTransformationSchedule
+	schedule   *dbt.DbtTransformationSchedule
 	runTests   *bool
 	paused     *bool
 }
 
 type dbtTransformationCreateRequest struct {
-	DbtModelId *string                           `json:"dbt_model_id,omitempty"`
-	Schedule   *dbtTransformationScheduleRequest `json:"schedule,omitempty"`
-	RunTests   *bool                             `json:"run_tests,omitempty"`
-	Paused     *bool                             `json:"paused,omitempty"`
+	DbtModelId *string `json:"dbt_model_id,omitempty"`
+	Schedule   any     `json:"schedule,omitempty"`
+	RunTests   *bool   `json:"run_tests,omitempty"`
+	Paused     *bool   `json:"paused,omitempty"`
 }
 
 func (c *Client) NewDbtTransformationCreateService() *DbtTransformationCreateService {
@@ -26,10 +28,10 @@ func (c *Client) NewDbtTransformationCreateService() *DbtTransformationCreateSer
 }
 
 func (s *DbtTransformationCreateService) request() *dbtTransformationCreateRequest {
-	var schedule *dbtTransformationScheduleRequest
+	var schedule interface{}
 
 	if s.schedule != nil {
-		schedule = s.schedule.request()
+		schedule = s.schedule.Request()
 	}
 
 	return &dbtTransformationCreateRequest{
@@ -45,7 +47,7 @@ func (s *DbtTransformationCreateService) DbtModelId(value string) *DbtTransforma
 	return s
 }
 
-func (s *DbtTransformationCreateService) Schedule(value *DbtTransformationSchedule) *DbtTransformationCreateService {
+func (s *DbtTransformationCreateService) Schedule(value *dbt.DbtTransformationSchedule) *DbtTransformationCreateService {
 	s.schedule = value
 	return s
 }
@@ -60,8 +62,8 @@ func (s *DbtTransformationCreateService) Paused(value bool) *DbtTransformationCr
 	return s
 }
 
-func (s *DbtTransformationCreateService) Do(ctx context.Context) (DbtTransformationResponse, error) {
-	var response DbtTransformationResponse
+func (s *DbtTransformationCreateService) Do(ctx context.Context) (dbt.DbtTransformationResponse, error) {
+	var response dbt.DbtTransformationResponse
 	url := fmt.Sprintf("%v/dbt/transformations", s.c.baseURL)
 	expectedStatus := 201
 

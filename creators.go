@@ -1,6 +1,9 @@
 package fivetran
 
-import "github.com/fivetran/go-fivetran/connectors"
+import (
+	"github.com/fivetran/go-fivetran/connectors"
+	"github.com/fivetran/go-fivetran/dbt"
+)
 
 func NewFunctionSecret() *connectors.FunctionSecret {
 	return &connectors.FunctionSecret{}
@@ -44,4 +47,12 @@ func NewConnectorSchemaConfigSchema() *connectors.ConnectorSchemaConfigSchema {
 
 func NewConnectorSchemaConfigTable() *connectors.ConnectorSchemaConfigTable {
 	return &connectors.ConnectorSchemaConfigTable{}
+}
+
+func NewDbtProjectConfig() *dbt.DbtProjectConfig {
+	return &dbt.DbtProjectConfig{}
+}
+
+func NewDbtTransformationSchedule() *dbt.DbtTransformationSchedule {
+	return &dbt.DbtTransformationSchedule{}
 }

@@ -4,6 +4,8 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+
+	"github.com/fivetran/go-fivetran/dbt"
 )
 
 type DbtProjectDetailsService struct {
@@ -20,8 +22,8 @@ func (s *DbtProjectDetailsService) DbtProjectID(value string) *DbtProjectDetails
 	return s
 }
 
-func (s *DbtProjectDetailsService) Do(ctx context.Context) (DbtProjectDetailsResponse, error) {
-	var response DbtProjectDetailsResponse
+func (s *DbtProjectDetailsService) Do(ctx context.Context) (dbt.DbtProjectDetailsResponse, error) {
+	var response dbt.DbtProjectDetailsResponse
 
 	if s.dbtProjectID == nil {
 		return response, fmt.Errorf("missing required DbtProjectId")

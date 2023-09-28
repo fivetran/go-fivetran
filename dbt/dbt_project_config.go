@@ -1,4 +1,4 @@
-package fivetran
+package dbt
 
 type DbtProjectConfig struct {
 	gitRemoteUrl *string
@@ -23,11 +23,7 @@ type DbtProjectConfigResponse struct {
 	FolderPath   string `json:"folder_path"`
 }
 
-func NewDbtProjectConfig() *DbtProjectConfig {
-	return &DbtProjectConfig{}
-}
-
-func (dc *DbtProjectConfig) request() *dbtProjectConfigRequest {
+func (dc *DbtProjectConfig) Request() *dbtProjectConfigRequest {
 	return &dbtProjectConfigRequest{
 		GitRemoteUrl: dc.gitRemoteUrl,
 		GitBranch:    dc.gitBranch,
@@ -35,7 +31,7 @@ func (dc *DbtProjectConfig) request() *dbtProjectConfigRequest {
 	}
 }
 
-func (dc *DbtProjectConfig) updateRequest() *updateDbtProjectConfigRequest {
+func (dc *DbtProjectConfig) UpdateRequest() *updateDbtProjectConfigRequest {
 	return &updateDbtProjectConfigRequest{
 		GitBranch:  dc.gitBranch,
 		FolderPath: dc.folderPath,

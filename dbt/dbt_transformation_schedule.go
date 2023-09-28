@@ -1,4 +1,4 @@
-package fivetran
+package dbt
 
 type DbtTransformationSchedule struct {
 	scheduleType *string
@@ -21,11 +21,7 @@ type DbtTransformationScheduleResponse struct {
 	TimeOfDay    string   `json:"time_of_day"`
 }
 
-func NewDbtTransformationSchedule() *DbtTransformationSchedule {
-	return &DbtTransformationSchedule{}
-}
-
-func (dbtTransformationSchedule *DbtTransformationSchedule) request() *dbtTransformationScheduleRequest {
+func (dbtTransformationSchedule *DbtTransformationSchedule) Request() *dbtTransformationScheduleRequest {
 	return &dbtTransformationScheduleRequest{
 		ScheduleType: dbtTransformationSchedule.scheduleType,
 		DaysOfWeek:   dbtTransformationSchedule.daysOfWeek,
