@@ -33,3 +33,15 @@ func NewConnectorConfigAdobeAnalyticsConfiguration() *connectors.ConnectorConfig
 func NewConnectorAuthClientAccess() *connectors.ConnectorAuthClientAccess {
 	return &connectors.ConnectorAuthClientAccess{}
 }
+
+func NewConnectorSchemaConfigColumn() *connectors.ConnectorSchemaConfigColumn {
+	return &connectors.ConnectorSchemaConfigColumn{}
+}
+
+func NewConnectorSchemaConfigSchema() *connectors.ConnectorSchemaConfigSchema {
+	return &connectors.ConnectorSchemaConfigSchema{}
+}
+
+func NewConnectorSchemaConfigTable() *connectors.ConnectorSchemaConfigTable {
+	return &connectors.ConnectorSchemaConfigTable{}
+}

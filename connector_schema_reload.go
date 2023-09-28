@@ -4,6 +4,8 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+
+	"github.com/fivetran/go-fivetran/connectors"
 )
 
 // ConnectorSchemaReloadService implements the Connector Management, Reload a Connector Schema Config API.
@@ -40,8 +42,8 @@ func (s *ConnectorSchemaReloadService) ExcludeMode(value string) *ConnectorSchem
 	return s
 }
 
-func (s *ConnectorSchemaReloadService) Do(ctx context.Context) (ConnectorSchemaDetailsResponse, error) {
-	var response ConnectorSchemaDetailsResponse
+func (s *ConnectorSchemaReloadService) Do(ctx context.Context) (connectors.ConnectorSchemaDetailsResponse, error) {
+	var response connectors.ConnectorSchemaDetailsResponse
 
 	if s.connectorID == nil {
 		return response, fmt.Errorf("missing required ConnectorID")

@@ -1,4 +1,4 @@
-package fivetran
+package connectors
 
 type ConnectorSchemaConfigColumn struct {
 	enabled *bool
@@ -19,10 +19,6 @@ type ConnectorSchemaConfigColumnResponse struct {
 		ReasonCode *string `json:"reason_code"`
 		Reason     *string `json:"reason"`
 	} `json:"enabled_patch_settings"`
-}
-
-func NewConnectorSchemaConfigColumn() *ConnectorSchemaConfigColumn {
-	return &ConnectorSchemaConfigColumn{}
 }
 
 func (csc *ConnectorSchemaConfigColumn) request() *connectorSchemaConfigColumnRequest {

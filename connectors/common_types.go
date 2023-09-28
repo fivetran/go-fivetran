@@ -93,3 +93,11 @@ type DetailsWithCustomMergedConfigNoTestsResponse struct {
 		Config       ConnectorConfigResponse // no mapping here
 	} `json:"data"`
 }
+
+type ConnectorSchemaDetailsResponse struct {
+	common.CommonResponse
+	Data struct {
+		SchemaChangeHandling string                                          `json:"schema_change_handling"`
+		Schemas              map[string]*ConnectorSchemaConfigSchemaResponse `json:"schemas"`
+	} `json:"data"`
+}

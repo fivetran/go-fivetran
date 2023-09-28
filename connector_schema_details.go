@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/fivetran/go-fivetran/common"
+	"github.com/fivetran/go-fivetran/connectors"
 )
 
 // ConnectorSchemaDetailsService implements the Connector Management, Retrieve a Connector Schema Config API.
@@ -13,14 +13,6 @@ import (
 type ConnectorSchemaDetailsService struct {
 	c           *Client
 	connectorID *string
-}
-
-type ConnectorSchemaDetailsResponse struct {
-	common.CommonResponse
-	Data struct {
-		SchemaChangeHandling string                                          `json:"schema_change_handling"`
-		Schemas              map[string]*ConnectorSchemaConfigSchemaResponse `json:"schemas"`
-	} `json:"data"`
 }
 
 func (c *Client) NewConnectorSchemaDetails() *ConnectorSchemaDetailsService {
@@ -32,8 +24,8 @@ func (s *ConnectorSchemaDetailsService) ConnectorID(value string) *ConnectorSche
 	return s
 }
 
-func (s *ConnectorSchemaDetailsService) Do(ctx context.Context) (ConnectorSchemaDetailsResponse, error) {
-	var response ConnectorSchemaDetailsResponse
+func (s *ConnectorSchemaDetailsService) Do(ctx context.Context) (connectors.ConnectorSchemaDetailsResponse, error) {
+	var response connectors.ConnectorSchemaDetailsResponse
 
 	if s.connectorID == nil {
 		return response, fmt.Errorf("missing required ConnectorID")

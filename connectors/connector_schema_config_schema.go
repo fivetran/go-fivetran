@@ -1,11 +1,11 @@
-package fivetran
+package connectors
 
 type ConnectorSchemaConfigSchema struct {
 	enabled *bool
 	tables  map[string]*ConnectorSchemaConfigTable
 }
 
-type connectorSchemaConfigSchemaRequest struct {
+type ConnectorSchemaConfigSchemaRequest struct {
 	Enabled *bool                                         `json:"enabled,omitempty"`
 	Tables  map[string]*connectorSchemaConfigTableRequest `json:"tables,omitempty"`
 }
@@ -16,11 +16,7 @@ type ConnectorSchemaConfigSchemaResponse struct {
 	Tables            map[string]*ConnectorSchemaConfigTableResponse `json:"tables"`
 }
 
-func NewConnectorSchemaConfigSchema() *ConnectorSchemaConfigSchema {
-	return &ConnectorSchemaConfigSchema{}
-}
-
-func (css *ConnectorSchemaConfigSchema) request() *connectorSchemaConfigSchemaRequest {
+func (css *ConnectorSchemaConfigSchema) Request() *ConnectorSchemaConfigSchemaRequest {
 	var tables map[string]*connectorSchemaConfigTableRequest
 	if css.tables != nil && len(css.tables) != 0 {
 		tables = make(map[string]*connectorSchemaConfigTableRequest)
@@ -29,7 +25,7 @@ func (css *ConnectorSchemaConfigSchema) request() *connectorSchemaConfigSchemaRe
 		}
 	}
 
-	return &connectorSchemaConfigSchemaRequest{
+	return &ConnectorSchemaConfigSchemaRequest{
 		Enabled: css.enabled,
 		Tables:  tables,
 	}
