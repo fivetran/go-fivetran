@@ -246,14 +246,14 @@ func assertConnectorConfig(t *testing.T, config connectors.ConnectorConfigRespon
 	assertEqual(t, *config.IsKeypair, true)
 }
 
-func assertConnectorUpdateResponse(t *testing.T, response fivetran.ConnectorModifyResponse) {
+func assertConnectorUpdateResponse(t *testing.T, response connectors.DetailsWithConfigResponse) {
 	assertEqual(t, response.Code, "Success")
 
 	assertEqual(t, *response.Data.Paused, false)
 	assertConnectorConfig(t, response.Data.Config)
 }
 
-func assertCustomConnectorUpdateResponse(t *testing.T, response fivetran.ConnectorCustomModifyResponse) {
+func assertCustomConnectorUpdateResponse(t *testing.T, response connectors.DetailsWithCustomConfigResponse) {
 	assertEqual(t, response.Code, "Success")
 
 	assertEqual(t, *response.Data.Paused, false)
@@ -272,7 +272,7 @@ func assertCustomConnectorUpdateResponse(t *testing.T, response fivetran.Connect
 	assertKey(t, "value", secret, "value")
 }
 
-func assertCustomMergedConnectorUpdateResponse(t *testing.T, response fivetran.ConnectorCustomMergedModifyResponse) {
+func assertCustomMergedConnectorUpdateResponse(t *testing.T, response connectors.DetailsWithCustomMergedConfigResponse) {
 	assertEqual(t, response.Code, "Success")
 
 	assertEqual(t, *response.Data.Paused, false)

@@ -4,6 +4,8 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+
+	"github.com/fivetran/go-fivetran/common"
 )
 
 // ConnectorDeleteService implements the Connector Management, Delete a Connector API.
@@ -11,11 +13,6 @@ import (
 type ConnectorDeleteService struct {
 	c           *Client
 	connectorID *string
-}
-
-type ConnectorDeleteResponse struct {
-	Code    string `json:"code"`
-	Message string `json:"message"`
 }
 
 func (c *Client) NewConnectorDelete() *ConnectorDeleteService {
@@ -27,8 +24,8 @@ func (s *ConnectorDeleteService) ConnectorID(connectorID string) *ConnectorDelet
 	return s
 }
 
-func (s *ConnectorDeleteService) Do(ctx context.Context) (ConnectorDeleteResponse, error) {
-	var response ConnectorDeleteResponse
+func (s *ConnectorDeleteService) Do(ctx context.Context) (common.CommonResponse, error) {
+	var response common.CommonResponse
 
 	if s.connectorID == nil {
 		return response, fmt.Errorf("missing required ConnectorID")

@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/fivetran/go-fivetran"
+	"github.com/fivetran/go-fivetran/connectors"
 	"github.com/fivetran/go-fivetran/tests/mock"
 )
 
@@ -135,7 +135,7 @@ func prepareConnectorDetailsResponse() string {
 	}`
 }
 
-func assertConnectorDetailsResponse(t *testing.T, response fivetran.ConnectorDetailsResponse) {
+func assertConnectorDetailsResponse(t *testing.T, response connectors.DetailsWithConfigNoTestsResponse) {
 
 	assertEqual(t, response.Code, "Success")
 
@@ -145,7 +145,7 @@ func assertConnectorDetailsResponse(t *testing.T, response fivetran.ConnectorDet
 	assertEqual(t, *response.Data.Config.IsKeypair, true)
 }
 
-func assertCustomConnectorDetailsResponse(t *testing.T, response fivetran.ConnectorCustomDetailsResponse) {
+func assertCustomConnectorDetailsResponse(t *testing.T, response connectors.DetailsWithCustomConfigNoTestsResponse) {
 
 	assertEqual(t, response.Code, "Success")
 
@@ -163,7 +163,7 @@ func assertCustomConnectorDetailsResponse(t *testing.T, response fivetran.Connec
 	assertKey(t, "value", secret, "value")
 }
 
-func assertCustomMergedConnectorDetailsResponse(t *testing.T, response fivetran.ConnectorCustomMergedDetailsResponse) {
+func assertCustomMergedConnectorDetailsResponse(t *testing.T, response connectors.DetailsWithCustomMergedConfigNoTestsResponse) {
 
 	assertEqual(t, response.Code, "Success")
 

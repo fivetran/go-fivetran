@@ -4,7 +4,6 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"time"
 
 	"github.com/fivetran/go-fivetran/connectors"
 	"github.com/fivetran/go-fivetran/utils"
@@ -52,69 +51,6 @@ type connectorCustomModifyRequest struct {
 	connectorModifyRequestBase
 	Config *map[string]interface{} `json:"config,omitempty"`
 	Auth   *map[string]interface{} `json:"auth,omitempty"`
-}
-
-type ConnectorModifyResponseDataBase struct {
-	ID              string    `json:"id"`
-	GroupID         string    `json:"group_id"`
-	Service         string    `json:"service"`
-	ServiceVersion  *int      `json:"service_version"`
-	Schema          string    `json:"schema"`
-	ConnectedBy     string    `json:"connected_by"`
-	CreatedAt       time.Time `json:"created_at"`
-	SucceededAt     time.Time `json:"succeeded_at"`
-	FailedAt        time.Time `json:"failed_at"`
-	SyncFrequency   *int      `json:"sync_frequency"`
-	Paused          *bool     `json:"paused"`
-	PauseAfterTrial *bool     `json:"pause_after_trial"`
-	ScheduleType    string    `json:"schedule_type"`
-	Status          struct {
-		SetupState       string `json:"setup_state"`
-		SyncState        string `json:"sync_state"`
-		UpdateState      string `json:"update_state"`
-		IsHistoricalSync *bool  `json:"is_historical_sync"`
-		Tasks            []struct {
-			Code    string `json:"code"`
-			Message string `json:"message"`
-		} `json:"tasks"`
-		Warnings []struct {
-			Code    string `json:"code"`
-			Message string `json:"message"`
-		} `json:"warnings"`
-	} `json:"status"`
-	SetupTests []struct {
-		Title   string `json:"title"`
-		Status  string `json:"status"`
-		Message string `json:"message"`
-	} `json:"setup_tests"`
-}
-
-type ConnectorModifyResponse struct {
-	Code    string `json:"code"`
-	Message string `json:"message"`
-	Data    struct {
-		ConnectorModifyResponseDataBase
-		Config connectors.ConnectorConfigResponse `json:"config"`
-	} `json:"data"`
-}
-
-type ConnectorCustomModifyResponse struct {
-	Code    string `json:"code"`
-	Message string `json:"message"`
-	Data    struct {
-		ConnectorModifyResponseDataBase
-		Config map[string]interface{} `json:"config"`
-	} `json:"data"`
-}
-
-type ConnectorCustomMergedModifyResponse struct {
-	Code    string `json:"code"`
-	Message string `json:"message"`
-	Data    struct {
-		ConnectorModifyResponseDataBase
-		CustomConfig map[string]interface{}             `json:"config"`
-		Config       connectors.ConnectorConfigResponse // no mapping here
-	} `json:"data"`
 }
 
 func (c *Client) NewConnectorModify() *ConnectorModifyService {
@@ -304,24 +240,24 @@ func (s *ConnectorModifyService) do(ctx context.Context, req, response any) erro
 	return nil
 }
 
-func (s *ConnectorModifyService) Do(ctx context.Context) (ConnectorModifyResponse, error) {
-	var response ConnectorModifyResponse
+func (s *ConnectorModifyService) Do(ctx context.Context) (connectors.DetailsWithConfigResponse, error) {
+	var response connectors.DetailsWithConfigResponse
 
 	err := s.do(ctx, s.request(), &response)
 
 	return response, err
 }
 
-func (s *ConnectorModifyService) DoCustom(ctx context.Context) (ConnectorCustomModifyResponse, error) {
-	var response ConnectorCustomModifyResponse
+func (s *ConnectorModifyService) DoCustom(ctx context.Context) (connectors.DetailsWithCustomConfigResponse, error) {
+	var response connectors.DetailsWithCustomConfigResponse
 
 	err := s.do(ctx, s.requestCustom(), &response)
 
 	return response, err
 }
 
-func (s *ConnectorModifyService) DoCustomMerged(ctx context.Context) (ConnectorCustomMergedModifyResponse, error) {
-	var response ConnectorCustomMergedModifyResponse
+func (s *ConnectorModifyService) DoCustomMerged(ctx context.Context) (connectors.DetailsWithCustomMergedConfigResponse, error) {
+	var response connectors.DetailsWithCustomMergedConfigResponse
 
 	req, err := s.requestCustomMerged()
 
