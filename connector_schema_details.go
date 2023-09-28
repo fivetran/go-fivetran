@@ -4,6 +4,8 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+
+	"github.com/fivetran/go-fivetran/common"
 )
 
 // ConnectorSchemaDetailsService implements the Connector Management, Retrieve a Connector Schema Config API.
@@ -14,9 +16,8 @@ type ConnectorSchemaDetailsService struct {
 }
 
 type ConnectorSchemaDetailsResponse struct {
-	Code    string `json:"code"`
-	Message string `json:"message"`
-	Data    struct {
+	common.CommonResponse
+	Data struct {
 		SchemaChangeHandling string                                          `json:"schema_change_handling"`
 		Schemas              map[string]*ConnectorSchemaConfigSchemaResponse `json:"schemas"`
 	} `json:"data"`

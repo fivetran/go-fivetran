@@ -4,6 +4,8 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+
+	"github.com/fivetran/go-fivetran/common"
 )
 
 // ConnectorReSyncTableService implements the Connector Management, Re-sync Connector Table Data API.
@@ -13,11 +15,6 @@ type ConnectorReSyncTableService struct {
 	connectorID *string
 	schema      *string
 	table       *string
-}
-
-type ConnectorReSyncTableResponse struct {
-	Code    string `json:"code"`
-	Message string `json:"message"`
 }
 
 func (c *Client) NewConnectorReSyncTable() *ConnectorReSyncTableService {
@@ -39,8 +36,8 @@ func (s *ConnectorReSyncTableService) Table(value string) *ConnectorReSyncTableS
 	return s
 }
 
-func (s *ConnectorReSyncTableService) Do(ctx context.Context) (ConnectorReSyncTableResponse, error) {
-	var response ConnectorReSyncTableResponse
+func (s *ConnectorReSyncTableService) Do(ctx context.Context) (common.CommonResponse, error) {
+	var response common.CommonResponse
 
 	if s.connectorID == nil {
 		return response, fmt.Errorf("missing required ConnectorID")
