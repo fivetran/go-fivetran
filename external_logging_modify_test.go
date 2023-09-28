@@ -5,11 +5,12 @@ import (
 	"testing"
 
 	"github.com/fivetran/go-fivetran"
+	testutils "github.com/fivetran/go-fivetran/test_utils"
 )
 
 func TestNewExternalLoggingModifyE2E(t *testing.T) {
-	externalLoggingId := CreateTempExternalLogging(t)
-	details, err := Client.NewExternalLoggingModify().ExternalLoggingId(externalLoggingId).
+	externalLoggingId := testutils.CreateTempExternalLogging(t)
+	details, err := testutils.Client.NewExternalLoggingModify().ExternalLoggingId(externalLoggingId).
 		Enabled(true).
 		Config(fivetran.NewExternalLoggingConfig().
 			WorkspaceId("test").
@@ -21,11 +22,11 @@ func TestNewExternalLoggingModifyE2E(t *testing.T) {
 		t.Error(err)
 	}
 
-	AssertEqual(t, details.Code, "Success")
-	AssertNotEmpty(t, details.Message)
-	AssertEqual(t, details.Data.Id, externalLoggingId)
-	AssertEqual(t, details.Data.Enabled, true)
-	AssertEqual(t, details.Data.Service, "azure_monitor_log")
-	AssertEqual(t, details.Data.Config.WorkspaceId, "test")
-    AssertEqual(t, details.Data.Config.PrimaryKey, "******")
+	testutils.AssertEqual(t, details.Code, "Success")
+	testutils.AssertNotEmpty(t, details.Message)
+	testutils.AssertEqual(t, details.Data.Id, externalLoggingId)
+	testutils.AssertEqual(t, details.Data.Enabled, true)
+	testutils.AssertEqual(t, details.Data.Service, "azure_monitor_log")
+	testutils.AssertEqual(t, details.Data.Config.WorkspaceId, "test")
+	testutils.AssertEqual(t, details.Data.Config.PrimaryKey, "******")
 }

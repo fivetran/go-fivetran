@@ -4,17 +4,19 @@ import (
 	"context"
 	"strings"
 	"testing"
+
+	testutils "github.com/fivetran/go-fivetran/test_utils"
 )
 
 func TestNewUserDeleteE2E(t *testing.T) {
-	userId := CreateUser(t)
-	deleted, err := Client.NewUserDelete().UserID(userId).Do(context.Background())
+	userId := testutils.CreateUser(t)
+	deleted, err := testutils.Client.NewUserDelete().UserID(userId).Do(context.Background())
 
 	if err != nil {
 		t.Logf("%+v\n", deleted)
 		t.Error(err)
 	}
-	AssertEqual(t, deleted.Code, "Success")
-	AssertNotEmpty(t, deleted.Message)
-	AssertEqual(t, strings.Contains(deleted.Message, userId), true)
+	testutils.AssertEqual(t, deleted.Code, "Success")
+	testutils.AssertNotEmpty(t, deleted.Message)
+	testutils.AssertEqual(t, strings.Contains(deleted.Message, userId), true)
 }

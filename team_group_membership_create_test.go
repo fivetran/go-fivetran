@@ -1,34 +1,36 @@
 package fivetran_test
 
 import (
-    "context"
-    "testing"
+	"context"
+	"testing"
+
+	testutils "github.com/fivetran/go-fivetran/test_utils"
 )
 
 func TestNewTeamGroupMembershipCreateE2E(t *testing.T) {
-    groupId := CreateGroup(t)
-    teamId := CreateTeam(t)
+	groupId := testutils.CreateGroup(t)
+	teamId := testutils.CreateTeam(t)
 
-    created, err := Client.NewTeamGroupMembershipCreate().
-        TeamId(teamId).
-        GroupId(groupId).
-        Role("Destination Administrator").
-        Do(context.Background())
+	created, err := testutils.Client.NewTeamGroupMembershipCreate().
+		TeamId(teamId).
+		GroupId(groupId).
+		Role("Destination Administrator").
+		Do(context.Background())
 
-    if err != nil {
-        t.Logf("%+v\n", created)
-        t.Error(err)
-    }
+	if err != nil {
+		t.Logf("%+v\n", created)
+		t.Error(err)
+	}
 
-    AssertEqual(t, created.Code, "Success")
-    AssertEqual(t, created.Message, "Group membership has been created")
-    AssertEqual(t, created.Data.GroupId, groupId)
-    AssertEqual(t, created.Data.Role, "Destination Administrator")
-    AssertNotEmpty(t, created.Data.CreatedAt)
-    
-    t.Cleanup(func() { 
-        DeleteTeamGroup(t, teamId, groupId)
-        DeleteGroup(t, groupId)
-        DeleteTeam(t, teamId)
-    })
+	testutils.AssertEqual(t, created.Code, "Success")
+	testutils.AssertEqual(t, created.Message, "Group membership has been created")
+	testutils.AssertEqual(t, created.Data.GroupId, groupId)
+	testutils.AssertEqual(t, created.Data.Role, "Destination Administrator")
+	testutils.AssertNotEmpty(t, created.Data.CreatedAt)
+
+	t.Cleanup(func() {
+		testutils.DeleteTeamGroup(t, teamId, groupId)
+		testutils.DeleteGroup(t, groupId)
+		testutils.DeleteTeam(t, teamId)
+	})
 }

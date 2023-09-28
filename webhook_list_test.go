@@ -3,25 +3,27 @@ package fivetran_test
 import (
 	"context"
 	"testing"
+
+	testutils "github.com/fivetran/go-fivetran/test_utils"
 )
 
 func TestWebhookListE2E(t *testing.T) {
-	webhookId := CreateWebhookAccount(t)
+	webhookId := testutils.CreateWebhookAccount(t)
 
-	result, err := Client.NewWebhookList().Do(context.Background())
+	result, err := testutils.Client.NewWebhookList().Do(context.Background())
 	if err != nil {
 		t.Logf("%+v\n", result)
 		t.Error(err)
 	}
 
-	AssertEqual(t, result.Code, "Success")
-	AssertNotEmpty(t, result.Data.Items[0].Id)
-    AssertNotEmpty(t, result.Data.Items[0].Events)
-    AssertNotEmpty(t, result.Data.Items[0].CreatedAt)
-    AssertNotEmpty(t, result.Data.Items[0].CreatedBy)
-    AssertNotEmpty(t, result.Data.Items[0].Type)
-    AssertNotEmpty(t, result.Data.Items[0].Secret)
-    AssertNotEmpty(t, result.Data.Items[0].Url)
+	testutils.AssertEqual(t, result.Code, "Success")
+	testutils.AssertNotEmpty(t, result.Data.Items[0].Id)
+	testutils.AssertNotEmpty(t, result.Data.Items[0].Events)
+	testutils.AssertNotEmpty(t, result.Data.Items[0].CreatedAt)
+	testutils.AssertNotEmpty(t, result.Data.Items[0].CreatedBy)
+	testutils.AssertNotEmpty(t, result.Data.Items[0].Type)
+	testutils.AssertNotEmpty(t, result.Data.Items[0].Secret)
+	testutils.AssertNotEmpty(t, result.Data.Items[0].Url)
 
-    t.Cleanup(func() { DeleteWebhook(t, webhookId) })
+	t.Cleanup(func() { testutils.DeleteWebhook(t, webhookId) })
 }

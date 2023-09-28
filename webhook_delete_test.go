@@ -1,22 +1,24 @@
 package fivetran_test
 
 import (
-    "context"
-    "strings"
-    "testing"
+	"context"
+	"strings"
+	"testing"
+
+	testutils "github.com/fivetran/go-fivetran/test_utils"
 )
 
 func TestNewWebhookDeleteE2E(t *testing.T) {
-    webhookId := CreateWebhookAccount(t)
+	webhookId := testutils.CreateWebhookAccount(t)
 
-    deleted, err := Client.NewWebhookDelete().WebhookId(webhookId).Do(context.Background())
+	deleted, err := testutils.Client.NewWebhookDelete().WebhookId(webhookId).Do(context.Background())
 
-    if err != nil {
-        t.Logf("%+v\n", deleted)
-        t.Error(err)
-    }
+	if err != nil {
+		t.Logf("%+v\n", deleted)
+		t.Error(err)
+	}
 
-    AssertEqual(t, deleted.Code, "Success")
-    AssertNotEmpty(t, deleted.Message)
-    AssertEqual(t, strings.Contains(deleted.Message, webhookId), true)
+	testutils.AssertEqual(t, deleted.Code, "Success")
+	testutils.AssertNotEmpty(t, deleted.Message)
+	testutils.AssertEqual(t, strings.Contains(deleted.Message, webhookId), true)
 }

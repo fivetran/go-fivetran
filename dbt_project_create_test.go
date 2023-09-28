@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/fivetran/go-fivetran"
+	testutils "github.com/fivetran/go-fivetran/test_utils"
 )
 
 func TestNewDbtProjectCreateE2E(t *testing.T) {
@@ -18,10 +19,10 @@ func TestNewDbtProjectCreateE2E(t *testing.T) {
 	variable := "DBT_VARIABLE=VALUE"
 	projectType := "GIT"
 
-	CreateDbtDestination(t)
+	testutils.CreateDbtDestination(t)
 
-	created, err := Client.NewDbtProjectCreate().
-		GroupID(PredefinedGroupId).
+	created, err := testutils.Client.NewDbtProjectCreate().
+		GroupID(testutils.PredefinedGroupId).
 		DbtVersion(dbtVersion).
 		ProjectConfig(fivetran.NewDbtProjectConfig().
 			GitRemoteUrl(gitRemoteUrl).
@@ -39,27 +40,27 @@ func TestNewDbtProjectCreateE2E(t *testing.T) {
 		t.Error(err)
 	}
 
-	AssertEqual(t, created.Code, "Success")
-	AssertNotEmpty(t, created.Message)
-	AssertNotEmpty(t, created.Data.ID)
+	testutils.AssertEqual(t, created.Code, "Success")
+	testutils.AssertNotEmpty(t, created.Message)
+	testutils.AssertNotEmpty(t, created.Data.ID)
 
-	AssertEqual(t, created.Data.GroupID, PredefinedGroupId)
-	AssertNotEmpty(t, created.Data.CreatedAt)
+	testutils.AssertEqual(t, created.Data.GroupID, testutils.PredefinedGroupId)
+	testutils.AssertNotEmpty(t, created.Data.CreatedAt)
 
-	AssertEqual(t, created.Data.TargetName, targetName)
-	AssertEqual(t, created.Data.DefaultSchema, defaultSchema)
-	AssertNotEmpty(t, created.Data.PublicKey)
-	AssertEqual(t, created.Data.CreatedById, PredefinedUserId)
+	testutils.AssertEqual(t, created.Data.TargetName, targetName)
+	testutils.AssertEqual(t, created.Data.DefaultSchema, defaultSchema)
+	testutils.AssertNotEmpty(t, created.Data.PublicKey)
+	testutils.AssertEqual(t, created.Data.CreatedById, testutils.PredefinedUserId)
 
-	AssertEqual(t, created.Data.ProjectConfig.GitRemoteUrl, gitRemoteUrl)
-	AssertEqual(t, created.Data.ProjectConfig.GitBranch, gitBranch)
-	AssertEqual(t, created.Data.ProjectConfig.FolderPath, folderPath)
+	testutils.AssertEqual(t, created.Data.ProjectConfig.GitRemoteUrl, gitRemoteUrl)
+	testutils.AssertEqual(t, created.Data.ProjectConfig.GitBranch, gitBranch)
+	testutils.AssertEqual(t, created.Data.ProjectConfig.FolderPath, folderPath)
 
-	AssertEqual(t, len(created.Data.EnvironmentVars), 1)
-	AssertEqual(t, created.Data.EnvironmentVars[0], variable)
+	testutils.AssertEqual(t, len(created.Data.EnvironmentVars), 1)
+	testutils.AssertEqual(t, created.Data.EnvironmentVars[0], variable)
 
 	t.Cleanup(func() {
-		cleanupDbtProjects()
-		deleteDbtDestination()
+		testutils.CleanupDbtProjects()
+		testutils.DeleteDbtDestination()
 	})
 }

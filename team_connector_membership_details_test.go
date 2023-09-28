@@ -1,32 +1,34 @@
 package fivetran_test
 
 import (
-    "context"
-    "testing"
+	"context"
+	"testing"
+
+	testutils "github.com/fivetran/go-fivetran/test_utils"
 )
 
 func TestTeamConnectorMembershipDetailsE2E(t *testing.T) {
-    teamId := CreateTeam(t)
-    connectorId := CreateConnector(t)
-    CreateTeamConnector(t, teamId, connectorId)
+	teamId := testutils.CreateTeam(t)
+	connectorId := testutils.CreateConnector(t)
+	testutils.CreateTeamConnector(t, teamId, connectorId)
 
-    result, err := Client.NewTeamConnectorMembershipDetails().
-        TeamId(teamId).
-        ConnectorId(connectorId).
-        Do(context.Background())
-    if err != nil {
-        t.Logf("%+v\n", result)
-        t.Error(err)
-    }
+	result, err := testutils.Client.NewTeamConnectorMembershipDetails().
+		TeamId(teamId).
+		ConnectorId(connectorId).
+		Do(context.Background())
+	if err != nil {
+		t.Logf("%+v\n", result)
+		t.Error(err)
+	}
 
-    AssertEqual(t, result.Code, "Success")
-    AssertEqual(t, result.Data.ConnectorId, connectorId)
-    AssertEqual(t, result.Data.Role, "Connector Administrator")
-    AssertNotEmpty(t, result.Data.CreatedAt)
+	testutils.AssertEqual(t, result.Code, "Success")
+	testutils.AssertEqual(t, result.Data.ConnectorId, connectorId)
+	testutils.AssertEqual(t, result.Data.Role, "Connector Administrator")
+	testutils.AssertNotEmpty(t, result.Data.CreatedAt)
 
-    t.Cleanup(func() { 
-        DeleteTeamConnector(t, teamId, connectorId)
-        DeleteConnector(t, connectorId)
-        DeleteTeam(t, teamId)
-    })
+	t.Cleanup(func() {
+		testutils.DeleteTeamConnector(t, teamId, connectorId)
+		testutils.DeleteConnector(t, connectorId)
+		testutils.DeleteTeam(t, teamId)
+	})
 }

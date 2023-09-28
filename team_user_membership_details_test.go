@@ -1,30 +1,32 @@
 package fivetran_test
 
 import (
-    "context"
-    "testing"
+	"context"
+	"testing"
+
+	testutils "github.com/fivetran/go-fivetran/test_utils"
 )
 
 func TestTeamUserMembershipDetailsE2E(t *testing.T) {
-    teamId := CreateTeam(t)
-    CreateTeamUser(t, teamId, PredefinedUserId)
+	teamId := testutils.CreateTeam(t)
+	testutils.CreateTeamUser(t, teamId, testutils.PredefinedUserId)
 
-    result, err := Client.NewTeamUserMembershipDetails().
-        TeamId(teamId).
-        UserId(PredefinedUserId).
-        Do(context.Background())
+	result, err := testutils.Client.NewTeamUserMembershipDetails().
+		TeamId(teamId).
+		UserId(testutils.PredefinedUserId).
+		Do(context.Background())
 
-    if err != nil {
-        t.Logf("%+v\n", result)
-        t.Error(err)
-    }
+	if err != nil {
+		t.Logf("%+v\n", result)
+		t.Error(err)
+	}
 
-    AssertEqual(t, result.Code, "Success")
-    AssertEqual(t, result.Data.UserId, PredefinedUserId)
-    AssertEqual(t, result.Data.Role, "Team Member")
+	testutils.AssertEqual(t, result.Code, "Success")
+	testutils.AssertEqual(t, result.Data.UserId, testutils.PredefinedUserId)
+	testutils.AssertEqual(t, result.Data.Role, "Team Member")
 
-    t.Cleanup(func() { 
-        DeleteTeamUser(t, teamId, PredefinedUserId)
-        DeleteTeam(t, teamId)
-    })
+	t.Cleanup(func() {
+		testutils.DeleteTeamUser(t, teamId, testutils.PredefinedUserId)
+		testutils.DeleteTeam(t, teamId)
+	})
 }

@@ -4,11 +4,13 @@ import (
 	"context"
 	"strings"
 	"testing"
+
+	testutils "github.com/fivetran/go-fivetran/test_utils"
 )
 
 func TestNewConnectorSyncE2E(t *testing.T) {
-	connectorId := CreateTempConnector(t)
-	sync, err := Client.NewConnectorSync().
+	connectorId := testutils.CreateTempConnector(t)
+	sync, err := testutils.Client.NewConnectorSync().
 		ConnectorID(connectorId).
 		Do(context.Background())
 
@@ -17,7 +19,7 @@ func TestNewConnectorSyncE2E(t *testing.T) {
 		t.Error(err)
 	}
 
-	AssertEqual(t, sync.Code, "Success")
-	AssertNotEmpty(t, sync.Message)
-	AssertEqual(t, strings.Contains(sync.Message, connectorId), true)
+	testutils.AssertEqual(t, sync.Code, "Success")
+	testutils.AssertNotEmpty(t, sync.Message)
+	testutils.AssertEqual(t, strings.Contains(sync.Message, connectorId), true)
 }

@@ -1,34 +1,36 @@
 package fivetran_test
 
 import (
-    "context"
-    "testing"
+	"context"
+	"testing"
+
+	testutils "github.com/fivetran/go-fivetran/test_utils"
 )
 
 func TestNewTeamConnectorMembershipCreateE2E(t *testing.T) {
-    teamId := CreateTeam(t)
-    connectorId := CreateConnector(t)
+	teamId := testutils.CreateTeam(t)
+	connectorId := testutils.CreateConnector(t)
 
-    created, err := Client.NewTeamConnectorMembershipCreate().
-        TeamId(teamId).
-        ConnectorId(connectorId).
-        Role("Connector Administrator").
-        Do(context.Background())
+	created, err := testutils.Client.NewTeamConnectorMembershipCreate().
+		TeamId(teamId).
+		ConnectorId(connectorId).
+		Role("Connector Administrator").
+		Do(context.Background())
 
-    if err != nil {
-        t.Logf("%+v\n", created)
-        t.Error(err)
-    }
+	if err != nil {
+		t.Logf("%+v\n", created)
+		t.Error(err)
+	}
 
-    AssertEqual(t, created.Code, "Success")
-    AssertEqual(t, created.Message, "Connector membership has been created")    
-    AssertEqual(t, created.Data.ConnectorId, connectorId)
-    AssertEqual(t, created.Data.Role, "Connector Administrator")
-    AssertNotEmpty(t, created.Data.CreatedAt)
-    
-    t.Cleanup(func() { 
-        DeleteTeamConnector(t, teamId, connectorId)
-        DeleteConnector(t, connectorId)
-        DeleteTeam(t, teamId)
-    })
+	testutils.AssertEqual(t, created.Code, "Success")
+	testutils.AssertEqual(t, created.Message, "Connector membership has been created")
+	testutils.AssertEqual(t, created.Data.ConnectorId, connectorId)
+	testutils.AssertEqual(t, created.Data.Role, "Connector Administrator")
+	testutils.AssertNotEmpty(t, created.Data.CreatedAt)
+
+	t.Cleanup(func() {
+		testutils.DeleteTeamConnector(t, teamId, connectorId)
+		testutils.DeleteConnector(t, connectorId)
+		testutils.DeleteTeam(t, teamId)
+	})
 }

@@ -5,12 +5,13 @@ import (
 	"testing"
 
 	"github.com/fivetran/go-fivetran"
+	testutils "github.com/fivetran/go-fivetran/test_utils"
 )
 
 func TestNewConnectorModifyE2E(t *testing.T) {
-	connectorId := CreateTempConnector(t)
+	connectorId := testutils.CreateTempConnector(t)
 
-	updated, err := Client.NewConnectorModify().ConnectorID(connectorId).
+	updated, err := testutils.Client.NewConnectorModify().ConnectorID(connectorId).
 		Paused(true).
 		PauseAfterTrial(true).
 		//IsHistoricalSync(false).
@@ -27,33 +28,33 @@ func TestNewConnectorModifyE2E(t *testing.T) {
 		t.Error(err)
 	}
 
-	AssertEqual(t, updated.Code, "Success")
-	AssertEqual(t, updated.Data.ID, connectorId)
-	AssertEqual(t, updated.Data.GroupID, PredefinedGroupId)
-	AssertEqual(t, updated.Data.Service, "itunes_connect")
-	AssertEqual(t, *updated.Data.ServiceVersion, 1)
-	AssertEqual(t, updated.Data.Schema, "itunes_e2e_connect")
-	AssertEqual(t, updated.Data.ConnectedBy, PredefinedUserId)
-	AssertEqual(t, updated.Data.CreatedAt.IsZero(), false)
-	AssertEqual(t, updated.Data.SucceededAt.IsZero(), true)
-	AssertEqual(t, updated.Data.FailedAt.IsZero(), true)
-	AssertEqual(t, *updated.Data.Paused, true)
-	AssertEqual(t, *updated.Data.PauseAfterTrial, true)
-	AssertEqual(t, *updated.Data.SyncFrequency, 1440)
-	AssertEqual(t, updated.Data.ScheduleType, "auto")
+	testutils.AssertEqual(t, updated.Code, "Success")
+	testutils.AssertEqual(t, updated.Data.ID, connectorId)
+	testutils.AssertEqual(t, updated.Data.GroupID, testutils.PredefinedGroupId)
+	testutils.AssertEqual(t, updated.Data.Service, "itunes_connect")
+	testutils.AssertEqual(t, *updated.Data.ServiceVersion, 1)
+	testutils.AssertEqual(t, updated.Data.Schema, "itunes_e2e_connect")
+	testutils.AssertEqual(t, updated.Data.ConnectedBy, testutils.PredefinedUserId)
+	testutils.AssertEqual(t, updated.Data.CreatedAt.IsZero(), false)
+	testutils.AssertEqual(t, updated.Data.SucceededAt.IsZero(), true)
+	testutils.AssertEqual(t, updated.Data.FailedAt.IsZero(), true)
+	testutils.AssertEqual(t, *updated.Data.Paused, true)
+	testutils.AssertEqual(t, *updated.Data.PauseAfterTrial, true)
+	testutils.AssertEqual(t, *updated.Data.SyncFrequency, 1440)
+	testutils.AssertEqual(t, updated.Data.ScheduleType, "auto")
 
-	AssertNotEmpty(t, updated.Data.Status.SetupState)
-	AssertEqual(t, updated.Data.Status.SyncState, "paused")
-	AssertEqual(t, updated.Data.Status.UpdateState, "on_schedule")
+	testutils.AssertNotEmpty(t, updated.Data.Status.SetupState)
+	testutils.AssertEqual(t, updated.Data.Status.SyncState, "paused")
+	testutils.AssertEqual(t, updated.Data.Status.UpdateState, "on_schedule")
 	//todo: check after fix
-	//AssertEqual(t, *updated.Data.Status.IsHistoricalSync, false)
-	AssertHasLength(t, updated.Data.Status.Tasks, 0)
-	AssertHasLength(t, updated.Data.Status.Warnings, 0)
+	//testutils.AssertEqual(t, *updated.Data.Status.IsHistoricalSync, false)
+	testutils.AssertHasLength(t, updated.Data.Status.Tasks, 0)
+	testutils.AssertHasLength(t, updated.Data.Status.Warnings, 0)
 
-	AssertEqual(t, updated.Data.Config.Password, "******")
-	AssertEqual(t, updated.Data.Config.TimeframeMonths, "SIX")
-	AssertEqual(t, updated.Data.Config.AppSyncMode, "AllApps")
-	AssertEqual(t, updated.Data.Config.SalesAccountSyncMode, "AllSalesAccounts")
-	AssertEqual(t, updated.Data.Config.FinanceAccountSyncMode, "AllFinanceAccounts")
-	AssertEqual(t, updated.Data.Config.Username, "fivetran_updated")
+	testutils.AssertEqual(t, updated.Data.Config.Password, "******")
+	testutils.AssertEqual(t, updated.Data.Config.TimeframeMonths, "SIX")
+	testutils.AssertEqual(t, updated.Data.Config.AppSyncMode, "AllApps")
+	testutils.AssertEqual(t, updated.Data.Config.SalesAccountSyncMode, "AllSalesAccounts")
+	testutils.AssertEqual(t, updated.Data.Config.FinanceAccountSyncMode, "AllFinanceAccounts")
+	testutils.AssertEqual(t, updated.Data.Config.Username, "fivetran_updated")
 }

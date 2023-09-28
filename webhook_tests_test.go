@@ -3,14 +3,16 @@ package fivetran_test
 import (
 	"context"
 	"testing"
+
+	testutils "github.com/fivetran/go-fivetran/test_utils"
 )
 
 func TestWebhookTestE2E(t *testing.T) {
-	webhookId := CreateWebhookAccount(t)
-	
-	response, err := Client.NewWebhookTest().
-			WebhookId(webhookId).
-			Event("sync_start").
+	webhookId := testutils.CreateWebhookAccount(t)
+
+	response, err := testutils.Client.NewWebhookTest().
+		WebhookId(webhookId).
+		Event("sync_start").
 		Do(context.Background())
 
 	if err != nil {
@@ -18,8 +20,8 @@ func TestWebhookTestE2E(t *testing.T) {
 		t.Error(err)
 	}
 
-	AssertEqual(t, response.Code, "Success")
-	AssertEqual(t, response.Data.Succeed, false)
+	testutils.AssertEqual(t, response.Code, "Success")
+	testutils.AssertEqual(t, response.Data.Succeed, false)
 
-	t.Cleanup(func() { DeleteWebhook(t, webhookId) })
+	t.Cleanup(func() { testutils.DeleteWebhook(t, webhookId) })
 }

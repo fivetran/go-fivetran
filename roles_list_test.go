@@ -3,17 +3,19 @@ package fivetran_test
 import (
 	"context"
 	"testing"
+
+	testutils "github.com/fivetran/go-fivetran/test_utils"
 )
 
 func TestNewRolesListE2E(t *testing.T) {
-	result, err := Client.NewRolesList().Do(context.Background())
+	result, err := testutils.Client.NewRolesList().Do(context.Background())
 	if err != nil {
 		t.Logf("%+v\n", result)
 		t.Error(err)
 	}
 
-	AssertEqual(t, result.Code, "Success")
-	AssertNotEmpty(t, result.Data.Items[0].Name)
-	AssertNotEmpty(t, result.Data.Items[0].Description)
-	AssertNotEmpty(t, result.Data.Items[0].Scope)
+	testutils.AssertEqual(t, result.Code, "Success")
+	testutils.AssertNotEmpty(t, result.Data.Items[0].Name)
+	testutils.AssertNotEmpty(t, result.Data.Items[0].Description)
+	testutils.AssertNotEmpty(t, result.Data.Items[0].Scope)
 }
