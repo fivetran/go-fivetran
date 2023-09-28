@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/fivetran/go-fivetran"
+	"github.com/fivetran/go-fivetran/common"
 	"github.com/fivetran/go-fivetran/tests/mock"
 )
 
@@ -47,7 +47,7 @@ func prepareGroupDeleteResponse() string {
 	}`)
 }
 
-func assertGroupDeleteResponse(t *testing.T, response fivetran.GroupDeleteResponse) {
+func assertGroupDeleteResponse(t *testing.T, response common.CommonResponse) {
 	assertEqual(t, response.Code, "Success")
 	assertEqual(t, response.Message, "Group has been deleted")
 }

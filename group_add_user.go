@@ -4,6 +4,8 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+
+	"github.com/fivetran/go-fivetran/common"
 )
 
 // GroupAddUserService implements the Group Management, Add a User to a Group API.
@@ -18,11 +20,6 @@ type GroupAddUserService struct {
 type groupAddUserRequest struct {
 	Email *string `json:"email,omitempty"`
 	Role  *string `json:"role,omitempty"`
-}
-
-type GroupAddUserResponse struct {
-	Code    string `json:"code"`
-	Message string `json:"message"`
 }
 
 func (c *Client) NewGroupAddUser() *GroupAddUserService {
@@ -51,8 +48,8 @@ func (s *GroupAddUserService) Role(value string) *GroupAddUserService {
 	return s
 }
 
-func (s *GroupAddUserService) Do(ctx context.Context) (GroupAddUserResponse, error) {
-	var response GroupAddUserResponse
+func (s *GroupAddUserService) Do(ctx context.Context) (common.CommonResponse, error) {
+	var response common.CommonResponse
 
 	if s.groupID == nil {
 		return response, fmt.Errorf("missing required GroupID")

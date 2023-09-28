@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/fivetran/go-fivetran"
+	"github.com/fivetran/go-fivetran/common"
 	"github.com/fivetran/go-fivetran/tests/mock"
 )
 
@@ -56,7 +56,7 @@ func assertGroupAddUserRequest(t *testing.T,
 	assertKey(t, "role", body, expectedRole)
 }
 
-func assertGroupAddUserResponse(t *testing.T, response fivetran.GroupAddUserResponse) {
+func assertGroupAddUserResponse(t *testing.T, response common.CommonResponse) {
 	assertEqual(t, response.Code, "Success")
 	assertEqual(t, response.Message, "User has been added to the group")
 }

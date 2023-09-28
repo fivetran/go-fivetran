@@ -4,7 +4,8 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"time"
+
+	"github.com/fivetran/go-fivetran/groups"
 )
 
 // GroupModifyService implements the Group Management, Modify a Group API.
@@ -17,16 +18,6 @@ type GroupModifyService struct {
 
 type groupModifyRequest struct {
 	Name *string `json:"name,omitempty"`
-}
-
-type GroupModifyResponse struct {
-	Code    string `json:"code"`
-	Message string `json:"message"`
-	Data    struct {
-		ID        string    `json:"id"`
-		Name      string    `json:"name"`
-		CreatedAt time.Time `json:"created_at"`
-	} `json:"data"`
 }
 
 func (c *Client) NewGroupModify() *GroupModifyService {
@@ -49,8 +40,8 @@ func (s *GroupModifyService) Name(value string) *GroupModifyService {
 	return s
 }
 
-func (s *GroupModifyService) Do(ctx context.Context) (GroupModifyResponse, error) {
-	var response GroupModifyResponse
+func (s *GroupModifyService) Do(ctx context.Context) (groups.GroupDetailsResponse, error) {
+	var response groups.GroupDetailsResponse
 
 	if s.groupID == nil {
 		return response, fmt.Errorf("missing required GroupID")

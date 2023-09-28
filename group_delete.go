@@ -4,6 +4,8 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+
+	"github.com/fivetran/go-fivetran/common"
 )
 
 // GroupDeleteService implements the Group Management, Delete a group API.
@@ -11,11 +13,6 @@ import (
 type GroupDeleteService struct {
 	c       *Client
 	groupID *string
-}
-
-type GroupDeleteResponse struct {
-	Code    string `json:"code"`
-	Message string `json:"message"`
 }
 
 func (c *Client) NewGroupDelete() *GroupDeleteService {
@@ -27,8 +24,8 @@ func (s *GroupDeleteService) GroupID(value string) *GroupDeleteService {
 	return s
 }
 
-func (s *GroupDeleteService) Do(ctx context.Context) (GroupDeleteResponse, error) {
-	var response GroupDeleteResponse
+func (s *GroupDeleteService) Do(ctx context.Context) (common.CommonResponse, error) {
+	var response common.CommonResponse
 
 	if s.groupID == nil {
 		return response, fmt.Errorf("missing required GroupID")

@@ -7,6 +7,7 @@ import (
 	"testing"
 
 	"github.com/fivetran/go-fivetran"
+	"github.com/fivetran/go-fivetran/common"
 	"github.com/fivetran/go-fivetran/tests/mock"
 )
 
@@ -127,7 +128,7 @@ func assertGroupListConnectorsResponse(t *testing.T, response fivetran.GroupList
 	assertEqual(t, *item.Status.IsHistoricalSync, LIST_CONNECTORS_IS_HISTORICAL_SYNC)
 	assertEqual(t, item.Status.SetupState, LIST_CONNECTORS_SETUP_STATE)
 	assertEqual(t, item.Status.SyncState, LIST_CONNECTORS_SYNC_STATE)
-	assertEqual(t, item.Status.Tasks, []fivetran.ConnectorTasks{})
+	assertEqual(t, item.Status.Tasks, []common.CommonResponse{})
 	assertEqual(t, item.Status.UpdateState, LIST_CONNECTORS_UPDATE_STATE)
-	assertEqual(t, item.Status.Warnings, []fivetran.ConnectorWarning{})
+	assertEqual(t, item.Status.Warnings, []common.CommonResponse{})
 }

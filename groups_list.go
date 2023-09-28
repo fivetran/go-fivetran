@@ -4,7 +4,9 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"time"
+
+	"github.com/fivetran/go-fivetran/common"
+	"github.com/fivetran/go-fivetran/groups"
 )
 
 // GroupsListService implements the Group Management, List All Groups API.
@@ -16,15 +18,10 @@ type GroupsListService struct {
 }
 
 type GroupsListResponse struct {
-	Code    string `json:"code"`
-	Message string `json:"message"`
-	Data    struct {
-		Items []struct {
-			ID        string    `json:"id"`
-			Name      string    `json:"name"`
-			CreatedAt time.Time `json:"created_at"`
-		} `json:"items"`
-		NextCursor string `json:"next_cursor"`
+	common.CommonResponse
+	Data struct {
+		Items      []groups.GroupItem `json:"items"`
+		NextCursor string             `json:"next_cursor"`
 	} `json:"data"`
 }
 

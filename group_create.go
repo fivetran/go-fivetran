@@ -4,7 +4,8 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"time"
+
+	"github.com/fivetran/go-fivetran/groups"
 )
 
 // GroupCreateService implements the Group Management, Create a Group API.
@@ -16,16 +17,6 @@ type GroupCreateService struct {
 
 type groupCreateRequest struct {
 	Name *string `json:"name,omitempty"`
-}
-
-type GroupCreateResponse struct {
-	Code    string `json:"code"`
-	Message string `json:"message"`
-	Data    struct {
-		ID        string    `json:"id"`
-		Name      string    `json:"name"`
-		CreatedAt time.Time `json:"created_at"`
-	} `json:"data"`
 }
 
 func (c *Client) NewGroupCreate() *GroupCreateService {
@@ -43,8 +34,8 @@ func (s *GroupCreateService) Name(value string) *GroupCreateService {
 	return s
 }
 
-func (s *GroupCreateService) Do(ctx context.Context) (GroupCreateResponse, error) {
-	var response GroupCreateResponse
+func (s *GroupCreateService) Do(ctx context.Context) (groups.GroupDetailsResponse, error) {
+	var response groups.GroupDetailsResponse
 	url := fmt.Sprintf("%v/groups", s.c.baseURL)
 	expectedStatus := 201
 

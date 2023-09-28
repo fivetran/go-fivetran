@@ -5,6 +5,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"time"
+
+	"github.com/fivetran/go-fivetran/common"
 )
 
 // GroupListConnectorsService implements the Group Management, List All Connectors within a Group API.
@@ -17,29 +19,18 @@ type GroupListConnectorsService struct {
 	schema  *string
 }
 
-type ConnectorTasks struct {
-	Code    string `json:"code"`
-	Message string `json:"message"`
-}
-
-type ConnectorWarning struct {
-	Code    string `json:"code"`
-	Message string `json:"message"`
-}
-
 type ConnectorsStatus struct {
-	SetupState       string             `json:"setup_state"`
-	SyncState        string             `json:"sync_state"`
-	UpdateState      string             `json:"update_state"`
-	IsHistoricalSync *bool              `json:"is_historical_sync"`
-	Tasks            []ConnectorTasks   `json:"tasks"`
-	Warnings         []ConnectorWarning `json:"warnings"`
+	SetupState       string                  `json:"setup_state"`
+	SyncState        string                  `json:"sync_state"`
+	UpdateState      string                  `json:"update_state"`
+	IsHistoricalSync *bool                   `json:"is_historical_sync"`
+	Tasks            []common.CommonResponse `json:"tasks"`
+	Warnings         []common.CommonResponse `json:"warnings"`
 }
 
 type GroupListConnectorsResponse struct {
-	Code    string `json:"code"`
-	Message string `json:"message"`
-	Data    struct {
+	common.CommonResponse
+	Data struct {
 		Items []struct {
 			ID             string           `json:"id"`
 			GroupID        string           `json:"group_id"`

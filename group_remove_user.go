@@ -4,6 +4,8 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+
+	"github.com/fivetran/go-fivetran/common"
 )
 
 // GroupRemoveUserService implements the Group Management, Remove a User from a Group API.
@@ -12,11 +14,6 @@ type GroupRemoveUserService struct {
 	c       *Client
 	groupID *string
 	userID  *string
-}
-
-type GroupRemoveUserResponse struct {
-	Code    string `json:"code"`
-	Message string `json:"message"`
 }
 
 func (c *Client) NewGroupRemoveUser() *GroupRemoveUserService {
@@ -33,8 +30,8 @@ func (s *GroupRemoveUserService) UserID(value string) *GroupRemoveUserService {
 	return s
 }
 
-func (s *GroupRemoveUserService) Do(ctx context.Context) (GroupRemoveUserResponse, error) {
-	var response GroupRemoveUserResponse
+func (s *GroupRemoveUserService) Do(ctx context.Context) (common.CommonResponse, error) {
+	var response common.CommonResponse
 
 	if s.groupID == nil {
 		return response, fmt.Errorf("missing required GroupID")
