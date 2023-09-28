@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/fivetran/go-fivetran/connectors"
 	"github.com/fivetran/go-fivetran/utils"
 )
 
@@ -23,8 +24,8 @@ type ConnectorModifyService struct {
 	scheduleType      *string
 	runSetupTests     *bool
 	pauseAfterTrial   *bool
-	config            *ConnectorConfig
-	auth              *ConnectorAuth
+	config            *connectors.ConnectorConfig
+	auth              *connectors.ConnectorAuth
 	configCustom      *map[string]interface{}
 	authCustom        *map[string]interface{}
 }
@@ -43,8 +44,8 @@ type connectorModifyRequestBase struct {
 
 type connectorModifyRequest struct {
 	connectorModifyRequestBase
-	Config *connectorConfigRequest `json:"config,omitempty"`
-	Auth   *connectorAuthRequest   `json:"auth,omitempty"`
+	Config any `json:"config,omitempty"`
+	Auth   any `json:"auth,omitempty"`
 }
 
 type connectorCustomModifyRequest struct {
@@ -93,7 +94,7 @@ type ConnectorModifyResponse struct {
 	Message string `json:"message"`
 	Data    struct {
 		ConnectorModifyResponseDataBase
-		Config ConnectorConfigResponse `json:"config"`
+		Config connectors.ConnectorConfigResponse `json:"config"`
 	} `json:"data"`
 }
 
@@ -111,8 +112,8 @@ type ConnectorCustomMergedModifyResponse struct {
 	Message string `json:"message"`
 	Data    struct {
 		ConnectorModifyResponseDataBase
-		CustomConfig map[string]interface{}  `json:"config"`
-		Config       ConnectorConfigResponse // no mapping here
+		CustomConfig map[string]interface{}             `json:"config"`
+		Config       connectors.ConnectorConfigResponse // no mapping here
 	} `json:"data"`
 }
 
@@ -135,14 +136,14 @@ func (s *ConnectorModifyService) requestBase() connectorModifyRequestBase {
 }
 
 func (s *ConnectorModifyService) request() *connectorModifyRequest {
-	var config *connectorConfigRequest
+	var config interface{}
 	if s.config != nil {
-		config = s.config.request()
+		config = s.config.Request()
 	}
 
-	var auth *connectorAuthRequest
+	var auth interface{}
 	if s.auth != nil {
-		auth = s.auth.request()
+		auth = s.auth.Request()
 	}
 
 	return &connectorModifyRequest{
@@ -165,7 +166,7 @@ func (s *ConnectorModifyService) requestCustomMerged() (*connectorCustomModifyRe
 
 	if s.config != nil {
 		var err error
-		currentConfig, err = s.config.merge(currentConfig)
+		currentConfig, err = s.config.Merge(currentConfig)
 		if err != nil {
 			return nil, err
 		}
@@ -174,7 +175,7 @@ func (s *ConnectorModifyService) requestCustomMerged() (*connectorCustomModifyRe
 	currentAuth := s.authCustom
 	if s.auth != nil {
 		var err error
-		currentAuth, err = s.auth.merge(currentAuth)
+		currentAuth, err = s.auth.Merge(currentAuth)
 		if err != nil {
 			return nil, err
 		}
@@ -207,12 +208,12 @@ func (s *ConnectorModifyService) DailySyncTime(value string) *ConnectorModifySer
 	return s
 }
 
-func (s *ConnectorModifyService) Config(value *ConnectorConfig) *ConnectorModifyService {
+func (s *ConnectorModifyService) Config(value *connectors.ConnectorConfig) *ConnectorModifyService {
 	s.config = value
 	return s
 }
 
-func (s *ConnectorModifyService) Auth(value *ConnectorAuth) *ConnectorModifyService {
+func (s *ConnectorModifyService) Auth(value *connectors.ConnectorAuth) *ConnectorModifyService {
 	s.auth = value
 	return s
 }

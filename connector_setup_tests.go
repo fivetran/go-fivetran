@@ -5,6 +5,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"time"
+
+	"github.com/fivetran/go-fivetran/connectors"
 )
 
 // ConnectorSetupTestsService implements the Connector Management, Run connector setup tests API.
@@ -55,7 +57,7 @@ type ConnectorSetupTestsResponse struct {
 			Status  string `json:"status"`
 			Message string `json:"message"`
 		} `json:"setup_tests"`
-		Config ConnectorConfigResponse `json:"config"`
+		Config connectors.ConnectorConfigResponse `json:"config"`
 	} `json:"data"`
 }
 

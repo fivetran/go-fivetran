@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/fivetran/go-fivetran"
+	"github.com/fivetran/go-fivetran/connectors"
 	"github.com/fivetran/go-fivetran/tests/mock"
 )
 
@@ -211,15 +212,15 @@ func prepareConnectorCustomMergedCreateResponse() string {
 	}`
 }
 
-func prepareConnectorConfig() *fivetran.ConnectorConfig {
+func prepareConnectorConfig() *connectors.ConnectorConfig {
 	config := fivetran.NewConnectorConfig()
-	secretsList := make([]*fivetran.FunctionSecret, 0)
+	secretsList := make([]*connectors.FunctionSecret, 0)
 	secretsList = append(secretsList, fivetran.NewFunctionSecret().Key("key").Value("value"))
 	config.SecretsList(secretsList)
 	return config
 }
 
-func prepareConnectorAuth() *fivetran.ConnectorAuth {
+func prepareConnectorAuth() *connectors.ConnectorAuth {
 	auth := fivetran.NewConnectorAuth()
 
 	clientAccess := fivetran.NewConnectorAuthClientAccess().ClientID("client_id").ClientSecret("client_secret")

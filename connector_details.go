@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/fivetran/go-fivetran/connectors"
 	"github.com/fivetran/go-fivetran/utils"
 )
 
@@ -52,7 +53,7 @@ type ConnectorDetailsResponse struct {
 	Message string `json:"message"`
 	Data    struct {
 		ConnectorDetailsdataBase
-		Config ConnectorConfigResponse `json:"config"`
+		Config connectors.ConnectorConfigResponse `json:"config"`
 	} `json:"data"`
 }
 
@@ -70,8 +71,8 @@ type ConnectorCustomMergedDetailsResponse struct {
 	Message string `json:"message"`
 	Data    struct {
 		ConnectorDetailsdataBase
-		CustomConfig map[string]interface{}  `json:"config"`
-		Config       ConnectorConfigResponse // no mapping here
+		CustomConfig map[string]interface{}             `json:"config"`
+		Config       connectors.ConnectorConfigResponse // no mapping here
 	} `json:"data"`
 }
 

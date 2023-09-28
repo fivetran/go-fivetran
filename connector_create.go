@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/fivetran/go-fivetran/connectors"
 	"github.com/fivetran/go-fivetran/utils"
 )
 
@@ -23,8 +24,8 @@ type ConnectorCreateService struct {
 	syncFrequency     *int
 	dailySyncTime     *string
 	pauseAfterTrial   *bool
-	config            *ConnectorConfig
-	auth              *ConnectorAuth
+	config            *connectors.ConnectorConfig
+	auth              *connectors.ConnectorAuth
 	configCustom      *map[string]interface{}
 	authCustom        *map[string]interface{}
 }
@@ -43,8 +44,8 @@ type connectorCreateRequestBase struct {
 
 type connectorCreateRequest struct {
 	connectorCreateRequestBase
-	Config *connectorConfigRequest `json:"config,omitempty"`
-	Auth   *connectorAuthRequest   `json:"auth,omitempty"`
+	Config any `json:"config,omitempty"`
+	Auth   any `json:"auth,omitempty"`
 }
 
 type connectorCustomCreateRequest struct {
@@ -94,7 +95,7 @@ type ConnectorCreateResponse struct {
 	Message string `json:"message"`
 	Data    struct {
 		ConnectorCreateResponseDataBase
-		Config ConnectorConfigResponse `json:"config"`
+		Config connectors.ConnectorConfigResponse `json:"config"`
 	} `json:"data"`
 }
 
@@ -112,8 +113,8 @@ type ConnectorCustomMergedCreateResponse struct {
 	Message string `json:"message"`
 	Data    struct {
 		ConnectorCreateResponseDataBase
-		CustomConfig map[string]interface{}  `json:"config"`
-		Config       ConnectorConfigResponse // no mapping here
+		CustomConfig map[string]interface{}             `json:"config"`
+		Config       connectors.ConnectorConfigResponse // no mapping here
 	} `json:"data"`
 }
 
@@ -136,14 +137,14 @@ func (s *ConnectorCreateService) requestBase() connectorCreateRequestBase {
 }
 
 func (s *ConnectorCreateService) request() *connectorCreateRequest {
-	var config *connectorConfigRequest
+	var config interface{}
 	if s.config != nil {
-		config = s.config.request()
+		config = s.config.Request()
 	}
 
-	var auth *connectorAuthRequest
+	var auth interface{}
 	if s.auth != nil {
-		auth = s.auth.request()
+		auth = s.auth.Request()
 	}
 
 	r := &connectorCreateRequest{
@@ -168,7 +169,7 @@ func (s *ConnectorCreateService) requestCustomMerged() (*connectorCustomCreateRe
 
 	if s.config != nil {
 		var err error
-		currentConfig, err = s.config.merge(currentConfig)
+		currentConfig, err = s.config.Merge(currentConfig)
 		if err != nil {
 			return nil, err
 		}
@@ -177,7 +178,7 @@ func (s *ConnectorCreateService) requestCustomMerged() (*connectorCustomCreateRe
 	currentAuth := s.authCustom
 	if s.auth != nil {
 		var err error
-		currentAuth, err = s.auth.merge(currentAuth)
+		currentAuth, err = s.auth.Merge(currentAuth)
 		if err != nil {
 			return nil, err
 		}
@@ -235,7 +236,7 @@ func (s *ConnectorCreateService) PauseAfterTrial(value bool) *ConnectorCreateSer
 	return s
 }
 
-func (s *ConnectorCreateService) Config(value *ConnectorConfig) *ConnectorCreateService {
+func (s *ConnectorCreateService) Config(value *connectors.ConnectorConfig) *ConnectorCreateService {
 	s.config = value
 	return s
 }
@@ -245,7 +246,7 @@ func (s *ConnectorCreateService) ConfigCustom(value *map[string]interface{}) *Co
 	return s
 }
 
-func (s *ConnectorCreateService) Auth(value *ConnectorAuth) *ConnectorCreateService {
+func (s *ConnectorCreateService) Auth(value *connectors.ConnectorAuth) *ConnectorCreateService {
 	s.auth = value
 	return s
 }
