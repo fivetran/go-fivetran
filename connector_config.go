@@ -1,5 +1,7 @@
 package fivetran
 
+import "github.com/fivetran/go-fivetran/utils"
+
 // ConnectorConfig builds Connector Management, Connector Config.
 // Ref. https://fivetran.com/docs/rest-api/connectors/config
 type ConnectorConfig struct {
@@ -641,7 +643,7 @@ func NewConnectorConfig() *ConnectorConfig {
 }
 
 func (cc *ConnectorConfig) merge(customConfig *map[string]interface{}) (*map[string]interface{}, error) {
-	err := MergeIntoMap(cc.request(), customConfig)
+	err := utils.MergeIntoMap(cc.request(), customConfig)
 	if err != nil {
 		return nil, err
 	}

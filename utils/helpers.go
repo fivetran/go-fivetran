@@ -1,4 +1,4 @@
-package fivetran
+package utils
 
 import "encoding/json"
 

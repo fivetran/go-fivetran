@@ -1,5 +1,7 @@
 package fivetran
 
+import "github.com/fivetran/go-fivetran/utils"
+
 // ConnectorAuth builds Connector Management, Auth.
 // Ref. https://fivetran.com/docs/rest-api/connectors
 type ConnectorAuth struct {
@@ -21,7 +23,7 @@ func NewConnectorAuth() *ConnectorAuth {
 }
 
 func (ca *ConnectorAuth) merge(customAuth *map[string]interface{}) (*map[string]interface{}, error) {
-	err := MergeIntoMap(ca.request(), customAuth)
+	err := utils.MergeIntoMap(ca.request(), customAuth)
 	if err != nil {
 		return nil, err
 	}

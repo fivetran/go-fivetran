@@ -5,6 +5,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"time"
+
+	"github.com/fivetran/go-fivetran/utils"
 )
 
 // ConnectorModifyService implements the Connector Management, Modify a Connector API.
@@ -329,7 +331,7 @@ func (s *ConnectorModifyService) DoCustomMerged(ctx context.Context) (ConnectorC
 	err = s.do(ctx, req, &response)
 
 	if err == nil {
-		err = FetchFromMap(&response.Data.CustomConfig, &response.Data.Config)
+		err = utils.FetchFromMap(&response.Data.CustomConfig, &response.Data.Config)
 	}
 
 	return response, err

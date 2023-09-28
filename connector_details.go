@@ -5,6 +5,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"time"
+
+	"github.com/fivetran/go-fivetran/utils"
 )
 
 // ConnectorDetailsService implements the Connector Management, Retrieve Connector Details API.
@@ -144,7 +146,7 @@ func (s *ConnectorDetailsService) DoCustomMerged(ctx context.Context) (Connector
 	err := s.do(ctx, &response)
 
 	if err == nil {
-		err = FetchFromMap(&response.Data.CustomConfig, &response.Data.Config)
+		err = utils.FetchFromMap(&response.Data.CustomConfig, &response.Data.Config)
 	}
 
 	return response, err
