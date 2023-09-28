@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased](https://github.com/fivetran/go-fivetran/compare/v0.7.11...HEAD)
 
-## [0.7.10](https://github.com/fivetran/go-fivetran/compare/v0.7.10...v0.8.0)
+## [0.7.11](https://github.com/fivetran/go-fivetran/compare/v0.7.10...v0.7.11)
 
 Supported the following Fivetran API endpoints:
 - Team Management API: [List all teams](https://fivetran.com/docs/rest-api/teams#listallteams)
