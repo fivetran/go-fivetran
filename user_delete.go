@@ -4,6 +4,8 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+
+	"github.com/fivetran/go-fivetran/common"
 )
 
 // UserDeleteService implements the User Management, Delete a user API.
@@ -11,11 +13,6 @@ import (
 type UserDeleteService struct {
 	c      *Client
 	userID *string
-}
-
-type UserDeleteResponse struct {
-	Code    string `json:"code"`
-	Message string `json:"message"`
 }
 
 func (c *Client) NewUserDelete() *UserDeleteService {
@@ -27,8 +24,8 @@ func (s *UserDeleteService) UserID(value string) *UserDeleteService {
 	return s
 }
 
-func (s *UserDeleteService) Do(ctx context.Context) (UserDeleteResponse, error) {
-	var response UserDeleteResponse
+func (s *UserDeleteService) Do(ctx context.Context) (common.CommonResponse, error) {
+	var response common.CommonResponse
 
 	if s.userID == nil {
 		return response, fmt.Errorf("missing required UserId")

@@ -4,7 +4,8 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"time"
+
+	"github.com/fivetran/go-fivetran/users"
 )
 
 // UsersListService implements the User Management, List All Users API.
@@ -13,27 +14,6 @@ type UsersListService struct {
 	c      *Client
 	limit  *int
 	cursor *string
-}
-
-type UsersListResponse struct {
-	Code    string `json:"code"`
-	Message string `json:"message"`
-	Data    struct {
-		Items []struct {
-			ID         string    `json:"id"`
-			Email      string    `json:"email"`
-			GivenName  string    `json:"given_name"`
-			FamilyName string    `json:"family_name"`
-			Verified   *bool     `json:"verified"`
-			Invited    *bool     `json:"invited"`
-			Picture    string    `json:"picture"`
-			Phone      string    `json:"phone"`
-			Role       string    `json:"role"`
-			LoggedInAt time.Time `json:"logged_in_at"`
-			CreatedAt  time.Time `json:"created_at"`
-		} `json:"items"`
-		NextCursor string `json:"next_cursor"`
-	} `json:"data"`
 }
 
 func (c *Client) NewUsersList() *UsersListService {
@@ -50,8 +30,8 @@ func (s *UsersListService) Cursor(value string) *UsersListService {
 	return s
 }
 
-func (s *UsersListService) Do(ctx context.Context) (UsersListResponse, error) {
-	var response UsersListResponse
+func (s *UsersListService) Do(ctx context.Context) (users.UsersListResponse, error) {
+	var response users.UsersListResponse
 	url := fmt.Sprintf("%v/users", s.c.baseURL)
 	expectedStatus := 200
 

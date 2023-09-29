@@ -4,7 +4,8 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"time"
+
+	"github.com/fivetran/go-fivetran/users"
 )
 
 // UserInviteService implements the User Management, Invite a User API.
@@ -26,24 +27,6 @@ type userInviteRequest struct {
 	Phone      *string `json:"phone,omitempty"`
 	Picture    *string `json:"picture,omitempty"`
 	Role       *string `json:"role,omitempty"`
-}
-
-type UserInviteResponse struct {
-	Code    string `json:"code"`
-	Message string `json:"message"`
-	Data    struct {
-		ID         string    `json:"id"`
-		Email      string    `json:"email"`
-		GivenName  string    `json:"given_name"`
-		FamilyName string    `json:"family_name"`
-		Verified   *bool     `json:"verified"`
-		Invited    *bool     `json:"invited"`
-		Picture    string    `json:"picture"`
-		Phone      string    `json:"phone"`
-		LoggedInAt time.Time `json:"logged_in_at"`
-		CreatedAt  time.Time `json:"created_at"`
-		Role       string    `json:"role"`
-	} `json:"data"`
 }
 
 func (c *Client) NewUserInvite() *UserInviteService {
@@ -91,8 +74,8 @@ func (s *UserInviteService) Role(value string) *UserInviteService {
 	return s
 }
 
-func (s *UserInviteService) Do(ctx context.Context) (UserInviteResponse, error) {
-	var response UserInviteResponse
+func (s *UserInviteService) Do(ctx context.Context) (users.UserDetailsResponse, error) {
+	var response users.UserDetailsResponse
 	url := fmt.Sprintf("%v/users", s.c.baseURL)
 	expectedStatus := 201
 

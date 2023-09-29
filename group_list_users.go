@@ -4,9 +4,9 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"time"
 
 	"github.com/fivetran/go-fivetran/common"
+	"github.com/fivetran/go-fivetran/users"
 )
 
 // GroupListUsersService implements the Group Management, List All Users within a Group API.
@@ -21,21 +21,8 @@ type GroupListUsersService struct {
 type GroupListUsersResponse struct {
 	common.CommonResponse
 	Data struct {
-		Items []struct {
-			ID         string    `json:"id"`
-			Email      string    `json:"email"`
-			GivenName  string    `json:"given_name"`
-			FamilyName string    `json:"family_name"`
-			Verified   *bool     `json:"verified"`
-			Invited    *bool     `json:"invited"`
-			Picture    string    `json:"picture"`
-			Phone      string    `json:"phone"`
-			Role       string    `json:"role"`
-			LoggedInAt time.Time `json:"logged_in_at"`
-			CreatedAt  time.Time `json:"created_at"`
-			Active     *bool     `json:"active"`
-		} `json:"items"`
-		NextCursor string `json:"next_cursor"`
+		Items      []users.UserDetailsData `json:"items"`
+		NextCursor string                  `json:"next_cursor"`
 	} `json:"data"`
 }
 

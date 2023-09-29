@@ -5,7 +5,8 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"time"
+
+	"github.com/fivetran/go-fivetran/users"
 )
 
 // UserModifyService implements the User Management, Modify a User API.
@@ -28,26 +29,6 @@ type userModifyRequest struct {
 	Phone      *nullableString `json:"phone,omitempty"`
 	Picture    *nullableString `json:"picture,omitempty"`
 	Role       *string         `json:"role,omitempty"`
-}
-
-type UserModifyData struct {
-	ID         string    `json:"id"`
-	Email      string    `json:"email"`
-	GivenName  string    `json:"given_name"`
-	FamilyName string    `json:"family_name"`
-	Verified   *bool     `json:"verified"`
-	Invited    *bool     `json:"invited"`
-	Picture    string    `json:"picture"`
-	Phone      string    `json:"phone"`
-	LoggedInAt time.Time `json:"logged_in_at"`
-	CreatedAt  time.Time `json:"created_at"`
-	Role       string    `json:"role"`
-}
-
-type UserModifyResponse struct {
-	Code    string         `json:"code"`
-	Message string         `json:"message"`
-	Data    UserModifyData `json:"data"`
 }
 
 func (c *Client) NewUserModify() *UserModifyService {
@@ -104,8 +85,8 @@ func (s *UserModifyService) Role(value string) *UserModifyService {
 	return s
 }
 
-func (s *UserModifyService) Do(ctx context.Context) (UserModifyResponse, error) {
-	var response UserModifyResponse
+func (s *UserModifyService) Do(ctx context.Context) (users.UserDetailsResponse, error) {
+	var response users.UserDetailsResponse
 
 	if s.userID == nil {
 		return response, fmt.Errorf("missing required UserID")

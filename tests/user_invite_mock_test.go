@@ -6,8 +6,9 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/fivetran/go-fivetran"
+	"github.com/fivetran/go-fivetran/common"
 	"github.com/fivetran/go-fivetran/tests/mock"
+	"github.com/fivetran/go-fivetran/users"
 )
 
 const (
@@ -82,12 +83,14 @@ func prepareUserModifyResponse() string {
 		EXPECTED_USER_MODIFY_ROLE)
 }
 
-func prepareExpectedUserModifyResponse() fivetran.UserModifyResponse {
+func prepareExpectedUserModifyResponse() users.UserDetailsResponse {
 	var verifyFlag = false
-	return fivetran.UserModifyResponse{
-		Code:    EXPECTED_USER_MODIFY_RESPONSE_CODE,
-		Message: "User has been invited to the account",
-		Data: fivetran.UserModifyData{
+	return users.UserDetailsResponse{
+		CommonResponse: common.CommonResponse{
+			Code:    EXPECTED_USER_MODIFY_RESPONSE_CODE,
+			Message: "User has been invited to the account",
+		},
+		Data: users.UserDetailsData{
 			ID:         EXPECTED_USER_MODIFY_USER_ID,
 			Email:      EXPECTED_USER_MODIFY_EMAIL,
 			GivenName:  EXPECTED_USER_MODIFY_GIVEN_NAME,
@@ -101,7 +104,7 @@ func prepareExpectedUserModifyResponse() fivetran.UserModifyResponse {
 	}
 }
 
-func assertUserModifyResponse(t *testing.T, actual, expected fivetran.UserModifyResponse) {
+func assertUserModifyResponse(t *testing.T, actual, expected users.UserDetailsResponse) {
 	assertEqual(t, actual.Code, expected.Code)
 	assertEqual(t, actual.Message, expected.Message)
 	assertEqual(t, actual.Data.ID, expected.Data.ID)

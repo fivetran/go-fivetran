@@ -4,7 +4,8 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"time"
+
+	"github.com/fivetran/go-fivetran/users"
 )
 
 // UserDetailsService implements the User Management, Retrieve user details API.
@@ -12,26 +13,6 @@ import (
 type UserDetailsService struct {
 	c      *Client
 	userID *string
-}
-
-type UserDetailsData struct {
-	ID         string    `json:"id"`
-	Email      string    `json:"email"`
-	GivenName  string    `json:"given_name"`
-	FamilyName string    `json:"family_name"`
-	Verified   *bool     `json:"verified"`
-	Invited    *bool     `json:"invited"`
-	Picture    string    `json:"picture"`
-	Phone      string    `json:"phone"`
-	LoggedInAt time.Time `json:"logged_in_at"`
-	CreatedAt  time.Time `json:"created_at"`
-	Role       string    `json:"role"`
-}
-
-type UserDetailsResponse struct {
-	Code    string          `json:"code"`
-	Message string          `json:"message"`
-	Data    UserDetailsData `json:"data"`
 }
 
 func (c *Client) NewUserDetails() *UserDetailsService {
@@ -43,8 +24,8 @@ func (s *UserDetailsService) UserID(value string) *UserDetailsService {
 	return s
 }
 
-func (s *UserDetailsService) Do(ctx context.Context) (UserDetailsResponse, error) {
-	var response UserDetailsResponse
+func (s *UserDetailsService) Do(ctx context.Context) (users.UserDetailsResponse, error) {
+	var response users.UserDetailsResponse
 
 	if s.userID == nil {
 		return response, fmt.Errorf("missing required UserId")

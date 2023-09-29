@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/fivetran/go-fivetran"
+	"github.com/fivetran/go-fivetran/common"
 	"github.com/fivetran/go-fivetran/tests/mock"
 )
 
@@ -57,7 +57,7 @@ func prepareUserDeleteResponse() string {
 	return fmt.Sprintf(`{"code": "%s", "message": "User has been deleted"}`, EXPECTED_USER_DELETE_RESPONSE_CODE)
 }
 
-func assertUserDeleteResponse(t *testing.T, actual fivetran.UserDeleteResponse, code string, message string) {
+func assertUserDeleteResponse(t *testing.T, actual common.CommonResponse, code string, message string) {
 	assertEqual(t, actual.Code, code)
 	assertEqual(t, actual.Message, message)
 }

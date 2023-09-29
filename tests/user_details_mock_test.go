@@ -7,8 +7,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/fivetran/go-fivetran"
+	"github.com/fivetran/go-fivetran/common"
 	"github.com/fivetran/go-fivetran/tests/mock"
+	"github.com/fivetran/go-fivetran/users"
 )
 
 const (
@@ -98,12 +99,14 @@ func prepareUserDetailsResponse() string {
 		true)
 }
 
-func prepareExpectedUserDetailsResponse() fivetran.UserDetailsResponse {
+func prepareExpectedUserDetailsResponse() users.UserDetailsResponse {
 	var flag = true
-	return fivetran.UserDetailsResponse{
-		Code:    EXPECTED_USER_RESPONSE_CODE,
-		Message: "",
-		Data: fivetran.UserDetailsData{
+	return users.UserDetailsResponse{
+		CommonResponse: common.CommonResponse{
+			Code:    EXPECTED_USER_RESPONSE_CODE,
+			Message: "",
+		},
+		Data: users.UserDetailsData{
 			ID:         EXPECTED_USER_ID,
 			Email:      EXPECTED_USER_EMAIL,
 			GivenName:  EXPECTED_USER_GIVEN_NAME,
@@ -120,8 +123,8 @@ func prepareExpectedUserDetailsResponse() fivetran.UserDetailsResponse {
 }
 
 func assertUserDetailsResponse(t *testing.T,
-	actual fivetran.UserDetailsResponse,
-	expected fivetran.UserDetailsResponse,
+	actual users.UserDetailsResponse,
+	expected users.UserDetailsResponse,
 	code string,
 	massage string) {
 	assertEqual(t, actual.Code, code)
