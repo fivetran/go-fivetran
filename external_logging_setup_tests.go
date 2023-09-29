@@ -6,6 +6,7 @@ import (
 	"fmt"
 
 	"github.com/fivetran/go-fivetran/common"
+	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
 // ExternalLoggingSetupTestsService implements the Log Management, Run Log service setup tests API.
@@ -45,15 +46,18 @@ func (s *ExternalLoggingSetupTestsService) Do(ctx context.Context) (ExternalLogg
 	headers["Content-Type"] = "application/json"
 	headers["Accept"] = restAPIv2
 
-	r := request{
-		method:  "POST",
-		url:     url,
-		queries: nil,
-		headers: headers,
-		client:  s.c.httpClient,
+	r := httputils.Request{
+		Method:           "POST",
+		Url:              url,
+		Body:             nil,
+		Queries:          nil,
+		Headers:          headers,
+		Client:           s.c.httpClient,
+		HandleRateLimits: s.c.handleRateLimits,
+		MaxRetryAttempts: s.c.maxRetryAttempts,
 	}
 
-	respBody, respStatus, err := r.httpRequest(ctx)
+	respBody, respStatus, err := r.Do(ctx)
 	if err != nil {
 		return response, err
 	}

@@ -6,6 +6,7 @@ import (
 	"fmt"
 
 	"github.com/fivetran/go-fivetran/common"
+	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
 // ConnectorReSyncTableService implements the Connector Management, Re-sync Connector Table Data API.
@@ -54,18 +55,18 @@ func (s *ConnectorReSyncTableService) Do(ctx context.Context) (common.CommonResp
 
 	headers := s.c.commonHeaders()
 
-	r := request{
-		method:           "POST",
-		url:              url,
-		body:             nil,
-		queries:          nil,
-		headers:          headers,
-		client:           s.c.httpClient,
-		handleRateLimits: s.c.handleRateLimits,
-		maxRetryAttempts: s.c.maxRetryAttempts,
+	r := httputils.Request{
+		Method:           "POST",
+		Url:              url,
+		Body:             nil,
+		Queries:          nil,
+		Headers:          headers,
+		Client:           s.c.httpClient,
+		HandleRateLimits: s.c.handleRateLimits,
+		MaxRetryAttempts: s.c.maxRetryAttempts,
 	}
 
-	respBody, respStatus, err := r.httpRequest(ctx)
+	respBody, respStatus, err := r.Do(ctx)
 	if err != nil {
 		return response, err
 	}

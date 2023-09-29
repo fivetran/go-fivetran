@@ -4,6 +4,9 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+
+	"github.com/fivetran/go-fivetran/common"
+	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
 // ConnectorsSourceMetadataService implements the Connector Management, Retrieve source metadata API.
@@ -15,9 +18,8 @@ type ConnectorsSourceMetadataService struct {
 }
 
 type ConnectorsSourceMetadataResponse struct {
-	Code    string `json:"code"`
-	Message string `json:"message"`
-	Data    struct {
+	common.CommonResponse
+	Data struct {
 		Items []struct {
 			ID          string `json:"id"`
 			Name        string `json:"name"`
@@ -60,18 +62,18 @@ func (s *ConnectorsSourceMetadataService) Do(ctx context.Context) (ConnectorsSou
 		queries["limit"] = fmt.Sprint(*s.limit)
 	}
 
-	r := request{
-		method:           "GET",
-		url:              url,
-		body:             nil,
-		queries:          queries,
-		headers:          headers,
-		client:           s.c.httpClient,
-		handleRateLimits: s.c.handleRateLimits,
-		maxRetryAttempts: s.c.maxRetryAttempts,
+	r := httputils.Request{
+		Method:           "POST",
+		Url:              url,
+		Body:             nil,
+		Queries:          queries,
+		Headers:          headers,
+		Client:           s.c.httpClient,
+		HandleRateLimits: s.c.handleRateLimits,
+		MaxRetryAttempts: s.c.maxRetryAttempts,
 	}
 
-	respBody, respStatus, err := r.httpRequest(ctx)
+	respBody, respStatus, err := r.Do(ctx)
 	if err != nil {
 		return response, err
 	}

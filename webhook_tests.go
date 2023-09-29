@@ -4,6 +4,8 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+
+	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
 // WebhookTestService implements the test method for Webhook Management API.
@@ -66,18 +68,18 @@ func (s *WebhookTestService) Do(ctx context.Context) (WebhookTestResponse, error
 		return response, err
 	}
 
-	r := request{
-		method:           "POST",
-		url:              url,
-		queries:          nil,
-		body:             reqBody,
-		headers:          headers,
-		client:           s.c.httpClient,
-		handleRateLimits: s.c.handleRateLimits,
-		maxRetryAttempts: s.c.maxRetryAttempts,
+	r := httputils.Request{
+		Method:           "POST",
+		Url:              url,
+		Body:             reqBody,
+		Queries:          nil,
+		Headers:          headers,
+		Client:           s.c.httpClient,
+		HandleRateLimits: s.c.handleRateLimits,
+		MaxRetryAttempts: s.c.maxRetryAttempts,
 	}
 
-	respBody, respStatus, err := r.httpRequest(ctx)
+	respBody, respStatus, err := r.Do(ctx)
 	if err != nil {
 		return response, err
 	}

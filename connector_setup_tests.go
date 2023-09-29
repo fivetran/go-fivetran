@@ -6,6 +6,7 @@ import (
 	"fmt"
 
 	"github.com/fivetran/go-fivetran/connectors"
+	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
 // ConnectorSetupTestsService implements the Connector Management, Run connector setup tests API.
@@ -89,18 +90,18 @@ func (s *ConnectorSetupTestsService) do(ctx context.Context, response any) error
 		return err
 	}
 
-	r := request{
-		method:           "POST",
-		url:              url,
-		body:             reqBody,
-		queries:          nil,
-		headers:          headers,
-		client:           s.c.httpClient,
-		handleRateLimits: s.c.handleRateLimits,
-		maxRetryAttempts: s.c.maxRetryAttempts,
+	r := httputils.Request{
+		Method:           "POST",
+		Url:              url,
+		Body:             reqBody,
+		Queries:          nil,
+		Headers:          headers,
+		Client:           s.c.httpClient,
+		HandleRateLimits: s.c.handleRateLimits,
+		MaxRetryAttempts: s.c.maxRetryAttempts,
 	}
 
-	respBody, respStatus, err := r.httpRequest(ctx)
+	respBody, respStatus, err := r.Do(ctx)
 	if err != nil {
 		return err
 	}

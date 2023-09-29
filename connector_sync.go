@@ -4,6 +4,9 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+
+	"github.com/fivetran/go-fivetran/common"
+	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
 // ConnectorSyncService implements the Connector Management, Sync Connector Data API.
@@ -11,11 +14,6 @@ import (
 type ConnectorSyncService struct {
 	c           *Client
 	connectorID *string
-}
-
-type ConnectorSyncResponse struct {
-	Code    string `json:"code"`
-	Message string `json:"message"`
 }
 
 func (c *Client) NewConnectorSync() *ConnectorSyncService {
@@ -27,8 +25,8 @@ func (s *ConnectorSyncService) ConnectorID(connectorID string) *ConnectorSyncSer
 	return s
 }
 
-func (s *ConnectorSyncService) Do(ctx context.Context) (ConnectorSyncResponse, error) {
-	var response ConnectorSyncResponse
+func (s *ConnectorSyncService) Do(ctx context.Context) (common.CommonResponse, error) {
+	var response common.CommonResponse
 
 	if s.connectorID == nil {
 		return response, fmt.Errorf("missing required ConnectorID")
@@ -40,18 +38,18 @@ func (s *ConnectorSyncService) Do(ctx context.Context) (ConnectorSyncResponse, e
 	headers := s.c.commonHeaders()
 	headers["Content-Type"] = "application/json"
 
-	r := request{
-		method:           "POST",
-		url:              url,
-		body:             nil,
-		queries:          nil,
-		headers:          headers,
-		client:           s.c.httpClient,
-		handleRateLimits: s.c.handleRateLimits,
-		maxRetryAttempts: s.c.maxRetryAttempts,
+	r := httputils.Request{
+		Method:           "POST",
+		Url:              url,
+		Body:             nil,
+		Queries:          nil,
+		Headers:          headers,
+		Client:           s.c.httpClient,
+		HandleRateLimits: s.c.handleRateLimits,
+		MaxRetryAttempts: s.c.maxRetryAttempts,
 	}
 
-	respBody, respStatus, err := r.httpRequest(ctx)
+	respBody, respStatus, err := r.Do(ctx)
 	if err != nil {
 		return response, err
 	}

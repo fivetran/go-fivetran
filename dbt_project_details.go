@@ -6,6 +6,7 @@ import (
 	"fmt"
 
 	"github.com/fivetran/go-fivetran/dbt"
+	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
 type DbtProjectDetailsService struct {
@@ -35,16 +36,18 @@ func (s *DbtProjectDetailsService) Do(ctx context.Context) (dbt.DbtProjectDetail
 	headers := s.c.commonHeaders()
 	headers["Accept"] = restAPIv2
 
-	r := request{
-		method:  "GET",
-		url:     url,
-		body:    nil,
-		queries: nil,
-		headers: headers,
-		client:  s.c.httpClient,
+	r := httputils.Request{
+		Method:           "GET",
+		Url:              url,
+		Body:             nil,
+		Queries:          nil,
+		Headers:          headers,
+		Client:           s.c.httpClient,
+		HandleRateLimits: s.c.handleRateLimits,
+		MaxRetryAttempts: s.c.maxRetryAttempts,
 	}
 
-	respBody, respStatus, err := r.httpRequest(ctx)
+	respBody, respStatus, err := r.Do(ctx)
 
 	if err != nil {
 		return response, err

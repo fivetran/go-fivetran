@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 
+	httputils "github.com/fivetran/go-fivetran/http_utils"
 	"github.com/fivetran/go-fivetran/webhooks"
 )
 
@@ -38,15 +39,18 @@ func (s *WebhookDetailsService) Do(ctx context.Context) (webhooks.WebhookRespons
 	headers["Content-Type"] = "application/json"
 	headers["Accept"] = restAPIv2
 
-	r := request{
-		method:  "GET",
-		url:     url,
-		queries: nil,
-		headers: headers,
-		client:  s.c.httpClient,
+	r := httputils.Request{
+		Method:           "GET",
+		Url:              url,
+		Body:             nil,
+		Queries:          nil,
+		Headers:          headers,
+		Client:           s.c.httpClient,
+		HandleRateLimits: s.c.handleRateLimits,
+		MaxRetryAttempts: s.c.maxRetryAttempts,
 	}
 
-	respBody, respStatus, err := r.httpRequest(ctx)
+	respBody, respStatus, err := r.Do(ctx)
 	if err != nil {
 		return response, err
 	}

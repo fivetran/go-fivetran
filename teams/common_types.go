@@ -23,6 +23,6 @@ type TeamGroupMembership struct {
 }
 
 type TeamUserMembership struct {
-	UserId string `json:"id"`
+	UserId string `json:"user_id"`
 	TeamMembership
 }

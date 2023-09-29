@@ -6,6 +6,7 @@ import (
 	"fmt"
 
 	"github.com/fivetran/go-fivetran/common"
+	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
 // TeamUsersModifyService implements the Team Management, Modify a user membership
@@ -69,16 +70,18 @@ func (s *TeamUserMembershipModifyService) Do(ctx context.Context) (common.Common
 		return response, err
 	}
 
-	r := request{
-		method:  "PATCH",
-		url:     url,
-		body:    reqBody,
-		queries: nil,
-		headers: headers,
-		client:  s.c.httpClient,
+	r := httputils.Request{
+		Method:           "PATCH",
+		Url:              url,
+		Body:             reqBody,
+		Queries:          nil,
+		Headers:          headers,
+		Client:           s.c.httpClient,
+		HandleRateLimits: s.c.handleRateLimits,
+		MaxRetryAttempts: s.c.maxRetryAttempts,
 	}
 
-	respBody, respStatus, err := r.httpRequest(ctx)
+	respBody, respStatus, err := r.Do(ctx)
 	if err != nil {
 		return response, err
 	}

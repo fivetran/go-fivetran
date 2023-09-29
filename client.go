@@ -4,20 +4,16 @@ import (
 	"encoding/base64"
 	"fmt"
 	"net/http"
-)
 
-// HttpClient performs an HTTP request. Can be implemented by mocks
-// to perform convenient unit tests
-type HttpClient interface {
-	Do(req *http.Request) (*http.Response, error)
-}
+	httputils "github.com/fivetran/go-fivetran/http_utils"
+)
 
 // Client holds client configuration
 type Client struct {
 	baseURL          string
 	authorization    string
 	customUserAgent  string
-	httpClient       HttpClient
+	httpClient       httputils.HttpClient
 	handleRateLimits bool
 	maxRetryAttempts int
 }
@@ -52,7 +48,7 @@ func (c *Client) CustomUserAgent(customUserAgent string) {
 }
 
 // SetHttpClient sets custom HTTP client to perform requests with
-func (c *Client) SetHttpClient(httpClient HttpClient) {
+func (c *Client) SetHttpClient(httpClient httputils.HttpClient) {
 	c.httpClient = httpClient
 }
 

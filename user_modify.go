@@ -7,6 +7,7 @@ import (
 	"fmt"
 
 	"github.com/fivetran/go-fivetran/common"
+	httputils "github.com/fivetran/go-fivetran/http_utils"
 	"github.com/fivetran/go-fivetran/users"
 )
 
@@ -113,18 +114,18 @@ func (s *UserModifyService) Do(ctx context.Context) (users.UserDetailsResponse, 
 	headers := s.c.commonHeaders()
 	headers["Content-Type"] = "application/json"
 
-	r := request{
-		method:           "PATCH",
-		url:              url,
-		body:             reqBody,
-		queries:          nil,
-		headers:          headers,
-		client:           s.c.httpClient,
-		handleRateLimits: s.c.handleRateLimits,
-		maxRetryAttempts: s.c.maxRetryAttempts,
+	r := httputils.Request{
+		Method:           "PATCH",
+		Url:              url,
+		Body:             reqBody,
+		Queries:          nil,
+		Headers:          headers,
+		Client:           s.c.httpClient,
+		HandleRateLimits: s.c.handleRateLimits,
+		MaxRetryAttempts: s.c.maxRetryAttempts,
 	}
 
-	respBody, respStatus, err := r.httpRequest(ctx)
+	respBody, respStatus, err := r.Do(ctx)
 	if err != nil {
 		return response, err
 	}

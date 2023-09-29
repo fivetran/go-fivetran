@@ -7,6 +7,7 @@ import (
 
 	"github.com/fivetran/go-fivetran/common"
 	"github.com/fivetran/go-fivetran/connectors"
+	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
 // GroupListConnectorsService implements the Group Management, List All Connectors within a Group API.
@@ -83,18 +84,18 @@ func (s *GroupListConnectorsService) Do(ctx context.Context) (GroupListConnector
 		queries["schema"] = *s.schema
 	}
 
-	r := request{
-		method:           "GET",
-		url:              url,
-		body:             nil,
-		queries:          queries,
-		headers:          headers,
-		client:           s.c.httpClient,
-		handleRateLimits: s.c.handleRateLimits,
-		maxRetryAttempts: s.c.maxRetryAttempts,
+	r := httputils.Request{
+		Method:           "GET",
+		Url:              url,
+		Body:             nil,
+		Queries:          queries,
+		Headers:          headers,
+		Client:           s.c.httpClient,
+		HandleRateLimits: s.c.handleRateLimits,
+		MaxRetryAttempts: s.c.maxRetryAttempts,
 	}
 
-	respBody, respStatus, err := r.httpRequest(ctx)
+	respBody, respStatus, err := r.Do(ctx)
 	if err != nil {
 		return response, err
 	}

@@ -6,6 +6,7 @@ import (
 	"fmt"
 
 	"github.com/fivetran/go-fivetran/connectors"
+	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
 // ConnectorSchemaConfigUpdateService implements the Connector Management, Modify a Connector Schema Config API.
@@ -78,18 +79,18 @@ func (csu *ConnectorSchemaConfigUpdateService) Do(ctx context.Context) (connecto
 	headers["Content-Type"] = "application/json"
 	headers["Accept"] = restAPIv2
 
-	r := request{
-		method:           "PATCH",
-		url:              url,
-		body:             reqBody,
-		queries:          nil,
-		headers:          headers,
-		client:           csu.c.httpClient,
-		handleRateLimits: csu.c.handleRateLimits,
-		maxRetryAttempts: csu.c.maxRetryAttempts,
+	r := httputils.Request{
+		Method:           "PATCH",
+		Url:              url,
+		Body:             reqBody,
+		Queries:          nil,
+		Headers:          headers,
+		Client:           csu.c.httpClient,
+		HandleRateLimits: csu.c.handleRateLimits,
+		MaxRetryAttempts: csu.c.maxRetryAttempts,
 	}
 
-	respBody, respStatus, err := r.httpRequest(ctx)
+	respBody, respStatus, err := r.Do(ctx)
 	if err != nil {
 		return response, err
 	}
