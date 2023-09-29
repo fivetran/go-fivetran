@@ -25,7 +25,7 @@ type teamGroupMembershipCreateRequest struct {
 
 type TeamGroupMembershipCreateResponse struct {
 	common.CommonResponse
-	Data teams.TeamGroupmembership `json:"data"`
+	Data teams.TeamGroupMembership `json:"data"`
 }
 
 func (c *Client) NewTeamGroupMembershipCreate() *TeamGroupMembershipCreateService {

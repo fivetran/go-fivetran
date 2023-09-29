@@ -37,13 +37,15 @@ func (c *Client) NewUserModify() *UserModifyService {
 }
 
 func (s *UserModifyService) request() *userModifyRequest {
-	return &userModifyRequest{
+	result := userModifyRequest{
 		GivenName:  s.givenName,
 		FamilyName: s.familyName,
 		Phone:      common.NewNullableString(s.phone, s.clearPhone),
 		Picture:    common.NewNullableString(s.picture, s.clearPicture),
 		Role:       s.role,
 	}
+
+	return &result
 }
 
 func (s *UserModifyService) UserID(value string) *UserModifyService {

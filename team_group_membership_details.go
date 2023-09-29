@@ -18,7 +18,7 @@ type TeamGroupMembershipDetailsService struct {
 
 type TeamGroupMembershipDetailsResponse struct {
 	Code string                    `json:"code"`
-	Data teams.TeamGroupmembership `json:"data"`
+	Data teams.TeamGroupMembership `json:"data"`
 }
 
 func (c *Client) NewTeamGroupMembershipDetails() *TeamGroupMembershipDetailsService {
