@@ -4,6 +4,8 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+
+	"github.com/fivetran/go-fivetran/common"
 )
 
 // DestinationDeleteService implements the Destination Management, Delete a destination API.
@@ -11,11 +13,6 @@ import (
 type DestinationDeleteService struct {
 	c             *Client
 	destinationID *string
-}
-
-type DestinationDeleteResponse struct {
-	Code    string `json:"code"`
-	Message string `json:"message"`
 }
 
 func (c *Client) NewDestinationDelete() *DestinationDeleteService {
@@ -27,8 +24,8 @@ func (s *DestinationDeleteService) DestinationID(value string) *DestinationDelet
 	return s
 }
 
-func (s *DestinationDeleteService) Do(ctx context.Context) (DestinationDeleteResponse, error) {
-	var response DestinationDeleteResponse
+func (s *DestinationDeleteService) Do(ctx context.Context) (common.CommonResponse, error) {
+	var response common.CommonResponse
 
 	if s.destinationID == nil {
 		return response, fmt.Errorf("missing required DestinationID")

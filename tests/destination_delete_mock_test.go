@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/fivetran/go-fivetran"
+	"github.com/fivetran/go-fivetran/common"
 	"github.com/fivetran/go-fivetran/tests/mock"
 )
 
@@ -54,7 +54,7 @@ func TestDestinationDeleteServiceDoMissingDestinationID(t *testing.T) {
 	assertEqual(t, err, expectedError)
 }
 
-func assertDestinationDeleteResponse(t *testing.T, response fivetran.DestinationDeleteResponse, code string, massage string) {
+func assertDestinationDeleteResponse(t *testing.T, response common.CommonResponse, code string, massage string) {
 	assertEqual(t, response.Code, code)
 	assertEqual(t, response.Message, massage)
 }

@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/fivetran/go-fivetran"
+	"github.com/fivetran/go-fivetran/destinations"
 	"github.com/fivetran/go-fivetran/tests/mock"
 )
 
@@ -84,7 +84,7 @@ func prepareDestinationDetailsResponse() string {
 		DESTINATION_DETAILS_MASKED_PASSWORD)
 }
 
-func assertDestinationDetailsResponse(t *testing.T, response fivetran.DestinationDetailsResponse) {
+func assertDestinationDetailsResponse(t *testing.T, response destinations.DestinationDetailsResponse) {
 	assertEqual(t, response.Code, "Success")
 	assertEqual(t, response.Data.ID, DESTINATION_DETAILS_ID)
 	assertEqual(t, response.Data.GroupID, DESTINATION_DETAILS_ID)

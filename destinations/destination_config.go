@@ -1,4 +1,4 @@
-package fivetran
+package destinations
 
 // DestinationConfig builds Destination Management, Destination Config.
 // Ref. https://fivetran.com/docs/rest-api/destinations/config
@@ -106,11 +106,7 @@ type DestinationConfigResponse struct {
 	Region                string `json:"region"`
 }
 
-func NewDestinationConfig() *DestinationConfig {
-	return &DestinationConfig{}
-}
-
-func (dc *DestinationConfig) request() *destinationConfigRequest {
+func (dc *DestinationConfig) Request() *destinationConfigRequest {
 	return &destinationConfigRequest{
 		Host:                  dc.host,
 		Port:                  dc.port,

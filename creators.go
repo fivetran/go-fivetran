@@ -3,6 +3,7 @@ package fivetran
 import (
 	"github.com/fivetran/go-fivetran/connectors"
 	"github.com/fivetran/go-fivetran/dbt"
+	"github.com/fivetran/go-fivetran/destinations"
 )
 
 func NewFunctionSecret() *connectors.FunctionSecret {
@@ -55,4 +56,8 @@ func NewDbtProjectConfig() *dbt.DbtProjectConfig {
 
 func NewDbtTransformationSchedule() *dbt.DbtTransformationSchedule {
 	return &dbt.DbtTransformationSchedule{}
+}
+
+func NewDestinationConfig() *destinations.DestinationConfig {
+	return &destinations.DestinationConfig{}
 }

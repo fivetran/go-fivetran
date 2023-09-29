@@ -4,6 +4,8 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+
+	"github.com/fivetran/go-fivetran/destinations"
 )
 
 // DestinationSetupTestsService implements the Destination Management, Run destination setup tests API.
@@ -18,25 +20,6 @@ type DestinationSetupTestsService struct {
 type destinationSetupTestsRequest struct {
 	TrustCertificates *bool `json:"trust_certificates,omitempty"`
 	TrustFingerprints *bool `json:"trust_fingerprints,omitempty"`
-}
-
-type DestinationSetupTestsResponse struct {
-	Code    string `json:"code"`
-	Message string `json:"message"`
-	Data    struct {
-		ID             string `json:"id"`
-		GroupID        string `json:"group_id"`
-		Service        string `json:"service"`
-		Region         string `json:"region"`
-		TimeZoneOffset string `json:"time_zone_offset"`
-		SetupStatus    string `json:"setup_status"`
-		SetupTests     []struct {
-			Title   string `json:"title"`
-			Status  string `json:"status"`
-			Message string `json:"message"`
-		} `json:"setup_tests"`
-		Config DestinationConfigResponse `json:"config"`
-	} `json:"data"`
 }
 
 func (c *Client) NewDestinationSetupTests() *DestinationSetupTestsService {
@@ -65,8 +48,8 @@ func (s *DestinationSetupTestsService) TrustFingerprints(value bool) *Destinatio
 	return s
 }
 
-func (s *DestinationSetupTestsService) Do(ctx context.Context) (DestinationSetupTestsResponse, error) {
-	var response DestinationSetupTestsResponse
+func (s *DestinationSetupTestsService) Do(ctx context.Context) (destinations.DestinationDetailsWithSetupTestsResponse, error) {
+	var response destinations.DestinationDetailsWithSetupTestsResponse
 
 	if s.destinationID == nil {
 		return response, fmt.Errorf("missing required DestinationID")

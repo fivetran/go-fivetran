@@ -26,7 +26,7 @@ type DetailsResponseDataCommon struct {
 
 type DetailsAndSetupTestsResponseDataCommon struct {
 	DetailsResponseDataCommon
-	SetupTests []SetupTestResponse `json:"setup_tests"`
+	SetupTests []common.SetupTestResponse `json:"setup_tests"`
 }
 
 type StatusResponse struct {
@@ -36,12 +36,6 @@ type StatusResponse struct {
 	IsHistoricalSync *bool                   `json:"is_historical_sync"`
 	Tasks            []common.CommonResponse `json:"tasks"`
 	Warnings         []common.CommonResponse `json:"warnings"`
-}
-
-type SetupTestResponse struct {
-	Title   string `json:"title"`
-	Status  string `json:"status"`
-	Message string `json:"message"`
 }
 
 type DetailsWithConfigResponse struct {

@@ -8,6 +8,7 @@ import (
 	"testing"
 
 	"github.com/fivetran/go-fivetran"
+	"github.com/fivetran/go-fivetran/destinations"
 	"github.com/fivetran/go-fivetran/tests/mock"
 )
 
@@ -196,7 +197,7 @@ func prepareDestinationResponse() string {
 	)
 }
 
-func prepareConfig() *fivetran.DestinationConfig {
+func prepareConfig() *destinations.DestinationConfig {
 	config := fivetran.NewDestinationConfig()
 	config.Host(HOST)
 	config.Port(PORT)
@@ -277,7 +278,7 @@ func assertRequest(t *testing.T, request map[string]interface{}) {
 	assertKey(t, "region", config, REGION)
 }
 
-func assertResponse(t *testing.T, response fivetran.DestinationCreateResponse) {
+func assertResponse(t *testing.T, response destinations.DestinationDetailsWithSetupTestsResponse) {
 
 	assertEqual(t, response.Code, "Created")
 	assertNotEmpty(t, response.Message)

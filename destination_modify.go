@@ -4,6 +4,8 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+
+	"github.com/fivetran/go-fivetran/destinations"
 )
 
 // DestinationModifyService implements the Destination Management, Modify a Destination API.
@@ -13,38 +15,19 @@ type DestinationModifyService struct {
 	destinationID     *string
 	region            *string
 	timeZoneOffset    *string
-	config            *DestinationConfig
+	config            *destinations.DestinationConfig
 	trustCertificates *bool
 	trustFingerprints *bool
 	runSetupTests     *bool
 }
 
 type destinationModifyRequest struct {
-	Region            *string                   `json:"region,omitempty"`
-	TimeZoneOffset    *string                   `json:"time_zone_offset,omitempty"`
-	Config            *destinationConfigRequest `json:"config,omitempty"`
-	TrustCertificates *bool                     `json:"trust_certificates,omitempty"`
-	TrustFingerprints *bool                     `json:"trust_fingerprints,omitempty"`
-	RunSetupTests     *bool                     `json:"run_setup_tests,omitempty"`
-}
-
-type DestinationModifyResponse struct {
-	Code    string `json:"code"`
-	Message string `json:"message"`
-	Data    struct {
-		ID             string `json:"id"`
-		GroupID        string `json:"group_id"`
-		Service        string `json:"service"`
-		Region         string `json:"region"`
-		TimeZoneOffset string `json:"time_zone_offset"`
-		SetupStatus    string `json:"setup_status"`
-		SetupTests     []struct {
-			Title   string `json:"title"`
-			Status  string `json:"status"`
-			Message string `json:"message"`
-		} `json:"setup_tests"`
-		Config DestinationConfigResponse `json:"config"`
-	} `json:"data"`
+	Region            *string `json:"region,omitempty"`
+	TimeZoneOffset    *string `json:"time_zone_offset,omitempty"`
+	Config            any     `json:"config,omitempty"`
+	TrustCertificates *bool   `json:"trust_certificates,omitempty"`
+	TrustFingerprints *bool   `json:"trust_fingerprints,omitempty"`
+	RunSetupTests     *bool   `json:"run_setup_tests,omitempty"`
 }
 
 func (c *Client) NewDestinationModify() *DestinationModifyService {
@@ -52,10 +35,10 @@ func (c *Client) NewDestinationModify() *DestinationModifyService {
 }
 
 func (s *DestinationModifyService) request() *destinationModifyRequest {
-	var config *destinationConfigRequest
+	var config interface{}
 
 	if s.config != nil {
-		config = s.config.request()
+		config = s.config.Request()
 	}
 
 	return &destinationModifyRequest{
@@ -83,7 +66,7 @@ func (s *DestinationModifyService) TimeZoneOffset(value string) *DestinationModi
 	return s
 }
 
-func (s *DestinationModifyService) Config(value *DestinationConfig) *DestinationModifyService {
+func (s *DestinationModifyService) Config(value *destinations.DestinationConfig) *DestinationModifyService {
 	s.config = value
 	return s
 }
@@ -103,8 +86,8 @@ func (s *DestinationModifyService) RunSetupTests(value bool) *DestinationModifyS
 	return s
 }
 
-func (s *DestinationModifyService) Do(ctx context.Context) (DestinationModifyResponse, error) {
-	var response DestinationModifyResponse
+func (s *DestinationModifyService) Do(ctx context.Context) (destinations.DestinationDetailsWithSetupTestsResponse, error) {
+	var response destinations.DestinationDetailsWithSetupTestsResponse
 
 	if s.destinationID == nil {
 		return response, fmt.Errorf("missing required DestinationID")
