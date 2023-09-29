@@ -4,24 +4,21 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+
+	"github.com/fivetran/go-fivetran/common"
 )
 
 // ExternalLoggingSetupTestsService implements the Log Management, Run Log service setup tests API.
 // Ref. https://fivetran.com/docs/rest-api/log-service-management#runlogservicesetuptests
 type ExternalLoggingSetupTestsService struct {
-	c                     *Client
-	externalLoggingId     *string
+	c                 *Client
+	externalLoggingId *string
 }
 
 type ExternalLoggingSetupTestsResponse struct {
-	Code    string `json:"code"`
-	Message string `json:"message"`
-	Data    struct {
-		SetupTests     []struct {
-			Title   string `json:"title"`
-			Status  string `json:"status"`
-			Message string `json:"message"`
-		} `json:"setup_tests"`
+	common.CommonResponse
+	Data struct {
+		SetupTests []common.SetupTestResponse `json:"setup_tests"`
 	} `json:"data"`
 }
 

@@ -1,4 +1,4 @@
-package fivetran
+package externallogging
 
 import "github.com/fivetran/go-fivetran/utils"
 
@@ -55,11 +55,7 @@ type ExternalLoggingConfigResponse struct {
 	Port         int    `json:"port"`
 }
 
-func NewExternalLoggingConfig() *ExternalLoggingConfig {
-	return &ExternalLoggingConfig{}
-}
-
-func (elc *ExternalLoggingConfig) request() *externalLoggingConfigRequest {
+func (elc *ExternalLoggingConfig) Request() *externalLoggingConfigRequest {
 	return &externalLoggingConfigRequest{
 		WorkspaceId:  elc.workspaceId,
 		PrimaryKey:   elc.primaryKey,
@@ -78,8 +74,8 @@ func (elc *ExternalLoggingConfig) request() *externalLoggingConfigRequest {
 	}
 }
 
-func (cc *ExternalLoggingConfig) merge(customConfig *map[string]interface{}) (*map[string]interface{}, error) {
-	err := utils.MergeIntoMap(cc.request(), customConfig)
+func (cc *ExternalLoggingConfig) Merge(customConfig *map[string]interface{}) (*map[string]interface{}, error) {
+	err := utils.MergeIntoMap(cc.Request(), customConfig)
 	if err != nil {
 		return nil, err
 	}

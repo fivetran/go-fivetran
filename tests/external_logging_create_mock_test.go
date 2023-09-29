@@ -7,6 +7,7 @@ import (
 	"testing"
 
 	"github.com/fivetran/go-fivetran"
+	externallogging "github.com/fivetran/go-fivetran/external_logging"
 	"github.com/fivetran/go-fivetran/tests/mock"
 )
 
@@ -106,7 +107,7 @@ func TestNewExternalLoggingCustomMergedMappingMock(t *testing.T) {
 
 		func(req *http.Request) (*http.Response, error) {
 			body := requestBodyToJson(t, req)
-			assertExternalLoggingCustomRequest(t, body)
+			assertExternalLoggingCustomMergedRequest(t, body)
 			response := mock.NewResponse(req, http.StatusCreated, prepareExternalLoggingMergedResponse())
 			return response, nil
 		})
@@ -180,7 +181,7 @@ func prepareExternalLoggingMergedResponse() string {
 	)
 }
 
-func prepareExternalLoggingConfig() *fivetran.ExternalLoggingConfig {
+func prepareExternalLoggingConfig() *externallogging.ExternalLoggingConfig {
 	config := fivetran.NewExternalLoggingConfig()
 	config.WorkspaceId(EXTLOG_WORKSPACEID)
 	config.PrimaryKey(EXTLOG_PRIMARYKEY)
@@ -234,7 +235,7 @@ func assertExternalLoggingCustomMergedRequest(t *testing.T, request map[string]i
 	assertKey(t, "fake_field", config, "unmapped-value")
 }
 
-func assertExternalLoggingResponse(t *testing.T, response fivetran.ExternalLoggingCreateResponse) {
+func assertExternalLoggingResponse(t *testing.T, response externallogging.ExternalLoggingResponse) {
 	assertEqual(t, response.Code, "Created")
 	assertNotEmpty(t, response.Message)
 
@@ -246,7 +247,7 @@ func assertExternalLoggingResponse(t *testing.T, response fivetran.ExternalLoggi
 	assertEqual(t, response.Data.Config.PrimaryKey, EXTLOG_PRIMARYKEY)
 }
 
-func assertExternalLoggingCustomResponse(t *testing.T, response fivetran.ExternalLoggingCustomCreateResponse) {
+func assertExternalLoggingCustomResponse(t *testing.T, response externallogging.ExternalLoggingCustomResponse) {
 	assertEqual(t, response.Code, "Created")
 	assertNotEmpty(t, response.Message)
 
@@ -254,11 +255,11 @@ func assertExternalLoggingCustomResponse(t *testing.T, response fivetran.Externa
 	assertEqual(t, response.Data.Service, EXTLOG_SERVICE)
 	assertEqual(t, response.Data.Enabled, EXTLOG_ENABLED)
 
-	assertEqual(t, response.Data.Config.WorkspaceId, EXTLOG_WORKSPACEID)
-	assertEqual(t, response.Data.Config.PrimaryKey, EXTLOG_PRIMARYKEY)
+	assertEqual(t, response.Data.Config["workspace_id"], EXTLOG_WORKSPACEID)
+	assertEqual(t, response.Data.Config["primary_key"], EXTLOG_PRIMARYKEY)
 }
 
-func assertExternalLoggingCustomMergedResponse(t *testing.T, response fivetran.ExternalLoggingCustomMergedCreateResponse) {
+func assertExternalLoggingCustomMergedResponse(t *testing.T, response externallogging.ExternalLoggingCustomMergedResponse) {
 	assertEqual(t, response.Code, "Created")
 	assertNotEmpty(t, response.Message)
 

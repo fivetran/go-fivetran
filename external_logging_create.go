@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 
+	externallogging "github.com/fivetran/go-fivetran/external_logging"
 	"github.com/fivetran/go-fivetran/utils"
 )
 
@@ -15,7 +16,7 @@ type ExternalLoggingCreateService struct {
 	groupId      *string
 	service      *string
 	enabled      *bool
-	config       *ExternalLoggingConfig
+	config       *externallogging.ExternalLoggingConfig
 	configCustom *map[string]interface{}
 }
 
@@ -29,7 +30,7 @@ type externalLoggingCreateRequestBase struct {
 
 type externalLoggingCreateRequest struct {
 	externalLoggingCreateRequestBase
-	Config *externalLoggingConfigRequest `json:"config,omitempty"`
+	Config any `json:"config,omitempty"`
 }
 
 type externalLoggingCustomCreateRequest struct {
@@ -38,40 +39,6 @@ type externalLoggingCustomCreateRequest struct {
 }
 
 /* responses */
-
-type ExternalLoggingCreateResponseBase struct {
-	Id      string `json:"id"`
-	Service string `json:"service"`
-	Enabled bool   `json:"enabled"`
-}
-
-type ExternalLoggingCreateResponse struct {
-	Code    string `json:"code"`
-	Message string `json:"message"`
-	Data    struct {
-		ExternalLoggingCreateResponseBase
-		Config ExternalLoggingConfigResponse `json:"config"`
-	} `json:"data"`
-}
-
-type ExternalLoggingCustomCreateResponse struct {
-	Code    string `json:"code"`
-	Message string `json:"message"`
-	Data    struct {
-		ExternalLoggingCreateResponseBase
-		Config ExternalLoggingConfigResponse `json:"config"`
-	} `json:"data"`
-}
-
-type ExternalLoggingCustomMergedCreateResponse struct {
-	Code    string `json:"code"`
-	Message string `json:"message"`
-	Data    struct {
-		ExternalLoggingCreateResponseBase
-		CustomConfig map[string]interface{}        `json:"config"`
-		Config       ExternalLoggingConfigResponse // no mapping here
-	} `json:"data"`
-}
 
 func (c *Client) NewExternalLoggingCreate() *ExternalLoggingCreateService {
 	return &ExternalLoggingCreateService{c: c}
@@ -86,9 +53,9 @@ func (s *ExternalLoggingCreateService) requestBase() externalLoggingCreateReques
 }
 
 func (s *ExternalLoggingCreateService) request() *externalLoggingCreateRequest {
-	var config *externalLoggingConfigRequest
+	var config interface{}
 	if s.config != nil {
-		config = s.config.request()
+		config = s.config.Request()
 	}
 
 	r := &externalLoggingCreateRequest{
@@ -111,7 +78,7 @@ func (s *ExternalLoggingCreateService) requestCustomMerged() (*externalLoggingCu
 
 	if s.config != nil {
 		var err error
-		currentConfig, err = s.config.merge(currentConfig)
+		currentConfig, err = s.config.Merge(currentConfig)
 		if err != nil {
 			return nil, err
 		}
@@ -138,7 +105,7 @@ func (s *ExternalLoggingCreateService) Enabled(value bool) *ExternalLoggingCreat
 	return s
 }
 
-func (s *ExternalLoggingCreateService) Config(value *ExternalLoggingConfig) *ExternalLoggingCreateService {
+func (s *ExternalLoggingCreateService) Config(value *externallogging.ExternalLoggingConfig) *ExternalLoggingCreateService {
 	s.config = value
 	return s
 }
@@ -187,24 +154,24 @@ func (s *ExternalLoggingCreateService) do(ctx context.Context, req, response any
 	return nil
 }
 
-func (s *ExternalLoggingCreateService) Do(ctx context.Context) (ExternalLoggingCreateResponse, error) {
-	var response ExternalLoggingCreateResponse
+func (s *ExternalLoggingCreateService) Do(ctx context.Context) (externallogging.ExternalLoggingResponse, error) {
+	var response externallogging.ExternalLoggingResponse
 
 	err := s.do(ctx, s.request(), &response)
 
 	return response, err
 }
 
-func (s *ExternalLoggingCreateService) DoCustom(ctx context.Context) (ExternalLoggingCustomCreateResponse, error) {
-	var response ExternalLoggingCustomCreateResponse
+func (s *ExternalLoggingCreateService) DoCustom(ctx context.Context) (externallogging.ExternalLoggingCustomResponse, error) {
+	var response externallogging.ExternalLoggingCustomResponse
 
 	err := s.do(ctx, s.requestCustom(), &response)
 
 	return response, err
 }
 
-func (s *ExternalLoggingCreateService) DoCustomMerged(ctx context.Context) (ExternalLoggingCustomMergedCreateResponse, error) {
-	var response ExternalLoggingCustomMergedCreateResponse
+func (s *ExternalLoggingCreateService) DoCustomMerged(ctx context.Context) (externallogging.ExternalLoggingCustomMergedResponse, error) {
+	var response externallogging.ExternalLoggingCustomMergedResponse
 
 	req, err := s.requestCustomMerged()
 

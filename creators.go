@@ -4,6 +4,7 @@ import (
 	"github.com/fivetran/go-fivetran/connectors"
 	"github.com/fivetran/go-fivetran/dbt"
 	"github.com/fivetran/go-fivetran/destinations"
+	externallogging "github.com/fivetran/go-fivetran/external_logging"
 )
 
 func NewFunctionSecret() *connectors.FunctionSecret {
@@ -60,4 +61,8 @@ func NewDbtTransformationSchedule() *dbt.DbtTransformationSchedule {
 
 func NewDestinationConfig() *destinations.DestinationConfig {
 	return &destinations.DestinationConfig{}
+}
+
+func NewExternalLoggingConfig() *externallogging.ExternalLoggingConfig {
+	return &externallogging.ExternalLoggingConfig{}
 }

@@ -2,7 +2,6 @@ package tests
 
 import (
 	"context"
-	"fmt"
 	"net/http"
 	"testing"
 
@@ -41,10 +40,10 @@ func TestGroupDeleteServiceDo(t *testing.T) {
 }
 
 func prepareGroupDeleteResponse() string {
-	return fmt.Sprintf(`{
+	return `{
 		"code": "Success",
 		"message": "Group has been deleted"
-	}`)
+	}`
 }
 
 func assertGroupDeleteResponse(t *testing.T, response common.CommonResponse) {

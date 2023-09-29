@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 
+	externallogging "github.com/fivetran/go-fivetran/external_logging"
 	"github.com/fivetran/go-fivetran/utils"
 )
 
@@ -15,7 +16,7 @@ type ExternalLoggingModifyService struct {
 	externalLoggingId *string
 	enabled           *bool
 	runSetupTests     *bool
-	config            *ExternalLoggingConfig
+	config            *externallogging.ExternalLoggingConfig
 	configCustom      *map[string]interface{}
 }
 
@@ -26,7 +27,7 @@ type externalLoggingModifyRequestBase struct {
 
 type externalLoggingModifyRequest struct {
 	externalLoggingModifyRequestBase
-	Config *externalLoggingConfigRequest `json:"config,omitempty"`
+	Config any `json:"config,omitempty"`
 }
 
 type externalLoggingCustomModifyRequest struct {
@@ -45,7 +46,7 @@ type ExternalLoggingModifyResponse struct {
 	Message string `json:"message"`
 	Data    struct {
 		ExternalLoggingModifyResponseDataBased
-		Config ExternalLoggingConfigResponse `json:"config"`
+		Config externallogging.ExternalLoggingConfigResponse `json:"config"`
 	} `json:"data"`
 }
 
@@ -63,8 +64,8 @@ type ExternalLoggingModifyCustomMergedResponse struct {
 	Message string `json:"message"`
 	Data    struct {
 		ExternalLoggingModifyResponseDataBased
-		CustomConfig map[string]interface{}        `json:"config"`
-		Config       ExternalLoggingConfigResponse // no mapping here
+		CustomConfig map[string]interface{}                        `json:"config"`
+		Config       externallogging.ExternalLoggingConfigResponse // no mapping here
 	} `json:"data"`
 }
 
@@ -79,10 +80,10 @@ func (s *ExternalLoggingModifyService) requestBase() externalLoggingModifyReques
 }
 
 func (s *ExternalLoggingModifyService) request() *externalLoggingModifyRequest {
-	var config *externalLoggingConfigRequest
+	var config interface{}
 
 	if s.config != nil {
-		config = s.config.request()
+		config = s.config.Request()
 	}
 
 	return &externalLoggingModifyRequest{
@@ -103,7 +104,7 @@ func (s *ExternalLoggingModifyService) requestCustomMerged() (*externalLoggingCu
 
 	if s.config != nil {
 		var err error
-		currentConfig, err = s.config.merge(currentConfig)
+		currentConfig, err = s.config.Merge(currentConfig)
 		if err != nil {
 			return nil, err
 		}
@@ -125,7 +126,7 @@ func (s *ExternalLoggingModifyService) Enabled(value bool) *ExternalLoggingModif
 	return s
 }
 
-func (s *ExternalLoggingModifyService) Config(value *ExternalLoggingConfig) *ExternalLoggingModifyService {
+func (s *ExternalLoggingModifyService) Config(value *externallogging.ExternalLoggingConfig) *ExternalLoggingModifyService {
 	s.config = value
 	return s
 }
@@ -183,24 +184,24 @@ func (s *ExternalLoggingModifyService) do(ctx context.Context, req, response any
 	return nil
 }
 
-func (s *ExternalLoggingModifyService) Do(ctx context.Context) (ExternalLoggingModifyResponse, error) {
-	var response ExternalLoggingModifyResponse
+func (s *ExternalLoggingModifyService) Do(ctx context.Context) (externallogging.ExternalLoggingResponse, error) {
+	var response externallogging.ExternalLoggingResponse
 
 	err := s.do(ctx, s.request(), &response)
 
 	return response, err
 }
 
-func (s *ExternalLoggingModifyService) DoCustom(ctx context.Context) (ExternalLoggingModifyCustomResponse, error) {
-	var response ExternalLoggingModifyCustomResponse
+func (s *ExternalLoggingModifyService) DoCustom(ctx context.Context) (externallogging.ExternalLoggingCustomResponse, error) {
+	var response externallogging.ExternalLoggingCustomResponse
 
 	err := s.do(ctx, s.requestCustom(), &response)
 
 	return response, err
 }
 
-func (s *ExternalLoggingModifyService) DoCustomMerged(ctx context.Context) (ExternalLoggingModifyCustomMergedResponse, error) {
-	var response ExternalLoggingModifyCustomMergedResponse
+func (s *ExternalLoggingModifyService) DoCustomMerged(ctx context.Context) (externallogging.ExternalLoggingCustomMergedResponse, error) {
+	var response externallogging.ExternalLoggingCustomMergedResponse
 
 	req, err := s.requestCustomMerged()
 

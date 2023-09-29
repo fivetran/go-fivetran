@@ -7,6 +7,7 @@ import (
 	"testing"
 
 	"github.com/fivetran/go-fivetran"
+	externallogging "github.com/fivetran/go-fivetran/external_logging"
 	"github.com/fivetran/go-fivetran/tests/mock"
 )
 
@@ -21,12 +22,12 @@ func TestExternalLoggingModifyService(t *testing.T) {
 			return response, nil
 		})
 
-    // act
-    response, err := ftClient.NewExternalLoggingModify().
-        ExternalLoggingId("log_id").
-        Enabled(EXTLOG_ENABLED).
-        Config(prepareExternalLoggingModifyConfig()).
-        Do(context.Background())
+	// act
+	response, err := ftClient.NewExternalLoggingModify().
+		ExternalLoggingId("log_id").
+		Enabled(EXTLOG_ENABLED).
+		Config(prepareExternalLoggingModifyConfig()).
+		Do(context.Background())
 
 	if err != nil {
 		t.Logf("%+v\n", response)
@@ -42,9 +43,8 @@ func TestExternalLoggingModifyService(t *testing.T) {
 	assertExternalLoggingModifyResponse(t, response)
 }
 
-
 func TestExternalLoggingCustomModifyService(t *testing.T) {
-    // arrange
+	// arrange
 	// arrange
 	ftClient, mockClient := CreateTestClient()
 	handler := mockClient.When(http.MethodPatch, "/v1/external-logging/log_id").ThenCall(
@@ -55,64 +55,64 @@ func TestExternalLoggingCustomModifyService(t *testing.T) {
 			return response, nil
 		})
 
-    // act
-    response, err := ftClient.NewExternalLoggingModify().
-        ExternalLoggingId("log_id").
-        Enabled(EXTLOG_ENABLED).
-        ConfigCustom(prepareExternalLoggingCustomMergedConfig()).
-        DoCustom(context.Background())
+	// act
+	response, err := ftClient.NewExternalLoggingModify().
+		ExternalLoggingId("log_id").
+		Enabled(EXTLOG_ENABLED).
+		ConfigCustom(prepareExternalLoggingCustomConfig()).
+		DoCustom(context.Background())
 
-    if err != nil {
-        t.Logf("%+v\n", response)
-        t.Error(err)
-    }
+	if err != nil {
+		t.Logf("%+v\n", response)
+		t.Error(err)
+	}
 
-    // assert
-    interactions := mockClient.Interactions()
-    assertEqual(t, len(interactions), 1)
-    assertEqual(t, interactions[0].Handler, handler)
-    assertEqual(t, handler.Interactions, 1)
+	// assert
+	interactions := mockClient.Interactions()
+	assertEqual(t, len(interactions), 1)
+	assertEqual(t, interactions[0].Handler, handler)
+	assertEqual(t, handler.Interactions, 1)
 
-    assertExternalLoggingModifyCustomResponse(t, response)
+	assertExternalLoggingModifyCustomResponse(t, response)
 }
 
 func TestExternalLoggingCustomMergedModifyService(t *testing.T) {
-    // arrange
-    ftClient, mockClient := CreateTestClient()
-    handler := mockClient.When(http.MethodPatch, "/v1/external-logging/log_id").ThenCall(
+	// arrange
+	ftClient, mockClient := CreateTestClient()
+	handler := mockClient.When(http.MethodPatch, "/v1/external-logging/log_id").ThenCall(
 
-        func(req *http.Request) (*http.Response, error) {
-            body := requestBodyToJson(t, req)
-            assertExternalLoggingModifyCustomMergedRequest(t, body)
-            response := mock.NewResponse(req, http.StatusOK, prepareExternalLoggingModifyMergedResponse())
-            return response, nil
-        })
+		func(req *http.Request) (*http.Response, error) {
+			body := requestBodyToJson(t, req)
+			assertExternalLoggingModifyCustomMergedRequest(t, body)
+			response := mock.NewResponse(req, http.StatusOK, prepareExternalLoggingModifyMergedResponse())
+			return response, nil
+		})
 
-    // act
-    response, err := ftClient.NewExternalLoggingModify().
-        ExternalLoggingId("log_id").
-        Enabled(EXTLOG_ENABLED).
-        Config(prepareExternalLoggingModifyConfig()).
-        ConfigCustom(prepareExternalLoggingCustomMergedConfig()).
-        DoCustomMerged(context.Background())
+	// act
+	response, err := ftClient.NewExternalLoggingModify().
+		ExternalLoggingId("log_id").
+		Enabled(EXTLOG_ENABLED).
+		Config(prepareExternalLoggingModifyConfig()).
+		ConfigCustom(prepareExternalLoggingCustomMergedConfig()).
+		DoCustomMerged(context.Background())
 
-    if err != nil {
-        t.Logf("%+v\n", response)
-        t.Error(err)
-    }
+	if err != nil {
+		t.Logf("%+v\n", response)
+		t.Error(err)
+	}
 
-    // assert
-    interactions := mockClient.Interactions()
-    assertEqual(t, len(interactions), 1)
-    assertEqual(t, interactions[0].Handler, handler)
-    assertEqual(t, handler.Interactions, 1)
+	// assert
+	interactions := mockClient.Interactions()
+	assertEqual(t, len(interactions), 1)
+	assertEqual(t, interactions[0].Handler, handler)
+	assertEqual(t, handler.Interactions, 1)
 
-    assertExternalLoggingModifyCustomMergedResponse(t, response)
+	assertExternalLoggingModifyCustomMergedResponse(t, response)
 }
 
 func prepareExternalLoggingModifyResponse() string {
-    return fmt.Sprintf(
-        `{
+	return fmt.Sprintf(
+		`{
 			"code": "Success",
 			"message": "External logging service has been updated",
             "data":{
@@ -125,17 +125,17 @@ func prepareExternalLoggingModifyResponse() string {
                 }
             }
         }`,
-        EXTLOG_GROUPID,
-        EXTLOG_SERVICE,
-        EXTLOG_ENABLED,
-        EXTLOG_WORKSPACEID,
-        EXTLOG_PRIMARYKEY,
-    )
+		EXTLOG_GROUPID,
+		EXTLOG_SERVICE,
+		EXTLOG_ENABLED,
+		EXTLOG_WORKSPACEID,
+		EXTLOG_PRIMARYKEY,
+	)
 }
 
 func prepareExternalLoggingModifyMergedResponse() string {
-    return fmt.Sprintf(
-        `{
+	return fmt.Sprintf(
+		`{
 			"code": "Success",
 			"message": "External logging service has been updated",
             "data":{
@@ -149,94 +149,93 @@ func prepareExternalLoggingModifyMergedResponse() string {
                 }
             }
         }`,
-        EXTLOG_GROUPID,
-        EXTLOG_SERVICE,
-        EXTLOG_ENABLED,
-        EXTLOG_WORKSPACEID,
-        EXTLOG_PRIMARYKEY,
-    )
+		EXTLOG_GROUPID,
+		EXTLOG_SERVICE,
+		EXTLOG_ENABLED,
+		EXTLOG_WORKSPACEID,
+		EXTLOG_PRIMARYKEY,
+	)
 }
 
-func prepareExternalLoggingModifyConfig() *fivetran.ExternalLoggingConfig {
-    config := fivetran.NewExternalLoggingConfig()
-    config.WorkspaceId(EXTLOG_WORKSPACEID)
-    config.PrimaryKey(EXTLOG_PRIMARYKEY)
+func prepareExternalLoggingModifyConfig() *externallogging.ExternalLoggingConfig {
+	config := fivetran.NewExternalLoggingConfig()
+	config.WorkspaceId(EXTLOG_WORKSPACEID)
+	config.PrimaryKey(EXTLOG_PRIMARYKEY)
 
-    return config
+	return config
 }
 
 func prepareExternalLoggingCustomConfig() *map[string]interface{} {
-    config := make(map[string]interface{})
+	config := make(map[string]interface{})
 
-    config["fake_field"] = "unmapped-value"
+	config["fake_field"] = "unmapped-value"
 
-    return &config
+	return &config
 }
 
 // assert Requests
 func assertExternalLoggingModifyRequest(t *testing.T, request map[string]interface{}) {
-    assertKey(t, "enabled", request, EXTLOG_ENABLED)
+	assertKey(t, "enabled", request, EXTLOG_ENABLED)
 
-    config, ok := request["config"].(map[string]interface{})
-    assertEqual(t, ok, true)
+	config, ok := request["config"].(map[string]interface{})
+	assertEqual(t, ok, true)
 
-    assertKey(t, "workspace_id", config, EXTLOG_WORKSPACEID)
-    assertKey(t, "primary_key", config, EXTLOG_PRIMARYKEY)     
+	assertKey(t, "workspace_id", config, EXTLOG_WORKSPACEID)
+	assertKey(t, "primary_key", config, EXTLOG_PRIMARYKEY)
 }
 
 func assertExternalLoggingModifyCustomRequest(t *testing.T, request map[string]interface{}) {
-    assertKey(t, "enabled", request, EXTLOG_ENABLED)
+	assertKey(t, "enabled", request, EXTLOG_ENABLED)
 
-    config, ok := request["config"].(map[string]interface{})
-    
-    assertEqual(t, ok, true)
+	config, ok := request["config"].(map[string]interface{})
 
-    assertKey(t, "fake_field", config, "unmapped-value")
+	assertEqual(t, ok, true)
+
+	assertKey(t, "fake_field", config, "unmapped-value")
 }
 
 func assertExternalLoggingModifyCustomMergedRequest(t *testing.T, request map[string]interface{}) {
-    assertKey(t, "enabled", request, EXTLOG_ENABLED)
+	assertKey(t, "enabled", request, EXTLOG_ENABLED)
 
-    config, ok := request["config"].(map[string]interface{})
-    
-    assertEqual(t, ok, true)
+	config, ok := request["config"].(map[string]interface{})
 
-    assertKey(t, "workspace_id", config, EXTLOG_WORKSPACEID)
-    assertKey(t, "primary_key", config, EXTLOG_PRIMARYKEY)     
-    assertKey(t, "fake_field", config, "unmapped-value")
+	assertEqual(t, ok, true)
+
+	assertKey(t, "workspace_id", config, EXTLOG_WORKSPACEID)
+	assertKey(t, "primary_key", config, EXTLOG_PRIMARYKEY)
+	assertKey(t, "fake_field", config, "unmapped-value")
 }
-
 
 // assert Response
-func assertExternalLoggingModifyResponse(t *testing.T, response fivetran.ExternalLoggingModifyResponse) {
+func assertExternalLoggingModifyResponse(t *testing.T, response externallogging.ExternalLoggingResponse) {
 	assertEqual(t, response.Code, "Success")
 	assertEqual(t, response.Message, "External logging service has been updated")
-    assertEqual(t, response.Data.Id, EXTLOG_GROUPID)
-    assertEqual(t, response.Data.Service, EXTLOG_SERVICE)
-    assertEqual(t, response.Data.Enabled, EXTLOG_ENABLED)
+	assertEqual(t, response.Data.Id, EXTLOG_GROUPID)
+	assertEqual(t, response.Data.Service, EXTLOG_SERVICE)
+	assertEqual(t, response.Data.Enabled, EXTLOG_ENABLED)
 
-    assertEqual(t, response.Data.Config.WorkspaceId, EXTLOG_WORKSPACEID)
-    assertEqual(t, response.Data.Config.PrimaryKey, EXTLOG_PRIMARYKEY)
+	assertEqual(t, response.Data.Config.WorkspaceId, EXTLOG_WORKSPACEID)
+	assertEqual(t, response.Data.Config.PrimaryKey, EXTLOG_PRIMARYKEY)
 }
 
-func assertExternalLoggingModifyCustomResponse(t *testing.T, response fivetran.ExternalLoggingModifyCustomResponse) {
+func assertExternalLoggingModifyCustomResponse(t *testing.T, response externallogging.ExternalLoggingCustomResponse) {
 	assertEqual(t, response.Code, "Success")
 	assertEqual(t, response.Message, "External logging service has been updated")
-    assertEqual(t, response.Data.Id, EXTLOG_GROUPID)
-    assertEqual(t, response.Data.Service, EXTLOG_SERVICE)
-    assertEqual(t, response.Data.Enabled, EXTLOG_ENABLED)
+	assertEqual(t, response.Data.Id, EXTLOG_GROUPID)
+	assertEqual(t, response.Data.Service, EXTLOG_SERVICE)
+	assertEqual(t, response.Data.Enabled, EXTLOG_ENABLED)
 
-    assertKey(t, "fake_field", response.Data.Config, "unmapped-value")
+	assertKey(t, "fake_field", response.Data.Config, "unmapped-value")
 }
 
-func assertExternalLoggingModifyCustomMergedResponse(t *testing.T, response fivetran.ExternalLoggingModifyCustomMergedResponse) {
+func assertExternalLoggingModifyCustomMergedResponse(t *testing.T, response externallogging.ExternalLoggingCustomMergedResponse) {
 	assertEqual(t, response.Code, "Success")
 	assertEqual(t, response.Message, "External logging service has been updated")
-    assertEqual(t, response.Data.Id, EXTLOG_GROUPID)
-    assertEqual(t, response.Data.Service, EXTLOG_SERVICE)
-    assertEqual(t, response.Data.Enabled, EXTLOG_ENABLED)
+	assertEqual(t, response.Data.Id, EXTLOG_GROUPID)
+	assertEqual(t, response.Data.Service, EXTLOG_SERVICE)
+	assertEqual(t, response.Data.Enabled, EXTLOG_ENABLED)
 
-    assertEqual(t, response.Data.Config.WorkspaceId, EXTLOG_WORKSPACEID)
-    assertEqual(t, response.Data.Config.PrimaryKey, EXTLOG_PRIMARYKEY)
-    assertKey(t, "fake_field", response.Data.CustomConfig, "unmapped-value")
+	assertEqual(t, response.Data.Config.WorkspaceId, EXTLOG_WORKSPACEID)
+	assertEqual(t, response.Data.Config.PrimaryKey, EXTLOG_PRIMARYKEY)
+	assertKey(t, "fake_field", response.Data.CustomConfig, "unmapped-value")
 }
