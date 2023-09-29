@@ -7,6 +7,7 @@ import (
 	"os"
 
 	"github.com/fivetran/go-fivetran"
+	"github.com/fivetran/go-fivetran/connectors"
 )
 
 func main() {
@@ -21,19 +22,19 @@ func main() {
 
 	connConfigReport := fivetran.NewConnectorConfigReports().ConfigType("cType1").Filter("filter1")
 	connConfigReport2 := fivetran.NewConnectorConfigReports().ConfigType("cType2")
-	connConfig.Reports([]*fivetran.ConnectorConfigReports{connConfigReport, connConfigReport2})
+	connConfig.Reports([]*connectors.ConnectorConfigReports{connConfigReport, connConfigReport2})
 
 	pCred1 := fivetran.NewConnectorConfigProjectCredentials().APIKey("myApiKEY1").Project("myProject1")
 	pCred2 := fivetran.NewConnectorConfigProjectCredentials().APIKey("myApiKEY2").Project("myProject2").SecretKey("TheSecretKEY2")
 	pCred3 := fivetran.NewConnectorConfigProjectCredentials().APIKey("myApiKEY3").Project("myProject3").SecretKey("YASK3")
-	connConfig.ProjectCredentials([]*fivetran.ConnectorConfigProjectCredentials{pCred1, pCred2, pCred3})
+	connConfig.ProjectCredentials([]*connectors.ConnectorConfigProjectCredentials{pCred1, pCred2, pCred3})
 
 	cTables1 := fivetran.NewConnectorConfigCustomTables().Aggregation("aggregation1").TableName("TableNAME1")
 	cTables2 := fivetran.NewConnectorConfigCustomTables().TableName("TableNAME2")
-	connConfig.CustomTables([]*fivetran.ConnectorConfigCustomTables{cTables1, cTables2})
+	connConfig.CustomTables([]*connectors.ConnectorConfigCustomTables{cTables1, cTables2})
 
 	adobeAnalyticsConfig1 := fivetran.NewConnectorConfigAdobeAnalyticsConfiguration().SyncMode("syncMode").Elements([]string{"elemet1", "element2"})
-	connConfig.AdobeAnalyticsConfigurations([]*fivetran.ConnectorConfigAdobeAnalyticsConfiguration{adobeAnalyticsConfig1})
+	connConfig.AdobeAnalyticsConfigurations([]*connectors.ConnectorConfigAdobeAnalyticsConfiguration{adobeAnalyticsConfig1})
 
 	connConfig.Schema("google_sheets5959").
 		Table("table").
