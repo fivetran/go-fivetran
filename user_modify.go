@@ -6,6 +6,7 @@ import (
 	"errors"
 	"fmt"
 
+	"github.com/fivetran/go-fivetran/common"
 	"github.com/fivetran/go-fivetran/users"
 )
 
@@ -24,11 +25,11 @@ type UserModifyService struct {
 }
 
 type userModifyRequest struct {
-	GivenName  *string         `json:"given_name,omitempty"`
-	FamilyName *string         `json:"family_name,omitempty"`
-	Phone      *nullableString `json:"phone,omitempty"`
-	Picture    *nullableString `json:"picture,omitempty"`
-	Role       *string         `json:"role,omitempty"`
+	GivenName  *string                `json:"given_name,omitempty"`
+	FamilyName *string                `json:"family_name,omitempty"`
+	Phone      *common.NullableString `json:"phone,omitempty"`
+	Picture    *common.NullableString `json:"picture,omitempty"`
+	Role       *string                `json:"role,omitempty"`
 }
 
 func (c *Client) NewUserModify() *UserModifyService {
@@ -39,8 +40,8 @@ func (s *UserModifyService) request() *userModifyRequest {
 	return &userModifyRequest{
 		GivenName:  s.givenName,
 		FamilyName: s.familyName,
-		Phone:      newNullableString(s.phone, s.clearPhone),
-		Picture:    newNullableString(s.picture, s.clearPicture),
+		Phone:      common.NewNullableString(s.phone, s.clearPhone),
+		Picture:    common.NewNullableString(s.picture, s.clearPicture),
 		Role:       s.role,
 	}
 }
