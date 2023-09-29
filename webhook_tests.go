@@ -9,21 +9,21 @@ import (
 // WebhookTestService implements the test method for Webhook Management API.
 // Ref. https://fivetran.com/docs/rest-api/webhooks#testwebhook
 type WebhookTestService struct {
-	c                     *Client
-	webhookId   		  *string
-	event 				  *string
+	c         *Client
+	webhookId *string
+	event     *string
 }
 
 type webhookTestRequest struct {
-    Event            	 *string  `json:"event,omitempty"`
+	Event *string `json:"event,omitempty"`
 }
 
 type WebhookTestResponse struct {
-	Code    string `json:"code"`
-	Data    struct {
-		Succeed   bool     `json:"succeed"`
-		Status    int      `json:"status"`
-		Message   string   `json:"message"`		
+	Code string `json:"code"`
+	Data struct {
+		Succeed bool   `json:"succeed"`
+		Status  int    `json:"status"`
+		Message string `json:"message"`
 	} `json:"data"`
 }
 
@@ -67,14 +67,14 @@ func (s *WebhookTestService) Do(ctx context.Context) (WebhookTestResponse, error
 	}
 
 	r := request{
-		method:  			"POST",
-		url:     			url,
-		queries: 			nil,
-		body:    			reqBody,
-		headers: 			headers,
-		client:  			s.c.httpClient,
-		handleRateLimits: 	s.c.handleRateLimits,
-		maxRetryAttempts: 	s.c.maxRetryAttempts,
+		method:           "POST",
+		url:              url,
+		queries:          nil,
+		body:             reqBody,
+		headers:          headers,
+		client:           s.c.httpClient,
+		handleRateLimits: s.c.handleRateLimits,
+		maxRetryAttempts: s.c.maxRetryAttempts,
 	}
 
 	respBody, respStatus, err := r.httpRequest(ctx)

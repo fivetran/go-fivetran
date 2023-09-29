@@ -6,8 +6,8 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/fivetran/go-fivetran"
 	"github.com/fivetran/go-fivetran/tests/mock"
+	"github.com/fivetran/go-fivetran/webhooks"
 )
 
 func TestWebhookModifyService(t *testing.T) {
@@ -20,11 +20,11 @@ func TestWebhookModifyService(t *testing.T) {
 		})
 
 	service := ftClient.NewWebhookModify().
-        	WebhookId("webhook_id").
-        	Url(WEBHOOK_URL).
-        	Secret(WEBHOOK_SECRET).
-        	Active(WEBHOOK_ACTIVE).
-        	Events([]string{WEBHOOK_EVENT})
+		WebhookId("webhook_id").
+		Url(WEBHOOK_URL).
+		Secret(WEBHOOK_SECRET).
+		Active(WEBHOOK_ACTIVE).
+		Events([]string{WEBHOOK_EVENT})
 
 	// act
 	response, err := service.Do(context.Background())
@@ -44,8 +44,8 @@ func TestWebhookModifyService(t *testing.T) {
 }
 
 func prepareWebhookModifyResponse() string {
-    return fmt.Sprintf(
-        `{
+	return fmt.Sprintf(
+		`{
             "code": "Success",
             "message": "Webhook has been updated",
             "data": {
@@ -62,25 +62,25 @@ func prepareWebhookModifyResponse() string {
                 "created_by": "_airworthy"
             }
         }`,
-        WEBHOOK_GROUP,
-        WEBHOOK_URL,
-        WEBHOOK_EVENT,
-        WEBHOOK_ACTIVE,
-    )
+		WEBHOOK_GROUP,
+		WEBHOOK_URL,
+		WEBHOOK_EVENT,
+		WEBHOOK_ACTIVE,
+	)
 }
 
-func assertWebhookModifyResponse(t *testing.T, response fivetran.WebhookModifyResponse) {
-    assertEqual(t, response.Code, "Success")
-    assertNotEmpty(t, response.Message)
+func assertWebhookModifyResponse(t *testing.T, response webhooks.WebhookResponse) {
+	assertEqual(t, response.Code, "Success")
+	assertNotEmpty(t, response.Message)
 
-    assertNotEmpty(t, response.Data.Id)
-    assertNotEmpty(t, response.Data.CreatedAt)
-    assertNotEmpty(t, response.Data.CreatedBy)
+	assertNotEmpty(t, response.Data.Id)
+	assertNotEmpty(t, response.Data.CreatedAt)
+	assertNotEmpty(t, response.Data.CreatedBy)
 
-    assertEqual(t, response.Data.Url, WEBHOOK_URL)
-    assertEqual(t, response.Data.Active, WEBHOOK_ACTIVE)
-    assertEqual(t, response.Data.GroupId, WEBHOOK_GROUP)
-    assertEqual(t, response.Data.Secret, "******")
-    assertEqual(t, response.Data.Type, "account")
-    assertEqual(t, response.Data.Events, []string{WEBHOOK_EVENT})
+	assertEqual(t, response.Data.Url, WEBHOOK_URL)
+	assertEqual(t, response.Data.Active, WEBHOOK_ACTIVE)
+	assertEqual(t, response.Data.GroupId, WEBHOOK_GROUP)
+	assertEqual(t, response.Data.Secret, "******")
+	assertEqual(t, response.Data.Type, "account")
+	assertEqual(t, response.Data.Events, []string{WEBHOOK_EVENT})
 }
