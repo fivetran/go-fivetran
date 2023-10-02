@@ -21,6 +21,6 @@ func TestNewCertificateDestinationFingerprintApproveE2E(t *testing.T) {
 	}
 
 	testutils.AssertEqual(t, response.Code, "Success")
-	testutils.AssertEmpty(t, response.Message)
+	testutils.AssertNotEmpty(t, response.Message)
 	testutils.AssertEqual(t, response.Data.ValidatedBy, testutils.PredefinedUserGivenName+" "+testutils.PredefinedUserFamilyName)
 }
