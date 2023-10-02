@@ -63,7 +63,7 @@ func (s *ConnectorsSourceMetadataService) Do(ctx context.Context) (ConnectorsSou
 	}
 
 	r := httputils.Request{
-		Method:           "POST",
+		Method:           "GET",
 		Url:              url,
 		Body:             nil,
 		Queries:          queries,

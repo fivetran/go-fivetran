@@ -74,3 +74,22 @@ func (c *Client) commonHeaders() map[string]string {
 		"User-Agent":    userAgent,
 	}
 }
+
+func (c *Client) commonHeadersByMethod(method string) map[string]string {
+	userAgent := defaultUserAgent
+
+	if c.customUserAgent != "" {
+		userAgent += " " + c.customUserAgent
+	}
+
+	result := map[string]string{
+		"Authorization": c.authorization,
+		"User-Agent":    userAgent,
+	}
+
+	if method == "POST" || method == "PATCH" {
+		result["Content-Type"] = "application/json"
+	}
+
+	return result
+}
