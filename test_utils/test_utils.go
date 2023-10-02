@@ -32,6 +32,10 @@ const (
 	PredefinedUserId  = "recoup_befell"
 )
 
+var (
+	cleanup = false
+)
+
 func InitE2E() {
 	var apiUrl string
 	var apiKey string
@@ -55,7 +59,10 @@ func InitE2E() {
 	Client = fivetran.New(apiKey, apiSecret)
 	Client.BaseURL(apiUrl)
 	if IsPredefinedUserExist() && IsPredefinedGroupExist() {
-		CleanupAccount()
+		if !cleanup {
+			CleanupAccount()
+			cleanup = true
+		}
 	} else {
 		log.Fatalln("The predefined user doesn't belong to the Testing account. Make sure that credentials are using in the tests belong to the Testing account.")
 	}
