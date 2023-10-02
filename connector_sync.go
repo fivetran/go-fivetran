@@ -8,21 +8,10 @@ import (
 	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
-func (c *Client) NewHttpService() httputils.HttpService {
-	return httputils.HttpService{
-		Method:           "POST",
-		CommonHeaders:    c.commonHeadersByMethod("POST"),
-		BaseUrl:          c.baseURL,
-		MaxRetryAttempts: c.maxRetryAttempts,
-		HandleRateLimits: c.handleRateLimits,
-		Client:           c.httpClient,
-		ExpectedStatus:   200,
-	}
-}
-
-func (c *Client) NewConnectorSync() *ConnectorSyncService {
-	return &ConnectorSyncService{
-		HttpService: c.NewHttpService(),
+func NewConnectorSyncRequestParams() httputils.HttpParams {
+	return httputils.HttpParams{
+		Method:         "POST",
+		ExpectedStatus: 200,
 	}
 }
 

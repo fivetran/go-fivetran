@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"os"
 	"reflect"
 	"testing"
 
@@ -30,6 +31,35 @@ const (
 	PredefinedGroupId = "sepulchre_settlement"
 	PredefinedUserId  = "recoup_befell"
 )
+
+func InitE2E() {
+	var apiUrl string
+	var apiKey string
+	var apiSecret string
+
+	valuesToLoad := map[string]*string{
+		"FIVETRAN_API_URL":               &apiUrl,
+		"FIVETRAN_APIKEY":                &apiKey,
+		"FIVETRAN_APISECRET":             &apiSecret,
+		"FIVETRAN_TEST_CERTIFICATE_HASH": &CertificateHash,
+		"FIVETRAN_TEST_CERTIFICATE":      &EncodedCertificate,
+	}
+
+	for name, value := range valuesToLoad {
+		*value = os.Getenv(name)
+		if *value == "" {
+			log.Fatalf("Environment variable %s is not set!\n", name)
+		}
+	}
+
+	Client = fivetran.New(apiKey, apiSecret)
+	Client.BaseURL(apiUrl)
+	if IsPredefinedUserExist() && IsPredefinedGroupExist() {
+		CleanupAccount()
+	} else {
+		log.Fatalln("The predefined user doesn't belong to the Testing account. Make sure that credentials are using in the tests belong to the Testing account.")
+	}
+}
 
 func CreateDbtDestination(t *testing.T) {
 	t.Helper()

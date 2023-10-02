@@ -1,4 +1,4 @@
-package fivetran_test
+package certificates_test
 
 import (
 	"context"
@@ -22,4 +22,5 @@ func TestNewCertificateConnectorCertificateApproveE2E(t *testing.T) {
 
 	testutils.AssertEqual(t, response.Code, "Success")
 	testutils.AssertNotEmpty(t, response.Message)
+	testutils.AssertEqual(t, response.Data.ValidatedBy, testutils.PredefinedUserId)
 }

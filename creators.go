@@ -1,10 +1,12 @@
 package fivetran
 
 import (
+	"github.com/fivetran/go-fivetran/certificates"
 	"github.com/fivetran/go-fivetran/connectors"
 	"github.com/fivetran/go-fivetran/dbt"
 	"github.com/fivetran/go-fivetran/destinations"
 	externallogging "github.com/fivetran/go-fivetran/external_logging"
+	"github.com/fivetran/go-fivetran/fingerprints"
 )
 
 func NewFunctionSecret() *connectors.FunctionSecret {
@@ -65,4 +67,34 @@ func NewDestinationConfig() *destinations.DestinationConfig {
 
 func NewExternalLoggingConfig() *externallogging.ExternalLoggingConfig {
 	return &externallogging.ExternalLoggingConfig{}
+}
+
+func (c *Client) NewConnectorSync() *ConnectorSyncService {
+	return &ConnectorSyncService{
+		HttpService: c.NewHttpService(NewConnectorSyncRequestParams()),
+	}
+}
+
+func (c *Client) NewCertificateConnectorCertificateApprove() *certificates.ConnectorCertificateApproveService {
+	return &certificates.ConnectorCertificateApproveService{
+		HttpService: c.NewHttpService(certificates.NewApproveConnectorCertificateRequestParams()),
+	}
+}
+
+func (c *Client) NewCertificateDestinationCertificateApprove() *certificates.DestinationCertificateApproveService {
+	return &certificates.DestinationCertificateApproveService{
+		HttpService: c.NewHttpService(certificates.NewApproveDestinationCertificateRequestParams()),
+	}
+}
+
+func (c *Client) NewCertificateConnectorFingerprintApprove() *fingerprints.ConnectorFingerprintApproveService {
+	return &fingerprints.ConnectorFingerprintApproveService{
+		HttpService: c.NewHttpService(fingerprints.NewApproveConnectorFingerprintsRequestParams()),
+	}
+}
+
+func (c *Client) NewCertificateDestinationFingerprintApprove() *fingerprints.DestinationFingerprintApproveService {
+	return &fingerprints.DestinationFingerprintApproveService{
+		HttpService: c.NewHttpService(fingerprints.NewApproveDestinationFingerprintsRequestParams()),
+	}
 }

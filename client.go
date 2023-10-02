@@ -62,6 +62,17 @@ func (c *Client) SetMaxRetryAttempts(maxRetryAttempts int) {
 	c.maxRetryAttempts = maxRetryAttempts
 }
 
+func (c *Client) NewHttpService(params httputils.HttpParams) httputils.HttpService {
+	return httputils.HttpService{
+		HttpParams:       params,
+		CommonHeaders:    c.commonHeadersByMethod(params.Method),
+		BaseUrl:          c.baseURL,
+		MaxRetryAttempts: c.maxRetryAttempts,
+		HandleRateLimits: c.handleRateLimits,
+		Client:           c.httpClient,
+	}
+}
+
 func (c *Client) commonHeaders() map[string]string {
 	userAgent := defaultUserAgent
 

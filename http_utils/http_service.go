@@ -6,14 +6,18 @@ import (
 	"fmt"
 )
 
+type HttpParams struct {
+	Method         string
+	ExpectedStatus int
+}
+
 type HttpService struct {
-	Method           string
+	HttpParams
 	BaseUrl          string
 	CommonHeaders    map[string]string
 	Client           HttpClient
 	HandleRateLimits bool
 	MaxRetryAttempts int
-	ExpectedStatus   int
 }
 
 func (s HttpService) Do(

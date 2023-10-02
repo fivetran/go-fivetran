@@ -1,4 +1,4 @@
-package fivetran_test
+package certificates_test
 
 import (
 	testutils "github.com/fivetran/go-fivetran/test_utils"
