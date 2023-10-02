@@ -47,7 +47,7 @@ func (s *ConnectorCertificateApproveService) EncodedCert(value string) *Connecto
 
 func (s *ConnectorCertificateApproveService) Do(ctx context.Context) (CertificateResponse, error) {
 	var response CertificateResponse
-	url := fmt.Sprintf("/connectors/%v/certificates", s.connectorID)
+	url := fmt.Sprintf("/connectors/%v/certificates", *s.connectorID)
 	err := s.HttpService.Do(ctx, url, s.request(), nil, &response)
 	return response, err
 }

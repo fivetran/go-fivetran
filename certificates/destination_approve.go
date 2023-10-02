@@ -47,7 +47,7 @@ func (s *DestinationCertificateApproveService) EncodedCert(value string) *Destin
 
 func (s *DestinationCertificateApproveService) Do(ctx context.Context) (CertificateResponse, error) {
 	var response CertificateResponse
-	url := fmt.Sprintf("/destinations/%v/certificates", s.destinationID)
+	url := fmt.Sprintf("/destinations/%v/certificates", *s.destinationID)
 	err := s.HttpService.Do(ctx, url, s.request(), nil, &response)
 	return response, err
 }

@@ -52,7 +52,7 @@ func (s *ConnectorFingerprintApproveService) PublicKey(value string) *ConnectorF
 
 func (s *ConnectorFingerprintApproveService) Do(ctx context.Context) (FingerprintResponse, error) {
 	var response FingerprintResponse
-	url := fmt.Sprintf("/connectors/%v/fingerprints", s.connectorID)
+	url := fmt.Sprintf("/connectors/%v/fingerprints", *s.connectorID)
 	err := s.HttpService.Do(ctx, url, s.request(), nil, &response)
 	return response, err
 }
