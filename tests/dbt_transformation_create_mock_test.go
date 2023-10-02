@@ -89,7 +89,7 @@ func TestNewDbtTransformationCreateFullMappingMock(t *testing.T) {
 		ThenCall(
 
 			func(req *http.Request) (*http.Response, error) {
-				body := requestBodyToJson(t, req)
+				body := RequestBodyToJson(t, req)
 				assertDbtTransformationRequest(t, body)
 				response := mock.NewResponse(req, http.StatusCreated, createResponse)
 				return response, nil

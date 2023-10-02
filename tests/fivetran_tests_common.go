@@ -30,7 +30,7 @@ func CreateTestClient() (*fivetran.Client, *mock.HttpClient) {
 	return ftClient, mockClient
 }
 
-func requestBodyToJson(t *testing.T, req *http.Request) map[string]interface{} {
+func RequestBodyToJson(t *testing.T, req *http.Request) map[string]interface{} {
 	t.Helper()
 
 	bodyBytes, err := io.ReadAll(req.Body)

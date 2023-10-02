@@ -21,7 +21,7 @@ func TestGroupModifyServiceDo(t *testing.T) {
 	ftClient, mockClient := CreateTestClient()
 	handler := mockClient.When(http.MethodPatch, "/v1/groups/"+ExpectedGroupID).
 		ThenCall(func(req *http.Request) (*http.Response, error) {
-			body := requestBodyToJson(t, req)
+			body := RequestBodyToJson(t, req)
 			assertGroupModifyRequest(t, body)
 			response := mock.NewResponse(req, http.StatusOK, prepareGroupModifyResponse())
 			return response, nil

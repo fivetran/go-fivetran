@@ -17,7 +17,7 @@ func TestConnectorSchemaUpdateFullMappingMock(t *testing.T) {
 	handler := mockClient.When(http.MethodPatch, fmt.Sprintf("/v1/connectors/%v/schemas/", TEST_CONNECTOR_ID)).ThenCall(
 
 		func(req *http.Request) (*http.Response, error) {
-			body := requestBodyToJson(t, req)
+			body := RequestBodyToJson(t, req)
 			assertSchemaRequest(t, body)
 			response := mock.NewResponse(req, http.StatusOK, prepareSchemaResponse())
 			return response, nil

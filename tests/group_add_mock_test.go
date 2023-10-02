@@ -19,7 +19,7 @@ func TestGroupAddUserServiceDo(t *testing.T) {
 	ftClient, mockClient := CreateTestClient()
 	handler := mockClient.When(http.MethodPost, fmt.Sprintf("/v1/groups/%s/users", groupID)).
 		ThenCall(func(req *http.Request) (*http.Response, error) {
-			requestBody := requestBodyToJson(t, req)
+			requestBody := RequestBodyToJson(t, req)
 			assertGroupAddUserRequest(t, requestBody, email, role)
 
 			response := mock.NewResponse(req, http.StatusOK, `{

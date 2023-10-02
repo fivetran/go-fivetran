@@ -78,7 +78,7 @@ func TestNewDbtProjectUpdateFullMappingMock(t *testing.T) {
 		ThenCall(
 
 			func(req *http.Request) (*http.Response, error) {
-				body := requestBodyToJson(t, req)
+				body := RequestBodyToJson(t, req)
 				assertKey(t, "dbt_version", body, dbtVersion)
 				assertKey(t, "target_name", body, targetName)
 				assertKey(t, "threads", body, float64(threads))

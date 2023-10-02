@@ -21,7 +21,7 @@ func TestNewConnectorSecretsListMappingMock(t *testing.T) {
 	handler := mockClient.When(http.MethodPost, "/v1/connectors").ThenCall(
 
 		func(req *http.Request) (*http.Response, error) {
-			body := requestBodyToJson(t, req)
+			body := RequestBodyToJson(t, req)
 			assertConnectorRequest(t, body)
 			response := mock.NewResponse(req, http.StatusCreated, prepareConnectorCreateResponse())
 			return response, nil
@@ -56,7 +56,7 @@ func TestNewConnectorCustomSecretsListMappingMock(t *testing.T) {
 	handler := mockClient.When(http.MethodPost, "/v1/connectors").ThenCall(
 
 		func(req *http.Request) (*http.Response, error) {
-			body := requestBodyToJson(t, req)
+			body := RequestBodyToJson(t, req)
 			assertConnectorRequest(t, body)
 			response := mock.NewResponse(req, http.StatusCreated, prepareConnectorCreateResponse())
 			return response, nil
@@ -90,7 +90,7 @@ func TestNewConnectorCustomMergedMappingMock(t *testing.T) {
 	handler := mockClient.When(http.MethodPost, "/v1/connectors").ThenCall(
 
 		func(req *http.Request) (*http.Response, error) {
-			body := requestBodyToJson(t, req)
+			body := RequestBodyToJson(t, req)
 			assertConnectorRequest(t, body)
 			response := mock.NewResponse(req, http.StatusCreated, prepareConnectorCustomMergedCreateResponse())
 			return response, nil

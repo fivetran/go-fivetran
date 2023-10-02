@@ -16,9 +16,8 @@ type DestinationFingerprintApproveService struct {
 }
 
 type destinationFingerprintApproveRequest struct {
-	DestinationID *string `json:"destination_id,omitempty"`
-	Hash          *string `json:"hash,omitempty"`
-	PublicKey     *string `json:"public_key,omitempty"`
+	Hash      *string `json:"hash,omitempty"`
+	PublicKey *string `json:"public_key,omitempty"`
 }
 
 func NewApproveDestinationFingerprintsRequestParams() httputils.HttpParams {
@@ -30,9 +29,8 @@ func NewApproveDestinationFingerprintsRequestParams() httputils.HttpParams {
 
 func (s *DestinationFingerprintApproveService) request() *destinationFingerprintApproveRequest {
 	return &destinationFingerprintApproveRequest{
-		DestinationID: s.destinationID,
-		Hash:          s.hash,
-		PublicKey:     s.publicKey,
+		Hash:      s.hash,
+		PublicKey: s.publicKey,
 	}
 }
 

@@ -16,7 +16,7 @@ func TestConnectorUpdateMock(t *testing.T) {
 	handler := mockClient.When(http.MethodPatch, "/v1/connectors/connector_id").ThenCall(
 
 		func(req *http.Request) (*http.Response, error) {
-			body := requestBodyToJson(t, req)
+			body := RequestBodyToJson(t, req)
 			assertConnectorUpdateRequest(t, body)
 			response := mock.NewResponse(req, http.StatusOK, prepareConnectorUpdateResponse())
 			return response, nil
@@ -50,7 +50,7 @@ func TestCustomConnectorUpdateMock(t *testing.T) {
 	handler := mockClient.When(http.MethodPatch, "/v1/connectors/connector_id").ThenCall(
 
 		func(req *http.Request) (*http.Response, error) {
-			body := requestBodyToJson(t, req)
+			body := RequestBodyToJson(t, req)
 			assertCustomConnectorUpdateRequest(t, body)
 			response := mock.NewResponse(req, http.StatusOK, prepareConnectorUpdateResponse())
 			return response, nil
@@ -97,7 +97,7 @@ func TestCustomMergedConnectorUpdateMock(t *testing.T) {
 	handler := mockClient.When(http.MethodPatch, "/v1/connectors/connector_id").ThenCall(
 
 		func(req *http.Request) (*http.Response, error) {
-			body := requestBodyToJson(t, req)
+			body := RequestBodyToJson(t, req)
 			assertCustomConnectorUpdateRequest(t, body)
 			response := mock.NewResponse(req, http.StatusOK, prepareConnectorUpdateResponse())
 			return response, nil

@@ -16,7 +16,7 @@ func TestNewTeamGroupModify(t *testing.T) {
 	handler := mockClient.When(http.MethodPatch, "/v1/teams/team_id/groups/group_id").ThenCall(
 
 		func(req *http.Request) (*http.Response, error) {
-			body := requestBodyToJson(t, req)
+			body := RequestBodyToJson(t, req)
 			assertTeamGroupModifyRequest(t, body)
 			response := mock.NewResponse(req, http.StatusOK, prepareTeamGroupModifyResponse())
 			return response, nil
