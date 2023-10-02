@@ -2,11 +2,10 @@ package tests
 
 import (
 	"context"
-	"fmt"
 	"net/http"
 	"testing"
 
-	"github.com/fivetran/go-fivetran"
+	"github.com/fivetran/go-fivetran/common"
 	"github.com/fivetran/go-fivetran/tests/mock"
 )
 
@@ -41,13 +40,13 @@ func TestGroupDeleteServiceDo(t *testing.T) {
 }
 
 func prepareGroupDeleteResponse() string {
-	return fmt.Sprintf(`{
+	return `{
 		"code": "Success",
 		"message": "Group has been deleted"
-	}`)
+	}`
 }
 
-func assertGroupDeleteResponse(t *testing.T, response fivetran.GroupDeleteResponse) {
+func assertGroupDeleteResponse(t *testing.T, response common.CommonResponse) {
 	assertEqual(t, response.Code, "Success")
 	assertEqual(t, response.Message, "Group has been deleted")
 }

@@ -1,4 +1,6 @@
-package fivetran
+package connectors
+
+import "github.com/fivetran/go-fivetran/utils"
 
 // ConnectorAuth builds Connector Management, Auth.
 // Ref. https://fivetran.com/docs/rest-api/connectors
@@ -16,19 +18,15 @@ type connectorAuthRequest struct {
 	RealmID      *string                           `json:"realm_id,omitempty"`
 }
 
-func NewConnectorAuth() *ConnectorAuth {
-	return &ConnectorAuth{}
-}
-
-func (ca *ConnectorAuth) merge(customAuth *map[string]interface{}) (*map[string]interface{}, error) {
-	err := MergeIntoMap(ca.request(), customAuth)
+func (ca *ConnectorAuth) Merge(customAuth *map[string]interface{}) (*map[string]interface{}, error) {
+	err := utils.MergeIntoMap(ca.Request(), customAuth)
 	if err != nil {
 		return nil, err
 	}
 	return customAuth, nil
 }
 
-func (ca *ConnectorAuth) request() *connectorAuthRequest {
+func (ca *ConnectorAuth) Request() *connectorAuthRequest {
 	var clientAccess *connectorAuthClientAccessRequest
 	if ca.clientAccess != nil {
 		clientAccess = ca.clientAccess.request()

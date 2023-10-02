@@ -7,6 +7,7 @@ import (
 	"testing"
 
 	"github.com/fivetran/go-fivetran"
+	"github.com/fivetran/go-fivetran/dbt"
 	"github.com/fivetran/go-fivetran/tests/mock"
 )
 
@@ -141,7 +142,7 @@ func assertDbtTransformationRequest(t *testing.T, request map[string]interface{}
 	assertKey(t, "time_of_day", schedule, TIME_OF_DAY)
 }
 
-func assertDbtTransformationResponse(t *testing.T, response fivetran.DbtTransformationResponse) {
+func assertDbtTransformationResponse(t *testing.T, response dbt.DbtTransformationResponse) {
 
 	assertEqual(t, response.Code, "Created")
 	assertNotEmpty(t, response.Message)

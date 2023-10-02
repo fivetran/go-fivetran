@@ -7,6 +7,7 @@ import (
 	"os"
 
 	"github.com/fivetran/go-fivetran"
+	"github.com/fivetran/go-fivetran/connectors"
 )
 
 func main() {
@@ -23,10 +24,11 @@ func main() {
 
 	cTables1 := fivetran.NewConnectorConfigCustomTables().Aggregation("aggregation1").TableName("theName")
 	cTables2 := fivetran.NewConnectorConfigCustomTables().TableName("theName").Fields([]string{"FIELD ONE", "FIELD TWO"})
-	connConfig.CustomTables([]*fivetran.ConnectorConfigCustomTables{cTables1, cTables2})
+
+	connConfig.CustomTables([]*connectors.ConnectorConfigCustomTables{cTables1, cTables2})
 
 	adobeAnalyticsConfig1 := fivetran.NewConnectorConfigAdobeAnalyticsConfiguration().SyncMode("syncMode").Elements([]string{"elemet1", "element2"})
-	connConfig.AdobeAnalyticsConfigurations([]*fivetran.ConnectorConfigAdobeAnalyticsConfiguration{adobeAnalyticsConfig1})
+	connConfig.AdobeAnalyticsConfigurations([]*connectors.ConnectorConfigAdobeAnalyticsConfiguration{adobeAnalyticsConfig1})
 
 	svc.ConnectorID("grateful_vertices")
 	svc.Paused(true)

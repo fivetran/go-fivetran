@@ -3,14 +3,16 @@ package fivetran_test
 import (
 	"context"
 	"testing"
+
+	testutils "github.com/fivetran/go-fivetran/test_utils"
 )
 
 func TestNewCertificateDestinationCertificateApproveE2E(t *testing.T) {
-	destinationId := CreateTempDestination(t)
-	response, err := Client.NewCertificateDestinationCertificateApprove().
+	destinationId := testutils.CreateTempDestination(t)
+	response, err := testutils.Client.NewCertificateDestinationCertificateApprove().
 		DestinationID(destinationId).
-		Hash(CertificateHash).
-		EncodedCert(EncodedCertificate).
+		Hash(testutils.CertificateHash).
+		EncodedCert(testutils.EncodedCertificate).
 		Do(context.Background())
 
 	if err != nil {
@@ -18,6 +20,6 @@ func TestNewCertificateDestinationCertificateApproveE2E(t *testing.T) {
 		t.Error(err)
 	}
 
-	AssertEqual(t, response.Code, "Success")
-	AssertNotEmpty(t, response.Message)
+	testutils.AssertEqual(t, response.Code, "Success")
+	testutils.AssertNotEmpty(t, response.Message)
 }

@@ -1,4 +1,4 @@
-package fivetran
+package connectors
 
 // ConnectorAuthClientAccess builds Connector Management, Auth Client Access.
 // Ref. https://fivetran.com/docs/rest-api/connectors
@@ -14,10 +14,6 @@ type connectorAuthClientAccessRequest struct {
 	ClientSecret   *string `json:"client_secret,omitempty"`
 	UserAgent      *string `json:"user_agent,omitempty"`
 	DeveloperToken *string `json:"developer_token,omitempty"`
-}
-
-func NewConnectorAuthClientAccess() *ConnectorAuthClientAccess {
-	return &ConnectorAuthClientAccess{}
 }
 
 func (ca *ConnectorAuthClientAccess) request() *connectorAuthClientAccessRequest {

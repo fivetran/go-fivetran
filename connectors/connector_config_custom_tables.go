@@ -1,4 +1,4 @@
-package fivetran
+package connectors
 
 // ConnectorConfigCustomTables builds Connector Management, Connector Config Custom Tables.
 // Ref. https://fivetran.com/docs/rest-api/connectors/config
@@ -39,10 +39,6 @@ type ConnectorConfigCustomTablesResponse struct {
 	ClickAttributionWindow string   `json:"click_attribution_window"`
 	ViewAttributionWindow  string   `json:"view_attribution_window"`
 	PrebuiltReportName     string   `json:"prebuilt_report_name"`
-}
-
-func NewConnectorConfigCustomTables() *ConnectorConfigCustomTables {
-	return &ConnectorConfigCustomTables{}
 }
 
 func (ct *ConnectorConfigCustomTables) request() *connectorConfigCustomTablesRequest {

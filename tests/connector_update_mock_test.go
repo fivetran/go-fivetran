@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/fivetran/go-fivetran"
+	"github.com/fivetran/go-fivetran/connectors"
 	"github.com/fivetran/go-fivetran/tests/mock"
 )
 
@@ -152,7 +153,7 @@ func prepareCustomUpdateConfig() *map[string]interface{} {
 	return &config
 }
 
-func prepareCustomMergedAuth() *fivetran.ConnectorAuth {
+func prepareCustomMergedAuth() *connectors.ConnectorAuth {
 	auth := fivetran.NewConnectorAuth()
 
 	clientAccess := fivetran.NewConnectorAuthClientAccess().ClientID("client_id").ClientSecret("client_secret")
@@ -170,9 +171,9 @@ func prepareCustomMergedUpdateConfigMap() *map[string]interface{} {
 	return &config
 }
 
-func prepareCustomMergedConfigUpdate() *fivetran.ConnectorConfig {
+func prepareCustomMergedConfigUpdate() *connectors.ConnectorConfig {
 	config := fivetran.NewConnectorConfig()
-	secretsList := make([]*fivetran.FunctionSecret, 0)
+	secretsList := make([]*connectors.FunctionSecret, 0)
 	secretsList = append(secretsList, fivetran.NewFunctionSecret().Key("key").Value("value"))
 	config.
 		SecretsList(secretsList).
@@ -181,9 +182,9 @@ func prepareCustomMergedConfigUpdate() *fivetran.ConnectorConfig {
 	return config
 }
 
-func prepareConfigUpdate() *fivetran.ConnectorConfig {
+func prepareConfigUpdate() *connectors.ConnectorConfig {
 	config := fivetran.NewConnectorConfig()
-	secretsList := make([]*fivetran.FunctionSecret, 0)
+	secretsList := make([]*connectors.FunctionSecret, 0)
 	secretsList = append(secretsList, fivetran.NewFunctionSecret().Key("key").Value("value"))
 	config.
 		SecretsList(secretsList).
@@ -238,21 +239,21 @@ func prepareConnectorUpdateResponse() string {
 	}`
 }
 
-func assertConnectorConfig(t *testing.T, config fivetran.ConnectorConfigResponse) {
+func assertConnectorConfig(t *testing.T, config connectors.ConnectorConfigResponse) {
 	assertEqual(t, config.SecretsList[0].Key, "key")
 	assertEqual(t, config.SecretsList[0].Value, "value")
 	assertEqual(t, config.ShareURL, "share_url")
 	assertEqual(t, *config.IsKeypair, true)
 }
 
-func assertConnectorUpdateResponse(t *testing.T, response fivetran.ConnectorModifyResponse) {
+func assertConnectorUpdateResponse(t *testing.T, response connectors.DetailsWithConfigResponse) {
 	assertEqual(t, response.Code, "Success")
 
 	assertEqual(t, *response.Data.Paused, false)
 	assertConnectorConfig(t, response.Data.Config)
 }
 
-func assertCustomConnectorUpdateResponse(t *testing.T, response fivetran.ConnectorCustomModifyResponse) {
+func assertCustomConnectorUpdateResponse(t *testing.T, response connectors.DetailsWithCustomConfigResponse) {
 	assertEqual(t, response.Code, "Success")
 
 	assertEqual(t, *response.Data.Paused, false)
@@ -271,7 +272,7 @@ func assertCustomConnectorUpdateResponse(t *testing.T, response fivetran.Connect
 	assertKey(t, "value", secret, "value")
 }
 
-func assertCustomMergedConnectorUpdateResponse(t *testing.T, response fivetran.ConnectorCustomMergedModifyResponse) {
+func assertCustomMergedConnectorUpdateResponse(t *testing.T, response connectors.DetailsWithCustomMergedConfigResponse) {
 	assertEqual(t, response.Code, "Success")
 
 	assertEqual(t, *response.Data.Paused, false)

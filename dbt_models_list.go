@@ -4,6 +4,9 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+
+	"github.com/fivetran/go-fivetran/dbt"
+	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
 type DbtModelsListService struct {
@@ -11,19 +14,6 @@ type DbtModelsListService struct {
 	projectId *string
 	limit     *int
 	cursor    *string
-}
-
-type DbtModelsListResponse struct {
-	Code    string `json:"code"`
-	Message string `json:"message"`
-	Data    struct {
-		Items []struct {
-			ID        string `json:"id"`
-			ModelName string `json:"model_name"`
-			Scheduled bool   `json:"scheduled"`
-		} `json:"items"`
-		NextCursor string `json:"next_cursor"`
-	} `json:"data"`
 }
 
 func (c *Client) NewDbtModelsList() *DbtModelsListService {
@@ -45,8 +35,8 @@ func (s *DbtModelsListService) Cursor(value string) *DbtModelsListService {
 	return s
 }
 
-func (s *DbtModelsListService) Do(ctx context.Context) (DbtModelsListResponse, error) {
-	var response DbtModelsListResponse
+func (s *DbtModelsListService) Do(ctx context.Context) (dbt.DbtModelsListResponse, error) {
+	var response dbt.DbtModelsListResponse
 	url := fmt.Sprintf("%v/dbt/models", s.c.baseURL)
 	expectedStatus := 200
 
@@ -63,18 +53,18 @@ func (s *DbtModelsListService) Do(ctx context.Context) (DbtModelsListResponse, e
 		queries["project_id"] = *s.projectId
 	}
 
-	r := request{
-		method:           "GET",
-		url:              url,
-		body:             nil,
-		queries:          queries,
-		headers:          headers,
-		client:           s.c.httpClient,
-		handleRateLimits: s.c.handleRateLimits,
-		maxRetryAttempts: s.c.maxRetryAttempts,
+	r := httputils.Request{
+		Method:           "GET",
+		Url:              url,
+		Body:             nil,
+		Queries:          queries,
+		Headers:          headers,
+		Client:           s.c.httpClient,
+		HandleRateLimits: s.c.handleRateLimits,
+		MaxRetryAttempts: s.c.maxRetryAttempts,
 	}
 
-	respBody, respStatus, err := r.httpRequest(ctx)
+	respBody, respStatus, err := r.Do(ctx)
 	if err != nil {
 		return response, err
 	}

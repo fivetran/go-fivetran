@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/fivetran/go-fivetran"
+	"github.com/fivetran/go-fivetran/groups"
 	"github.com/fivetran/go-fivetran/tests/mock"
 )
 
@@ -57,7 +57,7 @@ func prepareGroupDetailsResponse() string {
 		EXPECTED_CREATED_AT)
 }
 
-func assertGroupDetailsResponse(t *testing.T, response fivetran.GroupDetailsResponse, expectedID, expectedName string, expectedCreatedAt string) {
+func assertGroupDetailsResponse(t *testing.T, response groups.GroupDetailsResponse, expectedID, expectedName string, expectedCreatedAt string) {
 	assertEqual(t, response.Code, "Success")
 	assertEqual(t, response.Data.ID, expectedID)
 	assertEqual(t, response.Data.Name, expectedName)

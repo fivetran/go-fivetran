@@ -5,7 +5,10 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"time"
+
+	"github.com/fivetran/go-fivetran/common"
+	httputils "github.com/fivetran/go-fivetran/http_utils"
+	"github.com/fivetran/go-fivetran/users"
 )
 
 // UserModifyService implements the User Management, Modify a User API.
@@ -23,31 +26,11 @@ type UserModifyService struct {
 }
 
 type userModifyRequest struct {
-	GivenName  *string         `json:"given_name,omitempty"`
-	FamilyName *string         `json:"family_name,omitempty"`
-	Phone      *nullableString `json:"phone,omitempty"`
-	Picture    *nullableString `json:"picture,omitempty"`
-	Role       *string         `json:"role,omitempty"`
-}
-
-type UserModifyData struct {
-	ID         string    `json:"id"`
-	Email      string    `json:"email"`
-	GivenName  string    `json:"given_name"`
-	FamilyName string    `json:"family_name"`
-	Verified   *bool     `json:"verified"`
-	Invited    *bool     `json:"invited"`
-	Picture    string    `json:"picture"`
-	Phone      string    `json:"phone"`
-	LoggedInAt time.Time `json:"logged_in_at"`
-	CreatedAt  time.Time `json:"created_at"`
-	Role       string    `json:"role"`
-}
-
-type UserModifyResponse struct {
-	Code    string         `json:"code"`
-	Message string         `json:"message"`
-	Data    UserModifyData `json:"data"`
+	GivenName  *string                `json:"given_name,omitempty"`
+	FamilyName *string                `json:"family_name,omitempty"`
+	Phone      *common.NullableString `json:"phone,omitempty"`
+	Picture    *common.NullableString `json:"picture,omitempty"`
+	Role       *string                `json:"role,omitempty"`
 }
 
 func (c *Client) NewUserModify() *UserModifyService {
@@ -55,13 +38,15 @@ func (c *Client) NewUserModify() *UserModifyService {
 }
 
 func (s *UserModifyService) request() *userModifyRequest {
-	return &userModifyRequest{
+	result := userModifyRequest{
 		GivenName:  s.givenName,
 		FamilyName: s.familyName,
-		Phone:      newNullableString(s.phone, s.clearPhone),
-		Picture:    newNullableString(s.picture, s.clearPicture),
+		Phone:      common.NewNullableString(s.phone, s.clearPhone),
+		Picture:    common.NewNullableString(s.picture, s.clearPicture),
 		Role:       s.role,
 	}
+
+	return &result
 }
 
 func (s *UserModifyService) UserID(value string) *UserModifyService {
@@ -104,8 +89,8 @@ func (s *UserModifyService) Role(value string) *UserModifyService {
 	return s
 }
 
-func (s *UserModifyService) Do(ctx context.Context) (UserModifyResponse, error) {
-	var response UserModifyResponse
+func (s *UserModifyService) Do(ctx context.Context) (users.UserDetailsResponse, error) {
+	var response users.UserDetailsResponse
 
 	if s.userID == nil {
 		return response, fmt.Errorf("missing required UserID")
@@ -129,18 +114,18 @@ func (s *UserModifyService) Do(ctx context.Context) (UserModifyResponse, error) 
 	headers := s.c.commonHeaders()
 	headers["Content-Type"] = "application/json"
 
-	r := request{
-		method:           "PATCH",
-		url:              url,
-		body:             reqBody,
-		queries:          nil,
-		headers:          headers,
-		client:           s.c.httpClient,
-		handleRateLimits: s.c.handleRateLimits,
-		maxRetryAttempts: s.c.maxRetryAttempts,
+	r := httputils.Request{
+		Method:           "PATCH",
+		Url:              url,
+		Body:             reqBody,
+		Queries:          nil,
+		Headers:          headers,
+		Client:           s.c.httpClient,
+		HandleRateLimits: s.c.handleRateLimits,
+		MaxRetryAttempts: s.c.maxRetryAttempts,
 	}
 
-	respBody, respStatus, err := r.httpRequest(ctx)
+	respBody, respStatus, err := r.Do(ctx)
 	if err != nil {
 		return response, err
 	}

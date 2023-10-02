@@ -3,12 +3,14 @@ package fivetran_test
 import (
 	"context"
 	"testing"
+
+	testutils "github.com/fivetran/go-fivetran/test_utils"
 )
 
 func TestNewGroupAddUserE2E(t *testing.T) {
-	userId := CreateUser(t)
+	userId := testutils.CreateUser(t)
 
-	created, err := Client.NewGroupAddUser().GroupID(PredefinedGroupId).
+	created, err := testutils.Client.NewGroupAddUser().GroupID(testutils.PredefinedGroupId).
 		Email("william_addison.@fivetran.com").
 		Role("Destination Administrator").
 		Do(context.Background())
@@ -18,11 +20,11 @@ func TestNewGroupAddUserE2E(t *testing.T) {
 		t.Error(err)
 	}
 
-	AssertEqual(t, created.Code, "Success")
-	AssertNotEmpty(t, created.Message)
+	testutils.AssertEqual(t, created.Code, "Success")
+	testutils.AssertNotEmpty(t, created.Message)
 
 	t.Cleanup(func() {
-		RemoveUserFromGroup(t, PredefinedGroupId, userId)
-		DeleteUser(t, userId)
+		testutils.RemoveUserFromGroup(t, testutils.PredefinedGroupId, userId)
+		testutils.DeleteUser(t, userId)
 	})
 }

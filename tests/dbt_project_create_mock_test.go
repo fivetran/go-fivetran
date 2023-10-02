@@ -127,7 +127,7 @@ func TestNewDbtProjectCreateFullMappingMock(t *testing.T) {
 	assertEqual(t, response.Data.ID, dbtProjectID)
 	assertEqual(t, response.Data.TargetName, targetName)
 	assertEqual(t, response.Data.DefaultSchema, defaultSchema)
-	assertEqual(t, response.Data.GroupID, groupID)
+	assertEqual(t, response.Data.GroupId, groupID)
 	assertEqual(t, response.Data.CreatedAt, createdAt)
 	assertEqual(t, response.Data.CreatedById, createdByID)
 	assertEqual(t, response.Data.PublicKey, publicKey)

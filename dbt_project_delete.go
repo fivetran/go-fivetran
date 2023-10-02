@@ -4,6 +4,9 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+
+	"github.com/fivetran/go-fivetran/common"
+	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
 // ProjectDeleteService implements the Project Management, Delete a project API.
@@ -11,11 +14,6 @@ import (
 type DbtProjectDeleteService struct {
 	c            *Client
 	dbtProjectID *string
-}
-
-type DbtProjectDeleteResponse struct {
-	Code    string `json:"code"`
-	Message string `json:"message"`
 }
 
 func (c *Client) NewDbtProjectDelete() *DbtProjectDeleteService {
@@ -27,8 +25,8 @@ func (s *DbtProjectDeleteService) DbtProjectID(value string) *DbtProjectDeleteSe
 	return s
 }
 
-func (s *DbtProjectDeleteService) Do(ctx context.Context) (DbtProjectDeleteResponse, error) {
-	var response DbtProjectDeleteResponse
+func (s *DbtProjectDeleteService) Do(ctx context.Context) (common.CommonResponse, error) {
+	var response common.CommonResponse
 
 	if s.dbtProjectID == nil {
 		return response, fmt.Errorf("missing required dbtProjectID")
@@ -39,18 +37,18 @@ func (s *DbtProjectDeleteService) Do(ctx context.Context) (DbtProjectDeleteRespo
 
 	headers := s.c.commonHeaders()
 
-	r := request{
-		method:           "DELETE",
-		url:              url,
-		body:             nil,
-		queries:          nil,
-		headers:          headers,
-		client:           s.c.httpClient,
-		handleRateLimits: s.c.handleRateLimits,
-		maxRetryAttempts: s.c.maxRetryAttempts,
+	r := httputils.Request{
+		Method:           "DELETE",
+		Url:              url,
+		Body:             nil,
+		Queries:          nil,
+		Headers:          headers,
+		Client:           s.c.httpClient,
+		HandleRateLimits: s.c.handleRateLimits,
+		MaxRetryAttempts: s.c.maxRetryAttempts,
 	}
 
-	respBody, respStatus, err := r.httpRequest(ctx)
+	respBody, respStatus, err := r.Do(ctx)
 	if err != nil {
 		return response, err
 	}

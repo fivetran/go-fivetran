@@ -4,6 +4,9 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+
+	"github.com/fivetran/go-fivetran/common"
+	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
 // GroupAddUserService implements the Group Management, Add a User to a Group API.
@@ -18,11 +21,6 @@ type GroupAddUserService struct {
 type groupAddUserRequest struct {
 	Email *string `json:"email,omitempty"`
 	Role  *string `json:"role,omitempty"`
-}
-
-type GroupAddUserResponse struct {
-	Code    string `json:"code"`
-	Message string `json:"message"`
 }
 
 func (c *Client) NewGroupAddUser() *GroupAddUserService {
@@ -51,8 +49,8 @@ func (s *GroupAddUserService) Role(value string) *GroupAddUserService {
 	return s
 }
 
-func (s *GroupAddUserService) Do(ctx context.Context) (GroupAddUserResponse, error) {
-	var response GroupAddUserResponse
+func (s *GroupAddUserService) Do(ctx context.Context) (common.CommonResponse, error) {
+	var response common.CommonResponse
 
 	if s.groupID == nil {
 		return response, fmt.Errorf("missing required GroupID")
@@ -69,18 +67,18 @@ func (s *GroupAddUserService) Do(ctx context.Context) (GroupAddUserResponse, err
 		return response, err
 	}
 
-	r := request{
-		method:           "POST",
-		url:              url,
-		body:             reqBody,
-		queries:          nil,
-		headers:          headers,
-		client:           s.c.httpClient,
-		handleRateLimits: s.c.handleRateLimits,
-		maxRetryAttempts: s.c.maxRetryAttempts,
+	r := httputils.Request{
+		Method:           "POST",
+		Url:              url,
+		Body:             reqBody,
+		Queries:          nil,
+		Headers:          headers,
+		Client:           s.c.httpClient,
+		HandleRateLimits: s.c.handleRateLimits,
+		MaxRetryAttempts: s.c.maxRetryAttempts,
 	}
 
-	respBody, respStatus, err := r.httpRequest(ctx)
+	respBody, respStatus, err := r.Do(ctx)
 	if err != nil {
 		return response, err
 	}

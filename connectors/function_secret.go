@@ -1,4 +1,4 @@
-package fivetran
+package connectors
 
 type FunctionSecret struct {
 	key   *string
@@ -13,10 +13,6 @@ type functionSecretRequest struct {
 type FunctionSecretResponse struct {
 	Key   string `json:"key"`
 	Value string `json:"value"`
-}
-
-func NewFunctionSecret() *FunctionSecret {
-	return &FunctionSecret{}
 }
 
 func (fs *FunctionSecret) request() *functionSecretRequest {

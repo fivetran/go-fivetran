@@ -1,30 +1,32 @@
 package fivetran_test
 
 import (
-    "context"
-    "testing"
+	"context"
+	"testing"
+
+	testutils "github.com/fivetran/go-fivetran/test_utils"
 )
 
 func TestNewTeamConnectorMebershipDeleteE2E(t *testing.T) {
-    teamId := CreateTeam(t)
-    connectorId := CreateConnector(t)
-    CreateTeamConnector(t, teamId, connectorId)
+	teamId := testutils.CreateTeam(t)
+	connectorId := testutils.CreateConnector(t)
+	testutils.CreateTeamConnector(t, teamId, connectorId)
 
-    deleted, err := Client.NewTeamConnectorMembershipDelete().
-        TeamId(teamId).
-        ConnectorId(connectorId).
-        Do(context.Background())
+	deleted, err := testutils.Client.NewTeamConnectorMembershipDelete().
+		TeamId(teamId).
+		ConnectorId(connectorId).
+		Do(context.Background())
 
-    if err != nil {
-        t.Logf("%+v\n", deleted)
-        t.Error(err)
-    }
+	if err != nil {
+		t.Logf("%+v\n", deleted)
+		t.Error(err)
+	}
 
-    AssertEqual(t, deleted.Code, "Success")
-    AssertEqual(t, deleted.Message, "Connector membership has been deleted")
+	testutils.AssertEqual(t, deleted.Code, "Success")
+	testutils.AssertEqual(t, deleted.Message, "Connector membership has been deleted")
 
-    t.Cleanup(func() { 
-        DeleteConnector(t, connectorId)
-        DeleteTeam(t, teamId)
-    })
+	t.Cleanup(func() {
+		testutils.DeleteConnector(t, connectorId)
+		testutils.DeleteTeam(t, teamId)
+	})
 }

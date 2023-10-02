@@ -1,28 +1,30 @@
 package fivetran_test
 
 import (
-    "context"
-    "testing"
+	"context"
+	"testing"
+
+	testutils "github.com/fivetran/go-fivetran/test_utils"
 )
 
 func TestNewTeamUserMembershipDeleteE2E(t *testing.T) {
-    teamId := CreateTeam(t)
-    CreateTeamUser(t, teamId, PredefinedUserId)
+	teamId := testutils.CreateTeam(t)
+	testutils.CreateTeamUser(t, teamId, testutils.PredefinedUserId)
 
-    deleted, err := Client.NewTeamUserMembershipDelete().
-        TeamId(teamId).
-        UserId(PredefinedUserId).
-        Do(context.Background())
+	deleted, err := testutils.Client.NewTeamUserMembershipDelete().
+		TeamId(teamId).
+		UserId(testutils.PredefinedUserId).
+		Do(context.Background())
 
-    if err != nil {
-        t.Logf("%+v\n", deleted)
-        t.Error(err)
-    }
+	if err != nil {
+		t.Logf("%+v\n", deleted)
+		t.Error(err)
+	}
 
-    AssertEqual(t, deleted.Code, "Success")
-    AssertEqual(t, deleted.Message, "User has been removed from the team")
+	testutils.AssertEqual(t, deleted.Code, "Success")
+	testutils.AssertEqual(t, deleted.Message, "User has been removed from the team")
 
-    t.Cleanup(func() { 
-        DeleteTeam(t, teamId)
-    })
+	t.Cleanup(func() {
+		testutils.DeleteTeam(t, teamId)
+	})
 }

@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/fivetran/go-fivetran"
+	"github.com/fivetran/go-fivetran/connectors"
 	"github.com/fivetran/go-fivetran/tests/mock"
 )
 
@@ -211,15 +212,15 @@ func prepareConnectorCustomMergedCreateResponse() string {
 	}`
 }
 
-func prepareConnectorConfig() *fivetran.ConnectorConfig {
+func prepareConnectorConfig() *connectors.ConnectorConfig {
 	config := fivetran.NewConnectorConfig()
-	secretsList := make([]*fivetran.FunctionSecret, 0)
+	secretsList := make([]*connectors.FunctionSecret, 0)
 	secretsList = append(secretsList, fivetran.NewFunctionSecret().Key("key").Value("value"))
 	config.SecretsList(secretsList)
 	return config
 }
 
-func prepareConnectorAuth() *fivetran.ConnectorAuth {
+func prepareConnectorAuth() *connectors.ConnectorAuth {
 	auth := fivetran.NewConnectorAuth()
 
 	clientAccess := fivetran.NewConnectorAuthClientAccess().ClientID("client_id").ClientSecret("client_secret")
@@ -300,7 +301,7 @@ func assertConnectorRequest(t *testing.T, request map[string]interface{}) {
 	assertKey(t, "client_secret", clientAccess, "client_secret")
 }
 
-func assertConnectorResponse(t *testing.T, response fivetran.ConnectorCreateResponse) {
+func assertConnectorResponse(t *testing.T, response connectors.DetailsWithConfigResponse) {
 
 	assertEqual(t, response.Code, "Success")
 	assertNotEmpty(t, response.Message)
@@ -309,7 +310,7 @@ func assertConnectorResponse(t *testing.T, response fivetran.ConnectorCreateResp
 	assertEqual(t, response.Data.Config.SecretsList[0].Value, "value")
 }
 
-func assertConnectorCustomResponse(t *testing.T, response fivetran.ConnectorCustomCreateResponse) {
+func assertConnectorCustomResponse(t *testing.T, response connectors.DetailsWithCustomConfigResponse) {
 	assertEqual(t, response.Code, "Success")
 	assertNotEmpty(t, response.Message)
 
@@ -317,7 +318,7 @@ func assertConnectorCustomResponse(t *testing.T, response fivetran.ConnectorCust
 	assertKey(t, "value", response.Data.Config["secrets_list"].([]interface{})[0].(map[string]interface{}), "value")
 }
 
-func assertConnectorCustomMergedResponse(t *testing.T, response fivetran.ConnectorCustomMergedCreateResponse) {
+func assertConnectorCustomMergedResponse(t *testing.T, response connectors.DetailsWithCustomMergedConfigResponse) {
 	assertEqual(t, response.Code, "Success")
 	assertNotEmpty(t, response.Message)
 

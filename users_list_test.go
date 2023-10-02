@@ -3,27 +3,29 @@ package fivetran_test
 import (
 	"context"
 	"testing"
+
+	testutils "github.com/fivetran/go-fivetran/test_utils"
 )
 
 func TestNewUsersListE2E(t *testing.T) {
-	users, err := Client.NewUsersList().Do(context.Background())
+	users, err := testutils.Client.NewUsersList().Do(context.Background())
 	if err != nil {
 		t.Logf("%+v\n", users)
 		t.Error(err)
 	}
 
-	AssertEqual(t, users.Code, "Success")
-	AssertHasLength(t, users.Data.Items, 1)
-	AssertEqual(t, users.Data.Items[0].ID, PredefinedUserId)
-	AssertEqual(t, users.Data.Items[0].Email, PredefinedUserEmail)
-	AssertEqual(t, users.Data.Items[0].GivenName, PredefinedUserGivenName)
-	AssertEqual(t, users.Data.Items[0].FamilyName, PredefinedUserFamilyName)
-	AssertEqual(t, *users.Data.Items[0].Verified, true)
-	AssertEqual(t, *users.Data.Items[0].Invited, false)
-	AssertEmpty(t, users.Data.Items[0].Picture)
-	AssertEqual(t, users.Data.Items[0].Phone, PredefinedUserPhone)
-	AssertEqual(t, users.Data.Items[0].Role, "Account Administrator")
-	AssertEqual(t, users.Data.Items[0].LoggedInAt.IsZero(), false)
-	AssertEqual(t, users.Data.Items[0].CreatedAt.IsZero(), false)
-	AssertEmpty(t, users.Data.NextCursor)
+	testutils.AssertEqual(t, users.Code, "Success")
+	testutils.AssertHasLength(t, users.Data.Items, 1)
+	testutils.AssertEqual(t, users.Data.Items[0].ID, testutils.PredefinedUserId)
+	testutils.AssertEqual(t, users.Data.Items[0].Email, testutils.PredefinedUserEmail)
+	testutils.AssertEqual(t, users.Data.Items[0].GivenName, testutils.PredefinedUserGivenName)
+	testutils.AssertEqual(t, users.Data.Items[0].FamilyName, testutils.PredefinedUserFamilyName)
+	testutils.AssertEqual(t, *users.Data.Items[0].Verified, true)
+	testutils.AssertEqual(t, *users.Data.Items[0].Invited, false)
+	testutils.AssertEmpty(t, users.Data.Items[0].Picture)
+	testutils.AssertEqual(t, users.Data.Items[0].Phone, testutils.PredefinedUserPhone)
+	testutils.AssertEqual(t, users.Data.Items[0].Role, "Account Administrator")
+	testutils.AssertEqual(t, users.Data.Items[0].LoggedInAt.IsZero(), false)
+	testutils.AssertEqual(t, users.Data.Items[0].CreatedAt.IsZero(), false)
+	testutils.AssertEmpty(t, users.Data.NextCursor)
 }

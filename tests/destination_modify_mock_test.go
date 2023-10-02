@@ -7,6 +7,7 @@ import (
 	"testing"
 
 	"github.com/fivetran/go-fivetran"
+	"github.com/fivetran/go-fivetran/destinations"
 	"github.com/fivetran/go-fivetran/tests/mock"
 )
 
@@ -131,7 +132,7 @@ func prepareDestinationModifyResponse() string {
 		DESTINATION_MODIFY_MASKED)
 }
 
-func assertDestinationModifyResponse(t *testing.T, response fivetran.DestinationModifyResponse) {
+func assertDestinationModifyResponse(t *testing.T, response destinations.DestinationDetailsWithSetupTestsResponse) {
 	assertEqual(t, response.Code, "Success")
 	assertEqual(t, response.Message, "Destination has been updated")
 	assertEqual(t, response.Data.ID, DESTINATION_MODIFY_ID)

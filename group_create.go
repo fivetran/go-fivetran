@@ -4,7 +4,9 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"time"
+
+	"github.com/fivetran/go-fivetran/groups"
+	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
 // GroupCreateService implements the Group Management, Create a Group API.
@@ -16,16 +18,6 @@ type GroupCreateService struct {
 
 type groupCreateRequest struct {
 	Name *string `json:"name,omitempty"`
-}
-
-type GroupCreateResponse struct {
-	Code    string `json:"code"`
-	Message string `json:"message"`
-	Data    struct {
-		ID        string    `json:"id"`
-		Name      string    `json:"name"`
-		CreatedAt time.Time `json:"created_at"`
-	} `json:"data"`
 }
 
 func (c *Client) NewGroupCreate() *GroupCreateService {
@@ -43,8 +35,8 @@ func (s *GroupCreateService) Name(value string) *GroupCreateService {
 	return s
 }
 
-func (s *GroupCreateService) Do(ctx context.Context) (GroupCreateResponse, error) {
-	var response GroupCreateResponse
+func (s *GroupCreateService) Do(ctx context.Context) (groups.GroupDetailsResponse, error) {
+	var response groups.GroupDetailsResponse
 	url := fmt.Sprintf("%v/groups", s.c.baseURL)
 	expectedStatus := 201
 
@@ -56,18 +48,18 @@ func (s *GroupCreateService) Do(ctx context.Context) (GroupCreateResponse, error
 		return response, err
 	}
 
-	r := request{
-		method:           "POST",
-		url:              url,
-		body:             reqBody,
-		queries:          nil,
-		headers:          headers,
-		client:           s.c.httpClient,
-		handleRateLimits: s.c.handleRateLimits,
-		maxRetryAttempts: s.c.maxRetryAttempts,
+	r := httputils.Request{
+		Method:           "POST",
+		Url:              url,
+		Body:             reqBody,
+		Queries:          nil,
+		Headers:          headers,
+		Client:           s.c.httpClient,
+		HandleRateLimits: s.c.handleRateLimits,
+		MaxRetryAttempts: s.c.maxRetryAttempts,
 	}
 
-	respBody, respStatus, err := r.httpRequest(ctx)
+	respBody, respStatus, err := r.Do(ctx)
 	if err != nil {
 		return response, err
 	}

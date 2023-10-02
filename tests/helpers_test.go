@@ -3,7 +3,7 @@ package tests
 import (
 	"testing"
 
-	"github.com/fivetran/go-fivetran"
+	"github.com/fivetran/go-fivetran/utils"
 )
 
 type testStruct struct {
@@ -20,7 +20,7 @@ func TestMergeIntoMap(t *testing.T) {
 	}
 	testMap := make(map[string]interface{})
 	testMap["some_key"] = "someKeyValue"
-	fivetran.MergeIntoMap(testValue, &testMap)
+	utils.MergeIntoMap(testValue, &testMap)
 	assertKeyValue(t, testMap, "some_field", someFieldValue)
 	assertKeyValue(t, testMap, "another_field", anotherFieldValue)
 	assertKeyValue(t, testMap, "some_key", "someKeyValue")
@@ -33,7 +33,7 @@ func TestFetchFromMap(t *testing.T) {
 	testMap["another_field"] = "anotherFieldValue"
 	var testValue testStruct
 
-	err := fivetran.FetchFromMap(&testMap, &testValue)
+	err := utils.FetchFromMap(&testMap, &testValue)
 
 	assertIsNil(t, err)
 	assertIsNotNil(t, testValue)

@@ -4,21 +4,14 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+
+	"github.com/fivetran/go-fivetran/dbt"
+	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
 type DbtModelDetailsService struct {
 	c       *Client
 	modelId *string
-}
-
-type DbtModelDetailsResponse struct {
-	Code    string `json:"code"`
-	Message string `json:"message"`
-	Data    struct {
-		ID        string `json:"id"`
-		ModelName string `json:"model_name"`
-		Scheduled bool   `json:"scheduled"`
-	} `json:"data"`
 }
 
 func (c *Client) NewDbtModelDetails() *DbtModelDetailsService {
@@ -30,8 +23,8 @@ func (s *DbtModelDetailsService) ModelId(value string) *DbtModelDetailsService {
 	return s
 }
 
-func (s *DbtModelDetailsService) Do(ctx context.Context) (DbtModelDetailsResponse, error) {
-	var response DbtModelDetailsResponse
+func (s *DbtModelDetailsService) Do(ctx context.Context) (dbt.DbtModelDetailsResponse, error) {
+	var response dbt.DbtModelDetailsResponse
 
 	if s.modelId == nil {
 		return response, fmt.Errorf("missing required ModelId")
@@ -42,18 +35,18 @@ func (s *DbtModelDetailsService) Do(ctx context.Context) (DbtModelDetailsRespons
 
 	headers := s.c.commonHeaders()
 
-	r := request{
-		method:           "GET",
-		url:              url,
-		body:             nil,
-		queries:          nil,
-		headers:          headers,
-		client:           s.c.httpClient,
-		handleRateLimits: s.c.handleRateLimits,
-		maxRetryAttempts: s.c.maxRetryAttempts,
+	r := httputils.Request{
+		Method:           "GET",
+		Url:              url,
+		Body:             nil,
+		Queries:          nil,
+		Headers:          headers,
+		Client:           s.c.httpClient,
+		HandleRateLimits: s.c.handleRateLimits,
+		MaxRetryAttempts: s.c.maxRetryAttempts,
 	}
 
-	respBody, respStatus, err := r.httpRequest(ctx)
+	respBody, respStatus, err := r.Do(ctx)
 	if err != nil {
 		return response, err
 	}

@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/fivetran/go-fivetran"
+	"github.com/fivetran/go-fivetran/common"
 	"github.com/fivetran/go-fivetran/tests/mock"
 )
 
@@ -54,7 +54,7 @@ func TestTeamDeleteRoleInAccountServiceDoMissingId(t *testing.T) {
 	assertEqual(t, err, expectedError)
 }
 
-func assertTeamDeleteRoleInAccountResponse(t *testing.T, response fivetran.TeamsDeleteRoleInAccountResponse, code string, massage string) {
+func assertTeamDeleteRoleInAccountResponse(t *testing.T, response common.CommonResponse, code string, massage string) {
 	assertEqual(t, response.Code, code)
 	assertEqual(t, response.Message, massage)
 }

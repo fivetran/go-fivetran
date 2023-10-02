@@ -4,24 +4,22 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+
+	"github.com/fivetran/go-fivetran/common"
+	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
 // ExternalLoggingSetupTestsService implements the Log Management, Run Log service setup tests API.
 // Ref. https://fivetran.com/docs/rest-api/log-service-management#runlogservicesetuptests
 type ExternalLoggingSetupTestsService struct {
-	c                     *Client
-	externalLoggingId     *string
+	c                 *Client
+	externalLoggingId *string
 }
 
 type ExternalLoggingSetupTestsResponse struct {
-	Code    string `json:"code"`
-	Message string `json:"message"`
-	Data    struct {
-		SetupTests     []struct {
-			Title   string `json:"title"`
-			Status  string `json:"status"`
-			Message string `json:"message"`
-		} `json:"setup_tests"`
+	common.CommonResponse
+	Data struct {
+		SetupTests []common.SetupTestResponse `json:"setup_tests"`
 	} `json:"data"`
 }
 
@@ -48,15 +46,18 @@ func (s *ExternalLoggingSetupTestsService) Do(ctx context.Context) (ExternalLogg
 	headers["Content-Type"] = "application/json"
 	headers["Accept"] = restAPIv2
 
-	r := request{
-		method:  "POST",
-		url:     url,
-		queries: nil,
-		headers: headers,
-		client:  s.c.httpClient,
+	r := httputils.Request{
+		Method:           "POST",
+		Url:              url,
+		Body:             nil,
+		Queries:          nil,
+		Headers:          headers,
+		Client:           s.c.httpClient,
+		HandleRateLimits: s.c.handleRateLimits,
+		MaxRetryAttempts: s.c.maxRetryAttempts,
 	}
 
-	respBody, respStatus, err := r.httpRequest(ctx)
+	respBody, respStatus, err := r.Do(ctx)
 	if err != nil {
 		return response, err
 	}

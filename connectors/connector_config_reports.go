@@ -1,4 +1,4 @@
-package fivetran
+package connectors
 
 // ConnectorConfigReports builds Connector Management, Connector Config Reports.
 // Ref. https://fivetran.com/docs/rest-api/connectors/config
@@ -36,10 +36,6 @@ type ConnectorConfigReportsResponse struct {
 	Metrics        []string `json:"metrics"`
 	Segments       []string `json:"segments"`
 	Filter         string   `json:"filter"`
-}
-
-func NewConnectorConfigReports() *ConnectorConfigReports {
-	return &ConnectorConfigReports{}
 }
 
 func (r *ConnectorConfigReports) request() *connectorConfigReportsRequest {

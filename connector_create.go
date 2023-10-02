@@ -4,7 +4,10 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"time"
+
+	"github.com/fivetran/go-fivetran/connectors"
+	httputils "github.com/fivetran/go-fivetran/http_utils"
+	"github.com/fivetran/go-fivetran/utils"
 )
 
 // ConnectorCreateService implements the Connector Management, Create a Connector API.
@@ -21,8 +24,8 @@ type ConnectorCreateService struct {
 	syncFrequency     *int
 	dailySyncTime     *string
 	pauseAfterTrial   *bool
-	config            *ConnectorConfig
-	auth              *ConnectorAuth
+	config            *connectors.ConnectorConfig
+	auth              *connectors.ConnectorAuth
 	configCustom      *map[string]interface{}
 	authCustom        *map[string]interface{}
 }
@@ -41,78 +44,14 @@ type connectorCreateRequestBase struct {
 
 type connectorCreateRequest struct {
 	connectorCreateRequestBase
-	Config *connectorConfigRequest `json:"config,omitempty"`
-	Auth   *connectorAuthRequest   `json:"auth,omitempty"`
+	Config any `json:"config,omitempty"`
+	Auth   any `json:"auth,omitempty"`
 }
 
 type connectorCustomCreateRequest struct {
 	connectorCreateRequestBase
 	Config *map[string]interface{} `json:"config,omitempty"`
 	Auth   *map[string]interface{} `json:"auth,omitempty"`
-}
-
-type ConnectorCreateResponseDataBase struct {
-	ID              string    `json:"id"`
-	GroupID         string    `json:"group_id"`
-	Service         string    `json:"service"`
-	ServiceVersion  *int      `json:"service_version"`
-	Schema          string    `json:"schema"`
-	ConnectedBy     string    `json:"connected_by"`
-	CreatedAt       time.Time `json:"created_at"`
-	SucceededAt     time.Time `json:"succeeded_at"`
-	FailedAt        time.Time `json:"failed_at"`
-	SyncFrequency   *int      `json:"sync_frequency"`
-	ScheduleType    string    `json:"schedule_type"`
-	Paused          *bool     `json:"paused"`
-	PauseAfterTrial *bool     `json:"pause_after_trial"`
-	DailySyncTime   string    `json:"daily_sync_time"`
-	Status          struct {
-		SetupState       string `json:"setup_state"`
-		SyncState        string `json:"sync_state"`
-		UpdateState      string `json:"update_state"`
-		IsHistoricalSync *bool  `json:"is_historical_sync"`
-		Tasks            []struct {
-			Code    string `json:"code"`
-			Message string `json:"message"`
-		} `json:"tasks"`
-		Warnings []struct {
-			Code    string `json:"code"`
-			Message string `json:"message"`
-		} `json:"warnings"`
-	} `json:"status"`
-	SetupTests []struct {
-		Title   string `json:"title"`
-		Status  string `json:"status"`
-		Message string `json:"message"`
-	} `json:"setup_tests"`
-}
-
-type ConnectorCreateResponse struct {
-	Code    string `json:"code"`
-	Message string `json:"message"`
-	Data    struct {
-		ConnectorCreateResponseDataBase
-		Config ConnectorConfigResponse `json:"config"`
-	} `json:"data"`
-}
-
-type ConnectorCustomCreateResponse struct {
-	Code    string `json:"code"`
-	Message string `json:"message"`
-	Data    struct {
-		ConnectorCreateResponseDataBase
-		Config map[string]interface{} `json:"config"`
-	} `json:"data"`
-}
-
-type ConnectorCustomMergedCreateResponse struct {
-	Code    string `json:"code"`
-	Message string `json:"message"`
-	Data    struct {
-		ConnectorCreateResponseDataBase
-		CustomConfig map[string]interface{}  `json:"config"`
-		Config       ConnectorConfigResponse // no mapping here
-	} `json:"data"`
 }
 
 func (c *Client) NewConnectorCreate() *ConnectorCreateService {
@@ -134,14 +73,14 @@ func (s *ConnectorCreateService) requestBase() connectorCreateRequestBase {
 }
 
 func (s *ConnectorCreateService) request() *connectorCreateRequest {
-	var config *connectorConfigRequest
+	var config interface{}
 	if s.config != nil {
-		config = s.config.request()
+		config = s.config.Request()
 	}
 
-	var auth *connectorAuthRequest
+	var auth interface{}
 	if s.auth != nil {
-		auth = s.auth.request()
+		auth = s.auth.Request()
 	}
 
 	r := &connectorCreateRequest{
@@ -166,7 +105,7 @@ func (s *ConnectorCreateService) requestCustomMerged() (*connectorCustomCreateRe
 
 	if s.config != nil {
 		var err error
-		currentConfig, err = s.config.merge(currentConfig)
+		currentConfig, err = s.config.Merge(currentConfig)
 		if err != nil {
 			return nil, err
 		}
@@ -175,7 +114,7 @@ func (s *ConnectorCreateService) requestCustomMerged() (*connectorCustomCreateRe
 	currentAuth := s.authCustom
 	if s.auth != nil {
 		var err error
-		currentAuth, err = s.auth.merge(currentAuth)
+		currentAuth, err = s.auth.Merge(currentAuth)
 		if err != nil {
 			return nil, err
 		}
@@ -233,7 +172,7 @@ func (s *ConnectorCreateService) PauseAfterTrial(value bool) *ConnectorCreateSer
 	return s
 }
 
-func (s *ConnectorCreateService) Config(value *ConnectorConfig) *ConnectorCreateService {
+func (s *ConnectorCreateService) Config(value *connectors.ConnectorConfig) *ConnectorCreateService {
 	s.config = value
 	return s
 }
@@ -243,7 +182,7 @@ func (s *ConnectorCreateService) ConfigCustom(value *map[string]interface{}) *Co
 	return s
 }
 
-func (s *ConnectorCreateService) Auth(value *ConnectorAuth) *ConnectorCreateService {
+func (s *ConnectorCreateService) Auth(value *connectors.ConnectorAuth) *ConnectorCreateService {
 	s.auth = value
 	return s
 }
@@ -266,18 +205,18 @@ func (s *ConnectorCreateService) do(ctx context.Context, req, response any) erro
 		return err
 	}
 
-	r := request{
-		method:           "POST",
-		url:              url,
-		body:             reqBody,
-		queries:          nil,
-		headers:          headers,
-		client:           s.c.httpClient,
-		handleRateLimits: s.c.handleRateLimits,
-		maxRetryAttempts: s.c.maxRetryAttempts,
+	r := httputils.Request{
+		Method:           "POST",
+		Url:              url,
+		Body:             reqBody,
+		Queries:          nil,
+		Headers:          headers,
+		Client:           s.c.httpClient,
+		HandleRateLimits: s.c.handleRateLimits,
+		MaxRetryAttempts: s.c.maxRetryAttempts,
 	}
 
-	respBody, respStatus, err := r.httpRequest(ctx)
+	respBody, respStatus, err := r.Do(ctx)
 	if err != nil {
 		return err
 	}
@@ -294,24 +233,24 @@ func (s *ConnectorCreateService) do(ctx context.Context, req, response any) erro
 	return nil
 }
 
-func (s *ConnectorCreateService) Do(ctx context.Context) (ConnectorCreateResponse, error) {
-	var response ConnectorCreateResponse
+func (s *ConnectorCreateService) Do(ctx context.Context) (connectors.DetailsWithConfigResponse, error) {
+	var response connectors.DetailsWithConfigResponse
 
 	err := s.do(ctx, s.request(), &response)
 
 	return response, err
 }
 
-func (s *ConnectorCreateService) DoCustom(ctx context.Context) (ConnectorCustomCreateResponse, error) {
-	var response ConnectorCustomCreateResponse
+func (s *ConnectorCreateService) DoCustom(ctx context.Context) (connectors.DetailsWithCustomConfigResponse, error) {
+	var response connectors.DetailsWithCustomConfigResponse
 
 	err := s.do(ctx, s.requestCustom(), &response)
 
 	return response, err
 }
 
-func (s *ConnectorCreateService) DoCustomMerged(ctx context.Context) (ConnectorCustomMergedCreateResponse, error) {
-	var response ConnectorCustomMergedCreateResponse
+func (s *ConnectorCreateService) DoCustomMerged(ctx context.Context) (connectors.DetailsWithCustomMergedConfigResponse, error) {
+	var response connectors.DetailsWithCustomMergedConfigResponse
 
 	req, err := s.requestCustomMerged()
 
@@ -322,7 +261,7 @@ func (s *ConnectorCreateService) DoCustomMerged(ctx context.Context) (ConnectorC
 	err = s.do(ctx, req, &response)
 
 	if err == nil {
-		err = FetchFromMap(&response.Data.CustomConfig, &response.Data.Config)
+		err = utils.FetchFromMap(&response.Data.CustomConfig, &response.Data.Config)
 	}
 
 	return response, err

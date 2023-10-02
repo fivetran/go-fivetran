@@ -1,4 +1,4 @@
-package fivetran
+package connectors
 
 type ConnectorConfigAdobeAnalyticsConfiguration struct {
 	syncMode          *string
@@ -25,10 +25,6 @@ type ConnectorConfigAdobeAnalyticsConfigurationResponse struct {
 	Metrics           []string `json:"metrics"`
 	CalculatedMetrics []string `json:"calculated_metrics"`
 	Segments          []string `json:"segments"`
-}
-
-func NewConnectorConfigAdobeAnalyticsConfiguration() *ConnectorConfigAdobeAnalyticsConfiguration {
-	return &ConnectorConfigAdobeAnalyticsConfiguration{}
 }
 
 func (c *ConnectorConfigAdobeAnalyticsConfiguration) request() *connectorConfigAdobeAnalyticsConfigurationRequest {

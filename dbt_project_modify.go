@@ -4,6 +4,9 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+
+	"github.com/fivetran/go-fivetran/dbt"
+	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
 type DbtProjectModifyService struct {
@@ -14,15 +17,15 @@ type DbtProjectModifyService struct {
 	targetName      *string
 	threads         *int
 	environmentVars *[]string
-	projectConfig   *DbtProjectConfig
+	projectConfig   *dbt.DbtProjectConfig
 }
 
 type dbtProjectModifyRequest struct {
-	DbtVersion      *string                        `json:"dbt_version,omitempty"`
-	TargetName      *string                        `json:"target_name,omitempty"`
-	Threads         *int                           `json:"threads,omitempty"`
-	EnvironmentVars *[]string                      `json:"environment_vars,omitempty"`
-	ProjectConfig   *updateDbtProjectConfigRequest `json:"project_config,omitempty"`
+	DbtVersion      *string   `json:"dbt_version,omitempty"`
+	TargetName      *string   `json:"target_name,omitempty"`
+	Threads         *int      `json:"threads,omitempty"`
+	EnvironmentVars *[]string `json:"environment_vars,omitempty"`
+	ProjectConfig   any       `json:"project_config,omitempty"`
 }
 
 func (c *Client) NewDbtProjectModify() *DbtProjectModifyService {
@@ -49,7 +52,7 @@ func (s *DbtProjectModifyService) EnvironmentVars(value []string) *DbtProjectMod
 	return s
 }
 
-func (s *DbtProjectModifyService) ProjectConfig(value *DbtProjectConfig) *DbtProjectModifyService {
+func (s *DbtProjectModifyService) ProjectConfig(value *dbt.DbtProjectConfig) *DbtProjectModifyService {
 	s.projectConfig = value
 	return s
 }
@@ -60,10 +63,10 @@ func (s *DbtProjectModifyService) DbtVersion(value string) *DbtProjectModifyServ
 }
 
 func (s *DbtProjectModifyService) request() *dbtProjectModifyRequest {
-	var config *updateDbtProjectConfigRequest
+	var config interface{}
 
 	if s.projectConfig != nil {
-		config = s.projectConfig.updateRequest()
+		config = s.projectConfig.UpdateRequest()
 	}
 
 	return &dbtProjectModifyRequest{
@@ -75,8 +78,8 @@ func (s *DbtProjectModifyService) request() *dbtProjectModifyRequest {
 	}
 }
 
-func (s *DbtProjectModifyService) Do(ctx context.Context) (DbtProjectDetailsResponse, error) {
-	var response DbtProjectDetailsResponse
+func (s *DbtProjectModifyService) Do(ctx context.Context) (dbt.DbtProjectDetailsResponse, error) {
+	var response dbt.DbtProjectDetailsResponse
 
 	if s.dbtProjectID == nil {
 		return response, fmt.Errorf("missing required dbt project ID")
@@ -92,18 +95,18 @@ func (s *DbtProjectModifyService) Do(ctx context.Context) (DbtProjectDetailsResp
 		return response, err
 	}
 
-	r := request{
-		method:           "PATCH",
-		url:              url,
-		body:             reqBody,
-		queries:          nil,
-		headers:          headers,
-		client:           s.c.httpClient,
-		handleRateLimits: s.c.handleRateLimits,
-		maxRetryAttempts: s.c.maxRetryAttempts,
+	r := httputils.Request{
+		Method:           "PATCH",
+		Url:              url,
+		Body:             reqBody,
+		Queries:          nil,
+		Headers:          headers,
+		Client:           s.c.httpClient,
+		HandleRateLimits: s.c.handleRateLimits,
+		MaxRetryAttempts: s.c.maxRetryAttempts,
 	}
 
-	respBody, respStatus, err := r.httpRequest(ctx)
+	respBody, respStatus, err := r.Do(ctx)
 	if err != nil {
 		return response, err
 	}

@@ -5,11 +5,12 @@ import (
 	"testing"
 
 	"github.com/fivetran/go-fivetran"
+	testutils "github.com/fivetran/go-fivetran/test_utils"
 )
 
 func TestNewDestinationModifyE2E(t *testing.T) {
-	destinationId := CreateTempDestination(t)
-	details, err := Client.NewDestinationModify().DestinationID(destinationId).
+	destinationId := testutils.CreateTempDestination(t)
+	details, err := testutils.Client.NewDestinationModify().DestinationID(destinationId).
 		Region("GCP_AUSTRALIA_SOUTHEAST1").
 		TimeZoneOffset("+10").
 		RunSetupTests(false).
@@ -27,16 +28,16 @@ func TestNewDestinationModifyE2E(t *testing.T) {
 		t.Error(err)
 	}
 
-	AssertEqual(t, details.Code, "Success")
-	AssertNotEmpty(t, details.Message)
-	AssertEqual(t, details.Data.ID, destinationId)
-	AssertEqual(t, details.Data.GroupID, destinationId)
-	AssertEqual(t, details.Data.Service, "snowflake")
-	AssertEqual(t, details.Data.Region, "GCP_AUSTRALIA_SOUTHEAST1")
-	AssertEqual(t, details.Data.TimeZoneOffset, "+10")
-	AssertEqual(t, details.Data.Config.Host, "updated_host.snowflakecomputing.com")
-	AssertEqual(t, details.Data.Config.Port, "444")
-	AssertEqual(t, details.Data.Config.Database, "fivetran_updated")
-	AssertEqual(t, details.Data.Config.User, "fivetran_user_updated")
-	AssertEqual(t, details.Data.Config.Password, "******")
+	testutils.AssertEqual(t, details.Code, "Success")
+	testutils.AssertNotEmpty(t, details.Message)
+	testutils.AssertEqual(t, details.Data.ID, destinationId)
+	testutils.AssertEqual(t, details.Data.GroupID, destinationId)
+	testutils.AssertEqual(t, details.Data.Service, "snowflake")
+	testutils.AssertEqual(t, details.Data.Region, "GCP_AUSTRALIA_SOUTHEAST1")
+	testutils.AssertEqual(t, details.Data.TimeZoneOffset, "+10")
+	testutils.AssertEqual(t, details.Data.Config.Host, "updated_host.snowflakecomputing.com")
+	testutils.AssertEqual(t, details.Data.Config.Port, "444")
+	testutils.AssertEqual(t, details.Data.Config.Database, "fivetran_updated")
+	testutils.AssertEqual(t, details.Data.Config.User, "fivetran_user_updated")
+	testutils.AssertEqual(t, details.Data.Config.Password, "******")
 }

@@ -1,32 +1,34 @@
 package fivetran_test
 
 import (
-    "context"
-    "testing"
+	"context"
+	"testing"
+
+	testutils "github.com/fivetran/go-fivetran/test_utils"
 )
 
 func TestNewTeamConnectorMembershipModifyE2E(t *testing.T) {
-    teamId := CreateTeam(t)
-    connectorId := CreateConnector(t)
-    CreateTeamConnector(t, teamId, connectorId)
+	teamId := testutils.CreateTeam(t)
+	connectorId := testutils.CreateConnector(t)
+	testutils.CreateTeamConnector(t, teamId, connectorId)
 
-    modified, err := Client.NewTeamConnectorMembershipModify().
-        TeamId(teamId).
-        ConnectorId(connectorId).
-        Role("Connector Collaborator").
-        Do(context.Background())
+	modified, err := testutils.Client.NewTeamConnectorMembershipModify().
+		TeamId(teamId).
+		ConnectorId(connectorId).
+		Role("Connector Collaborator").
+		Do(context.Background())
 
-    if err != nil {
-        t.Logf("%+v\n", modified)
-        t.Error(err)
-    }
+	if err != nil {
+		t.Logf("%+v\n", modified)
+		t.Error(err)
+	}
 
-    AssertEqual(t, modified.Code, "Success")
-    AssertEqual(t, modified.Message, "Connector membership has been updated")
-    
-    t.Cleanup(func() { 
-        DeleteTeamConnector(t, teamId, connectorId)
-        DeleteConnector(t, connectorId)
-        DeleteTeam(t, teamId)
-    })
+	testutils.AssertEqual(t, modified.Code, "Success")
+	testutils.AssertEqual(t, modified.Message, "Connector membership has been updated")
+
+	t.Cleanup(func() {
+		testutils.DeleteTeamConnector(t, teamId, connectorId)
+		testutils.DeleteConnector(t, connectorId)
+		testutils.DeleteTeam(t, teamId)
+	})
 }

@@ -1,4 +1,4 @@
-package fivetran
+package connectors
 
 // ConnectorConfigProjectCredentials builds Connector Management, Connector Config Project Credentials.
 // Ref. https://fivetran.com/docs/rest-api/connectors/config
@@ -18,10 +18,6 @@ type ConnectorConfigProjectCredentialsResponse struct {
 	Project   string `json:"project"`
 	APIKey    string `json:"api_key"`
 	SecretKey string `json:"secret_key"`
-}
-
-func NewConnectorConfigProjectCredentials() *ConnectorConfigProjectCredentials {
-	return &ConnectorConfigProjectCredentials{}
 }
 
 func (pc *ConnectorConfigProjectCredentials) request() *connectorConfigProjectCredentialsRequest {

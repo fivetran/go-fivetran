@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/fivetran/go-fivetran"
+	"github.com/fivetran/go-fivetran/groups"
 	"github.com/fivetran/go-fivetran/tests/mock"
 )
 
@@ -64,7 +64,7 @@ func assertGroupModifyRequest(t *testing.T, request map[string]interface{}) {
 	assertKey(t, "name", request, GROUP_MODIFY_EXPECTED_GROUP_NAME)
 }
 
-func assertGroupModifyResponse(t *testing.T, response fivetran.GroupModifyResponse) {
+func assertGroupModifyResponse(t *testing.T, response groups.GroupDetailsResponse) {
 	assertEqual(t, response.Code, "Success")
 	assertEqual(t, response.Message, "Group has been updated")
 	assertEqual(t, response.Data.ID, GROUP_MODIFY_GROUP_ID)

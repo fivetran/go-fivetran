@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/fivetran/go-fivetran"
+	"github.com/fivetran/go-fivetran/common"
 	"github.com/fivetran/go-fivetran/tests/mock"
 )
 
@@ -47,7 +47,7 @@ func prepareGroupRemoveUserResponse(expectedUserID string) string {
 	}`, expectedUserID)
 }
 
-func assertGroupRemoveUserResponse(t *testing.T, response fivetran.GroupRemoveUserResponse, expectedUserID string) {
+func assertGroupRemoveUserResponse(t *testing.T, response common.CommonResponse, expectedUserID string) {
 	assertEqual(t, response.Code, "Success")
 	expectedMessage := fmt.Sprintf("User with id '%v' has been removed from the group", expectedUserID)
 	assertEqual(t, response.Message, expectedMessage)

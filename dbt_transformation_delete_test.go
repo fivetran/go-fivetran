@@ -4,13 +4,15 @@ import (
 	"context"
 	"strings"
 	"testing"
+
+	testutils "github.com/fivetran/go-fivetran/test_utils"
 )
 
 func TestNewDbtTransformationDeleteE2E(t *testing.T) {
 	t.Skip("Skipping test until we get more info on dbt transformations data which can be used for testing")
 
-	dbtTransformationId := CreateDbtTransformation(t)
-	deleted, err := Client.NewDestinationDelete().
+	dbtTransformationId := testutils.CreateDbtTransformation(t)
+	deleted, err := testutils.Client.NewDestinationDelete().
 		DestinationID(dbtTransformationId).
 		Do(context.Background())
 
@@ -19,7 +21,7 @@ func TestNewDbtTransformationDeleteE2E(t *testing.T) {
 		t.Error(err)
 	}
 
-	AssertEqual(t, deleted.Code, "Success")
-	AssertNotEmpty(t, deleted.Message)
-	AssertEqual(t, strings.Contains(deleted.Message, dbtTransformationId), true)
+	testutils.AssertEqual(t, deleted.Code, "Success")
+	testutils.AssertNotEmpty(t, deleted.Message)
+	testutils.AssertEqual(t, strings.Contains(deleted.Message, dbtTransformationId), true)
 }

@@ -4,7 +4,10 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"time"
+
+	"github.com/fivetran/go-fivetran/common"
+	"github.com/fivetran/go-fivetran/connectors"
+	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
 // GroupListConnectorsService implements the Group Management, List All Connectors within a Group API.
@@ -17,45 +20,20 @@ type GroupListConnectorsService struct {
 	schema  *string
 }
 
-type ConnectorTasks struct {
-	Code    string `json:"code"`
-	Message string `json:"message"`
-}
-
-type ConnectorWarning struct {
-	Code    string `json:"code"`
-	Message string `json:"message"`
-}
-
 type ConnectorsStatus struct {
-	SetupState       string             `json:"setup_state"`
-	SyncState        string             `json:"sync_state"`
-	UpdateState      string             `json:"update_state"`
-	IsHistoricalSync *bool              `json:"is_historical_sync"`
-	Tasks            []ConnectorTasks   `json:"tasks"`
-	Warnings         []ConnectorWarning `json:"warnings"`
+	SetupState       string                  `json:"setup_state"`
+	SyncState        string                  `json:"sync_state"`
+	UpdateState      string                  `json:"update_state"`
+	IsHistoricalSync *bool                   `json:"is_historical_sync"`
+	Tasks            []common.CommonResponse `json:"tasks"`
+	Warnings         []common.CommonResponse `json:"warnings"`
 }
 
 type GroupListConnectorsResponse struct {
-	Code    string `json:"code"`
-	Message string `json:"message"`
-	Data    struct {
-		Items []struct {
-			ID             string           `json:"id"`
-			GroupID        string           `json:"group_id"`
-			Service        string           `json:"service"`
-			ServiceVersion *int             `json:"service_version"`
-			Schema         string           `json:"schema"`
-			ConnectedBy    string           `json:"connected_by"`
-			CreatedAt      time.Time        `json:"created_at"`
-			SucceededAt    time.Time        `json:"succeeded_at"`
-			FailedAt       time.Time        `json:"failed_at"`
-			SyncFrequency  *int             `json:"sync_frequency"`
-			ScheduleType   string           `json:"schedule_type"`
-			Status         ConnectorsStatus `json:"status"`
-			DailySyncTime  string           `json:"daily_sync_time"`
-		} `json:"items"`
-		NextCursor string `json:"next_cursor"`
+	common.CommonResponse
+	Data struct {
+		Items      []connectors.DetailsResponseDataCommon `json:"items"`
+		NextCursor string                                 `json:"next_cursor"`
 	} `json:"data"`
 }
 
@@ -106,18 +84,18 @@ func (s *GroupListConnectorsService) Do(ctx context.Context) (GroupListConnector
 		queries["schema"] = *s.schema
 	}
 
-	r := request{
-		method:           "GET",
-		url:              url,
-		body:             nil,
-		queries:          queries,
-		headers:          headers,
-		client:           s.c.httpClient,
-		handleRateLimits: s.c.handleRateLimits,
-		maxRetryAttempts: s.c.maxRetryAttempts,
+	r := httputils.Request{
+		Method:           "GET",
+		Url:              url,
+		Body:             nil,
+		Queries:          queries,
+		Headers:          headers,
+		Client:           s.c.httpClient,
+		HandleRateLimits: s.c.handleRateLimits,
+		MaxRetryAttempts: s.c.maxRetryAttempts,
 	}
 
-	respBody, respStatus, err := r.httpRequest(ctx)
+	respBody, respStatus, err := r.Do(ctx)
 	if err != nil {
 		return response, err
 	}

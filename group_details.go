@@ -4,7 +4,9 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"time"
+
+	"github.com/fivetran/go-fivetran/groups"
+	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
 // GroupDetailsService implements the Group Management, Retrieve Group Details API.
@@ -12,16 +14,6 @@ import (
 type GroupDetailsService struct {
 	c       *Client
 	groupID *string
-}
-
-type GroupDetailsResponse struct {
-	Code    string `json:"code"`
-	Message string `json:"message"`
-	Data    struct {
-		ID        string    `json:"id"`
-		Name      string    `json:"name"`
-		CreatedAt time.Time `json:"created_at"`
-	} `json:"data"`
 }
 
 func (c *Client) NewGroupDetails() *GroupDetailsService {
@@ -33,8 +25,8 @@ func (s *GroupDetailsService) GroupID(value string) *GroupDetailsService {
 	return s
 }
 
-func (s *GroupDetailsService) Do(ctx context.Context) (GroupDetailsResponse, error) {
-	var response GroupDetailsResponse
+func (s *GroupDetailsService) Do(ctx context.Context) (groups.GroupDetailsResponse, error) {
+	var response groups.GroupDetailsResponse
 
 	if s.groupID == nil {
 		return response, fmt.Errorf("missing required GroupID")
@@ -45,18 +37,18 @@ func (s *GroupDetailsService) Do(ctx context.Context) (GroupDetailsResponse, err
 
 	headers := s.c.commonHeaders()
 
-	r := request{
-		method:           "GET",
-		url:              url,
-		body:             nil,
-		queries:          nil,
-		headers:          headers,
-		client:           s.c.httpClient,
-		handleRateLimits: s.c.handleRateLimits,
-		maxRetryAttempts: s.c.maxRetryAttempts,
+	r := httputils.Request{
+		Method:           "GET",
+		Url:              url,
+		Body:             nil,
+		Queries:          nil,
+		Headers:          headers,
+		Client:           s.c.httpClient,
+		HandleRateLimits: s.c.handleRateLimits,
+		MaxRetryAttempts: s.c.maxRetryAttempts,
 	}
 
-	respBody, respStatus, err := r.httpRequest(ctx)
+	respBody, respStatus, err := r.Do(ctx)
 	if err != nil {
 		return response, err
 	}

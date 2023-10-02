@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/fivetran/go-fivetran"
+	"github.com/fivetran/go-fivetran/common"
 	"github.com/fivetran/go-fivetran/tests/mock"
 )
 
@@ -52,7 +52,7 @@ func TestConnectorReSyncTableWithNilConnectorID(t *testing.T) {
 	// assert
 	interactions := mockClient.Interactions()
 	assertEqual(t, len(interactions), 0)
-	assertEqual(t, response, fivetran.ConnectorReSyncTableResponse{})
+	assertEqual(t, response, common.CommonResponse{})
 	assertIsNotNil(t, err)
 	assertEqual(t, err.Error(), "missing required ConnectorID")
 }
@@ -69,7 +69,7 @@ func TestConnectorReSyncTableWithNilSchema(t *testing.T) {
 	// assert
 	interactions := mockClient.Interactions()
 	assertEqual(t, len(interactions), 0)
-	assertEqual(t, response, fivetran.ConnectorReSyncTableResponse{})
+	assertEqual(t, response, common.CommonResponse{})
 	assertIsNotNil(t, err)
 	assertEqual(t, err.Error(), "missing required Schema")
 }
@@ -86,7 +86,7 @@ func TestConnectorReSyncTableWithNilTable(t *testing.T) {
 	// assert
 	interactions := mockClient.Interactions()
 	assertEqual(t, len(interactions), 0)
-	assertEqual(t, response, fivetran.ConnectorReSyncTableResponse{})
+	assertEqual(t, response, common.CommonResponse{})
 	assertIsNotNil(t, err)
 	assertEqual(t, err.Error(), "missing required Table")
 }
@@ -126,7 +126,7 @@ func prepareConnectorReSyncTableResponse(code string, message string) string {
 	}`
 }
 
-func assertConnectorReSyncTableResponse(t *testing.T, response fivetran.ConnectorReSyncTableResponse, code string, message string) {
+func assertConnectorReSyncTableResponse(t *testing.T, response common.CommonResponse, code string, message string) {
 	assertEqual(t, response.Code, code)
 	if response.Message != message {
 		t.Errorf("expected message `%s` , got '%s'", message, response.Message)

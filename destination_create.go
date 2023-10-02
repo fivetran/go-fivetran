@@ -4,6 +4,9 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+
+	"github.com/fivetran/go-fivetran/destinations"
+	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
 // DestinationCreateService implements the Destination Management, Create a Destination API.
@@ -14,40 +17,21 @@ type DestinationCreateService struct {
 	service           *string
 	region            *string
 	timeZoneOffset    *string
-	config            *DestinationConfig
+	config            *destinations.DestinationConfig
 	trustCertificates *bool
 	trustFingerprints *bool
 	runSetupTests     *bool
 }
 
 type destinationCreateRequest struct {
-	GroupID           *string                   `json:"group_id,omitempty"`
-	Service           *string                   `json:"service,omitempty"`
-	Region            *string                   `json:"region,omitempty"`
-	TimeZoneOffset    *string                   `json:"time_zone_offset,omitempty"`
-	Config            *destinationConfigRequest `json:"config,omitempty"`
-	TrustCertificates *bool                     `json:"trust_certificates,omitempty"`
-	TrustFingerprints *bool                     `json:"trust_fingerprints,omitempty"`
-	RunSetupTests     *bool                     `json:"run_setup_tests,omitempty"`
-}
-
-type DestinationCreateResponse struct {
-	Code    string `json:"code"`
-	Message string `json:"message"`
-	Data    struct {
-		ID             string `json:"id"`
-		GroupID        string `json:"group_id"`
-		Service        string `json:"service"`
-		Region         string `json:"region"`
-		TimeZoneOffset string `json:"time_zone_offset"`
-		SetupStatus    string `json:"setup_status"`
-		SetupTests     []struct {
-			Title   string `json:"title"`
-			Status  string `json:"status"`
-			Message string `json:"message"`
-		} `json:"setup_tests"`
-		Config DestinationConfigResponse `json:"config"`
-	} `json:"data"`
+	GroupID           *string `json:"group_id,omitempty"`
+	Service           *string `json:"service,omitempty"`
+	Region            *string `json:"region,omitempty"`
+	TimeZoneOffset    *string `json:"time_zone_offset,omitempty"`
+	Config            any     `json:"config,omitempty"`
+	TrustCertificates *bool   `json:"trust_certificates,omitempty"`
+	TrustFingerprints *bool   `json:"trust_fingerprints,omitempty"`
+	RunSetupTests     *bool   `json:"run_setup_tests,omitempty"`
 }
 
 func (c *Client) NewDestinationCreate() *DestinationCreateService {
@@ -55,10 +39,9 @@ func (c *Client) NewDestinationCreate() *DestinationCreateService {
 }
 
 func (s *DestinationCreateService) request() *destinationCreateRequest {
-	var config *destinationConfigRequest
-
+	var config interface{}
 	if s.config != nil {
-		config = s.config.request()
+		config = s.config.Request()
 	}
 
 	return &destinationCreateRequest{
@@ -93,7 +76,7 @@ func (s *DestinationCreateService) TimeZoneOffset(value string) *DestinationCrea
 	return s
 }
 
-func (s *DestinationCreateService) Config(value *DestinationConfig) *DestinationCreateService {
+func (s *DestinationCreateService) Config(value *destinations.DestinationConfig) *DestinationCreateService {
 	s.config = value
 	return s
 }
@@ -113,8 +96,8 @@ func (s *DestinationCreateService) RunSetupTests(value bool) *DestinationCreateS
 	return s
 }
 
-func (s *DestinationCreateService) Do(ctx context.Context) (DestinationCreateResponse, error) {
-	var response DestinationCreateResponse
+func (s *DestinationCreateService) Do(ctx context.Context) (destinations.DestinationDetailsWithSetupTestsResponse, error) {
+	var response destinations.DestinationDetailsWithSetupTestsResponse
 	url := fmt.Sprintf("%v/destinations", s.c.baseURL)
 	expectedStatus := 201
 
@@ -127,18 +110,18 @@ func (s *DestinationCreateService) Do(ctx context.Context) (DestinationCreateRes
 		return response, err
 	}
 
-	r := request{
-		method:           "POST",
-		url:              url,
-		body:             reqBody,
-		queries:          nil,
-		headers:          headers,
-		client:           s.c.httpClient,
-		handleRateLimits: s.c.handleRateLimits,
-		maxRetryAttempts: s.c.maxRetryAttempts,
+	r := httputils.Request{
+		Method:           "POST",
+		Url:              url,
+		Body:             reqBody,
+		Queries:          nil,
+		Headers:          headers,
+		Client:           s.c.httpClient,
+		HandleRateLimits: s.c.handleRateLimits,
+		MaxRetryAttempts: s.c.maxRetryAttempts,
 	}
 
-	respBody, respStatus, err := r.httpRequest(ctx)
+	respBody, respStatus, err := r.Do(ctx)
 	if err != nil {
 		return response, err
 	}

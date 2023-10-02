@@ -1,36 +1,38 @@
 package fivetran_test
 
 import (
-    "context"
-    "testing"
+	"context"
+	"testing"
+
+	testutils "github.com/fivetran/go-fivetran/test_utils"
 )
 
 func TestNewWebhookGroupCreateE2E(t *testing.T) {
-    created, err := Client.NewWebhookGroupCreate().
-        Url("https://localhost:12345").
-        Secret("my_secret").
-        GroupId(PredefinedGroupId).
-        Active(false).
-        Events([]string{"sync_start","sync_end"}).
-        Do(context.Background())
+	created, err := testutils.Client.NewWebhookGroupCreate().
+		Url("https://localhost:12345").
+		Secret("my_secret").
+		GroupId(testutils.PredefinedGroupId).
+		Active(false).
+		Events([]string{"sync_start", "sync_end"}).
+		Do(context.Background())
 
-    if err != nil {
-        t.Logf("%+v\n", created)
-        t.Error(err)
-    }
+	if err != nil {
+		t.Logf("%+v\n", created)
+		t.Error(err)
+	}
 
-    AssertEqual(t, created.Code, "Success")
-    AssertNotEmpty(t, created.Message)
-    AssertNotEmpty(t, created.Data.Id)
-    AssertNotEmpty(t, created.Data.Events)
-    AssertNotEmpty(t, created.Data.CreatedAt)
-    AssertNotEmpty(t, created.Data.CreatedBy)
-    AssertEqual(t, created.Data.Type, "group")
-    AssertEqual(t, created.Data.Active, false)
-    AssertEqual(t, created.Data.GroupId, PredefinedGroupId)
-    AssertEqual(t, created.Data.Secret, "******")
-    AssertEqual(t, created.Data.Url, "https://localhost:12345")
-    AssertEqual(t, created.Data.Events, []string{"sync_start","sync_end"})
-    
-    t.Cleanup(func() { DeleteWebhook(t, created.Data.Id) })
+	testutils.AssertEqual(t, created.Code, "Success")
+	testutils.AssertNotEmpty(t, created.Message)
+	testutils.AssertNotEmpty(t, created.Data.Id)
+	testutils.AssertNotEmpty(t, created.Data.Events)
+	testutils.AssertNotEmpty(t, created.Data.CreatedAt)
+	testutils.AssertNotEmpty(t, created.Data.CreatedBy)
+	testutils.AssertEqual(t, created.Data.Type, "group")
+	testutils.AssertEqual(t, created.Data.Active, false)
+	testutils.AssertEqual(t, created.Data.GroupId, testutils.PredefinedGroupId)
+	testutils.AssertEqual(t, created.Data.Secret, "******")
+	testutils.AssertEqual(t, created.Data.Url, "https://localhost:12345")
+	testutils.AssertEqual(t, created.Data.Events, []string{"sync_start", "sync_end"})
+
+	t.Cleanup(func() { testutils.DeleteWebhook(t, created.Data.Id) })
 }

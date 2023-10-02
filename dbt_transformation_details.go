@@ -4,31 +4,14 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+
+	"github.com/fivetran/go-fivetran/dbt"
+	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
 type DbtTransformationDetailsService struct {
 	c                *Client
 	transformationId *string
-}
-
-type DbtTransformationResponse struct {
-	Code    string `json:"code"`
-	Message string `json:"message"`
-	Data    struct {
-		ID              string                            `json:"id"`
-		Status          string                            `json:"status"`
-		Schedule        DbtTransformationScheduleResponse `json:"schedule"`
-		LastRun         string                            `json:"last_run"`
-		OutputModelName string                            `json:"output_model_name"`
-		DbtProjectId    string                            `json:"dbt_project_id"`
-		DbtModelId      string                            `json:"dbt_model_id"`
-		NextRun         string                            `json:"next_run"`
-		CreatedAt       string                            `json:"created_at"`
-		ModelIds        []string                          `json:"model_ids"`
-		ConnectorIds    []string                          `json:"connector_ids"`
-		RunTests        bool                              `json:"run_tests"`
-		Paused          bool                              `json:"paused"`
-	} `json:"data"`
 }
 
 func (c *Client) NewDbtTransformationDetailsService() *DbtTransformationDetailsService {
@@ -40,8 +23,8 @@ func (s *DbtTransformationDetailsService) TransformationId(value string) *DbtTra
 	return s
 }
 
-func (s *DbtTransformationDetailsService) Do(ctx context.Context) (DbtTransformationResponse, error) {
-	var response DbtTransformationResponse
+func (s *DbtTransformationDetailsService) Do(ctx context.Context) (dbt.DbtTransformationResponse, error) {
+	var response dbt.DbtTransformationResponse
 
 	if s.transformationId == nil {
 		return response, fmt.Errorf("missing required transformation id")
@@ -52,18 +35,18 @@ func (s *DbtTransformationDetailsService) Do(ctx context.Context) (DbtTransforma
 
 	headers := s.c.commonHeaders()
 
-	r := request{
-		method:           "GET",
-		url:              url,
-		body:             nil,
-		queries:          nil,
-		headers:          headers,
-		client:           s.c.httpClient,
-		handleRateLimits: s.c.handleRateLimits,
-		maxRetryAttempts: s.c.maxRetryAttempts,
+	r := httputils.Request{
+		Method:           "GET",
+		Url:              url,
+		Body:             nil,
+		Queries:          nil,
+		Headers:          headers,
+		Client:           s.c.httpClient,
+		HandleRateLimits: s.c.handleRateLimits,
+		MaxRetryAttempts: s.c.maxRetryAttempts,
 	}
 
-	respBody, respStatus, err := r.httpRequest(ctx)
+	respBody, respStatus, err := r.Do(ctx)
 	if err != nil {
 		return response, err
 	}

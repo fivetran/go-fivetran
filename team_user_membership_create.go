@@ -1,101 +1,103 @@
 package fivetran
 
 import (
-    "context"
-    "encoding/json"
-    "fmt"
+	"context"
+	"encoding/json"
+	"fmt"
+
+	"github.com/fivetran/go-fivetran/common"
+	httputils "github.com/fivetran/go-fivetran/http_utils"
+	"github.com/fivetran/go-fivetran/teams"
 )
 
 // TeamUserMembershipCreateService implements the Team Management, Add a user to a team
 // Ref. https://fivetran.com/docs/rest-api/teams#addausertoateam
 type TeamUserMembershipCreateService struct {
-    c                 *Client
-    teamId            *string
-    userId            *string
-    role              *string
+	c      *Client
+	teamId *string
+	userId *string
+	role   *string
 }
 
 type teamUserMembershipCreateRequest struct {
-    UserId            *string `json:"user_id,omitempty"`
-    Role              *string `json:"role,omitempty"`
+	UserId *string `json:"user_id,omitempty"`
+	Role   *string `json:"role,omitempty"`
 }
 
 type TeamUserMembershipCreateResponse struct {
-    Code    string `json:"code"`
-    Message string `json:"message"`
-    Data    struct {
-        UserId          string       `json:"user_id"`
-        Role            string       `json:"role"`
-    } `json:"data"`
+	common.CommonResponse
+	Data teams.TeamUserMembership `json:"data"`
 }
 
 func (c *Client) NewTeamUserMembershipCreate() *TeamUserMembershipCreateService {
-    return &TeamUserMembershipCreateService{c: c}
+	return &TeamUserMembershipCreateService{c: c}
 }
 
 func (s *TeamUserMembershipCreateService) request() *teamUserMembershipCreateRequest {
-    return &teamUserMembershipCreateRequest{
-        UserId:         s.userId,
-        Role:           s.role,
-    }
+	return &teamUserMembershipCreateRequest{
+		UserId: s.userId,
+		Role:   s.role,
+	}
 }
 
 func (s *TeamUserMembershipCreateService) TeamId(value string) *TeamUserMembershipCreateService {
-    s.teamId = &value
-    return s
+	s.teamId = &value
+	return s
 }
 
 func (s *TeamUserMembershipCreateService) UserId(value string) *TeamUserMembershipCreateService {
-    s.userId = &value
-    return s
+	s.userId = &value
+	return s
 }
 
 func (s *TeamUserMembershipCreateService) Role(value string) *TeamUserMembershipCreateService {
-    s.role = &value
-    return s
+	s.role = &value
+	return s
 }
 
 func (s *TeamUserMembershipCreateService) Do(ctx context.Context) (TeamUserMembershipCreateResponse, error) {
-    var response TeamUserMembershipCreateResponse
-    
-    if s.teamId == nil {
-        return response, fmt.Errorf("missing required teamId")
-    }
+	var response TeamUserMembershipCreateResponse
 
-    url := fmt.Sprintf("%v/teams/%v/users", s.c.baseURL, *s.teamId)
-    expectedStatus := 201
+	if s.teamId == nil {
+		return response, fmt.Errorf("missing required teamId")
+	}
 
-    headers := s.c.commonHeaders()
-    headers["Content-Type"] = "application/json"
-    headers["Accept"] = restAPIv2
+	url := fmt.Sprintf("%v/teams/%v/users", s.c.baseURL, *s.teamId)
+	expectedStatus := 201
 
-    reqBody, err := json.Marshal(s.request())
-    if err != nil {
-        return response, err
-    }
+	headers := s.c.commonHeaders()
+	headers["Content-Type"] = "application/json"
+	headers["Accept"] = restAPIv2
 
-    r := request{
-        method:  "POST",
-        url:     url,
-        body:    reqBody,
-        queries: nil,
-        headers: headers,
-        client:  s.c.httpClient,
-    }
+	reqBody, err := json.Marshal(s.request())
+	if err != nil {
+		return response, err
+	}
 
-    respBody, respStatus, err := r.httpRequest(ctx)
-    if err != nil {
-        return response, err
-    }
+	r := httputils.Request{
+		Method:           "POST",
+		Url:              url,
+		Body:             reqBody,
+		Queries:          nil,
+		Headers:          headers,
+		Client:           s.c.httpClient,
+		HandleRateLimits: s.c.handleRateLimits,
+		MaxRetryAttempts: s.c.maxRetryAttempts,
+	}
 
-    if err := json.Unmarshal(respBody, &response); err != nil {
-        return response, err
-    }
+	respBody, respStatus, err := r.Do(ctx)
+	if err != nil {
+		return response, err
+	}
 
-    if respStatus != expectedStatus {
-        err := fmt.Errorf("status code: %v; expected: %v", respStatus, expectedStatus)
-        return response, err
-    }
+	if err := json.Unmarshal(respBody, &response); err != nil {
+		return response, err
+	}
 
-    return response, nil
+	if respStatus != expectedStatus {
+		err := fmt.Errorf("status code: %v; expected: %v", respStatus, expectedStatus)
+		return response, err
+	}
+
+	return response, nil
 }

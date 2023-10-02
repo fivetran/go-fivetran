@@ -7,6 +7,7 @@ import (
 	"testing"
 
 	"github.com/fivetran/go-fivetran"
+	"github.com/fivetran/go-fivetran/connectors"
 	"github.com/fivetran/go-fivetran/tests/mock"
 )
 
@@ -80,7 +81,7 @@ func assertSchemaRequest(t *testing.T, request map[string]interface{}) {
 	assertKey(t, "hashed", column, true)
 }
 
-func assertSchemaResponse(t *testing.T, response fivetran.ConnectorSchemaDetailsResponse) {
+func assertSchemaResponse(t *testing.T, response connectors.ConnectorSchemaDetailsResponse) {
 	assertEqual(t, response.Code, "Success")
 	assertEqual(t, response.Data.SchemaChangeHandling, "BLOCK_ALL")
 	assertEqual(t, len(response.Data.Schemas), 1)

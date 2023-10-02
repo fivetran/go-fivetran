@@ -1,4 +1,6 @@
-package fivetran
+package connectors
+
+import "github.com/fivetran/go-fivetran/utils"
 
 // ConnectorConfig builds Connector Management, Connector Config.
 // Ref. https://fivetran.com/docs/rest-api/connectors/config
@@ -636,19 +638,15 @@ type ConnectorConfigResponse struct {
 	ShareURL                         string                                               `json:"share_url"`
 }
 
-func NewConnectorConfig() *ConnectorConfig {
-	return &ConnectorConfig{}
-}
-
-func (cc *ConnectorConfig) merge(customConfig *map[string]interface{}) (*map[string]interface{}, error) {
-	err := MergeIntoMap(cc.request(), customConfig)
+func (cc *ConnectorConfig) Merge(customConfig *map[string]interface{}) (*map[string]interface{}, error) {
+	err := utils.MergeIntoMap(cc.Request(), customConfig)
 	if err != nil {
 		return nil, err
 	}
 	return customConfig, nil
 }
 
-func (cc *ConnectorConfig) request() *connectorConfigRequest {
+func (cc *ConnectorConfig) Request() *connectorConfigRequest {
 	var projectCredentials []*connectorConfigProjectCredentialsRequest
 	if cc.projectCredentials != nil {
 		for _, pc := range cc.projectCredentials {

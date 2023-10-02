@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/fivetran/go-fivetran"
+	"github.com/fivetran/go-fivetran/groups"
 	"github.com/fivetran/go-fivetran/tests/mock"
 )
 
@@ -68,7 +68,7 @@ func prepareGroupCreateResponse() string {
 	)
 }
 
-func assertGroupCreateResponse(t *testing.T, response fivetran.GroupCreateResponse) {
+func assertGroupCreateResponse(t *testing.T, response groups.GroupDetailsResponse) {
 	assertEqual(t, response.Code, ExpectedGroupCreateCode)
 	assertEqual(t, response.Message, ExpectedGroupCreateMessage)
 

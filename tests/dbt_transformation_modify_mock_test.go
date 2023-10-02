@@ -7,6 +7,7 @@ import (
 	"testing"
 
 	"github.com/fivetran/go-fivetran"
+	"github.com/fivetran/go-fivetran/dbt"
 	"github.com/fivetran/go-fivetran/tests/mock"
 )
 
@@ -127,7 +128,7 @@ func prepareDbtTransformationModifyResponse() string {
 	)
 }
 
-func assertDbtTransformationModifyResponse(t *testing.T, response fivetran.DbtTransformationResponse) {
+func assertDbtTransformationModifyResponse(t *testing.T, response dbt.DbtTransformationResponse) {
 	assertEqual(t, response.Code, "Success")
 	assertEqual(t, response.Message, "Dbt transformation has been updated")
 

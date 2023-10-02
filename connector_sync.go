@@ -2,24 +2,35 @@ package fivetran
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
+
+	"github.com/fivetran/go-fivetran/common"
+	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
+
+func (c *Client) NewHttpService() httputils.HttpService {
+	return httputils.HttpService{
+		Method:           "POST",
+		CommonHeaders:    c.commonHeadersByMethod("POST"),
+		BaseUrl:          c.baseURL,
+		MaxRetryAttempts: c.maxRetryAttempts,
+		HandleRateLimits: c.handleRateLimits,
+		Client:           c.httpClient,
+		ExpectedStatus:   200,
+	}
+}
+
+func (c *Client) NewConnectorSync() *ConnectorSyncService {
+	return &ConnectorSyncService{
+		HttpService: c.NewHttpService(),
+	}
+}
 
 // ConnectorSyncService implements the Connector Management, Sync Connector Data API.
 // Ref. https://fivetran.com/docs/rest-api/connectors#syncconnectordata
 type ConnectorSyncService struct {
-	c           *Client
 	connectorID *string
-}
-
-type ConnectorSyncResponse struct {
-	Code    string `json:"code"`
-	Message string `json:"message"`
-}
-
-func (c *Client) NewConnectorSync() *ConnectorSyncService {
-	return &ConnectorSyncService{c: c}
+	httputils.HttpService
 }
 
 func (s *ConnectorSyncService) ConnectorID(connectorID string) *ConnectorSyncService {
@@ -27,43 +38,14 @@ func (s *ConnectorSyncService) ConnectorID(connectorID string) *ConnectorSyncSer
 	return s
 }
 
-func (s *ConnectorSyncService) Do(ctx context.Context) (ConnectorSyncResponse, error) {
-	var response ConnectorSyncResponse
+func (s *ConnectorSyncService) Do(ctx context.Context) (common.CommonResponse, error) {
+	var response common.CommonResponse
 
 	if s.connectorID == nil {
 		return response, fmt.Errorf("missing required ConnectorID")
 	}
 
-	url := fmt.Sprintf("%v/connectors/%v/force", s.c.baseURL, *s.connectorID)
-	expectedStatus := 200
+	err := s.HttpService.Do(ctx, fmt.Sprintf("/connectors/%v/force", *s.connectorID), nil, nil, &response)
 
-	headers := s.c.commonHeaders()
-	headers["Content-Type"] = "application/json"
-
-	r := request{
-		method:           "POST",
-		url:              url,
-		body:             nil,
-		queries:          nil,
-		headers:          headers,
-		client:           s.c.httpClient,
-		handleRateLimits: s.c.handleRateLimits,
-		maxRetryAttempts: s.c.maxRetryAttempts,
-	}
-
-	respBody, respStatus, err := r.httpRequest(ctx)
-	if err != nil {
-		return response, err
-	}
-
-	if err := json.Unmarshal(respBody, &response); err != nil {
-		return response, err
-	}
-
-	if respStatus != expectedStatus {
-		err := fmt.Errorf("status code: %v; expected: %v", respStatus, expectedStatus)
-		return response, err
-	}
-
-	return response, nil
+	return response, err
 }

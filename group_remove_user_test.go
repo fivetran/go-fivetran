@@ -4,23 +4,25 @@ import (
 	"context"
 	"strings"
 	"testing"
+
+	testutils "github.com/fivetran/go-fivetran/test_utils"
 )
 
 func TestNewGroupRemoveUserE2E(t *testing.T) {
-	userId := CreateUser(t)
-	AddUserToGroup(t, PredefinedGroupId, "william_addison.@fivetran.com")
+	userId := testutils.CreateUser(t)
+	testutils.AddUserToGroup(t, testutils.PredefinedGroupId, "william_addison.@fivetran.com")
 
-	deleted, err := Client.NewGroupRemoveUser().GroupID(PredefinedGroupId).UserID(userId).Do(context.Background())
+	deleted, err := testutils.Client.NewGroupRemoveUser().GroupID(testutils.PredefinedGroupId).UserID(userId).Do(context.Background())
 	if err != nil {
 		t.Logf("%+v\n", deleted)
 		t.Error(err)
 	}
 
-	AssertEqual(t, deleted.Code, "Success")
-	AssertNotEmpty(t, deleted.Message)
-	AssertEqual(t, strings.Contains(deleted.Message, userId), true)
+	testutils.AssertEqual(t, deleted.Code, "Success")
+	testutils.AssertNotEmpty(t, deleted.Message)
+	testutils.AssertEqual(t, strings.Contains(deleted.Message, userId), true)
 
 	t.Cleanup(func() {
-		DeleteUser(t, userId)
+		testutils.DeleteUser(t, userId)
 	})
 }

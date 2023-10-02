@@ -4,6 +4,9 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+
+	"github.com/fivetran/go-fivetran/common"
+	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
 // ConnectorDeleteService implements the Connector Management, Delete a Connector API.
@@ -11,11 +14,6 @@ import (
 type ConnectorDeleteService struct {
 	c           *Client
 	connectorID *string
-}
-
-type ConnectorDeleteResponse struct {
-	Code    string `json:"code"`
-	Message string `json:"message"`
 }
 
 func (c *Client) NewConnectorDelete() *ConnectorDeleteService {
@@ -27,8 +25,8 @@ func (s *ConnectorDeleteService) ConnectorID(connectorID string) *ConnectorDelet
 	return s
 }
 
-func (s *ConnectorDeleteService) Do(ctx context.Context) (ConnectorDeleteResponse, error) {
-	var response ConnectorDeleteResponse
+func (s *ConnectorDeleteService) Do(ctx context.Context) (common.CommonResponse, error) {
+	var response common.CommonResponse
 
 	if s.connectorID == nil {
 		return response, fmt.Errorf("missing required ConnectorID")
@@ -39,18 +37,18 @@ func (s *ConnectorDeleteService) Do(ctx context.Context) (ConnectorDeleteRespons
 
 	headers := s.c.commonHeaders()
 
-	r := request{
-		method:           "DELETE",
-		url:              url,
-		body:             nil,
-		queries:          nil,
-		headers:          headers,
-		client:           s.c.httpClient,
-		handleRateLimits: s.c.handleRateLimits,
-		maxRetryAttempts: s.c.maxRetryAttempts,
+	r := httputils.Request{
+		Method:           "DELETE",
+		Url:              url,
+		Body:             nil,
+		Queries:          nil,
+		Headers:          headers,
+		Client:           s.c.httpClient,
+		HandleRateLimits: s.c.handleRateLimits,
+		MaxRetryAttempts: s.c.maxRetryAttempts,
 	}
 
-	respBody, respStatus, err := r.httpRequest(ctx)
+	respBody, respStatus, err := r.Do(ctx)
 	if err != nil {
 		return response, err
 	}

@@ -5,11 +5,12 @@ import (
 	"testing"
 
 	"github.com/fivetran/go-fivetran"
+	testutils "github.com/fivetran/go-fivetran/test_utils"
 )
 
 func TestNewDestinationCreateE2E(t *testing.T) {
-	created, err := Client.NewDestinationCreate().
-		GroupID(PredefinedGroupId).
+	created, err := testutils.Client.NewDestinationCreate().
+		GroupID(testutils.PredefinedGroupId).
 		Service("snowflake").
 		TimeZoneOffset("+10").
 		RunSetupTests(false).
@@ -27,19 +28,19 @@ func TestNewDestinationCreateE2E(t *testing.T) {
 		t.Error(err)
 	}
 
-	AssertEqual(t, created.Code, "Success")
-	AssertNotEmpty(t, created.Message)
-	AssertEqual(t, created.Data.ID, PredefinedGroupId)
-	AssertEqual(t, created.Data.Service, "snowflake")
-	AssertEqual(t, created.Data.Region, "GCP_US_EAST4")
-	AssertEqual(t, created.Data.TimeZoneOffset, "+10")
-	AssertEqual(t, created.Data.SetupStatus, "incomplete")
-	AssertEqual(t, created.Data.Config.Host, "your-account.snowflakecomputing.com")
-	AssertEqual(t, created.Data.Config.Port, "443")
-	AssertEqual(t, created.Data.Config.Database, "fivetran")
-	AssertEqual(t, created.Data.Config.Auth, "PASSWORD")
-	AssertEqual(t, created.Data.Config.User, "fivetran_user")
-	AssertEqual(t, created.Data.Config.Password, "******")
+	testutils.AssertEqual(t, created.Code, "Success")
+	testutils.AssertNotEmpty(t, created.Message)
+	testutils.AssertEqual(t, created.Data.ID, testutils.PredefinedGroupId)
+	testutils.AssertEqual(t, created.Data.Service, "snowflake")
+	testutils.AssertEqual(t, created.Data.Region, "GCP_US_EAST4")
+	testutils.AssertEqual(t, created.Data.TimeZoneOffset, "+10")
+	testutils.AssertEqual(t, created.Data.SetupStatus, "incomplete")
+	testutils.AssertEqual(t, created.Data.Config.Host, "your-account.snowflakecomputing.com")
+	testutils.AssertEqual(t, created.Data.Config.Port, "443")
+	testutils.AssertEqual(t, created.Data.Config.Database, "fivetran")
+	testutils.AssertEqual(t, created.Data.Config.Auth, "PASSWORD")
+	testutils.AssertEqual(t, created.Data.Config.User, "fivetran_user")
+	testutils.AssertEqual(t, created.Data.Config.Password, "******")
 
-	t.Cleanup(func() { DeleteDestination(t, PredefinedGroupId) })
+	t.Cleanup(func() { testutils.DeleteDestination(t, testutils.PredefinedGroupId) })
 }

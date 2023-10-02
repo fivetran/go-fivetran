@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/fivetran/go-fivetran"
+	"github.com/fivetran/go-fivetran/common"
 	"github.com/fivetran/go-fivetran/tests/mock"
 )
 
@@ -68,7 +68,7 @@ func TestTeamGroupDeleteServiceDoMissingConnectorId(t *testing.T) {
 	assertEqual(t, err, expectedError)
 }
 
-func assertTeamGroupDeleteResponse(t *testing.T, response fivetran.TeamGroupMembershipDeleteResponse, code string, massage string) {
+func assertTeamGroupDeleteResponse(t *testing.T, response common.CommonResponse, code string, massage string) {
 	assertEqual(t, response.Code, code)
 	assertEqual(t, response.Message, massage)
 }

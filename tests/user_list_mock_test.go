@@ -6,8 +6,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/fivetran/go-fivetran"
+	"github.com/fivetran/go-fivetran/common"
 	"github.com/fivetran/go-fivetran/tests/mock"
+	"github.com/fivetran/go-fivetran/users"
 )
 
 func TestUsersListServiceDo(t *testing.T) {
@@ -65,65 +66,37 @@ func TestUsersListServiceDo(t *testing.T) {
 	}
 
 	flag := true
-	expectedResponse := fivetran.UsersListResponse{
+	expectedResponse := users.UsersListResponse{}
+	expectedResponse.Data.NextCursor = "eyJza2lwIjoyfQ"
+	expectedResponse.CommonResponse = common.CommonResponse{
 		Code: "Success",
-		Data: struct {
-			Items []struct {
-				ID         string    `json:"id"`
-				Email      string    `json:"email"`
-				GivenName  string    `json:"given_name"`
-				FamilyName string    `json:"family_name"`
-				Verified   *bool     `json:"verified"`
-				Invited    *bool     `json:"invited"`
-				Picture    string    `json:"picture"`
-				Phone      string    `json:"phone"`
-				Role       string    `json:"role"`
-				LoggedInAt time.Time `json:"logged_in_at"`
-				CreatedAt  time.Time `json:"created_at"`
-			} `json:"items"`
-			NextCursor string `json:"next_cursor"`
-		}{
-			Items: []struct {
-				ID         string    `json:"id"`
-				Email      string    `json:"email"`
-				GivenName  string    `json:"given_name"`
-				FamilyName string    `json:"family_name"`
-				Verified   *bool     `json:"verified"`
-				Invited    *bool     `json:"invited"`
-				Picture    string    `json:"picture"`
-				Phone      string    `json:"phone"`
-				Role       string    `json:"role"`
-				LoggedInAt time.Time `json:"logged_in_at"`
-				CreatedAt  time.Time `json:"created_at"`
-			}{
-				{
-					ID:         "nozzle_eat",
-					Email:      "john@mycompany.com",
-					GivenName:  "John",
-					FamilyName: "White",
-					Verified:   &flag,
-					Invited:    &flag,
-					Picture:    "",
-					Phone:      "",
-					Role:       "Account Administrator",
-					LoggedInAt: parseTime("2019-01-03T08:44:45.369Z"),
-					CreatedAt:  parseTime("2018-01-15T11:00:27.329220Z"),
-				},
-				{
-					ID:         "prophecies_falsely",
-					Email:      "robert@mycompany.com",
-					GivenName:  "Robert",
-					FamilyName: "Brown",
-					Verified:   &flag,
-					Invited:    &flag,
-					Picture:    "",
-					Phone:      "",
-					Role:       "",
-					LoggedInAt: parseTime("2018-12-12T12:06:15.337Z"),
-					CreatedAt:  parseTime("2018-01-24T20:43:32.963843Z"),
-				},
-			},
-			NextCursor: "eyJza2lwIjoyfQ",
+	}
+	expectedResponse.Data.Items = []users.UserDetailsData{
+		{
+			ID:         "nozzle_eat",
+			Email:      "john@mycompany.com",
+			GivenName:  "John",
+			FamilyName: "White",
+			Verified:   &flag,
+			Invited:    &flag,
+			Picture:    "",
+			Phone:      "",
+			Role:       "Account Administrator",
+			LoggedInAt: parseTime("2019-01-03T08:44:45.369Z"),
+			CreatedAt:  parseTime("2018-01-15T11:00:27.329220Z"),
+		},
+		{
+			ID:         "prophecies_falsely",
+			Email:      "robert@mycompany.com",
+			GivenName:  "Robert",
+			FamilyName: "Brown",
+			Verified:   &flag,
+			Invited:    &flag,
+			Picture:    "",
+			Phone:      "",
+			Role:       "",
+			LoggedInAt: parseTime("2018-12-12T12:06:15.337Z"),
+			CreatedAt:  parseTime("2018-01-24T20:43:32.963843Z"),
 		},
 	}
 
@@ -136,7 +109,7 @@ func TestUsersListServiceDo(t *testing.T) {
 
 }
 
-func assertUsersListResponse(t *testing.T, response fivetran.UsersListResponse, expected fivetran.UsersListResponse) {
+func assertUsersListResponse(t *testing.T, response, expected users.UsersListResponse) {
 	assertEqual(t, response.Code, expected.Code)
 	assertEqual(t, response.Data.NextCursor, expected.Data.NextCursor)
 

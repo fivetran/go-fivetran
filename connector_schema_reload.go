@@ -4,6 +4,9 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+
+	"github.com/fivetran/go-fivetran/connectors"
+	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
 // ConnectorSchemaReloadService implements the Connector Management, Reload a Connector Schema Config API.
@@ -40,8 +43,8 @@ func (s *ConnectorSchemaReloadService) ExcludeMode(value string) *ConnectorSchem
 	return s
 }
 
-func (s *ConnectorSchemaReloadService) Do(ctx context.Context) (ConnectorSchemaDetailsResponse, error) {
-	var response ConnectorSchemaDetailsResponse
+func (s *ConnectorSchemaReloadService) Do(ctx context.Context) (connectors.ConnectorSchemaDetailsResponse, error) {
+	var response connectors.ConnectorSchemaDetailsResponse
 
 	if s.connectorID == nil {
 		return response, fmt.Errorf("missing required ConnectorID")
@@ -59,18 +62,18 @@ func (s *ConnectorSchemaReloadService) Do(ctx context.Context) (ConnectorSchemaD
 	headers["Content-Type"] = "application/json"
 	headers["Accept"] = restAPIv2
 
-	r := request{
-		method:           "POST",
-		url:              url,
-		body:             reqBody,
-		queries:          nil,
-		headers:          headers,
-		client:           s.c.httpClient,
-		handleRateLimits: s.c.handleRateLimits,
-		maxRetryAttempts: s.c.maxRetryAttempts,
+	r := httputils.Request{
+		Method:           "POST",
+		Url:              url,
+		Body:             reqBody,
+		Queries:          nil,
+		Headers:          headers,
+		Client:           s.c.httpClient,
+		HandleRateLimits: s.c.handleRateLimits,
+		MaxRetryAttempts: s.c.maxRetryAttempts,
 	}
 
-	respBody, respStatus, err := r.httpRequest(ctx)
+	respBody, respStatus, err := r.Do(ctx)
 	if err != nil {
 		return response, err
 	}

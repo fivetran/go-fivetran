@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/fivetran/go-fivetran"
+	"github.com/fivetran/go-fivetran/connectors"
 	"github.com/fivetran/go-fivetran/tests/mock"
 )
 
@@ -63,7 +63,7 @@ func TestConnectorSetupTestsServiceBadRequest(t *testing.T) {
 	assertEqual(t, response.Code, "BadRequest")
 }
 
-func assertConnectorSetupTestsResponse(t *testing.T, response fivetran.ConnectorSetupTestsResponse) {
+func assertConnectorSetupTestsResponse(t *testing.T, response connectors.DetailsWithConfigResponse) {
 	assertEqual(t, response.Code, "Success")
 	assertNotEmpty(t, response.Message)
 

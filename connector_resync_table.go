@@ -4,6 +4,9 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+
+	"github.com/fivetran/go-fivetran/common"
+	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
 // ConnectorReSyncTableService implements the Connector Management, Re-sync Connector Table Data API.
@@ -13,11 +16,6 @@ type ConnectorReSyncTableService struct {
 	connectorID *string
 	schema      *string
 	table       *string
-}
-
-type ConnectorReSyncTableResponse struct {
-	Code    string `json:"code"`
-	Message string `json:"message"`
 }
 
 func (c *Client) NewConnectorReSyncTable() *ConnectorReSyncTableService {
@@ -39,8 +37,8 @@ func (s *ConnectorReSyncTableService) Table(value string) *ConnectorReSyncTableS
 	return s
 }
 
-func (s *ConnectorReSyncTableService) Do(ctx context.Context) (ConnectorReSyncTableResponse, error) {
-	var response ConnectorReSyncTableResponse
+func (s *ConnectorReSyncTableService) Do(ctx context.Context) (common.CommonResponse, error) {
+	var response common.CommonResponse
 
 	if s.connectorID == nil {
 		return response, fmt.Errorf("missing required ConnectorID")
@@ -57,18 +55,18 @@ func (s *ConnectorReSyncTableService) Do(ctx context.Context) (ConnectorReSyncTa
 
 	headers := s.c.commonHeaders()
 
-	r := request{
-		method:           "POST",
-		url:              url,
-		body:             nil,
-		queries:          nil,
-		headers:          headers,
-		client:           s.c.httpClient,
-		handleRateLimits: s.c.handleRateLimits,
-		maxRetryAttempts: s.c.maxRetryAttempts,
+	r := httputils.Request{
+		Method:           "POST",
+		Url:              url,
+		Body:             nil,
+		Queries:          nil,
+		Headers:          headers,
+		Client:           s.c.httpClient,
+		HandleRateLimits: s.c.handleRateLimits,
+		MaxRetryAttempts: s.c.maxRetryAttempts,
 	}
 
-	respBody, respStatus, err := r.httpRequest(ctx)
+	respBody, respStatus, err := r.Do(ctx)
 	if err != nil {
 		return response, err
 	}

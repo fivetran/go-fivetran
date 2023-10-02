@@ -4,6 +4,9 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+
+	"github.com/fivetran/go-fivetran/dbt"
+	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
 type DbtProjectCreateService struct {
@@ -15,18 +18,18 @@ type DbtProjectCreateService struct {
 	threads         *int
 	projectType     *string
 	environmentVars *[]string
-	projectConfig   *DbtProjectConfig
+	projectConfig   *dbt.DbtProjectConfig
 }
 
 type dbtProjectCreateRequest struct {
-	GroupID         *string                  `json:"group_id,omitempty"`
-	DbtVersion      *string                  `json:"dbt_version,omitempty"`
-	DefaultSchema   *string                  `json:"default_schema,omitempty"`
-	TargetName      *string                  `json:"target_name,omitempty"`
-	Threads         *int                     `json:"threads,omitempty"`
-	EnvironmentVars *[]string                `json:"environment_vars,omitempty"`
-	Type            *string                  `json:"type,omitempty"`
-	ProjectConfig   *dbtProjectConfigRequest `json:"project_config,omitempty"`
+	GroupID         *string   `json:"group_id,omitempty"`
+	DbtVersion      *string   `json:"dbt_version,omitempty"`
+	DefaultSchema   *string   `json:"default_schema,omitempty"`
+	TargetName      *string   `json:"target_name,omitempty"`
+	Threads         *int      `json:"threads,omitempty"`
+	EnvironmentVars *[]string `json:"environment_vars,omitempty"`
+	Type            *string   `json:"type,omitempty"`
+	ProjectConfig   any       `json:"project_config,omitempty"`
 }
 
 func (c *Client) NewDbtProjectCreate() *DbtProjectCreateService {
@@ -34,10 +37,10 @@ func (c *Client) NewDbtProjectCreate() *DbtProjectCreateService {
 }
 
 func (s *DbtProjectCreateService) request() *dbtProjectCreateRequest {
-	var config *dbtProjectConfigRequest
+	var config interface{}
 
 	if s.projectConfig != nil {
-		config = s.projectConfig.request()
+		config = s.projectConfig.Request()
 	}
 
 	return &dbtProjectCreateRequest{
@@ -82,7 +85,7 @@ func (s *DbtProjectCreateService) EnvironmentVars(value []string) *DbtProjectCre
 	return s
 }
 
-func (s *DbtProjectCreateService) ProjectConfig(value *DbtProjectConfig) *DbtProjectCreateService {
+func (s *DbtProjectCreateService) ProjectConfig(value *dbt.DbtProjectConfig) *DbtProjectCreateService {
 	s.projectConfig = value
 	return s
 }
@@ -92,8 +95,8 @@ func (s *DbtProjectCreateService) Type(value string) *DbtProjectCreateService {
 	return s
 }
 
-func (s *DbtProjectCreateService) Do(ctx context.Context) (DbtProjectDetailsResponse, error) {
-	var response DbtProjectDetailsResponse
+func (s *DbtProjectCreateService) Do(ctx context.Context) (dbt.DbtProjectDetailsResponse, error) {
+	var response dbt.DbtProjectDetailsResponse
 	url := fmt.Sprintf("%v/dbt/projects", s.c.baseURL)
 	expectedStatus := 201
 
@@ -105,18 +108,18 @@ func (s *DbtProjectCreateService) Do(ctx context.Context) (DbtProjectDetailsResp
 		return response, err
 	}
 
-	r := request{
-		method:           "POST",
-		url:              url,
-		body:             reqBody,
-		queries:          nil,
-		headers:          headers,
-		client:           s.c.httpClient,
-		handleRateLimits: s.c.handleRateLimits,
-		maxRetryAttempts: s.c.maxRetryAttempts,
+	r := httputils.Request{
+		Method:           "POST",
+		Url:              url,
+		Body:             reqBody,
+		Queries:          nil,
+		Headers:          headers,
+		Client:           s.c.httpClient,
+		HandleRateLimits: s.c.handleRateLimits,
+		MaxRetryAttempts: s.c.maxRetryAttempts,
 	}
 
-	respBody, respStatus, err := r.httpRequest(ctx)
+	respBody, respStatus, err := r.Do(ctx)
 	if err != nil {
 		return response, err
 	}

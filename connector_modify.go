@@ -4,7 +4,10 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"time"
+
+	"github.com/fivetran/go-fivetran/connectors"
+	httputils "github.com/fivetran/go-fivetran/http_utils"
+	"github.com/fivetran/go-fivetran/utils"
 )
 
 // ConnectorModifyService implements the Connector Management, Modify a Connector API.
@@ -21,8 +24,8 @@ type ConnectorModifyService struct {
 	scheduleType      *string
 	runSetupTests     *bool
 	pauseAfterTrial   *bool
-	config            *ConnectorConfig
-	auth              *ConnectorAuth
+	config            *connectors.ConnectorConfig
+	auth              *connectors.ConnectorAuth
 	configCustom      *map[string]interface{}
 	authCustom        *map[string]interface{}
 }
@@ -41,77 +44,14 @@ type connectorModifyRequestBase struct {
 
 type connectorModifyRequest struct {
 	connectorModifyRequestBase
-	Config *connectorConfigRequest `json:"config,omitempty"`
-	Auth   *connectorAuthRequest   `json:"auth,omitempty"`
+	Config any `json:"config,omitempty"`
+	Auth   any `json:"auth,omitempty"`
 }
 
 type connectorCustomModifyRequest struct {
 	connectorModifyRequestBase
 	Config *map[string]interface{} `json:"config,omitempty"`
 	Auth   *map[string]interface{} `json:"auth,omitempty"`
-}
-
-type ConnectorModifyResponseDataBase struct {
-	ID              string    `json:"id"`
-	GroupID         string    `json:"group_id"`
-	Service         string    `json:"service"`
-	ServiceVersion  *int      `json:"service_version"`
-	Schema          string    `json:"schema"`
-	ConnectedBy     string    `json:"connected_by"`
-	CreatedAt       time.Time `json:"created_at"`
-	SucceededAt     time.Time `json:"succeeded_at"`
-	FailedAt        time.Time `json:"failed_at"`
-	SyncFrequency   *int      `json:"sync_frequency"`
-	Paused          *bool     `json:"paused"`
-	PauseAfterTrial *bool     `json:"pause_after_trial"`
-	ScheduleType    string    `json:"schedule_type"`
-	Status          struct {
-		SetupState       string `json:"setup_state"`
-		SyncState        string `json:"sync_state"`
-		UpdateState      string `json:"update_state"`
-		IsHistoricalSync *bool  `json:"is_historical_sync"`
-		Tasks            []struct {
-			Code    string `json:"code"`
-			Message string `json:"message"`
-		} `json:"tasks"`
-		Warnings []struct {
-			Code    string `json:"code"`
-			Message string `json:"message"`
-		} `json:"warnings"`
-	} `json:"status"`
-	SetupTests []struct {
-		Title   string `json:"title"`
-		Status  string `json:"status"`
-		Message string `json:"message"`
-	} `json:"setup_tests"`
-}
-
-type ConnectorModifyResponse struct {
-	Code    string `json:"code"`
-	Message string `json:"message"`
-	Data    struct {
-		ConnectorModifyResponseDataBase
-		Config ConnectorConfigResponse `json:"config"`
-	} `json:"data"`
-}
-
-type ConnectorCustomModifyResponse struct {
-	Code    string `json:"code"`
-	Message string `json:"message"`
-	Data    struct {
-		ConnectorModifyResponseDataBase
-		Config map[string]interface{} `json:"config"`
-	} `json:"data"`
-}
-
-type ConnectorCustomMergedModifyResponse struct {
-	Code    string `json:"code"`
-	Message string `json:"message"`
-	Data    struct {
-		ConnectorModifyResponseDataBase
-		CustomConfig map[string]interface{}  `json:"config"`
-		Config       ConnectorConfigResponse // no mapping here
-	} `json:"data"`
 }
 
 func (c *Client) NewConnectorModify() *ConnectorModifyService {
@@ -133,14 +73,14 @@ func (s *ConnectorModifyService) requestBase() connectorModifyRequestBase {
 }
 
 func (s *ConnectorModifyService) request() *connectorModifyRequest {
-	var config *connectorConfigRequest
+	var config interface{}
 	if s.config != nil {
-		config = s.config.request()
+		config = s.config.Request()
 	}
 
-	var auth *connectorAuthRequest
+	var auth interface{}
 	if s.auth != nil {
-		auth = s.auth.request()
+		auth = s.auth.Request()
 	}
 
 	return &connectorModifyRequest{
@@ -163,7 +103,7 @@ func (s *ConnectorModifyService) requestCustomMerged() (*connectorCustomModifyRe
 
 	if s.config != nil {
 		var err error
-		currentConfig, err = s.config.merge(currentConfig)
+		currentConfig, err = s.config.Merge(currentConfig)
 		if err != nil {
 			return nil, err
 		}
@@ -172,7 +112,7 @@ func (s *ConnectorModifyService) requestCustomMerged() (*connectorCustomModifyRe
 	currentAuth := s.authCustom
 	if s.auth != nil {
 		var err error
-		currentAuth, err = s.auth.merge(currentAuth)
+		currentAuth, err = s.auth.Merge(currentAuth)
 		if err != nil {
 			return nil, err
 		}
@@ -205,12 +145,12 @@ func (s *ConnectorModifyService) DailySyncTime(value string) *ConnectorModifySer
 	return s
 }
 
-func (s *ConnectorModifyService) Config(value *ConnectorConfig) *ConnectorModifyService {
+func (s *ConnectorModifyService) Config(value *connectors.ConnectorConfig) *ConnectorModifyService {
 	s.config = value
 	return s
 }
 
-func (s *ConnectorModifyService) Auth(value *ConnectorAuth) *ConnectorModifyService {
+func (s *ConnectorModifyService) Auth(value *connectors.ConnectorAuth) *ConnectorModifyService {
 	s.auth = value
 	return s
 }
@@ -273,18 +213,18 @@ func (s *ConnectorModifyService) do(ctx context.Context, req, response any) erro
 		return err
 	}
 
-	r := request{
-		method:           "PATCH",
-		url:              url,
-		body:             reqBody,
-		queries:          nil,
-		headers:          headers,
-		client:           s.c.httpClient,
-		handleRateLimits: s.c.handleRateLimits,
-		maxRetryAttempts: s.c.maxRetryAttempts,
+	r := httputils.Request{
+		Method:           "PATCH",
+		Url:              url,
+		Body:             reqBody,
+		Queries:          nil,
+		Headers:          headers,
+		Client:           s.c.httpClient,
+		HandleRateLimits: s.c.handleRateLimits,
+		MaxRetryAttempts: s.c.maxRetryAttempts,
 	}
 
-	respBody, respStatus, err := r.httpRequest(ctx)
+	respBody, respStatus, err := r.Do(ctx)
 	if err != nil {
 		return err
 	}
@@ -301,24 +241,24 @@ func (s *ConnectorModifyService) do(ctx context.Context, req, response any) erro
 	return nil
 }
 
-func (s *ConnectorModifyService) Do(ctx context.Context) (ConnectorModifyResponse, error) {
-	var response ConnectorModifyResponse
+func (s *ConnectorModifyService) Do(ctx context.Context) (connectors.DetailsWithConfigResponse, error) {
+	var response connectors.DetailsWithConfigResponse
 
 	err := s.do(ctx, s.request(), &response)
 
 	return response, err
 }
 
-func (s *ConnectorModifyService) DoCustom(ctx context.Context) (ConnectorCustomModifyResponse, error) {
-	var response ConnectorCustomModifyResponse
+func (s *ConnectorModifyService) DoCustom(ctx context.Context) (connectors.DetailsWithCustomConfigResponse, error) {
+	var response connectors.DetailsWithCustomConfigResponse
 
 	err := s.do(ctx, s.requestCustom(), &response)
 
 	return response, err
 }
 
-func (s *ConnectorModifyService) DoCustomMerged(ctx context.Context) (ConnectorCustomMergedModifyResponse, error) {
-	var response ConnectorCustomMergedModifyResponse
+func (s *ConnectorModifyService) DoCustomMerged(ctx context.Context) (connectors.DetailsWithCustomMergedConfigResponse, error) {
+	var response connectors.DetailsWithCustomMergedConfigResponse
 
 	req, err := s.requestCustomMerged()
 
@@ -329,7 +269,7 @@ func (s *ConnectorModifyService) DoCustomMerged(ctx context.Context) (ConnectorC
 	err = s.do(ctx, req, &response)
 
 	if err == nil {
-		err = FetchFromMap(&response.Data.CustomConfig, &response.Data.Config)
+		err = utils.FetchFromMap(&response.Data.CustomConfig, &response.Data.Config)
 	}
 
 	return response, err

@@ -1,31 +1,33 @@
 package fivetran_test
 
 import (
-    "context"
-    "testing"
+	"context"
+	"testing"
+
+	testutils "github.com/fivetran/go-fivetran/test_utils"
 )
 
 func TestNewTeamsModifyE2E(t *testing.T) {
-    teamId := CreateTeam(t)
+	teamId := testutils.CreateTeam(t)
 
-    modified, err := Client.NewTeamsModify().
-        TeamId(teamId).
-        Name("test_team").
-        Description("test_description_2").
-        Role("Account Reviewer").
-        Do(context.Background())
+	modified, err := testutils.Client.NewTeamsModify().
+		TeamId(teamId).
+		Name("test_team").
+		Description("test_description_2").
+		Role("Account Reviewer").
+		Do(context.Background())
 
-    if err != nil {
-        t.Logf("%+v\n", modified)
-        t.Error(err)
-    }
+	if err != nil {
+		t.Logf("%+v\n", modified)
+		t.Error(err)
+	}
 
-    AssertEqual(t, modified.Code, "Success")
-    AssertNotEmpty(t, modified.Message)
-    AssertNotEmpty(t, modified.Data.Id)
-    AssertEqual(t, modified.Data.Name, "test_team")
-    AssertEqual(t, modified.Data.Description, "test_description_2")
-    AssertEqual(t, modified.Data.Role, "Account Reviewer")
-    
-    t.Cleanup(func() { DeleteTeam(t, modified.Data.Id) })
+	testutils.AssertEqual(t, modified.Code, "Success")
+	testutils.AssertNotEmpty(t, modified.Message)
+	testutils.AssertNotEmpty(t, modified.Data.Id)
+	testutils.AssertEqual(t, modified.Data.Name, "test_team")
+	testutils.AssertEqual(t, modified.Data.Description, "test_description_2")
+	testutils.AssertEqual(t, modified.Data.Role, "Account Reviewer")
+
+	t.Cleanup(func() { testutils.DeleteTeam(t, modified.Data.Id) })
 }

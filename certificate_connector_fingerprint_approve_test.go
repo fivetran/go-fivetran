@@ -3,11 +3,13 @@ package fivetran_test
 import (
 	"context"
 	"testing"
+
+	testutils "github.com/fivetran/go-fivetran/test_utils"
 )
 
 func TestNewCertificateConnectorFingerprintApproveE2E(t *testing.T) {
-	connectorId := CreateTempConnector(t)
-	response, err := Client.NewCertificateConnectorFingerprintApprove().
+	connectorId := testutils.CreateTempConnector(t)
+	response, err := testutils.Client.NewCertificateConnectorFingerprintApprove().
 		ConnectorID(connectorId).
 		Hash("test_hash").
 		PublicKey("test_public_key").
@@ -18,6 +20,6 @@ func TestNewCertificateConnectorFingerprintApproveE2E(t *testing.T) {
 		t.Error(err)
 	}
 
-	AssertEqual(t, response.Code, "Success")
-	AssertNotEmpty(t, response.Message)
+	testutils.AssertEqual(t, response.Code, "Success")
+	testutils.AssertNotEmpty(t, response.Message)
 }

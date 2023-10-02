@@ -4,7 +4,9 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"time"
+
+	"github.com/fivetran/go-fivetran/connectors"
+	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
 // ConnectorSetupTestsService implements the Connector Management, Run connector setup tests API.
@@ -19,44 +21,6 @@ type ConnectorSetupTestsService struct {
 type connectorSetupTestsRequest struct {
 	TrustCertificates *bool `json:"trust_certificates,omitempty"`
 	TrustFingerprints *bool `json:"trust_fingerprints,omitempty"`
-}
-
-type ConnectorSetupTestsResponse struct {
-	Code    string `json:"code"`
-	Message string `json:"message"`
-	Data    struct {
-		ID             string    `json:"id"`
-		GroupID        string    `json:"group_id"`
-		Service        string    `json:"service"`
-		ServiceVersion *int      `json:"service_version"`
-		Schema         string    `json:"schema"`
-		ConnectedBy    string    `json:"connected_by"`
-		CreatedAt      time.Time `json:"created_at"`
-		SucceededAt    time.Time `json:"succeeded_at"`
-		FailedAt       time.Time `json:"failed_at"`
-		SyncFrequency  *int      `json:"sync_frequency"`
-		ScheduleType   string    `json:"schedule_type"`
-		Status         struct {
-			SetupState       string `json:"setup_state"`
-			SyncState        string `json:"sync_state"`
-			UpdateState      string `json:"update_state"`
-			IsHistoricalSync *bool  `json:"is_historical_sync"`
-			Tasks            []struct {
-				Code    string `json:"code"`
-				Message string `json:"message"`
-			} `json:"tasks"`
-			Warnings []struct {
-				Code    string `json:"code"`
-				Message string `json:"message"`
-			} `json:"warnings"`
-		} `json:"status"`
-		SetupTests []struct {
-			Title   string `json:"title"`
-			Status  string `json:"status"`
-			Message string `json:"message"`
-		} `json:"setup_tests"`
-		Config ConnectorConfigResponse `json:"config"`
-	} `json:"data"`
 }
 
 func (c *Client) NewConnectorSetupTests() *ConnectorSetupTestsService {
@@ -85,11 +49,33 @@ func (s *ConnectorSetupTestsService) TrustFingerprints(value bool) *ConnectorSet
 	return s
 }
 
-func (s *ConnectorSetupTestsService) Do(ctx context.Context) (ConnectorSetupTestsResponse, error) {
-	var response ConnectorSetupTestsResponse
+func (s *ConnectorSetupTestsService) Do(ctx context.Context) (connectors.DetailsWithConfigResponse, error) {
+	var response connectors.DetailsWithConfigResponse
 
+	err := s.do(ctx, &response)
+
+	return response, err
+}
+
+func (s *ConnectorSetupTestsService) DoCustom(ctx context.Context) (connectors.DetailsWithCustomConfigResponse, error) {
+	var response connectors.DetailsWithCustomConfigResponse
+
+	err := s.do(ctx, &response)
+
+	return response, err
+}
+
+func (s *ConnectorSetupTestsService) DoCustomMerged(ctx context.Context) (connectors.DetailsWithCustomMergedConfigResponse, error) {
+	var response connectors.DetailsWithCustomMergedConfigResponse
+
+	err := s.do(ctx, &response)
+
+	return response, err
+}
+
+func (s *ConnectorSetupTestsService) do(ctx context.Context, response any) error {
 	if s.connectorID == nil {
-		return response, fmt.Errorf("missing required ConnectorID")
+		return fmt.Errorf("missing required ConnectorID")
 	}
 
 	url := fmt.Sprintf("%v/connectors/%v/test", s.c.baseURL, *s.connectorID)
@@ -101,33 +87,33 @@ func (s *ConnectorSetupTestsService) Do(ctx context.Context) (ConnectorSetupTest
 
 	reqBody, err := json.Marshal(s.request())
 	if err != nil {
-		return response, err
+		return err
 	}
 
-	r := request{
-		method:           "POST",
-		url:              url,
-		body:             reqBody,
-		queries:          nil,
-		headers:          headers,
-		client:           s.c.httpClient,
-		handleRateLimits: s.c.handleRateLimits,
-		maxRetryAttempts: s.c.maxRetryAttempts,
+	r := httputils.Request{
+		Method:           "POST",
+		Url:              url,
+		Body:             reqBody,
+		Queries:          nil,
+		Headers:          headers,
+		Client:           s.c.httpClient,
+		HandleRateLimits: s.c.handleRateLimits,
+		MaxRetryAttempts: s.c.maxRetryAttempts,
 	}
 
-	respBody, respStatus, err := r.httpRequest(ctx)
+	respBody, respStatus, err := r.Do(ctx)
 	if err != nil {
-		return response, err
+		return err
 	}
 
 	if err := json.Unmarshal(respBody, &response); err != nil {
-		return response, err
+		return err
 	}
 
 	if respStatus != expectedStatus {
 		err := fmt.Errorf("status code: %v; expected: %v", respStatus, expectedStatus)
-		return response, err
+		return err
 	}
 
-	return response, nil
+	return nil
 }

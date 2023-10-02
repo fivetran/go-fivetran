@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/fivetran/go-fivetran"
+	"github.com/fivetran/go-fivetran/common"
 	"github.com/fivetran/go-fivetran/tests/mock"
 )
 
@@ -67,7 +67,7 @@ func prepareDbtTransformationDeleteResponse(code string, message string) string 
 	return s
 }
 
-func assertDbtTransformationDeleteResponse(t *testing.T, response fivetran.DbtTransformationDeleteResponse, expectCode string, expectMessage string) {
+func assertDbtTransformationDeleteResponse(t *testing.T, response common.CommonResponse, expectCode string, expectMessage string) {
 	assertEqual(t, response.Code, expectCode)
 	if response.Message != expectMessage {
 		t.Errorf("expected message '%s', got '%s'", expectMessage, response.Message)

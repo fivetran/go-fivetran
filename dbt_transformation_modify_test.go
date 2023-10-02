@@ -5,13 +5,14 @@ import (
 	"testing"
 
 	"github.com/fivetran/go-fivetran"
+	testutils "github.com/fivetran/go-fivetran/test_utils"
 )
 
 func TestNewDbtTransformationModifyE2E(t *testing.T) {
 	t.Skip("Skipping test until we get more info on dbt transformations data which can be used for testing")
 
-	dbtTransformationId := CreateTempDbtTransformation(t)
-	details, err := Client.NewDbtTransformationModifyService().
+	dbtTransformationId := testutils.CreateTempDbtTransformation(t)
+	details, err := testutils.Client.NewDbtTransformationModifyService().
 		DbtTransformationId(dbtTransformationId).
 		Schedule(fivetran.NewDbtTransformationSchedule().
 			ScheduleType("INTEGRATED").
@@ -27,20 +28,20 @@ func TestNewDbtTransformationModifyE2E(t *testing.T) {
 	}
 
 	// These checks are inconsistent currently, will update it when enable the test
-	AssertEqual(t, details.Code, "Success")
-	AssertNotEmpty(t, details.Message)
-	AssertNotEmpty(t, details.Data.ID)
-	AssertEqual(t, details.Data.Status, "")
-	AssertEmpty(t, details.Data.Schedule.DaysOfWeek)
-	AssertEqual(t, details.Data.Schedule.Interval, "")
-	AssertEqual(t, details.Data.Schedule.ScheduleType, "")
-	AssertEqual(t, details.Data.Schedule.TimeOfDay, "")
-	AssertEqual(t, details.Data.LastRun, "")
-	AssertEqual(t, details.Data.OutputModelName, "")
-	AssertEqual(t, details.Data.DbtProjectId, "")
-	AssertEqual(t, details.Data.DbtModelId, "")
-	AssertEqual(t, details.Data.NextRun, "")
-	AssertEqual(t, details.Data.CreatedAt, "")
-	AssertNotEmpty(t, details.Data.ModelIds)
-	AssertEmpty(t, details.Data.ConnectorIds)
+	testutils.AssertEqual(t, details.Code, "Success")
+	testutils.AssertNotEmpty(t, details.Message)
+	testutils.AssertNotEmpty(t, details.Data.ID)
+	testutils.AssertEqual(t, details.Data.Status, "")
+	testutils.AssertEmpty(t, details.Data.Schedule.DaysOfWeek)
+	testutils.AssertEqual(t, details.Data.Schedule.Interval, "")
+	testutils.AssertEqual(t, details.Data.Schedule.ScheduleType, "")
+	testutils.AssertEqual(t, details.Data.Schedule.TimeOfDay, "")
+	testutils.AssertEqual(t, details.Data.LastRun, "")
+	testutils.AssertEqual(t, details.Data.OutputModelName, "")
+	testutils.AssertEqual(t, details.Data.DbtProjectId, "")
+	testutils.AssertEqual(t, details.Data.DbtModelId, "")
+	testutils.AssertEqual(t, details.Data.NextRun, "")
+	testutils.AssertEqual(t, details.Data.CreatedAt, "")
+	testutils.AssertNotEmpty(t, details.Data.ModelIds)
+	testutils.AssertEmpty(t, details.Data.ConnectorIds)
 }

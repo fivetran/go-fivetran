@@ -4,7 +4,10 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"time"
+
+	"github.com/fivetran/go-fivetran/common"
+	"github.com/fivetran/go-fivetran/groups"
+	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
 // GroupsListService implements the Group Management, List All Groups API.
@@ -16,15 +19,10 @@ type GroupsListService struct {
 }
 
 type GroupsListResponse struct {
-	Code    string `json:"code"`
-	Message string `json:"message"`
-	Data    struct {
-		Items []struct {
-			ID        string    `json:"id"`
-			Name      string    `json:"name"`
-			CreatedAt time.Time `json:"created_at"`
-		} `json:"items"`
-		NextCursor string `json:"next_cursor"`
+	common.CommonResponse
+	Data struct {
+		Items      []groups.GroupItem `json:"items"`
+		NextCursor string             `json:"next_cursor"`
 	} `json:"data"`
 }
 
@@ -57,18 +55,18 @@ func (s *GroupsListService) Do(ctx context.Context) (GroupsListResponse, error) 
 		queries["limit"] = fmt.Sprint(*s.limit)
 	}
 
-	r := request{
-		method:           "GET",
-		url:              url,
-		body:             nil,
-		queries:          queries,
-		headers:          headers,
-		client:           s.c.httpClient,
-		handleRateLimits: s.c.handleRateLimits,
-		maxRetryAttempts: s.c.maxRetryAttempts,
+	r := httputils.Request{
+		Method:           "GET",
+		Url:              url,
+		Body:             nil,
+		Queries:          queries,
+		Headers:          headers,
+		Client:           s.c.httpClient,
+		HandleRateLimits: s.c.handleRateLimits,
+		MaxRetryAttempts: s.c.maxRetryAttempts,
 	}
 
-	respBody, respStatus, err := r.httpRequest(ctx)
+	respBody, respStatus, err := r.Do(ctx)
 	if err != nil {
 		return response, err
 	}

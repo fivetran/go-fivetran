@@ -3,11 +3,13 @@ package fivetran_test
 import (
 	"context"
 	"testing"
+
+	testutils "github.com/fivetran/go-fivetran/test_utils"
 )
 
 func TestNewUserModifyE2E(t *testing.T) {
-	userId := CreateTempUser(t)
-	user, err := Client.NewUserModify().
+	userId := testutils.CreateTempUser(t)
+	user, err := testutils.Client.NewUserModify().
 		UserID(userId).
 		FamilyName("Gerrard").
 		GivenName("Steven").
@@ -21,17 +23,17 @@ func TestNewUserModifyE2E(t *testing.T) {
 		t.Error(err)
 	}
 
-	AssertEqual(t, user.Code, "Success")
-	AssertNotEmpty(t, user.Message)
-	AssertEqual(t, user.Data.ID, userId)
-	AssertEqual(t, user.Data.Email, "william_addison.@fivetran.com")
-	AssertEqual(t, user.Data.GivenName, "Steven")
-	AssertEqual(t, user.Data.FamilyName, "Gerrard")
-	AssertEqual(t, *user.Data.Verified, false)
-	AssertEqual(t, *user.Data.Invited, true)
-	AssertEqual(t, user.Data.Phone, "+19876543210")
-	AssertEqual(t, user.Data.Picture, "http://picture.com")
-	//todo: incomment when role field will be mapped then.AssertThat(t, user.Data.Role, is.EqualTo("Owner"))
-	AssertEqual(t, user.Data.LoggedInAt.IsZero(), true)
-	AssertEqual(t, user.Data.CreatedAt.IsZero(), false)
+	testutils.AssertEqual(t, user.Code, "Success")
+	testutils.AssertNotEmpty(t, user.Message)
+	testutils.AssertEqual(t, user.Data.ID, userId)
+	testutils.AssertEqual(t, user.Data.Email, "william_addison.@fivetran.com")
+	testutils.AssertEqual(t, user.Data.GivenName, "Steven")
+	testutils.AssertEqual(t, user.Data.FamilyName, "Gerrard")
+	testutils.AssertEqual(t, *user.Data.Verified, false)
+	testutils.AssertEqual(t, *user.Data.Invited, true)
+	testutils.AssertEqual(t, user.Data.Phone, "+19876543210")
+	testutils.AssertEqual(t, user.Data.Picture, "http://picture.com")
+	//todo: incomment when role field will be mapped then.testutils.AssertThat(t, user.Data.Role, is.EqualTo("Owner"))
+	testutils.AssertEqual(t, user.Data.LoggedInAt.IsZero(), true)
+	testutils.AssertEqual(t, user.Data.CreatedAt.IsZero(), false)
 }

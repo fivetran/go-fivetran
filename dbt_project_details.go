@@ -4,6 +4,9 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+
+	"github.com/fivetran/go-fivetran/dbt"
+	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
 type DbtProjectDetailsService struct {
@@ -20,8 +23,8 @@ func (s *DbtProjectDetailsService) DbtProjectID(value string) *DbtProjectDetails
 	return s
 }
 
-func (s *DbtProjectDetailsService) Do(ctx context.Context) (DbtProjectDetailsResponse, error) {
-	var response DbtProjectDetailsResponse
+func (s *DbtProjectDetailsService) Do(ctx context.Context) (dbt.DbtProjectDetailsResponse, error) {
+	var response dbt.DbtProjectDetailsResponse
 
 	if s.dbtProjectID == nil {
 		return response, fmt.Errorf("missing required DbtProjectId")
@@ -33,16 +36,18 @@ func (s *DbtProjectDetailsService) Do(ctx context.Context) (DbtProjectDetailsRes
 	headers := s.c.commonHeaders()
 	headers["Accept"] = restAPIv2
 
-	r := request{
-		method:  "GET",
-		url:     url,
-		body:    nil,
-		queries: nil,
-		headers: headers,
-		client:  s.c.httpClient,
+	r := httputils.Request{
+		Method:           "GET",
+		Url:              url,
+		Body:             nil,
+		Queries:          nil,
+		Headers:          headers,
+		Client:           s.c.httpClient,
+		HandleRateLimits: s.c.handleRateLimits,
+		MaxRetryAttempts: s.c.maxRetryAttempts,
 	}
 
-	respBody, respStatus, err := r.httpRequest(ctx)
+	respBody, respStatus, err := r.Do(ctx)
 
 	if err != nil {
 		return response, err
