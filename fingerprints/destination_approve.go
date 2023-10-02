@@ -53,7 +53,7 @@ func (s *DestinationFingerprintApproveService) PublicKey(value string) *Destinat
 
 func (s *DestinationFingerprintApproveService) Do(ctx context.Context) (FingerprintResponse, error) {
 	var response FingerprintResponse
-	url := fmt.Sprintf("destinations/%v/fingerprints", *s.destinationID)
+	url := fmt.Sprintf("/destinations/%v/fingerprints", *s.destinationID)
 	err := s.HttpService.Do(ctx, url, s.request(), nil, &response)
 	return response, err
 }
