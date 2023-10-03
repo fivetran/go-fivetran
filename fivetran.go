@@ -7,6 +7,7 @@ import (
 	"github.com/fivetran/go-fivetran/destinations"
 	externallogging "github.com/fivetran/go-fivetran/external_logging"
 	"github.com/fivetran/go-fivetran/fingerprints"
+	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
 func NewFunctionSecret() *connectors.FunctionSecret {
@@ -169,4 +170,12 @@ func (c *Client) NewDestinationFingerprintDetails() *fingerprints.DestinationFin
 	return &fingerprints.DestinationFingerprintDetailsService{
 		HttpService: c.NewHttpService(),
 	}
+}
+
+func Debug(value bool) {
+	httputils.Debug(value)
+}
+
+func DebugAuth(value bool) {
+	httputils.DebugAuth(value)
 }
