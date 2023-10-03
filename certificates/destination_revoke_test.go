@@ -29,7 +29,7 @@ func TestNewCertificateDestinationCertificateRevokeMock(t *testing.T) {
 		})
 
 	// act & assert
-	response, err := ftClient.NewCertificateDestinationCertificateRevoke().
+	response, err := ftClient.NewDestinationCertificateRevoke().
 		DestinationID(testDestinationId).
 		Hash(testHash).
 		Do(context.Background())

@@ -16,13 +16,6 @@ type DestinationCertificateRevokeService struct {
 	hash          *string
 }
 
-func NewRevokeDestinationCertificateRequestParams() httputils.HttpParams {
-	return httputils.HttpParams{
-		Method:         "DELETE",
-		ExpectedStatus: 200,
-	}
-}
-
 func (s *DestinationCertificateRevokeService) DestinationID(value string) *DestinationCertificateRevokeService {
 	s.destinationID = &value
 	return s
@@ -36,6 +29,6 @@ func (s *DestinationCertificateRevokeService) Hash(value string) *DestinationCer
 func (s *DestinationCertificateRevokeService) Do(ctx context.Context) (common.CommonResponse, error) {
 	var response common.CommonResponse
 	url := fmt.Sprintf("/destinations/%v/certificates/%v", *s.destinationID, *s.hash)
-	err := s.HttpService.Do(ctx, url, nil, nil, &response)
+	err := s.HttpService.Do(ctx, "DELETE", url, nil, nil, 200, &response)
 	return response, err
 }

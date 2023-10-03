@@ -13,3 +13,11 @@ type FingerprintDetails struct {
 	ValidatedDate string `json:"validated_date"`
 	ValidatedBy   string `json:"validated_by"`
 }
+
+type FingerprintsListResponse struct {
+	common.CommonResponse
+	Data struct {
+		Items      []FingerprintDetails `json:"items"`
+		NextCursor string               `json:"next_cursor"`
+	} `json:"data"`
+}

@@ -62,10 +62,9 @@ func (c *Client) SetMaxRetryAttempts(maxRetryAttempts int) {
 	c.maxRetryAttempts = maxRetryAttempts
 }
 
-func (c *Client) NewHttpService(params httputils.HttpParams) httputils.HttpService {
+func (c *Client) NewHttpService() httputils.HttpService {
 	return httputils.HttpService{
-		HttpParams:       params,
-		CommonHeaders:    c.commonHeadersByMethod(params.Method),
+		CommonHeaders:    c.commonHeaders(),
 		BaseUrl:          c.baseURL,
 		MaxRetryAttempts: c.maxRetryAttempts,
 		HandleRateLimits: c.handleRateLimits,
@@ -84,23 +83,4 @@ func (c *Client) commonHeaders() map[string]string {
 		"Authorization": c.authorization,
 		"User-Agent":    userAgent,
 	}
-}
-
-func (c *Client) commonHeadersByMethod(method string) map[string]string {
-	userAgent := defaultUserAgent
-
-	if c.customUserAgent != "" {
-		userAgent += " " + c.customUserAgent
-	}
-
-	result := map[string]string{
-		"Authorization": c.authorization,
-		"User-Agent":    userAgent,
-	}
-
-	if method == "POST" || method == "PATCH" {
-		result["Content-Type"] = "application/json"
-	}
-
-	return result
 }

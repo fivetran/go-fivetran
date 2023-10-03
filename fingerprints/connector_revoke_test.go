@@ -1,4 +1,4 @@
-package certificates_test
+package fingerprints_test
 
 import (
 	"context"
@@ -11,13 +11,13 @@ import (
 	"github.com/fivetran/go-fivetran/tests/mock"
 )
 
-func TestNewCertificateConnectorCertificateRevokeMock(t *testing.T) {
+func TestNewConnectorFingerprintRevokeMock(t *testing.T) {
 	// arrange
 	testConnectorId := "connector_id"
 	testHash := "hash"
 
 	ftClient, mockClient := tests.CreateTestClient()
-	handler := mockClient.When(http.MethodDelete, fmt.Sprintf("/v1/connectors/%v/certificates/%v", testConnectorId, testHash)).ThenCall(
+	handler := mockClient.When(http.MethodDelete, fmt.Sprintf("/v1/connectors/%v/fingerprints/%v", testConnectorId, testHash)).ThenCall(
 		func(req *http.Request) (*http.Response, error) {
 			response := mock.NewResponse(req, http.StatusOK,
 				`{
@@ -29,7 +29,7 @@ func TestNewCertificateConnectorCertificateRevokeMock(t *testing.T) {
 		})
 
 	// act & assert
-	response, err := ftClient.NewConnectorCertificateRevoke().
+	response, err := ftClient.NewConnectorFingerprintRevoke().
 		ConnectorID(testConnectorId).
 		Hash(testHash).
 		Do(context.Background())

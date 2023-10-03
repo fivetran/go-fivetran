@@ -71,66 +71,102 @@ func NewExternalLoggingConfig() *externallogging.ExternalLoggingConfig {
 
 func (c *Client) NewConnectorSync() *ConnectorSyncService {
 	return &ConnectorSyncService{
-		HttpService: c.NewHttpService(NewConnectorSyncRequestParams()),
+		HttpService: c.NewHttpService(),
 	}
 }
 
 func (c *Client) NewCertificateConnectorCertificateApprove() *certificates.ConnectorCertificateApproveService {
 	return &certificates.ConnectorCertificateApproveService{
-		HttpService: c.NewHttpService(certificates.NewApproveConnectorCertificateRequestParams()),
+		HttpService: c.NewHttpService(),
 	}
 }
 
 func (c *Client) NewCertificateDestinationCertificateApprove() *certificates.DestinationCertificateApproveService {
 	return &certificates.DestinationCertificateApproveService{
-		HttpService: c.NewHttpService(certificates.NewApproveDestinationCertificateRequestParams()),
+		HttpService: c.NewHttpService(),
 	}
 }
 
 func (c *Client) NewCertificateConnectorFingerprintApprove() *fingerprints.ConnectorFingerprintApproveService {
 	return &fingerprints.ConnectorFingerprintApproveService{
-		HttpService: c.NewHttpService(fingerprints.NewApproveConnectorFingerprintsRequestParams()),
+		HttpService: c.NewHttpService(),
 	}
 }
 
 func (c *Client) NewCertificateDestinationFingerprintApprove() *fingerprints.DestinationFingerprintApproveService {
 	return &fingerprints.DestinationFingerprintApproveService{
-		HttpService: c.NewHttpService(fingerprints.NewApproveDestinationFingerprintsRequestParams()),
+		HttpService: c.NewHttpService(),
 	}
 }
 
-func (c *Client) NewCertificateConnectorCertificateRevoke() *certificates.ConnectorCertificateRevokeService {
+func (c *Client) NewConnectorCertificateRevoke() *certificates.ConnectorCertificateRevokeService {
 	return &certificates.ConnectorCertificateRevokeService{
-		HttpService: c.NewHttpService(certificates.NewRevokeConnectorCertificateRequestParams()),
+		HttpService: c.NewHttpService(),
 	}
 }
 
-func (c *Client) NewCertificateDestinationCertificateRevoke() *certificates.DestinationCertificateRevokeService {
+func (c *Client) NewDestinationCertificateRevoke() *certificates.DestinationCertificateRevokeService {
 	return &certificates.DestinationCertificateRevokeService{
-		HttpService: c.NewHttpService(certificates.NewRevokeDestinationCertificateRequestParams()),
+		HttpService: c.NewHttpService(),
 	}
 }
 
 func (c *Client) NewConnectorCertificatesList() *certificates.ConnectorCertificatesListService {
 	return &certificates.ConnectorCertificatesListService{
-		HttpService: c.NewHttpService(certificates.NewListConnectorCertificateRequestParams()),
+		HttpService: c.NewHttpService(),
 	}
 }
 
 func (c *Client) NewDestinationCertificatesList() *certificates.DestinationCertificatesListService {
 	return &certificates.DestinationCertificatesListService{
-		HttpService: c.NewHttpService(certificates.NewListDestinationCertificateRequestParams()),
+		HttpService: c.NewHttpService(),
 	}
 }
 
 func (c *Client) NewConnectorCertificateDetails() *certificates.ConnectorCertificateDetailsService {
 	return &certificates.ConnectorCertificateDetailsService{
-		HttpService: c.NewHttpService(certificates.NewConnectorCertificateDetailsRequestParams()),
+		HttpService: c.NewHttpService(),
 	}
 }
 
 func (c *Client) NewDestinationCertificateDetails() *certificates.DestinationCertificateDetailsService {
 	return &certificates.DestinationCertificateDetailsService{
-		HttpService: c.NewHttpService(certificates.NewDestinationCertificateDetailsRequestParams()),
+		HttpService: c.NewHttpService(),
+	}
+}
+
+func (c *Client) NewConnectorFingerprintRevoke() *fingerprints.ConnectorFingerprintRevokeService {
+	return &fingerprints.ConnectorFingerprintRevokeService{
+		HttpService: c.NewHttpService(),
+	}
+}
+
+func (c *Client) NewDestinationFingerprintRevoke() *fingerprints.DestinationFingerprintRevokeService {
+	return &fingerprints.DestinationFingerprintRevokeService{
+		HttpService: c.NewHttpService(),
+	}
+}
+
+func (c *Client) NewConnectorFingerprintsList() *fingerprints.ConnectorFingerprintsListService {
+	return &fingerprints.ConnectorFingerprintsListService{
+		HttpService: c.NewHttpService(),
+	}
+}
+
+func (c *Client) NewDestinationFingerprintsList() *fingerprints.DestinationFingerprintsListService {
+	return &fingerprints.DestinationFingerprintsListService{
+		HttpService: c.NewHttpService(),
+	}
+}
+
+func (c *Client) NewConnectorFingerprintDetails() *fingerprints.ConnectorFingerprintDetailsService {
+	return &fingerprints.ConnectorFingerprintDetailsService{
+		HttpService: c.NewHttpService(),
+	}
+}
+
+func (c *Client) NewDestinationFingerprintDetails() *fingerprints.DestinationFingerprintDetailsService {
+	return &fingerprints.DestinationFingerprintDetailsService{
+		HttpService: c.NewHttpService(),
 	}
 }

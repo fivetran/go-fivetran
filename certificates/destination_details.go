@@ -13,13 +13,6 @@ type DestinationCertificateDetailsService struct {
 	hash          *string
 }
 
-func NewDestinationCertificateDetailsRequestParams() httputils.HttpParams {
-	return httputils.HttpParams{
-		Method:         "GET",
-		ExpectedStatus: 200,
-	}
-}
-
 func (s *DestinationCertificateDetailsService) DestinationID(value string) *DestinationCertificateDetailsService {
 	s.destinationID = &value
 	return s
@@ -34,6 +27,6 @@ func (s *DestinationCertificateDetailsService) Do(ctx context.Context) (Certific
 	var response CertificateResponse
 	url := fmt.Sprintf("/destinations/%v/certificates/%v", *s.destinationID, *s.hash)
 
-	err := s.HttpService.Do(ctx, url, nil, nil, &response)
+	err := s.HttpService.Do(ctx, "GET", url, nil, nil, 200, &response)
 	return response, err
 }

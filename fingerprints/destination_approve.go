@@ -20,13 +20,6 @@ type destinationFingerprintApproveRequest struct {
 	PublicKey *string `json:"public_key,omitempty"`
 }
 
-func NewApproveDestinationFingerprintsRequestParams() httputils.HttpParams {
-	return httputils.HttpParams{
-		Method:         "POST",
-		ExpectedStatus: 201,
-	}
-}
-
 func (s *DestinationFingerprintApproveService) request() *destinationFingerprintApproveRequest {
 	return &destinationFingerprintApproveRequest{
 		Hash:      s.hash,
@@ -52,6 +45,6 @@ func (s *DestinationFingerprintApproveService) PublicKey(value string) *Destinat
 func (s *DestinationFingerprintApproveService) Do(ctx context.Context) (FingerprintResponse, error) {
 	var response FingerprintResponse
 	url := fmt.Sprintf("/destinations/%v/fingerprints", *s.destinationID)
-	err := s.HttpService.Do(ctx, url, s.request(), nil, &response)
+	err := s.HttpService.Do(ctx, "POST", url, s.request(), nil, 201, &response)
 	return response, err
 }

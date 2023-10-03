@@ -6,13 +6,7 @@ import (
 	"fmt"
 )
 
-type HttpParams struct {
-	Method         string
-	ExpectedStatus int
-}
-
 type HttpService struct {
-	HttpParams
 	BaseUrl          string
 	CommonHeaders    map[string]string
 	Client           HttpClient
@@ -22,9 +16,11 @@ type HttpService struct {
 
 func (s HttpService) Do(
 	ctx context.Context,
+	method,
 	url string,
 	requestBody any,
 	queries map[string]string,
+	expectedStatus int,
 	response any) error {
 
 	var body []byte = nil
@@ -37,8 +33,12 @@ func (s HttpService) Do(
 		}
 	}
 
+	if method == "POST" || method == "PATCH" {
+		s.CommonHeaders["Content-Type"] = "application/json"
+	}
+
 	r := Request{
-		Method:           s.Method,
+		Method:           method,
 		Url:              s.BaseUrl + url,
 		Body:             body,
 		Queries:          queries,
@@ -57,8 +57,8 @@ func (s HttpService) Do(
 		return err
 	}
 
-	if respStatus != s.ExpectedStatus {
-		err := fmt.Errorf("status code: %v; expected: %v", respStatus, s.ExpectedStatus)
+	if respStatus != expectedStatus {
+		err := fmt.Errorf("status code: %v; expected: %v", respStatus, expectedStatus)
 		return err
 	}
 	return nil

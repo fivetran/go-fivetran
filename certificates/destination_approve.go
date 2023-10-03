@@ -16,13 +16,6 @@ type DestinationCertificateApproveService struct {
 	encodedCert   *string
 }
 
-func NewApproveDestinationCertificateRequestParams() httputils.HttpParams {
-	return httputils.HttpParams{
-		Method:         "POST",
-		ExpectedStatus: 201,
-	}
-}
-
 func (s *DestinationCertificateApproveService) request() *certificateApproveRequest {
 	return &certificateApproveRequest{
 		Hash:        s.hash,
@@ -48,6 +41,6 @@ func (s *DestinationCertificateApproveService) EncodedCert(value string) *Destin
 func (s *DestinationCertificateApproveService) Do(ctx context.Context) (CertificateResponse, error) {
 	var response CertificateResponse
 	url := fmt.Sprintf("/destinations/%v/certificates", *s.destinationID)
-	err := s.HttpService.Do(ctx, url, s.request(), nil, &response)
+	err := s.HttpService.Do(ctx, "POST", url, s.request(), nil, 201, &response)
 	return response, err
 }

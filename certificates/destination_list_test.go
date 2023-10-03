@@ -36,7 +36,7 @@ func TestNewDestinationCertificatesListMock(t *testing.T) {
 			response := mock.NewResponse(req, http.StatusOK, fmt.Sprintf(`
 				{
 					"code": "Success", 
-					"message": "The certificate has been approved",
+					"message": "",
 					"data": {
 						"items": [
 							{
@@ -81,5 +81,5 @@ func TestNewDestinationCertificatesListMock(t *testing.T) {
 	testutils.AssertEqual(t, response.Data.Items[0].Type, testType)
 	testutils.AssertEqual(t, response.Data.Items[0].ValidatedDate, validatedDate)
 	testutils.AssertEqual(t, response.Data.NextCursor, nextCursor)
-	testutils.AssertNotEmpty(t, response.Message)
+	testutils.AssertEmpty(t, response.Message)
 }

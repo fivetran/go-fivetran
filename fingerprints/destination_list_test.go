@@ -1,4 +1,4 @@
-package certificates_test
+package fingerprints_test
 
 import (
 	"context"
@@ -12,23 +12,20 @@ import (
 	"github.com/fivetran/go-fivetran/tests/mock"
 )
 
-func TestNewConnectorCertificatesListMock(t *testing.T) {
+func TestNewDestinationFingerprintsListMock(t *testing.T) {
 	// arrange
 	validatedBy := "user_name"
 	validatedDate := "validated_date"
-	testConnectorId := "connector_id"
+	testDestinationId := "destination_id"
 	testHash := "hash"
 
 	testPublicKey := "test_public_key"
-	testName := "name"
-	testType := "type"
 	nextCursor := "next_cursor"
 	cursor := "cursor"
 	limit := 1
 
 	ftClient, mockClient := tests.CreateTestClient()
-	handler := mockClient.When(http.MethodGet, fmt.Sprintf("/v1/connectors/%v/certificates", testConnectorId)).ThenCall(
-
+	handler := mockClient.When(http.MethodGet, fmt.Sprintf("/v1/destinations/%v/fingerprints", testDestinationId)).ThenCall(
 		func(req *http.Request) (*http.Response, error) {
 			var query = req.URL.Query()
 			testutils.AssertEqual(t, query.Get("cursor"), cursor)
@@ -42,8 +39,6 @@ func TestNewConnectorCertificatesListMock(t *testing.T) {
 							{
 								"hash": "%v",
 								"public_key": "%v",
-								"name": "%v",
-								"type": "%v",
 								"validated_by": "%v",
 								"validated_date": "%v"
 							}
@@ -51,14 +46,14 @@ func TestNewConnectorCertificatesListMock(t *testing.T) {
 						"next_cursor": "%v"
 					} 
 				}
-				`, testHash, testPublicKey, testName, testType, validatedBy, validatedDate, nextCursor))
+				`, testHash, testPublicKey, validatedBy, validatedDate, nextCursor))
 
 			return response, nil
 		})
 
 	// act & assert
-	response, err := ftClient.NewConnectorCertificatesList().
-		ConnectorID(testConnectorId).
+	response, err := ftClient.NewDestinationFingerprintsList().
+		DestinationID(testDestinationId).
 		Cursor(cursor).
 		Limit(limit).
 		Do(context.Background())
@@ -77,8 +72,6 @@ func TestNewConnectorCertificatesListMock(t *testing.T) {
 	testutils.AssertEqual(t, response.Data.Items[0].Hash, testHash)
 	testutils.AssertEqual(t, response.Data.Items[0].PublicKey, testPublicKey)
 	testutils.AssertEqual(t, response.Data.Items[0].ValidatedBy, validatedBy)
-	testutils.AssertEqual(t, response.Data.Items[0].Name, testName)
-	testutils.AssertEqual(t, response.Data.Items[0].Type, testType)
 	testutils.AssertEqual(t, response.Data.Items[0].ValidatedDate, validatedDate)
 	testutils.AssertEqual(t, response.Data.NextCursor, nextCursor)
 	testutils.AssertEmpty(t, response.Message)

@@ -15,13 +15,6 @@ type ConnectorCertificatesListService struct {
 	limit       *int
 }
 
-func NewListConnectorCertificateRequestParams() httputils.HttpParams {
-	return httputils.HttpParams{
-		Method:         "GET",
-		ExpectedStatus: 200,
-	}
-}
-
 func (s *ConnectorCertificatesListService) ConnectorID(value string) *ConnectorCertificatesListService {
 	s.connectorID = &value
 	return s
@@ -50,6 +43,6 @@ func (s *ConnectorCertificatesListService) Do(ctx context.Context) (Certificates
 			queries["limit"] = fmt.Sprintf("%v", *s.limit)
 		}
 	}
-	err := s.HttpService.Do(ctx, url, nil, queries, &response)
+	err := s.HttpService.Do(ctx, "GET", url, nil, queries, 200, &response)
 	return response, err
 }

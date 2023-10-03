@@ -15,13 +15,6 @@ type DestinationCertificatesListService struct {
 	limit         *int
 }
 
-func NewListDestinationCertificateRequestParams() httputils.HttpParams {
-	return httputils.HttpParams{
-		Method:         "GET",
-		ExpectedStatus: 200,
-	}
-}
-
 func (s *DestinationCertificatesListService) DestinationID(value string) *DestinationCertificatesListService {
 	s.destinationID = &value
 	return s
@@ -50,6 +43,6 @@ func (s *DestinationCertificatesListService) Do(ctx context.Context) (Certificat
 			queries["limit"] = fmt.Sprintf("%v", *s.limit)
 		}
 	}
-	err := s.HttpService.Do(ctx, url, nil, queries, &response)
+	err := s.HttpService.Do(ctx, "GET", url, nil, queries, 200, &response)
 	return response, err
 }

@@ -8,13 +8,6 @@ import (
 	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
-func NewConnectorSyncRequestParams() httputils.HttpParams {
-	return httputils.HttpParams{
-		Method:         "POST",
-		ExpectedStatus: 200,
-	}
-}
-
 // ConnectorSyncService implements the Connector Management, Sync Connector Data API.
 // Ref. https://fivetran.com/docs/rest-api/connectors#syncconnectordata
 type ConnectorSyncService struct {
@@ -34,7 +27,7 @@ func (s *ConnectorSyncService) Do(ctx context.Context) (common.CommonResponse, e
 		return response, fmt.Errorf("missing required ConnectorID")
 	}
 
-	err := s.HttpService.Do(ctx, fmt.Sprintf("/connectors/%v/force", *s.connectorID), nil, nil, &response)
+	err := s.HttpService.Do(ctx, "POST", fmt.Sprintf("/connectors/%v/force", *s.connectorID), nil, nil, 200, &response)
 
 	return response, err
 }
