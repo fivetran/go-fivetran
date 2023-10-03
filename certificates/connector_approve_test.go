@@ -36,7 +36,7 @@ func TestNewCertificateConnectorCertificateApproveMock(t *testing.T) {
 			response := mock.NewResponse(req, http.StatusCreated, fmt.Sprintf(`
 				{
 					"code": "Success", 
-					"message": "The fingerprint has been approved",
+					"message": "The certificate has been approved",
 					"data": {
 						"hash": "%v",
 						"public_key": "%v",

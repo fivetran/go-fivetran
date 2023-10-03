@@ -98,3 +98,39 @@ func (c *Client) NewCertificateDestinationFingerprintApprove() *fingerprints.Des
 		HttpService: c.NewHttpService(fingerprints.NewApproveDestinationFingerprintsRequestParams()),
 	}
 }
+
+func (c *Client) NewCertificateConnectorCertificateRevoke() *certificates.ConnectorCertificateRevokeService {
+	return &certificates.ConnectorCertificateRevokeService{
+		HttpService: c.NewHttpService(certificates.NewRevokeConnectorCertificateRequestParams()),
+	}
+}
+
+func (c *Client) NewCertificateDestinationCertificateRevoke() *certificates.DestinationCertificateRevokeService {
+	return &certificates.DestinationCertificateRevokeService{
+		HttpService: c.NewHttpService(certificates.NewRevokeDestinationCertificateRequestParams()),
+	}
+}
+
+func (c *Client) NewConnectorCertificatesList() *certificates.ConnectorCertificatesListService {
+	return &certificates.ConnectorCertificatesListService{
+		HttpService: c.NewHttpService(certificates.NewListConnectorCertificateRequestParams()),
+	}
+}
+
+func (c *Client) NewDestinationCertificatesList() *certificates.DestinationCertificatesListService {
+	return &certificates.DestinationCertificatesListService{
+		HttpService: c.NewHttpService(certificates.NewListDestinationCertificateRequestParams()),
+	}
+}
+
+func (c *Client) NewConnectorCertificateDetails() *certificates.ConnectorCertificateDetailsService {
+	return &certificates.ConnectorCertificateDetailsService{
+		HttpService: c.NewHttpService(certificates.NewConnectorCertificateDetailsRequestParams()),
+	}
+}
+
+func (c *Client) NewDestinationCertificateDetails() *certificates.DestinationCertificateDetailsService {
+	return &certificates.DestinationCertificateDetailsService{
+		HttpService: c.NewHttpService(certificates.NewDestinationCertificateDetailsRequestParams()),
+	}
+}

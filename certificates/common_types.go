@@ -18,6 +18,14 @@ type CertificateResponse struct {
 	Data CertificateDetails `json:"data"`
 }
 
+type CertificatesListResponse struct {
+	common.CommonResponse
+	Data struct {
+		Items      []CertificateDetails `json:"items"`
+		NextCursor string               `json:"next_cursor"`
+	} `json:"data"`
+}
+
 type certificateApproveRequest struct {
 	Hash        *string `json:"hash,omitempty"`
 	EncodedCert *string `json:"encoded_cert,omitempty"`

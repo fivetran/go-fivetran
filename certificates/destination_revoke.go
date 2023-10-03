@@ -1,0 +1,41 @@
+package certificates
+
+import (
+	"context"
+	"fmt"
+
+	"github.com/fivetran/go-fivetran/common"
+	httputils "github.com/fivetran/go-fivetran/http_utils"
+)
+
+// CertificateConnectorCertificateApproveService implements the Certificate Management, Revoke certificate for destination API.
+// Ref. https://fivetran.com/docs/rest-api/certificates#revokeadestinationcertificate
+type DestinationCertificateRevokeService struct {
+	httputils.HttpService
+	destinationID *string
+	hash          *string
+}
+
+func NewRevokeDestinationCertificateRequestParams() httputils.HttpParams {
+	return httputils.HttpParams{
+		Method:         "DELETE",
+		ExpectedStatus: 200,
+	}
+}
+
+func (s *DestinationCertificateRevokeService) DestinationID(value string) *DestinationCertificateRevokeService {
+	s.destinationID = &value
+	return s
+}
+
+func (s *DestinationCertificateRevokeService) Hash(value string) *DestinationCertificateRevokeService {
+	s.hash = &value
+	return s
+}
+
+func (s *DestinationCertificateRevokeService) Do(ctx context.Context) (common.CommonResponse, error) {
+	var response common.CommonResponse
+	url := fmt.Sprintf("/destinations/%v/certificates/%v", *s.destinationID, *s.hash)
+	err := s.HttpService.Do(ctx, url, nil, nil, &response)
+	return response, err
+}
