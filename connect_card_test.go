@@ -3,16 +3,18 @@ package fivetran_test
 import (
     "context"
     "testing"
+
+    testutils "github.com/fivetran/go-fivetran/test_utils"
 )
 
 func TestNewConnectCardE2E(t *testing.T) {
-    connectorId := CreateTempConnector(t)
+    connectorId := testutils.CreateTempConnector(t)
 
-    config := Client.NewConnectCardConfig().
+    config := testutils.Client.NewConnectCardConfig().
         RedirectUri("http://test_domain.com").
         HideSetupGuide(false)
 
-    created, err := Client.NewConnectCard().
+    created, err := testutils.Client.NewConnectCard().
         ConnectorId(connectorId).
         Config(config).
         Do(context.Background())
@@ -22,11 +24,11 @@ func TestNewConnectCardE2E(t *testing.T) {
         t.Error(err)
     }
 
-    AssertEqual(t, created.Code, "Success")
-    AssertNotEmpty(t, created.Message)
-    AssertNotEmpty(t, created.Data.ConnectorId)
-    AssertNotEmpty(t, created.Data.ConnectCard.Token)
-    AssertNotEmpty(t, created.Data.ConnectCard.Uri)
-    AssertEqual(t, created.Data.ConnectCardConfig.RedirectUri, "http://test_domain.com")
-    AssertEqual(t, created.Data.ConnectCardConfig.HideSetupGuide, false)
+    testutils.AssertEqual(t, created.Code, "Success")
+    testutils.AssertNotEmpty(t, created.Message)
+    testutils.AssertNotEmpty(t, created.Data.ConnectorId)
+    testutils.AssertNotEmpty(t, created.Data.ConnectCard.Token)
+    testutils.AssertNotEmpty(t, created.Data.ConnectCard.Uri)
+    testutils.AssertEqual(t, created.Data.ConnectCardConfig.RedirectUri, "http://test_domain.com")
+    testutils.AssertEqual(t, created.Data.ConnectCardConfig.HideSetupGuide, false)
 }
