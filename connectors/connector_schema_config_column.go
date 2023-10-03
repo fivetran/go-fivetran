@@ -5,7 +5,7 @@ type ConnectorSchemaConfigColumn struct {
 	hashed  *bool
 }
 
-type connectorSchemaConfigColumnRequest struct {
+type ConnectorSchemaConfigColumnRequest struct {
 	Enabled *bool `json:"enabled,omitempty"`
 	Hashed  *bool `json:"hashed,omitempty"`
 }
@@ -21,8 +21,8 @@ type ConnectorSchemaConfigColumnResponse struct {
 	} `json:"enabled_patch_settings"`
 }
 
-func (csc *ConnectorSchemaConfigColumn) request() *connectorSchemaConfigColumnRequest {
-	return &connectorSchemaConfigColumnRequest{
+func (csc *ConnectorSchemaConfigColumn) Request() *ConnectorSchemaConfigColumnRequest {
+	return &ConnectorSchemaConfigColumnRequest{
 		Enabled: csc.enabled,
 		Hashed:  csc.hashed,
 	}

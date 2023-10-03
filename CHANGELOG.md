@@ -5,9 +5,40 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/fivetran/go-fivetran/compare/v0.7.11...HEAD)
+## [Unreleased](https://github.com/fivetran/go-fivetran/compare/v0.7.12...HEAD)
+
+## [0.7.12](https://github.com/fivetran/go-fivetran/compare/v0.7.11...v0.7.12)
+
+## Added
+
+Supported the following Fivetran API endpoints:
+- [List all approved certificates for connector](https://fivetran.com/docs/rest-api/certificates#listallapprovedcertificatesforconnector)
+- [List all approved fingerprints for connector](https://fivetran.com/docs/rest-api/certificates#listallapprovedfingerprintsforconnector)
+- [Retrieve a connector certificate details](https://fivetran.com/docs/rest-api/certificates#retrieveaconnectorcertificatedetails)
+- [Retrieve a connector fingerprint details](https://fivetran.com/docs/rest-api/certificates#retrieveaconnectorfingerprintdetails)
+- [Revoke a connector certificate](https://fivetran.com/docs/rest-api/certificates#revokeaconnectorcertificate)
+- [Revoke a connector fingerprint](https://fivetran.com/docs/rest-api/certificates#revokeaconnectorfingerprint)
+- [List all approved certificates for destination](https://fivetran.com/docs/rest-api/certificates#listallapprovedcertificatesfordestination)
+- [List all approved fingerprints for destination](https://fivetran.com/docs/rest-api/certificates#listallapprovedfingerprintsfordestination)
+- [Retrieve a destination certificate details](https://fivetran.com/docs/rest-api/certificates#retrieveadestinationcertificatedetails)
+- [Retrieve a destination fingerprint details](https://fivetran.com/docs/rest-api/certificates#retrieveadestinationfingerprintdetails)
+- [Revoke a destination certificate](https://fivetran.com/docs/rest-api/certificates#revokeadestinationcertificate)
+- [Revoke a destination fingerprint](https://fivetran.com/docs/rest-api/certificates#revokeadestinationfingerprint)
+- [Modify a connector database schema config](https://fivetran.com/docs/rest-api/connectors#modifyaconnectordatabaseschemaconfig)
+- [Modify a connector table config](https://fivetran.com/docs/rest-api/connectors#modifyaconnectortableconfig)
+- [Modify a connector column config](https://fivetran.com/docs/rest-api/connectors#modifyaconnectorcolumnconfig)
+- [Connect Card](https://fivetran.com/docs/rest-api/connectors/connect-card)
+
+## Updated
+Extended response object for the following endpoints:
+- [Approve a connector certificate](https://fivetran.com/docs/rest-api/certificates#approveaconnectorcertificate)
+- [Approve a connector fingerprint](https://fivetran.com/docs/rest-api/certificates#approveaconnectorfingerprint)
+- [Approve a destination certificate](https://fivetran.com/docs/rest-api/certificates#approveadestinationcertificate)
+- [Approve a destination fingerprint](https://fivetran.com/docs/rest-api/certificates#approveadestinationfingerprint)
 
 ## [0.7.11](https://github.com/fivetran/go-fivetran/compare/v0.7.10...v0.7.11)
+
+## Added
 
 Supported the following Fivetran API endpoints:
 - Team Management API: [List all teams](https://fivetran.com/docs/rest-api/teams#listallteams)
@@ -33,6 +64,8 @@ Supported the following Fivetran API endpoints:
 - Team Management API Group memberships: [Delete group membership](https://fivetran.com/docs/rest-api/teams#deletegroupmembership)
 
 ## [0.7.10](https://github.com/fivetran/go-fivetran/compare/v0.7.9...v0.7.10)
+
+## Fixed
 
 - Fixed export NewWebhookTest method
 - Fixed markup in the README file

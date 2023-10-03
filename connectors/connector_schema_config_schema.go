@@ -7,7 +7,7 @@ type ConnectorSchemaConfigSchema struct {
 
 type ConnectorSchemaConfigSchemaRequest struct {
 	Enabled *bool                                         `json:"enabled,omitempty"`
-	Tables  map[string]*connectorSchemaConfigTableRequest `json:"tables,omitempty"`
+	Tables  map[string]*ConnectorSchemaConfigTableRequest `json:"tables,omitempty"`
 }
 
 type ConnectorSchemaConfigSchemaResponse struct {
@@ -17,11 +17,11 @@ type ConnectorSchemaConfigSchemaResponse struct {
 }
 
 func (css *ConnectorSchemaConfigSchema) Request() *ConnectorSchemaConfigSchemaRequest {
-	var tables map[string]*connectorSchemaConfigTableRequest
+	var tables map[string]*ConnectorSchemaConfigTableRequest
 	if css.tables != nil && len(css.tables) != 0 {
-		tables = make(map[string]*connectorSchemaConfigTableRequest)
+		tables = make(map[string]*ConnectorSchemaConfigTableRequest)
 		for k, v := range css.tables {
-			tables[k] = v.request()
+			tables[k] = v.Request()
 		}
 	}
 

@@ -118,16 +118,16 @@ REST API Endpoint | REST API Version | SDK Service/Config/Auth
 [Re-sync connector table data](https://fivetran.com/docs/rest-api/connectors#resyncconnectortabledata) | v1 | [ConnectorReSyncTableService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ConnectorReSyncTableService)
 [Run connector setup tests](https://fivetran.com/docs/rest-api/connectors#runconnectorsetuptests) | v2 | [ConnectorSetupTestsService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ConnectorSetupTestsService)
 [Delete a connector](https://fivetran.com/docs/rest-api/connectors#deleteaconnector) | v1 | [ConnectorDeleteService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ConnectorDeleteService)
-[Retrieve a connector schema config](https://fivetran.com/docs/rest-api/connectors#retrieveaconnectorschemaconfig) | | not implemented
-[Retrieve source table columns config](https://fivetran.com/docs/rest-api/connectors#retrievesourcetablecolumnsconfig) | | not implemented
-[Reload a connector schema config](https://fivetran.com/docs/rest-api/connectors#reloadaconnectorschemaconfig) | | not implemented
-[Modify a connector schema config](https://fivetran.com/docs/rest-api/connectors#modifyaconnectorschemaconfig) | | not implemented
-[Modify a connector database schema config](https://fivetran.com/docs/rest-api/connectors#modifyaconnectordatabaseschemaconfig) | | not implemented
-[Modify a connector table config](https://fivetran.com/docs/rest-api/connectors#modifyaconnectortableconfig) | | not implemented
-[Modify a connector column config](https://fivetran.com/docs/rest-api/connectors#modifyaconnectorcolumnconfig) | | not implemented
+[Retrieve a connector schema config](https://fivetran.com/docs/rest-api/connectors#retrieveaconnectorschemaconfig) | v1 | [ConnectorSchemaDetailsService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ConnectorSchemaDetailsService)
+[Retrieve source table columns config](https://fivetran.com/docs/rest-api/connectors#retrievesourcetablecolumnsconfig) | v1 | [ConnectorColumnConfigListService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ConnectorColumnConfigListService)
+[Reload a connector schema config](https://fivetran.com/docs/rest-api/connectors#reloadaconnectorschemaconfig) | v1 | [ConnectorSchemaReloadService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ConnectorSchemaReloadService)
+[Modify a connector schema config](https://fivetran.com/docs/rest-api/connectors#modifyaconnectorschemaconfig) | v1 | [ConnectorSchemaConfigUpdateService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ConnectorSchemaConfigUpdateService)
+[Modify a connector database schema config](https://fivetran.com/docs/rest-api/connectors#modifyaconnectordatabaseschemaconfig) | v1 | [ConnectorDatabaseSchemaConfigModifyService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ConnectorDatabaseSchemaConfigModifyService)
+[Modify a connector table config](https://fivetran.com/docs/rest-api/connectors#modifyaconnectortableconfig) | v1 | [ConnectorTableConfigModifyService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ConnectorTableConfigModifyService)
+[Modify a connector column config](https://fivetran.com/docs/rest-api/connectors#modifyaconnectorcolumnconfig) | v1 | [ConnectorColumnConfigModifyService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ConnectorColumnConfigModifyService)
 [Connector Config](https://fivetran.com/docs/rest-api/connectors/config) | v1 | [ConnectorConfig](https://pkg.go.dev/github.com/fivetran/go-fivetran#ConnectorConfig)<br> [ConnectorConfigReports](https://pkg.go.dev/github.com/fivetran/go-fivetran#ConnectorConfigReports)<br> [ConnectorConfigProjectCredentials](https://pkg.go.dev/github.com/fivetran/go-fivetran#ConnectorConfigProjectCredentials)<br> [ConnectorConfigCustomTables](https://pkg.go.dev/github.com/fivetran/go-fivetran#ConnectorConfigCustomTables)
 [Connector Auth](https://fivetran.com/docs/rest-api/connectors) | v1 | [ConnectorAuth](https://pkg.go.dev/github.com/fivetran/go-fivetran#ConnectorAuth)<br> [ConnectorAuthClientAccess](https://pkg.go.dev/github.com/fivetran/go-fivetran#ConnectorAuthClientAccess)
-[Connect Card](https://fivetran.com/docs/rest-api/connectors/connect-card) | | not implemented
+[Connect Card](https://fivetran.com/docs/rest-api/connectors/connect-card) | v1 | [ConnectCardService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ConnectCardService)
 
 ### [Transformations Management API](https://fivetran.com/docs/rest-api/dbt-transformation-management)
 REST API Endpoint | REST API Version | SDK Service
