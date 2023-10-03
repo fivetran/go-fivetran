@@ -13,7 +13,7 @@ func TestUserModifyMock(t *testing.T) {
 	handler := mockClient.When(http.MethodPatch, "/v1/users/user_id").ThenCall(
 
 		func(req *http.Request) (*http.Response, error) {
-			body := requestBodyToJson(t, req)
+			body := RequestBodyToJson(t, req)
 			assertFullUserUpdateRequest(t, body)
 			response := mock.NewResponse(req, http.StatusOK, prepareUserUpdateResponse())
 			return response, nil
@@ -77,7 +77,7 @@ func TestUserClearPictureAndPhoneMock(t *testing.T) {
 	handler := mockClient.When(http.MethodPatch, "/v1/users/user_id").ThenCall(
 
 		func(req *http.Request) (*http.Response, error) {
-			body := requestBodyToJson(t, req)
+			body := RequestBodyToJson(t, req)
 			assertUserUpdateRequest(t, body)
 			response := mock.NewResponse(req, http.StatusOK, prepareUserUpdateResponse())
 			return response, nil

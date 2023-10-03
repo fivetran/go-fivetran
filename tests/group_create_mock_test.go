@@ -25,7 +25,7 @@ func TestGroupCreateServiceDo(t *testing.T) {
 
 	handler := mockClient.When(http.MethodPost, "/v1/groups").
 		ThenCall(func(req *http.Request) (*http.Response, error) {
-			body := requestBodyToJson(t, req)
+			body := RequestBodyToJson(t, req)
 			assertGroupCreateRequest(t, body)
 			response := mock.NewResponse(req, http.StatusCreated, prepareGroupCreateResponse())
 			return response, nil

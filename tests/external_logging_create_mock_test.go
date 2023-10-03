@@ -38,7 +38,7 @@ func TestNewExternalLoggingCreateFullMappingMock(t *testing.T) {
 	handler := mockClient.When(http.MethodPost, "/v1/external-logging").ThenCall(
 
 		func(req *http.Request) (*http.Response, error) {
-			body := requestBodyToJson(t, req)
+			body := RequestBodyToJson(t, req)
 			assertExternalLoggingFullRequest(t, body)
 			response := mock.NewResponse(req, http.StatusCreated, prepareExternalLoggingResponse())
 			return response, nil
@@ -72,7 +72,7 @@ func TestNewExternalLoggingCustomMappingMock(t *testing.T) {
 	handler := mockClient.When(http.MethodPost, "/v1/external-logging").ThenCall(
 
 		func(req *http.Request) (*http.Response, error) {
-			body := requestBodyToJson(t, req)
+			body := RequestBodyToJson(t, req)
 			assertExternalLoggingCustomRequest(t, body)
 			response := mock.NewResponse(req, http.StatusCreated, prepareExternalLoggingResponse())
 			return response, nil
@@ -106,7 +106,7 @@ func TestNewExternalLoggingCustomMergedMappingMock(t *testing.T) {
 	handler := mockClient.When(http.MethodPost, "/v1/external-logging").ThenCall(
 
 		func(req *http.Request) (*http.Response, error) {
-			body := requestBodyToJson(t, req)
+			body := RequestBodyToJson(t, req)
 			assertExternalLoggingCustomMergedRequest(t, body)
 			response := mock.NewResponse(req, http.StatusCreated, prepareExternalLoggingMergedResponse())
 			return response, nil

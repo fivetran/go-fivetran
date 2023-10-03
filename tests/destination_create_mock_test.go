@@ -65,7 +65,7 @@ func TestNewDestinationCreateFullMappingMock(t *testing.T) {
 	handler := mockClient.When(http.MethodPost, "/v1/destinations").ThenCall(
 
 		func(req *http.Request) (*http.Response, error) {
-			body := requestBodyToJson(t, req)
+			body := RequestBodyToJson(t, req)
 			assertRequest(t, body)
 			response := mock.NewResponse(req, http.StatusCreated, prepareDestinationResponse())
 			return response, nil

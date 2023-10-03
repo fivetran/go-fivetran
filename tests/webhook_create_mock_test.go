@@ -24,7 +24,7 @@ func TestNewWebhookAccountCreate(t *testing.T) {
 	handler := mockClient.When(http.MethodPost, "/v1/webhooks/account").ThenCall(
 
 		func(req *http.Request) (*http.Response, error) {
-			body := requestBodyToJson(t, req)
+			body := RequestBodyToJson(t, req)
 			assertWebhookAccountRequest(t, body)
 			response := mock.NewResponse(req, http.StatusOK, prepareWebhookAccountResponse())
 			return response, nil
@@ -58,7 +58,7 @@ func TestNewWebhookGroupCreate(t *testing.T) {
 	handler := mockClient.When(http.MethodPost, "/v1/webhooks/group/"+WEBHOOK_GROUP).ThenCall(
 
 		func(req *http.Request) (*http.Response, error) {
-			body := requestBodyToJson(t, req)
+			body := RequestBodyToJson(t, req)
 			assertWebhookGroupRequest(t, body)
 			response := mock.NewResponse(req, http.StatusOK, prepareWebhookGroupResponse())
 			return response, nil

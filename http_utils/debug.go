@@ -1,4 +1,4 @@
-package fivetran
+package httputils
 
 var debug struct {
 	enable     bool

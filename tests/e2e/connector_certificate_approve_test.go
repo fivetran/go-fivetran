@@ -7,12 +7,12 @@ import (
 	testutils "github.com/fivetran/go-fivetran/test_utils"
 )
 
-func TestNewCertificateConnectorFingerprintApproveE2E(t *testing.T) {
+func TestNewCertificateConnectorCertificateApproveE2E(t *testing.T) {
 	connectorId := testutils.CreateTempConnector(t)
-	response, err := testutils.Client.NewCertificateConnectorFingerprintApprove().
+	response, err := testutils.Client.NewCertificateConnectorCertificateApprove().
 		ConnectorID(connectorId).
-		Hash("test_hash").
-		PublicKey("test_public_key").
+		Hash(testutils.CertificateHash).
+		EncodedCert(testutils.EncodedCertificate).
 		Do(context.Background())
 
 	if err != nil {
@@ -22,4 +22,5 @@ func TestNewCertificateConnectorFingerprintApproveE2E(t *testing.T) {
 
 	testutils.AssertEqual(t, response.Code, "Success")
 	testutils.AssertNotEmpty(t, response.Message)
+	testutils.AssertEqual(t, response.Data.ValidatedBy, testutils.PredefinedUserGivenName+" "+testutils.PredefinedUserFamilyName)
 }

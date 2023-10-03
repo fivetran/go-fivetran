@@ -16,7 +16,7 @@ func TestExternalLoggingModifyService(t *testing.T) {
 	ftClient, mockClient := CreateTestClient()
 	handler := mockClient.When(http.MethodPatch, "/v1/external-logging/log_id").ThenCall(
 		func(req *http.Request) (*http.Response, error) {
-			body := requestBodyToJson(t, req)
+			body := RequestBodyToJson(t, req)
 			assertExternalLoggingModifyRequest(t, body)
 			response := mock.NewResponse(req, http.StatusOK, prepareExternalLoggingModifyResponse())
 			return response, nil
@@ -49,7 +49,7 @@ func TestExternalLoggingCustomModifyService(t *testing.T) {
 	ftClient, mockClient := CreateTestClient()
 	handler := mockClient.When(http.MethodPatch, "/v1/external-logging/log_id").ThenCall(
 		func(req *http.Request) (*http.Response, error) {
-			body := requestBodyToJson(t, req)
+			body := RequestBodyToJson(t, req)
 			assertExternalLoggingModifyCustomRequest(t, body)
 			response := mock.NewResponse(req, http.StatusOK, prepareExternalLoggingModifyMergedResponse())
 			return response, nil
@@ -82,7 +82,7 @@ func TestExternalLoggingCustomMergedModifyService(t *testing.T) {
 	handler := mockClient.When(http.MethodPatch, "/v1/external-logging/log_id").ThenCall(
 
 		func(req *http.Request) (*http.Response, error) {
-			body := requestBodyToJson(t, req)
+			body := RequestBodyToJson(t, req)
 			assertExternalLoggingModifyCustomMergedRequest(t, body)
 			response := mock.NewResponse(req, http.StatusOK, prepareExternalLoggingModifyMergedResponse())
 			return response, nil

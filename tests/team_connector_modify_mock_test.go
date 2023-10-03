@@ -16,7 +16,7 @@ func TestNewTeamConnectorModify(t *testing.T) {
 	handler := mockClient.When(http.MethodPatch, "/v1/teams/team_id/connectors/connector_id").ThenCall(
 
 		func(req *http.Request) (*http.Response, error) {
-			body := requestBodyToJson(t, req)
+			body := RequestBodyToJson(t, req)
 			assertTeamConnectorModifyRequest(t, body)
 			response := mock.NewResponse(req, http.StatusOK, prepareTeamConnectorModifyResponse())
 			return response, nil
