@@ -4,6 +4,8 @@ import (
     "context"
     "encoding/json"
     "fmt"
+
+    httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
 // ConnectCardService implements the https://fivetran.com/docs/rest-api/getting-started/connect-card#connectcards
@@ -14,7 +16,7 @@ type ConnectCardService struct {
     config             *ConnectCardConfig
 }
 
-type ConnectCardRequest struct {
+type connectCardRequest struct {
     ConnectCardConfig  *connectCardConfigRequest `json:"connect_card_config"`
 }
 
@@ -35,14 +37,14 @@ func (c *Client) NewConnectCard() *ConnectCardService {
     return &ConnectCardService{c: c}
 }
 
-func (s *ConnectCardService) request() *ConnectCardRequest {
+func (s *ConnectCardService) request() *connectCardRequest {
     var config *connectCardConfigRequest
 
     if s.config != nil {
         config = s.config.request()
     }
 
-    return &ConnectCardRequest{
+    return &connectCardRequest{
         ConnectCardConfig: config,
     }
 }
@@ -80,16 +82,16 @@ func (s *ConnectCardService) Do(ctx context.Context) (ConnectCardResponse, error
         return response, err
     }
 
-    r := request{
-        method:  "POST",
-        url:     url,
-        body:    reqBody,
-        queries: nil,
-        headers: headers,
-        client:  s.c.httpClient,
+    r := httputils.Request{
+        Method:  "POST",
+        Url:     url,
+        Body:    reqBody,
+        Queries: nil,
+        Headers: headers,
+        Client:  s.c.httpClient,
     }
 
-    respBody, respStatus, err := r.httpRequest(ctx)
+    respBody, respStatus, err := r.Do(ctx)
     if err != nil {
         return response, err
     }

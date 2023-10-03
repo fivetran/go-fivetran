@@ -6,10 +6,10 @@ type ConnectorSchemaConfigTable struct {
 	columns  map[string]*ConnectorSchemaConfigColumn
 }
 
-type connectorSchemaConfigTableRequest struct {
+type ConnectorSchemaConfigTableRequest struct {
 	Enabled  *bool                                          `json:"enabled,omitempty"`
 	SyncMode *string                                        `json:"sync_mode,omitempty"`
-	Columns  map[string]*connectorSchemaConfigColumnRequest `json:"columns,omitempty"`
+	Columns  map[string]*ConnectorSchemaConfigColumnRequest `json:"columns,omitempty"`
 }
 
 type ConnectorSchemaConfigTableResponse struct {
@@ -24,16 +24,16 @@ type ConnectorSchemaConfigTableResponse struct {
 	} `json:"enabled_patch_settings"`
 }
 
-func (cst *ConnectorSchemaConfigTable) request() *connectorSchemaConfigTableRequest {
-	var columns map[string]*connectorSchemaConfigColumnRequest
+func (cst *ConnectorSchemaConfigTable) Request() *ConnectorSchemaConfigTableRequest {
+	var columns map[string]*ConnectorSchemaConfigColumnRequest
 	if cst.columns != nil && len(cst.columns) != 0 {
-		columns = make(map[string]*connectorSchemaConfigColumnRequest)
+		columns = make(map[string]*ConnectorSchemaConfigColumnRequest)
 		for k, v := range cst.columns {
-			columns[k] = v.request()
+			columns[k] = v.Request()
 		}
 	}
 
-	return &connectorSchemaConfigTableRequest{
+	return &ConnectorSchemaConfigTableRequest{
 		Enabled:  cst.enabled,
 		SyncMode: cst.syncMode,
 		Columns:  columns,

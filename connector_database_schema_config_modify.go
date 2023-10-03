@@ -4,6 +4,9 @@ import (
     "context"
     "encoding/json"
     "fmt"
+
+    "github.com/fivetran/go-fivetran/connectors"
+    httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
 // ConnectorDatabaseSchemaConfigModifyService implements the Connector Management, Modify a Connector Database Schema Config
@@ -13,12 +16,12 @@ type ConnectorDatabaseSchemaConfigModifyService struct {
     connectorId         *string
     schema              *string
     enabled             *bool
-    tables              map[string]*ConnectorSchemaConfigTable
+    tables              map[string]*connectors.ConnectorSchemaConfigTable
 }
 
 type connectorSchemaConfigModifyRequest struct {
     Enabled             *bool                                         `json:"enabled,omitempty"`
-    Tables              map[string]*connectorSchemaConfigTableRequest `json:"tables,omitempty"`
+    Tables              map[string]*connectors.ConnectorSchemaConfigTableRequest `json:"tables,omitempty"`
 }
 
 func (c *Client) NewConnectorDatabaseSchemaConfigModifyService() *ConnectorDatabaseSchemaConfigModifyService {
@@ -26,11 +29,11 @@ func (c *Client) NewConnectorDatabaseSchemaConfigModifyService() *ConnectorDatab
 }
 
 func (csu *ConnectorDatabaseSchemaConfigModifyService) request() *connectorSchemaConfigModifyRequest {
-    var tables map[string]*connectorSchemaConfigTableRequest
+    var tables map[string]*connectors.ConnectorSchemaConfigTableRequest
     if csu.tables != nil && len(csu.tables) != 0 {
-        tables = make(map[string]*connectorSchemaConfigTableRequest)
+        tables = make(map[string]*connectors.ConnectorSchemaConfigTableRequest)
         for k, v := range csu.tables {
-            tables[k] = v.request()
+            tables[k] = v.Request()
         }
     }
 
@@ -55,16 +58,16 @@ func (csu *ConnectorDatabaseSchemaConfigModifyService) Enabled(value bool) *Conn
     return csu
 }
 
-func (csu *ConnectorDatabaseSchemaConfigModifyService) Tables(name string, table *ConnectorSchemaConfigTable) *ConnectorDatabaseSchemaConfigModifyService {
+func (csu *ConnectorDatabaseSchemaConfigModifyService) Tables(name string, table *connectors.ConnectorSchemaConfigTable) *ConnectorDatabaseSchemaConfigModifyService {
     if csu.tables == nil {
-        csu.tables = make(map[string]*ConnectorSchemaConfigTable)
+        csu.tables = make(map[string]*connectors.ConnectorSchemaConfigTable)
     }
     csu.tables[name] = table
     return csu
 }
 
-func (csu *ConnectorDatabaseSchemaConfigModifyService) Do(ctx context.Context) (ConnectorSchemaDetailsResponse, error) {
-    var response ConnectorSchemaDetailsResponse
+func (csu *ConnectorDatabaseSchemaConfigModifyService) Do(ctx context.Context) (connectors.ConnectorSchemaDetailsResponse, error) {
+    var response connectors.ConnectorSchemaDetailsResponse
 
     if csu.connectorId == nil {
         return response, fmt.Errorf("missing required connectorId")
@@ -86,18 +89,18 @@ func (csu *ConnectorDatabaseSchemaConfigModifyService) Do(ctx context.Context) (
     headers["Content-Type"] = "application/json"
     headers["Accept"] = restAPIv2
 
-    r := request{
-        method:           "PATCH",
-        url:              url,
-        body:             reqBody,
-        queries:          nil,
-        headers:          headers,
-        client:           csu.c.httpClient,
-        handleRateLimits: csu.c.handleRateLimits,
-        maxRetryAttempts: csu.c.maxRetryAttempts,
+    r := httputils.Request{
+        Method:           "PATCH",
+        Url:              url,
+        Body:             reqBody,
+        Queries:          nil,
+        Headers:          headers,
+        Client:           csu.c.httpClient,
+        HandleRateLimits: csu.c.handleRateLimits,
+        MaxRetryAttempts: csu.c.maxRetryAttempts,
     }
 
-    respBody, respStatus, err := r.httpRequest(ctx)
+    respBody, respStatus, err := r.Do(ctx)
     if err != nil {
         return response, err
     }

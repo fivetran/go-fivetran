@@ -8,6 +8,7 @@ import (
 
     "github.com/fivetran/go-fivetran"
     "github.com/fivetran/go-fivetran/tests/mock"
+    "github.com/fivetran/go-fivetran/connectors"
 )
 
 func TestNewConnectorTableConfigModifyServiceMock(t *testing.T) {
@@ -74,7 +75,7 @@ func assertConnectorTableConfigModifyRequest(t *testing.T, request map[string]in
     assertKey(t, "hashed", column3, true)
 }
 
-func assertConnectorTableConfigModifyResponse(t *testing.T, response fivetran.ConnectorSchemaDetailsResponse) {
+func assertConnectorTableConfigModifyResponse(t *testing.T, response connectors.ConnectorSchemaDetailsResponse) {
     assertEqual(t, response.Code, "Success")
 
     assertEqual(t, len(response.Data.Schemas), 2)

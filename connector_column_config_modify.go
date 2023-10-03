@@ -4,6 +4,9 @@ import (
     "context"
     "encoding/json"
     "fmt"
+
+    "github.com/fivetran/go-fivetran/connectors"
+    httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
 // ConnectorColumnConfigModifyService implements the Connector Management, Modify a Connector Table Config
@@ -64,8 +67,8 @@ func (csu *ConnectorColumnConfigModifyService) Hashed(value bool) *ConnectorColu
     return csu
 }
 
-func (csu *ConnectorColumnConfigModifyService) Do(ctx context.Context) (ConnectorSchemaDetailsResponse, error) {
-    var response ConnectorSchemaDetailsResponse
+func (csu *ConnectorColumnConfigModifyService) Do(ctx context.Context) (connectors.ConnectorSchemaDetailsResponse, error) {
+    var response connectors.ConnectorSchemaDetailsResponse
 
     if csu.connectorId == nil {
         return response, fmt.Errorf("missing required connectorId")
@@ -96,18 +99,18 @@ func (csu *ConnectorColumnConfigModifyService) Do(ctx context.Context) (Connecto
     headers["Content-Type"] = "application/json"
     headers["Accept"] = restAPIv2
 
-    r := request{
-        method:           "PATCH",
-        url:              url,
-        body:             reqBody,
-        queries:          nil,
-        headers:          headers,
-        client:           csu.c.httpClient,
-        handleRateLimits: csu.c.handleRateLimits,
-        maxRetryAttempts: csu.c.maxRetryAttempts,
+    r := httputils.Request{
+        Method:           "PATCH",
+        Url:              url,
+        Body:             reqBody,
+        Queries:          nil,
+        Headers:          headers,
+        Client:           csu.c.httpClient,
+        HandleRateLimits: csu.c.handleRateLimits,
+        MaxRetryAttempts: csu.c.maxRetryAttempts,
     }
 
-    respBody, respStatus, err := r.httpRequest(ctx)
+    respBody, respStatus, err := r.Do(ctx)
     if err != nil {
         return response, err
     }
