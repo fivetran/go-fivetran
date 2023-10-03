@@ -49,25 +49,25 @@ func (req *Request) do(ctx context.Context, attempt int) ([]byte, int, error) {
 		newReq.Header.Add(k, v)
 	}
 
-	// if debug.enable {
-	// 	fmt.Printf("---\nDebug:\n  - HTTP Request:\n")
-	// 	fmt.Printf("    - Method: %v\n", req.method)
-	// 	fmt.Printf("    - URL: %v\n", newReq.URL.String())
-	// 	fmt.Printf("    - Body: %s\n", req.body)
-	// 	fmt.Printf("    - Headers:\n")
-	// 	for k, v := range req.headers {
-	// 		if k == "Authorization" {
-	// 			// if debug.authEnable {
-	// 			// 	fmt.Printf("      - %v: %v\n", k, v)
-	// 			// }
-	// 			// if !debug.authEnable {
-	// 			// 	fmt.Printf("      - %v: <omitted>\n", k)
-	// 			// }
-	// 			continue
-	// 		}
-	// 		fmt.Printf("      - %v: %v\n", k, v)
-	// 	}
-	// }
+	if debug.enable {
+		fmt.Printf("---\nDebug:\n  - HTTP Request:\n")
+		fmt.Printf("    - Method: %v\n", req.Method)
+		fmt.Printf("    - URL: %v\n", newReq.URL.String())
+		fmt.Printf("    - Body: %s\n", req.Body)
+		fmt.Printf("    - Headers:\n")
+		for k, v := range req.Headers {
+			if k == "Authorization" {
+				if debug.authEnable {
+					fmt.Printf("      - %v: %v\n", k, v)
+				}
+				if !debug.authEnable {
+					fmt.Printf("      - %v: <omitted>\n", k)
+				}
+				continue
+			}
+			fmt.Printf("      - %v: %v\n", k, v)
+		}
+	}
 
 	resp, err := req.Client.Do(newReq)
 	if err != nil {
@@ -84,16 +84,16 @@ func (req *Request) do(ctx context.Context, attempt int) ([]byte, int, error) {
 		if err != nil {
 			return nil, 0, err
 		}
-		// if debug.enable {
-		// 	fmt.Printf("\n\t- Waiting for retry: %v seconds left", retryAfterSeconds)
-		// }
+		if debug.enable {
+			fmt.Printf("\n\t- Waiting for retry: %v seconds left", retryAfterSeconds)
+		}
 		err = contextDelay(ctx, time.Duration(retryAfterSeconds)*time.Second)
 		if err != nil {
 			return nil, 0, err
 		}
-		// if debug.enable {
-		// 	fmt.Printf("\n\t- Retry attempt: %v", attempt)
-		// }
+		if debug.enable {
+			fmt.Printf("\n\t- Retry attempt: %v", attempt)
+		}
 		return req.do(ctx, attempt+1)
 	}
 
@@ -103,11 +103,11 @@ func (req *Request) do(ctx context.Context, attempt int) ([]byte, int, error) {
 		return nil, resp.StatusCode, err
 	}
 
-	// if debug.enable {
-	// 	fmt.Printf("  - HTTP Response:\n")
-	// 	fmt.Printf("    - Status Code: %v\n", resp.StatusCode)
-	// 	fmt.Printf("    - Body: %s\n---\n", respBody)
-	// }
+	if debug.enable {
+		fmt.Printf("  - HTTP Response:\n")
+		fmt.Printf("    - Status Code: %v\n", resp.StatusCode)
+		fmt.Printf("    - Body: %s\n---\n", respBody)
+	}
 
 	return respBody, resp.StatusCode, nil
 }
