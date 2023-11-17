@@ -79,7 +79,7 @@ func CreateDbtDestination(t *testing.T) {
 		Config(
 			fivetran.NewDestinationConfig().
 				ProjectID(BqProjectId).
-				DataSetLocation("GCP_US_EAST4")).
+				DataSetLocation("US")).
 		Do(context.Background())
 	if err != nil {
 		t.Logf("%+v\n", destination)
