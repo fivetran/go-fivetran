@@ -28,7 +28,7 @@ func main() {
 
 	svc.GroupID("anyplace_silvery")
 	svc.Service("snowflake")
-	svc.Region("US")
+	svc.Region("GCP_US_EAST4")
 	svc.TimeZoneOffset("-5")
 	svc.Config(destConfig)
 

@@ -62,6 +62,8 @@ const (
     TENANT_ID                = "tenant_id"
     CLIENT_ID                = "client_id"
     SECRET_VALUE             = "secret_value"
+    WORKSPACE_NAME           = "workspace_name"
+    LAKEHOUSE_NAME           = "lakehouse_name"
 )
 
 func TestNewDestinationCreateFullMappingMock(t *testing.T) {
@@ -157,7 +159,9 @@ func prepareDestinationResponse() string {
                     "container_name":           "%v",
                     "tenant_id":                "%v",
                     "client_id":                "%v",
-                    "secret_value":             "%v"
+                    "secret_value":             "%v",
+                    "workspace_name":           "%v",
+                    "lakehouse_name":           "%v"
                 }
             }
         }`,
@@ -208,6 +212,8 @@ func prepareDestinationResponse() string {
         TENANT_ID,
         CLIENT_ID,
         SECRET_VALUE,
+        WORKSPACE_NAME,
+        LAKEHOUSE_NAME,
     )
 }
 
@@ -248,6 +254,8 @@ func prepareConfig() *destinations.DestinationConfig {
     config.TenantId(TENANT_ID)
     config.ClientId(CLIENT_ID)
     config.SecretValue(SECRET_VALUE)
+    config.WorkspaceName(WORKSPACE_NAME)
+    config.LakehouseName(LAKEHOUSE_NAME)
 
     return config
 }
@@ -301,6 +309,8 @@ func assertRequest(t *testing.T, request map[string]interface{}) {
     assertKey(t, "tenant_id", config, TENANT_ID)
     assertKey(t, "client_id", config, CLIENT_ID)
     assertKey(t, "secret_value", config, SECRET_VALUE)
+    assertKey(t, "workspace_name", config, WORKSPACE_NAME)
+    assertKey(t, "lakehouse_name", config, LAKEHOUSE_NAME)
 }
 
 func assertResponse(t *testing.T, response destinations.DestinationDetailsWithSetupTestsResponse) {
@@ -358,4 +368,6 @@ func assertResponse(t *testing.T, response destinations.DestinationDetailsWithSe
     assertEqual(t, response.Data.Config.TenantId, TENANT_ID)
     assertEqual(t, response.Data.Config.ClientId, CLIENT_ID)
     assertEqual(t, response.Data.Config.SecretValue, SECRET_VALUE)
+    assertEqual(t, response.Data.Config.WorkspaceName, WORKSPACE_NAME)
+    assertEqual(t, response.Data.Config.LakehouseName, LAKEHOUSE_NAME)
 }

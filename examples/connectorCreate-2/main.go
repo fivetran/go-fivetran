@@ -51,7 +51,20 @@ func main() {
 	connAuth.ClientAccess(connAuthClientAccess).
 		AccessToken("thisIsAccessToken").
 		RealmID("thisIsRealmID").
-		RefreshToken("thisIsRefreshToken")
+		RefreshToken("thisIsRefreshToken").
+		PreviousRefreshToken("thisIsPreviousRefreshToken").
+		UserAccessToken("thisIsUserAccessToken").
+		ConsumerSecret("thisIsConsumerSecret").
+		ConsumerKey("thisIsConsumerKey").
+		OauthToken("thisIsOauthToken").
+		OauthTokenSecret("thisIsOauthTokenSecret").
+		RoleArn("thisIsRoleArn").
+		AwsAccessKey("thisIsAwsAccessKey").
+		AwsSecretKey("thisIsAwsSecretKey").
+		ClientId("thisIsClientId").
+		KeyId("thisIsKeyId").
+		TeamId("thisIsTeamId").
+		ClientSecret("thisIsClientSecret")
 
 	svc.GroupID("replying_ministry")
 	svc.Service("google_sheets")
