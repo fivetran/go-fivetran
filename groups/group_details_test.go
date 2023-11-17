@@ -1,4 +1,4 @@
-package tests
+package groups_test
 
 import (
 	"context"
@@ -7,6 +7,8 @@ import (
 	"testing"
 
 	"github.com/fivetran/go-fivetran/groups"
+	testutils "github.com/fivetran/go-fivetran/test_utils"
+	"github.com/fivetran/go-fivetran/tests"
 	"github.com/fivetran/go-fivetran/tests/mock"
 )
 
@@ -19,7 +21,7 @@ const (
 func TestGroupDetailsServiceDo(t *testing.T) {
 	// arrange
 
-	ftClient, mockClient := CreateTestClient()
+	ftClient, mockClient := tests.CreateTestClient()
 	handler := mockClient.When(http.MethodGet, "/v1/groups/"+EXPECTED_GROUP_ID).
 		ThenCall(func(req *http.Request) (*http.Response, error) {
 			response := mock.NewResponse(req, http.StatusOK, prepareGroupDetailsResponse())
@@ -37,9 +39,9 @@ func TestGroupDetailsServiceDo(t *testing.T) {
 	}
 
 	interactions := mockClient.Interactions()
-	assertEqual(t, len(interactions), 1)
-	assertEqual(t, interactions[0].Handler, handler)
-	assertEqual(t, handler.Interactions, 1)
+	testutils.AssertEqual(t, len(interactions), 1)
+	testutils.AssertEqual(t, interactions[0].Handler, handler)
+	testutils.AssertEqual(t, handler.Interactions, 1)
 	assertGroupDetailsResponse(t, response, EXPECTED_GROUP_ID, EXPECTED_GROUP_NAME, EXPECTED_CREATED_AT)
 }
 
@@ -58,8 +60,8 @@ func prepareGroupDetailsResponse() string {
 }
 
 func assertGroupDetailsResponse(t *testing.T, response groups.GroupDetailsResponse, expectedID, expectedName string, expectedCreatedAt string) {
-	assertEqual(t, response.Code, "Success")
-	assertEqual(t, response.Data.ID, expectedID)
-	assertEqual(t, response.Data.Name, expectedName)
-	assertTimeEqual(t, response.Data.CreatedAt, expectedCreatedAt)
+	testutils.AssertEqual(t, response.Code, "Success")
+	testutils.AssertEqual(t, response.Data.ID, expectedID)
+	testutils.AssertEqual(t, response.Data.Name, expectedName)
+	testutils.AssertTimeEqual(t, response.Data.CreatedAt, expectedCreatedAt)
 }

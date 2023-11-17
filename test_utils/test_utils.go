@@ -7,6 +7,7 @@ import (
 	"os"
 	"reflect"
 	"testing"
+	"time"
 
 	"github.com/fivetran/go-fivetran"
 )
@@ -381,6 +382,11 @@ func AssertEqual(t *testing.T, actual interface{}, expected interface{}) {
 	}
 }
 
+func AssertTimeEqual(t *testing.T, actualTime time.Time, expectedTime string) {
+	ex, _ := time.Parse(time.RFC3339, expectedTime)
+	AssertEqual(t, ex, actualTime)
+}
+
 func AssertEmpty(t *testing.T, actual interface{}) {
 	t.Helper()
 
@@ -399,6 +405,12 @@ func AssertNotEmpty(t *testing.T, actual interface{}) {
 	if isEmpty {
 		printError(t, actual, "none-empty value")
 	}
+}
+
+func AssertKey(t *testing.T, key string, requestPart map[string]interface{}, expectedValue interface{}) {
+	v, ok := requestPart[key]
+	AssertEqual(t, ok, true)
+	AssertEqual(t, v, expectedValue)
 }
 
 func isEmpty(actual interface{}) bool {

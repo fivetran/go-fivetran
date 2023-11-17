@@ -1,4 +1,4 @@
-package tests
+package groups_test
 
 import (
 	"context"
@@ -6,6 +6,8 @@ import (
 	"testing"
 
 	"github.com/fivetran/go-fivetran/groups"
+	testutils "github.com/fivetran/go-fivetran/test_utils"
+	"github.com/fivetran/go-fivetran/tests"
 	"github.com/fivetran/go-fivetran/tests/mock"
 )
 
@@ -14,7 +16,7 @@ func TestGroupsListServiceDo(t *testing.T) {
 	limit := 10
 	cursor := "some_cursor"
 
-	ftClient, mockClient := CreateTestClient()
+	ftClient, mockClient := tests.CreateTestClient()
 	handler := mockClient.When(http.MethodGet, "/v1/groups").
 		ThenCall(func(req *http.Request) (*http.Response, error) {
 			response := mock.NewResponse(req, http.StatusOK, prepareGroupsListResponse())
@@ -33,9 +35,9 @@ func TestGroupsListServiceDo(t *testing.T) {
 	}
 
 	interactions := mockClient.Interactions()
-	assertEqual(t, len(interactions), 1)
-	assertEqual(t, interactions[0].Handler, handler)
-	assertEqual(t, handler.Interactions, 1)
+	testutils.AssertEqual(t, len(interactions), 1)
+	testutils.AssertEqual(t, interactions[0].Handler, handler)
+	testutils.AssertEqual(t, handler.Interactions, 1)
 	assertGroupsListResponse(t, response)
 }
 
@@ -61,14 +63,14 @@ func prepareGroupsListResponse() string {
 }
 
 func assertGroupsListResponse(t *testing.T, response groups.GroupsListResponse) {
-	assertEqual(t, response.Code, "Success")
+	testutils.AssertEqual(t, response.Code, "Success")
 
-	assertEqual(t, len(response.Data.Items), 2)
-	assertEqual(t, response.Data.Items[0].ID, "projected_sickle")
-	assertEqual(t, response.Data.Items[0].Name, "Staging")
+	testutils.AssertEqual(t, len(response.Data.Items), 2)
+	testutils.AssertEqual(t, response.Data.Items[0].ID, "projected_sickle")
+	testutils.AssertEqual(t, response.Data.Items[0].Name, "Staging")
 
-	assertEqual(t, response.Data.Items[1].ID, "schoolmaster_heedless")
-	assertEqual(t, response.Data.Items[1].Name, "Production")
+	testutils.AssertEqual(t, response.Data.Items[1].ID, "schoolmaster_heedless")
+	testutils.AssertEqual(t, response.Data.Items[1].Name, "Production")
 
-	assertEqual(t, response.Data.NextCursor, "eyJza2lwIjoyfQ")
+	testutils.AssertEqual(t, response.Data.NextCursor, "eyJza2lwIjoyfQ")
 }
