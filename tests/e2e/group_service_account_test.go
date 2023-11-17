@@ -17,5 +17,5 @@ func TestNewGroupServiceAccountE2E(t *testing.T) {
 	}
 
 	testutils.AssertEqual(t, result.Code, "Success")
-	testutils.AssertEqual(t, result.Data.ServiceAccount, strings.ReplaceAll(fmt.Sprintf("g-%v@fivetran-production.iam.gserviceaccount.com", testutils.PredefinedGroupId), "_", "-"))
+	testutils.AssertEqual(t, result.Data.ServiceAccount, strings.ReplaceAll(fmt.Sprintf("g-%v@dulcet-yew-246109.iam.gserviceaccount.com", testutils.PredefinedGroupId), "_", "-"))
 }
