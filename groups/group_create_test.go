@@ -1,4 +1,4 @@
-package tests
+package groups_test
 
 import (
 	"context"
@@ -7,7 +7,10 @@ import (
 	"testing"
 
 	"github.com/fivetran/go-fivetran/groups"
+	"github.com/fivetran/go-fivetran/tests"
 	"github.com/fivetran/go-fivetran/tests/mock"
+
+	testutils "github.com/fivetran/go-fivetran/test_utils"
 )
 
 const (
@@ -20,12 +23,12 @@ const (
 
 func TestGroupCreateServiceDo(t *testing.T) {
 	// Arrange
-	ftClient, mockClient := CreateTestClient()
+	ftClient, mockClient := tests.CreateTestClient()
 	groupName := "NewGroup"
 
 	handler := mockClient.When(http.MethodPost, "/v1/groups").
 		ThenCall(func(req *http.Request) (*http.Response, error) {
-			body := RequestBodyToJson(t, req)
+			body := tests.RequestBodyToJson(t, req)
 			assertGroupCreateRequest(t, body)
 			response := mock.NewResponse(req, http.StatusCreated, prepareGroupCreateResponse())
 			return response, nil
@@ -43,9 +46,9 @@ func TestGroupCreateServiceDo(t *testing.T) {
 	}
 
 	interactions := mockClient.Interactions()
-	assertEqual(t, len(interactions), 1)
-	assertEqual(t, interactions[0].Handler, handler)
-	assertEqual(t, handler.Interactions, 1)
+	testutils.AssertEqual(t, len(interactions), 1)
+	testutils.AssertEqual(t, interactions[0].Handler, handler)
+	testutils.AssertEqual(t, handler.Interactions, 1)
 
 	assertGroupCreateResponse(t, response)
 }
@@ -69,15 +72,15 @@ func prepareGroupCreateResponse() string {
 }
 
 func assertGroupCreateResponse(t *testing.T, response groups.GroupDetailsResponse) {
-	assertEqual(t, response.Code, ExpectedGroupCreateCode)
-	assertEqual(t, response.Message, ExpectedGroupCreateMessage)
+	testutils.AssertEqual(t, response.Code, ExpectedGroupCreateCode)
+	testutils.AssertEqual(t, response.Message, ExpectedGroupCreateMessage)
 
-	assertEqual(t, response.Data.ID, ExpectedGroupCreateID)
-	assertEqual(t, response.Data.Name, ExpectedGroupCreateName)
+	testutils.AssertEqual(t, response.Data.ID, ExpectedGroupCreateID)
+	testutils.AssertEqual(t, response.Data.Name, ExpectedGroupCreateName)
 
-	assertTimeEqual(t, response.Data.CreatedAt, ExpectedGroupCreateCreatedAt)
+	testutils.AssertTimeEqual(t, response.Data.CreatedAt, ExpectedGroupCreateCreatedAt)
 }
 
 func assertGroupCreateRequest(t *testing.T, request map[string]interface{}) {
-	assertKey(t, "name", request, "NewGroup")
+	testutils.AssertKey(t, "name", request, "NewGroup")
 }

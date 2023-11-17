@@ -94,6 +94,8 @@ REST API Endpoint | REST API Version | SDK Service
 [Add a user to a group](https://fivetran.com/docs/rest-api/groups#addausertoagroup) | v1 | [GroupAddUserService](https://pkg.go.dev/github.com/fivetran/go-fivetran#GroupAddUserService)
 [Remove a user from a group](https://fivetran.com/docs/rest-api/groups#removeauserfromagroup) | v1 | [GroupRemoveUserService](https://pkg.go.dev/github.com/fivetran/go-fivetran#GroupRemoveUserService)
 [Delete a group](https://fivetran.com/docs/rest-api/groups#deleteagroup) | v1 | [GroupDeleteService](https://pkg.go.dev/github.com/fivetran/go-fivetran#GroupDeleteService)
+[Retrieve Group Public SSH Key](https://fivetran.com/docs/rest-api/groups#retrievegrouppublicsshkey) | v1 | [GroupSshKeyService](https://pkg.go.dev/github.com/fivetran/go-fivetran/groups#GroupSshKeyService)
+[Retrieve Group Service Account](https://fivetran.com/docs/rest-api/groups#retrievegroupserviceaccount) | v1 | [GroupServiceAccountService](https://pkg.go.dev/github.com/fivetran/go-fivetran/groups#GroupServiceAccountService)
 
 ### [Destination Management API](https://fivetran.com/docs/rest-api/destinations)
 
@@ -147,10 +149,22 @@ REST API Endpoint | REST API Version | SDK Service
 ### [Certificate Management API](https://fivetran.com/docs/rest-api/certificates)
 REST API Endpoint | REST API Version | SDK Service
 --- | --- | ---
-[Approve a connector certificate](https://fivetran.com/docs/rest-api/certificates#approveaconnectorcertificate) | v1 | [CertificateConnectorCertificateApproveService](https://pkg.go.dev/github.com/fivetran/go-fivetran#CertificateConnectorCertificateApproveService)
-[Approve a connector fingerprint](https://fivetran.com/docs/rest-api/certificates#approveaconnectorfingerprint) | v1 | [CertificateConnectorFingerprintApproveService](https://pkg.go.dev/github.com/fivetran/go-fivetran#CertificateConnectorFingerprintApproveService)
-[Approve a destination certificate](https://fivetran.com/docs/rest-api/certificates#approveadestinationcertificate) | v1 | [CertificateDestinationCertificateApproveService](https://pkg.go.dev/github.com/fivetran/go-fivetran#CertificateDestinationCertificateApproveService)
-[Approve a destination fingerprint](https://fivetran.com/docs/rest-api/certificates#approveadestinationfingerprint) | v1 | [CertificateDestinationFingerprintApproveService](https://pkg.go.dev/github.com/fivetran/go-fivetran#CertificateDestinationFingerprintApproveService)
+[Approve a connector certificate](https://fivetran.com/docs/rest-api/certificates#approveaconnectorcertificate) | v1 | [ConnectorCertificateApproveService](https://pkg.go.dev/github.com/fivetran/go-fivetran/certificates#ConnectorCertificateApproveService)
+[Approve a connector fingerprint](https://fivetran.com/docs/rest-api/certificates#approveaconnectorfingerprint) | v1 | [ConnectorFingerprintApproveService](https://pkg.go.dev/github.com/fivetran/go-fivetran/fingerprints#ConnectorFingerprintApproveService)
+[List all approved certificates for connector](https://fivetran.com/docs/rest-api/certificates#listallapprovedcertificatesforconnector) | v1 | [ConnectorCertificatesListService](https://pkg.go.dev/github.com/fivetran/go-fivetran/certificates#ConnectorCertificatesListService)
+[List all approved fingerprints for connector](https://fivetran.com/docs/rest-api/certificates#listallapprovedfingerprintsforconnector) | v1 | [ConnectorFingerprintsListService](https://pkg.go.dev/github.com/fivetran/go-fivetran/fingerprints#ConnectorFingerprintsListService)
+[Retrieve a connector certificate details](https://fivetran.com/docs/rest-api/certificates#retrieveaconnectorcertificatedetails) | v1 | [ConnectorCertificateDetailsService](https://pkg.go.dev/github.com/fivetran/go-fivetran/certificates#ConnectorCertificateDetailsService)
+[Retrieve a connector fingerprint details](https://fivetran.com/docs/rest-api/certificates#retrieveaconnectorfingerprintdetails) | v1 | [ConnectorFingerprintDetailsService](https://pkg.go.dev/github.com/fivetran/go-fivetran/fingerprints#ConnectorFingerprintDetailsService)
+[Revoke a connector certificate](https://fivetran.com/docs/rest-api/certificates#revokeaconnectorcertificate) | v1 | [ConnectorCertificateRevokeService](https://pkg.go.dev/github.com/fivetran/go-fivetran/certificates#ConnectorCertificateRevokeService)
+[Revoke a connector fingerprint](https://fivetran.com/docs/rest-api/certificates#revokeaconnectorfingerprint) | v1 | [ConnectorFingerprintRevokeService](https://pkg.go.dev/github.com/fivetran/go-fivetran/fingerprints#ConnectorFingerprintRevokeService)
+[Approve a destination certificate](https://fivetran.com/docs/rest-api/certificates#approveadestinationcertificate) | v1 | [DestinationCertificateApproveService](https://pkg.go.dev/github.com/fivetran/go-fivetran/certificates#DestinationCertificateApproveService)
+[Approve a destination fingerprint](https://fivetran.com/docs/rest-api/certificates#approveadestinationfingerprint) | v1 | [DestinationFingerprintApproveService](https://pkg.go.dev/github.com/fivetran/go-fivetran/fingerprints#DestinationFingerprintApproveService)
+[List all approved certificates for destination](https://fivetran.com/docs/rest-api/certificates#listallapprovedcertificatesfordestination) | v1 | [DestinationCertificatesListService](https://pkg.go.dev/github.com/fivetran/go-fivetran/certificates#DestinationCertificatesListService)
+[List all approved fingerprints for destination](https://fivetran.com/docs/rest-api/certificates#listallapprovedfingerprintsfordestination) | v1 | [DestinationFingerprintsListService](https://pkg.go.dev/github.com/fivetran/go-fivetran/fingerprints#DestinationFingerprintsListService)
+[Retrieve a destination certificate details](https://fivetran.com/docs/rest-api/certificates#retrieveadestinationcertificatedetails) | v1 | [DestinationCertificateDetailsService](https://pkg.go.dev/github.com/fivetran/go-fivetran/certificates#DestinationCertificateDetailsService)
+[Retrieve a destination fingerprint details](https://fivetran.com/docs/rest-api/certificates#retrieveadestinationfingerprintdetails) | v1 | [DestinationFingerprintDetailsService](https://pkg.go.dev/github.com/fivetran/go-fivetran/fingerprints#DestinationFingerprintDetailsService)
+[Revoke a destination certificate](https://fivetran.com/docs/rest-api/certificates#revokeadestinationcertificate) | v1 | [DestinationCertificateRevokeService](https://pkg.go.dev/github.com/fivetran/go-fivetran/certificates#DestinationCertificateRevokeService)
+[Revoke a destination fingerprint](https://fivetran.com/docs/rest-api/certificates#revokeadestinationfingerprint) | v1 | [DestinationFingerprintRevokeService](https://pkg.go.dev/github.com/fivetran/go-fivetran/fingerprints#DestinationFingerprintRevokeService)
 
 ### [Log Service Management](https://fivetran.com/docs/rest-api/log-service-management)
 

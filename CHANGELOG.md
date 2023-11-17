@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased](https://github.com/fivetran/go-fivetran/compare/v0.7.13...HEAD)
 
+## [0.7.15](https://github.com/fivetran/go-fivetran/compare/v0.7.14...v0.7.15)
+
+## Added
+- Support for [Retrieve Group Service Account](https://fivetran.com/docs/rest-api/groups#retrievegroupserviceaccount) endpoint.
+- Support for [Retrieve Group Public SSH Key](https://fivetran.com/docs/rest-api/groups#retrievegrouppublicsshkey) endpoint.
+
+## [0.7.14](https://github.com/fivetran/go-fivetran/compare/v0.7.13...v0.7.14)
+
+## Added
+
+- Support for missing `auth` fields for connectors.
+- OneLake Data-Lake support.
+
+
 ## [0.7.13](https://github.com/fivetran/go-fivetran/compare/v0.7.12...v0.7.13)
 
 ## Added

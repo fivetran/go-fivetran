@@ -1,4 +1,4 @@
-package tests
+package groups_test
 
 import (
 	"context"
@@ -7,7 +7,10 @@ import (
 	"testing"
 
 	"github.com/fivetran/go-fivetran/common"
+	"github.com/fivetran/go-fivetran/tests"
 	"github.com/fivetran/go-fivetran/tests/mock"
+
+	testutils "github.com/fivetran/go-fivetran/test_utils"
 )
 
 func TestGroupAddUserServiceDo(t *testing.T) {
@@ -16,10 +19,10 @@ func TestGroupAddUserServiceDo(t *testing.T) {
 	email := "john.white@mycompany.com"
 	role := "Account Administrator"
 
-	ftClient, mockClient := CreateTestClient()
+	ftClient, mockClient := tests.CreateTestClient()
 	handler := mockClient.When(http.MethodPost, fmt.Sprintf("/v1/groups/%s/users", groupID)).
 		ThenCall(func(req *http.Request) (*http.Response, error) {
-			requestBody := RequestBodyToJson(t, req)
+			requestBody := tests.RequestBodyToJson(t, req)
 			assertGroupAddUserRequest(t, requestBody, email, role)
 
 			response := mock.NewResponse(req, http.StatusOK, `{
@@ -42,9 +45,9 @@ func TestGroupAddUserServiceDo(t *testing.T) {
 	}
 
 	interactions := mockClient.Interactions()
-	assertEqual(t, len(interactions), 1)
-	assertEqual(t, interactions[0].Handler, handler)
-	assertEqual(t, handler.Interactions, 1)
+	testutils.AssertEqual(t, len(interactions), 1)
+	testutils.AssertEqual(t, interactions[0].Handler, handler)
+	testutils.AssertEqual(t, handler.Interactions, 1)
 	assertGroupAddUserResponse(t, response)
 }
 
@@ -52,11 +55,11 @@ func assertGroupAddUserRequest(t *testing.T,
 	body map[string]interface{},
 	expectedEmail string,
 	expectedRole string) {
-	assertKey(t, "email", body, expectedEmail)
-	assertKey(t, "role", body, expectedRole)
+	testutils.AssertKey(t, "email", body, expectedEmail)
+	testutils.AssertKey(t, "role", body, expectedRole)
 }
 
 func assertGroupAddUserResponse(t *testing.T, response common.CommonResponse) {
-	assertEqual(t, response.Code, "Success")
-	assertEqual(t, response.Message, "User has been added to the group")
+	testutils.AssertEqual(t, response.Code, "Success")
+	testutils.AssertEqual(t, response.Message, "User has been added to the group")
 }

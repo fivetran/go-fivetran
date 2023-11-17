@@ -1,4 +1,4 @@
-package tests
+package groups_test
 
 import (
 	"context"
@@ -6,9 +6,12 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/fivetran/go-fivetran"
 	"github.com/fivetran/go-fivetran/common"
+	"github.com/fivetran/go-fivetran/groups"
+	"github.com/fivetran/go-fivetran/tests"
 	"github.com/fivetran/go-fivetran/tests/mock"
+
+	testutils "github.com/fivetran/go-fivetran/test_utils"
 )
 
 const (
@@ -35,7 +38,7 @@ func TestGroupListConnectorsServiceDo(t *testing.T) {
 	cursor := "eyJza2lwIjoxfQ"
 	schema := "salesforce"
 
-	ftClient, mockClient := CreateTestClient()
+	ftClient, mockClient := tests.CreateTestClient()
 	handler := mockClient.When(http.MethodGet, fmt.Sprintf("/v1/groups/%s/connectors", groupID)).
 		ThenCall(func(req *http.Request) (*http.Response, error) {
 			response := mock.NewResponse(req, http.StatusOK, prepareGroupListConnectorsResponse())
@@ -56,9 +59,9 @@ func TestGroupListConnectorsServiceDo(t *testing.T) {
 	}
 
 	interactions := mockClient.Interactions()
-	assertEqual(t, len(interactions), 1)
-	assertEqual(t, interactions[0].Handler, handler)
-	assertEqual(t, handler.Interactions, 1)
+	testutils.AssertEqual(t, len(interactions), 1)
+	testutils.AssertEqual(t, interactions[0].Handler, handler)
+	testutils.AssertEqual(t, handler.Interactions, 1)
 	assertGroupListConnectorsResponse(t, response)
 }
 
@@ -109,26 +112,26 @@ func prepareGroupListConnectorsResponse() string {
 	return value
 }
 
-func assertGroupListConnectorsResponse(t *testing.T, response fivetran.GroupListConnectorsResponse) {
+func assertGroupListConnectorsResponse(t *testing.T, response groups.GroupListConnectorsResponse) {
 
-	assertEqual(t, response.Code, "Success")
-	assertEqual(t, len(response.Data.Items), 1)
+	testutils.AssertEqual(t, response.Code, "Success")
+	testutils.AssertEqual(t, len(response.Data.Items), 1)
 	item := response.Data.Items[0]
 
-	assertEqual(t, item.ID, LIST_CONNECTORS_ID)
-	assertEqual(t, item.GroupID, LIST_CONNECTORS_GROUP_ID)
-	assertEqual(t, item.Service, LIST_CONNECTORS_SERVICE)
-	assertEqual(t, *item.ServiceVersion, LIST_CONNECTORS_SERVICE_VERSION)
-	assertEqual(t, item.Schema, LIST_CONNECTORS_SCHEMA)
-	assertEqual(t, item.ConnectedBy, LIST_CONNECTORS_CONNECTED_BY)
-	assertTimeEqual(t, item.CreatedAt, LIST_CONNECTORS_CREATED_AT)
-	assertTimeEqual(t, item.SucceededAt, LIST_CONNECTORS_SUCCEEDED_AT)
-	assertTimeEqual(t, item.FailedAt, LIST_CONNECTORS_FAILED_AT)
-	assertEqual(t, *item.SyncFrequency, LIST_CONNECTORS_SYNC_FREQUENCY)
-	assertEqual(t, *item.Status.IsHistoricalSync, LIST_CONNECTORS_IS_HISTORICAL_SYNC)
-	assertEqual(t, item.Status.SetupState, LIST_CONNECTORS_SETUP_STATE)
-	assertEqual(t, item.Status.SyncState, LIST_CONNECTORS_SYNC_STATE)
-	assertEqual(t, item.Status.Tasks, []common.CommonResponse{})
-	assertEqual(t, item.Status.UpdateState, LIST_CONNECTORS_UPDATE_STATE)
-	assertEqual(t, item.Status.Warnings, []common.CommonResponse{})
+	testutils.AssertEqual(t, item.ID, LIST_CONNECTORS_ID)
+	testutils.AssertEqual(t, item.GroupID, LIST_CONNECTORS_GROUP_ID)
+	testutils.AssertEqual(t, item.Service, LIST_CONNECTORS_SERVICE)
+	testutils.AssertEqual(t, *item.ServiceVersion, LIST_CONNECTORS_SERVICE_VERSION)
+	testutils.AssertEqual(t, item.Schema, LIST_CONNECTORS_SCHEMA)
+	testutils.AssertEqual(t, item.ConnectedBy, LIST_CONNECTORS_CONNECTED_BY)
+	testutils.AssertTimeEqual(t, item.CreatedAt, LIST_CONNECTORS_CREATED_AT)
+	testutils.AssertTimeEqual(t, item.SucceededAt, LIST_CONNECTORS_SUCCEEDED_AT)
+	testutils.AssertTimeEqual(t, item.FailedAt, LIST_CONNECTORS_FAILED_AT)
+	testutils.AssertEqual(t, *item.SyncFrequency, LIST_CONNECTORS_SYNC_FREQUENCY)
+	testutils.AssertEqual(t, *item.Status.IsHistoricalSync, LIST_CONNECTORS_IS_HISTORICAL_SYNC)
+	testutils.AssertEqual(t, item.Status.SetupState, LIST_CONNECTORS_SETUP_STATE)
+	testutils.AssertEqual(t, item.Status.SyncState, LIST_CONNECTORS_SYNC_STATE)
+	testutils.AssertEqual(t, item.Status.Tasks, []common.CommonResponse{})
+	testutils.AssertEqual(t, item.Status.UpdateState, LIST_CONNECTORS_UPDATE_STATE)
+	testutils.AssertEqual(t, item.Status.Warnings, []common.CommonResponse{})
 }
