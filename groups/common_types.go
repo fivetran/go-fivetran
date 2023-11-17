@@ -26,6 +26,13 @@ type GroupSshKeyResponse struct {
 	}
 }
 
+type GroupServiceAccountResponse struct {
+	common.CommonResponse
+	Data struct {
+		ServiceAccount string `json:"service_account"`
+	}
+}
+
 type GroupListConnectorsResponse struct {
 	common.CommonResponse
 	Data struct {
