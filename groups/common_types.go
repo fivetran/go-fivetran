@@ -19,6 +19,13 @@ type GroupDetailsResponse struct {
 	Data GroupItem `json:"data"`
 }
 
+type GroupSshKeyResponse struct {
+	common.CommonResponse
+	Data struct {
+		PublicKey string `json:"public_key"`
+	}
+}
+
 type GroupListConnectorsResponse struct {
 	common.CommonResponse
 	Data struct {

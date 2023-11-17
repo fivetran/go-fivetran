@@ -225,3 +225,7 @@ func (c *Client) NewGroupListUsers() *groups.GroupListUsersService {
 func (c *Client) NewGroupsList() *groups.GroupsListService {
 	return &groups.GroupsListService{HttpService: c.NewHttpService()}
 }
+
+func (c *Client) NewGroupSshPublicKey() *groups.GroupSshKeyService {
+	return &groups.GroupSshKeyService{HttpService: c.NewHttpService()}
+}
