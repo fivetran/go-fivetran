@@ -73,7 +73,7 @@ func CreateDbtDestination(t *testing.T) {
 	destination, err := Client.NewDestinationCreate().
 		GroupID(PredefinedGroupId).
 		Service("big_query").
-		Region("US").
+		Region("GCP_US_EAST4").
 		RunSetupTests(true).
 		TimeZoneOffset("-5").
 		Config(

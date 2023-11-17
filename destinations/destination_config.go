@@ -39,6 +39,8 @@ type DestinationConfig struct {
     tenantId              *string
     clientId              *string
     secretValue           *string
+    workspaceName         *string
+    lakehouseName         *string
 }
 
 type destinationConfigRequest struct {
@@ -78,6 +80,8 @@ type destinationConfigRequest struct {
     TenantId              *string `json:"tenant_id,omitempty"`
     ClientId              *string `json:"client_id,omitempty"`
     SecretValue           *string `json:"secret_value,omitempty"`
+    WorkspaceName         *string `json:"workspace_name,omitempty"`
+    LakehouseName         *string `json:"lakehouse_name,omitempty"`
 }
 
 type DestinationConfigResponse struct {
@@ -119,6 +123,8 @@ type DestinationConfigResponse struct {
     TenantId              string `json:"tenant_id"`
     ClientId              string `json:"client_id"`
     SecretValue           string `json:"secret_value"`
+    WorkspaceName         string `json:"workspace_name"`
+    LakehouseName         string `json:"lakehouse_name"`
 }
 
 func (dc *DestinationConfig) Request() *destinationConfigRequest {
@@ -159,6 +165,8 @@ func (dc *DestinationConfig) Request() *destinationConfigRequest {
         TenantId:              dc.tenantId,
         ClientId:              dc.clientId,
         SecretValue:           dc.secretValue,
+        WorkspaceName:         dc.workspaceName,
+        LakehouseName:         dc.lakehouseName,
     }
 }
 
@@ -344,5 +352,15 @@ func (dc *DestinationConfig) ClientId(value string) *DestinationConfig {
 
 func (dc *DestinationConfig) SecretValue(value string) *DestinationConfig {
     dc.secretValue = &value
+    return dc
+}
+
+func (dc *DestinationConfig) WorkspaceName(value string) *DestinationConfig {
+    dc.workspaceName = &value
+    return dc
+}
+ 
+func (dc *DestinationConfig) LakehouseName(value string) *DestinationConfig {
+    dc.lakehouseName = &value
     return dc
 }
