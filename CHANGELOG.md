@@ -5,7 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/fivetran/go-fivetran/compare/v0.7.13...HEAD)
+## [Unreleased](https://github.com/fivetran/go-fivetran/compare/v0.7.17...HEAD)
+
+## [0.7.16](https://github.com/fivetran/go-fivetran/compare/v0.7.15...v0.7.16)
+
+## Added
+
+Supported the following Fivetran API endpoints for Private Links Management:
+- [Create a Private Link](https://fivetran.com/docs/rest-api/private-links-management#createaprivatelink)
+- [List all Private Links within Group](https://fivetran.com/docs/rest-api/private-links-management#listallprivatelinkswithingroup)
+- [Retrieve Private Link Details](https://fivetran.com/docs/rest-api/private-links-management#retrieveprivatelinkdetails)
+- [Update a Private Link](https://fivetran.com/docs/rest-api/private-links-management#updateaprivatelink)
+- [Delete a Private Link](https://fivetran.com/docs/rest-api/private-links-management#deleteaprivatelink)
 
 ## [0.8.0](https://github.com/fivetran/go-fivetran/compare/v0.7.11...v0.8.10)
 

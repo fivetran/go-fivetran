@@ -508,6 +508,7 @@ func CleanupAccount() {
 	CleanupDbtProjects()
 	CleanupGroups()
 	CleanupExternalLogging()
+	CleanupPrivateLinks()
 	CleanupWebhooks()
 	CleanupTeams()
 }
@@ -598,6 +599,25 @@ func CleanupExternalLogging() {
 	}
 }
 
+func CleanupPrivateLinks() {
+	groups, err := Client.NewGroupsList().Do(context.Background())
+	if err != nil {
+		log.Fatal(err)
+	}
+	for _, group := range groups.Data.Items {
+		privateLinks, err := Client.NewGroupListPrivateLinks().GroupID(group.ID).Do(context.Background())
+		if err != nil {
+			log.Fatal(err)
+		}
+		for _, privateLinks := range privateLinks.Data.Items {
+			_, err := Client.NewPrivateLinksDelete().PrivateLinkId(privateLinks.Id).Do(context.Background())
+			if err != nil && err.Error() != "status code: 404; expected: 200" {
+				log.Fatal(err)
+			}
+		}
+	}
+}
+
 func CleanupWebhooks() {
 	list, err := Client.NewWebhookList().Do(context.Background())
 	if err != nil {
@@ -664,6 +684,84 @@ func CreateExternalLogging(t *testing.T) string {
 	return created.Data.Id
 }
 
+/* Private Links */
+func CreatePrivateLinkGroup(t *testing.T) string {
+	t.Helper()
+	created, err := Client.NewGroupCreate().Name("private_link_test").Do(context.Background())
+	if err != nil {
+		t.Logf("%+v\n", created)
+		t.Error(err)
+	}
+	return created.Data.ID
+}
+
+func CreatePrivateLinkDestination(t *testing.T, id string) string {
+	t.Helper()
+	destination, err := Client.NewDestinationCreate().
+		GroupID(id).
+		Service("big_query").
+		Region("AWS_US_EAST_1").
+		RunSetupTests(false).
+		TimeZoneOffset("-5").
+		Config(
+			fivetran.NewDestinationConfig().
+				ProjectID(BqProjectId).
+				DataSetLocation("US")).
+		Do(context.Background())
+	if err != nil {
+		t.Logf("%+v\n", destination)
+		t.Error(err)
+	}
+	return destination.Data.ID
+}
+
+func CreatePrivateLink(t *testing.T) (string, string, string) {
+	t.Helper()
+	plGroupId := CreatePrivateLinkGroup(t)
+	t.Logf("groupId %+v\n", plGroupId)
+	plDestinationId := CreatePrivateLinkDestination(t,plGroupId)
+	t.Logf("plDestinationId %+v\n", plDestinationId)
+
+	created, err := Client.NewPrivateLinksCreate().
+		Name("test").
+		GroupId(plGroupId).
+		Service("redshift").
+		Config(fivetran.NewPrivateLinksConfig().
+			AwsAccountId("account_id.cloud_region_name.privatelink.snowflakecomputing.com").
+    		ClusterIdentifier("account_id.cloud_region_name.privatelink.snowflakecomputing.com")).
+		Do(context.Background())
+
+	if err != nil {
+		t.Logf("%+v\n", created)
+		t.Error(err)
+	}
+	return created.Data.Id, plDestinationId, plGroupId
+}
+
+func DeletePrivateLink(t *testing.T, id string) {
+	t.Helper()
+	deleted, err := Client.NewPrivateLinksDelete().PrivateLinkId(id).Do(context.Background())
+
+	if err != nil {
+		t.Logf("%+v\n", deleted)
+		//t.Error(err)
+	}
+}
+
+func CreateTempPrivateLink(t *testing.T) (string, string) {
+	t.Helper()
+	privateLinkId, plDestinationId, plGroupId := CreatePrivateLink(t)
+
+	t.Cleanup(func() {
+		//DeletePrivateLink(t, privateLinkId) 
+		DeleteDestination(t, plDestinationId)
+		DeleteGroup(t, plGroupId)
+	})
+	return privateLinkId, plGroupId
+}
+
+/* Private Links */
+
 func CreateTempWebhook(t *testing.T) string {
 	t.Helper()
 	webhookId := CreateWebhookAccount(t)
@@ -696,6 +794,7 @@ func CreateWebhookAccount(t *testing.T) string {
 	}
 	return created.Data.Id
 }
+
 
 /* Begin Team Management */
 func CreateTeam(t *testing.T) string {

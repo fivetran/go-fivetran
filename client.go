@@ -17,6 +17,7 @@ import (
 	"github.com/fivetran/go-fivetran/teams"
 	"github.com/fivetran/go-fivetran/roles"
 	"github.com/fivetran/go-fivetran/connect_card"
+	"github.com/fivetran/go-fivetran/private_links"
 	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
@@ -229,6 +230,10 @@ func (c *Client) NewGroupListConnectors() *groups.GroupListConnectorsService {
 
 func (c *Client) NewGroupListUsers() *groups.GroupListUsersService {
 	return &groups.GroupListUsersService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewGroupListPrivateLinks() *groups.GroupListPrivateLinksService {
+	return &groups.GroupListPrivateLinksService{HttpService: c.NewHttpService()}
 }
 
 func (c *Client) NewGroupsList() *groups.GroupsListService {
@@ -564,4 +569,25 @@ func (c *Client) NewConnectorSchemaUpdateService() *connectors.ConnectorSchemaCo
 
 func (c *Client) NewConnectorTableConfigModifyService() *connectors.ConnectorTableConfigModifyService {
     return &connectors.ConnectorTableConfigModifyService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewConnectorsSourceMetadata() *connectors.ConnectorsSourceMetadataService {
+	return &connectors.ConnectorsSourceMetadataService{HttpService: c.NewHttpService()}
+}
+
+/* Private Links */
+func (c *Client) NewPrivateLinksCreate() *privatelinks.PrivateLinksCreateService {
+	return &privatelinks.PrivateLinksCreateService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewPrivateLinksDelete() *privatelinks.PrivateLinksDeleteService {
+	return &privatelinks.PrivateLinksDeleteService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewPrivateLinksDetails() *privatelinks.PrivateLinksDetailsService {
+	return &privatelinks.PrivateLinksDetailsService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewPrivateLinksModify() *privatelinks.PrivateLinksModifyService {
+	return &privatelinks.PrivateLinksModifyService{HttpService: c.NewHttpService()}
 }
