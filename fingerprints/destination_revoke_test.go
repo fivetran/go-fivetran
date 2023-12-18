@@ -7,7 +7,7 @@ import (
 	"testing"
 
 	testutils "github.com/fivetran/go-fivetran/test_utils"
-	"github.com/fivetran/go-fivetran/tests"
+	
 	"github.com/fivetran/go-fivetran/tests/mock"
 )
 
@@ -16,7 +16,7 @@ func TestNewDestinationFingerprintRevokeMock(t *testing.T) {
 	testDestinationId := "destination_id"
 	testHash := "hash"
 
-	ftClient, mockClient := tests.CreateTestClient()
+	ftClient, mockClient := testutils.CreateTestClient()
 	handler := mockClient.When(http.MethodDelete, fmt.Sprintf("/v1/destinations/%v/fingerprints/%v", testDestinationId, testHash)).ThenCall(
 		func(req *http.Request) (*http.Response, error) {
 			response := mock.NewResponse(req, http.StatusOK,

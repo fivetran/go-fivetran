@@ -7,7 +7,7 @@ import (
 	"testing"
 
 	testutils "github.com/fivetran/go-fivetran/test_utils"
-	"github.com/fivetran/go-fivetran/tests"
+	
 	"github.com/fivetran/go-fivetran/tests/mock"
 )
 
@@ -16,7 +16,7 @@ func TestGroupSshKeyServiceDo(t *testing.T) {
 	sshPublicKey := `ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC2l5Tq4JWBHyTb46aGRQ== fivetran user key\\n` // we have to escape char here for serialization
 	expectedKey := `ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC2l5Tq4JWBHyTb46aGRQ== fivetran user key\n`   // we expect \n at the end of key value
 
-	ftClient, mockClient := tests.CreateTestClient()
+	ftClient, mockClient := testutils.CreateTestClient()
 	handler := mockClient.When(http.MethodGet, "/v1/groups/"+EXPECTED_GROUP_ID+"/public-key").
 		ThenCall(func(req *http.Request) (*http.Response, error) {
 			response := mock.NewResponse(req, http.StatusOK, fmt.Sprintf(`{

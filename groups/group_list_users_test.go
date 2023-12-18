@@ -7,7 +7,7 @@ import (
 	"testing"
 
 	"github.com/fivetran/go-fivetran/groups"
-	"github.com/fivetran/go-fivetran/tests"
+	
 	"github.com/fivetran/go-fivetran/tests/mock"
 
 	testutils "github.com/fivetran/go-fivetran/test_utils"
@@ -34,7 +34,7 @@ func TestGroupListUsersServiceDo(t *testing.T) {
 	limit := 10
 	cursor := "eyJza2lwIjoxfQ"
 
-	ftClient, mockClient := tests.CreateTestClient()
+	ftClient, mockClient := testutils.CreateTestClient()
 	handler := mockClient.When(http.MethodGet, fmt.Sprintf("/v1/groups/%s/users", groupID)).
 		ThenCall(func(req *http.Request) (*http.Response, error) {
 			response := mock.NewResponse(req, http.StatusOK, prepareGroupListUsersResponse())

@@ -7,7 +7,7 @@ import (
 	"testing"
 
 	"github.com/fivetran/go-fivetran/common"
-	"github.com/fivetran/go-fivetran/tests"
+	
 	"github.com/fivetran/go-fivetran/tests/mock"
 
 	testutils "github.com/fivetran/go-fivetran/test_utils"
@@ -19,10 +19,10 @@ func TestGroupAddUserServiceDo(t *testing.T) {
 	email := "john.white@mycompany.com"
 	role := "Account Administrator"
 
-	ftClient, mockClient := tests.CreateTestClient()
+	ftClient, mockClient := testutils.CreateTestClient()
 	handler := mockClient.When(http.MethodPost, fmt.Sprintf("/v1/groups/%s/users", groupID)).
 		ThenCall(func(req *http.Request) (*http.Response, error) {
-			requestBody := tests.RequestBodyToJson(t, req)
+			requestBody := testutils.RequestBodyToJson(t, req)
 			assertGroupAddUserRequest(t, requestBody, email, role)
 
 			response := mock.NewResponse(req, http.StatusOK, `{

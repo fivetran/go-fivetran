@@ -4,13 +4,14 @@ import (
     "context"
     "testing"
 
+    "github.com/fivetran/go-fivetran"
     testutils "github.com/fivetran/go-fivetran/test_utils"
 )
 
 func TestNewConnectCardE2E(t *testing.T) {
     connectorId := testutils.CreateTempConnector(t)
 
-    config := testutils.Client.NewConnectCardConfig().
+    config := fivetran.NewConnectCardConfig().
         RedirectUri("http://test_domain.com").
         HideSetupGuide(false)
 

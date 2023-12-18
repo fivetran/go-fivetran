@@ -1,28 +1,5 @@
 package dbt
 
-type DbtProjectConfig struct {
-	gitRemoteUrl *string
-	gitBranch    *string
-	folderPath   *string
-}
-
-type dbtProjectConfigRequest struct {
-	GitRemoteUrl *string `json:"git_remote_url,omitempty"`
-	GitBranch    *string `json:"git_branch,omitempty"`
-	FolderPath   *string `json:"folder_path,omitempty"`
-}
-
-type updateDbtProjectConfigRequest struct {
-	GitBranch  *string `json:"git_branch,omitempty"`
-	FolderPath *string `json:"folder_path,omitempty"`
-}
-
-type DbtProjectConfigResponse struct {
-	GitRemoteUrl string `json:"git_remote_url"`
-	GitBranch    string `json:"git_branch"`
-	FolderPath   string `json:"folder_path"`
-}
-
 func (dc *DbtProjectConfig) Request() *dbtProjectConfigRequest {
 	return &dbtProjectConfigRequest{
 		GitRemoteUrl: dc.gitRemoteUrl,

@@ -7,7 +7,7 @@ import (
 	"testing"
 
 	testutils "github.com/fivetran/go-fivetran/test_utils"
-	"github.com/fivetran/go-fivetran/tests"
+	
 	"github.com/fivetran/go-fivetran/tests/mock"
 )
 
@@ -16,7 +16,7 @@ func TestNewCertificateConnectorCertificateRevokeMock(t *testing.T) {
 	testConnectorId := "connector_id"
 	testHash := "hash"
 
-	ftClient, mockClient := tests.CreateTestClient()
+	ftClient, mockClient := testutils.CreateTestClient()
 	handler := mockClient.When(http.MethodDelete, fmt.Sprintf("/v1/connectors/%v/certificates/%v", testConnectorId, testHash)).ThenCall(
 		func(req *http.Request) (*http.Response, error) {
 			response := mock.NewResponse(req, http.StatusOK,

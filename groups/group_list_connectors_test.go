@@ -8,7 +8,7 @@ import (
 
 	"github.com/fivetran/go-fivetran/common"
 	"github.com/fivetran/go-fivetran/groups"
-	"github.com/fivetran/go-fivetran/tests"
+	
 	"github.com/fivetran/go-fivetran/tests/mock"
 
 	testutils "github.com/fivetran/go-fivetran/test_utils"
@@ -38,7 +38,7 @@ func TestGroupListConnectorsServiceDo(t *testing.T) {
 	cursor := "eyJza2lwIjoxfQ"
 	schema := "salesforce"
 
-	ftClient, mockClient := tests.CreateTestClient()
+	ftClient, mockClient := testutils.CreateTestClient()
 	handler := mockClient.When(http.MethodGet, fmt.Sprintf("/v1/groups/%s/connectors", groupID)).
 		ThenCall(func(req *http.Request) (*http.Response, error) {
 			response := mock.NewResponse(req, http.StatusOK, prepareGroupListConnectorsResponse())

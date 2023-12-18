@@ -7,7 +7,7 @@ import (
 	"testing"
 
 	testutils "github.com/fivetran/go-fivetran/test_utils"
-	"github.com/fivetran/go-fivetran/tests"
+	
 	"github.com/fivetran/go-fivetran/tests/mock"
 )
 
@@ -17,10 +17,10 @@ func TestGroupModifyServiceDo(t *testing.T) {
 	const GROUP_MODIFY_EXPECTED_GROUP_NAME = "New_Group_Name"
 	const GROUP_MODIFY_CREATED_TIME = "2020-05-25T15:26:47.306509Z"
 
-	ftClient, mockClient := tests.CreateTestClient()
+	ftClient, mockClient := testutils.CreateTestClient()
 	handler := mockClient.When(http.MethodPatch, "/v1/groups/"+GROUP_MODIFY_GROUP_ID).
 		ThenCall(func(req *http.Request) (*http.Response, error) {
-			body := tests.RequestBodyToJson(t, req)
+			body := testutils.RequestBodyToJson(t, req)
 			testutils.AssertKey(t, "name", body, GROUP_MODIFY_EXPECTED_GROUP_NAME)
 
 			response := mock.NewResponse(req, http.StatusOK, fmt.Sprintf(`

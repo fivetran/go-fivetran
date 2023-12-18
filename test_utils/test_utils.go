@@ -3,12 +3,16 @@ package testutils
 import (
 	"context"
 	"fmt"
+	"net/http"
+	"io"
+	"bytes"
 	"log"
 	"os"
 	"reflect"
+	"encoding/json"
 	"testing"
 	"time"
-
+	"github.com/fivetran/go-fivetran/tests/mock"
 	"github.com/fivetran/go-fivetran"
 )
 
@@ -35,6 +39,12 @@ const (
 
 var (
 	cleanup = false
+	TEST_KEY    = "test_key"
+	TEST_SECRET = "test_secret"
+
+	TEST_CONNECTOR_ID = "test_connector_id"
+	TEST_HASH         = "test_hash"
+	TEST_PUBLIC_KEY   = "test_public_key"
 )
 
 func InitE2E() {
@@ -67,6 +77,32 @@ func InitE2E() {
 	} else {
 		log.Fatalln("The predefined user doesn't belong to the Testing account. Make sure that credentials are using in the tests belong to the Testing account.")
 	}
+}
+
+func CreateTestClient() (*fivetran.Client, *mock.HttpClient) {
+	ftClient := fivetran.New(TEST_KEY, TEST_SECRET)
+	mockClient := mock.NewHttpClient()
+	ftClient.SetHttpClient(mockClient)
+	return ftClient, mockClient
+}
+
+func RequestBodyToJson(t *testing.T, req *http.Request) map[string]interface{} {
+	t.Helper()
+
+	bodyBytes, err := io.ReadAll(req.Body)
+	if err != nil {
+		t.Errorf("requestBodyToJson, cannot read request body: %s", err)
+	}
+	req.Body.Close()
+	req.Body = io.NopCloser(bytes.NewReader(bodyBytes))
+
+	result := map[string]interface{}{}
+	err = json.Unmarshal(bodyBytes, &result)
+	if err != nil {
+		t.Errorf("requestBodyToJson, cannot parse request body: %s", err)
+	}
+
+	return result
 }
 
 func CreateDbtDestination(t *testing.T) {
@@ -413,6 +449,46 @@ func AssertKey(t *testing.T, key string, requestPart map[string]interface{}, exp
 	AssertEqual(t, v, expectedValue)
 }
 
+func AssertHasKey(t *testing.T, source map[string]interface{}, key string) {
+	t.Helper()
+	_, ok := source[key]
+	if !ok {
+		t.Errorf("Expected Key not found in map: %s", key)
+	}
+}
+
+func AssertHasNoKey(t *testing.T, source map[string]interface{}, key string) {
+	t.Helper()
+	_, ok := source[key]
+	if ok {
+		t.Errorf("Unexpected Key found in map: %s", key)
+	}
+}
+
+func BoolToStr(b bool) string {
+	if b {
+		return "true"
+	}
+	return "false"
+}
+
+func AssertIsNotNil(t *testing.T, value interface{}) {
+	t.Helper()
+
+	if value == nil {
+		printError(t, value, "non-nil value")
+	}
+}
+
+func AssertKeyValue(t *testing.T, source map[string]interface{}, key string, expected interface{}) {
+	t.Helper()
+	AssertHasKey(t, source, key)
+	actual := source[key]
+	if !reflect.DeepEqual(actual, expected) {
+		printError(t, actual, expected)
+	}
+}
+
 func isEmpty(actual interface{}) bool {
 	var isEmpty bool = false
 
@@ -726,3 +802,54 @@ func DeleteTeam(t *testing.T, id string) {
 }
 
 /* End Team Management */
+
+func DeleteUserConnector(t *testing.T, userId string, connectorId string) {
+	t.Helper()
+	deleted, err := Client.NewUserConnectorMembershipDelete().UserId(userId).ConnectorId(connectorId).Do(context.Background())
+
+	if err != nil {
+		t.Logf("%+v\n", deleted)
+		t.Error(err)
+	}
+}
+
+func CreateUserConnector(t *testing.T, userId string, connectorId string) {
+	t.Helper()
+	created, err := Client.NewUserConnectorMembershipCreate().
+		UserId(userId).
+		ConnectorId(connectorId).
+		Role("Connector Administrator").
+		Do(context.Background())
+
+	if err != nil {
+		t.Logf("%+v\n", created)
+		t.Error(err)
+	}
+}
+
+func DeleteUserGroup(t *testing.T, userId string, groupId string) {
+	t.Helper()
+	deleted, err := Client.NewUserGroupMembershipDelete().
+		UserId(userId).
+		GroupId(groupId).
+		Do(context.Background())
+
+	if err != nil {
+		t.Logf("%+v\n", deleted)
+		t.Error(err)
+	}
+}
+
+func CreateUserGroup(t *testing.T, userId string, groupId string) {
+	t.Helper()
+	created, err := Client.NewUserGroupMembershipCreate().
+		UserId(userId).
+		GroupId(groupId).
+		Role("Destination Analyst").
+		Do(context.Background())
+
+	if err != nil {
+		t.Logf("%+v\n", created)
+		t.Error(err)
+	}
+}

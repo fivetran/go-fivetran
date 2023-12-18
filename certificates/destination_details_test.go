@@ -7,7 +7,6 @@ import (
 	"testing"
 
 	testutils "github.com/fivetran/go-fivetran/test_utils"
-	"github.com/fivetran/go-fivetran/tests"
 	"github.com/fivetran/go-fivetran/tests/mock"
 )
 
@@ -22,7 +21,7 @@ func TestNewDestinationCertificateDetailsMock(t *testing.T) {
 	testName := "name"
 	testType := "type"
 
-	ftClient, mockClient := tests.CreateTestClient()
+	ftClient, mockClient := testutils.CreateTestClient()
 	handler := mockClient.When(http.MethodGet, fmt.Sprintf("/v1/destinations/%v/certificates/%v", testDestinationId, testHash)).ThenCall(
 
 		func(req *http.Request) (*http.Response, error) {
