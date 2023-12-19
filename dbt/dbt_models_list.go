@@ -32,7 +32,7 @@ func (s *DbtModelsListService) Cursor(value string) *DbtModelsListService {
 func (s *DbtModelsListService) Do(ctx context.Context) (DbtModelsListResponse, error) {
 	var response DbtModelsListResponse
 	var queries map[string]string = nil
-	if s.cursor != nil || s.limit != nil {
+	if s.cursor != nil || s.limit != nil || s.projectId != nil {
 		queries = make(map[string]string)
 		if s.cursor != nil {
 			queries["cursor"] = *s.cursor
@@ -40,9 +40,9 @@ func (s *DbtModelsListService) Do(ctx context.Context) (DbtModelsListResponse, e
 		if s.limit != nil {
 			queries["limit"] = fmt.Sprintf("%v", *s.limit)
 		}
-	}
-	if s.projectId != nil {
-		queries["project_id"] = *s.projectId
+		if s.projectId != nil {
+			queries["project_id"] = *s.projectId
+		}
 	}
 
 	err := s.HttpService.Do(ctx, "GET", "/dbt/models", nil, queries, 200, &response)
