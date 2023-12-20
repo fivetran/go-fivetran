@@ -7,7 +7,7 @@ import (
 	"testing"
 
 	"github.com/fivetran/go-fivetran/groups"
-	"github.com/fivetran/go-fivetran/tests"
+	
 	"github.com/fivetran/go-fivetran/tests/mock"
 
 	testutils "github.com/fivetran/go-fivetran/test_utils"
@@ -23,12 +23,12 @@ const (
 
 func TestGroupCreateServiceDo(t *testing.T) {
 	// Arrange
-	ftClient, mockClient := tests.CreateTestClient()
+	ftClient, mockClient := testutils.CreateTestClient()
 	groupName := "NewGroup"
 
 	handler := mockClient.When(http.MethodPost, "/v1/groups").
 		ThenCall(func(req *http.Request) (*http.Response, error) {
-			body := tests.RequestBodyToJson(t, req)
+			body := testutils.RequestBodyToJson(t, req)
 			assertGroupCreateRequest(t, body)
 			response := mock.NewResponse(req, http.StatusCreated, prepareGroupCreateResponse())
 			return response, nil

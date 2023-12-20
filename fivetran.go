@@ -4,6 +4,7 @@ import (
 	"github.com/fivetran/go-fivetran/connectors"
 	"github.com/fivetran/go-fivetran/dbt"
 	"github.com/fivetran/go-fivetran/destinations"
+	"github.com/fivetran/go-fivetran/connect_card"
 	externallogging "github.com/fivetran/go-fivetran/external_logging"
 	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
@@ -66,6 +67,10 @@ func NewDestinationConfig() *destinations.DestinationConfig {
 
 func NewExternalLoggingConfig() *externallogging.ExternalLoggingConfig {
 	return &externallogging.ExternalLoggingConfig{}
+}
+
+func NewConnectCardConfig() *connectcard.ConnectCardConfig {
+	return &connectcard.ConnectCardConfig{}
 }
 
 func Debug(value bool) {

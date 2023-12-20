@@ -7,7 +7,7 @@ import (
 	"testing"
 
 	testutils "github.com/fivetran/go-fivetran/test_utils"
-	"github.com/fivetran/go-fivetran/tests"
+	
 	"github.com/fivetran/go-fivetran/tests/mock"
 )
 
@@ -20,7 +20,7 @@ func TestNewConnectorFingerprintDetailsMock(t *testing.T) {
 
 	testPublicKey := "test_public_key"
 
-	ftClient, mockClient := tests.CreateTestClient()
+	ftClient, mockClient := testutils.CreateTestClient()
 	handler := mockClient.When(http.MethodGet, fmt.Sprintf("/v1/connectors/%v/fingerprints/%v", testConnectorId, testHash)).ThenCall(
 
 		func(req *http.Request) (*http.Response, error) {

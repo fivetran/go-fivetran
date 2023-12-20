@@ -7,7 +7,7 @@ import (
 	"testing"
 
 	testutils "github.com/fivetran/go-fivetran/test_utils"
-	"github.com/fivetran/go-fivetran/tests"
+	
 	"github.com/fivetran/go-fivetran/tests/mock"
 )
 
@@ -19,11 +19,11 @@ func TestNewCertificateConnectorFingerprintApproveMock(t *testing.T) {
 	testHash := "hash"
 	testPublicKey := "public_key"
 
-	ftClient, mockClient := tests.CreateTestClient()
+	ftClient, mockClient := testutils.CreateTestClient()
 	handler := mockClient.When(http.MethodPost, fmt.Sprintf("/v1/connectors/%v/fingerprints", testConnectorId)).ThenCall(
 
 		func(req *http.Request) (*http.Response, error) {
-			body := tests.RequestBodyToJson(t, req)
+			body := testutils.RequestBodyToJson(t, req)
 
 			testutils.AssertEqual(t, len(body), 2)
 			testutils.AssertEqual(t, body["hash"], testHash)

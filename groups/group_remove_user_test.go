@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/fivetran/go-fivetran/tests"
+	
 	"github.com/fivetran/go-fivetran/tests/mock"
 
 	testutils "github.com/fivetran/go-fivetran/test_utils"
@@ -17,7 +17,7 @@ func TestGroupRemoveUserServiceDo(t *testing.T) {
 	expectedGroupID := "projected_sickle"
 	expectedUserID := "nozzle_eat"
 
-	ftClient, mockClient := tests.CreateTestClient()
+	ftClient, mockClient := testutils.CreateTestClient()
 	handler := mockClient.When(http.MethodDelete, "/v1/groups/"+expectedGroupID+"/users/"+expectedUserID).
 		ThenCall(func(req *http.Request) (*http.Response, error) {
 			response := mock.NewResponse(req, http.StatusOK, fmt.Sprintf(`

@@ -7,7 +7,6 @@ import (
 	"testing"
 
 	testutils "github.com/fivetran/go-fivetran/test_utils"
-	"github.com/fivetran/go-fivetran/tests"
 	"github.com/fivetran/go-fivetran/tests/mock"
 )
 
@@ -23,11 +22,11 @@ func TestNewCertificateDestinationCertificateApproveMock(t *testing.T) {
 	testName := "name"
 	testType := "type"
 
-	ftClient, mockClient := tests.CreateTestClient()
+	ftClient, mockClient := testutils.CreateTestClient()
 	handler := mockClient.When(http.MethodPost, fmt.Sprintf("/v1/destinations/%v/certificates", testDestinationId)).ThenCall(
 
 		func(req *http.Request) (*http.Response, error) {
-			body := tests.RequestBodyToJson(t, req)
+			body := testutils.RequestBodyToJson(t, req)
 
 			testutils.AssertEqual(t, len(body), 2)
 			testutils.AssertEqual(t, body["hash"], testHash)

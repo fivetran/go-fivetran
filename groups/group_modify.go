@@ -31,6 +31,9 @@ func (s *GroupModifyService) Name(value string) *GroupModifyService {
 
 func (s *GroupModifyService) Do(ctx context.Context) (GroupDetailsResponse, error) {
 	var response GroupDetailsResponse
+	if s.groupID == nil {
+		return response, fmt.Errorf("missing required groupID")
+	}
 	url := fmt.Sprintf("/groups/%v", *s.groupID)
 	err := s.HttpService.Do(ctx, "PATCH", url, s.request(), nil, 200, &response)
 	return response, err

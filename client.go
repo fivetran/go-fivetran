@@ -5,9 +5,18 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/fivetran/go-fivetran/connectors"
 	"github.com/fivetran/go-fivetran/certificates"
 	"github.com/fivetran/go-fivetran/fingerprints"
 	"github.com/fivetran/go-fivetran/groups"
+	"github.com/fivetran/go-fivetran/users"
+	"github.com/fivetran/go-fivetran/external_logging"
+	"github.com/fivetran/go-fivetran/destinations"
+	"github.com/fivetran/go-fivetran/dbt"
+	"github.com/fivetran/go-fivetran/webhooks"
+	"github.com/fivetran/go-fivetran/teams"
+	"github.com/fivetran/go-fivetran/roles"
+	"github.com/fivetran/go-fivetran/connect_card"
 	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
@@ -88,8 +97,8 @@ func (c *Client) commonHeaders() map[string]string {
 	}
 }
 
-func (c *Client) NewConnectorSync() *ConnectorSyncService {
-	return &ConnectorSyncService{
+func (c *Client) NewConnectorSync() *connectors.ConnectorSyncService {
+	return &connectors.ConnectorSyncService{
 		HttpService: c.NewHttpService(),
 	}
 }
@@ -232,4 +241,327 @@ func (c *Client) NewGroupSshPublicKey() *groups.GroupSshKeyService {
 
 func (c *Client) NewGroupServiceAccount() *groups.GroupServiceAccountService {
 	return &groups.GroupServiceAccountService{HttpService: c.NewHttpService()}
+}
+
+/* External Logging */
+func (c *Client) NewExternalLoggingCreate() *externallogging.ExternalLoggingCreateService {
+	return &externallogging.ExternalLoggingCreateService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewExternalLoggingDelete() *externallogging.ExternalLoggingDeleteService {
+	return &externallogging.ExternalLoggingDeleteService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewExternalLoggingDetails() *externallogging.ExternalLoggingDetailsService {
+	return &externallogging.ExternalLoggingDetailsService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewExternalLoggingModify() *externallogging.ExternalLoggingModifyService {
+	return &externallogging.ExternalLoggingModifyService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewExternalLoggingSetupTests() *externallogging.ExternalLoggingSetupTestsService {
+	return &externallogging.ExternalLoggingSetupTestsService{HttpService: c.NewHttpService()}
+}
+
+/* Destinations */
+func (c *Client) NewDestinationCreate() *destinations.DestinationCreateService {
+	return &destinations.DestinationCreateService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewDestinationDelete() *destinations.DestinationDeleteService {
+	return &destinations.DestinationDeleteService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewDestinationDetails() *destinations.DestinationDetailsService {
+	return &destinations.DestinationDetailsService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewDestinationModify() *destinations.DestinationModifyService {
+	return &destinations.DestinationModifyService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewDestinationSetupTests() *destinations.DestinationSetupTestsService {
+	return &destinations.DestinationSetupTestsService{HttpService: c.NewHttpService()}
+}
+
+/* Users */
+func (c *Client) NewUsersList() *users.UsersListService {
+	return &users.UsersListService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewUserDetails() *users.UserDetailsService {
+	return &users.UserDetailsService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewUserModify() *users.UserModifyService {
+	return &users.UserModifyService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewUserInvite() *users.UserInviteService {
+	return &users.UserInviteService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewUserDelete() *users.UserDeleteService {
+	return &users.UserDeleteService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewUserGroupMembershipCreate() *users.UserGroupMembershipCreateService {
+	return &users.UserGroupMembershipCreateService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewUserGroupMembershipDelete() *users.UserGroupMembershipDeleteService {
+	return &users.UserGroupMembershipDeleteService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewUserGroupMembershipDetails() *users.UserGroupMembershipDetailsService {
+	return &users.UserGroupMembershipDetailsService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewUserGroupMembershipsList() *users.UserGroupMembershipsListService {
+	return &users.UserGroupMembershipsListService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewUserGroupMembershipModify() *users.UserGroupMembershipModifyService {
+	return &users.UserGroupMembershipModifyService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewUserConnectorMembershipsList() *users.UserConnectorMembershipsListService {
+	return &users.UserConnectorMembershipsListService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewUserConnectorMembershipModify() *users.UserConnectorMembershipModifyService {
+	return &users.UserConnectorMembershipModifyService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewUserConnectorMembershipCreate() *users.UserConnectorMembershipCreateService {
+	return &users.UserConnectorMembershipCreateService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewUserConnectorMembershipDelete() *users.UserConnectorMembershipDeleteService {
+	return &users.UserConnectorMembershipDeleteService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewUserConnectorMembershipDetails() *users.UserConnectorMembershipDetailsService {
+	return &users.UserConnectorMembershipDetailsService{HttpService: c.NewHttpService()}
+}
+
+/* DBT */
+func (c *Client) NewDbtModelDetails() *dbt.DbtModelDetailsService {
+	return &dbt.DbtModelDetailsService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewDbtModelsList() *dbt.DbtModelsListService {
+	return &dbt.DbtModelsListService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewDbtProjectDetails() *dbt.DbtProjectDetailsService {
+	return &dbt.DbtProjectDetailsService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewDbtProjectDelete() *dbt.DbtProjectDeleteService {
+	return &dbt.DbtProjectDeleteService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewDbtProjectCreate() *dbt.DbtProjectCreateService {
+	return &dbt.DbtProjectCreateService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewDbtProjectModify() *dbt.DbtProjectModifyService {
+	return &dbt.DbtProjectModifyService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewDbtProjectsList() *dbt.DbtProjectsListService {
+	return &dbt.DbtProjectsListService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewDbtTransformationCreateService() *dbt.DbtTransformationCreateService {
+	return &dbt.DbtTransformationCreateService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewDbtTransformationDeleteService() *dbt.DbtTransformationDeleteService {
+	return &dbt.DbtTransformationDeleteService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewDbtTransformationDetailsService() *dbt.DbtTransformationDetailsService {
+	return &dbt.DbtTransformationDetailsService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewDbtTransformationModifyService() *dbt.DbtTransformationModifyService {
+	return &dbt.DbtTransformationModifyService{HttpService: c.NewHttpService()}
+}
+
+/* Webhooks */
+func (c *Client) NewWebhookDelete() *webhooks.WebhookDeleteService {
+	return &webhooks.WebhookDeleteService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewWebhookModify() *webhooks.WebhookModifyService {
+	return &webhooks.WebhookModifyService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewWebhookGroupCreate() *webhooks.WebhookGroupCreateService {
+	return &webhooks.WebhookGroupCreateService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewWebhookAccountCreate() *webhooks.WebhookAccountCreateService {
+	return &webhooks.WebhookAccountCreateService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewWebhookList() *webhooks.WebhookListService {
+	return &webhooks.WebhookListService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewWebhookDetails() *webhooks.WebhookDetailsService {
+	return &webhooks.WebhookDetailsService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewWebhookTest() *webhooks.WebhookTestService {
+	return &webhooks.WebhookTestService{HttpService: c.NewHttpService()}
+}
+
+/* Teams */
+func (c *Client) NewTeamsCreate() *teams.TeamsCreateService {
+	return &teams.TeamsCreateService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewTeamsDelete() *teams.TeamsDeleteService {
+	return &teams.TeamsDeleteService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewTeamsDetails() *teams.TeamsDetailsService {
+	return &teams.TeamsDetailsService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewTeamsList() *teams.TeamsListService {
+	return &teams.TeamsListService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewTeamsModify() *teams.TeamsModifyService {
+	return &teams.TeamsModifyService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewTeamConnectorMembershipCreate() *teams.TeamConnectorMembershipCreateService {
+	return &teams.TeamConnectorMembershipCreateService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewTeamConnectorMembershipDelete() *teams.TeamConnectorMembershipDeleteService {
+	return &teams.TeamConnectorMembershipDeleteService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewTeamConnectorMembershipDetails() *teams.TeamConnectorMembershipDetailsService {
+	return &teams.TeamConnectorMembershipDetailsService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewTeamConnectorMembershipsList() *teams.TeamConnectorMembershipsListService {
+	return &teams.TeamConnectorMembershipsListService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewTeamConnectorMembershipModify() *teams.TeamConnectorMembershipModifyService {
+	return &teams.TeamConnectorMembershipModifyService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewTeamGroupMembershipCreate() *teams.TeamGroupMembershipCreateService {
+	return &teams.TeamGroupMembershipCreateService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewTeamGroupMembershipDelete() *teams.TeamGroupMembershipDeleteService {
+	return &teams.TeamGroupMembershipDeleteService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewTeamGroupMembershipDetails() *teams.TeamGroupMembershipDetailsService {
+	return &teams.TeamGroupMembershipDetailsService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewTeamGroupMembershipsList() *teams.TeamGroupMembershipsListService {
+	return &teams.TeamGroupMembershipsListService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewTeamGroupMembershipModify() *teams.TeamGroupMembershipModifyService {
+	return &teams.TeamGroupMembershipModifyService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewTeamUserMembershipCreate() *teams.TeamUserMembershipCreateService {
+	return &teams.TeamUserMembershipCreateService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewTeamUserMembershipDelete() *teams.TeamUserMembershipDeleteService {
+	return &teams.TeamUserMembershipDeleteService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewTeamUserMembershipDetails() *teams.TeamUserMembershipDetailsService {
+	return &teams.TeamUserMembershipDetailsService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewTeamUserMembershipsList() *teams.TeamUserMembershipsListService {
+	return &teams.TeamUserMembershipsListService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewTeamUserMembershipModify() *teams.TeamUserMembershipModifyService {
+	return &teams.TeamUserMembershipModifyService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewTeamsDeleteRoleInAccount() *teams.TeamsDeleteRoleInAccountService {
+	return &teams.TeamsDeleteRoleInAccountService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewRolesList() *roles.RolesListService {
+	return &roles.RolesListService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewConnectCard() *connectcard.ConnectCardService {
+    return &connectcard.ConnectCardService{HttpService: c.NewHttpService()}
+}
+
+/* Connectors */
+func (c *Client) NewConnectorCreate() *connectors.ConnectorCreateService {
+	return &connectors.ConnectorCreateService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewConnectorDetails() *connectors.ConnectorDetailsService {
+	return &connectors.ConnectorDetailsService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewConnectorModify() *connectors.ConnectorModifyService {
+	return &connectors.ConnectorModifyService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewConnectorDelete() *connectors.ConnectorDeleteService {
+	return &connectors.ConnectorDeleteService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewConnectorSetupTests() *connectors.ConnectorSetupTestsService {
+	return &connectors.ConnectorSetupTestsService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewConnectorColumnConfigListService() *connectors.ConnectorColumnConfigListService {
+    return &connectors.ConnectorColumnConfigListService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewConnectorColumnConfigModifyService() *connectors.ConnectorColumnConfigModifyService {
+    return &connectors.ConnectorColumnConfigModifyService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewConnectorDatabaseSchemaConfigModifyService() *connectors.ConnectorDatabaseSchemaConfigModifyService {
+    return &connectors.ConnectorDatabaseSchemaConfigModifyService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewConnectorReSyncTable() *connectors.ConnectorReSyncTableService {
+	return &connectors.ConnectorReSyncTableService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewConnectorSchemaDetails() *connectors.ConnectorSchemaDetailsService {
+	return &connectors.ConnectorSchemaDetailsService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewConnectorSchemaReload() *connectors.ConnectorSchemaReloadService {
+	return &connectors.ConnectorSchemaReloadService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewConnectorSchemaUpdateService() *connectors.ConnectorSchemaConfigUpdateService {
+	return &connectors.ConnectorSchemaConfigUpdateService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewConnectorTableConfigModifyService() *connectors.ConnectorTableConfigModifyService {
+    return &connectors.ConnectorTableConfigModifyService{HttpService: c.NewHttpService()}
 }

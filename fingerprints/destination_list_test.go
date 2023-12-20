@@ -8,7 +8,7 @@ import (
 	"testing"
 
 	testutils "github.com/fivetran/go-fivetran/test_utils"
-	"github.com/fivetran/go-fivetran/tests"
+	
 	"github.com/fivetran/go-fivetran/tests/mock"
 )
 
@@ -24,7 +24,7 @@ func TestNewDestinationFingerprintsListMock(t *testing.T) {
 	cursor := "cursor"
 	limit := 1
 
-	ftClient, mockClient := tests.CreateTestClient()
+	ftClient, mockClient := testutils.CreateTestClient()
 	handler := mockClient.When(http.MethodGet, fmt.Sprintf("/v1/destinations/%v/fingerprints", testDestinationId)).ThenCall(
 		func(req *http.Request) (*http.Response, error) {
 			var query = req.URL.Query()

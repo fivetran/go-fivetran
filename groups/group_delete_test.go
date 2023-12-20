@@ -7,14 +7,14 @@ import (
 
 	"github.com/fivetran/go-fivetran/common"
 	testutils "github.com/fivetran/go-fivetran/test_utils"
-	"github.com/fivetran/go-fivetran/tests"
+	
 	"github.com/fivetran/go-fivetran/tests/mock"
 )
 
 func TestGroupDeleteServiceDo(t *testing.T) {
 	// arrange
 	var expectedGroupID = "group_id"
-	ftClient, mockClient := tests.CreateTestClient()
+	ftClient, mockClient := testutils.CreateTestClient()
 	handler := mockClient.When(http.MethodDelete, "/v1/groups/"+expectedGroupID).
 		ThenCall(func(req *http.Request) (*http.Response, error) {
 			response := mock.NewResponse(req, http.StatusOK, prepareGroupDeleteResponse())

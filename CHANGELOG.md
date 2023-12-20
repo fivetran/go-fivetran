@@ -7,6 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased](https://github.com/fivetran/go-fivetran/compare/v0.7.13...HEAD)
 
+## [0.8.0](https://github.com/fivetran/go-fivetran/compare/v0.7.11...v0.8.10)
+
+## Added
+
+Supported the following Fivetran API endpoints:
+- User Management API Connector memberships: [List all connector memberships](https://fivetran.com/docs/rest-api/users#listallconnectormemberships)
+- User Management API Connector memberships: [Retrieve connector membership](https://fivetran.com/docs/rest-api/users#retrieveconnectormembership)
+- User Management API Connector memberships: [Add connector membership](https://fivetran.com/docs/rest-api/users#addconnectormembership)
+- User Management API Connector memberships: [Update connector membership](https://fivetran.com/docs/rest-api/users#updateconnectormembership)
+- User Management API Connector memberships: [Delete connector membership](https://fivetran.com/docs/rest-api/users#deleteconnectormembership)
+- User Management API Group memberships: [List all group memberships](https://fivetran.com/docs/rest-api/users#listallgroupmemberships)
+- User Management API Group memberships: [Retrieve group membership](https://fivetran.com/docs/rest-api/users#retrievegroupmembership)
+- User Management API Group memberships: [Add group membership](https://fivetran.com/docs/rest-api/users#addgroupmembership)
+- User Management API Group memberships: [Update group membership](https://fivetran.com/docs/rest-api/users#updategroupmembership)
+- User Management API Group memberships: [Delete group membership](https://fivetran.com/docs/rest-api/users#deletegroupmembership)
+
+Added fields to support Google Cloud Logging:
+- `ExternalLoggingConfig.projectId`
+
 ## [0.7.15](https://github.com/fivetran/go-fivetran/compare/v0.7.14...v0.7.15)
 
 ## Added

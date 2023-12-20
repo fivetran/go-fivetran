@@ -76,3 +76,79 @@ type DbtProjectsListResponse struct {
 		NextCursor string           `json:"next_cursor"`
 	} `json:"data"`
 }
+
+type DbtTransformationSchedule struct {
+	scheduleType *string
+	daysOfWeek   []string
+	interval     *int
+	timeOfDay    *string
+}
+
+type dbtTransformationScheduleRequest struct {
+	ScheduleType *string  `json:"schedule_type,omitempty"`
+	DaysOfWeek   []string `json:"days_of_week,omitempty"`
+	Interval     *int     `json:"interval,omitempty"`
+	TimeOfDay    *string  `json:"time_of_day,omitempty"`
+}
+
+type DbtTransformationScheduleResponse struct {
+	ScheduleType string   `json:"schedule_type"`
+	DaysOfWeek   []string `json:"days_of_week"`
+	Interval     int      `json:"interval"`
+	TimeOfDay    string   `json:"time_of_day"`
+}
+
+type dbtTransformationModifyRequest struct {
+	Schedule any   `json:"schedule,omitempty"`
+	RunTests *bool `json:"run_tests,omitempty"`
+	Paused   *bool `json:"paused,omitempty"`
+}
+
+type dbtTransformationCreateRequest struct {
+	DbtModelId *string `json:"dbt_model_id,omitempty"`
+	Schedule   any     `json:"schedule,omitempty"`
+	RunTests   *bool   `json:"run_tests,omitempty"`
+	Paused     *bool   `json:"paused,omitempty"`
+}
+type DbtProjectConfig struct {
+	gitRemoteUrl *string
+	gitBranch    *string
+	folderPath   *string
+}
+
+type dbtProjectConfigRequest struct {
+	GitRemoteUrl *string `json:"git_remote_url,omitempty"`
+	GitBranch    *string `json:"git_branch,omitempty"`
+	FolderPath   *string `json:"folder_path,omitempty"`
+}
+
+type updateDbtProjectConfigRequest struct {
+	GitBranch  *string `json:"git_branch,omitempty"`
+	FolderPath *string `json:"folder_path,omitempty"`
+}
+
+type DbtProjectConfigResponse struct {
+	GitRemoteUrl string `json:"git_remote_url"`
+	GitBranch    string `json:"git_branch"`
+	FolderPath   string `json:"folder_path"`
+}
+
+type dbtProjectModifyRequest struct {
+	DbtVersion      *string   `json:"dbt_version,omitempty"`
+	TargetName      *string   `json:"target_name,omitempty"`
+	Threads         *int      `json:"threads,omitempty"`
+	EnvironmentVars *[]string `json:"environment_vars,omitempty"`
+	ProjectConfig   any       `json:"project_config,omitempty"`
+}
+
+
+type dbtProjectCreateRequest struct {
+	GroupID         *string   `json:"group_id,omitempty"`
+	DbtVersion      *string   `json:"dbt_version,omitempty"`
+	DefaultSchema   *string   `json:"default_schema,omitempty"`
+	TargetName      *string   `json:"target_name,omitempty"`
+	Threads         *int      `json:"threads,omitempty"`
+	EnvironmentVars *[]string `json:"environment_vars,omitempty"`
+	Type            *string   `json:"type,omitempty"`
+	ProjectConfig   any       `json:"project_config,omitempty"`
+}

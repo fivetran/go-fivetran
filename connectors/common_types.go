@@ -95,3 +95,90 @@ type ConnectorSchemaDetailsResponse struct {
 		Schemas              map[string]*ConnectorSchemaConfigSchemaResponse `json:"schemas"`
 	} `json:"data"`
 }
+
+type connectorCreateRequestBase struct {
+	Service           *string `json:"service,omitempty"`
+	GroupID           *string `json:"group_id,omitempty"`
+	TrustCertificates *bool   `json:"trust_certificates,omitempty"`
+	TrustFingerprints *bool   `json:"trust_fingerprints,omitempty"`
+	RunSetupTests     *bool   `json:"run_setup_tests,omitempty"`
+	Paused            *bool   `json:"paused,omitempty"`
+	SyncFrequency     *int    `json:"sync_frequency,omitempty"`
+	DailySyncTime     *string `json:"daily_sync_time,omitempty"`
+	PauseAfterTrial   *bool   `json:"pause_after_trial,omitempty"`
+}
+
+type connectorCreateRequest struct {
+	connectorCreateRequestBase
+	Config any `json:"config,omitempty"`
+	Auth   any `json:"auth,omitempty"`
+}
+
+type connectorCustomCreateRequest struct {
+	connectorCreateRequestBase
+	Config *map[string]interface{} `json:"config,omitempty"`
+	Auth   *map[string]interface{} `json:"auth,omitempty"`
+}
+
+type connectorSchemaConfigModifyRequest struct {
+    Enabled             *bool                                         `json:"enabled,omitempty"`
+    Tables              map[string]*ConnectorSchemaConfigTableRequest `json:"tables,omitempty"`
+}
+
+type ConnectorColumnConfigListResponse struct {
+    Code                string `json:"code"`
+    Columns             map[string]*ConnectorSchemaConfigColumnResponse `json:"columns"`
+    
+}
+
+type connectorColumnConfigModifyRequest struct {
+    Enabled             *bool `json:"enabled,omitempty"`
+    Hashed              *bool `json:"hashed,omitempty"`
+}
+
+type connectorModifyRequestBase struct {
+	Paused            *bool   `json:"paused,omitempty"`
+	SyncFrequency     *int    `json:"sync_frequency,omitempty"`
+	DailySyncTime     *string `json:"daily_sync_time,omitempty"`
+	TrustCertificates *bool   `json:"trust_certificates,omitempty"`
+	TrustFingerprints *bool   `json:"trust_fingerprints,omitempty"`
+	IsHistoricalSync  *bool   `json:"is_historical_sync,omitempty"`
+	ScheduleType      *string `json:"schedule_type,omitempty"`
+	RunSetupTests     *bool   `json:"run_setup_tests,omitempty"`
+	PauseAfterTrial   *bool   `json:"pause_after_trial,omitempty"`
+}
+
+type connectorModifyRequest struct {
+	connectorModifyRequestBase
+	Config any `json:"config,omitempty"`
+	Auth   any `json:"auth,omitempty"`
+}
+
+type connectorCustomModifyRequest struct {
+	connectorModifyRequestBase
+	Config *map[string]interface{} `json:"config,omitempty"`
+	Auth   *map[string]interface{} `json:"auth,omitempty"`
+}
+
+type connectorSchemaReloadRequest struct {
+	ExcludeMode *string `json:"exclude_mode,omitempty"`
+}
+
+
+type connectorSchemaConfigUpdateRequest struct {
+	SchemaChangeHandling *string                                                   `json:"schema_change_handling,omitempty"`
+	Schemas              map[string]*ConnectorSchemaConfigSchemaRequest `json:"schemas,omitempty"`
+}
+
+
+type connectorSetupTestsRequest struct {
+	TrustCertificates *bool `json:"trust_certificates,omitempty"`
+	TrustFingerprints *bool `json:"trust_fingerprints,omitempty"`
+}
+
+
+type connectorTableConfigModifyRequest struct {
+    Enabled             *bool                                         `json:"enabled,omitempty"`
+    SyncMode            *string                                       `json:"sync_mode,omitempty"`
+    Columns             map[string]*ConnectorSchemaConfigColumnRequest `json:"columns,omitempty"`
+}
