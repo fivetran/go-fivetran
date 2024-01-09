@@ -34,7 +34,7 @@ type PrivateLinksConfigResponse struct {
 	WorkspaceUrl 			string `json:"workspace_url"`
 	AccountName      		string `json:"account_name"`
 	AccountUrl   			string `json:"account_url"`
-	VpceId       			string `json:"vpceId"`
+	VpceId       			string `json:"vpce_id"`
 	PlsId       			string `json:"pls_id"`
 	AwsAccountId    		string `json:"aws_account_id"`
 	ClusterIdentifier       string `json:"cluster_identifier"`
