@@ -21,7 +21,7 @@ type privateLinksConfigRequest struct {
 	WorkspaceUrl 			*string `json:"workspace_url,omitempty"`
 	AccountName  			*string `json:"account_name,omitempty"`
 	AccountUrl   			*string `json:"account_url,omitempty"`
-	VpceId       			*string `json:"vpceId,omitempty"`
+	VpceId       			*string `json:"vpce_id,omitempty"`
 	PlsId       			*string `json:"pls_id,omitempty"`
 	AwsAccountId    		*string `json:"aws_account_id,omitempty"`
 	ClusterIdentifier       *string `json:"cluster_identifier,omitempty"`
