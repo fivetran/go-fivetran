@@ -182,3 +182,19 @@ type connectorTableConfigModifyRequest struct {
     SyncMode            *string                                       `json:"sync_mode,omitempty"`
     Columns             map[string]*ConnectorSchemaConfigColumnRequest `json:"columns,omitempty"`
 }
+
+type ConnectorsSourceMetadataResponse struct {
+	common.CommonResponse
+	Data struct {
+		Items []struct {
+			ID          string `json:"id"`
+			Name        string `json:"name"`
+			Type        string `json:"type"`
+			Description string `json:"description"`
+			IconURL     string `json:"icon_url"`
+			LinkToDocs  string `json:"link_to_docs"`
+			LinkToErd   string `json:"link_to_erd"`
+		} `json:"items"`
+		NextCursor string `json:"next_cursor"`
+	} `json:"data"`
+}

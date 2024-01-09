@@ -6,6 +6,7 @@ import (
 	"github.com/fivetran/go-fivetran/common"
 	"github.com/fivetran/go-fivetran/connectors"
 	"github.com/fivetran/go-fivetran/users"
+	"github.com/fivetran/go-fivetran/private_links"
 )
 
 type GroupItem struct {
@@ -46,6 +47,14 @@ type GroupListUsersResponse struct {
 	Data struct {
 		Items      []users.UserDetailsData `json:"items"`
 		NextCursor string                  `json:"next_cursor"`
+	} `json:"data"`
+}
+
+type GroupListPrivateLinksResponse struct {
+	common.CommonResponse
+	Data struct {
+		Items      []privatelinks.PrivateLinksResponseBase  `json:"items"`
+		NextCursor string                                 	`json:"next_cursor"`
 	} `json:"data"`
 }
 
