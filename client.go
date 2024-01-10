@@ -271,7 +271,9 @@ func (c *Client) NewExternalLoggingSetupTests() *externallogging.ExternalLogging
 
 /* Destinations */
 func (c *Client) NewDestinationCreate() *destinations.DestinationCreateService {
-	return &destinations.DestinationCreateService{HttpService: c.NewHttpService()}
+	http := c.NewHttpService()
+	http.CommonHeaders["Accept"] = restAPIv2
+	return &destinations.DestinationCreateService{HttpService: http}
 }
 
 func (c *Client) NewDestinationDelete() *destinations.DestinationDeleteService {
@@ -279,15 +281,21 @@ func (c *Client) NewDestinationDelete() *destinations.DestinationDeleteService {
 }
 
 func (c *Client) NewDestinationDetails() *destinations.DestinationDetailsService {
-	return &destinations.DestinationDetailsService{HttpService: c.NewHttpService()}
+	http := c.NewHttpService()
+	http.CommonHeaders["Accept"] = restAPIv2
+	return &destinations.DestinationDetailsService{HttpService: http}
 }
 
 func (c *Client) NewDestinationModify() *destinations.DestinationModifyService {
-	return &destinations.DestinationModifyService{HttpService: c.NewHttpService()}
+	http := c.NewHttpService()
+	http.CommonHeaders["Accept"] = restAPIv2
+	return &destinations.DestinationModifyService{HttpService: http}
 }
 
 func (c *Client) NewDestinationSetupTests() *destinations.DestinationSetupTestsService {
-	return &destinations.DestinationSetupTestsService{HttpService: c.NewHttpService()}
+	http := c.NewHttpService()
+	http.CommonHeaders["Accept"] = restAPIv2
+	return &destinations.DestinationSetupTestsService{HttpService: http}
 }
 
 /* Users */
@@ -524,7 +532,9 @@ func (c *Client) NewConnectorCreate() *connectors.ConnectorCreateService {
 }
 
 func (c *Client) NewConnectorDetails() *connectors.ConnectorDetailsService {
-	return &connectors.ConnectorDetailsService{HttpService: c.NewHttpService()}
+	http := c.NewHttpService()
+	http.CommonHeaders["Accept"] = restAPIv2
+	return &connectors.ConnectorDetailsService{HttpService: http}
 }
 
 func (c *Client) NewConnectorModify() *connectors.ConnectorModifyService {
