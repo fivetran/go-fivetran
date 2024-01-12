@@ -184,7 +184,7 @@ func CreateDbtProject(t *testing.T) string {
 			GitRemoteUrl("https://github.com/fivetran/dbt_demo").
 			FolderPath("").
 			GitBranch("main")).
-		DefaultSchema("").
+		DefaultSchema("test_schema").
 		TargetName("").
 		Threads(4).
 		Do(context.Background())

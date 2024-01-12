@@ -41,6 +41,6 @@ func (s *ConnectorSchemaReloadService) Do(ctx context.Context) (ConnectorSchemaD
 	}
 	
 	url := fmt.Sprintf("/connectors/%v/schemas/reload", *s.connectorID)
-	err := s.HttpService.Do(ctx, "POST", url, s.request(), nil, 201, &response)
+	err := s.HttpService.Do(ctx, "POST", url, s.request(), nil, 200, &response)
 	return response, err
 }
