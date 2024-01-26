@@ -5,20 +5,20 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/fivetran/go-fivetran/connectors"
 	"github.com/fivetran/go-fivetran/certificates"
+	connectcard "github.com/fivetran/go-fivetran/connect_card"
+	"github.com/fivetran/go-fivetran/connectors"
+	"github.com/fivetran/go-fivetran/dbt"
+	"github.com/fivetran/go-fivetran/destinations"
+	externallogging "github.com/fivetran/go-fivetran/external_logging"
 	"github.com/fivetran/go-fivetran/fingerprints"
 	"github.com/fivetran/go-fivetran/groups"
-	"github.com/fivetran/go-fivetran/users"
-	"github.com/fivetran/go-fivetran/external_logging"
-	"github.com/fivetran/go-fivetran/destinations"
-	"github.com/fivetran/go-fivetran/dbt"
-	"github.com/fivetran/go-fivetran/webhooks"
-	"github.com/fivetran/go-fivetran/teams"
-	"github.com/fivetran/go-fivetran/roles"
-	"github.com/fivetran/go-fivetran/connect_card"
-	"github.com/fivetran/go-fivetran/private_links"
 	httputils "github.com/fivetran/go-fivetran/http_utils"
+	privatelinks "github.com/fivetran/go-fivetran/private_links"
+	"github.com/fivetran/go-fivetran/roles"
+	"github.com/fivetran/go-fivetran/teams"
+	"github.com/fivetran/go-fivetran/users"
+	"github.com/fivetran/go-fivetran/webhooks"
 )
 
 // Client holds client configuration
@@ -35,7 +35,7 @@ const defaultBaseURL = "https://api.fivetran.com/v1"
 const restAPIv2 = "application/json;version=2"
 
 // WARNING: Update Agent version on each release!
-const defaultUserAgent = "Go-Fivetran/0.7.8"
+const defaultUserAgent = "Go-Fivetran/0.8.2"
 
 // New receives API Key and API Secret, and returns a new Client with the
 // default HTTP client
@@ -523,7 +523,7 @@ func (c *Client) NewRolesList() *roles.RolesListService {
 }
 
 func (c *Client) NewConnectCard() *connectcard.ConnectCardService {
-    return &connectcard.ConnectCardService{HttpService: c.NewHttpService()}
+	return &connectcard.ConnectCardService{HttpService: c.NewHttpService()}
 }
 
 /* Connectors */
@@ -550,15 +550,15 @@ func (c *Client) NewConnectorSetupTests() *connectors.ConnectorSetupTestsService
 }
 
 func (c *Client) NewConnectorColumnConfigListService() *connectors.ConnectorColumnConfigListService {
-    return &connectors.ConnectorColumnConfigListService{HttpService: c.NewHttpService()}
+	return &connectors.ConnectorColumnConfigListService{HttpService: c.NewHttpService()}
 }
 
 func (c *Client) NewConnectorColumnConfigModifyService() *connectors.ConnectorColumnConfigModifyService {
-    return &connectors.ConnectorColumnConfigModifyService{HttpService: c.NewHttpService()}
+	return &connectors.ConnectorColumnConfigModifyService{HttpService: c.NewHttpService()}
 }
 
 func (c *Client) NewConnectorDatabaseSchemaConfigModifyService() *connectors.ConnectorDatabaseSchemaConfigModifyService {
-    return &connectors.ConnectorDatabaseSchemaConfigModifyService{HttpService: c.NewHttpService()}
+	return &connectors.ConnectorDatabaseSchemaConfigModifyService{HttpService: c.NewHttpService()}
 }
 
 func (c *Client) NewConnectorReSyncTable() *connectors.ConnectorReSyncTableService {
@@ -578,7 +578,7 @@ func (c *Client) NewConnectorSchemaUpdateService() *connectors.ConnectorSchemaCo
 }
 
 func (c *Client) NewConnectorTableConfigModifyService() *connectors.ConnectorTableConfigModifyService {
-    return &connectors.ConnectorTableConfigModifyService{HttpService: c.NewHttpService()}
+	return &connectors.ConnectorTableConfigModifyService{HttpService: c.NewHttpService()}
 }
 
 func (c *Client) NewConnectorsSourceMetadata() *connectors.ConnectorsSourceMetadataService {
