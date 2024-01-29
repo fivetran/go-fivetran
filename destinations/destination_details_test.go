@@ -1,16 +1,16 @@
 package destinations_test
 
 import (
-    "context"
-    "fmt"
-    "net/http"
-    "testing"
+	"context"
+	"fmt"
+	"net/http"
+	"testing"
 
-    "github.com/fivetran/go-fivetran/destinations"
-    
-    "github.com/fivetran/go-fivetran/tests/mock"
+	"github.com/fivetran/go-fivetran/destinations"
 
-    testutils "github.com/fivetran/go-fivetran/test_utils"
+	"github.com/fivetran/go-fivetran/tests/mock"
+
+	testutils "github.com/fivetran/go-fivetran/test_utils"
 )
 
 const DESTINATION_DETAILS_SERVICE = "snowflake"
@@ -51,6 +51,34 @@ func TestDestinationDetailsService(t *testing.T) {
 	testutils.AssertEqual(t, handler.Interactions, 1)
 
 	assertDestinationDetailsResponse(t, response)
+}
+
+func TestDestinationDetailsCustomService(t *testing.T) {
+	// arrange
+	ftClient, mockClient := testutils.CreateTestClient()
+	handler := mockClient.When(http.MethodGet, "/v1/destinations/"+ID).ThenCall(
+		func(req *http.Request) (*http.Response, error) {
+			response := mock.NewResponse(req, http.StatusOK, prepareDestinationDetailsResponse())
+			return response, nil
+		})
+
+	service := ftClient.NewDestinationDetails().DestinationID(ID)
+
+	// act
+	response, err := service.DoCustom(context.Background())
+
+	if err != nil {
+		t.Logf("%+v\n", response)
+		t.Error(err)
+	}
+
+	// assert
+	interactions := mockClient.Interactions()
+	testutils.AssertEqual(t, len(interactions), 1)
+	testutils.AssertEqual(t, interactions[0].Handler, handler)
+	testutils.AssertEqual(t, handler.Interactions, 1)
+
+	assertDestinationDetailsCustomResponse(t, response)
 }
 
 func prepareDestinationDetailsResponse() string {
@@ -101,4 +129,20 @@ func assertDestinationDetailsResponse(t *testing.T, response destinations.Destin
 	testutils.AssertEqual(t, response.Data.Config.Auth, DESTINATION_DETAILS_AUTH)
 	testutils.AssertEqual(t, response.Data.Config.User, DESTINATION_DETAILS_USER)
 	testutils.AssertEqual(t, response.Data.Config.Password, DESTINATION_DETAILS_MASKED_PASSWORD)
+}
+
+func assertDestinationDetailsCustomResponse(t *testing.T, response destinations.DestinationDetailsCustomResponse) {
+	testutils.AssertEqual(t, response.Code, "Success")
+	testutils.AssertEqual(t, response.Data.ID, DESTINATION_DETAILS_ID)
+	testutils.AssertEqual(t, response.Data.GroupID, DESTINATION_DETAILS_ID)
+	testutils.AssertEqual(t, response.Data.Service, DESTINATION_DETAILS_SERVICE)
+	testutils.AssertEqual(t, response.Data.Region, DESTINATION_DETAILS_REGION)
+	testutils.AssertEqual(t, response.Data.TimeZoneOffset, DESTINATION_DETAILS_TIME_ZONE)
+	testutils.AssertEqual(t, response.Data.SetupStatus, DESTINATION_DETAILS_SETUP_STATUS)
+	testutils.AssertEqual(t, response.Data.Config["host"], DESTINATION_DETAILS_HOST)
+	testutils.AssertEqual(t, response.Data.Config["port"], DESTINATION_DETAILS_PORT)
+	testutils.AssertEqual(t, response.Data.Config["database"], DESTINATION_DETAILS_DATABASE)
+	testutils.AssertEqual(t, response.Data.Config["auth"], DESTINATION_DETAILS_AUTH)
+	testutils.AssertEqual(t, response.Data.Config["user"], DESTINATION_DETAILS_USER)
+	testutils.AssertEqual(t, response.Data.Config["password"], DESTINATION_DETAILS_MASKED_PASSWORD)
 }

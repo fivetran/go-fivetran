@@ -44,3 +44,41 @@ func TestNewDestinationCreateE2E(t *testing.T) {
 
 	t.Cleanup(func() { testutils.DeleteDestination(t, testutils.PredefinedGroupId) })
 }
+
+func TestNewDestinationCreateCustomE2E(t *testing.T) {
+	created, err := testutils.Client.NewDestinationCreate().
+		GroupID(testutils.PredefinedGroupId).
+		Service("snowflake").
+		TimeZoneOffset("+10").
+		RunSetupTests(false).
+		ConfigCustom(&map[string]interface{}{
+			"host":     "your-account.snowflakecomputing.com",
+			"port":     443,
+			"database": "fivetran",
+			"auth":     "PASSWORD",
+			"user":     "fivetran_user",
+			"password": "123456",
+		}).
+		DoCustom(context.Background())
+
+	if err != nil {
+		t.Logf("%+v\n", created)
+		t.Error(err)
+	}
+
+	testutils.AssertEqual(t, created.Code, "Success")
+	testutils.AssertNotEmpty(t, created.Message)
+	testutils.AssertEqual(t, created.Data.ID, testutils.PredefinedGroupId)
+	testutils.AssertEqual(t, created.Data.Service, "snowflake")
+	testutils.AssertEqual(t, created.Data.Region, "GCP_US_EAST4")
+	testutils.AssertEqual(t, created.Data.TimeZoneOffset, "+10")
+	testutils.AssertEqual(t, created.Data.SetupStatus, "incomplete")
+	testutils.AssertEqual(t, created.Data.Config["host"], "your-account.snowflakecomputing.com")
+	testutils.AssertEqual(t, created.Data.Config["port"], "443")
+	testutils.AssertEqual(t, created.Data.Config["database"], "fivetran")
+	testutils.AssertEqual(t, created.Data.Config["auth"], "PASSWORD")
+	testutils.AssertEqual(t, created.Data.Config["user"], "fivetran_user")
+	testutils.AssertEqual(t, created.Data.Config["password"], "******")
+
+	t.Cleanup(func() { testutils.DeleteDestination(t, testutils.PredefinedGroupId) })
+}

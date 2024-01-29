@@ -15,6 +15,7 @@ type DestinationModifyService struct {
 	region            *string
 	timeZoneOffset    *string
 	config            *DestinationConfig
+	configCustom      *map[string]interface{}
 	trustCertificates *bool
 	trustFingerprints *bool
 	runSetupTests     *bool
@@ -31,6 +32,17 @@ func (s *DestinationModifyService) request() *destinationModifyRequest {
 		Region:            s.region,
 		TimeZoneOffset:    s.timeZoneOffset,
 		Config:            config,
+		TrustCertificates: s.trustCertificates,
+		TrustFingerprints: s.trustFingerprints,
+		RunSetupTests:     s.runSetupTests,
+	}
+}
+
+func (s *DestinationModifyService) requestCustom() *destinationModifyRequest {
+	return &destinationModifyRequest{
+		Region:            s.region,
+		TimeZoneOffset:    s.timeZoneOffset,
+		Config:            s.configCustom,
 		TrustCertificates: s.trustCertificates,
 		TrustFingerprints: s.trustFingerprints,
 		RunSetupTests:     s.runSetupTests,
@@ -54,6 +66,11 @@ func (s *DestinationModifyService) TimeZoneOffset(value string) *DestinationModi
 
 func (s *DestinationModifyService) Config(value *DestinationConfig) *DestinationModifyService {
 	s.config = value
+	return s
+}
+
+func (s *DestinationModifyService) ConfigCustom(value *map[string]interface{}) *DestinationModifyService {
+	s.configCustom = value
 	return s
 }
 
@@ -81,5 +98,17 @@ func (s *DestinationModifyService) Do(ctx context.Context) (DestinationDetailsWi
 
 	url := fmt.Sprintf("/destinations/%v", *s.destinationID)
 	err := s.HttpService.Do(ctx, "PATCH", url, s.request(), nil, 200, &response)
+	return response, err
+}
+
+func (s *DestinationModifyService) DoCustom(ctx context.Context) (DestinationDetailsWithSetupTestsCustomResponse, error) {
+	var response DestinationDetailsWithSetupTestsCustomResponse
+
+	if s.destinationID == nil {
+		return response, fmt.Errorf("missing required DestinationID")
+	}
+
+	url := fmt.Sprintf("/destinations/%v", *s.destinationID)
+	err := s.HttpService.Do(ctx, "PATCH", url, s.requestCustom(), nil, 200, &response)
 	return response, err
 }

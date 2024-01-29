@@ -30,3 +30,15 @@ func (s *DestinationDetailsService) Do(ctx context.Context) (DestinationDetailsR
 	err := s.HttpService.Do(ctx, "GET", url, nil, nil, 200, &response)
 	return response, err
 }
+
+func (s *DestinationDetailsService) DoCustom(ctx context.Context) (DestinationDetailsCustomResponse, error) {
+	var response DestinationDetailsCustomResponse
+
+	if s.destinationID == nil {
+		return response, fmt.Errorf("missing required destinationID")
+	}
+
+	url := fmt.Sprintf("/destinations/%v", *s.destinationID)
+	err := s.HttpService.Do(ctx, "GET", url, nil, nil, 200, &response)
+	return response, err
+}
