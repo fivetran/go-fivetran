@@ -12,7 +12,6 @@ import (
 type PrivateLinksCreateService struct {
 	httputils.HttpService
 	name      	 *string
-	service      *string
 	groupId      *string
 	config       *PrivateLinksConfig
 }
@@ -27,18 +26,12 @@ func (s *PrivateLinksCreateService) request() privateLinksCreateRequest {
 	return privateLinksCreateRequest{
 		Name: 		s.name,
 		GroupId: 	s.groupId,
-		Service: 	s.service,
 		Config:     config,
 	}
 }
 
 func (s *PrivateLinksCreateService) GroupId(value string) *PrivateLinksCreateService {
 	s.groupId = &value
-	return s
-}
-
-func (s *PrivateLinksCreateService) Service(value string) *PrivateLinksCreateService {
-	s.service = &value
 	return s
 }
 

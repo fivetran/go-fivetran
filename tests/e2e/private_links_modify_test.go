@@ -14,7 +14,7 @@ func TestNewPrivateLinkModifyE2E(t *testing.T) {
 	privateLinkId, plGroupId := testutils.CreateTempPrivateLink(t)
 	details, err := testutils.Client.NewPrivateLinksModify().PrivateLinkId(privateLinkId).
 		Config(fivetran.NewPrivateLinksConfig().
-			AwsAccountId("account_id1.cloud_region_name.privatelink.snowflakecomputing.com")).
+			ConnectionServiceId("2")).
 		Do(context.Background())
 
 	if err != nil {
@@ -26,5 +26,5 @@ func TestNewPrivateLinkModifyE2E(t *testing.T) {
 	testutils.AssertNotEmpty(t, details.Message)
 
 	testutils.AssertEqual(t, details.Data.GroupId, plGroupId)
-	testutils.AssertEqual(t, details.Data.Config.AwsAccountId, "account_id1.cloud_region_name.privatelink.snowflakecomputing.com")
+	testutils.AssertEqual(t, details.Data.Config.ConnectionServiceId, "2")
 }

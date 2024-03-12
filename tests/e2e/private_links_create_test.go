@@ -17,10 +17,8 @@ func TestNewPrivateLinkCreateE2E(t *testing.T) {
 	created, err := testutils.Client.NewPrivateLinksCreate().
 		Name("test").
 		GroupId(plGroupId).
-		Service("redshift").
 		Config(fivetran.NewPrivateLinksConfig().
-			AwsAccountId("account_id.cloud_region_name.privatelink.snowflakecomputing.com").
-    		ClusterIdentifier("account_id.cloud_region_name.privatelink.snowflakecomputing.com")).
+			ConnectionServiceId("1")).
 		Do(context.Background())
 
 	if err != nil {
@@ -31,9 +29,8 @@ func TestNewPrivateLinkCreateE2E(t *testing.T) {
 	testutils.AssertEqual(t, created.Code, "Success")
 	testutils.AssertNotEmpty(t, created.Message)
 	testutils.AssertEqual(t, created.Data.Name, "test")
-	testutils.AssertEqual(t, created.Data.Service, "big_query")
 	testutils.AssertEqual(t, created.Data.GroupId, plGroupId)
-	testutils.AssertEqual(t, created.Data.Config.AwsAccountId, "account_id.cloud_region_name.privatelink.snowflakecomputing.com")
+	testutils.AssertEqual(t, created.Data.Config.ConnectionServiceId, "1")
 
 	t.Cleanup(func() { 
 		testutils.DeletePrivateLink(t, created.Data.Id) 

@@ -14,6 +14,7 @@ func TestNewDestinationCreateE2E(t *testing.T) {
 		Service("snowflake").
 		TimeZoneOffset("+10").
 		RunSetupTests(false).
+		DaylightSavingTimeEnabled(true).
 		Config(fivetran.NewDestinationConfig().
 			Host("your-account.snowflakecomputing.com").
 			Port(443).
@@ -34,6 +35,7 @@ func TestNewDestinationCreateE2E(t *testing.T) {
 	testutils.AssertEqual(t, created.Data.Service, "snowflake")
 	testutils.AssertEqual(t, created.Data.Region, "GCP_US_EAST4")
 	testutils.AssertEqual(t, created.Data.TimeZoneOffset, "+10")
+	testutils.AssertEqual(t, created.Data.DaylightSavingTimeEnabled, true)
 	testutils.AssertEqual(t, created.Data.SetupStatus, "incomplete")
 	testutils.AssertEqual(t, created.Data.Config.Host, "your-account.snowflakecomputing.com")
 	testutils.AssertEqual(t, created.Data.Config.Port, "443")
@@ -51,6 +53,7 @@ func TestNewDestinationCreateCustomE2E(t *testing.T) {
 		Service("snowflake").
 		TimeZoneOffset("+10").
 		RunSetupTests(false).
+		DaylightSavingTimeEnabled(false).
 		ConfigCustom(&map[string]interface{}{
 			"host":     "your-account.snowflakecomputing.com",
 			"port":     443,
@@ -72,6 +75,7 @@ func TestNewDestinationCreateCustomE2E(t *testing.T) {
 	testutils.AssertEqual(t, created.Data.Service, "snowflake")
 	testutils.AssertEqual(t, created.Data.Region, "GCP_US_EAST4")
 	testutils.AssertEqual(t, created.Data.TimeZoneOffset, "+10")
+	testutils.AssertEqual(t, created.Data.DaylightSavingTimeEnabled, false)
 	testutils.AssertEqual(t, created.Data.SetupStatus, "incomplete")
 	testutils.AssertEqual(t, created.Data.Config["host"], "your-account.snowflakecomputing.com")
 	testutils.AssertEqual(t, created.Data.Config["port"], "443")

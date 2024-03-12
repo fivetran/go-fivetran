@@ -19,6 +19,7 @@ const (
 	DESTINATION_MODIFY_ID                 = "decent_dropsy"
 	DESTINATION_MODIFY_REGION             = "GCP_AUSTRALIA_SOUTHEAST1"
 	DESTINATION_MODIFY_TIME_ZONE_OFFSET   = "+10"
+	DESTINATION_MODIFY_DAYLIGHT 		  = true
 	DESTINATION_MODIFY_SETUP_STATUS       = "connected"
 	DESTINATION_MODIFY_TEST_TITLE_HOST    = "Host Connection"
 	DESTINATION_MODIFY_TEST_TITLE_DB      = "Database Connection"
@@ -58,6 +59,7 @@ func TestDestinationModifyService(t *testing.T) {
 		Region(DESTINATION_MODIFY_REGION).
 		TimeZoneOffset(DESTINATION_MODIFY_TIME_ZONE_OFFSET).
 		Config(destinationConfig).
+		DaylightSavingTimeEnabled(DESTINATION_MODIFY_DAYLIGHT).
 		TrustCertificates(TRUST_CERTIFICATES).
 		TrustFingerprints(TRUST_FINGERPRINTS).
 		RunSetupTests(RUN_SETUP_TESTS)
@@ -93,6 +95,7 @@ func TestDestinationModifyCustomService(t *testing.T) {
 	service := ftClient.NewDestinationModify().
 		DestinationID(DESTINATION_MODIFY_ID).
 		Region(DESTINATION_MODIFY_REGION).
+		DaylightSavingTimeEnabled(DESTINATION_MODIFY_DAYLIGHT).
 		TimeZoneOffset(DESTINATION_MODIFY_TIME_ZONE_OFFSET).
 		ConfigCustom(&map[string]interface{}{
 			"host":     DESTINATION_MODIFY_HOST,
@@ -132,6 +135,7 @@ func prepareDestinationModifyResponse() string {
 			"group_id": "%s",
 			"service": "%s",
 			"region": "%s",
+			"daylight_saving_time_enabled": %v,			
 			"time_zone_offset": "%s",
 			"setup_status": "%s",
 			"setup_tests": [
@@ -165,6 +169,7 @@ func prepareDestinationModifyResponse() string {
 		DESTINATION_MODIFY_ID,
 		DESTINATION_MODIFY_SERVICE,
 		DESTINATION_MODIFY_REGION,
+		DESTINATION_MODIFY_DAYLIGHT,
 		DESTINATION_MODIFY_TIME_ZONE_OFFSET,
 		DESTINATION_MODIFY_SETUP_STATUS,
 		DESTINATION_MODIFY_TEST_TITLE_HOST,
@@ -187,6 +192,7 @@ func assertDestinationModifyResponse(t *testing.T, response destinations.Destina
 	testutils.AssertEqual(t, response.Data.ID, DESTINATION_MODIFY_ID)
 	testutils.AssertEqual(t, response.Data.GroupID, DESTINATION_MODIFY_ID)
 	testutils.AssertEqual(t, response.Data.Service, DESTINATION_MODIFY_SERVICE)
+	testutils.AssertEqual(t, response.Data.DaylightSavingTimeEnabled, DESTINATION_MODIFY_DAYLIGHT)
 	testutils.AssertEqual(t, response.Data.Region, DESTINATION_MODIFY_REGION)
 	testutils.AssertEqual(t, response.Data.TimeZoneOffset, DESTINATION_MODIFY_TIME_ZONE_OFFSET)
 	testutils.AssertEqual(t, response.Data.SetupStatus, DESTINATION_MODIFY_SETUP_STATUS)
@@ -215,6 +221,7 @@ func assertDestinationModifyCustomResponse(t *testing.T, response destinations.D
 	testutils.AssertEqual(t, response.Data.ID, DESTINATION_MODIFY_ID)
 	testutils.AssertEqual(t, response.Data.GroupID, DESTINATION_MODIFY_ID)
 	testutils.AssertEqual(t, response.Data.Service, DESTINATION_MODIFY_SERVICE)
+	testutils.AssertEqual(t, response.Data.DaylightSavingTimeEnabled, DESTINATION_MODIFY_DAYLIGHT)
 	testutils.AssertEqual(t, response.Data.Region, DESTINATION_MODIFY_REGION)
 	testutils.AssertEqual(t, response.Data.TimeZoneOffset, DESTINATION_MODIFY_TIME_ZONE_OFFSET)
 	testutils.AssertEqual(t, response.Data.SetupStatus, DESTINATION_MODIFY_SETUP_STATUS)

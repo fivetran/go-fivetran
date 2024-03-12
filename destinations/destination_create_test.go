@@ -16,57 +16,58 @@ import (
 )
 
 const (
-	SERVICE                  = "test_service"
-	ID                       = "test_id"
-	REGION                   = "GCP_US_EAST4"
-	TIME_ZONE                = "-5"
-	SETUP_STATUS             = "connected"
-	TEST_TITLE               = "Test Title"
-	TEST_STATUS              = "PASSED"
-	TEST_MESSAGE             = "Test message"
-	HOST                     = "your.host"
-	PORT                     = 443
-	DATABASE                 = "fivetran"
-	AUTH                     = "PASSWORD"
-	USER                     = "fivetran_user"
-	MASKED                   = "******"
-	CONNECTION_TYPE          = "Directly"
-	TUNNEL_HOST              = "tunnel.host"
-	TUNNEL_PORT              = "334"
-	TUNNEL_USER              = "tunnel_user"
-	PROJECT_ID               = "project_id_value"
-	DATA_SET_LOCATION        = "data_Set_location_value"
-	LOCATION                 = "data_Set_location_value"
-	BUCKET                   = "your-bucket"
-	SERVER_HOST_NAME         = "server.host.name"
-	HTTP_PATH                = "http.path"
-	CREATE_EXTERNAL_TABLES   = true
-	EXTERNAL_LOCATION        = "group_id"
-	AUTH_TYPE                = "auth_type_value"
-	ROLE_ARN                 = "role:arn-xxx"
-	PUBLIC_KEY               = "public_key_value"
-	CLUSTER_ID               = "cluster_id_value"
-	CLUSTER_REGION           = "cluster_region_value"
-	PASSWORD                 = "password"
-	PRIVATE_KEY              = "private_key"
-	SECRET_KEY               = "secret_key"
-	TRUST_CERTIFICATES       = true
-	TRUST_FINGERPRINTS       = true
-	RUN_SETUP_TESTS          = true
-	PERSONAL_ACCESS_TOKEN    = "PAT"
-	ROLE                     = "role"
-	PASSPHRASE               = "passphrase"
-	IS_PRIVATE_KEY_ENCRYPTED = true
-	CATALOG                  = "catalog"
-	FIVETRAN_ROLE_ARN        = "fivetran_role_arn"
-	PREFIX_PATH              = "prefix_path"
-	STORAGE_ACCOUNT_NAME     = "storage_account_name"
-	CONTAINER_NAME           = "container_name"
-	TENANT_ID                = "tenant_id"
-	CLIENT_ID                = "client_id"
-	SECRET_VALUE             = "secret_value"
-	WORKSPACE_NAME           = "workspace_name"
-	LAKEHOUSE_NAME           = "lakehouse_name"
+	SERVICE                   = "test_service"
+	ID                        = "test_id"
+	REGION                    = "GCP_US_EAST4"
+	TIME_ZONE                 = "-5"
+	SETUP_STATUS              = "connected"
+	TEST_TITLE                = "Test Title"
+	TEST_STATUS               = "PASSED"
+	TEST_MESSAGE              = "Test message"
+	HOST                      = "your.host"
+	PORT                      = 443
+	DATABASE                  = "fivetran"
+	AUTH                      = "PASSWORD"
+	USER                      = "fivetran_user"
+	MASKED                    = "******"
+	CONNECTION_TYPE           = "Directly"
+	TUNNEL_HOST               = "tunnel.host"
+	TUNNEL_PORT               = "334"
+	TUNNEL_USER               = "tunnel_user"
+	PROJECT_ID                = "project_id_value"
+	DATA_SET_LOCATION         = "data_Set_location_value"
+	LOCATION                  = "data_Set_location_value"
+	BUCKET                    = "your-bucket"
+	SERVER_HOST_NAME          = "server.host.name"
+	HTTP_PATH                 = "http.path"
+	CREATE_EXTERNAL_TABLES    = true
+	EXTERNAL_LOCATION         = "group_id"
+	AUTH_TYPE                 = "auth_type_value"
+	ROLE_ARN                  = "role:arn-xxx"
+	PUBLIC_KEY                = "public_key_value"
+	CLUSTER_ID                = "cluster_id_value"
+	CLUSTER_REGION            = "cluster_region_value"
+	PASSWORD                  = "password"
+	PRIVATE_KEY               = "private_key"
+	SECRET_KEY                = "secret_key"
+	TRUST_CERTIFICATES        = true
+	TRUST_FINGERPRINTS        = true
+	RUN_SETUP_TESTS           = true
+	DAYLIGHTSAVINGTIMEENABLED = true
+	PERSONAL_ACCESS_TOKEN     = "PAT"
+	ROLE                      = "role"
+	PASSPHRASE                = "passphrase"
+	IS_PRIVATE_KEY_ENCRYPTED  = true
+	CATALOG                   = "catalog"
+	FIVETRAN_ROLE_ARN         = "fivetran_role_arn"
+	PREFIX_PATH               = "prefix_path"
+	STORAGE_ACCOUNT_NAME      = "storage_account_name"
+	CONTAINER_NAME            = "container_name"
+	TENANT_ID                 = "tenant_id"
+	CLIENT_ID                 = "client_id"
+	SECRET_VALUE              = "secret_value"
+	WORKSPACE_NAME            = "workspace_name"
+	LAKEHOUSE_NAME            = "lakehouse_name"
 )
 
 func TestNewDestinationCreateFullMappingMock(t *testing.T) {
@@ -88,6 +89,7 @@ func TestNewDestinationCreateFullMappingMock(t *testing.T) {
 		TrustCertificates(TRUST_CERTIFICATES).
 		TrustFingerprints(TRUST_FINGERPRINTS).
 		RunSetupTests(RUN_SETUP_TESTS).
+		DaylightSavingTimeEnabled(DAYLIGHTSAVINGTIMEENABLED).
 		GroupID(ID).
 		Config(prepareConfig()).
 		Do(context.Background())
@@ -124,6 +126,7 @@ func TestNewDestinationCreateCustomFullMappingMock(t *testing.T) {
 		TrustCertificates(TRUST_CERTIFICATES).
 		TrustFingerprints(TRUST_FINGERPRINTS).
 		RunSetupTests(RUN_SETUP_TESTS).
+		DaylightSavingTimeEnabled(DAYLIGHTSAVINGTIMEENABLED).
 		GroupID(ID).
 		ConfigCustom(prepareConfigCustom()).
 		DoCustom(context.Background())
@@ -152,6 +155,7 @@ func prepareDestinationResponse() string {
                 "service":                      "%v",
                 "region":                       "%v",
                 "time_zone_offset":             "%v",
+                "daylight_saving_time_enabled": %v,
                 "setup_status":                 "%v",
                 "setup_tests":[
                     {
@@ -209,6 +213,7 @@ func prepareDestinationResponse() string {
 		SERVICE,
 		REGION,
 		TIME_ZONE, // time_zone_offset
+		DAYLIGHTSAVINGTIMEENABLED,
 		SETUP_STATUS,
 		TEST_TITLE,
 		TEST_STATUS,
@@ -348,6 +353,8 @@ func assertRequest(t *testing.T, request map[string]interface{}) {
 	testutils.AssertKey(t, "trust_certificates", request, TRUST_CERTIFICATES)
 	testutils.AssertKey(t, "trust_fingerprints", request, TRUST_FINGERPRINTS)
 	testutils.AssertKey(t, "run_setup_tests", request, RUN_SETUP_TESTS)
+	testutils.AssertKey(t, "daylight_saving_time_enabled", request, DAYLIGHTSAVINGTIMEENABLED)
+	
 	testutils.AssertKey(t, "group_id", request, ID)
 
 	c, ok := request["config"]
@@ -402,6 +409,7 @@ func asserResponseCustom(t *testing.T, response destinations.DestinationDetailsW
 	testutils.AssertEqual(t, response.Data.ID, ID)
 	testutils.AssertEqual(t, response.Data.Region, REGION)
 	testutils.AssertEqual(t, response.Data.Service, SERVICE)
+	testutils.AssertEqual(t, response.Data.DaylightSavingTimeEnabled, DAYLIGHTSAVINGTIMEENABLED)
 	testutils.AssertEqual(t, response.Data.SetupStatus, SETUP_STATUS)
 	testutils.AssertEqual(t, response.Data.TimeZoneOffset, TIME_ZONE)
 
@@ -461,6 +469,7 @@ func assertResponse(t *testing.T, response destinations.DestinationDetailsWithSe
 	testutils.AssertEqual(t, response.Data.ID, ID)
 	testutils.AssertEqual(t, response.Data.Region, REGION)
 	testutils.AssertEqual(t, response.Data.Service, SERVICE)
+	testutils.AssertEqual(t, response.Data.DaylightSavingTimeEnabled, DAYLIGHTSAVINGTIMEENABLED)
 	testutils.AssertEqual(t, response.Data.SetupStatus, SETUP_STATUS)
 	testutils.AssertEqual(t, response.Data.TimeZoneOffset, TIME_ZONE)
 
