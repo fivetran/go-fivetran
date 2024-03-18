@@ -46,7 +46,6 @@ func preparePrivateLinksCreateResponse() string {
        		"name": "%v",
        		"group_id": "%v",
        		"cloud_provider": "%v",
-       		"service": "%v",
        		"region": "%v",
        		"state": "%v",
        		"state_summary": "%v",
@@ -61,7 +60,6 @@ func preparePrivateLinksCreateResponse() string {
 		GROUP_LIST_PRIVATE_LINK_NAME,
 		GROUP_LIST_PRIVATE_LINK_GROUP_ID,
 		GROUP_LIST_PRIVATE_LINK_CLOUD,
-		GROUP_LIST_PRIVATE_LINK_SERVICE,
 		GROUP_LIST_PRIVATE_LINK_REGION,
 		GROUP_LIST_PRIVATE_LINK_STATE,
 		GROUP_LIST_PRIVATE_LINK_STATE_SUMMARY,
@@ -76,7 +74,6 @@ func assertPrivateLinksCreateResponse(t *testing.T, response privatelinks.Privat
 	testutils.AssertEqual(t, response.Data.Name, GROUP_LIST_PRIVATE_LINK_NAME)
 	testutils.AssertEqual(t, response.Data.GroupId, GROUP_LIST_PRIVATE_LINK_GROUP_ID)
 	testutils.AssertEqual(t, response.Data.CloudProvider, GROUP_LIST_PRIVATE_LINK_CLOUD)
-	testutils.AssertEqual(t, response.Data.Service, GROUP_LIST_PRIVATE_LINK_SERVICE)
 	testutils.AssertEqual(t, response.Data.Region, GROUP_LIST_PRIVATE_LINK_REGION)
 	testutils.AssertEqual(t, response.Data.State, GROUP_LIST_PRIVATE_LINK_STATE)
 	testutils.AssertEqual(t, response.Data.StateSummary, GROUP_LIST_PRIVATE_LINK_STATE_SUMMARY)

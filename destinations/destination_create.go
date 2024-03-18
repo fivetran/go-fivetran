@@ -10,15 +10,16 @@ import (
 // Ref. https://fivetran.com/docs/rest-api/destinations#createadestination
 type DestinationCreateService struct {
 	httputils.HttpService
-	groupID           *string
-	service           *string
-	region            *string
-	timeZoneOffset    *string
-	config            *DestinationConfig
-	configCustom      *map[string]interface{}
-	trustCertificates *bool
-	trustFingerprints *bool
-	runSetupTests     *bool
+	groupID           			*string
+	service           			*string
+	region            			*string
+	timeZoneOffset    			*string
+	config            			*DestinationConfig
+	configCustom      			*map[string]interface{}
+	trustCertificates 			*bool
+	trustFingerprints 			*bool
+	runSetupTests     			*bool
+	daylightSavingTimeEnabled   *bool
 }
 
 func (s *DestinationCreateService) GroupID(value string) *DestinationCreateService {
@@ -66,6 +67,11 @@ func (s *DestinationCreateService) RunSetupTests(value bool) *DestinationCreateS
 	return s
 }
 
+func (s *DestinationCreateService) DaylightSavingTimeEnabled(value bool) *DestinationCreateService {
+	s.daylightSavingTimeEnabled = &value
+	return s
+}
+
 func (s *DestinationCreateService) Do(ctx context.Context) (DestinationDetailsWithSetupTestsResponse, error) {
 	var response DestinationDetailsWithSetupTestsResponse
 	err := s.HttpService.Do(ctx, "POST", "/destinations", s.request(), nil, 201, &response)
@@ -85,26 +91,28 @@ func (s *DestinationCreateService) request() *destinationCreateRequest {
 	}
 
 	return &destinationCreateRequest{
-		GroupID:           s.groupID,
-		Service:           s.service,
-		Region:            s.region,
-		TimeZoneOffset:    s.timeZoneOffset,
-		Config:            config,
-		TrustCertificates: s.trustCertificates,
-		TrustFingerprints: s.trustFingerprints,
-		RunSetupTests:     s.runSetupTests,
+		GroupID:           				s.groupID,
+		Service:           				s.service,
+		Region:            				s.region,
+		TimeZoneOffset:    				s.timeZoneOffset,
+		Config:           				config,
+		TrustCertificates: 				s.trustCertificates,
+		TrustFingerprints: 				s.trustFingerprints,
+		RunSetupTests:     			    s.runSetupTests,
+		DaylightSavingTimeEnabled:      s.daylightSavingTimeEnabled,
 	}
 }
 
 func (s *DestinationCreateService) requestCustom() *destinationCreateRequest {
 	return &destinationCreateRequest{
-		GroupID:           s.groupID,
-		Service:           s.service,
-		Region:            s.region,
-		TimeZoneOffset:    s.timeZoneOffset,
-		Config:            s.configCustom,
-		TrustCertificates: s.trustCertificates,
-		TrustFingerprints: s.trustFingerprints,
-		RunSetupTests:     s.runSetupTests,
+		GroupID:           				s.groupID,
+		Service:           				s.service,
+		Region:            				s.region,
+		TimeZoneOffset:    				s.timeZoneOffset,
+		Config:            				s.configCustom,
+		TrustCertificates: 				s.trustCertificates,
+		TrustFingerprints: 				s.trustFingerprints,
+		RunSetupTests:    				s.runSetupTests,
+		DaylightSavingTimeEnabled:      s.daylightSavingTimeEnabled,
 	}
 }

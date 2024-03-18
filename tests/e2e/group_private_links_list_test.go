@@ -8,6 +8,8 @@ import (
 )
 
 func TestNewGroupListPrivateLinksE2E(t *testing.T) {
+	t.Skip("Private links have a strict limit on the number of requests per hour; to test changes in these modules, this Skip must be removed")
+
 	privateLinkId, groupId := testutils.CreateTempPrivateLink(t)
 	privateLinks, err := testutils.Client.NewGroupListPrivateLinks().GroupID(groupId).Do(context.Background())
 
@@ -22,5 +24,4 @@ func TestNewGroupListPrivateLinksE2E(t *testing.T) {
 	testutils.AssertEqual(t, privateLinks.Data.Items[0].Name, "test")
 	testutils.AssertEqual(t, privateLinks.Data.Items[0].Id, privateLinkId)
 	testutils.AssertEqual(t, privateLinks.Data.Items[0].GroupId, groupId)
-	testutils.AssertEqual(t, privateLinks.Data.Items[0].Service, "big_query") // It's a bug in PL service - in field service returned service from destination
 }

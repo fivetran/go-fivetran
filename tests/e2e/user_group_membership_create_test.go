@@ -14,7 +14,7 @@ func TestNewUserGroupMembershipCreateE2E(t *testing.T) {
 	created, err := testutils.Client.NewUserGroupMembershipCreate().
 		UserId(userId).
 		GroupId(groupId).
-		Role("Destination Administrator").
+		Role("Destination Analyst").
 		Do(context.Background())
 
 	if err != nil {
@@ -25,7 +25,7 @@ func TestNewUserGroupMembershipCreateE2E(t *testing.T) {
 	testutils.AssertEqual(t, created.Code, "Success")
 	testutils.AssertEqual(t, created.Message, "Group membership has been created")
 	testutils.AssertEqual(t, created.Data.GroupId, groupId)
-	testutils.AssertEqual(t, created.Data.Role, "Destination Administrator")
+	testutils.AssertEqual(t, created.Data.Role, "Destination Analyst")
 	testutils.AssertNotEmpty(t, created.Data.CreatedAt)
 
 	t.Cleanup(func() {

@@ -18,6 +18,7 @@ const DESTINATION_DETAILS_ID = "decent_dropsy"
 const DESTINATION_DETAILS_REGION = "GCP_US_EAST4"
 const DESTINATION_DETAILS_TIME_ZONE = "-5"
 const DESTINATION_DETAILS_SETUP_STATUS = "connected"
+const DESTINATION_DETAILS_DAYLIGHT = true
 const DESTINATION_DETAILS_HOST = "your-account.snowflakecomputing.com"
 const DESTINATION_DETAILS_PORT = "443"
 const DESTINATION_DETAILS_DATABASE = "fivetran"
@@ -89,6 +90,7 @@ func prepareDestinationDetailsResponse() string {
 			"group_id": "%s",
 			"service": "%s",
 			"region": "%s",
+			"daylight_saving_time_enabled": %v,
 			"time_zone_offset": "%s",
 			"setup_status": "%s",
 			"config": {
@@ -105,6 +107,7 @@ func prepareDestinationDetailsResponse() string {
 		DESTINATION_DETAILS_ID,
 		DESTINATION_DETAILS_SERVICE,
 		DESTINATION_DETAILS_REGION,
+		DESTINATION_DETAILS_DAYLIGHT,
 		DESTINATION_DETAILS_TIME_ZONE,
 		DESTINATION_DETAILS_SETUP_STATUS,
 		DESTINATION_DETAILS_HOST,
@@ -121,6 +124,7 @@ func assertDestinationDetailsResponse(t *testing.T, response destinations.Destin
 	testutils.AssertEqual(t, response.Data.GroupID, DESTINATION_DETAILS_ID)
 	testutils.AssertEqual(t, response.Data.Service, DESTINATION_DETAILS_SERVICE)
 	testutils.AssertEqual(t, response.Data.Region, DESTINATION_DETAILS_REGION)
+	testutils.AssertEqual(t, response.Data.DaylightSavingTimeEnabled, DESTINATION_DETAILS_DAYLIGHT)
 	testutils.AssertEqual(t, response.Data.TimeZoneOffset, DESTINATION_DETAILS_TIME_ZONE)
 	testutils.AssertEqual(t, response.Data.SetupStatus, DESTINATION_DETAILS_SETUP_STATUS)
 	testutils.AssertEqual(t, response.Data.Config.Host, DESTINATION_DETAILS_HOST)
@@ -136,6 +140,7 @@ func assertDestinationDetailsCustomResponse(t *testing.T, response destinations.
 	testutils.AssertEqual(t, response.Data.ID, DESTINATION_DETAILS_ID)
 	testutils.AssertEqual(t, response.Data.GroupID, DESTINATION_DETAILS_ID)
 	testutils.AssertEqual(t, response.Data.Service, DESTINATION_DETAILS_SERVICE)
+	testutils.AssertEqual(t, response.Data.DaylightSavingTimeEnabled, DESTINATION_DETAILS_DAYLIGHT)
 	testutils.AssertEqual(t, response.Data.Region, DESTINATION_DETAILS_REGION)
 	testutils.AssertEqual(t, response.Data.TimeZoneOffset, DESTINATION_DETAILS_TIME_ZONE)
 	testutils.AssertEqual(t, response.Data.SetupStatus, DESTINATION_DETAILS_SETUP_STATUS)

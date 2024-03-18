@@ -289,6 +289,7 @@ func CreateDestination(t *testing.T) string {
 		Service("snowflake").
 		TimeZoneOffset("+10").
 		RunSetupTests(false).
+		DaylightSavingTimeEnabled(true).
 		Config(fivetran.NewDestinationConfig().
 			Host("your-account.snowflakecomputing.com").
 			Port(443).
@@ -699,14 +700,19 @@ func CreatePrivateLinkDestination(t *testing.T, id string) string {
 	t.Helper()
 	destination, err := Client.NewDestinationCreate().
 		GroupID(id).
-		Service("big_query").
-		Region("AWS_US_EAST_1").
+		Service("adls").
+		Region("AZURE_EASTUS2").
 		RunSetupTests(false).
 		TimeZoneOffset("-5").
 		Config(
 			fivetran.NewDestinationConfig().
-				ProjectID(BqProjectId).
-				DataSetLocation("US")).
+          		StorageAccountName("adls_storage_account_name").
+          		ContainerName("adls_container_name").
+          		TenantId("service_principal_tenant_id").
+          		ClientId("service_principal_client_id").
+          		SecretValue("service_principal_secret_value").
+          		PrefixPath("adls_container_path_prefix").
+          		ConnectionType("Directly")).
 		Do(context.Background())
 	if err != nil {
 		t.Logf("%+v\n", destination)
@@ -725,10 +731,9 @@ func CreatePrivateLink(t *testing.T) (string, string, string) {
 	created, err := Client.NewPrivateLinksCreate().
 		Name("test").
 		GroupId(plGroupId).
-		Service("redshift").
 		Config(fivetran.NewPrivateLinksConfig().
-			AwsAccountId("account_id.cloud_region_name.privatelink.snowflakecomputing.com").
-    		ClusterIdentifier("account_id.cloud_region_name.privatelink.snowflakecomputing.com")).
+			ConnectionServiceId("1").
+			SubResourceName("blob")).
 		Do(context.Background())
 
 	if err != nil {

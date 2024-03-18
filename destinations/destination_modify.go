@@ -11,14 +11,15 @@ import (
 // Ref. https://fivetran.com/docs/rest-api/destinations#modifyadestination
 type DestinationModifyService struct {
 	httputils.HttpService
-	destinationID     *string
-	region            *string
-	timeZoneOffset    *string
-	config            *DestinationConfig
-	configCustom      *map[string]interface{}
-	trustCertificates *bool
-	trustFingerprints *bool
-	runSetupTests     *bool
+	destinationID     			*string
+	region            			*string
+	timeZoneOffset    			*string
+	config            			*DestinationConfig
+	configCustom      			*map[string]interface{}
+	trustCertificates 			*bool
+	trustFingerprints 			*bool
+	runSetupTests     			*bool
+	daylightSavingTimeEnabled   *bool
 }
 
 func (s *DestinationModifyService) request() *destinationModifyRequest {
@@ -29,23 +30,25 @@ func (s *DestinationModifyService) request() *destinationModifyRequest {
 	}
 
 	return &destinationModifyRequest{
-		Region:            s.region,
-		TimeZoneOffset:    s.timeZoneOffset,
-		Config:            config,
-		TrustCertificates: s.trustCertificates,
-		TrustFingerprints: s.trustFingerprints,
-		RunSetupTests:     s.runSetupTests,
+		Region:            				s.region,
+		TimeZoneOffset:    				s.timeZoneOffset,
+		Config:            				config,
+		TrustCertificates: 				s.trustCertificates,
+		TrustFingerprints: 				s.trustFingerprints,
+		RunSetupTests:     				s.runSetupTests,
+		DaylightSavingTimeEnabled:      s.daylightSavingTimeEnabled,
 	}
 }
 
 func (s *DestinationModifyService) requestCustom() *destinationModifyRequest {
 	return &destinationModifyRequest{
-		Region:            s.region,
-		TimeZoneOffset:    s.timeZoneOffset,
-		Config:            s.configCustom,
-		TrustCertificates: s.trustCertificates,
-		TrustFingerprints: s.trustFingerprints,
-		RunSetupTests:     s.runSetupTests,
+		Region:            				s.region,
+		TimeZoneOffset:    				s.timeZoneOffset,
+		Config:            				s.configCustom,
+		TrustCertificates: 				s.trustCertificates,
+		TrustFingerprints: 				s.trustFingerprints,
+		RunSetupTests:     				s.runSetupTests,
+		DaylightSavingTimeEnabled:      s.daylightSavingTimeEnabled,
 	}
 }
 
@@ -86,6 +89,11 @@ func (s *DestinationModifyService) TrustFingerprints(value bool) *DestinationMod
 
 func (s *DestinationModifyService) RunSetupTests(value bool) *DestinationModifyService {
 	s.runSetupTests = &value
+	return s
+}
+
+func (s *DestinationModifyService) DaylightSavingTimeEnabled(value bool) *DestinationModifyService {
+	s.daylightSavingTimeEnabled = &value
 	return s
 }
 

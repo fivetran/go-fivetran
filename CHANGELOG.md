@@ -5,7 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/fivetran/go-fivetran/compare/v0.8.2...HEAD)
+## [Unreleased](https://github.com/fivetran/go-fivetran/compare/v0.8.3...HEAD)
+
+## [0.8.3](https://github.com/fivetran/go-fivetran/compare/v0.8.2...v0.8.3)
+
+## Added
+Added fields to support Shift my UTC offset with daylight savings time (US Only) in Destination API:
+- `DestinationCreateService.daylightSavingTimeEnabled`
+- `DestinationModifyService.daylightSavingTimeEnabled`
+- `DestinationDetailsService.daylightSavingTimeEnabled`
+
+Removed unneccessary field `service` from Private Links API `PrivateLinksCreateService`
 
 ## [0.8.2](https://github.com/fivetran/go-fivetran/compare/v0.8.1...v0.8.2)
 
