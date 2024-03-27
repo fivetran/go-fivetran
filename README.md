@@ -80,6 +80,16 @@ REST API Endpoint | REST API Version | SDK Service
 [Invite a user](https://fivetran.com/docs/rest-api/users#inviteauser) | v1 | [UserInviteService](https://pkg.go.dev/github.com/fivetran/go-fivetran#UserInviteService) 
 [Modify a user](https://fivetran.com/docs/rest-api/users#modifyauser) | v1 | [UserModifyService](https://pkg.go.dev/github.com/fivetran/go-fivetran#UserModifyService)
 [Delete a user](https://fivetran.com/docs/rest-api/users#deleteauser) | v1 | [UserDeleteService](https://pkg.go.dev/github.com/fivetran/go-fivetran#UserDeleteService)
+[List all connector memberships](https://fivetran.com/docs/rest-api/users#listallconnectormemberships) | v1 | [UserConnectorMembershipsListService](https://pkg.go.dev/github.com/fivetran/go-fivetran#UserConnectorMembershipsListService)
+[Retrieve connector membership](https://fivetran.com/docs/rest-api/users#retrieveconnectormembership) | v1 | [UserConnectorMembershipDetailsService](https://pkg.go.dev/github.com/fivetran/go-fivetran#UserConnectorMembershipDetailsService)
+[Add connector membership](https://fivetran.com/docs/rest-api/users#addconnectormembership) | v1 | [UserConnectorMembershipCreateService](https://pkg.go.dev/github.com/fivetran/go-UserConnectorMembershipCreateService#UserDeleteService)
+[Update connector membership](https://fivetran.com/docs/rest-api/users#updateconnectormembership) | v1 | [UserConnectorMembershipModifyService](https://pkg.go.dev/github.com/fivetran/go-fivetran#UserConnectorMembershipModifyService)
+[Delete connector membership](https://fivetran.com/docs/rest-api/users#deleteconnectormembership) | v1 | [UserConnectorMembershipDeleteService](https://pkg.go.dev/github.com/fivetran/go-fivetran#UserConnectorMembershipDeleteService)
+[List all group memberships](https://fivetran.com/docs/rest-api/users#listallgroupmemberships) | v1 | [UserGroupMembershipsListService](https://pkg.go.dev/github.com/fivetran/go-fivetran#UserGroupMembershipsListService)
+[Retrieve group membership](https://fivetran.com/docs/rest-api/users#retrievegroupmembership) | v1 | [UserGroupMembershipDetailsService](https://pkg.go.dev/github.com/fivetran/go-fivetran#UserGroupMembershipDetailsService)
+[Add group membership](https://fivetran.com/docs/rest-api/users#addgroupmembership) | v1 | [UserGroupMembershipCreateService](https://pkg.go.dev/github.com/fivetran/go-fivetran#UserGroupMembershipCreateService)
+[Update group membership](https://fivetran.com/docs/rest-api/users#updategroupmembership) | v1 | [UserGroupMembershipModifyService](https://pkg.go.dev/github.com/fivetran/go-fivetran#UserGroupMembershipModifyService)
+[Delete group membership](https://fivetran.com/docs/rest-api/users#deletegroupmembership) | v1 | [UserGroupMembershipDeleteService](https://pkg.go.dev/github.com/fivetran/go-fivetran#UserGroupMembershipDeleteService)
 
 ### [Group Management API](https://fivetran.com/docs/rest-api/groups)
 
@@ -214,6 +224,7 @@ REST API Endpoint | REST API Version | SDK Service/Config
 [Delete a team](https://fivetran.com/docs/rest-api/teams#deleteateam) | v1 | [TeamsDeleteService](https://pkg.go.dev/github.com/fivetran/go-fivetran#TeamsDeleteService)
 
 ### [Team Management User memberships](https://fivetran.com/docs/rest-api/teams#usermemberships)
+
 REST API Endpoint | REST API Version | SDK Service/Config
 --- | --- | ---
 [List all user memberships](https://fivetran.com/docs/rest-api/teams#listallusermemberships) | v1 | [TeamUserMembershipsListService](https://pkg.go.dev/github.com/fivetran/go-fivetran#TeamUserMembershipsListService)
@@ -223,6 +234,7 @@ REST API Endpoint | REST API Version | SDK Service/Config
 [Delete a user from a team](https://fivetran.com/docs/rest-api/teams#deleteauserfromateam) | v1 | [TeamUserMembershipDeleteService](https://pkg.go.dev/github.com/fivetran/go-fivetran#TeamUserMembershipDeleteService)
 
 ### [Team Management Connector memberships](https://fivetran.com/docs/rest-api/teams#connectormemberships)
+
 REST API Endpoint | REST API Version | SDK Service/Config
 --- | --- | ---
 [List all connector memberships](https://fivetran.com/docs/rest-api/teams#listallconnectormemberships) | v1 | [TeamConnectorMembershipsListService](https://pkg.go.dev/github.com/fivetran/go-fivetran#TeamConnectorMembershipsListService)
@@ -232,6 +244,7 @@ REST API Endpoint | REST API Version | SDK Service/Config
 [Delete connector membership](https://fivetran.com/docs/rest-api/teams#deleteconnectormembership) | v1 | [TeamConnectorMembershipDeleteService](https://pkg.go.dev/github.com/fivetran/go-fivetran#TeamConnectorMembershipDeleteService)
 
 ### [Team Management Group memberships](https://fivetran.com/docs/rest-api/teams#groupmemberships)
+
 REST API Endpoint | REST API Version | SDK Service/Config
 --- | --- | ---
 [List all group memberships](https://fivetran.com/docs/rest-api/teams#listallgroupmemberships) | v1 | [TeamGroupMembershipsService](https://pkg.go.dev/github.com/fivetran/go-fivetran#TeamGroupMembershipsService)
@@ -239,6 +252,28 @@ REST API Endpoint | REST API Version | SDK Service/Config
 [Add group membership](https://fivetran.com/docs/rest-api/teams#addgroupmembership) | v1 | [TeamGroupMembershipCreateService](https://pkg.go.dev/github.com/fivetran/go-fivetran#TeamGroupMembershipCreateService)
 [Update group membership](https://fivetran.com/docs/rest-api/teams#updategroupmembership) | v1 | [TeamGroupMembershipModifyService](https://pkg.go.dev/github.com/fivetran/go-fivetran#TeamGroupMembershipModifyService)
 [Delete group membership](https://fivetran.com/docs/rest-api/teams#deletegroupmembership) | v1 | [TeamGroupMembershipDeleteService](https://pkg.go.dev/github.com/fivetran/go-fivetran#TeamGroupMembershipDeleteService)
+
+### [Private Links Management](https://fivetran.com/docs/rest-api/private-links-management)
+
+REST API Endpoint | REST API Version | SDK Service/Config
+--- | --- | ---
+[Create a Private Link](https://fivetran.com/docs/rest-api/private-links-management#createaprivatelink) | v1 |  [PrivateLinksCreateService](https://pkg.go.dev/github.com/fivetran/go-fivetran#PrivateLinksCreateService)
+[List all Private Links within Group](https://fivetran.com/docs/rest-api/private-links-management#listallprivatelinkswithingroup) | v1 |  [GroupListPrivateLinksService](https://pkg.go.dev/github.com/fivetran/go-fivetran#GroupListPrivateLinksService)
+[Retrieve Private Link Details](https://fivetran.com/docs/rest-api/private-links-management#retrieveprivatelinkdetails) | v1 |  [PrivateLinksDetailsService](https://pkg.go.dev/github.com/fivetran/go-fivetran#PrivateLinksDetailsService)
+[Update a Private Link](https://fivetran.com/docs/rest-api/private-links-management#updateaprivatelink) | v1 |  [PrivateLinksModifyService](https://pkg.go.dev/github.com/fivetran/go-fivetran#PrivateLinksModifyService)
+[Delete a Private Link](https://fivetran.com/docs/rest-api/private-links-management#deleteaprivatelink) | v1 |  [PrivateLinksDeleteService](https://pkg.go.dev/github.com/fivetran/go-fivetran#PrivateLinksDeleteService)
+
+### [Proxy Agents Management](https://fivetran.com/docs/rest-api/proxy-management)
+
+REST API Endpoint | REST API Version | SDK Service/Config
+--- | --- | ---
+[Create a Proxy Agent](/docs/rest-api/proxy-management#createaproxyagent) | v1 |  [ProxyCreateService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ProxyCreateService)
+[List all Proxy Agents](/docs/rest-api/proxy-management#listallproxyagents) | v1 |  [ProxyListService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ProxyListService)
+[Retrieve Proxy Agent Details](/docs/rest-api/proxy-management#retrieveproxyagentdetails) | v1 |  [ProxyDetailsService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ProxyDetailsService)
+[Delete a Proxy Agent](/docs/rest-api/proxy-management#deleteaproxyagent) | v1 |  [ProxyDeleteService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ProxyDeleteService)
+[Return all connections attached to the proxy agent](/docs/rest-api/proxy-management#returnsallconnectionsattachedtotheproxyagent) | v1 |  [ProxyConnectionMembershipsListService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ProxyConnectionMembershipsListService)
+[Attach connection to the proxy agent](/docs/rest-api/proxy-management#attachconnectiontotheproxyagent) | v1 |  [ProxyConnectionMembershipCreateService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ProxyConnectionMembershipCreateService)
+[Detach connection from the proxy agent](/docs/rest-api/proxy-management#detachconnectionformtheproxyagent) | v1 |  [ProxyConnectionMembershipDeleteService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ProxyConnectionMembershipDeleteService)
 
 ## Support
 

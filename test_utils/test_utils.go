@@ -512,6 +512,7 @@ func CleanupAccount() {
 	CleanupPrivateLinks()
 	CleanupWebhooks()
 	CleanupTeams()
+	CleanupProxy()
 }
 
 func IsPredefinedUserExist() bool {
@@ -647,6 +648,24 @@ func CleanupTeams() {
 
 	if list.Data.NextCursor != "" {
 		CleanupTeams()
+	}
+}
+
+func CleanupProxy() {
+	list, err := Client.NewProxyList().Do(context.Background())
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	for _, proxy := range list.Data.Items {
+		_, err := Client.NewProxyDelete().ProxyId(proxy.Id).Do(context.Background())
+		if err != nil && err.Error() != "status code: 404; expected: 200" {
+			log.Fatal(err)
+		}
+	}
+
+	if list.Data.NextCursor != "" {
+		CleanupProxy()
 	}
 }
 
@@ -950,6 +969,53 @@ func CreateUserGroup(t *testing.T, userId string, groupId string) {
 		UserId(userId).
 		GroupId(groupId).
 		Role("Destination Analyst").
+		Do(context.Background())
+
+	if err != nil {
+		t.Logf("%+v\n", created)
+		t.Error(err)
+	}
+}
+
+func CreateProxy(t *testing.T) string {
+	t.Helper()
+	created, err := Client.NewProxyCreate().
+		DisplayName("go_sdk_proxy_internal").
+		GroupId(PredefinedGroupId).
+		Do(context.Background())
+
+	if err != nil {
+		t.Logf("%+v\n", created)
+		t.Error(err)
+	}
+	return created.Data.AgentId
+}
+
+func DeleteProxy(t *testing.T, id string) {
+	t.Helper()
+	deleted, err := Client.NewProxyDelete().ProxyId(id).Do(context.Background())
+
+	if err != nil {
+		t.Logf("%+v\n", deleted)
+		t.Error(err)
+	}
+}
+
+func DeleteProxyConnection(t *testing.T, proxyId string, connectionId string) {
+	t.Helper()
+	deleted, err := Client.NewProxyConnectionMembershipDelete().ProxyId(proxyId).ConnectionId(connectionId).Do(context.Background())
+
+	if err != nil {
+		t.Logf("%+v\n", deleted)
+		t.Error(err)
+	}
+}
+
+func CreateProxyConnection(t *testing.T, proxyId string, connectionId string) {
+	t.Helper()
+	created, err := Client.NewProxyConnectionMembershipCreate().
+		ProxyId(proxyId).
+		ConnectionId(connectionId).
 		Do(context.Background())
 
 	if err != nil {
