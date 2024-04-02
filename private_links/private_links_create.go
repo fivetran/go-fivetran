@@ -2,7 +2,6 @@ package privatelinks
 
 import (
 	"context"
-	"fmt"
 
 	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
@@ -47,7 +46,6 @@ func (s *PrivateLinksCreateService) Config(value *PrivateLinksConfig) *PrivateLi
 
 func (s *PrivateLinksCreateService) Do(ctx context.Context) (PrivateLinksResponse, error) {
 	var response PrivateLinksResponse
-	fmt.Printf("request %v",  s.request())
 	err := s.HttpService.Do(ctx, "POST", "/private-links", s.request(), nil, 201, &response)
 	return response, err
 }

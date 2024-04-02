@@ -5,7 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/fivetran/go-fivetran/compare/v0.8.3...HEAD)
+## [Unreleased](https://github.com/fivetran/go-fivetran/compare/v0.8.4...HEAD)
+
+## [0.8.4](https://github.com/fivetran/go-fivetran/compare/v0.8.3...v0.8.4)
+
+## Added
+
+Supported the following Fivetran API endpoints for Proxy Agents Management:
+- [Create a Proxy Agent](/docs/rest-api/proxy-management#createaproxyagent)
+- [List all Proxy Agents](/docs/rest-api/proxy-management#listallproxyagents)
+- [Retrieve Proxy Agent Details](/docs/rest-api/proxy-management#retrieveproxyagentdetails)
+- [Delete a Proxy Agent](/docs/rest-api/proxy-management#deleteaproxyagent)
+- [Return all connections attached to the proxy agent](/docs/rest-api/proxy-management#returnsallconnectionsattachedtotheproxyagent)
+- [Attach connection to the proxy agent](/docs/rest-api/proxy-management#attachconnectiontotheproxyagent)
+- [Detach connection from the proxy agent](/docs/rest-api/proxy-management#detachconnectionformtheproxyagent)
 
 ## [0.8.3](https://github.com/fivetran/go-fivetran/compare/v0.8.2...v0.8.3)
 

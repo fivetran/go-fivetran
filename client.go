@@ -19,6 +19,7 @@ import (
 	"github.com/fivetran/go-fivetran/teams"
 	"github.com/fivetran/go-fivetran/users"
 	"github.com/fivetran/go-fivetran/webhooks"
+	"github.com/fivetran/go-fivetran/proxy"
 )
 
 // Client holds client configuration
@@ -35,7 +36,7 @@ const defaultBaseURL = "https://api.fivetran.com/v1"
 const restAPIv2 = "application/json;version=2"
 
 // WARNING: Update Agent version on each release!
-const defaultUserAgent = "Go-Fivetran/0.8.2"
+const defaultUserAgent = "Go-Fivetran/0.8.4"
 
 // New receives API Key and API Secret, and returns a new Client with the
 // default HTTP client
@@ -600,4 +601,33 @@ func (c *Client) NewPrivateLinksDetails() *privatelinks.PrivateLinksDetailsServi
 
 func (c *Client) NewPrivateLinksModify() *privatelinks.PrivateLinksModifyService {
 	return &privatelinks.PrivateLinksModifyService{HttpService: c.NewHttpService()}
+}
+
+/* Proxy */
+func (c *Client) NewProxyCreate() *proxy.ProxyCreateService {
+	return &proxy.ProxyCreateService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewProxyList() *proxy.ProxyListService {
+	return &proxy.ProxyListService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewProxyDetails() *proxy.ProxyDetailsService {
+	return &proxy.ProxyDetailsService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewProxyDelete() *proxy.ProxyDeleteService {
+	return &proxy.ProxyDeleteService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewProxyConnectionMembershipCreate() *proxy.ProxyConnectionMembershipCreateService {
+	return &proxy.ProxyConnectionMembershipCreateService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewProxyConnectionMembershipsList() *proxy.ProxyConnectionMembershipsListService {
+	return &proxy.ProxyConnectionMembershipsListService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewProxyConnectionMembershipDelete() *proxy.ProxyConnectionMembershipDeleteService {
+	return &proxy.ProxyConnectionMembershipDeleteService{HttpService: c.NewHttpService()}
 }
