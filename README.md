@@ -258,7 +258,7 @@ REST API Endpoint | REST API Version | SDK Service/Config
 REST API Endpoint | REST API Version | SDK Service/Config
 --- | --- | ---
 [Create a Private Link](https://fivetran.com/docs/rest-api/private-links-management#createaprivatelink) | v1 |  [PrivateLinksCreateService](https://pkg.go.dev/github.com/fivetran/go-fivetran#PrivateLinksCreateService)
-[List all Private Links within Group](https://fivetran.com/docs/rest-api/private-links-management#listallprivatelinkswithingroup) | v1 |  [GroupListPrivateLinksService](https://pkg.go.dev/github.com/fivetran/go-fivetran#GroupListPrivateLinksService)
+[List all Private Links within Account](https://fivetran.com/docs/rest-api/private-links-management#listallprivatelinkswithinaccount) | v1 |  [PrivateLinkListService](https://pkg.go.dev/github.com/fivetran/go-fivetran#PrivateLinkListService)
 [Retrieve Private Link Details](https://fivetran.com/docs/rest-api/private-links-management#retrieveprivatelinkdetails) | v1 |  [PrivateLinksDetailsService](https://pkg.go.dev/github.com/fivetran/go-fivetran#PrivateLinksDetailsService)
 [Update a Private Link](https://fivetran.com/docs/rest-api/private-links-management#updateaprivatelink) | v1 |  [PrivateLinksModifyService](https://pkg.go.dev/github.com/fivetran/go-fivetran#PrivateLinksModifyService)
 [Delete a Private Link](https://fivetran.com/docs/rest-api/private-links-management#deleteaprivatelink) | v1 |  [PrivateLinksDeleteService](https://pkg.go.dev/github.com/fivetran/go-fivetran#PrivateLinksDeleteService)
@@ -272,8 +272,15 @@ REST API Endpoint | REST API Version | SDK Service/Config
 [Retrieve Proxy Agent Details](/docs/rest-api/proxy-management#retrieveproxyagentdetails) | v1 |  [ProxyDetailsService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ProxyDetailsService)
 [Delete a Proxy Agent](/docs/rest-api/proxy-management#deleteaproxyagent) | v1 |  [ProxyDeleteService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ProxyDeleteService)
 [Return all connections attached to the proxy agent](/docs/rest-api/proxy-management#returnsallconnectionsattachedtotheproxyagent) | v1 |  [ProxyConnectionMembershipsListService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ProxyConnectionMembershipsListService)
-[Attach connection to the proxy agent](/docs/rest-api/proxy-management#attachconnectiontotheproxyagent) | v1 |  [ProxyConnectionMembershipCreateService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ProxyConnectionMembershipCreateService)
-[Detach connection from the proxy agent](/docs/rest-api/proxy-management#detachconnectionformtheproxyagent) | v1 |  [ProxyConnectionMembershipDeleteService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ProxyConnectionMembershipDeleteService)
+
+### [Local Processing Agent Management](https://fivetran.com/docs/rest-api/local-processing-agent-management#localprocessingagentmanagement)
+REST API Endpoint | REST API Version | SDK Service/Config
+--- | --- | ---
+[Create a Local Processing Agent](https://fivetran.com/docs/rest-api/local-processing-agent-management#createalocalprocessingagent) | v1 |  [LocalProcessingAgentCreateService](https://pkg.go.dev/github.com/fivetran/go-fivetran#LocalProcessingAgentCreateService)
+[List Local Processing Agents](/docs/rest-api/local-processing-agent-management#listlocalprocessingagents) | v1 |  [LocalProcessingAgentListService](https://pkg.go.dev/github.com/fivetran/go-fivetran#LocalProcessingAgentListService)
+[Retrieve Local Processing Agent Details](/docs/rest-api/local-processing-agent-management#retrievelocalprocessingagentdetails) | v1 |  [LocalProcessingAgentDetailsService](https://pkg.go.dev/github.com/fivetran/go-fivetran#LocalProcessingAgentDetailsService)
+[Delete a Local Processing Agent](/docs/rest-api/local-processing-agent-management#deletealocalprocessingagent) | v1 |  [LocalProcessingAgentDeleteService](https://pkg.go.dev/github.com/fivetran/go-fivetran#LocalProcessingAgentDeleteService)
+[Regenerate authentication keys for a Local Processing Agent](/docs/rest-api/local-processing-agent-management#regeneratekeys) | v1 |  [LocalProcessingAgentReAuthService](https://pkg.go.dev/github.com/fivetran/go-fivetran#LocalProcessingAgentReAuthService)
 
 ## Support
 

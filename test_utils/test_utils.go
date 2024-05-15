@@ -513,6 +513,7 @@ func CleanupAccount() {
 	CleanupWebhooks()
 	CleanupTeams()
 	CleanupProxy()
+	CleanupLocalProcessingAgents()
 }
 
 func IsPredefinedUserExist() bool {
@@ -602,20 +603,14 @@ func CleanupExternalLogging() {
 }
 
 func CleanupPrivateLinks() {
-	groups, err := Client.NewGroupsList().Do(context.Background())
+	links, err := Client.NewPrivateLinkList().Do(context.Background())
 	if err != nil {
 		log.Fatal(err)
 	}
-	for _, group := range groups.Data.Items {
-		privateLinks, err := Client.NewGroupListPrivateLinks().GroupID(group.ID).Do(context.Background())
-		if err != nil {
+	for _, link := range links.Data.Items {
+		_, err := Client.NewPrivateLinkDelete().PrivateLinkId(link.Id).Do(context.Background())
+		if err != nil && err.Error() != "status code: 404; expected: 200" {
 			log.Fatal(err)
-		}
-		for _, privateLinks := range privateLinks.Data.Items {
-			_, err := Client.NewPrivateLinksDelete().PrivateLinkId(privateLinks.Id).Do(context.Background())
-			if err != nil && err.Error() != "status code: 404; expected: 200" {
-				log.Fatal(err)
-			}
 		}
 	}
 }
@@ -669,6 +664,24 @@ func CleanupProxy() {
 	}
 }
 
+func CleanupLocalProcessingAgents() {
+	list, err := Client.NewLocalProcessingAgentList().Do(context.Background())
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	for _, lpa := range list.Data.Items {
+		_, err := Client.NewLocalProcessingAgentDelete().AgentId(lpa.Id).Do(context.Background())
+		if err != nil && err.Error() != "status code: 404; expected: 200" {
+			log.Fatal(err)
+		}
+	}
+
+	if list.Data.NextCursor != "" {
+		CleanupLocalProcessingAgents()
+	}
+}
+
 func CreateTempExternalLogging(t *testing.T) string {
 	t.Helper()
 	externalLoggingId := CreateExternalLogging(t)
@@ -705,66 +718,26 @@ func CreateExternalLogging(t *testing.T) string {
 }
 
 /* Private Links */
-func CreatePrivateLinkGroup(t *testing.T) string {
+func CreatePrivateLink(t *testing.T) (string) {
 	t.Helper()
-	created, err := Client.NewGroupCreate().Name("private_link_test").Do(context.Background())
-	if err != nil {
-		t.Logf("%+v\n", created)
-		t.Error(err)
-	}
-	return created.Data.ID
-}
-
-func CreatePrivateLinkDestination(t *testing.T, id string) string {
-	t.Helper()
-	destination, err := Client.NewDestinationCreate().
-		GroupID(id).
-		Service("adls").
-		Region("AZURE_EASTUS2").
-		RunSetupTests(false).
-		TimeZoneOffset("-5").
-		Config(
-			fivetran.NewDestinationConfig().
-          		StorageAccountName("adls_storage_account_name").
-          		ContainerName("adls_container_name").
-          		TenantId("service_principal_tenant_id").
-          		ClientId("service_principal_client_id").
-          		SecretValue("service_principal_secret_value").
-          		PrefixPath("adls_container_path_prefix").
-          		ConnectionType("Directly")).
-		Do(context.Background())
-	if err != nil {
-		t.Logf("%+v\n", destination)
-		t.Error(err)
-	}
-	return destination.Data.ID
-}
-
-func CreatePrivateLink(t *testing.T) (string, string, string) {
-	t.Helper()
-	plGroupId := CreatePrivateLinkGroup(t)
-	t.Logf("groupId %+v\n", plGroupId)
-	plDestinationId := CreatePrivateLinkDestination(t,plGroupId)
-	t.Logf("plDestinationId %+v\n", plDestinationId)
-
-	created, err := Client.NewPrivateLinksCreate().
-		Name("test").
-		GroupId(plGroupId).
-		Config(fivetran.NewPrivateLinksConfig().
-			ConnectionServiceId("1").
-			SubResourceName("blob")).
+	created, err := Client.NewPrivateLinkCreate().
+		Name("go_sdk_private_link_internal").
+		Service("SOURCE").
+		Region("GCP_US_EAST4").
+		Config(fivetran.NewPrivateLinkConfig().
+			ConnectionServiceName("test")).
 		Do(context.Background())
 
 	if err != nil {
 		t.Logf("%+v\n", created)
 		t.Error(err)
 	}
-	return created.Data.Id, plDestinationId, plGroupId
+	return created.Data.Id
 }
 
 func DeletePrivateLink(t *testing.T, id string) {
 	t.Helper()
-	deleted, err := Client.NewPrivateLinksDelete().PrivateLinkId(id).Do(context.Background())
+	deleted, err := Client.NewPrivateLinkDelete().PrivateLinkId(id).Do(context.Background())
 
 	if err != nil {
 		t.Logf("%+v\n", deleted)
@@ -772,16 +745,14 @@ func DeletePrivateLink(t *testing.T, id string) {
 	}
 }
 
-func CreateTempPrivateLink(t *testing.T) (string, string) {
+func CreateTempPrivateLink(t *testing.T) (string) {
 	t.Helper()
-	privateLinkId, plDestinationId, plGroupId := CreatePrivateLink(t)
+	privateLinkId := CreatePrivateLink(t)
 
 	t.Cleanup(func() {
-		//DeletePrivateLink(t, privateLinkId) 
-		DeleteDestination(t, plDestinationId)
-		DeleteGroup(t, plGroupId)
+		DeletePrivateLink(t, privateLinkId) 
 	})
-	return privateLinkId, plGroupId
+	return privateLinkId
 }
 
 /* Private Links */
@@ -981,7 +952,7 @@ func CreateProxy(t *testing.T) string {
 	t.Helper()
 	created, err := Client.NewProxyCreate().
 		DisplayName("go_sdk_proxy_internal").
-		GroupId(PredefinedGroupId).
+		GroupRegion("GCP_US_EAST4").
 		Do(context.Background())
 
 	if err != nil {
@@ -1001,25 +972,28 @@ func DeleteProxy(t *testing.T, id string) {
 	}
 }
 
-func DeleteProxyConnection(t *testing.T, proxyId string, connectionId string) {
+func CreateLocalProcessingAgent(t *testing.T) string {
 	t.Helper()
-	deleted, err := Client.NewProxyConnectionMembershipDelete().ProxyId(proxyId).ConnectionId(connectionId).Do(context.Background())
-
-	if err != nil {
-		t.Logf("%+v\n", deleted)
-		t.Error(err)
-	}
-}
-
-func CreateProxyConnection(t *testing.T, proxyId string, connectionId string) {
-	t.Helper()
-	created, err := Client.NewProxyConnectionMembershipCreate().
-		ProxyId(proxyId).
-		ConnectionId(connectionId).
+	created, err := Client.NewLocalProcessingAgentCreate().
+		DisplayName("go_sdk_lpa_internal").
+		GroupId(PredefinedGroupId).
+		EnvType("DOCKER").
+		AcceptTerms(true).
 		Do(context.Background())
 
 	if err != nil {
 		t.Logf("%+v\n", created)
+		t.Error(err)
+	}
+	return created.Data.Id
+}
+
+func DeleteLocalProcessingAgent(t *testing.T, id string) {
+	t.Helper()
+	deleted, err := Client.NewLocalProcessingAgentDelete().AgentId(id).Do(context.Background())
+
+	if err != nil {
+		t.Logf("%+v\n", deleted)
 		t.Error(err)
 	}
 }

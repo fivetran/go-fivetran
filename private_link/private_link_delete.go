@@ -1,4 +1,4 @@
-package privatelinks
+package privatelink
 
 import (
 	"context"
@@ -8,19 +8,19 @@ import (
 	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
-// PrivateLinksDeleteService implements the Private Links Management, Delete a Private Link
-// Ref. https://fivetran.com/docs/rest-api/private-links-management#deleteaprivatelink
-type PrivateLinksDeleteService struct {
+// PrivateLinkDeleteService implements the Private Link Management, Delete a Private Link
+// Ref. https://fivetran.com/docs/rest-api/private-link-management#deleteaprivatelink
+type PrivateLinkDeleteService struct {
 	httputils.HttpService
 	privateLinkId 	  *string
 }
 
-func (s *PrivateLinksDeleteService) PrivateLinkId(value string) *PrivateLinksDeleteService {
+func (s *PrivateLinkDeleteService) PrivateLinkId(value string) *PrivateLinkDeleteService {
 	s.privateLinkId = &value
 	return s
 }
 
-func (s *PrivateLinksDeleteService) Do(ctx context.Context) (common.CommonResponse, error) {
+func (s *PrivateLinkDeleteService) Do(ctx context.Context) (common.CommonResponse, error) {
 	var response common.CommonResponse
 	if s.privateLinkId == nil {
 		return response, fmt.Errorf("missing required privateLinkId")
