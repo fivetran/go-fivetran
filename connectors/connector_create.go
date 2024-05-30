@@ -21,6 +21,7 @@ type ConnectorCreateService struct {
 	syncFrequency     *int
 	dailySyncTime     *string
 	pauseAfterTrial   *bool
+	privateLinkId 	  *string
 	config            *ConnectorConfig
 	auth              *ConnectorAuth
 	configCustom      *map[string]interface{}
@@ -38,6 +39,7 @@ func (s *ConnectorCreateService) requestBase() connectorCreateRequestBase {
 		SyncFrequency:     s.syncFrequency,
 		DailySyncTime:     s.dailySyncTime,
 		PauseAfterTrial:   s.pauseAfterTrial,
+		PrivateLinkId: 	   s.privateLinkId
 	}
 }
 
@@ -138,6 +140,11 @@ func (s *ConnectorCreateService) DailySyncTime(value string) *ConnectorCreateSer
 
 func (s *ConnectorCreateService) PauseAfterTrial(value bool) *ConnectorCreateService {
 	s.pauseAfterTrial = &value
+	return s
+}
+
+func (s *ConnectorCreateService) PrivateLinkId(value string) *ConnectorCreateService {
+	s.privateLinkId = &value
 	return s
 }
 
