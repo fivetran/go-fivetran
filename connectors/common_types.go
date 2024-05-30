@@ -106,6 +106,7 @@ type connectorCreateRequestBase struct {
 	SyncFrequency     *int    `json:"sync_frequency,omitempty"`
 	DailySyncTime     *string `json:"daily_sync_time,omitempty"`
 	PauseAfterTrial   *bool   `json:"pause_after_trial,omitempty"`
+	PrivateLinkId	  *string `json:"private_link_id,omitempty"`
 }
 
 type connectorCreateRequest struct {
