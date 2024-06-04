@@ -15,23 +15,26 @@ import (
 )
 
 const (
-	DESTINATION_MODIFY_SERVICE            = "snowflake"
-	DESTINATION_MODIFY_ID                 = "decent_dropsy"
-	DESTINATION_MODIFY_REGION             = "GCP_AUSTRALIA_SOUTHEAST1"
-	DESTINATION_MODIFY_TIME_ZONE_OFFSET   = "+10"
-	DESTINATION_MODIFY_DAYLIGHT 		  = true
-	DESTINATION_MODIFY_SETUP_STATUS       = "connected"
-	DESTINATION_MODIFY_TEST_TITLE_HOST    = "Host Connection"
-	DESTINATION_MODIFY_TEST_TITLE_DB      = "Database Connection"
-	DESTINATION_MODIFY_TEST_TITLE_PERM    = "Permission Test"
-	DESTINATION_MODIFY_TEST_STATUS_PASSED = "PASSED"
-	DESTINATION_MODIFY_HOST               = "your-account.snowflakecomputing.com"
-	DESTINATION_MODIFY_PORT               = "1433"
-	DESTINATION_MODIFY_DATABASE           = "fivetran"
-	DESTINATION_MODIFY_AUTH               = "PASSWORD"
-	DESTINATION_MODIFY_USER               = "fivetran_user"
-	DESTINATION_MODIFY_PASSWORD           = "******"
-	DESTINATION_MODIFY_MASKED             = "******"
+	DESTINATION_MODIFY_SERVICE            		= "snowflake"
+	DESTINATION_MODIFY_ID                 		= "decent_dropsy"
+	DESTINATION_MODIFY_REGION             		= "GCP_AUSTRALIA_SOUTHEAST1"
+	DESTINATION_MODIFY_TIME_ZONE_OFFSET   		= "+10"
+	DESTINATION_MODIFY_DAYLIGHT 		  		= true
+    DESTINATION_MODIFY_LOCALPROCESSINGAGENTID   = "lpa_id"
+    DESTINATION_MODIFY_PRIVATELINKID            = "private_link_id"
+    DESTINATION_MODIFY_NETWORKINGMETHOD         = "Direct"
+	DESTINATION_MODIFY_SETUP_STATUS      		= "connected"
+	DESTINATION_MODIFY_TEST_TITLE_HOST    		= "Host Connection"
+	DESTINATION_MODIFY_TEST_TITLE_DB      		= "Database Connection"
+	DESTINATION_MODIFY_TEST_TITLE_PERM    		= "Permission Test"
+	DESTINATION_MODIFY_TEST_STATUS_PASSED 		= "PASSED"
+	DESTINATION_MODIFY_HOST              		= "your-account.snowflakecomputing.com"
+	DESTINATION_MODIFY_PORT               		= "1433"
+	DESTINATION_MODIFY_DATABASE          		= "fivetran"
+	DESTINATION_MODIFY_AUTH               		= "PASSWORD"
+	DESTINATION_MODIFY_USER               		= "fivetran_user"
+	DESTINATION_MODIFY_PASSWORD           		= "******"
+	DESTINATION_MODIFY_MASKED             		= "******"
 )
 
 func TestDestinationModifyService(t *testing.T) {
@@ -60,6 +63,9 @@ func TestDestinationModifyService(t *testing.T) {
 		TimeZoneOffset(DESTINATION_MODIFY_TIME_ZONE_OFFSET).
 		Config(destinationConfig).
 		DaylightSavingTimeEnabled(DESTINATION_MODIFY_DAYLIGHT).
+        LocalProcessingAgentId(DESTINATION_MODIFY_LOCALPROCESSINGAGENTID).
+        PrivateLinkId(DESTINATION_MODIFY_PRIVATELINKID).
+        NetworkingMethod(DESTINATION_MODIFY_NETWORKINGMETHOD).
 		TrustCertificates(TRUST_CERTIFICATES).
 		TrustFingerprints(TRUST_FINGERPRINTS).
 		RunSetupTests(RUN_SETUP_TESTS)
@@ -96,6 +102,9 @@ func TestDestinationModifyCustomService(t *testing.T) {
 		DestinationID(DESTINATION_MODIFY_ID).
 		Region(DESTINATION_MODIFY_REGION).
 		DaylightSavingTimeEnabled(DESTINATION_MODIFY_DAYLIGHT).
+		LocalProcessingAgentId(DESTINATION_MODIFY_LOCALPROCESSINGAGENTID).
+        PrivateLinkId(DESTINATION_MODIFY_PRIVATELINKID).
+        NetworkingMethod(DESTINATION_MODIFY_NETWORKINGMETHOD).
 		TimeZoneOffset(DESTINATION_MODIFY_TIME_ZONE_OFFSET).
 		ConfigCustom(&map[string]interface{}{
 			"host":     DESTINATION_MODIFY_HOST,
@@ -135,7 +144,10 @@ func prepareDestinationModifyResponse() string {
 			"group_id": "%s",
 			"service": "%s",
 			"region": "%s",
-			"daylight_saving_time_enabled": %v,			
+			"daylight_saving_time_enabled": %v,
+			"local_processing_agent_id": "%v",
+            "private_link_id": "%v",
+            "networking_method": "%v",
 			"time_zone_offset": "%s",
 			"setup_status": "%s",
 			"setup_tests": [
@@ -170,6 +182,9 @@ func prepareDestinationModifyResponse() string {
 		DESTINATION_MODIFY_SERVICE,
 		DESTINATION_MODIFY_REGION,
 		DESTINATION_MODIFY_DAYLIGHT,
+		DESTINATION_MODIFY_LOCALPROCESSINGAGENTID,
+        DESTINATION_MODIFY_PRIVATELINKID,
+        DESTINATION_MODIFY_NETWORKINGMETHOD,
 		DESTINATION_MODIFY_TIME_ZONE_OFFSET,
 		DESTINATION_MODIFY_SETUP_STATUS,
 		DESTINATION_MODIFY_TEST_TITLE_HOST,
@@ -193,6 +208,9 @@ func assertDestinationModifyResponse(t *testing.T, response destinations.Destina
 	testutils.AssertEqual(t, response.Data.GroupID, DESTINATION_MODIFY_ID)
 	testutils.AssertEqual(t, response.Data.Service, DESTINATION_MODIFY_SERVICE)
 	testutils.AssertEqual(t, response.Data.DaylightSavingTimeEnabled, DESTINATION_MODIFY_DAYLIGHT)
+	testutils.AssertEqual(t, response.Data.LocalProcessingAgentId, DESTINATION_MODIFY_LOCALPROCESSINGAGENTID)
+	testutils.AssertEqual(t, response.Data.PrivateLinkId, DESTINATION_MODIFY_PRIVATELINKID)
+	testutils.AssertEqual(t, response.Data.NetworkingMethod, DESTINATION_MODIFY_NETWORKINGMETHOD)
 	testutils.AssertEqual(t, response.Data.Region, DESTINATION_MODIFY_REGION)
 	testutils.AssertEqual(t, response.Data.TimeZoneOffset, DESTINATION_MODIFY_TIME_ZONE_OFFSET)
 	testutils.AssertEqual(t, response.Data.SetupStatus, DESTINATION_MODIFY_SETUP_STATUS)
@@ -222,6 +240,10 @@ func assertDestinationModifyCustomResponse(t *testing.T, response destinations.D
 	testutils.AssertEqual(t, response.Data.GroupID, DESTINATION_MODIFY_ID)
 	testutils.AssertEqual(t, response.Data.Service, DESTINATION_MODIFY_SERVICE)
 	testutils.AssertEqual(t, response.Data.DaylightSavingTimeEnabled, DESTINATION_MODIFY_DAYLIGHT)
+	testutils.AssertEqual(t, response.Data.LocalProcessingAgentId, DESTINATION_MODIFY_LOCALPROCESSINGAGENTID)
+	testutils.AssertEqual(t, response.Data.LocalProcessingAgentId, DESTINATION_MODIFY_LOCALPROCESSINGAGENTID)
+	testutils.AssertEqual(t, response.Data.PrivateLinkId, DESTINATION_MODIFY_PRIVATELINKID)
+	testutils.AssertEqual(t, response.Data.NetworkingMethod, DESTINATION_MODIFY_NETWORKINGMETHOD)
 	testutils.AssertEqual(t, response.Data.Region, DESTINATION_MODIFY_REGION)
 	testutils.AssertEqual(t, response.Data.TimeZoneOffset, DESTINATION_MODIFY_TIME_ZONE_OFFSET)
 	testutils.AssertEqual(t, response.Data.SetupStatus, DESTINATION_MODIFY_SETUP_STATUS)

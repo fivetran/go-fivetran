@@ -13,6 +13,7 @@ func TestNewConnectorCreateE2E(t *testing.T) {
 		GroupID(testutils.PredefinedGroupId).
 		Service("itunes_connect").
 		RunSetupTests(false).
+		NetworkingMethod("Directly").
 		Config(fivetran.NewConnectorConfig().
 			Schema("itunes_e2e_connect").
 			Username("fivetran").
@@ -39,6 +40,10 @@ func TestNewConnectorCreateE2E(t *testing.T) {
 	testutils.AssertEqual(t, *created.Data.PauseAfterTrial, false)
 	testutils.AssertEqual(t, *created.Data.SyncFrequency, 360)
 	testutils.AssertEqual(t, created.Data.ScheduleType, "auto")
+	testutils.AssertEmpty(t, created.Data.PrivateLinkId)
+	testutils.AssertEmpty(t, created.Data.LocalProcessingAgentId)
+	testutils.AssertEmpty(t, created.Data.ProxyAgentId)
+	testutils.AssertEqual(t, created.Data.NetworkingMethod, "Directly")
 
 	testutils.AssertEqual(t, created.Data.Status.SetupState, "incomplete")
 	testutils.AssertEqual(t, created.Data.Status.SyncState, "scheduled")

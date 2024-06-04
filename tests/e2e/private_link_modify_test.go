@@ -11,10 +11,11 @@ import (
 func TestNewPrivateLinkModifyE2E(t *testing.T) {
 	t.Skip("Private links have a strict limit on the number of requests per hour; to test changes in these modules, this Skip must be removed")
 
-	privateLinkId, plGroupId := testutils.CreateTempPrivateLink(t)
-	details, err := testutils.Client.NewPrivateLinksModify().PrivateLinkId(privateLinkId).
-		Config(fivetran.NewPrivateLinksConfig().
-			ConnectionServiceId("2")).
+	privateLinkId := testutils.CreateTempPrivateLink(t)
+
+	details, err := testutils.Client.NewPrivateLinkModify().PrivateLinkId(privateLinkId).
+		Config(fivetran.NewPrivateLinkConfig().
+			ConnectionServiceName("test2")).
 		Do(context.Background())
 
 	if err != nil {
@@ -24,7 +25,5 @@ func TestNewPrivateLinkModifyE2E(t *testing.T) {
 
 	testutils.AssertEqual(t, details.Code, "Success")
 	testutils.AssertNotEmpty(t, details.Message)
-
-	testutils.AssertEqual(t, details.Data.GroupId, plGroupId)
-	testutils.AssertEqual(t, details.Data.Config.ConnectionServiceId, "2")
+	testutils.AssertEqual(t, details.Data.Config.ConnectionServiceName, "test2")
 }

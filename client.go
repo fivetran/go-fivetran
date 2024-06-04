@@ -14,7 +14,8 @@ import (
 	"github.com/fivetran/go-fivetran/fingerprints"
 	"github.com/fivetran/go-fivetran/groups"
 	httputils "github.com/fivetran/go-fivetran/http_utils"
-	privatelinks "github.com/fivetran/go-fivetran/private_links"
+	privatelink "github.com/fivetran/go-fivetran/private_link"
+	localprocessingagent "github.com/fivetran/go-fivetran/local_processing_agent"
 	"github.com/fivetran/go-fivetran/roles"
 	"github.com/fivetran/go-fivetran/teams"
 	"github.com/fivetran/go-fivetran/users"
@@ -36,7 +37,7 @@ const defaultBaseURL = "https://api.fivetran.com/v1"
 const restAPIv2 = "application/json;version=2"
 
 // WARNING: Update Agent version on each release!
-const defaultUserAgent = "Go-Fivetran/0.8.4"
+const defaultUserAgent = "Go-Fivetran/0.8.6"
 
 // New receives API Key and API Secret, and returns a new Client with the
 // default HTTP client
@@ -231,10 +232,6 @@ func (c *Client) NewGroupListConnectors() *groups.GroupListConnectorsService {
 
 func (c *Client) NewGroupListUsers() *groups.GroupListUsersService {
 	return &groups.GroupListUsersService{HttpService: c.NewHttpService()}
-}
-
-func (c *Client) NewGroupListPrivateLinks() *groups.GroupListPrivateLinksService {
-	return &groups.GroupListPrivateLinksService{HttpService: c.NewHttpService()}
 }
 
 func (c *Client) NewGroupsList() *groups.GroupsListService {
@@ -587,20 +584,24 @@ func (c *Client) NewConnectorsSourceMetadata() *connectors.ConnectorsSourceMetad
 }
 
 /* Private Links */
-func (c *Client) NewPrivateLinksCreate() *privatelinks.PrivateLinksCreateService {
-	return &privatelinks.PrivateLinksCreateService{HttpService: c.NewHttpService()}
+func (c *Client) NewPrivateLinkCreate() *privatelink.PrivateLinkCreateService {
+	return &privatelink.PrivateLinkCreateService{HttpService: c.NewHttpService()}
 }
 
-func (c *Client) NewPrivateLinksDelete() *privatelinks.PrivateLinksDeleteService {
-	return &privatelinks.PrivateLinksDeleteService{HttpService: c.NewHttpService()}
+func (c *Client) NewPrivateLinkDelete() *privatelink.PrivateLinkDeleteService {
+	return &privatelink.PrivateLinkDeleteService{HttpService: c.NewHttpService()}
 }
 
-func (c *Client) NewPrivateLinksDetails() *privatelinks.PrivateLinksDetailsService {
-	return &privatelinks.PrivateLinksDetailsService{HttpService: c.NewHttpService()}
+func (c *Client) NewPrivateLinkList() *privatelink.PrivateLinkListService {
+	return &privatelink.PrivateLinkListService{HttpService: c.NewHttpService()}
 }
 
-func (c *Client) NewPrivateLinksModify() *privatelinks.PrivateLinksModifyService {
-	return &privatelinks.PrivateLinksModifyService{HttpService: c.NewHttpService()}
+func (c *Client) NewPrivateLinkDetails() *privatelink.PrivateLinkDetailsService {
+	return &privatelink.PrivateLinkDetailsService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewPrivateLinkModify() *privatelink.PrivateLinkModifyService {
+	return &privatelink.PrivateLinkModifyService{HttpService: c.NewHttpService()}
 }
 
 /* Proxy */
@@ -620,14 +621,27 @@ func (c *Client) NewProxyDelete() *proxy.ProxyDeleteService {
 	return &proxy.ProxyDeleteService{HttpService: c.NewHttpService()}
 }
 
-func (c *Client) NewProxyConnectionMembershipCreate() *proxy.ProxyConnectionMembershipCreateService {
-	return &proxy.ProxyConnectionMembershipCreateService{HttpService: c.NewHttpService()}
-}
-
 func (c *Client) NewProxyConnectionMembershipsList() *proxy.ProxyConnectionMembershipsListService {
 	return &proxy.ProxyConnectionMembershipsListService{HttpService: c.NewHttpService()}
 }
 
-func (c *Client) NewProxyConnectionMembershipDelete() *proxy.ProxyConnectionMembershipDeleteService {
-	return &proxy.ProxyConnectionMembershipDeleteService{HttpService: c.NewHttpService()}
+/* Local Processing Agent */
+func (c *Client) NewLocalProcessingAgentCreate() *localprocessingagent.LocalProcessingAgentCreateService {
+	return &localprocessingagent.LocalProcessingAgentCreateService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewLocalProcessingAgentDelete() *localprocessingagent.LocalProcessingAgentDeleteService {
+	return &localprocessingagent.LocalProcessingAgentDeleteService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewLocalProcessingAgentDetails() *localprocessingagent.LocalProcessingAgentDetailsService {
+	return &localprocessingagent.LocalProcessingAgentDetailsService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewLocalProcessingAgentList() *localprocessingagent.LocalProcessingAgentListService {
+	return &localprocessingagent.LocalProcessingAgentListService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewLocalProcessingAgentReAuth() *localprocessingagent.LocalProcessingAgentReAuthService {
+	return &localprocessingagent.LocalProcessingAgentReAuthService{HttpService: c.NewHttpService()}
 }

@@ -8,10 +8,9 @@ import (
 )
 
 func TestNewProxyCreateE2E(t *testing.T) {
-	groupId := testutils.CreateGroup(t)
 	created, err := testutils.Client.NewProxyCreate().
 		DisplayName("go_sdk_test_proxy").
-		GroupId(groupId).
+		GroupRegion("GCP_US_EAST4").
 		Do(context.Background())
 
 	if err != nil {
@@ -27,6 +26,5 @@ func TestNewProxyCreateE2E(t *testing.T) {
 
 	t.Cleanup(func() { 
 		testutils.DeleteProxy(t, created.Data.AgentId) 
-		testutils.DeleteGroup(t, groupId)
 	})
 }

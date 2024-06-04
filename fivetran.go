@@ -6,7 +6,7 @@ import (
 	"github.com/fivetran/go-fivetran/destinations"
 	"github.com/fivetran/go-fivetran/connect_card"
 	externallogging "github.com/fivetran/go-fivetran/external_logging"
-	"github.com/fivetran/go-fivetran/private_links"
+	"github.com/fivetran/go-fivetran/private_link"
 	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
@@ -74,8 +74,8 @@ func NewConnectCardConfig() *connectcard.ConnectCardConfig {
 	return &connectcard.ConnectCardConfig{}
 }
 
-func NewPrivateLinksConfig() *privatelinks.PrivateLinksConfig {
-	return &privatelinks.PrivateLinksConfig{}
+func NewPrivateLinkConfig() *privatelink.PrivateLinkConfig {
+	return &privatelink.PrivateLinkConfig{}
 }
 
 func Debug(value bool) {

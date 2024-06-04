@@ -5,22 +5,79 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/fivetran/go-fivetran/compare/v0.8.4...HEAD)
+## [Unreleased](https://github.com/fivetran/go-fivetran/compare/v0.8.6...HEAD)
 
-## [0.8.4](https://github.com/fivetran/go-fivetran/compare/v0.8.3...v0.8.4)
+## [0.8.6](https://github.com/fivetran/go-fivetran/compare/v0.8.5...v0.8.6)
+
+## Added
+
+Supported the following Fivetran API endpoints for Local Processing Agent Management:
+- [Create a Local Processing Agent](https://fivetran.com/docs/rest-api/local-processing-agent-management#createalocalprocessingagent)
+- [List Local Processing Agents](/docs/rest-api/local-processing-agent-management#listlocalprocessingagents)
+- [Retrieve Local Processing Agent Details](/docs/rest-api/local-processing-agent-management#retrievelocalprocessingagentdetails)
+- [Delete a Local Processing Agent](/docs/rest-api/local-processing-agent-management#deletealocalprocessingagent)
+- [Regenerate authentication keys for a Local Processing Agent](/docs/rest-api/local-processing-agent-management#regeneratekeys)
+
+Supported the following Fivetran API endpoints for Private Links Management::
+- [List all Private Links within Account](https://fivetran.com/docs/rest-api/private-links-management#listallprivatelinkswithinaccount)
+
+Added fields to support setting up Local Processing Agent in Destination API:
+- `DestinationCreateService.localProcessingAgentId`
+- `DestinationModifyService.localProcessingAgentId`
+- `DestinationDetailsService.localProcessingAgentId`
+
+Added fields to support setting up Private Link in Destination API:
+- `DestinationCreateService.privateLinkId`
+- `DestinationModifyService.privateLinkId`
+- `DestinationDetailsService.privateLinkId`
+
+Added fields to support setting up Networking Method in Destination API:
+- `DestinationCreateService.networkingMethod`
+- `DestinationModifyService.networkingMethod`
+- `DestinationDetailsService.networkingMethod`
+
+Added fields to support setting up Local Processing Agent in Connector API:
+- `ConnectorCreateService.localProcessingAgentId`
+- `ConnectorModifyService.localProcessingAgentId`
+- `ConnectorDetailsService.localProcessingAgentId`
+
+Added fields to support setting up Proxy Agent in Connector API:
+- `ConnectorCreateService.proxyAgentId`
+- `ConnectorModifyService.proxyAgentId`
+- `ConnectorDetailsService.proxyAgentId`
+
+Added fields to support setting up Private Link in Connector API:
+- `ConnectorCreateService.privateLinkId`
+- `ConnectorModifyService.privateLinkId`
+- `ConnectorDetailsService.privateLinkId`
+
+Added fields to support setting up Networking Method in Connector API:
+- `ConnectorCreateService.networkingMethod`
+- `ConnectorModifyService.networkingMethod`
+- `ConnectorDetailsService.networkingMethod`
+
+## Removed
+Removed the following deprecated Fivetran API endpoints for Proxy Agents Management:
+- [Attach connection to the proxy agent](https://fivetran.com/docs/rest-api/proxy-management#attachconnectiontotheproxyagent)
+- [Detach connection from the proxy agent](https://fivetran.com/docs/rest-api/proxy-management#detachconnectionformtheproxyagent)
+
+Removed the following deprecated Fivetran API endpoints for Private Links Management:
+- [List all Private Links within Group](https://fivetran.com/docs/rest-api/private-links-management#listallprivatelinkswithingroup)
+
+## [0.8.5](https://github.com/fivetran/go-fivetran/compare/v0.8.4...v0.8.5)
 
 ## Added
 
 Supported the following Fivetran API endpoints for Proxy Agents Management:
-- [Create a Proxy Agent](/docs/rest-api/proxy-management#createaproxyagent)
-- [List all Proxy Agents](/docs/rest-api/proxy-management#listallproxyagents)
-- [Retrieve Proxy Agent Details](/docs/rest-api/proxy-management#retrieveproxyagentdetails)
-- [Delete a Proxy Agent](/docs/rest-api/proxy-management#deleteaproxyagent)
-- [Return all connections attached to the proxy agent](/docs/rest-api/proxy-management#returnsallconnectionsattachedtotheproxyagent)
-- [Attach connection to the proxy agent](/docs/rest-api/proxy-management#attachconnectiontotheproxyagent)
-- [Detach connection from the proxy agent](/docs/rest-api/proxy-management#detachconnectionformtheproxyagent)
+- [Create a Proxy Agent](https://fivetran.com/docs/rest-api/proxy-management#createaproxyagent)
+- [List all Proxy Agents](https://fivetran.com/docs/rest-api/proxy-management#listallproxyagents)
+- [Retrieve Proxy Agent Details](https://fivetran.com/docs/rest-api/proxy-management#retrieveproxyagentdetails)
+- [Delete a Proxy Agent](https://fivetran.com/docs/rest-api/proxy-management#deleteaproxyagent)
+- [Return all connections attached to the proxy agent](https://fivetran.com/docs/rest-api/proxy-management#returnsallconnectionsattachedtotheproxyagent)
+- [Attach connection to the proxy agent](https://fivetran.com/docs/rest-api/proxy-management#attachconnectiontotheproxyagent)
+- [Detach connection from the proxy agent](https://fivetran.com/docs/rest-api/proxy-management#detachconnectionformtheproxyagent)
 
-## [0.8.3](https://github.com/fivetran/go-fivetran/compare/v0.8.2...v0.8.3)
+## [0.8.4](https://github.com/fivetran/go-fivetran/compare/v0.8.3...v0.8.4)
 
 ## Added
 Added fields to support Shift my UTC offset with daylight savings time (US Only) in Destination API:
@@ -30,7 +87,7 @@ Added fields to support Shift my UTC offset with daylight savings time (US Only)
 
 Removed unneccessary field `service` from Private Links API `PrivateLinksCreateService`
 
-## [0.8.2](https://github.com/fivetran/go-fivetran/compare/v0.8.1...v0.8.2)
+## [0.8.3](https://github.com/fivetran/go-fivetran/compare/v0.8.2...v0.8.3)
 
 ## Added
 Support for custom config (`map[string]interface{}`) for destinations:
@@ -38,7 +95,7 @@ Support for custom config (`map[string]interface{}`) for destinations:
 - `DestinationModifyService.ConfigCustom` and `DestinationModifyService.DoCustom` methods
 - `DestinationDetailsService.DoCustom` method
 
-## [0.8.1](https://github.com/fivetran/go-fivetran/compare/v0.8.0...v0.8.1)
+## [0.8.2](https://github.com/fivetran/go-fivetran/compare/v0.8.0...v0.8.2)
 
 ## Added
 

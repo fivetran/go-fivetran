@@ -12,7 +12,7 @@ import (
 
 const (
 	PROXY_NAME       = "Test Proxy"
-	PROXY_GROUP      = "group_id"
+	PROXY_GROUP      = "group_region"
 )
 
 func TestNewProxyCreate(t *testing.T) {
@@ -30,7 +30,7 @@ func TestNewProxyCreate(t *testing.T) {
 	// act
 	response, err := ftClient.NewProxyCreate().
 		DisplayName(PROXY_NAME).
-		GroupId(PROXY_GROUP).
+		GroupRegion(PROXY_GROUP).
 		Do(context.Background())
 
 	if err != nil {
@@ -60,7 +60,7 @@ func prepareProxyCreateResponse() string {
 
 func assertProxyCreateRequest(t *testing.T, request map[string]interface{}) {
 	testutils.AssertKey(t, "display_name", request, PROXY_NAME)
-	testutils.AssertKey(t, "group_id", request, PROXY_GROUP)
+	testutils.AssertKey(t, "group_region", request, PROXY_GROUP)
 }
 
 func assertProxyCreateResponse(t *testing.T, response proxy.ProxyCreateResponse) {

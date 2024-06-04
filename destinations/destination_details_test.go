@@ -19,6 +19,9 @@ const DESTINATION_DETAILS_REGION = "GCP_US_EAST4"
 const DESTINATION_DETAILS_TIME_ZONE = "-5"
 const DESTINATION_DETAILS_SETUP_STATUS = "connected"
 const DESTINATION_DETAILS_DAYLIGHT = true
+const DESTINATION_DETAILS_LOCALPROCESSINGAGENTID = "lpa_id"
+const DESTINATION_DETAILS_PRIVATELINKID = "private_link_id"
+const DESTINATION_DETAILS_NETWORKINGMETHOD = "Direct"
 const DESTINATION_DETAILS_HOST = "your-account.snowflakecomputing.com"
 const DESTINATION_DETAILS_PORT = "443"
 const DESTINATION_DETAILS_DATABASE = "fivetran"
@@ -91,6 +94,9 @@ func prepareDestinationDetailsResponse() string {
 			"service": "%s",
 			"region": "%s",
 			"daylight_saving_time_enabled": %v,
+            "local_processing_agent_id":    "%v",
+            "private_link_id":              "%v",
+            "networking_method":            "%v",
 			"time_zone_offset": "%s",
 			"setup_status": "%s",
 			"config": {
@@ -108,6 +114,9 @@ func prepareDestinationDetailsResponse() string {
 		DESTINATION_DETAILS_SERVICE,
 		DESTINATION_DETAILS_REGION,
 		DESTINATION_DETAILS_DAYLIGHT,
+		DESTINATION_DETAILS_LOCALPROCESSINGAGENTID,
+		DESTINATION_DETAILS_PRIVATELINKID,
+		DESTINATION_DETAILS_NETWORKINGMETHOD,
 		DESTINATION_DETAILS_TIME_ZONE,
 		DESTINATION_DETAILS_SETUP_STATUS,
 		DESTINATION_DETAILS_HOST,
@@ -125,6 +134,9 @@ func assertDestinationDetailsResponse(t *testing.T, response destinations.Destin
 	testutils.AssertEqual(t, response.Data.Service, DESTINATION_DETAILS_SERVICE)
 	testutils.AssertEqual(t, response.Data.Region, DESTINATION_DETAILS_REGION)
 	testutils.AssertEqual(t, response.Data.DaylightSavingTimeEnabled, DESTINATION_DETAILS_DAYLIGHT)
+	testutils.AssertEqual(t, response.Data.LocalProcessingAgentId, DESTINATION_DETAILS_LOCALPROCESSINGAGENTID)
+	testutils.AssertEqual(t, response.Data.PrivateLinkId, DESTINATION_DETAILS_PRIVATELINKID)
+	testutils.AssertEqual(t, response.Data.NetworkingMethod, DESTINATION_DETAILS_NETWORKINGMETHOD)
 	testutils.AssertEqual(t, response.Data.TimeZoneOffset, DESTINATION_DETAILS_TIME_ZONE)
 	testutils.AssertEqual(t, response.Data.SetupStatus, DESTINATION_DETAILS_SETUP_STATUS)
 	testutils.AssertEqual(t, response.Data.Config.Host, DESTINATION_DETAILS_HOST)
@@ -141,6 +153,9 @@ func assertDestinationDetailsCustomResponse(t *testing.T, response destinations.
 	testutils.AssertEqual(t, response.Data.GroupID, DESTINATION_DETAILS_ID)
 	testutils.AssertEqual(t, response.Data.Service, DESTINATION_DETAILS_SERVICE)
 	testutils.AssertEqual(t, response.Data.DaylightSavingTimeEnabled, DESTINATION_DETAILS_DAYLIGHT)
+	testutils.AssertEqual(t, response.Data.LocalProcessingAgentId, DESTINATION_DETAILS_LOCALPROCESSINGAGENTID)
+	testutils.AssertEqual(t, response.Data.PrivateLinkId, DESTINATION_DETAILS_PRIVATELINKID)
+	testutils.AssertEqual(t, response.Data.NetworkingMethod, DESTINATION_DETAILS_NETWORKINGMETHOD)
 	testutils.AssertEqual(t, response.Data.Region, DESTINATION_DETAILS_REGION)
 	testutils.AssertEqual(t, response.Data.TimeZoneOffset, DESTINATION_DETAILS_TIME_ZONE)
 	testutils.AssertEqual(t, response.Data.SetupStatus, DESTINATION_DETAILS_SETUP_STATUS)
