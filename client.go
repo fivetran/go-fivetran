@@ -14,13 +14,13 @@ import (
 	"github.com/fivetran/go-fivetran/fingerprints"
 	"github.com/fivetran/go-fivetran/groups"
 	httputils "github.com/fivetran/go-fivetran/http_utils"
-	privatelink "github.com/fivetran/go-fivetran/private_link"
 	localprocessingagent "github.com/fivetran/go-fivetran/local_processing_agent"
+	privatelink "github.com/fivetran/go-fivetran/private_link"
+	"github.com/fivetran/go-fivetran/proxy"
 	"github.com/fivetran/go-fivetran/roles"
 	"github.com/fivetran/go-fivetran/teams"
 	"github.com/fivetran/go-fivetran/users"
 	"github.com/fivetran/go-fivetran/webhooks"
-	"github.com/fivetran/go-fivetran/proxy"
 )
 
 // Client holds client configuration
@@ -573,6 +573,10 @@ func (c *Client) NewConnectorSchemaReload() *connectors.ConnectorSchemaReloadSer
 
 func (c *Client) NewConnectorSchemaUpdateService() *connectors.ConnectorSchemaConfigUpdateService {
 	return &connectors.ConnectorSchemaConfigUpdateService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewConnectorSchemaCreateService() *connectors.ConnectorSchemaConfigCreateService {
+	return &connectors.ConnectorSchemaConfigCreateService{HttpService: c.NewHttpService()}
 }
 
 func (c *Client) NewConnectorTableConfigModifyService() *connectors.ConnectorTableConfigModifyService {
