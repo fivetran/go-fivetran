@@ -134,8 +134,10 @@ type connectorSchemaConfigModifyRequest struct {
 }
 
 type ConnectorColumnConfigListResponse struct {
-	Code    string                                          `json:"code"`
-	Columns map[string]*ConnectorSchemaConfigColumnResponse `json:"columns"`
+	common.CommonResponse
+	Data struct {
+		Columns map[string]*ConnectorSchemaConfigColumnResponse `json:"columns"`
+	} `json:"data"`
 }
 
 type connectorColumnConfigModifyRequest struct {

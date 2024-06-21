@@ -13,11 +13,12 @@ type ConnectorSchemaConfigTableRequest struct {
 }
 
 type ConnectorSchemaConfigTableResponse struct {
-	NameInDestination    *string                                         `json:"name_in_destination"`
-	Enabled              *bool                                           `json:"enabled"`
-	SyncMode             *string                                         `json:"sync_mode"`
-	Columns              map[string]*ConnectorSchemaConfigColumnResponse `json:"columns"`
-	EnabledPatchSettings struct {
+	NameInDestination     *string                                         `json:"name_in_destination"`
+	Enabled               *bool                                           `json:"enabled"`
+	SyncMode              *string                                         `json:"sync_mode"`
+	Columns               map[string]*ConnectorSchemaConfigColumnResponse `json:"columns"`
+	SupportsColumnsConfig *bool                                           `json:"supports_columns_config"`
+	EnabledPatchSettings  struct {
 		Allowed    *bool   `json:"allowed"`
 		ReasonCode *string `json:"reason_code"`
 		Reason     *string `json:"reason"`

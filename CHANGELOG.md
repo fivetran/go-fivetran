@@ -5,7 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/fivetran/go-fivetran/compare/v0.8.7...HEAD)
+## [Unreleased](https://github.com/fivetran/go-fivetran/compare/v0.8.8...HEAD)
+
+## [0.8.8](https://github.com/fivetran/go-fivetran/compare/v0.8.7...v0.8.8)
+
+## Fixed
+- Response model for [Retrieve Source Table Columns Config](https://fivetran.com/docs/rest-api/connectors#retrievesourcetablecolumnsconfig) fixed.
+
+## Added
+- New field `connectors.ConnectorSchemaConfigTableResponse.SupportsColumnsConfig` added.
 
 ## [0.8.7](https://github.com/fivetran/go-fivetran/compare/v0.8.6...v0.8.7)
 
