@@ -47,10 +47,8 @@ func prepareProxyListResponse() string {
           {
             "id": "id",
             "account_id": "account_id",
-            "registred_at": "registred_at",
+            "registered_at": "registered_at",
             "region": "region",
-            "token": "token",
-            "salt": "salt",
             "created_by": "created_by",
             "display_name": "display_name"
           }
@@ -64,10 +62,8 @@ func assertProxyListResponse(t *testing.T, response proxy.ProxyListResponse) {
 	testutils.AssertEqual(t, response.Code, "Success")
 	testutils.AssertEqual(t, response.Data.Items[0].Id, "id")
 	testutils.AssertEqual(t, response.Data.Items[0].AccountId, "account_id")
-	testutils.AssertEqual(t, response.Data.Items[0].RegistredAt, "registred_at")
+	testutils.AssertEqual(t, response.Data.Items[0].RegisteredAt, "registered_at")
 	testutils.AssertEqual(t, response.Data.Items[0].Region, "region")
-	testutils.AssertEqual(t, response.Data.Items[0].Token, "token")
-	testutils.AssertEqual(t, response.Data.Items[0].Salt, "salt")
 	testutils.AssertEqual(t, response.Data.Items[0].CreatedBy, "created_by")
 	testutils.AssertEqual(t, response.Data.Items[0].DisplayName, "display_name")
 }

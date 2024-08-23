@@ -13,10 +13,8 @@ type ProxyCreateData struct {
 type ProxyData struct {
     Id              string `json:"id"`
     AccountId       string `json:"account_id"`
-    RegistredAt     string `json:"registred_at"`
+    RegisteredAt    string `json:"registered_at"`
     Region          string `json:"region"`
-    Token           string `json:"token"`
-    Salt            string `json:"salt"`
     CreatedBy       string `json:"created_by"`
     DisplayName     string `json:"display_name"`
 }

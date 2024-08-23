@@ -8,13 +8,6 @@ func (dc *DbtProjectConfig) Request() *dbtProjectConfigRequest {
 	}
 }
 
-func (dc *DbtProjectConfig) UpdateRequest() *updateDbtProjectConfigRequest {
-	return &updateDbtProjectConfigRequest{
-		GitBranch:  dc.gitBranch,
-		FolderPath: dc.folderPath,
-	}
-}
-
 func (dc *DbtProjectConfig) GitRemoteUrl(value string) *DbtProjectConfig {
 	dc.gitRemoteUrl = &value
 	return dc

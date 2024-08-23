@@ -20,8 +20,6 @@ func TestProxyListE2E(t *testing.T) {
 	testutils.AssertEqual(t, result.Data.Items[0].Id, proxyId)
 	testutils.AssertNotEmpty(t, result.Data.Items[0].AccountId)
 	testutils.AssertNotEmpty(t, result.Data.Items[0].Region)
-	testutils.AssertNotEmpty(t, result.Data.Items[0].Token)
-	testutils.AssertNotEmpty(t, result.Data.Items[0].Salt)
 	testutils.AssertNotEmpty(t, result.Data.Items[0].CreatedBy)
 	testutils.AssertNotEmpty(t, result.Data.Items[0].DisplayName)
 

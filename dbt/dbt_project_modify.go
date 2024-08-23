@@ -52,7 +52,7 @@ func (s *DbtProjectModifyService) request() *dbtProjectModifyRequest {
 	var config interface{}
 
 	if s.projectConfig != nil {
-		config = s.projectConfig.UpdateRequest()
+		config = s.projectConfig.Request()
 	}
 
 	return &dbtProjectModifyRequest{
