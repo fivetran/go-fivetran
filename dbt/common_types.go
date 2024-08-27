@@ -122,11 +122,6 @@ type dbtProjectConfigRequest struct {
 	FolderPath   *string `json:"folder_path,omitempty"`
 }
 
-type updateDbtProjectConfigRequest struct {
-	GitBranch  *string `json:"git_branch,omitempty"`
-	FolderPath *string `json:"folder_path,omitempty"`
-}
-
 type DbtProjectConfigResponse struct {
 	GitRemoteUrl string `json:"git_remote_url"`
 	GitBranch    string `json:"git_branch"`

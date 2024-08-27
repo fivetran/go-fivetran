@@ -89,7 +89,7 @@ func TestNewDbtProjectUpdateFullMappingMock(t *testing.T) {
 
 				configRequest := body["project_config"].(map[string]interface{})
 
-				testutils.AssertHasNoKey(t, configRequest, "git_remote_url")
+				testutils.AssertKey(t, "git_remote_url", configRequest, gitRemoteURL)
 				testutils.AssertKey(t, "git_branch", configRequest, gitBranch)
 				testutils.AssertKey(t, "folder_path", configRequest, folderPath)
 
@@ -106,7 +106,7 @@ func TestNewDbtProjectUpdateFullMappingMock(t *testing.T) {
 		Threads(threads).
 		EnvironmentVars([]string{environmentVar}).
 		ProjectConfig(fivetran.NewDbtProjectConfig().
-			GitRemoteUrl(gitRemoteURL). // This value should not be passed in request
+			GitRemoteUrl(gitRemoteURL).
 			FolderPath(folderPath).
 			GitBranch(gitBranch)).
 		Do(context.Background())

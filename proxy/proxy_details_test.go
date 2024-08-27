@@ -46,10 +46,8 @@ func prepareProxyDetailsResponse() string {
   		"data": {
             "id": "id",
             "account_id": "account_id",
-            "registred_at": "registred_at",
+            "registered_at": "registered_at",
             "region": "region",
-            "token": "token",
-            "salt": "salt",
             "created_by": "created_by",
             "display_name": "display_name"
   			}
@@ -60,10 +58,8 @@ func assertProxyDetailsResponse(t *testing.T, response proxy.ProxyDetailsRespons
 	testutils.AssertEqual(t, response.Code, "Success")
 	testutils.AssertEqual(t, response.Data.Id, "id")
 	testutils.AssertEqual(t, response.Data.AccountId, "account_id")
-	testutils.AssertEqual(t, response.Data.RegistredAt, "registred_at")
+	testutils.AssertEqual(t, response.Data.RegisteredAt, "registered_at")
 	testutils.AssertEqual(t, response.Data.Region, "region")
-	testutils.AssertEqual(t, response.Data.Token, "token")
-	testutils.AssertEqual(t, response.Data.Salt, "salt")
 	testutils.AssertEqual(t, response.Data.CreatedBy, "created_by")
 	testutils.AssertEqual(t, response.Data.DisplayName, "display_name")
 }

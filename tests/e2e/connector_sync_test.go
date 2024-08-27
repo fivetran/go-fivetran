@@ -9,6 +9,7 @@ import (
 )
 
 func TestNewConnectorSyncE2E(t *testing.T) {
+	t.Skip("Problems with scheduler on staging")
 	connectorId := testutils.CreateTempConnector(t)
 	sync, err := testutils.Client.NewConnectorSync().
 		ConnectorID(connectorId).

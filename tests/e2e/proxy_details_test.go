@@ -20,8 +20,6 @@ func TestProxyDetailsE2E(t *testing.T) {
 	testutils.AssertEqual(t, result.Data.Id, proxyId)
 	testutils.AssertNotEmpty(t, result.Data.AccountId)
 	testutils.AssertNotEmpty(t, result.Data.Region)
-	testutils.AssertNotEmpty(t, result.Data.Token)
-	testutils.AssertNotEmpty(t, result.Data.Salt)
 	testutils.AssertNotEmpty(t, result.Data.CreatedBy)
 	testutils.AssertNotEmpty(t, result.Data.DisplayName)
 
