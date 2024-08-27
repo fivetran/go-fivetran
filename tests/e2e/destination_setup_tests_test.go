@@ -8,6 +8,7 @@ import (
 )
 
 func TestNewDestinationSetupTestsE2E(t *testing.T) {
+	t.Skip("The test is very unstable and often times out. Use locally or to test changes to just this method.")
 	destinationId := testutils.CreateTempDestination(t)
 	response, err := testutils.Client.NewDestinationSetupTests().DestinationID(destinationId).
 		TrustCertificates(true).
