@@ -21,6 +21,7 @@ const (
 func TestNewConnectorSecretsListMappingMock(t *testing.T) {
     // arrange
     ftClient, mockClient := testutils.CreateTestClient()
+	syncFrequency := SYNC_FREQUENCY
     handler := mockClient.When(http.MethodPost, "/v1/connectors").ThenCall(
 
         func(req *http.Request) (*http.Response, error) {
@@ -34,7 +35,7 @@ func TestNewConnectorSecretsListMappingMock(t *testing.T) {
     response, err := ftClient.NewConnectorCreate().
         Service(CONNECTOR_SERVICE).
         GroupID("test_id").
-        SyncFrequency(SYNC_FREQUENCY).
+        SyncFrequency(&syncFrequency).
         LocalProcessingAgentId("lpa_id").
         ProxyAgentId("proxy_id").
         PrivateLinkId("private_link_id").
@@ -60,6 +61,7 @@ func TestNewConnectorSecretsListMappingMock(t *testing.T) {
 func TestNewConnectorCustomSecretsListMappingMock(t *testing.T) {
     // arrange
     ftClient, mockClient := testutils.CreateTestClient()
+	syncFrequency := SYNC_FREQUENCY
     handler := mockClient.When(http.MethodPost, "/v1/connectors").ThenCall(
 
         func(req *http.Request) (*http.Response, error) {
@@ -73,7 +75,7 @@ func TestNewConnectorCustomSecretsListMappingMock(t *testing.T) {
     response, err := ftClient.NewConnectorCreate().
         Service(CONNECTOR_SERVICE).
         GroupID("test_id").
-        SyncFrequency(SYNC_FREQUENCY).
+        SyncFrequency(&syncFrequency).
         LocalProcessingAgentId("lpa_id").
         ProxyAgentId("proxy_id").
         PrivateLinkId("private_link_id").
@@ -98,6 +100,7 @@ func TestNewConnectorCustomSecretsListMappingMock(t *testing.T) {
 func TestNewConnectorCustomMergedMappingMock(t *testing.T) {
     // arrange
     ftClient, mockClient := testutils.CreateTestClient()
+	syncFrequency := SYNC_FREQUENCY
     handler := mockClient.When(http.MethodPost, "/v1/connectors").ThenCall(
 
         func(req *http.Request) (*http.Response, error) {
@@ -111,7 +114,7 @@ func TestNewConnectorCustomMergedMappingMock(t *testing.T) {
     response, err := ftClient.NewConnectorCreate().
         Service(CONNECTOR_SERVICE).
         GroupID("test_id").
-        SyncFrequency(SYNC_FREQUENCY).
+        SyncFrequency(&syncFrequency).
         LocalProcessingAgentId("lpa_id").
         ProxyAgentId("proxy_id").
         PrivateLinkId("private_link_id").
@@ -298,7 +301,7 @@ func prepareConnectorCustomAuth() *map[string]interface{} {
 func assertConnectorRequest(t *testing.T, request map[string]interface{}) {
     testutils.AssertKey(t, "service", request, CONNECTOR_SERVICE)
     testutils.AssertKey(t, "group_id", request, "test_id")
-    testutils.AssertKey(t, "sync_frequency", request, float64(5))
+    testutils.AssertKey(t, "sync_frequency", request, 5)
     testutils.AssertKey(t, "local_processing_agent_id", request, "lpa_id")
     testutils.AssertKey(t, "proxy_agent_id", request, "proxy_id")
     testutils.AssertKey(t, "private_link_id", request, "private_link_id")
