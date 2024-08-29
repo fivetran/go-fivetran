@@ -13,6 +13,7 @@ import (
 func main() {
 	apiKey := os.Getenv("FIVETRAN_APIKEY")
 	apiSecret := os.Getenv("FIVETRAN_APISECRET")
+	syncFrequency := 5;
 	fivetran.Debug(true)
 
 	client := fivetran.New(apiKey, apiSecret)
@@ -32,7 +33,7 @@ func main() {
 
 	svc.ConnectorID("grateful_vertices")
 	svc.Paused(true)
-	svc.SyncFrequency(5)
+	svc.SyncFrequency(&syncFrequency)
 	svc.Config(connConfig)
 
 	value, err := svc.Do(context.Background())
