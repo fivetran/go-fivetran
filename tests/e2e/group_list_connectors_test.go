@@ -33,7 +33,7 @@ func TestNewGroupListConnectorsE2E(t *testing.T) {
 	//testutils.AssertEqual(t, *connectors.Data.Items[0].Paused, false)
 	//testutils.AssertEqual(t, *connectors.Data.Items[0].PauseAfterTrial, false)
 
-	testutils.AssertEqual(t, *connectors.Data.Items[0].SyncFrequency, 360)
+	testutils.AssertEqual(t, *connectors.Data.Items[0].SyncFrequency, "360")
 	testutils.AssertEqual(t, connectors.Data.Items[0].ScheduleType, "auto")
 
 	testutils.AssertEqual(t, connectors.Data.Items[0].Status.SetupState, "incomplete")
