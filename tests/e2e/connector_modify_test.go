@@ -15,7 +15,7 @@ func TestNewConnectorModifyE2E(t *testing.T) {
 		Paused(true).
 		PauseAfterTrial(true).
 		//IsHistoricalSync(false).
-		SyncFrequency(1440).
+		SyncFrequency("1440").
 		DailySyncTime("03:00").
 		Config(fivetran.NewConnectorConfig().
 			Username("fivetran_updated").

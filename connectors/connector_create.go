@@ -18,7 +18,7 @@ type ConnectorCreateService struct {
     trustFingerprints       *bool
     runSetupTests           *bool
     paused                  *bool
-    syncFrequency           *int
+    syncFrequency           *string
     dailySyncTime           *string
     pauseAfterTrial         *bool
     localProcessingAgentId  *string
@@ -154,7 +154,7 @@ func (s *ConnectorCreateService) Paused(value bool) *ConnectorCreateService {
     return s
 }
 
-func (s *ConnectorCreateService) SyncFrequency(value int) *ConnectorCreateService {
+func (s *ConnectorCreateService) SyncFrequency(value string) *ConnectorCreateService {
     s.syncFrequency = &value
     return s
 }

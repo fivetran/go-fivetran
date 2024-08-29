@@ -14,7 +14,7 @@ type ConnectorModifyService struct {
     httputils.HttpService
     connectorID             *string
     paused                  *bool
-    syncFrequency           *int
+    syncFrequency           *string
     dailySyncTime           *string
     trustCertificates       *bool
     trustFingerprints       *bool
@@ -133,7 +133,7 @@ func (s *ConnectorModifyService) Paused(value bool) *ConnectorModifyService {
     return s
 }
 
-func (s *ConnectorModifyService) SyncFrequency(value int) *ConnectorModifyService {
+func (s *ConnectorModifyService) SyncFrequency(value string) *ConnectorModifyService {
     s.syncFrequency = &value
     return s
 }

@@ -15,7 +15,7 @@ import (
 
 const (
     CONNECTOR_SERVICE = "test_service"
-    SYNC_FREQUENCY    = 5
+    SYNC_FREQUENCY    = "5"
 )
 
 func TestNewConnectorSecretsListMappingMock(t *testing.T) {
@@ -298,7 +298,7 @@ func prepareConnectorCustomAuth() *map[string]interface{} {
 func assertConnectorRequest(t *testing.T, request map[string]interface{}) {
     testutils.AssertKey(t, "service", request, CONNECTOR_SERVICE)
     testutils.AssertKey(t, "group_id", request, "test_id")
-    testutils.AssertKey(t, "sync_frequency", request, float64(5))
+    testutils.AssertKey(t, "sync_frequency", request, "5")
     testutils.AssertKey(t, "local_processing_agent_id", request, "lpa_id")
     testutils.AssertKey(t, "proxy_agent_id", request, "proxy_id")
     testutils.AssertKey(t, "private_link_id", request, "private_link_id")

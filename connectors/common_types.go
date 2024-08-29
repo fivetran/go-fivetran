@@ -16,7 +16,7 @@ type DetailsResponseDataCommon struct {
 	CreatedAt              time.Time      `json:"created_at"`
 	SucceededAt            time.Time      `json:"succeeded_at"`
 	FailedAt               time.Time      `json:"failed_at"`
-	SyncFrequency          *int           `json:"sync_frequency"`
+	SyncFrequency          string         `json:"sync_frequency"`
 	ScheduleType           string         `json:"schedule_type"`
 	Paused                 *bool          `json:"paused"`
 	PauseAfterTrial        *bool          `json:"pause_after_trial"`
@@ -107,7 +107,7 @@ type connectorCreateRequestBase struct {
 	TrustFingerprints      *bool   `json:"trust_fingerprints,omitempty"`
 	RunSetupTests          *bool   `json:"run_setup_tests,omitempty"`
 	Paused                 *bool   `json:"paused,omitempty"`
-	SyncFrequency          *int    `json:"sync_frequency,omitempty"`
+	SyncFrequency          *string `json:"sync_frequency,omitempty"`
 	DailySyncTime          *string `json:"daily_sync_time,omitempty"`
 	PauseAfterTrial        *bool   `json:"pause_after_trial,omitempty"`
 	ProxyAgentId           *string `json:"proxy_agent_id,omitempty"`
@@ -147,7 +147,7 @@ type connectorColumnConfigModifyRequest struct {
 
 type connectorModifyRequestBase struct {
 	Paused                 *bool   `json:"paused,omitempty"`
-	SyncFrequency          *int    `json:"sync_frequency,omitempty"`
+	SyncFrequency          *string `json:"sync_frequency,omitempty"`
 	DailySyncTime          *string `json:"daily_sync_time,omitempty"`
 	TrustCertificates      *bool   `json:"trust_certificates,omitempty"`
 	TrustFingerprints      *bool   `json:"trust_fingerprints,omitempty"`
