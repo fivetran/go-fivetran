@@ -16,7 +16,7 @@ type DetailsResponseDataCommon struct {
 	CreatedAt              time.Time      `json:"created_at"`
 	SucceededAt            time.Time      `json:"succeeded_at"`
 	FailedAt               time.Time      `json:"failed_at"`
-	SyncFrequency          string         `json:"sync_frequency"`
+	SyncFrequency          *int           `json:"sync_frequency"`
 	ScheduleType           string         `json:"schedule_type"`
 	Paused                 *bool          `json:"paused"`
 	PauseAfterTrial        *bool          `json:"pause_after_trial"`
