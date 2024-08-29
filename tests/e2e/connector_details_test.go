@@ -29,7 +29,7 @@ func TestNewConnectorDetailsE2E(t *testing.T) {
 	testutils.AssertEqual(t, details.Data.FailedAt.IsZero(), true)
 	testutils.AssertEqual(t, *details.Data.Paused, false)
 	testutils.AssertEqual(t, *details.Data.PauseAfterTrial, false)
-	testutils.AssertEqual(t, *details.Data.SyncFrequency, "360")
+	testutils.AssertEqual(t, details.Data.SyncFrequency, "360")
 	testutils.AssertEqual(t, details.Data.ScheduleType, "auto")
 
 	testutils.AssertEqual(t, details.Data.Status.SetupState, "incomplete")

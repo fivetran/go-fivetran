@@ -40,13 +40,13 @@ func TestNewConnectorModifyE2E(t *testing.T) {
 	testutils.AssertEqual(t, updated.Data.FailedAt.IsZero(), true)
 	testutils.AssertEqual(t, *updated.Data.Paused, true)
 	testutils.AssertEqual(t, *updated.Data.PauseAfterTrial, true)
-	testutils.AssertEqual(t, *updated.Data.SyncFrequency, "1440")
+	testutils.AssertEqual(t, updated.Data.SyncFrequency, "1440")
 	testutils.AssertEqual(t, updated.Data.ScheduleType, "auto")
 	testutils.AssertEmpty(t, updated.Data.PrivateLinkId)
 	testutils.AssertEmpty(t, updated.Data.LocalProcessingAgentId)
 	testutils.AssertEmpty(t, updated.Data.ProxyAgentId)
 	testutils.AssertEqual(t, updated.Data.NetworkingMethod, "Directly")
-	
+
 	testutils.AssertNotEmpty(t, updated.Data.Status.SetupState)
 	testutils.AssertEqual(t, updated.Data.Status.SyncState, "paused")
 	testutils.AssertEqual(t, updated.Data.Status.UpdateState, "on_schedule")
