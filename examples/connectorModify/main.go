@@ -32,7 +32,7 @@ func main() {
 
 	svc.ConnectorID("grateful_vertices")
 	svc.Paused(true)
-	svc.SyncFrequency("5")
+	svc.SyncFrequency(5)
 	svc.Config(connConfig)
 
 	value, err := svc.Do(context.Background())

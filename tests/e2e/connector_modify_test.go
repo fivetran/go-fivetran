@@ -10,12 +10,12 @@ import (
 
 func TestNewConnectorModifyE2E(t *testing.T) {
 	connectorId := testutils.CreateTempConnector(t)
-
+	syncFrequency := 1440
 	updated, err := testutils.Client.NewConnectorModify().ConnectorID(connectorId).
 		Paused(true).
 		PauseAfterTrial(true).
 		//IsHistoricalSync(false).
-		SyncFrequency("1440").
+		SyncFrequency(&syncFrequency).
 		DailySyncTime("03:00").
 		Config(fivetran.NewConnectorConfig().
 			Username("fivetran_updated").
