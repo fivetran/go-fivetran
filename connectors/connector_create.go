@@ -154,8 +154,8 @@ func (s *ConnectorCreateService) Paused(value bool) *ConnectorCreateService {
     return s
 }
 
-func (s *ConnectorCreateService) SyncFrequency(value int) *ConnectorCreateService {
-    s.syncFrequency = &value
+func (s *ConnectorCreateService) SyncFrequency(value *int) *ConnectorCreateService {
+    s.syncFrequency = value
     return s
 }
 

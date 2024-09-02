@@ -1,19 +1,20 @@
 package testutils
 
 import (
-	"context"
-	"fmt"
-	"net/http"
-	"io"
 	"bytes"
+	"context"
+	"encoding/json"
+	"fmt"
+	"io"
 	"log"
+	"net/http"
 	"os"
 	"reflect"
-	"encoding/json"
 	"testing"
 	"time"
-	"github.com/fivetran/go-fivetran/tests/mock"
+
 	"github.com/fivetran/go-fivetran"
+	"github.com/fivetran/go-fivetran/tests/mock"
 )
 
 var Client *fivetran.Client
@@ -38,7 +39,7 @@ const (
 )
 
 var (
-	cleanup = false
+	cleanup     = false
 	TEST_KEY    = "test_key"
 	TEST_SECRET = "test_secret"
 
@@ -481,6 +482,14 @@ func AssertIsNotNil(t *testing.T, value interface{}) {
 	}
 }
 
+func AssertIsNil(t *testing.T, value *int) {
+	t.Helper()
+
+	if value != nil {
+		printError(t, value, "nil value")
+	}
+}
+
 func AssertKeyValue(t *testing.T, source map[string]interface{}, key string, expected interface{}) {
 	t.Helper()
 	AssertHasKey(t, source, key)
@@ -718,7 +727,7 @@ func CreateExternalLogging(t *testing.T) string {
 }
 
 /* Private Links */
-func CreatePrivateLink(t *testing.T) (string) {
+func CreatePrivateLink(t *testing.T) string {
 	t.Helper()
 	created, err := Client.NewPrivateLinkCreate().
 		Name("go_sdk_private_link_internal").
@@ -745,12 +754,12 @@ func DeletePrivateLink(t *testing.T, id string) {
 	}
 }
 
-func CreateTempPrivateLink(t *testing.T) (string) {
+func CreateTempPrivateLink(t *testing.T) string {
 	t.Helper()
 	privateLinkId := CreatePrivateLink(t)
 
 	t.Cleanup(func() {
-		DeletePrivateLink(t, privateLinkId) 
+		DeletePrivateLink(t, privateLinkId)
 	})
 	return privateLinkId
 }
@@ -789,7 +798,6 @@ func CreateWebhookAccount(t *testing.T) string {
 	}
 	return created.Data.Id
 }
-
 
 /* Begin Team Management */
 func CreateTeam(t *testing.T) string {

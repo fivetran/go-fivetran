@@ -10,12 +10,12 @@ import (
 
 func TestNewConnectorModifyE2E(t *testing.T) {
 	connectorId := testutils.CreateTempConnector(t)
-
+	syncFrequency := 1440
 	updated, err := testutils.Client.NewConnectorModify().ConnectorID(connectorId).
 		Paused(true).
 		PauseAfterTrial(true).
 		//IsHistoricalSync(false).
-		SyncFrequency(1440).
+		SyncFrequency(&syncFrequency).
 		DailySyncTime("03:00").
 		Config(fivetran.NewConnectorConfig().
 			Username("fivetran_updated").
@@ -46,7 +46,7 @@ func TestNewConnectorModifyE2E(t *testing.T) {
 	testutils.AssertEmpty(t, updated.Data.LocalProcessingAgentId)
 	testutils.AssertEmpty(t, updated.Data.ProxyAgentId)
 	testutils.AssertEqual(t, updated.Data.NetworkingMethod, "Directly")
-	
+
 	testutils.AssertNotEmpty(t, updated.Data.Status.SetupState)
 	testutils.AssertEqual(t, updated.Data.Status.SyncState, "paused")
 	testutils.AssertEqual(t, updated.Data.Status.UpdateState, "on_schedule")
