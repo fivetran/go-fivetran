@@ -1,5 +1,11 @@
 package destinations
 
+import (
+        "fmt"
+    "reflect"
+    "strconv"
+)
+
 // DestinationConfig builds Destination Management, Destination Config.
 // Ref. https://fivetran.com/docs/rest-api/destinations/config
 type DestinationConfig struct {
@@ -112,7 +118,7 @@ type DestinationConfigResponse struct {
     ClusterId             string `json:"cluster_id"`
     ClusterRegion         string `json:"cluster_region"`
     Role                  string `json:"role"`
-    IsPrivateKeyEncrypted string `json:"is_private_key_encrypted"`
+    IsPrivateKeyEncrypted interface{}   `json:"is_private_key_encrypted"` // We expect a string here, but return a boolean. Since in the code this field is a string, so for backward compatibility we use the interface
     Passphrase            string `json:"passphrase"`
     Catalog               string `json:"catalog"`
     FivetranRoleArn       string `json:"fivetran_role_arn"`
