@@ -112,7 +112,7 @@ type DestinationConfigResponse struct {
     ClusterId             string `json:"cluster_id"`
     ClusterRegion         string `json:"cluster_region"`
     Role                  string `json:"role"`
-    IsPrivateKeyEncrypted string `json:"is_private_key_encrypted"`
+    IsPrivateKeyEncrypted bool   `json:"is_private_key_encrypted"`
     Passphrase            string `json:"passphrase"`
     Catalog               string `json:"catalog"`
     FivetranRoleArn       string `json:"fivetran_role_arn"`
