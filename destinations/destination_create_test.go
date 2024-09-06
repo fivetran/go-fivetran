@@ -204,7 +204,7 @@ func prepareDestinationResponse() string {
                     "cluster_id":               "%v",
                     "cluster_region":           "%v",
                     "role":                     "%v",
-                    "is_private_key_encrypted": "%v",
+                    "is_private_key_encrypted": %v,
                     "passphrase":               "%v",
                     "catalog":                  "%v",
                     "fivetran_role_arn":        "%v",
