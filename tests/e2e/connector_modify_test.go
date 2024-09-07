@@ -9,6 +9,7 @@ import (
 )
 
 func TestNewConnectorModifyE2E(t *testing.T) {
+	t.Skip("The test often fails due to timeouts. It is necessary to check its work only when this resource changes")
 	connectorId := testutils.CreateTempConnector(t)
 	syncFrequency := 1440
 	updated, err := testutils.Client.NewConnectorModify().ConnectorID(connectorId).

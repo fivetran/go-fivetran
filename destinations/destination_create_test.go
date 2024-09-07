@@ -204,7 +204,7 @@ func prepareDestinationResponse() string {
                     "cluster_id":               "%v",
                     "cluster_region":           "%v",
                     "role":                     "%v",
-                    "is_private_key_encrypted": "%v",
+                    "is_private_key_encrypted": %v,
                     "passphrase":               "%v",
                     "catalog":                  "%v",
                     "fivetran_role_arn":        "%v",
@@ -465,7 +465,7 @@ func asserResponseCustom(t *testing.T, response destinations.DestinationDetailsW
     testutils.AssertEqual(t, response.Data.Config["user"], USER)
     testutils.AssertEqual(t, response.Data.Config["location"], LOCATION)
     testutils.AssertEqual(t, response.Data.Config["role"], ROLE)
-    testutils.AssertEqual(t, response.Data.Config["is_private_key_encrypted"], testutils.BoolToStr(IS_PRIVATE_KEY_ENCRYPTED))
+    testutils.AssertEqual(t, response.Data.Config["is_private_key_encrypted"], IS_PRIVATE_KEY_ENCRYPTED)
     testutils.AssertEqual(t, response.Data.Config["passphrase"], PASSPHRASE)
     testutils.AssertEqual(t, response.Data.Config["catalog"], CATALOG)
     testutils.AssertEqual(t, response.Data.Config["fivetran_role_arn"], FIVETRAN_ROLE_ARN)
@@ -528,7 +528,7 @@ func assertResponse(t *testing.T, response destinations.DestinationDetailsWithSe
     testutils.AssertEqual(t, response.Data.Config.User, USER)
     testutils.AssertEqual(t, response.Data.Config.Location, LOCATION)
     testutils.AssertEqual(t, response.Data.Config.Role, ROLE)
-    testutils.AssertEqual(t, response.Data.Config.IsPrivateKeyEncrypted, testutils.BoolToStr(IS_PRIVATE_KEY_ENCRYPTED))
+    testutils.AssertEqual(t, response.Data.Config.IsPrivateKeyEncrypted, IS_PRIVATE_KEY_ENCRYPTED)
     testutils.AssertEqual(t, response.Data.Config.Passphrase, PASSPHRASE)
     testutils.AssertEqual(t, response.Data.Config.Catalog, CATALOG)
     testutils.AssertEqual(t, response.Data.Config.FivetranRoleArn, FIVETRAN_ROLE_ARN)
