@@ -27,6 +27,6 @@ func (s *DbtProjectTestService) Do(ctx context.Context) (DbtProjectTestResponse,
 	}
 
 	url := fmt.Sprintf("/dbt/projects/%v/test", *s.projectID)
-	err := s.HttpService.Do(ctx, "POST", url, s.request(), nil, 200, &response)
+	err := s.HttpService.Do(ctx, "POST", url, nil, nil, 200, &response)
 	return response, err
 }
