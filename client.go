@@ -386,6 +386,10 @@ func (c *Client) NewDbtProjectsList() *dbt.DbtProjectsListService {
 	return &dbt.DbtProjectsListService{HttpService: c.NewHttpService()}
 }
 
+func (c *Client) NewDbtProjectTest() *dbt.DbtProjectTestService {
+	return &dbt.DbtProjectTestService{HttpService: c.NewHttpService()}
+}
+
 func (c *Client) NewDbtTransformationCreateService() *dbt.DbtTransformationCreateService {
 	return &dbt.DbtTransformationCreateService{HttpService: c.NewHttpService()}
 }
