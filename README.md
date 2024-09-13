@@ -156,6 +156,7 @@ REST API Endpoint | REST API Version | SDK Service
 [Retrieve dbt Transformation Details](https://fivetran.com/docs/rest-api/dbt-transformation-management#retrievedbttransformationdetails) | v1 | [DbtTransformationDetailsService](https://pkg.go.dev/github.com/fivetran/go-fivetran#DbtTransformationDetailsService)
 [Update dbt Transformation](https://fivetran.com/docs/rest-api/dbt-transformation-management#modifydbttransformation) | v1 | [DbtTransformationModifyService](https://pkg.go.dev/github.com/fivetran/go-fivetran#DbtTransformationModifyService)
 [Delete dbt Transformation](https://fivetran.com/docs/rest-api/dbt-transformation-management#deletedbttransformation) | v1 | [DbtTransformationDeleteService](https://pkg.go.dev/github.com/fivetran/go-fivetran#DbtTransformationDeleteService)
+[Test dbt Project](https://fivetran.com/docs/rest-api/transformations-for-dbt-core-management#testdbtproject) | v1 | [DbtProjectTestService](https://pkg.go.dev/github.com/fivetran/go-fivetran#DbtProjectTestService)
 
 ### [Certificate Management API](https://fivetran.com/docs/rest-api/certificates)
 REST API Endpoint | REST API Version | SDK Service

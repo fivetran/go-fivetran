@@ -147,3 +147,15 @@ type dbtProjectCreateRequest struct {
 	Type            *string   `json:"type,omitempty"`
 	ProjectConfig   any       `json:"project_config,omitempty"`
 }
+
+type DbtProjectTestResponse struct {
+	Code string `json:"code"`
+	Data struct {
+		DbtProjectId string `json:"dbt_project_id"`
+		SetupTests []struct {
+			Title   string `json:"title"`
+			Status  string `json:"status"`
+			Message string `json:"message"`
+		} `json:"setup_tests"`
+	} `json:"data"`
+}
