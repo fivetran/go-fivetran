@@ -41,7 +41,7 @@ func TestNewConnectorCreateE2E(t *testing.T) {
 	testutils.AssertEqual(t, *created.Data.SyncFrequency, 360)
 	testutils.AssertEqual(t, created.Data.ScheduleType, "auto")
 	testutils.AssertEmpty(t, created.Data.PrivateLinkId)
-	testutils.AssertEmpty(t, created.Data.LocalProcessingAgentId)
+	testutils.AssertEmpty(t, created.Data.HybridDeploymentAgentId)
 	testutils.AssertEmpty(t, created.Data.ProxyAgentId)
 	testutils.AssertEqual(t, created.Data.NetworkingMethod, "Directly")
 

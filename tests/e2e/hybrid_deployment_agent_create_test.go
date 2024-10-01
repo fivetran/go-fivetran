@@ -7,9 +7,9 @@ import (
 	testutils "github.com/fivetran/go-fivetran/test_utils"
 )
 
-func TestNewLocalProcessingAgentCreateE2E(t *testing.T) {
+func TestNewHybridDeploymentAgentCreateE2E(t *testing.T) {
 	groupId := testutils.CreateGroup(t)
-	created, err := testutils.Client.NewLocalProcessingAgentCreate().
+	created, err := testutils.Client.NewHybridDeploymentAgentCreate().
 		DisplayName("go_sdk_test_lpa").
 		GroupId(groupId).
 		EnvType("DOCKER").
@@ -28,7 +28,7 @@ func TestNewLocalProcessingAgentCreateE2E(t *testing.T) {
 	testutils.AssertEqual(t, created.Data.GroupId, groupId)
 
 	t.Cleanup(func() { 
-		testutils.DeleteLocalProcessingAgent(t, created.Data.Id) 
+		testutils.DeleteHybridDeploymentAgent(t, created.Data.Id) 
 		testutils.DeleteGroup(t, groupId)
 	})
 }

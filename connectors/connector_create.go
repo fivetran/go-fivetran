@@ -12,23 +12,23 @@ import (
 
 type ConnectorCreateService struct {
     httputils.HttpService
-    service                 *string
-    groupID                 *string
-    trustCertificates       *bool
-    trustFingerprints       *bool
-    runSetupTests           *bool
-    paused                  *bool
-    syncFrequency           *int
-    dailySyncTime           *string
-    pauseAfterTrial         *bool
-    localProcessingAgentId  *string
-    networkingMethod        *string
-    privateLinkId           *string
-    proxyAgentId            *string
-    config                  *ConnectorConfig
-    auth                    *ConnectorAuth
-    configCustom            *map[string]interface{}
-    authCustom              *map[string]interface{}
+    service                  *string
+    groupID                  *string
+    trustCertificates        *bool
+    trustFingerprints        *bool
+    runSetupTests            *bool
+    paused                   *bool
+    syncFrequency            *int
+    dailySyncTime            *string
+    pauseAfterTrial          *bool
+    hybridDeploymentAgentId  *string
+    networkingMethod         *string
+    privateLinkId            *string
+    proxyAgentId             *string
+    config                   *ConnectorConfig
+    auth                     *ConnectorAuth
+    configCustom             *map[string]interface{}
+    authCustom               *map[string]interface{}
 }
 
 func (s *ConnectorCreateService) requestBase() connectorCreateRequestBase {
@@ -43,7 +43,7 @@ func (s *ConnectorCreateService) requestBase() connectorCreateRequestBase {
         DailySyncTime:              s.dailySyncTime,
         PauseAfterTrial:            s.pauseAfterTrial,
         PrivateLinkId:              s.privateLinkId,
-        LocalProcessingAgentId:     s.localProcessingAgentId,
+        HybridDeploymentAgentId:    s.hybridDeploymentAgentId,
         NetworkingMethod:           s.networkingMethod,
         ProxyAgentId:               s.proxyAgentId,
     }
@@ -114,8 +114,8 @@ func (s *ConnectorCreateService) GroupID(value string) *ConnectorCreateService {
     return s
 }
 
-func (s *ConnectorCreateService) LocalProcessingAgentId(value string) *ConnectorCreateService {
-    s.localProcessingAgentId = &value
+func (s *ConnectorCreateService) HybridDeploymentAgentId(value string) *ConnectorCreateService {
+    s.hybridDeploymentAgentId = &value
     return s
 }
 

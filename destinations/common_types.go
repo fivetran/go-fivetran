@@ -10,7 +10,7 @@ type DestinationDetailsBase struct {
     TimeZoneOffset              string `json:"time_zone_offset"`
     SetupStatus                 string `json:"setup_status"`
     PrivateLinkId               string `json:"private_link_id"`
-    LocalProcessingAgentId      string `json:"local_processing_agent_id"`
+    HybridDeploymentAgentId     string `json:"hybrid_deployment_agent_id"`
     NetworkingMethod            string `json:"networking_method"`
     DaylightSavingTimeEnabled   bool   `json:"daylight_saving_time_enabled"`
 }
@@ -62,7 +62,7 @@ type destinationCreateRequest struct {
     RunSetupTests               *bool   `json:"run_setup_tests,omitempty"`
     DaylightSavingTimeEnabled   *bool   `json:"daylight_saving_time_enabled,omitempty"`
     PrivateLinkId               *string `json:"private_link_id,omitempty"`
-    LocalProcessingAgentId      *string `json:"local_processing_agent_id,omitempty"`
+    HybridDeploymentAgentId     *string `json:"hybrid_deployment_agent_id,omitempty"`
     NetworkingMethod            *string `json:"networking_method,omitempty"`
     
 }
@@ -76,7 +76,7 @@ type destinationModifyRequest struct {
     RunSetupTests               *bool   `json:"run_setup_tests,omitempty"`
     DaylightSavingTimeEnabled   *bool   `json:"daylight_saving_time_enabled,omitempty"`
     PrivateLinkId               *string `json:"private_link_id,omitempty"`
-    LocalProcessingAgentId      *string `json:"local_processing_agent_id,omitempty"`
+    HybridDeploymentAgentId     *string `json:"hybrid_deployment_agent_id,omitempty"`
     NetworkingMethod            *string `json:"networking_method,omitempty"`
 }
 

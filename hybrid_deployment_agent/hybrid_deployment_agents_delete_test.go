@@ -1,4 +1,4 @@
-package localprocessingagent_test
+package hybriddeploymentagent_test
 
 import (
     "context"
@@ -13,17 +13,17 @@ import (
     testutils "github.com/fivetran/go-fivetran/test_utils"
 )
 
-func TestLocalProcessingAgentDeleteServiceDo(t *testing.T) {
+func TestHybridDeploymentAgentDeleteServiceDo(t *testing.T) {
 	// arrange
 	ftClient, mockClient := testutils.CreateTestClient()
-	handler := mockClient.When(http.MethodDelete, "/v1/local-processing-agents/agent_id").ThenCall(
+	handler := mockClient.When(http.MethodDelete, "/v1/hybrid-deployment-agents/agent_id").ThenCall(
 		func(req *http.Request) (*http.Response, error) {
 			response := mock.NewResponse(req, http.StatusOK, `{"code": "Success"}`)
 			return response, nil
 		},
 	)
 
-	service := ftClient.NewLocalProcessingAgentDelete().AgentId("agent_id")
+	service := ftClient.NewHybridDeploymentAgentDelete().AgentId("agent_id")
 
 	// act
 	response, err := service.Do(context.Background())
@@ -33,7 +33,7 @@ func TestLocalProcessingAgentDeleteServiceDo(t *testing.T) {
 		t.Error(err)
 	}
 
-	assertLocalProcessingAgentDeleteResponse(t, response, "Success")
+	assertHybridDeploymentAgentDeleteResponse(t, response, "Success")
 
 	// Check that the expected interactions with the mock client occurred
 	interactions := mockClient.Interactions()
@@ -42,12 +42,12 @@ func TestLocalProcessingAgentDeleteServiceDo(t *testing.T) {
 	testutils.AssertEqual(t, handler.Interactions, 1)
 }
 
-func TestLocalProcessingAgentsDeleteServiceDoMissingAgentID(t *testing.T) {
+func TestHybridDeploymentAgentsDeleteServiceDoMissingAgentID(t *testing.T) {
 	// Create a test client
 	ftClient, _ := testutils.CreateTestClient()
 
 	// Create the ExternalLoggingDeleteService without setting the Log ID
-	service := ftClient.NewLocalProcessingAgentDelete()
+	service := ftClient.NewHybridDeploymentAgentDelete()
 
 	// Call the Do method to execute the request
 	_, err := service.Do(context.Background())
@@ -57,6 +57,6 @@ func TestLocalProcessingAgentsDeleteServiceDoMissingAgentID(t *testing.T) {
 	testutils.AssertEqual(t, err, expectedError)
 }
 
-func assertLocalProcessingAgentDeleteResponse(t *testing.T, response common.CommonResponse, code string) {
+func assertHybridDeploymentAgentDeleteResponse(t *testing.T, response common.CommonResponse, code string) {
 	testutils.AssertEqual(t, response.Code, code)
 }

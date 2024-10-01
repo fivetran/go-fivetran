@@ -1,27 +1,27 @@
-package localprocessingagent_test
+package hybriddeploymentagent_test
 
 import (
     "context"
     "net/http"
     "testing"
-	"github.com/fivetran/go-fivetran/local_processing_agent"
+	"github.com/fivetran/go-fivetran/hybrid_deployment_agents"
     "github.com/fivetran/go-fivetran/tests/mock"
 
     testutils "github.com/fivetran/go-fivetran/test_utils"
 )
 
-func TestLocalProcessingAgentDetailsServiceDo(t *testing.T) {
+func TestHybridDeploymentAgentDetailsServiceDo(t *testing.T) {
 	// arrange
 
 	ftClient, mockClient := testutils.CreateTestClient()
-	handler := mockClient.When(http.MethodGet, "/v1/local-processing-agents/agent_id").
+	handler := mockClient.When(http.MethodGet, "/v1/hybrid-deployment-agents/agent_id").
 		ThenCall(func(req *http.Request) (*http.Response, error) {
-			response := mock.NewResponse(req, http.StatusOK, prepareLocalProcessingAgentDetailsResponse())
+			response := mock.NewResponse(req, http.StatusOK, prepareHybridDeploymentAgentDetailsResponse())
 			return response, nil
 		})
 
 	// act
-	response, err := ftClient.NewLocalProcessingAgentDetails().
+	response, err := ftClient.NewHybridDeploymentAgentDetails().
 		AgentId("agent_id").
 		Do(context.Background())
 
@@ -34,10 +34,10 @@ func TestLocalProcessingAgentDetailsServiceDo(t *testing.T) {
 	testutils.AssertEqual(t, len(interactions), 1)
 	testutils.AssertEqual(t, interactions[0].Handler, handler)
 	testutils.AssertEqual(t, handler.Interactions, 1)
-	assertLocalProcessingAgentDetailsResponse(t, response)
+	assertHybridDeploymentAgentDetailsResponse(t, response)
 }
 
-func prepareLocalProcessingAgentDetailsResponse() string {
+func prepareHybridDeploymentAgentDetailsResponse() string {
 	return `{
   "code": "Success",
   "data": {
@@ -56,7 +56,7 @@ func prepareLocalProcessingAgentDetailsResponse() string {
 }`
 }
 
-func assertLocalProcessingAgentDetailsResponse(t *testing.T, response localprocessingagent.LocalProcessingAgentDetailsResponse) {
+func assertHybridDeploymentAgentDetailsResponse(t *testing.T, response hybriddeploymentagent.HybridDeploymentAgentDetailsResponse) {
 	testutils.AssertEqual(t, response.Data.Id, "id")
 	testutils.AssertEqual(t, response.Data.DisplayName, "display_name")
 	testutils.AssertEqual(t, response.Data.GroupId, "group_id")

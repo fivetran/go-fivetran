@@ -1,27 +1,27 @@
-package localprocessingagent_test
+package hybriddeploymentagent_test
 
 import (
     "context"
     "net/http"
     "testing"
-		"github.com/fivetran/go-fivetran/local_processing_agent"
+		"github.com/fivetran/go-fivetran/hybrid_deployment_agents"
     "github.com/fivetran/go-fivetran/tests/mock"
 
     testutils "github.com/fivetran/go-fivetran/test_utils"
 )
 
-func TestLocalProcessingAgentListServiceDo(t *testing.T) {
+func TestHybridDeploymentAgentListServiceDo(t *testing.T) {
 	// arrange
 
 	ftClient, mockClient := testutils.CreateTestClient()
-	handler := mockClient.When(http.MethodGet, "/v1/local-processing-agents").
+	handler := mockClient.When(http.MethodGet, "/v1/hybrid-deployment-agents").
 		ThenCall(func(req *http.Request) (*http.Response, error) {
-			response := mock.NewResponse(req, http.StatusOK, prepareLocalProcessingAgentListResponse())
+			response := mock.NewResponse(req, http.StatusOK, prepareHybridDeploymentAgentListResponse())
 			return response, nil
 		})
 
 	// act
-	response, err := ftClient.NewLocalProcessingAgentList().
+	response, err := ftClient.NewHybridDeploymentAgentList().
 		Do(context.Background())
 
 	// assert
@@ -33,10 +33,10 @@ func TestLocalProcessingAgentListServiceDo(t *testing.T) {
 	testutils.AssertEqual(t, len(interactions), 1)
 	testutils.AssertEqual(t, interactions[0].Handler, handler)
 	testutils.AssertEqual(t, handler.Interactions, 1)
-	assertLocalProcessingAgentListResponse(t, response)
+	assertHybridDeploymentAgentListResponse(t, response)
 }
 
-func prepareLocalProcessingAgentListResponse() string {
+func prepareHybridDeploymentAgentListResponse() string {
 	return `{
 					    "code": "Success",
     					"data": {
@@ -60,7 +60,7 @@ func prepareLocalProcessingAgentListResponse() string {
 					}`
 }
 
-func assertLocalProcessingAgentListResponse(t *testing.T, response localprocessingagent.LocalProcessingAgentListResponse) {
+func assertHybridDeploymentAgentListResponse(t *testing.T, response hybriddeploymentagent.HybridDeploymentAgentListResponse) {
 	testutils.AssertEqual(t, response.Code, "Success")
 	testutils.AssertEqual(t, response.Data.Items[0].Id, "id")
 	testutils.AssertEqual(t, response.Data.Items[0].DisplayName, "display_name")

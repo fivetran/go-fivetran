@@ -1,29 +1,29 @@
-package localprocessingagent_test
+package hybriddeploymentagent_test
 
 import (
     "context"
     "net/http"
     "testing"
-	"github.com/fivetran/go-fivetran/local_processing_agent"
+	"github.com/fivetran/go-fivetran/hybrid_deployment_agents"
     "github.com/fivetran/go-fivetran/tests/mock"
 
     testutils "github.com/fivetran/go-fivetran/test_utils"
 )
 
-func TestNewLocalProcessingAgentCreateMappingMock(t *testing.T) {
+func TestNewHybridDeploymentAgentCreateMappingMock(t *testing.T) {
 	// arrange
 	ftClient, mockClient := testutils.CreateTestClient()
-	handler := mockClient.When(http.MethodPost, "/v1/local-processing-agents").ThenCall(
+	handler := mockClient.When(http.MethodPost, "/v1/hybrid-deployment-agents").ThenCall(
 
 		func(req *http.Request) (*http.Response, error) {
 			body := testutils.RequestBodyToJson(t, req)
-			assertLocalProcessingAgentCreateRequest(t, body)
-			response := mock.NewResponse(req, http.StatusCreated, prepareLocalProcessingAgentCreateResponse())
+			assertHybridDeploymentAgentCreateRequest(t, body)
+			response := mock.NewResponse(req, http.StatusCreated, prepareHybridDeploymentAgentCreateResponse())
 			return response, nil
 		})
 
 	// act
-	response, err := ftClient.NewLocalProcessingAgentCreate().
+	response, err := ftClient.NewHybridDeploymentAgentCreate().
 		GroupId("group_id").
 		DisplayName("display_name").
 		EnvType("DOCKER").
@@ -41,10 +41,10 @@ func TestNewLocalProcessingAgentCreateMappingMock(t *testing.T) {
 	testutils.AssertEqual(t, interactions[0].Handler, handler)
 	testutils.AssertEqual(t, handler.Interactions, 1)
 
-	assertLocalProcessingAgentCreateResponse(t, response)
+	assertHybridDeploymentAgentCreateResponse(t, response)
 }
 
-func prepareLocalProcessingAgentCreateResponse() string {
+func prepareHybridDeploymentAgentCreateResponse() string {
 	return `{
 		    "code": "Success",
 		    "message": "Success",
@@ -62,14 +62,14 @@ func prepareLocalProcessingAgentCreateResponse() string {
 		}`
 }
 
-func assertLocalProcessingAgentCreateRequest(t *testing.T, request map[string]interface{}) {
+func assertHybridDeploymentAgentCreateRequest(t *testing.T, request map[string]interface{}) {
 	testutils.AssertKey(t, "group_id", request, "group_id")
 	testutils.AssertKey(t, "display_name", request, "display_name")
 	testutils.AssertKey(t, "env_type", request, "DOCKER")
 	testutils.AssertKey(t, "accept_terms", request, true)
 }
 
-func assertLocalProcessingAgentCreateResponse(t *testing.T, response localprocessingagent.LocalProcessingAgentCreateResponse) {
+func assertHybridDeploymentAgentCreateResponse(t *testing.T, response hybriddeploymentagent.HybridDeploymentAgentCreateResponse) {
 	testutils.AssertEqual(t, response.Code, "Success")
 	testutils.AssertNotEmpty(t, response.Message)
 

@@ -14,7 +14,7 @@ import (
 	"github.com/fivetran/go-fivetran/fingerprints"
 	"github.com/fivetran/go-fivetran/groups"
 	httputils "github.com/fivetran/go-fivetran/http_utils"
-	localprocessingagent "github.com/fivetran/go-fivetran/local_processing_agent"
+	hybriddeploymentagent "github.com/fivetran/go-fivetran/hybrid_deployment_agent"
 	privatelink "github.com/fivetran/go-fivetran/private_link"
 	"github.com/fivetran/go-fivetran/proxy"
 	"github.com/fivetran/go-fivetran/roles"
@@ -633,23 +633,23 @@ func (c *Client) NewProxyConnectionMembershipsList() *proxy.ProxyConnectionMembe
 	return &proxy.ProxyConnectionMembershipsListService{HttpService: c.NewHttpService()}
 }
 
-/* Local Processing Agent */
-func (c *Client) NewLocalProcessingAgentCreate() *localprocessingagent.LocalProcessingAgentCreateService {
-	return &localprocessingagent.LocalProcessingAgentCreateService{HttpService: c.NewHttpService()}
+/* Hybrid Deployment Agent */
+func (c *Client) NewHybridDeploymentAgentCreate() *hybriddeploymentagent.HybridDeploymentAgentCreateService {
+	return &hybriddeploymentagent.HybridDeploymentAgentCreateService{HttpService: c.NewHttpService()}
 }
 
-func (c *Client) NewLocalProcessingAgentDelete() *localprocessingagent.LocalProcessingAgentDeleteService {
-	return &localprocessingagent.LocalProcessingAgentDeleteService{HttpService: c.NewHttpService()}
+func (c *Client) NewHybridDeploymentAgentDelete() *hybriddeploymentagent.HybridDeploymentAgentDeleteService {
+	return &hybriddeploymentagent.HybridDeploymentAgentDeleteService{HttpService: c.NewHttpService()}
 }
 
-func (c *Client) NewLocalProcessingAgentDetails() *localprocessingagent.LocalProcessingAgentDetailsService {
-	return &localprocessingagent.LocalProcessingAgentDetailsService{HttpService: c.NewHttpService()}
+func (c *Client) NewHybridDeploymentAgentDetails() *hybriddeploymentagent.HybridDeploymentAgentDetailsService {
+	return &hybriddeploymentagent.HybridDeploymentAgentDetailsService{HttpService: c.NewHttpService()}
 }
 
-func (c *Client) NewLocalProcessingAgentList() *localprocessingagent.LocalProcessingAgentListService {
-	return &localprocessingagent.LocalProcessingAgentListService{HttpService: c.NewHttpService()}
+func (c *Client) NewHybridDeploymentAgentList() *hybriddeploymentagent.HybridDeploymentAgentListService {
+	return &hybriddeploymentagent.HybridDeploymentAgentListService{HttpService: c.NewHttpService()}
 }
 
-func (c *Client) NewLocalProcessingAgentReAuth() *localprocessingagent.LocalProcessingAgentReAuthService {
-	return &localprocessingagent.LocalProcessingAgentReAuthService{HttpService: c.NewHttpService()}
+func (c *Client) NewHybridDeploymentAgentReAuth() *hybriddeploymentagent.HybridDeploymentAgentReAuthService {
+	return &hybriddeploymentagent.HybridDeploymentAgentReAuthService{HttpService: c.NewHttpService()}
 }

@@ -12,24 +12,24 @@ import (
 // Ref. https://fivetran.com/docs/rest-api/connectors#modifyaconnector
 type ConnectorModifyService struct {
     httputils.HttpService
-    connectorID             *string
-    paused                  *bool
-    syncFrequency           *int
-    dailySyncTime           *string
-    trustCertificates       *bool
-    trustFingerprints       *bool
-    isHistoricalSync        *bool
-    scheduleType            *string
-    runSetupTests           *bool
-    pauseAfterTrial         *bool
-    localProcessingAgentId  *string
-    networkingMethod        *string
-    privateLinkId           *string
-    proxyAgentId            *string
-    config                  *ConnectorConfig
-    auth                    *ConnectorAuth
-    configCustom            *map[string]interface{}
-    authCustom              *map[string]interface{}
+    connectorID              *string
+    paused                   *bool
+    syncFrequency            *int
+    dailySyncTime            *string
+    trustCertificates        *bool
+    trustFingerprints        *bool
+    isHistoricalSync         *bool
+    scheduleType             *string
+    runSetupTests            *bool
+    pauseAfterTrial          *bool
+    hybridDeploymentAgentId  *string
+    networkingMethod         *string
+    privateLinkId            *string
+    proxyAgentId             *string
+    config                   *ConnectorConfig
+    auth                     *ConnectorAuth
+    configCustom             *map[string]interface{}
+    authCustom               *map[string]interface{}
 }
 
 func (s *ConnectorModifyService) requestBase() connectorModifyRequestBase {
@@ -44,7 +44,7 @@ func (s *ConnectorModifyService) requestBase() connectorModifyRequestBase {
         RunSetupTests:              s.runSetupTests,
         PauseAfterTrial:            s.pauseAfterTrial,
         PrivateLinkId:              s.privateLinkId,
-        LocalProcessingAgentId:     s.localProcessingAgentId,
+        HybridDeploymentAgentId:    s.hybridDeploymentAgentId,
         NetworkingMethod:           s.networkingMethod,
         ProxyAgentId:               s.proxyAgentId,
     }
@@ -108,8 +108,8 @@ func (s *ConnectorModifyService) ConnectorID(value string) *ConnectorModifyServi
     return s
 }
 
-func (s *ConnectorModifyService) LocalProcessingAgentId(value string) *ConnectorModifyService {
-    s.localProcessingAgentId = &value
+func (s *ConnectorModifyService) HybridDeploymentAgentId(value string) *ConnectorModifyService {
+    s.hybridDeploymentAgentId = &value
     return s
 }
 

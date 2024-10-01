@@ -522,7 +522,7 @@ func CleanupAccount() {
 	CleanupWebhooks()
 	CleanupTeams()
 	CleanupProxy()
-	CleanupLocalProcessingAgents()
+	CleanupHybridDeploymentAgents()
 }
 
 func IsPredefinedUserExist() bool {
@@ -673,21 +673,21 @@ func CleanupProxy() {
 	}
 }
 
-func CleanupLocalProcessingAgents() {
-	list, err := Client.NewLocalProcessingAgentList().Do(context.Background())
+func CleanupHybridDeploymentAgents() {
+	list, err := Client.NewHybridDeploymentAgentList().Do(context.Background())
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	for _, lpa := range list.Data.Items {
-		_, err := Client.NewLocalProcessingAgentDelete().AgentId(lpa.Id).Do(context.Background())
+		_, err := Client.NewHybridDeploymentAgentDelete().AgentId(lpa.Id).Do(context.Background())
 		if err != nil && err.Error() != "status code: 404; expected: 200" {
 			log.Fatal(err)
 		}
 	}
 
 	if list.Data.NextCursor != "" {
-		CleanupLocalProcessingAgents()
+		CleanupHybridDeploymentAgents()
 	}
 }
 
@@ -980,9 +980,9 @@ func DeleteProxy(t *testing.T, id string) {
 	}
 }
 
-func CreateLocalProcessingAgent(t *testing.T) string {
+func CreateHybridDeploymentAgent(t *testing.T) string {
 	t.Helper()
-	created, err := Client.NewLocalProcessingAgentCreate().
+	created, err := Client.NewHybridDeploymentAgentCreate().
 		DisplayName("go_sdk_lpa_internal").
 		GroupId(PredefinedGroupId).
 		EnvType("DOCKER").
@@ -996,9 +996,9 @@ func CreateLocalProcessingAgent(t *testing.T) string {
 	return created.Data.Id
 }
 
-func DeleteLocalProcessingAgent(t *testing.T, id string) {
+func DeleteHybridDeploymentAgent(t *testing.T, id string) {
 	t.Helper()
-	deleted, err := Client.NewLocalProcessingAgentDelete().AgentId(id).Do(context.Background())
+	deleted, err := Client.NewHybridDeploymentAgentDelete().AgentId(id).Do(context.Background())
 
 	if err != nil {
 		t.Logf("%+v\n", deleted)
