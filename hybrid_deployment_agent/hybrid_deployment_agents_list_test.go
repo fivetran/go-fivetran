@@ -4,7 +4,7 @@ import (
     "context"
     "net/http"
     "testing"
-		"github.com/fivetran/go-fivetran/hybrid_deployment_agents"
+	"github.com/fivetran/go-fivetran/hybrid_deployment_agent"
     "github.com/fivetran/go-fivetran/tests/mock"
 
     testutils "github.com/fivetran/go-fivetran/test_utils"
