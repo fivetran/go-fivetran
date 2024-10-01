@@ -7,10 +7,10 @@ import (
 	testutils "github.com/fivetran/go-fivetran/test_utils"
 )
 
-func TestNewLocalProcessingAgentDeleteE2E(t *testing.T) {
-	agentId := testutils.CreateLocalProcessingAgent(t)
+func TestNewHybridDeploymentAgentDeleteE2E(t *testing.T) {
+	agentId := testutils.CreateHybridDeploymentAgent(t)
 
-	deleted, err := testutils.Client.NewLocalProcessingAgentDelete().AgentId(agentId).Do(context.Background())
+	deleted, err := testutils.Client.NewHybridDeploymentAgentDelete().AgentId(agentId).Do(context.Background())
 
 	if err != nil {
 		t.Logf("%+v\n", deleted)

@@ -68,7 +68,7 @@ const (
     SECRET_VALUE              = "secret_value"
     WORKSPACE_NAME            = "workspace_name"
     LAKEHOUSE_NAME            = "lakehouse_name"
-    LOCALPROCESSINGAGENTID    = "lpa_id"
+    HYBRIDDEPLOYMENTAGENTID   = "hybrid_deployment_agent_id"
     PRIVATELINKID             = "private_link_id"
     NETWORKINGMETHOD          = "Direct"
 )
@@ -93,7 +93,7 @@ func TestNewDestinationCreateFullMappingMock(t *testing.T) {
         TrustFingerprints(TRUST_FINGERPRINTS).
         RunSetupTests(RUN_SETUP_TESTS).
         DaylightSavingTimeEnabled(DAYLIGHTSAVINGTIMEENABLED).
-        LocalProcessingAgentId(LOCALPROCESSINGAGENTID).
+        HybridDeploymentAgentId(HYBRIDDEPLOYMENTAGENTID).
         PrivateLinkId(PRIVATELINKID).
         NetworkingMethod(NETWORKINGMETHOD).
         GroupID(ID).
@@ -133,7 +133,7 @@ func TestNewDestinationCreateCustomFullMappingMock(t *testing.T) {
         TrustFingerprints(TRUST_FINGERPRINTS).
         RunSetupTests(RUN_SETUP_TESTS).
         DaylightSavingTimeEnabled(DAYLIGHTSAVINGTIMEENABLED).
-        LocalProcessingAgentId(LOCALPROCESSINGAGENTID).
+        HybridDeploymentAgentId(HYBRIDDEPLOYMENTAGENTID).
         PrivateLinkId(PRIVATELINKID).
         NetworkingMethod(NETWORKINGMETHOD).
         GroupID(ID).
@@ -165,7 +165,7 @@ func prepareDestinationResponse() string {
                 "region":                       "%v",
                 "time_zone_offset":             "%v",
                 "daylight_saving_time_enabled": %v,
-                "local_processing_agent_id":    "%v",
+                "hybrid_deployment_agent_id":   "%v",
                 "private_link_id":              "%v",
                 "networking_method":            "%v",
                 "setup_status":                 "%v",
@@ -226,7 +226,7 @@ func prepareDestinationResponse() string {
         REGION,
         TIME_ZONE, // time_zone_offset
         DAYLIGHTSAVINGTIMEENABLED,
-        LOCALPROCESSINGAGENTID,
+        HYBRIDDEPLOYMENTAGENTID,
         PRIVATELINKID,
         NETWORKINGMETHOD,
         SETUP_STATUS,
@@ -369,7 +369,7 @@ func assertRequest(t *testing.T, request map[string]interface{}) {
     testutils.AssertKey(t, "trust_fingerprints", request, TRUST_FINGERPRINTS)
     testutils.AssertKey(t, "run_setup_tests", request, RUN_SETUP_TESTS)
     testutils.AssertKey(t, "daylight_saving_time_enabled", request, DAYLIGHTSAVINGTIMEENABLED)
-    testutils.AssertKey(t, "local_processing_agent_id", request, LOCALPROCESSINGAGENTID)
+    testutils.AssertKey(t, "hybrid_deployment_agent_id", request, HYBRIDDEPLOYMENTAGENTID)
     testutils.AssertKey(t, "private_link_id", request, PRIVATELINKID)
     testutils.AssertKey(t, "networking_method", request, NETWORKINGMETHOD)
     testutils.AssertKey(t, "group_id", request, ID)
@@ -427,7 +427,7 @@ func asserResponseCustom(t *testing.T, response destinations.DestinationDetailsW
     testutils.AssertEqual(t, response.Data.Region, REGION)
     testutils.AssertEqual(t, response.Data.Service, SERVICE)
     testutils.AssertEqual(t, response.Data.DaylightSavingTimeEnabled, DAYLIGHTSAVINGTIMEENABLED)
-    testutils.AssertEqual(t, response.Data.LocalProcessingAgentId, LOCALPROCESSINGAGENTID)
+    testutils.AssertEqual(t, response.Data.HybridDeploymentAgentId, HYBRIDDEPLOYMENTAGENTID)
     testutils.AssertEqual(t, response.Data.PrivateLinkId, PRIVATELINKID)
     testutils.AssertEqual(t, response.Data.NetworkingMethod, NETWORKINGMETHOD)
     testutils.AssertEqual(t, response.Data.SetupStatus, SETUP_STATUS)
@@ -490,7 +490,7 @@ func assertResponse(t *testing.T, response destinations.DestinationDetailsWithSe
     testutils.AssertEqual(t, response.Data.Region, REGION)
     testutils.AssertEqual(t, response.Data.Service, SERVICE)
     testutils.AssertEqual(t, response.Data.DaylightSavingTimeEnabled, DAYLIGHTSAVINGTIMEENABLED)
-    testutils.AssertEqual(t, response.Data.LocalProcessingAgentId, LOCALPROCESSINGAGENTID)
+    testutils.AssertEqual(t, response.Data.HybridDeploymentAgentId, HYBRIDDEPLOYMENTAGENTID)
     testutils.AssertEqual(t, response.Data.PrivateLinkId, PRIVATELINKID)
     testutils.AssertEqual(t, response.Data.NetworkingMethod, NETWORKINGMETHOD)
     testutils.AssertEqual(t, response.Data.SetupStatus, SETUP_STATUS)

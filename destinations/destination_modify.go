@@ -20,7 +20,7 @@ type DestinationModifyService struct {
     trustFingerprints           *bool
     runSetupTests               *bool
     daylightSavingTimeEnabled   *bool
-    localProcessingAgentId      *string
+    hybridDeploymentAgentId     *string
     networkingMethod            *string
     privateLinkId               *string
 }
@@ -41,7 +41,7 @@ func (s *DestinationModifyService) request() *destinationModifyRequest {
         RunSetupTests:                  s.runSetupTests,
         DaylightSavingTimeEnabled:      s.daylightSavingTimeEnabled,
         PrivateLinkId:                  s.privateLinkId,
-        LocalProcessingAgentId:         s.localProcessingAgentId,
+        HybridDeploymentAgentId:        s.hybridDeploymentAgentId,
         NetworkingMethod:               s.networkingMethod,
     }
 }
@@ -56,7 +56,7 @@ func (s *DestinationModifyService) requestCustom() *destinationModifyRequest {
         RunSetupTests:                  s.runSetupTests,
         DaylightSavingTimeEnabled:      s.daylightSavingTimeEnabled,
         PrivateLinkId:                  s.privateLinkId,
-        LocalProcessingAgentId:         s.localProcessingAgentId,
+        HybridDeploymentAgentId:        s.hybridDeploymentAgentId,
         NetworkingMethod:               s.networkingMethod,
     }
 }
@@ -106,8 +106,8 @@ func (s *DestinationModifyService) DaylightSavingTimeEnabled(value bool) *Destin
     return s
 }
 
-func (s *DestinationModifyService) LocalProcessingAgentId(value string) *DestinationModifyService {
-    s.localProcessingAgentId = &value
+func (s *DestinationModifyService) HybridDeploymentAgentId(value string) *DestinationModifyService {
+    s.hybridDeploymentAgentId = &value
     return s
 }
 

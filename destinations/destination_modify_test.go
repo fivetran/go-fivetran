@@ -20,7 +20,7 @@ const (
 	DESTINATION_MODIFY_REGION             		= "GCP_AUSTRALIA_SOUTHEAST1"
 	DESTINATION_MODIFY_TIME_ZONE_OFFSET   		= "+10"
 	DESTINATION_MODIFY_DAYLIGHT 		  		= true
-    DESTINATION_MODIFY_LOCALPROCESSINGAGENTID   = "lpa_id"
+    DESTINATION_MODIFY_HYBRIDDEPLOYMENTAGENTID  = "hybrid_deployment_agent_id"
     DESTINATION_MODIFY_PRIVATELINKID            = "private_link_id"
     DESTINATION_MODIFY_NETWORKINGMETHOD         = "Direct"
 	DESTINATION_MODIFY_SETUP_STATUS      		= "connected"
@@ -63,7 +63,7 @@ func TestDestinationModifyService(t *testing.T) {
 		TimeZoneOffset(DESTINATION_MODIFY_TIME_ZONE_OFFSET).
 		Config(destinationConfig).
 		DaylightSavingTimeEnabled(DESTINATION_MODIFY_DAYLIGHT).
-        LocalProcessingAgentId(DESTINATION_MODIFY_LOCALPROCESSINGAGENTID).
+        HybridDeploymentAgentId(DESTINATION_MODIFY_HYBRIDDEPLOYMENTAGENTID).
         PrivateLinkId(DESTINATION_MODIFY_PRIVATELINKID).
         NetworkingMethod(DESTINATION_MODIFY_NETWORKINGMETHOD).
 		TrustCertificates(TRUST_CERTIFICATES).
@@ -102,7 +102,7 @@ func TestDestinationModifyCustomService(t *testing.T) {
 		DestinationID(DESTINATION_MODIFY_ID).
 		Region(DESTINATION_MODIFY_REGION).
 		DaylightSavingTimeEnabled(DESTINATION_MODIFY_DAYLIGHT).
-		LocalProcessingAgentId(DESTINATION_MODIFY_LOCALPROCESSINGAGENTID).
+		HybridDeploymentAgentId(DESTINATION_MODIFY_HYBRIDDEPLOYMENTAGENTID).
         PrivateLinkId(DESTINATION_MODIFY_PRIVATELINKID).
         NetworkingMethod(DESTINATION_MODIFY_NETWORKINGMETHOD).
 		TimeZoneOffset(DESTINATION_MODIFY_TIME_ZONE_OFFSET).
@@ -145,7 +145,7 @@ func prepareDestinationModifyResponse() string {
 			"service": "%s",
 			"region": "%s",
 			"daylight_saving_time_enabled": %v,
-			"local_processing_agent_id": "%v",
+			"hybrid_deployment_agent_id": "%v",
             "private_link_id": "%v",
             "networking_method": "%v",
 			"time_zone_offset": "%s",
@@ -182,7 +182,7 @@ func prepareDestinationModifyResponse() string {
 		DESTINATION_MODIFY_SERVICE,
 		DESTINATION_MODIFY_REGION,
 		DESTINATION_MODIFY_DAYLIGHT,
-		DESTINATION_MODIFY_LOCALPROCESSINGAGENTID,
+		DESTINATION_MODIFY_HYBRIDDEPLOYMENTAGENTID,
         DESTINATION_MODIFY_PRIVATELINKID,
         DESTINATION_MODIFY_NETWORKINGMETHOD,
 		DESTINATION_MODIFY_TIME_ZONE_OFFSET,
@@ -208,7 +208,7 @@ func assertDestinationModifyResponse(t *testing.T, response destinations.Destina
 	testutils.AssertEqual(t, response.Data.GroupID, DESTINATION_MODIFY_ID)
 	testutils.AssertEqual(t, response.Data.Service, DESTINATION_MODIFY_SERVICE)
 	testutils.AssertEqual(t, response.Data.DaylightSavingTimeEnabled, DESTINATION_MODIFY_DAYLIGHT)
-	testutils.AssertEqual(t, response.Data.LocalProcessingAgentId, DESTINATION_MODIFY_LOCALPROCESSINGAGENTID)
+	testutils.AssertEqual(t, response.Data.HybridDeploymentAgentId, DESTINATION_MODIFY_HYBRIDDEPLOYMENTAGENTID)
 	testutils.AssertEqual(t, response.Data.PrivateLinkId, DESTINATION_MODIFY_PRIVATELINKID)
 	testutils.AssertEqual(t, response.Data.NetworkingMethod, DESTINATION_MODIFY_NETWORKINGMETHOD)
 	testutils.AssertEqual(t, response.Data.Region, DESTINATION_MODIFY_REGION)
@@ -240,8 +240,7 @@ func assertDestinationModifyCustomResponse(t *testing.T, response destinations.D
 	testutils.AssertEqual(t, response.Data.GroupID, DESTINATION_MODIFY_ID)
 	testutils.AssertEqual(t, response.Data.Service, DESTINATION_MODIFY_SERVICE)
 	testutils.AssertEqual(t, response.Data.DaylightSavingTimeEnabled, DESTINATION_MODIFY_DAYLIGHT)
-	testutils.AssertEqual(t, response.Data.LocalProcessingAgentId, DESTINATION_MODIFY_LOCALPROCESSINGAGENTID)
-	testutils.AssertEqual(t, response.Data.LocalProcessingAgentId, DESTINATION_MODIFY_LOCALPROCESSINGAGENTID)
+	testutils.AssertEqual(t, response.Data.HybridDeploymentAgentId, DESTINATION_MODIFY_HYBRIDDEPLOYMENTAGENTID)
 	testutils.AssertEqual(t, response.Data.PrivateLinkId, DESTINATION_MODIFY_PRIVATELINKID)
 	testutils.AssertEqual(t, response.Data.NetworkingMethod, DESTINATION_MODIFY_NETWORKINGMETHOD)
 	testutils.AssertEqual(t, response.Data.Region, DESTINATION_MODIFY_REGION)

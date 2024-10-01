@@ -110,7 +110,7 @@ func prepareConnectorDetailsResponse() string {
             "failed_at": null,
             "sync_frequency": 1440,
             "daily_sync_time": "03:00",
-            "local_processing_agent_id": "lpa_id",
+            "hybrid_deployment_agent_id": "hybrid_deployment_agent_id",
             "proxy_agent_id": "proxy_id",
             "private_link_id": "private_link_id",
             "networking_method": "networking_method",

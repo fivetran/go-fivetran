@@ -8,8 +8,6 @@ Checkout our [CHANGELOG](CHANGELOG.md) for information about the latest bug fixe
 
 Make sure you read the Fivetran REST API [documentation](https://fivetran.com/docs/rest-api) before using the SDK.
 
-**NOTE**: `go-fivetran` is still in [ALPHA](https://en.wikipedia.org/wiki/Software_release_life_cycle#Alpha) development stage. Future versions may introduce breaking changes. 
-
 ## Installation
 
 ```
@@ -275,14 +273,14 @@ REST API Endpoint | REST API Version | SDK Service/Config
 [Delete a Proxy Agent](/docs/rest-api/proxy-management#deleteaproxyagent) | v1 |  [ProxyDeleteService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ProxyDeleteService)
 [Return all connections attached to the proxy agent](/docs/rest-api/proxy-management#returnsallconnectionsattachedtotheproxyagent) | v1 |  [ProxyConnectionMembershipsListService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ProxyConnectionMembershipsListService)
 
-### [Local Processing Agent Management](https://fivetran.com/docs/rest-api/local-processing-agent-management#localprocessingagentmanagement)
+### [Hybrid Deployment Agent Management](https://fivetran.com/docs/rest-api/hybrid-deployment-agent-management#hybriddeploymentagentmanagement)
 REST API Endpoint | REST API Version | SDK Service/Config
 --- | --- | ---
-[Create a Local Processing Agent](https://fivetran.com/docs/rest-api/local-processing-agent-management#createalocalprocessingagent) | v1 |  [LocalProcessingAgentCreateService](https://pkg.go.dev/github.com/fivetran/go-fivetran#LocalProcessingAgentCreateService)
-[List Local Processing Agents](/docs/rest-api/local-processing-agent-management#listlocalprocessingagents) | v1 |  [LocalProcessingAgentListService](https://pkg.go.dev/github.com/fivetran/go-fivetran#LocalProcessingAgentListService)
-[Retrieve Local Processing Agent Details](/docs/rest-api/local-processing-agent-management#retrievelocalprocessingagentdetails) | v1 |  [LocalProcessingAgentDetailsService](https://pkg.go.dev/github.com/fivetran/go-fivetran#LocalProcessingAgentDetailsService)
-[Delete a Local Processing Agent](/docs/rest-api/local-processing-agent-management#deletealocalprocessingagent) | v1 |  [LocalProcessingAgentDeleteService](https://pkg.go.dev/github.com/fivetran/go-fivetran#LocalProcessingAgentDeleteService)
-[Regenerate authentication keys for a Local Processing Agent](/docs/rest-api/local-processing-agent-management#regeneratekeys) | v1 |  [LocalProcessingAgentReAuthService](https://pkg.go.dev/github.com/fivetran/go-fivetran#LocalProcessingAgentReAuthService)
+[Create a Hybrid Deployment Agent](https://fivetran.com/docs/rest-api/hybrid-deployment-agent-management#createahybriddeploymentagent) | v1 |  [HybridDeploymentAgentCreateService](https://pkg.go.dev/github.com/fivetran/go-fivetran#HybridDeploymentAgentCreateService)
+[List Hybrid Deployment Agents](/docs/rest-api/hybrid-deployment-agent-management#listhybriddeploymentagents) | v1 |  [HybridDeploymentAgentListService](https://pkg.go.dev/github.com/fivetran/go-fivetran#HybridDeploymentAgentListService)
+[Retrieve Hybrid Deployment Agent Details](/docs/rest-api/hybrid-deployment-agent-management#retrievehybriddeploymentagentdetails) | v1 |  [HybridDeploymentAgentDetailsService](https://pkg.go.dev/github.com/fivetran/go-fivetran#HybridDeploymentAgentDetailsService)
+[Delete a Hybrid Deployment Agent](/docs/rest-api/lhybrid-deployment-agent-management#deleteahybriddeploymentagent) | v1 |  [HybridDeploymentAgentDeleteService](https://pkg.go.dev/github.com/fivetran/go-fivetran#HybridDeploymentAgentDeleteService)
+[Regenerate authentication keys for a Hybrid Deployment Agent](/docs/rest-api/hybrid-deployment-agent-management#regeneratekeys) | v1 |  [HybridDeploymentAgentReAuthService](https://pkg.go.dev/github.com/fivetran/go-fivetran#HybridDeploymentAgentReAuthService)
 
 ## Support
 

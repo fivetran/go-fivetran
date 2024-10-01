@@ -1,35 +1,35 @@
-package localprocessingagent
+package hybriddeploymentagent
 
-type localProcessingAgentCreateRequest struct {
+type hybridDeploymentAgentCreateRequest struct {
     GroupId       *string `json:"group_id,omitempty"`
     DisplayName   *string `json:"display_name,omitempty"`
     EnvType       *string `json:"env_type,omitempty"`
     AcceptTerms   *bool   `json:"accept_terms,omitempty"`
 }
 
-type LocalProcessingAgentDetails struct {
+type HybridDeploymentAgentDetails struct {
     Id              string `json:"id"`
     DisplayName     string `json:"display_name"`
     GroupId         string `json:"group_id"`
     RegisteredAt    string `json:"registered_at"`
 }
 
-type LocalProcessingAgentUsageDetails struct {
+type HybridDeploymentAgentUsageDetails struct {
     ConnectionId   string `json:"connection_id"`
     Schema         string `json:"schema"`
     Service        string `json:"service"`
 }
 
-type LocalProcessingAgentData struct {
-    LocalProcessingAgentDetails
-    Usage []LocalProcessingAgentUsageDetails `json:"usage"`
+type HybridDeploymentAgentData struct {
+    HybridDeploymentAgentDetails
+    Usage []HybridDeploymentAgentUsageDetails `json:"usage"`
 }
 
-type LocalProcessingAgentCreateResponse struct {
+type HybridDeploymentAgentCreateResponse struct {
     Code    string `json:"code"`
     Message string `json:"message"`
     Data    struct {
-        LocalProcessingAgentDetails
+        HybridDeploymentAgentDetails
         Files struct {
           ConfigJson        string `json:"config_json"`
           AuthJson          string `json:"auth_json"`
@@ -38,23 +38,15 @@ type LocalProcessingAgentCreateResponse struct {
     } `json:"data"`
 }
 
-type LocalProcessingAgentDetailsResponse struct {
+type HybridDeploymentAgentDetailsResponse struct {
     Code string                     `json:"code"`
-    Data LocalProcessingAgentData   `json:"data"`
+    Data HybridDeploymentAgentData   `json:"data"`
 }
 
-type LocalProcessingAgentListResponse struct {
+type HybridDeploymentAgentListResponse struct {
     Code string `json:"code"`
     Data struct {
-        Items      []LocalProcessingAgentData `json:"items"`
+        Items      []HybridDeploymentAgentData `json:"items"`
         NextCursor string                     `json:"next_cursor"`
     } `json:"data"`
-}
-
-
-type externalLoggingCreateRequestBase struct {
-    Id      *string `json:"id,omitempty"`
-    GroupId *string `json:"group_id,omitempty"`
-    Service *string `json:"service,omitempty"`
-    Enabled *bool   `json:"enabled,omitempty"`
 }

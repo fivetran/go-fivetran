@@ -36,7 +36,7 @@ func TestNewConnectorSecretsListMappingMock(t *testing.T) {
 		Service(CONNECTOR_SERVICE).
 		GroupID("test_id").
 		SyncFrequency(&syncFrequency).
-		LocalProcessingAgentId("lpa_id").
+		HybridDeploymentAgentId("lpa_id").
 		ProxyAgentId("proxy_id").
 		PrivateLinkId("private_link_id").
 		NetworkingMethod("networking_method").
@@ -76,7 +76,7 @@ func TestNewConnectorCustomSecretsListMappingMock(t *testing.T) {
 		Service(CONNECTOR_SERVICE).
 		GroupID("test_id").
 		SyncFrequency(&syncFrequency).
-		LocalProcessingAgentId("lpa_id").
+		HybridDeploymentAgentId("lpa_id").
 		ProxyAgentId("proxy_id").
 		PrivateLinkId("private_link_id").
 		NetworkingMethod("networking_method").
@@ -115,7 +115,7 @@ func TestNewConnectorCustomMergedMappingMock(t *testing.T) {
 		Service(CONNECTOR_SERVICE).
 		GroupID("test_id").
 		SyncFrequency(&syncFrequency).
-		LocalProcessingAgentId("lpa_id").
+		HybridDeploymentAgentId("lpa_id").
 		ProxyAgentId("proxy_id").
 		PrivateLinkId("private_link_id").
 		NetworkingMethod("networking_method").
@@ -154,7 +154,7 @@ func TestNewConnectorWihtNilSyncFrequency(t *testing.T) {
 		Service(CONNECTOR_SERVICE).
 		GroupID("test_id").
 		SyncFrequency(nil).
-		LocalProcessingAgentId("lpa_id").
+		HybridDeploymentAgentId("lpa_id").
 		ProxyAgentId("proxy_id").
 		PrivateLinkId("private_link_id").
 		NetworkingMethod("networking_method").
@@ -195,7 +195,7 @@ func prepareConnectorCreateResponse() string {
             "failed_at": null,
             "sync_frequency": 1440,
             "daily_sync_time": "03:00",
-            "local_processing_agent_id": "lpa_id",
+            "hybrid_deployment_agent_id": "lpa_id",
             "proxy_agent_id": "proxy_id",
             "private_link_id": "private_link_id",
             "networking_method": "networking_method",
@@ -242,7 +242,7 @@ func prepareConnectorCustomMergedCreateResponse() string {
             "failed_at": null,
             "sync_frequency": 1440,
             "daily_sync_time": "03:00",
-            "local_processing_agent_id": "lpa_id",
+            "hybrid_deployment_agent_id": "lpa_id",
             "proxy_agent_id": "proxy_id",
             "private_link_id": "private_link_id",
             "networking_method": "networking_method",
@@ -296,7 +296,7 @@ func prepareConnectorCreateResponseWithNilSyncFrequency() string {
             "failed_at": null,
             "sync_frequency": null,
             "daily_sync_time": "03:00",
-            "local_processing_agent_id": "lpa_id",
+            "hybrid_deployment_agent_id": "lpa_id",
             "proxy_agent_id": "proxy_id",
             "private_link_id": "private_link_id",
             "networking_method": "networking_method",
@@ -389,7 +389,7 @@ func assertConnectorRequest(t *testing.T, request map[string]interface{}) {
 	testutils.AssertKey(t, "service", request, CONNECTOR_SERVICE)
 	testutils.AssertKey(t, "group_id", request, "test_id")
 	testutils.AssertKey(t, "sync_frequency", request, float64(5))
-	testutils.AssertKey(t, "local_processing_agent_id", request, "lpa_id")
+	testutils.AssertKey(t, "hybrid_deployment_agent_id", request, "lpa_id")
 	testutils.AssertKey(t, "proxy_agent_id", request, "proxy_id")
 	testutils.AssertKey(t, "private_link_id", request, "private_link_id")
 	testutils.AssertKey(t, "networking_method", request, "networking_method")
@@ -421,7 +421,7 @@ func assertConnectorRequest(t *testing.T, request map[string]interface{}) {
 func assertConnectorRequestWithNilSyncFrequency(t *testing.T, request map[string]interface{}) {
 	testutils.AssertKey(t, "service", request, CONNECTOR_SERVICE)
 	testutils.AssertKey(t, "group_id", request, "test_id")
-	testutils.AssertKey(t, "local_processing_agent_id", request, "lpa_id")
+	testutils.AssertKey(t, "hybrid_deployment_agent_id", request, "lpa_id")
 	testutils.AssertKey(t, "proxy_agent_id", request, "proxy_id")
 	testutils.AssertKey(t, "private_link_id", request, "private_link_id")
 	testutils.AssertKey(t, "networking_method", request, "networking_method")

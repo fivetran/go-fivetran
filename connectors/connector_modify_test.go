@@ -28,7 +28,7 @@ func TestConnectorUpdateMock(t *testing.T) {
     // act
     response, err := ftClient.NewConnectorModify().
         ConnectorID("connector_id").
-        LocalProcessingAgentId("lpa_id").
+        HybridDeploymentAgentId("hybrid_deployment_agent_id").
         ProxyAgentId("proxy_id").
         PrivateLinkId("private_link_id").
         NetworkingMethod("networking_method").
@@ -66,7 +66,7 @@ func TestCustomConnectorUpdateMock(t *testing.T) {
     // act
     response, err := ftClient.NewConnectorModify().
         ConnectorID("connector_id").
-        LocalProcessingAgentId("lpa_id").
+        HybridDeploymentAgentId("hybrid_deployment_agent_id").
         ProxyAgentId("proxy_id").
         PrivateLinkId("private_link_id").
         NetworkingMethod("networking_method").
@@ -118,7 +118,7 @@ func TestCustomMergedConnectorUpdateMock(t *testing.T) {
     response, err := ftClient.NewConnectorModify().
         ConnectorID("connector_id").
         Paused(false).
-        LocalProcessingAgentId("lpa_id").
+        HybridDeploymentAgentId("hybrid_deployment_agent_id").
         ProxyAgentId("proxy_id").
         PrivateLinkId("private_link_id").
         NetworkingMethod("networking_method").
@@ -226,7 +226,7 @@ func prepareConnectorUpdateResponse() string {
             "failed_at": null,
             "sync_frequency": 1440,
             "daily_sync_time": "03:00",
-            "local_processing_agent_id": "lpa_id",
+            "hybrid_deployment_agent_id": "hybrid_deployment_agent_id",
             "proxy_agent_id": "proxy_id",
             "private_link_id": "private_link_id",
             "networking_method": "networking_method",
@@ -269,7 +269,7 @@ func assertConnectorUpdateResponse(t *testing.T, response connectors.DetailsWith
     testutils.AssertEqual(t, response.Code, "Success")
 
     testutils.AssertEqual(t, *response.Data.Paused, false)
-    testutils.AssertEqual(t, response.Data.LocalProcessingAgentId, "lpa_id")
+    testutils.AssertEqual(t, response.Data.HybridDeploymentAgentId, "hybrid_deployment_agent_id")
     testutils.AssertEqual(t, response.Data.ProxyAgentId, "proxy_id")
     testutils.AssertEqual(t, response.Data.PrivateLinkId, "private_link_id")
     testutils.AssertEqual(t, response.Data.NetworkingMethod, "networking_method")
@@ -281,7 +281,7 @@ func assertCustomConnectorUpdateResponse(t *testing.T, response connectors.Detai
     testutils.AssertEqual(t, response.Code, "Success")
 
     testutils.AssertEqual(t, *response.Data.Paused, false)
-    testutils.AssertEqual(t, response.Data.LocalProcessingAgentId, "lpa_id")
+    testutils.AssertEqual(t, response.Data.HybridDeploymentAgentId, "hybrid_deployment_agent_id")
     testutils.AssertEqual(t, response.Data.ProxyAgentId, "proxy_id")
     testutils.AssertEqual(t, response.Data.PrivateLinkId, "private_link_id")
     testutils.AssertEqual(t, response.Data.NetworkingMethod, "networking_method")
@@ -304,7 +304,7 @@ func assertCustomMergedConnectorUpdateResponse(t *testing.T, response connectors
     testutils.AssertEqual(t, response.Code, "Success")
 
     testutils.AssertEqual(t, *response.Data.Paused, false)
-    testutils.AssertEqual(t, response.Data.LocalProcessingAgentId, "lpa_id")
+    testutils.AssertEqual(t, response.Data.HybridDeploymentAgentId, "hybrid_deployment_agent_id")
     testutils.AssertEqual(t, response.Data.ProxyAgentId, "proxy_id")
     testutils.AssertEqual(t, response.Data.PrivateLinkId, "private_link_id")
     testutils.AssertEqual(t, response.Data.NetworkingMethod, "networking_method")
@@ -316,7 +316,7 @@ func assertCustomMergedConnectorUpdateResponse(t *testing.T, response connectors
 
 func assertConnectorUpdateRequest(t *testing.T, request map[string]interface{}) {
     testutils.AssertKeyValue(t, request, "paused", false)
-    testutils.AssertKeyValue(t, request, "local_processing_agent_id", "lpa_id")
+    testutils.AssertKeyValue(t, request, "hybrid_deployment_agent_id", "hybrid_deployment_agent_id")
     testutils.AssertKeyValue(t, request, "proxy_agent_id", "proxy_id")
     testutils.AssertKeyValue(t, request, "private_link_id", "private_link_id")
     testutils.AssertKeyValue(t, request, "networking_method", "networking_method")
