@@ -274,6 +274,7 @@ REST API Endpoint | REST API Version | SDK Service/Config
 [Return all connections attached to the proxy agent](/docs/rest-api/proxy-management#returnsallconnectionsattachedtotheproxyagent) | v1 |  [ProxyConnectionMembershipsListService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ProxyConnectionMembershipsListService)
 
 ### [Hybrid Deployment Agent Management](https://fivetran.com/docs/rest-api/hybrid-deployment-agent-management#hybriddeploymentagentmanagement)
+
 REST API Endpoint | REST API Version | SDK Service/Config
 --- | --- | ---
 [Create a Hybrid Deployment Agent](https://fivetran.com/docs/rest-api/hybrid-deployment-agent-management#createahybriddeploymentagent) | v1 |  [HybridDeploymentAgentCreateService](https://pkg.go.dev/github.com/fivetran/go-fivetran#HybridDeploymentAgentCreateService)

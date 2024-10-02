@@ -567,6 +567,9 @@ func CleanupDestinations() {
 			log.Fatal(err)
 		}
 	}
+	if groups.Data.NextCursor != "" {
+		CleanupDestinations()
+	}	
 }
 
 func CleanupGroups() {
@@ -582,6 +585,9 @@ func CleanupGroups() {
 				log.Fatal(err)
 			}
 		}
+	}
+	if groups.Data.NextCursor != "" {
+		CleanupGroups()
 	}
 }
 
@@ -609,18 +615,24 @@ func CleanupExternalLogging() {
 			log.Fatal(err)
 		}
 	}
+	if groups.Data.NextCursor != "" {
+		CleanupExternalLogging()
+	}
 }
 
 func CleanupPrivateLinks() {
-	links, err := Client.NewPrivateLinkList().Do(context.Background())
+	list, err := Client.NewPrivateLinkList().Do(context.Background())
 	if err != nil {
 		log.Fatal(err)
 	}
-	for _, link := range links.Data.Items {
+	for _, link := range list.Data.Items {
 		_, err := Client.NewPrivateLinkDelete().PrivateLinkId(link.Id).Do(context.Background())
 		if err != nil && err.Error() != "status code: 404; expected: 200" {
 			log.Fatal(err)
 		}
+	}
+	if list.Data.NextCursor != "" {
+		CleanupPrivateLinks()
 	}
 }
 
@@ -634,6 +646,9 @@ func CleanupWebhooks() {
 		if err != nil && err.Error() != "status code: 404; expected: 200" {
 			log.Fatal(err)
 		}
+	}
+	if list.Data.NextCursor != "" {
+		CleanupWebhooks()
 	}
 }
 

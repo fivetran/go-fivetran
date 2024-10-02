@@ -13,6 +13,7 @@ type PrivateLinkConfig struct {
     awsAccountId                *string
     clusterIdentifier           *string
     subResourceName             *string
+    privateDnsRegions           *string
     privateConnectionServiceId  *string
 }
 
@@ -27,6 +28,7 @@ type privateLinkConfigRequest struct {
     AwsAccountId                *string `json:"aws_account_id,omitempty"`
     ClusterIdentifier           *string `json:"cluster_identifier,omitempty"`
     SubResourceName             *string `json:"sub_resource_name,omitempty"`
+    PrivateDnsRegions           *string `json:"private_dns_regions,omitempty"`
     PrivateConnectionServiceId  *string `json:"private_connection_service_id,omitempty"`
 }
  
@@ -41,6 +43,7 @@ type PrivateLinkConfigResponse struct {
     AwsAccountId                string `json:"aws_account_id"`
     ClusterIdentifier           string `json:"cluster_identifier"`
     SubResourceName             string `json:"sub_resource_name"`
+    PrivateDnsRegions           string `json:"private_dns_regions"`
     PrivateConnectionServiceId  string `json:"private_connection_service_id,omitempty"`
 
 }
@@ -57,6 +60,7 @@ func (plc *PrivateLinkConfig) Request() *privateLinkConfigRequest {
         AwsAccountId:                       plc.awsAccountId,
         ClusterIdentifier:                  plc.clusterIdentifier,
         SubResourceName:                    plc.subResourceName,
+        PrivateDnsRegions:                  plc.privateDnsRegions,
         PrivateConnectionServiceId:         plc.privateConnectionServiceId,
     }
 }
@@ -108,6 +112,11 @@ func (plc *PrivateLinkConfig) ClusterIdentifier(value string) *PrivateLinkConfig
 
 func (plc *PrivateLinkConfig) SubResourceName(value string) *PrivateLinkConfig {
     plc.subResourceName = &value
+    return plc
+}
+
+func (plc *PrivateLinkConfig) PrivateDnsRegions(value string) *PrivateLinkConfig {
+    plc.privateDnsRegions = &value
     return plc
 }
 
