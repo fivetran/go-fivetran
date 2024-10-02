@@ -631,7 +631,7 @@ func CleanupPrivateLinks() {
 			log.Fatal(err)
 		}
 	}
-	if link.Data.NextCursor != "" {
+	if list.Data.NextCursor != "" {
 		CleanupPrivateLinks()
 	}
 }
