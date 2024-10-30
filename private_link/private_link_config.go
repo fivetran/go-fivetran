@@ -1,5 +1,7 @@
 package privatelink
 
+import "github.com/fivetran/go-fivetran/utils"
+
 // PrivateLinkConfig builds Private Link Management, Private Link Config.
 // Ref. https://fivetran.com/docs/rest-api/private-link-management#privatelinketupconfigurations
 type PrivateLinkConfig struct {
@@ -63,6 +65,14 @@ func (plc *PrivateLinkConfig) Request() *privateLinkConfigRequest {
         PrivateDnsRegions:                  plc.privateDnsRegions,
         PrivateConnectionServiceId:         plc.privateConnectionServiceId,
     }
+}
+
+func (plc *PrivateLinkConfig) Merge(customConfig *map[string]interface{}) (*map[string]interface{}, error) {
+    err := utils.MergeIntoMap(plc.Request(), customConfig)
+    if err != nil {
+        return nil, err
+    }
+    return customConfig, nil
 }
 
 func (plc *PrivateLinkConfig) ConnectionServiceName(value string) *PrivateLinkConfig {
