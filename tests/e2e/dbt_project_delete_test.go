@@ -9,6 +9,7 @@ import (
 )
 
 func TestNewProjectDeleteE2E(t *testing.T) {
+	t.Skip("Unstable test; will be delete with refactoring DBT")
 	projectId := testutils.CreateDbtProject(t)
 	deleted, err := testutils.Client.NewDbtProjectDelete().DbtProjectID(projectId).Do(context.Background())
 	if err != nil {

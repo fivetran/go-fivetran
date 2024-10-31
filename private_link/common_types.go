@@ -22,6 +22,25 @@ type PrivateLinkResponse struct {
     } `json:"data"`
 }
 
+type PrivateLinkCustomResponse struct {
+    Code    string `json:"code"`
+    Message string `json:"message"`
+    Data    struct {
+        PrivateLinkResponseBase
+        Config map[string]interface{} `json:"config"`
+    } `json:"data"`
+}
+
+type PrivateLinkCustomMergedResponse struct {
+    Code    string `json:"code"`
+    Message string `json:"message"`
+    Data    struct {
+        PrivateLinkResponseBase
+        CustomConfig map[string]interface{}        `json:"config"`
+        Config       PrivateLinkConfigResponse // no mapping here
+    } `json:"data"`
+}
+
 type PrivateLinkListResponse struct {
     Code string `json:"code"`
     Data struct {
@@ -30,13 +49,26 @@ type PrivateLinkListResponse struct {
     } `json:"data"`
 }
 
-type privateLinkCreateRequest struct {
+type privateLinkCreateRequestBase struct {
     Name        *string `json:"name,omitempty"`
     Region      *string `json:"region,omitempty"`
     Service     *string `json:"service,omitempty"`
+}
+
+type privateLinkCreateRequest struct {
+    privateLinkCreateRequestBase
     Config      any     `json:"config,omitempty"`
+}
+
+type privateLinkCustomCreateRequest struct {
+    privateLinkCreateRequestBase
+    Config *map[string]interface{} `json:"config,omitempty"`
 }
 
 type privateLinkModifyRequest struct {
     Config          any     `json:"config,omitempty"`
+}
+
+type privateLinkCustomModifyRequest struct {
+    Config *map[string]interface{} `json:"config,omitempty"`
 }

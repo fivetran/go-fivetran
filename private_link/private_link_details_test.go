@@ -13,7 +13,7 @@ func TestPrivateLinkDetailsServiceDo(t *testing.T) {
 	// arrange
 
 	ftClient, mockClient := testutils.CreateTestClient()
-	handler := mockClient.When(http.MethodGet, "/v1/private-links/123456").
+	handler := mockClient.When(http.MethodGet, "/v1/private-links/private_link_id").
 		ThenCall(func(req *http.Request) (*http.Response, error) {
 			response := mock.NewResponse(req, http.StatusOK, preparePrivateLinkDetailsResponse())
 			return response, nil
@@ -21,7 +21,7 @@ func TestPrivateLinkDetailsServiceDo(t *testing.T) {
 
 	// act
 	response, err := ftClient.NewPrivateLinkDetails().
-		PrivateLinkId("123456").
+		PrivateLinkId("private_link_id").
 		Do(context.Background())
 
 	// assert
@@ -36,11 +36,38 @@ func TestPrivateLinkDetailsServiceDo(t *testing.T) {
 	assertPrivateLinkDetailsResponse(t, response)
 }
 
+func TestPrivateLinkDetailsCustomServiceDo(t *testing.T) {
+	// arrange
+
+	ftClient, mockClient := testutils.CreateTestClient()
+	handler := mockClient.When(http.MethodGet, "/v1/private-links/private_link_id").
+		ThenCall(func(req *http.Request) (*http.Response, error) {
+			response := mock.NewResponse(req, http.StatusOK, preparePrivateLinkDetailsResponse())
+			return response, nil
+		})
+
+	// act
+	response, err := ftClient.NewPrivateLinkDetails().
+		PrivateLinkId("private_link_id").
+		DoCustom(context.Background())
+
+	// assert
+	if err != nil {
+		t.Error(err)
+	}
+
+	interactions := mockClient.Interactions()
+	testutils.AssertEqual(t, len(interactions), 1)
+	testutils.AssertEqual(t, interactions[0].Handler, handler)
+	testutils.AssertEqual(t, handler.Interactions, 1)
+	assertPrivateLinkCustomDetailsResponse(t, response)
+}
+
 func preparePrivateLinkDetailsResponse() string {
 	return `{
   "code": "Success",
   "data": {
-    "id": "123456",
+    "id": "private_link_id",
     "name": "name",
     "region": "region",
     "service": "service",
@@ -59,7 +86,7 @@ func preparePrivateLinkDetailsResponse() string {
 
 func assertPrivateLinkDetailsResponse(t *testing.T, response privatelink.PrivateLinkResponse) {
 	testutils.AssertEqual(t, response.Code, "Success")
-	testutils.AssertEqual(t, response.Data.Id, "123456")
+	testutils.AssertEqual(t, response.Data.Id, "private_link_id")
 	testutils.AssertEqual(t, response.Data.Name, "name")
 	testutils.AssertEqual(t, response.Data.Region, "region")
 	testutils.AssertEqual(t, response.Data.Service, "service")
@@ -69,4 +96,18 @@ func assertPrivateLinkDetailsResponse(t *testing.T, response privatelink.Private
 	testutils.AssertEqual(t, response.Data.CreatedAt, "2022-04-29T09:41:08.583Z")
 	testutils.AssertEqual(t, response.Data.CreatedBy, "created_by")
 	testutils.AssertEqual(t, response.Data.Config.ConnectionServiceName, "connection_service_name")
+}
+
+func assertPrivateLinkCustomDetailsResponse(t *testing.T, response privatelink.PrivateLinkCustomResponse) {
+	testutils.AssertEqual(t, response.Code, "Success")
+	testutils.AssertEqual(t, response.Data.Id, "private_link_id")
+	testutils.AssertEqual(t, response.Data.Name, "name")
+	testutils.AssertEqual(t, response.Data.Region, "region")
+	testutils.AssertEqual(t, response.Data.Service, "service")
+	testutils.AssertEqual(t, response.Data.CloudProvider, "cloud_provider")
+	testutils.AssertEqual(t, response.Data.State, "state")
+	testutils.AssertEqual(t, response.Data.StateSummary, "state_summary")
+	testutils.AssertEqual(t, response.Data.CreatedAt, "2022-04-29T09:41:08.583Z")
+	testutils.AssertEqual(t, response.Data.CreatedBy, "created_by")
+	testutils.AssertEqual(t, response.Data.Config["connection_service_name"], "connection_service_name")
 }

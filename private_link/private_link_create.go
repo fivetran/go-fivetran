@@ -4,6 +4,7 @@ import (
 	"context"
 
 	httputils "github.com/fivetran/go-fivetran/http_utils"
+	"github.com/fivetran/go-fivetran/utils"
 )
 
 // PrivateLinkCreateService implements the Log Management, Create a Log Service API.
@@ -14,21 +15,54 @@ type PrivateLinkCreateService struct {
 	region       *string
 	service      *string
 	config       *PrivateLinkConfig
+	configCustom *map[string]interface{}
 }
 
 
-func (s *PrivateLinkCreateService) request() privateLinkCreateRequest {
+func (s *PrivateLinkCreateService) requestBase() privateLinkCreateRequestBase {
+	return privateLinkCreateRequestBase{
+		Name: 		s.name,
+		Region: 	s.region,
+		Service: 	s.service,
+	}
+}
+
+func (s *PrivateLinkCreateService) request() *privateLinkCreateRequest {
 	var config interface{}
 	if s.config != nil {
 		config = s.config.Request()
 	}
 
-	return privateLinkCreateRequest{
-		Name: 		s.name,
-		Region: 	s.region,
-		Service: 	s.service,
-		Config:     config,
+	r := &privateLinkCreateRequest{
+		privateLinkCreateRequestBase: s.requestBase(),
+		Config:                       config,
 	}
+
+	return r
+}
+
+func (s *PrivateLinkCreateService) requestCustom() *privateLinkCustomCreateRequest {
+	return &privateLinkCustomCreateRequest{
+		privateLinkCreateRequestBase: s.requestBase(),
+		Config:                       s.configCustom,
+	}
+}
+
+func (s *PrivateLinkCreateService) requestCustomMerged() (*privateLinkCustomCreateRequest, error) {
+	currentConfig := s.configCustom
+
+	if s.config != nil {
+		var err error
+		currentConfig, err = s.config.Merge(currentConfig)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	return &privateLinkCustomCreateRequest{
+		privateLinkCreateRequestBase: s.requestBase(),
+		Config:                       currentConfig,
+	}, nil
 }
 
 func (s *PrivateLinkCreateService) Region(value string) *PrivateLinkCreateService {
@@ -51,8 +85,46 @@ func (s *PrivateLinkCreateService) Config(value *PrivateLinkConfig) *PrivateLink
 	return s
 }
 
+func (s *PrivateLinkCreateService) ConfigCustom(value *map[string]interface{}) *PrivateLinkCreateService {
+	s.configCustom = value
+	return s
+}
+
+func (s *PrivateLinkCreateService) do(ctx context.Context, req, response any) error {
+	err := s.HttpService.Do(ctx, "POST", "/private-links", s.request(), nil, 201, &response)
+	return err
+}
+
 func (s *PrivateLinkCreateService) Do(ctx context.Context) (PrivateLinkResponse, error) {
 	var response PrivateLinkResponse
-	err := s.HttpService.Do(ctx, "POST", "/private-links", s.request(), nil, 201, &response)
+
+	err := s.do(ctx, s.request(), &response)
+
+	return response, err
+}
+
+func (s *PrivateLinkCreateService) DoCustom(ctx context.Context) (PrivateLinkCustomResponse, error) {
+	var response PrivateLinkCustomResponse
+
+	err := s.do(ctx, s.requestCustom(), &response)
+
+	return response, err
+}
+
+func (s *PrivateLinkCreateService) DoCustomMerged(ctx context.Context) (PrivateLinkCustomMergedResponse, error) {
+	var response PrivateLinkCustomMergedResponse
+
+	req, err := s.requestCustomMerged()
+
+	if err != nil {
+		return response, err
+	}
+
+	err = s.do(ctx, req, &response)
+
+	if err == nil {
+		err = utils.FetchFromMap(&response.Data.CustomConfig, &response.Data.Config)
+	}
+
 	return response, err
 }
