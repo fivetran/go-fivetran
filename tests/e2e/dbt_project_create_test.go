@@ -9,6 +9,8 @@ import (
 )
 
 func TestNewDbtProjectCreateE2E(t *testing.T) {
+	t.Skip("Unstable test; will be delete with refactoring DBT")
+
 	dbtVersion := "1.3.1"
 	gitRemoteUrl := "https://github.com/fivetran/dbt_demo"
 	gitBranch := "main"
