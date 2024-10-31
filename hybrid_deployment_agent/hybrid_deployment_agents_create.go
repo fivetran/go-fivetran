@@ -13,6 +13,7 @@ type HybridDeploymentAgentCreateService struct {
 	groupId 	     *string
 	displayName      *string
 	envType      	 *string
+	authType      	 *string
 	acceptTerms      *bool
 }
 
@@ -21,6 +22,7 @@ func (s *HybridDeploymentAgentCreateService) request() hybridDeploymentAgentCrea
 		GroupId: 		s.groupId,
 		DisplayName: 	s.displayName,
 		EnvType: 		s.envType,
+		AuthType: 		s.authType,
 		AcceptTerms: 	s.acceptTerms,
 	}
 }
@@ -37,6 +39,11 @@ func (s *HybridDeploymentAgentCreateService) DisplayName(value string) *HybridDe
 
 func (s *HybridDeploymentAgentCreateService) EnvType(value string) *HybridDeploymentAgentCreateService {
 	s.envType = &value
+	return s
+}
+
+func (s *HybridDeploymentAgentCreateService) AuthType(value string) *HybridDeploymentAgentCreateService {
+	s.authType = &value
 	return s
 }
 
