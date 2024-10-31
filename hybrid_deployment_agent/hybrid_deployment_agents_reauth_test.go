@@ -23,6 +23,7 @@ func TestNewHybridDeploymentAgentReAuthMappingMock(t *testing.T) {
 	// act
 	response, err := ftClient.NewHybridDeploymentAgentReAuth().
 		AgentId("agent_id").
+		AuthType("AUTO").
 		Do(context.Background())
 
 	if err != nil {
@@ -48,6 +49,7 @@ func prepareHybridDeploymentAgentResponse() string {
        			"display_name": "display_name",
        			"group_id": "group_id",
        			"registered_at": "1970-01-01T00:00:00.000000Z",
+       			"token": "token_value",
        			"files": {
           			"config_json": "config_json",
           			"auth_json": "auth_json",
@@ -64,6 +66,7 @@ func assertHybridDeploymentAgentResponse(t *testing.T, response hybriddeployment
 	testutils.AssertEqual(t, response.Data.DisplayName, "display_name")
 	testutils.AssertEqual(t, response.Data.GroupId, "group_id")
 	testutils.AssertEqual(t, response.Data.RegisteredAt, "1970-01-01T00:00:00.000000Z")
+	testutils.AssertEqual(t, response.Data.Token, "token_value")
 	testutils.AssertEqual(t, response.Data.Files.ConfigJson, "config_json")
 	testutils.AssertEqual(t, response.Data.Files.AuthJson, "auth_json")
 	testutils.AssertEqual(t, response.Data.Files.DockerComposeYaml, "docker_compose_yaml")
