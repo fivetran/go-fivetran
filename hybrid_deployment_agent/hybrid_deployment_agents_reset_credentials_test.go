@@ -16,7 +16,7 @@ import (
 func TestHybridDeploymentAgentResetCredentialsServiceDo(t *testing.T) {
 	// arrange
 	ftClient, mockClient := testutils.CreateTestClient()
-	handler := mockClient.When(http.MethodResetCredentials, "/v1/hybrid-deployment-agents/agent_id/reset-credentials").ThenCall(
+	handler := mockClient.When(http.MethodPost, "/v1/hybrid-deployment-agents/agent_id/reset-credentials").ThenCall(
 		func(req *http.Request) (*http.Response, error) {
 			response := mock.NewResponse(req, http.StatusOK, `{"code": "Success"}`)
 			return response, nil
