@@ -653,3 +653,7 @@ func (c *Client) NewHybridDeploymentAgentList() *hybriddeploymentagent.HybridDep
 func (c *Client) NewHybridDeploymentAgentReAuth() *hybriddeploymentagent.HybridDeploymentAgentReAuthService {
 	return &hybriddeploymentagent.HybridDeploymentAgentReAuthService{HttpService: c.NewHttpService()}
 }
+
+func (c *Client) NewHybridDeploymentAgentResetCredentials() *hybriddeploymentagent.HybridDeploymentAgentResetCredentialsService {
+	return &hybriddeploymentagent.HybridDeploymentAgentResetCredentialsService{HttpService: c.NewHttpService()}
+}

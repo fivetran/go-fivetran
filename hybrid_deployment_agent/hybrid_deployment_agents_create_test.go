@@ -26,6 +26,7 @@ func TestNewHybridDeploymentAgentCreateMappingMock(t *testing.T) {
 	response, err := ftClient.NewHybridDeploymentAgentCreate().
 		GroupId("group_id").
 		DisplayName("display_name").
+		AuthType("AUTO").
 		EnvType("DOCKER").
 		AcceptTerms(true).
 		Do(context.Background())
@@ -53,6 +54,7 @@ func prepareHybridDeploymentAgentCreateResponse() string {
        			"display_name": "display_name",
        			"group_id": "group_id",
        			"registered_at": "1970-01-01T00:00:00.000000Z",
+       			"token": "token",
        			"files": {
           			"config_json": "config_json",
           			"auth_json": "auth_json",
@@ -66,6 +68,7 @@ func assertHybridDeploymentAgentCreateRequest(t *testing.T, request map[string]i
 	testutils.AssertKey(t, "group_id", request, "group_id")
 	testutils.AssertKey(t, "display_name", request, "display_name")
 	testutils.AssertKey(t, "env_type", request, "DOCKER")
+	testutils.AssertKey(t, "auth_type", request, "AUTO")
 	testutils.AssertKey(t, "accept_terms", request, true)
 }
 
@@ -77,6 +80,7 @@ func assertHybridDeploymentAgentCreateResponse(t *testing.T, response hybriddepl
 	testutils.AssertEqual(t, response.Data.DisplayName, "display_name")
 	testutils.AssertEqual(t, response.Data.GroupId, "group_id")
 	testutils.AssertEqual(t, response.Data.RegisteredAt, "1970-01-01T00:00:00.000000Z")
+	testutils.AssertEqual(t, response.Data.Token, "token")
 	testutils.AssertEqual(t, response.Data.Files.ConfigJson, "config_json")
 	testutils.AssertEqual(t, response.Data.Files.AuthJson, "auth_json")
 	testutils.AssertEqual(t, response.Data.Files.DockerComposeYaml, "docker_compose_yaml")

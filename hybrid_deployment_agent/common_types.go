@@ -3,8 +3,13 @@ package hybriddeploymentagent
 type hybridDeploymentAgentCreateRequest struct {
     GroupId       *string `json:"group_id,omitempty"`
     DisplayName   *string `json:"display_name,omitempty"`
+    AuthType      *string `json:"auth_type,omitempty"`
     EnvType       *string `json:"env_type,omitempty"`
     AcceptTerms   *bool   `json:"accept_terms,omitempty"`
+}
+
+type hybridDeploymentAgentReAuthRequest struct {
+    AuthType      *string `json:"auth_type,omitempty"`
 }
 
 type HybridDeploymentAgentDetails struct {
@@ -35,6 +40,7 @@ type HybridDeploymentAgentCreateResponse struct {
           AuthJson          string `json:"auth_json"`
           DockerComposeYaml string `json:"docker_compose_yaml"`
         } `json:"files"`
+        Token   string `json:"token"`
     } `json:"data"`
 }
 
