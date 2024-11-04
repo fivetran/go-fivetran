@@ -16,7 +16,7 @@ func TestNewPrivateLinkCreateE2E(t *testing.T) {
 		Service("SOURCE_GCP").
 		Region("GCP_US_EAST4").
 		Config(fivetran.NewPrivateLinkConfig().
-			ConnectionServiceName("test")).
+			PrivateConnectionServiceId("test")).
 		Do(context.Background())
 
 	if err != nil {
@@ -30,7 +30,7 @@ func TestNewPrivateLinkCreateE2E(t *testing.T) {
 	testutils.AssertNotEmpty(t, created.Data.Service)
 	testutils.AssertNotEmpty(t, created.Data.Region)
 	testutils.AssertNotEmpty(t, created.Data.CloudProvider)
-	testutils.AssertEqual(t, created.Data.Config.ConnectionServiceName, "test")
+	testutils.AssertEqual(t, created.Data.Config.PrivateConnectionServiceId, "test")
 
 	t.Cleanup(func() { 
 		testutils.DeletePrivateLink(t, created.Data.Id) 
@@ -45,7 +45,7 @@ func TestNewPrivateLinkCustomCreateE2E(t *testing.T) {
 		Service("SOURCE_GCP").
 		Region("GCP_US_EAST4").
 		ConfigCustom(&map[string]interface{}{
-			"connection_service_name":     "test",
+			"private_connection_service_id": "test",
 		}).
 		DoCustom(context.Background())
 
@@ -60,7 +60,7 @@ func TestNewPrivateLinkCustomCreateE2E(t *testing.T) {
 	testutils.AssertNotEmpty(t, created.Data.Service)
 	testutils.AssertNotEmpty(t, created.Data.Region)
 	testutils.AssertNotEmpty(t, created.Data.CloudProvider)
-	testutils.AssertEqual(t, created.Data.Config["connection_service_name"], "test")
+	testutils.AssertEqual(t, created.Data.Config["private_connection_service_id"], "test")
 
 	t.Cleanup(func() { 
 		testutils.DeletePrivateLink(t, created.Data.Id) 

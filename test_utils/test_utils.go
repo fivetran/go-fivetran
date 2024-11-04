@@ -749,7 +749,7 @@ func CreatePrivateLink(t *testing.T) string {
 		Service("SOURCE_GCP").
 		Region("GCP_US_EAST4").
 		Config(fivetran.NewPrivateLinkConfig().
-			ConnectionServiceName("test")).
+			PrivateConnectionServiceId("test")).
 		Do(context.Background())
 
 	if err != nil {

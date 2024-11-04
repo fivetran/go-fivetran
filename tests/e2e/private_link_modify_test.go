@@ -15,7 +15,7 @@ func TestNewPrivateLinkModifyE2E(t *testing.T) {
 
 	details, err := testutils.Client.NewPrivateLinkModify().PrivateLinkId(privateLinkId).
 		Config(fivetran.NewPrivateLinkConfig().
-			ConnectionServiceName("test2")).
+			PrivateConnectionServiceId("test2")).
 		Do(context.Background())
 
 	if err != nil {
@@ -25,5 +25,5 @@ func TestNewPrivateLinkModifyE2E(t *testing.T) {
 
 	testutils.AssertEqual(t, details.Code, "Success")
 	testutils.AssertNotEmpty(t, details.Message)
-	testutils.AssertEqual(t, details.Data.Config.ConnectionServiceName, "test2")
+	testutils.AssertEqual(t, details.Data.Config.PrivateConnectionServiceId, "test2")
 }
