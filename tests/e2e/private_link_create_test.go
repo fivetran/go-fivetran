@@ -3,6 +3,7 @@ package fivetran_test
 import (
 	"context"
 	"testing"
+	"strconv"
 
 	"github.com/fivetran/go-fivetran"
 	testutils "github.com/fivetran/go-fivetran/test_utils"
@@ -10,7 +11,7 @@ import (
 
 func TestNewPrivateLinkCreateE2E(t *testing.T) {
 	//t.Skip("Private links have a strict limit on the number of requests per hour; to test changes in these modules, this Skip must be removed")
-	suffix := strconv.Itoa(seededRand.Int())
+	suffix := strconv.Itoa(testutils.SeededRand.Int())
 	created, err := testutils.Client.NewPrivateLinkCreate().
 		Name(suffix).
 		Service("SOURCE_GCP").
@@ -39,7 +40,7 @@ func TestNewPrivateLinkCreateE2E(t *testing.T) {
 
 func TestNewPrivateLinkCustomCreateE2E(t *testing.T) {
 	//t.Skip("Private links have a strict limit on the number of requests per hour; to test changes in these modules, this Skip must be removed")
-	suffix := strconv.Itoa(seededRand.Int())
+	suffix := strconv.Itoa(testutils.SeededRand.Int())
 	created, err := testutils.Client.NewPrivateLinkCreate().
 		Name(suffix).
 		Service("SOURCE_GCP").

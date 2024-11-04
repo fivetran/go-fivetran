@@ -11,7 +11,9 @@ import (
 	"os"
 	"reflect"
 	"testing"
+	"strconv"
 	"time"
+	"math/rand"
 
 	"github.com/fivetran/go-fivetran"
 	"github.com/fivetran/go-fivetran/tests/mock"
@@ -21,6 +23,7 @@ var Client *fivetran.Client
 
 var CertificateHash string
 var EncodedCertificate string
+var SeededRand *rand.Rand = rand.New(rand.NewSource(time.Now().UnixNano()))
 
 // Tests should be re-written to not use a pre-defined user and group
 const (
@@ -744,7 +747,7 @@ func CreateExternalLogging(t *testing.T) string {
 /* Private Links */
 func CreatePrivateLink(t *testing.T) string {
 	t.Helper()
-	suffix := strconv.Itoa(seededRand.Int())
+	suffix := strconv.Itoa(SeededRand.Int())
 	created, err := Client.NewPrivateLinkCreate().
 		Name(suffix).
 		Service("SOURCE_GCP").
