@@ -746,7 +746,7 @@ func CreatePrivateLink(t *testing.T) string {
 	t.Helper()
 	created, err := Client.NewPrivateLinkCreate().
 		Name("go_sdk_private_link_internal").
-		Service("SOURCE").
+		Service("SOURCE_GCP").
 		Region("GCP_US_EAST4").
 		Config(fivetran.NewPrivateLinkConfig().
 			ConnectionServiceName("test")).

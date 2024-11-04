@@ -13,7 +13,7 @@ func TestNewPrivateLinkCreateE2E(t *testing.T) {
 
 	created, err := testutils.Client.NewPrivateLinkCreate().
 		Name("go_sdk_private_link_test").
-		Service("SOURCE").
+		Service("SOURCE_GCP").
 		Region("GCP_US_EAST4").
 		Config(fivetran.NewPrivateLinkConfig().
 			ConnectionServiceName("test")).
@@ -42,7 +42,7 @@ func TestNewPrivateLinkCustomCreateE2E(t *testing.T) {
 
 	created, err := testutils.Client.NewPrivateLinkCreate().
 		Name("go_sdk_private_link_test").
-		Service("SOURCE").
+		Service("SOURCE_GCP").
 		Region("GCP_US_EAST4").
 		ConfigCustom(&map[string]interface{}{
 			"connection_service_name":     "test",
