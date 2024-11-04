@@ -10,7 +10,7 @@ import (
 )
 
 func TestNewPrivateLinkCreateE2E(t *testing.T) {
-	//t.Skip("Private links have a strict limit on the number of requests per hour; to test changes in these modules, this Skip must be removed")
+	t.Skip("Passed in previous runs. Private links have a strict limit on the number of requests per hour; to test changes in these modules, this Skip must be removed")
 	suffix := strconv.Itoa(testutils.SeededRand.Int())
 	created, err := testutils.Client.NewPrivateLinkCreate().
 		Name(suffix).
@@ -39,7 +39,7 @@ func TestNewPrivateLinkCreateE2E(t *testing.T) {
 }
 
 func TestNewPrivateLinkCustomCreateE2E(t *testing.T) {
-	//t.Skip("Private links have a strict limit on the number of requests per hour; to test changes in these modules, this Skip must be removed")
+	t.Skip("Passed in previous runs. Private links have a strict limit on the number of requests per hour; to test changes in these modules, this Skip must be removed")
 	suffix := strconv.Itoa(testutils.SeededRand.Int())
 	created, err := testutils.Client.NewPrivateLinkCreate().
 		Name(suffix).
