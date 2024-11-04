@@ -10,9 +10,9 @@ import (
 
 func TestNewPrivateLinkCreateE2E(t *testing.T) {
 	//t.Skip("Private links have a strict limit on the number of requests per hour; to test changes in these modules, this Skip must be removed")
-
+	suffix := strconv.Itoa(seededRand.Int())
 	created, err := testutils.Client.NewPrivateLinkCreate().
-		Name("sdk_private_link_test").
+		Name(suffix).
 		Service("SOURCE_GCP").
 		Region("GCP_US_EAST4").
 		Config(fivetran.NewPrivateLinkConfig().
@@ -26,7 +26,7 @@ func TestNewPrivateLinkCreateE2E(t *testing.T) {
 
 	testutils.AssertEqual(t, created.Code, "Success")
 	testutils.AssertNotEmpty(t, created.Message)
-	testutils.AssertEqual(t, created.Data.Name, "sdk_private_link_test")
+	testutils.AssertEqual(t, created.Data.Name, suffix)
 	testutils.AssertNotEmpty(t, created.Data.Service)
 	testutils.AssertNotEmpty(t, created.Data.Region)
 	testutils.AssertNotEmpty(t, created.Data.CloudProvider)
@@ -39,9 +39,9 @@ func TestNewPrivateLinkCreateE2E(t *testing.T) {
 
 func TestNewPrivateLinkCustomCreateE2E(t *testing.T) {
 	//t.Skip("Private links have a strict limit on the number of requests per hour; to test changes in these modules, this Skip must be removed")
-
+	suffix := strconv.Itoa(seededRand.Int())
 	created, err := testutils.Client.NewPrivateLinkCreate().
-		Name("sdk_private_link_test").
+		Name(suffix).
 		Service("SOURCE_GCP").
 		Region("GCP_US_EAST4").
 		ConfigCustom(&map[string]interface{}{
@@ -56,7 +56,7 @@ func TestNewPrivateLinkCustomCreateE2E(t *testing.T) {
 
 	testutils.AssertEqual(t, created.Code, "Success")
 	testutils.AssertNotEmpty(t, created.Message)
-	testutils.AssertEqual(t, created.Data.Name, "sdk_private_link_test")
+	testutils.AssertEqual(t, created.Data.Name, suffix)
 	testutils.AssertNotEmpty(t, created.Data.Service)
 	testutils.AssertNotEmpty(t, created.Data.Region)
 	testutils.AssertNotEmpty(t, created.Data.CloudProvider)

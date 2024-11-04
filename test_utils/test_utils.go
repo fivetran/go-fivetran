@@ -744,8 +744,9 @@ func CreateExternalLogging(t *testing.T) string {
 /* Private Links */
 func CreatePrivateLink(t *testing.T) string {
 	t.Helper()
+	suffix := strconv.Itoa(seededRand.Int())
 	created, err := Client.NewPrivateLinkCreate().
-		Name("sdk_private_link_test2").
+		Name(suffix).
 		Service("SOURCE_GCP").
 		Region("GCP_US_EAST4").
 		Config(fivetran.NewPrivateLinkConfig().
