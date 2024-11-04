@@ -45,7 +45,7 @@ func TestNewPrivateLinkCustomCreateE2E(t *testing.T) {
 		Service("SOURCE").
 		Region("GCP_US_EAST4").
 		CustomConfig(&map[string]interface{}{
-			"connection_service_name":     "test"
+			"connection_service_name":     "test",
 		}).
 		DoCustom(context.Background())
 
