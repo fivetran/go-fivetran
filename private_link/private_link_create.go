@@ -91,7 +91,7 @@ func (s *PrivateLinkCreateService) ConfigCustom(value *map[string]interface{}) *
 }
 
 func (s *PrivateLinkCreateService) do(ctx context.Context, req, response any) error {
-	err := s.HttpService.Do(ctx, "POST", "/private-links", s.request(), nil, 201, &response)
+	err := s.HttpService.Do(ctx, "POST", "/private-links", req, nil, 201, &response)
 	return err
 }
 

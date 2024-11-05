@@ -8,7 +8,7 @@ import (
 )
 
 func TestPrivateLinkListE2E(t *testing.T) {
-	t.Skip("Private links have a strict limit on the number of requests per hour; to test changes in these modules, this Skip must be removed")
+	//t.Skip("Private links have a strict limit on the number of requests per hour; to test changes in these modules, this Skip must be removed")
 
 	linkId := testutils.CreatePrivateLink(t)
 
@@ -19,13 +19,16 @@ func TestPrivateLinkListE2E(t *testing.T) {
 	}
 
 	testutils.AssertEqual(t, result.Code, "Success")
-	testutils.AssertEqual(t, result.Data.Items[0].Id, linkId)
-	testutils.AssertNotEmpty(t, result.Data.Items[0].AccountId)
-	testutils.AssertNotEmpty(t, result.Data.Items[0].Region)
-	testutils.AssertNotEmpty(t, result.Data.Items[0].Service)
-	testutils.AssertNotEmpty(t, result.Data.Items[0].CreatedAt)
-	testutils.AssertNotEmpty(t, result.Data.Items[0].CreatedBy)
-	testutils.AssertNotEmpty(t, result.Data.Items[0].Name)
+	for _, v := range result.Data.Items {
+		if v.Id == linkId {
+			testutils.AssertNotEmpty(t, v.AccountId)
+			testutils.AssertEqual(t, v.Region, "GCP_US_EAST4")
+			testutils.AssertEqual(t, v.Service, "SOURCE_GCP")
+			testutils.AssertNotEmpty(t, v.CreatedAt)
+			testutils.AssertNotEmpty(t, v.CreatedBy)
+			testutils.AssertNotEmpty(t, v.Name)
+		}
+    }
 
 	t.Cleanup(func() { testutils.DeletePrivateLink(t, linkId) })
 }

@@ -8,7 +8,7 @@ import (
 )
 
 func TestPrivateLinkDetailsE2E(t *testing.T) {
-	t.Skip("Private links have a strict limit on the number of requests per hour; to test changes in these modules, this Skip must be removed")
+	t.Skip("Passed in previous runs. Private links have a strict limit on the number of requests per hour; to test changes in these modules, this Skip must be removed")
 
 	linkId := testutils.CreatePrivateLink(t)
 
@@ -22,8 +22,8 @@ func TestPrivateLinkDetailsE2E(t *testing.T) {
 	testutils.AssertEqual(t, result.Data.Id, linkId)
 	testutils.AssertNotEmpty(t, result.Data.Name)
 	testutils.AssertNotEmpty(t, result.Data.AccountId)
-	testutils.AssertNotEmpty(t, result.Data.Region)
-	testutils.AssertNotEmpty(t, result.Data.Service)
+	testutils.AssertEqual(t, result.Data.Region, "GCP_US_EAST4")
+	testutils.AssertEqual(t, result.Data.Service, "SOURCE_GCP")
 	testutils.AssertNotEmpty(t, result.Data.CreatedAt)
 	testutils.AssertNotEmpty(t, result.Data.CreatedBy)
 
