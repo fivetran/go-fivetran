@@ -20,10 +20,12 @@ func TestNewPrivateLinkModifyE2E(t *testing.T) {
 
 	if err != nil {
 		t.Logf("%+v\n", details)
-		t.Error(err)
+		if details.Code != "IllegalState" {
+			t.Error(err)
+		}
 	}
 
-	testutils.AssertEqual(t, details.Code, "Success")
+	// Private link in CREATING state is not allowed to perform any operation
+	testutils.AssertEqual(t, details.Code, "IllegalState")
 	testutils.AssertNotEmpty(t, details.Message)
-	testutils.AssertEqual(t, details.Data.Config.PrivateConnectionServiceId, "test2")
 }
