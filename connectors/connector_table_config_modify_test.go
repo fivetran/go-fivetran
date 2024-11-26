@@ -121,7 +121,7 @@ func assertConnectorTableConfigModifyResponse(t *testing.T, response connectors.
 
 	column3_table2_schema1 := table2_schema1.Columns["column_3"]
 	testutils.AssertEqual(t, *column3_table2_schema1.NameInDestination, "column_3")
-	testutils.AssertEqual(t, *column3_table2_schema1.IsPrimaryKey, true)
+	testutils.AssertEqual(t, *column3_table2_schema1.IsPrimaryKey, false)
 	testutils.AssertEqual(t, *column3_table2_schema1.Enabled, true)
 	testutils.AssertEqual(t, *column3_table2_schema1.Hashed, true)
 	testutils.AssertEqual(t, *column3_table2_schema1.EnabledPatchSettings.Allowed, true)
