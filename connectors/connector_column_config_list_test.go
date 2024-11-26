@@ -89,7 +89,7 @@ func prepareConnectorColumnConfigListResponse() string {
                     "reason_code": "SYSTEM_COLUMN",
                     "reason": "The column does not support exclusion as it is a Primary Key"
                 },
-				""is_primary_key" : true
+				"is_primary_key" : true
             },
             "column_2": {
                 "name_in_destination": "column_2",
@@ -108,6 +108,7 @@ func prepareConnectorColumnConfigListResponse() string {
                     "allowed": true
 				},
                 "is_primary_key" : false
+			}
         }
     }
 }
