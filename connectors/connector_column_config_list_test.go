@@ -53,6 +53,7 @@ func assertConnectorColumnConfigListResponse(t *testing.T, response connectors.C
 
 	column_1 := response.Data.Columns["column_1"]
 	testutils.AssertEqual(t, *column_1.NameInDestination, "column_1")
+	testutils.AssertEqual(t, *column_1.IsPrimaryKey, true)
 	testutils.AssertEqual(t, *column_1.Enabled, true)
 	testutils.AssertEqual(t, *column_1.Hashed, false)
 	testutils.AssertEqual(t, *column_1.EnabledPatchSettings.Allowed, false)
@@ -61,12 +62,14 @@ func assertConnectorColumnConfigListResponse(t *testing.T, response connectors.C
 
 	column_2 := response.Data.Columns["column_2"]
 	testutils.AssertEqual(t, *column_2.NameInDestination, "column_2")
+	testutils.AssertEqual(t, *column_2.IsPrimaryKey, false)
 	testutils.AssertEqual(t, *column_2.Enabled, true)
 	testutils.AssertEqual(t, *column_2.Hashed, false)
 	testutils.AssertEqual(t, *column_2.EnabledPatchSettings.Allowed, true)
 
 	column_3 := response.Data.Columns["column_3"]
 	testutils.AssertEqual(t, *column_3.NameInDestination, "column_3")
+	testutils.AssertEqual(t, *column_3.IsPrimaryKey, false)
 	testutils.AssertEqual(t, *column_3.Enabled, false)
 	testutils.AssertEqual(t, *column_3.Hashed, false)
 	testutils.AssertEqual(t, *column_3.EnabledPatchSettings.Allowed, true)
@@ -85,7 +88,8 @@ func prepareConnectorColumnConfigListResponse() string {
                     "allowed": false,
                     "reason_code": "SYSTEM_COLUMN",
                     "reason": "The column does not support exclusion as it is a Primary Key"
-                }
+                },
+				"is_primary_key" : true
             },
             "column_2": {
                 "name_in_destination": "column_2",
@@ -93,7 +97,8 @@ func prepareConnectorColumnConfigListResponse() string {
                 "hashed": false,
                 "enabled_patch_settings": {
                     "allowed": true
-                }
+                },
+				"is_primary_key" : false
             },
             "column_3": {
                 "name_in_destination": "column_3",
@@ -101,8 +106,9 @@ func prepareConnectorColumnConfigListResponse() string {
                 "hashed": false,
                 "enabled_patch_settings": {
                     "allowed": true
-                }
-            }
+				},
+                "is_primary_key" : false
+			}
         }
     }
 }

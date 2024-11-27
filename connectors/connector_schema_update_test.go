@@ -8,7 +8,7 @@ import (
 
 	"github.com/fivetran/go-fivetran"
 	"github.com/fivetran/go-fivetran/connectors"
-	
+
 	"github.com/fivetran/go-fivetran/tests/mock"
 
 	testutils "github.com/fivetran/go-fivetran/test_utils"
@@ -115,11 +115,13 @@ func assertSchemaResponse(t *testing.T, response connectors.ConnectorSchemaDetai
 	testutils.AssertEqual(t, *column1.EnabledPatchSettings.Reason, "The column does not support exclusion as it is a Primary Key")
 	testutils.AssertEqual(t, *column1.Hashed, false)
 	testutils.AssertEqual(t, *column1.NameInDestination, "column_1")
+	testutils.AssertEqual(t, *column1.IsPrimaryKey, true)
 
 	column2 := table1.Columns["column_2"]
 	testutils.AssertEqual(t, *column2.Enabled, true)
 	testutils.AssertEqual(t, *column2.Hashed, true)
 	testutils.AssertEqual(t, *column2.EnabledPatchSettings.Allowed, true)
+	testutils.AssertEqual(t, *column2.IsPrimaryKey, false)
 }
 
 func prepareSchemaResponse() string {
@@ -148,7 +150,8 @@ func prepareSchemaResponse() string {
 												"allowed": false,
 												"reason_code": "SYSTEM_COLUMN",
 												"reason": "The column does not support exclusion as it is a Primary Key"
-											}
+											},
+											"is_primary_key" : true
 										},
 										"column_2": {
 											"name_in_destination": "column_2",
@@ -156,7 +159,8 @@ func prepareSchemaResponse() string {
 											"hashed": true,
 											"enabled_patch_settings": {
 												"allowed": true
-											}
+											},
+											"is_primary_key" : false
 										}
 									}
 								},

@@ -7,7 +7,7 @@ import (
 	"testing"
 
 	"github.com/fivetran/go-fivetran/connectors"
-	
+
 	"github.com/fivetran/go-fivetran/tests/mock"
 
 	testutils "github.com/fivetran/go-fivetran/test_utils"
@@ -84,6 +84,7 @@ func assertConnectorColumnConfigModifyResponse(t *testing.T, response connectors
 
 	column1_table2_schema1 := table2_schema1.Columns["column_1"]
 	testutils.AssertEqual(t, *column1_table2_schema1.NameInDestination, "column_1")
+	testutils.AssertEqual(t, *column1_table2_schema1.IsPrimaryKey, true)
 	testutils.AssertEqual(t, *column1_table2_schema1.Enabled, true)
 	testutils.AssertEqual(t, *column1_table2_schema1.Hashed, false)
 	testutils.AssertEqual(t, *column1_table2_schema1.EnabledPatchSettings.Allowed, false)
@@ -92,12 +93,14 @@ func assertConnectorColumnConfigModifyResponse(t *testing.T, response connectors
 
 	column2_table2_schema1 := table2_schema1.Columns["column_2"]
 	testutils.AssertEqual(t, *column2_table2_schema1.NameInDestination, "column_2")
+	testutils.AssertEqual(t, *column2_table2_schema1.IsPrimaryKey, false)
 	testutils.AssertEqual(t, *column2_table2_schema1.Enabled, true)
 	testutils.AssertEqual(t, *column2_table2_schema1.Hashed, false)
 	testutils.AssertEqual(t, *column2_table2_schema1.EnabledPatchSettings.Allowed, true)
 
 	column3_table2_schema1 := table2_schema1.Columns["column_3"]
 	testutils.AssertEqual(t, *column3_table2_schema1.NameInDestination, "column_3")
+	testutils.AssertEqual(t, *column3_table2_schema1.IsPrimaryKey, false)
 	testutils.AssertEqual(t, *column3_table2_schema1.Enabled, true)
 	testutils.AssertEqual(t, *column3_table2_schema1.Hashed, true)
 	testutils.AssertEqual(t, *column3_table2_schema1.EnabledPatchSettings.Allowed, true)
@@ -156,7 +159,8 @@ func prepareConnectorColumnConfigModifyResponse() string {
                                     "allowed": false,
                                     "reason_code": "SYSTEM_COLUMN",
                                     "reason": "The column does not support exclusion as it is a Primary Key"
-                                }
+                                },
+								"is_primary_key" : true
                             },
                             "column_2": {
                                 "name_in_destination": "column_2",
@@ -164,7 +168,8 @@ func prepareConnectorColumnConfigModifyResponse() string {
                                 "hashed": false,
                                 "enabled_patch_settings": {
                                     "allowed": true
-                                }
+                                },
+								"is_primary_key" : false
                             },
                             "column_3": {
                                 "name_in_destination": "column_3",
@@ -172,7 +177,8 @@ func prepareConnectorColumnConfigModifyResponse() string {
                                 "hashed": true,
                                 "enabled_patch_settings": {
                                     "allowed": true
-                                }
+                                },
+								"is_primary_key" : false
                             }
                         }
                     }
