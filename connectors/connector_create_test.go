@@ -16,12 +16,14 @@ import (
 const (
 	CONNECTOR_SERVICE = "test_service"
 	SYNC_FREQUENCY    = 5
+	DATA_DELAY_THRESHOLD = 1
 )
 
 func TestNewConnectorSecretsListMappingMock(t *testing.T) {
 	// arrange
 	ftClient, mockClient := testutils.CreateTestClient()
 	syncFrequency := SYNC_FREQUENCY
+	dataDelayThreshold := DATA_DELAY_THRESHOLD
 	handler := mockClient.When(http.MethodPost, "/v1/connectors").ThenCall(
 
 		func(req *http.Request) (*http.Response, error) {
@@ -40,7 +42,7 @@ func TestNewConnectorSecretsListMappingMock(t *testing.T) {
 		ProxyAgentId("proxy_id").
 		PrivateLinkId("private_link_id").
 		NetworkingMethod("networking_method").
-        DataDelayThreshold(1).
+        DataDelayThreshold(&dataDelayThreshold).
         DataDelaySensitivity("CUSTOM").
 		Config(prepareConnectorConfig()).
 		Auth(prepareConnectorAuth()).
@@ -64,6 +66,7 @@ func TestNewConnectorCustomSecretsListMappingMock(t *testing.T) {
 	// arrange
 	ftClient, mockClient := testutils.CreateTestClient()
 	syncFrequency := SYNC_FREQUENCY
+	dataDelayThreshold := DATA_DELAY_THRESHOLD
 	handler := mockClient.When(http.MethodPost, "/v1/connectors").ThenCall(
 
 		func(req *http.Request) (*http.Response, error) {
@@ -82,7 +85,7 @@ func TestNewConnectorCustomSecretsListMappingMock(t *testing.T) {
 		ProxyAgentId("proxy_id").
 		PrivateLinkId("private_link_id").
 		NetworkingMethod("networking_method").
-        DataDelayThreshold(1).
+        DataDelayThreshold(&dataDelayThreshold).
         DataDelaySensitivity("CUSTOM").
 		ConfigCustom(prepareConnectorCustomConfig()).
 		AuthCustom(prepareConnectorCustomAuth()).
@@ -105,6 +108,7 @@ func TestNewConnectorCustomMergedMappingMock(t *testing.T) {
 	// arrange
 	ftClient, mockClient := testutils.CreateTestClient()
 	syncFrequency := SYNC_FREQUENCY
+	dataDelayThreshold := DATA_DELAY_THRESHOLD
 	handler := mockClient.When(http.MethodPost, "/v1/connectors").ThenCall(
 
 		func(req *http.Request) (*http.Response, error) {
@@ -123,7 +127,7 @@ func TestNewConnectorCustomMergedMappingMock(t *testing.T) {
 		ProxyAgentId("proxy_id").
 		PrivateLinkId("private_link_id").
 		NetworkingMethod("networking_method").
-        DataDelayThreshold(1).
+        DataDelayThreshold(&dataDelayThreshold).
         DataDelaySensitivity("CUSTOM").
 		Config(prepareConnectorConfig()).
 		ConfigCustom(prepareConnectorCustomMergedConfig()).
@@ -164,8 +168,6 @@ func TestNewConnectorWihtNilSyncFrequency(t *testing.T) {
 		ProxyAgentId("proxy_id").
 		PrivateLinkId("private_link_id").
 		NetworkingMethod("networking_method").
-        DataDelayThreshold(1).
-        DataDelaySensitivity("CUSTOM").
 		Config(prepareConnectorConfig()).
 		Auth(prepareConnectorAuth()).
 		Do(context.Background())

@@ -16,6 +16,7 @@ import (
 func TestConnectorUpdateMock(t *testing.T) {
     // arrange
     ftClient, mockClient := testutils.CreateTestClient()
+    dataDelayThreshold := DATA_DELAY_THRESHOLD
     handler := mockClient.When(http.MethodPatch, "/v1/connectors/connector_id").ThenCall(
 
         func(req *http.Request) (*http.Response, error) {
@@ -32,7 +33,7 @@ func TestConnectorUpdateMock(t *testing.T) {
         ProxyAgentId("proxy_id").
         PrivateLinkId("private_link_id").
         NetworkingMethod("networking_method").
-        DataDelayThreshold(1).
+        DataDelayThreshold(&dataDelayThreshold).
         DataDelaySensitivity("CUSTOM").
         Paused(false).
         Config(prepareConfigUpdate()).
@@ -56,6 +57,7 @@ func TestConnectorUpdateMock(t *testing.T) {
 func TestCustomConnectorUpdateMock(t *testing.T) {
     // arrange
     ftClient, mockClient := testutils.CreateTestClient()
+    dataDelayThreshold := DATA_DELAY_THRESHOLD
     handler := mockClient.When(http.MethodPatch, "/v1/connectors/connector_id").ThenCall(
 
         func(req *http.Request) (*http.Response, error) {
@@ -72,7 +74,7 @@ func TestCustomConnectorUpdateMock(t *testing.T) {
         ProxyAgentId("proxy_id").
         PrivateLinkId("private_link_id").
         NetworkingMethod("networking_method").
-        DataDelayThreshold(1).
+        DataDelayThreshold(&dataDelayThreshold).
         DataDelaySensitivity("CUSTOM").
         Paused(false).
         ConfigCustom(prepareCustomUpdateConfig()).
@@ -109,6 +111,7 @@ func prepareConnectorCustomAuthUpdate() *map[string]interface{} {
 func TestCustomMergedConnectorUpdateMock(t *testing.T) {
     // arrange
     ftClient, mockClient := testutils.CreateTestClient()
+    dataDelayThreshold := DATA_DELAY_THRESHOLD
     handler := mockClient.When(http.MethodPatch, "/v1/connectors/connector_id").ThenCall(
 
         func(req *http.Request) (*http.Response, error) {
@@ -126,7 +129,7 @@ func TestCustomMergedConnectorUpdateMock(t *testing.T) {
         ProxyAgentId("proxy_id").
         PrivateLinkId("private_link_id").
         NetworkingMethod("networking_method").
-        DataDelayThreshold(1).
+        DataDelayThreshold(&dataDelayThreshold).
         DataDelaySensitivity("CUSTOM").
         ConfigCustom(prepareCustomMergedUpdateConfigMap()).
         Config(prepareCustomMergedConfigUpdate()).
