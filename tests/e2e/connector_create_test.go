@@ -14,6 +14,8 @@ func TestNewConnectorCreateE2E(t *testing.T) {
 		Service("itunes_connect").
 		RunSetupTests(false).
 		NetworkingMethod("Directly").
+        DataDelayThreshold(1).
+        DataDelaySensitivity("CUSTOM").
 		Config(fivetran.NewConnectorConfig().
 			Schema("itunes_e2e_connect").
 			Username("fivetran").
@@ -44,6 +46,8 @@ func TestNewConnectorCreateE2E(t *testing.T) {
 	testutils.AssertEmpty(t, created.Data.HybridDeploymentAgentId)
 	testutils.AssertEmpty(t, created.Data.ProxyAgentId)
 	testutils.AssertEqual(t, created.Data.NetworkingMethod, "Directly")
+	testutils.AssertEqual(t, *created.Data.DataDelayThreshold, 0)
+	testutils.AssertEqual(t, created.Data.DataDelaySensitivity, "CUSTOM")
 
 	testutils.AssertEqual(t, created.Data.Status.SetupState, "incomplete")
 	testutils.AssertEqual(t, created.Data.Status.SyncState, "scheduled")

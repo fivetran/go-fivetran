@@ -18,6 +18,8 @@ func TestNewConnectorModifyE2E(t *testing.T) {
 		//IsHistoricalSync(false).
 		SyncFrequency(&syncFrequency).
 		DailySyncTime("03:00").
+        DataDelayThreshold(1).
+        DataDelaySensitivity("CUSTOM").
 		Config(fivetran.NewConnectorConfig().
 			Username("fivetran_updated").
 			Password("fivetran_password_updated").
@@ -47,7 +49,9 @@ func TestNewConnectorModifyE2E(t *testing.T) {
 	testutils.AssertEmpty(t, updated.Data.HybridDeploymentAgentId)
 	testutils.AssertEmpty(t, updated.Data.ProxyAgentId)
 	testutils.AssertEqual(t, updated.Data.NetworkingMethod, "Directly")
-
+	testutils.AssertEqual(t, *updated.Data.DataDelayThreshold, 0)
+	testutils.AssertEqual(t, updated.Data.DataDelaySensitivity, "CUSTOM")
+	
 	testutils.AssertNotEmpty(t, updated.Data.Status.SetupState)
 	testutils.AssertEqual(t, updated.Data.Status.SyncState, "paused")
 	testutils.AssertEqual(t, updated.Data.Status.UpdateState, "on_schedule")

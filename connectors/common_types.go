@@ -25,6 +25,8 @@ type DetailsResponseDataCommon struct {
     HybridDeploymentAgentId string         `json:"hybrid_deployment_agent_id"`
     ProxyAgentId            string         `json:"proxy_agent_id"`
     NetworkingMethod        string         `json:"networking_method"`
+    DataDelaySensitivity    string         `json:"data_delay_sensitivity"`
+    DataDelayThreshold      *int           `json:"data_delay_threshold"`
     Status                  StatusResponse `json:"status"`
 }
 
@@ -114,6 +116,8 @@ type connectorCreateRequestBase struct {
     PrivateLinkId           *string `json:"private_link_id,omitempty"`
     HybridDeploymentAgentId *string `json:"hybrid_deployment_agent_id,omitempty"`
     NetworkingMethod        *string `json:"networking_method,omitempty"`
+    DataDelaySensitivity    *string `json:"data_delay_sensitivity"`
+    DataDelayThreshold      *int    `json:"data_delay_threshold"`
 }
 
 type connectorCreateRequest struct {
@@ -159,6 +163,8 @@ type connectorModifyRequestBase struct {
     PrivateLinkId           *string `json:"private_link_id,omitempty"`
     HybridDeploymentAgentId *string `json:"hybrid_deployment_agent_id,omitempty"`
     NetworkingMethod        *string `json:"networking_method,omitempty"`
+    DataDelaySensitivity    *string `json:"data_delay_sensitivity,omitempty"`
+    DataDelayThreshold      *int    `json:"data_delay_threshold,omitempty"`
 }
 
 type connectorModifyRequest struct {

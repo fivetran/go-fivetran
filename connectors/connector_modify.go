@@ -26,6 +26,8 @@ type ConnectorModifyService struct {
     networkingMethod         *string
     privateLinkId            *string
     proxyAgentId             *string
+    dataDelaySensitivity     *string
+    dataDelayThreshold       *int
     config                   *ConnectorConfig
     auth                     *ConnectorAuth
     configCustom             *map[string]interface{}
@@ -47,6 +49,8 @@ func (s *ConnectorModifyService) requestBase() connectorModifyRequestBase {
         HybridDeploymentAgentId:    s.hybridDeploymentAgentId,
         NetworkingMethod:           s.networkingMethod,
         ProxyAgentId:               s.proxyAgentId,
+        DataDelaySensitivity:       s.dataDelaySensitivity,
+        DataDelayThreshold:         s.dataDelayThreshold,
     }
 }
 
@@ -192,7 +196,14 @@ func (s *ConnectorModifyService) PauseAfterTrial(value bool) *ConnectorModifySer
     s.pauseAfterTrial = &value
     return s
 }
-
+func (s *ConnectorCreateService) DataDelayThreshold(value *int) *ConnectorCreateService {
+    s.dataDelayThreshold = value
+    return s
+}
+func (s *ConnectorCreateService) DataDelaySensitivity(value string) *ConnectorCreateService {
+    s.dataDelaySensitivity = &value
+    return s
+}
 func (s *ConnectorModifyService) do(ctx context.Context, req, response any) error {
     if s.connectorID == nil {
         return fmt.Errorf("missing required connectorID")
