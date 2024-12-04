@@ -196,11 +196,11 @@ func (s *ConnectorModifyService) PauseAfterTrial(value bool) *ConnectorModifySer
     s.pauseAfterTrial = &value
     return s
 }
-func (s *ConnectorCreateService) DataDelayThreshold(value *int) *ConnectorCreateService {
+func (s *ConnectorModifyService) DataDelayThreshold(value *int) *ConnectorModifyService {
     s.dataDelayThreshold = value
     return s
 }
-func (s *ConnectorCreateService) DataDelaySensitivity(value string) *ConnectorCreateService {
+func (s *ConnectorModifyService) DataDelaySensitivity(value string) *ConnectorModifyService {
     s.dataDelaySensitivity = &value
     return s
 }
