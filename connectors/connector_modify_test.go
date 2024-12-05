@@ -284,7 +284,7 @@ func assertConnectorUpdateResponse(t *testing.T, response connectors.DetailsWith
     testutils.AssertEqual(t, response.Data.ProxyAgentId, "proxy_id")
     testutils.AssertEqual(t, response.Data.PrivateLinkId, "private_link_id")
     testutils.AssertEqual(t, response.Data.NetworkingMethod, "networking_method")
-    testutils.AssertEqual(t, *response.Data.DataDelayThreshold, "1")
+    testutils.AssertEqual(t, *response.Data.DataDelayThreshold, 1)
     testutils.AssertEqual(t, response.Data.DataDelaySensitivity, "CUSTOM")
 
     assertConnectorConfig(t, response.Data.Config)
@@ -298,7 +298,7 @@ func assertCustomConnectorUpdateResponse(t *testing.T, response connectors.Detai
     testutils.AssertEqual(t, response.Data.ProxyAgentId, "proxy_id")
     testutils.AssertEqual(t, response.Data.PrivateLinkId, "private_link_id")
     testutils.AssertEqual(t, response.Data.NetworkingMethod, "networking_method")
-    testutils.AssertEqual(t, *response.Data.DataDelayThreshold, "1")
+    testutils.AssertEqual(t, *response.Data.DataDelayThreshold, 1)
     testutils.AssertEqual(t, response.Data.DataDelaySensitivity, "CUSTOM")
 
     testutils.AssertKey(t, "share_url", response.Data.Config, "share_url")
@@ -323,7 +323,7 @@ func assertCustomMergedConnectorUpdateResponse(t *testing.T, response connectors
     testutils.AssertEqual(t, response.Data.ProxyAgentId, "proxy_id")
     testutils.AssertEqual(t, response.Data.PrivateLinkId, "private_link_id")
     testutils.AssertEqual(t, response.Data.NetworkingMethod, "networking_method")
-    testutils.AssertEqual(t, *response.Data.DataDelayThreshold, "1")
+    testutils.AssertEqual(t, *response.Data.DataDelayThreshold, 1)
     testutils.AssertEqual(t, response.Data.DataDelaySensitivity, "CUSTOM")
 
     assertConnectorConfig(t, response.Data.Config)
