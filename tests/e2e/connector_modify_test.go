@@ -12,13 +12,14 @@ func TestNewConnectorModifyE2E(t *testing.T) {
 	t.Skip("The test often fails due to timeouts. It is necessary to check its work only when this resource changes")
 	connectorId := testutils.CreateTempConnector(t)
 	syncFrequency := 1440
+	dataDelayThreshold := 1
 	updated, err := testutils.Client.NewConnectorModify().ConnectorID(connectorId).
 		Paused(true).
 		PauseAfterTrial(true).
 		//IsHistoricalSync(false).
 		SyncFrequency(&syncFrequency).
 		DailySyncTime("03:00").
-        DataDelayThreshold(1).
+        DataDelayThreshold(&dataDelayThreshold).
         DataDelaySensitivity("CUSTOM").
 		Config(fivetran.NewConnectorConfig().
 			Username("fivetran_updated").
@@ -51,7 +52,7 @@ func TestNewConnectorModifyE2E(t *testing.T) {
 	testutils.AssertEqual(t, updated.Data.NetworkingMethod, "Directly")
 	testutils.AssertEqual(t, *updated.Data.DataDelayThreshold, 0)
 	testutils.AssertEqual(t, updated.Data.DataDelaySensitivity, "CUSTOM")
-	
+
 	testutils.AssertNotEmpty(t, updated.Data.Status.SetupState)
 	testutils.AssertEqual(t, updated.Data.Status.SyncState, "paused")
 	testutils.AssertEqual(t, updated.Data.Status.UpdateState, "on_schedule")

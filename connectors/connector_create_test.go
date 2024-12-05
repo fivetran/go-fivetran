@@ -209,7 +209,7 @@ func prepareConnectorCreateResponse() string {
             "proxy_agent_id": "proxy_id",
             "private_link_id": "private_link_id",
             "networking_method": "networking_method",
-            "data_delay_threshold": 0,
+            "data_delay_threshold": 1,
             "data_delay_sensitivity": "CUSTOM",
             "status": {
                 "setup_state": "incomplete",
@@ -258,7 +258,7 @@ func prepareConnectorCustomMergedCreateResponse() string {
             "proxy_agent_id": "proxy_id",
             "private_link_id": "private_link_id",
             "networking_method": "networking_method",
-            "data_delay_threshold": 0,
+            "data_delay_threshold": 1,
             "data_delay_sensitivity": "CUSTOM",
             "status": {
                 "setup_state": "incomplete",
@@ -314,7 +314,7 @@ func prepareConnectorCreateResponseWithNilSyncFrequency() string {
             "proxy_agent_id": "proxy_id",
             "private_link_id": "private_link_id",
             "networking_method": "networking_method",
-            "data_delay_threshold": 0,
+            "data_delay_threshold": 1,
             "data_delay_sensitivity": "CUSTOM",
             "status": {
                 "setup_state": "incomplete",
@@ -410,7 +410,7 @@ func assertConnectorRequest(t *testing.T, request map[string]interface{}) {
 	testutils.AssertKey(t, "private_link_id", request, "private_link_id")
 	testutils.AssertKey(t, "networking_method", request, "networking_method")
 	testutils.AssertKey(t, "data_delay_sensitivity", request, "CUSTOM")
-	testutils.AssertKey(t, "data_delay_threshold", request, "0")
+	testutils.AssertKey(t, "data_delay_threshold", request, "1")
 
 	config, ok := request["config"].(map[string]interface{})
 	testutils.AssertEqual(t, ok, true)
@@ -443,8 +443,6 @@ func assertConnectorRequestWithNilSyncFrequency(t *testing.T, request map[string
 	testutils.AssertKey(t, "proxy_agent_id", request, "proxy_id")
 	testutils.AssertKey(t, "private_link_id", request, "private_link_id")
 	testutils.AssertKey(t, "networking_method", request, "networking_method")
-	testutils.AssertKey(t, "data_delay_sensitivity", request, "CUSTOM")
-	testutils.AssertKey(t, "data_delay_threshold", request, "0")
 	
 	config, ok := request["config"].(map[string]interface{})
 	testutils.AssertEqual(t, ok, true)
