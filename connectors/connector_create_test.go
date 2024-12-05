@@ -410,7 +410,7 @@ func assertConnectorRequest(t *testing.T, request map[string]interface{}) {
 	testutils.AssertKey(t, "private_link_id", request, "private_link_id")
 	testutils.AssertKey(t, "networking_method", request, "networking_method")
 	testutils.AssertKey(t, "data_delay_sensitivity", request, "CUSTOM")
-	testutils.AssertKey(t, "data_delay_threshold", request, "1")
+	testutils.AssertKey(t, "data_delay_threshold", request, 1)
 
 	config, ok := request["config"].(map[string]interface{})
 	testutils.AssertEqual(t, ok, true)
