@@ -16,6 +16,7 @@ import (
 func TestConnectorUpdateMock(t *testing.T) {
     // arrange
     ftClient, mockClient := testutils.CreateTestClient()
+    dataDelayThreshold := DATA_DELAY_THRESHOLD
     handler := mockClient.When(http.MethodPatch, "/v1/connectors/connector_id").ThenCall(
 
         func(req *http.Request) (*http.Response, error) {
@@ -32,6 +33,8 @@ func TestConnectorUpdateMock(t *testing.T) {
         ProxyAgentId("proxy_id").
         PrivateLinkId("private_link_id").
         NetworkingMethod("networking_method").
+        DataDelayThreshold(&dataDelayThreshold).
+        DataDelaySensitivity("CUSTOM").
         Paused(false).
         Config(prepareConfigUpdate()).
         Auth(prepareConnectorAuth()).
@@ -54,6 +57,7 @@ func TestConnectorUpdateMock(t *testing.T) {
 func TestCustomConnectorUpdateMock(t *testing.T) {
     // arrange
     ftClient, mockClient := testutils.CreateTestClient()
+    dataDelayThreshold := DATA_DELAY_THRESHOLD
     handler := mockClient.When(http.MethodPatch, "/v1/connectors/connector_id").ThenCall(
 
         func(req *http.Request) (*http.Response, error) {
@@ -70,6 +74,8 @@ func TestCustomConnectorUpdateMock(t *testing.T) {
         ProxyAgentId("proxy_id").
         PrivateLinkId("private_link_id").
         NetworkingMethod("networking_method").
+        DataDelayThreshold(&dataDelayThreshold).
+        DataDelaySensitivity("CUSTOM").
         Paused(false).
         ConfigCustom(prepareCustomUpdateConfig()).
         AuthCustom(prepareConnectorCustomAuthUpdate()).
@@ -105,6 +111,7 @@ func prepareConnectorCustomAuthUpdate() *map[string]interface{} {
 func TestCustomMergedConnectorUpdateMock(t *testing.T) {
     // arrange
     ftClient, mockClient := testutils.CreateTestClient()
+    dataDelayThreshold := DATA_DELAY_THRESHOLD
     handler := mockClient.When(http.MethodPatch, "/v1/connectors/connector_id").ThenCall(
 
         func(req *http.Request) (*http.Response, error) {
@@ -122,6 +129,8 @@ func TestCustomMergedConnectorUpdateMock(t *testing.T) {
         ProxyAgentId("proxy_id").
         PrivateLinkId("private_link_id").
         NetworkingMethod("networking_method").
+        DataDelayThreshold(&dataDelayThreshold).
+        DataDelaySensitivity("CUSTOM").
         ConfigCustom(prepareCustomMergedUpdateConfigMap()).
         Config(prepareCustomMergedConfigUpdate()).
         Auth(prepareCustomMergedAuth()).
@@ -230,6 +239,8 @@ func prepareConnectorUpdateResponse() string {
             "proxy_agent_id": "proxy_id",
             "private_link_id": "private_link_id",
             "networking_method": "networking_method",
+            "data_delay_threshold": 1,
+            "data_delay_sensitivity": "CUSTOM",
             "status": {
                 "setup_state": "incomplete",
                 "sync_state": "scheduled",
@@ -273,6 +284,8 @@ func assertConnectorUpdateResponse(t *testing.T, response connectors.DetailsWith
     testutils.AssertEqual(t, response.Data.ProxyAgentId, "proxy_id")
     testutils.AssertEqual(t, response.Data.PrivateLinkId, "private_link_id")
     testutils.AssertEqual(t, response.Data.NetworkingMethod, "networking_method")
+    testutils.AssertEqual(t, *response.Data.DataDelayThreshold, 1)
+    testutils.AssertEqual(t, response.Data.DataDelaySensitivity, "CUSTOM")
 
     assertConnectorConfig(t, response.Data.Config)
 }
@@ -285,6 +298,8 @@ func assertCustomConnectorUpdateResponse(t *testing.T, response connectors.Detai
     testutils.AssertEqual(t, response.Data.ProxyAgentId, "proxy_id")
     testutils.AssertEqual(t, response.Data.PrivateLinkId, "private_link_id")
     testutils.AssertEqual(t, response.Data.NetworkingMethod, "networking_method")
+    testutils.AssertEqual(t, *response.Data.DataDelayThreshold, 1)
+    testutils.AssertEqual(t, response.Data.DataDelaySensitivity, "CUSTOM")
 
     testutils.AssertKey(t, "share_url", response.Data.Config, "share_url")
     testutils.AssertKey(t, "is_keypair", response.Data.Config, true)
@@ -308,6 +323,8 @@ func assertCustomMergedConnectorUpdateResponse(t *testing.T, response connectors
     testutils.AssertEqual(t, response.Data.ProxyAgentId, "proxy_id")
     testutils.AssertEqual(t, response.Data.PrivateLinkId, "private_link_id")
     testutils.AssertEqual(t, response.Data.NetworkingMethod, "networking_method")
+    testutils.AssertEqual(t, *response.Data.DataDelayThreshold, 1)
+    testutils.AssertEqual(t, response.Data.DataDelaySensitivity, "CUSTOM")
 
     assertConnectorConfig(t, response.Data.Config)
 

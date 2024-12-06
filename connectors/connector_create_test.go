@@ -16,12 +16,14 @@ import (
 const (
 	CONNECTOR_SERVICE = "test_service"
 	SYNC_FREQUENCY    = 5
+	DATA_DELAY_THRESHOLD = 1
 )
 
 func TestNewConnectorSecretsListMappingMock(t *testing.T) {
 	// arrange
 	ftClient, mockClient := testutils.CreateTestClient()
 	syncFrequency := SYNC_FREQUENCY
+	dataDelayThreshold := DATA_DELAY_THRESHOLD
 	handler := mockClient.When(http.MethodPost, "/v1/connectors").ThenCall(
 
 		func(req *http.Request) (*http.Response, error) {
@@ -40,6 +42,8 @@ func TestNewConnectorSecretsListMappingMock(t *testing.T) {
 		ProxyAgentId("proxy_id").
 		PrivateLinkId("private_link_id").
 		NetworkingMethod("networking_method").
+        DataDelayThreshold(&dataDelayThreshold).
+        DataDelaySensitivity("CUSTOM").
 		Config(prepareConnectorConfig()).
 		Auth(prepareConnectorAuth()).
 		Do(context.Background())
@@ -62,6 +66,7 @@ func TestNewConnectorCustomSecretsListMappingMock(t *testing.T) {
 	// arrange
 	ftClient, mockClient := testutils.CreateTestClient()
 	syncFrequency := SYNC_FREQUENCY
+	dataDelayThreshold := DATA_DELAY_THRESHOLD
 	handler := mockClient.When(http.MethodPost, "/v1/connectors").ThenCall(
 
 		func(req *http.Request) (*http.Response, error) {
@@ -80,6 +85,8 @@ func TestNewConnectorCustomSecretsListMappingMock(t *testing.T) {
 		ProxyAgentId("proxy_id").
 		PrivateLinkId("private_link_id").
 		NetworkingMethod("networking_method").
+        DataDelayThreshold(&dataDelayThreshold).
+        DataDelaySensitivity("CUSTOM").
 		ConfigCustom(prepareConnectorCustomConfig()).
 		AuthCustom(prepareConnectorCustomAuth()).
 		DoCustom(context.Background())
@@ -101,6 +108,7 @@ func TestNewConnectorCustomMergedMappingMock(t *testing.T) {
 	// arrange
 	ftClient, mockClient := testutils.CreateTestClient()
 	syncFrequency := SYNC_FREQUENCY
+	dataDelayThreshold := DATA_DELAY_THRESHOLD
 	handler := mockClient.When(http.MethodPost, "/v1/connectors").ThenCall(
 
 		func(req *http.Request) (*http.Response, error) {
@@ -119,6 +127,8 @@ func TestNewConnectorCustomMergedMappingMock(t *testing.T) {
 		ProxyAgentId("proxy_id").
 		PrivateLinkId("private_link_id").
 		NetworkingMethod("networking_method").
+        DataDelayThreshold(&dataDelayThreshold).
+        DataDelaySensitivity("CUSTOM").
 		Config(prepareConnectorConfig()).
 		ConfigCustom(prepareConnectorCustomMergedConfig()).
 		AuthCustom(prepareConnectorCustomAuth()).
@@ -199,6 +209,8 @@ func prepareConnectorCreateResponse() string {
             "proxy_agent_id": "proxy_id",
             "private_link_id": "private_link_id",
             "networking_method": "networking_method",
+            "data_delay_threshold": 1,
+            "data_delay_sensitivity": "CUSTOM",
             "status": {
                 "setup_state": "incomplete",
                 "sync_state": "scheduled",
@@ -246,6 +258,8 @@ func prepareConnectorCustomMergedCreateResponse() string {
             "proxy_agent_id": "proxy_id",
             "private_link_id": "private_link_id",
             "networking_method": "networking_method",
+            "data_delay_threshold": 1,
+            "data_delay_sensitivity": "CUSTOM",
             "status": {
                 "setup_state": "incomplete",
                 "sync_state": "scheduled",
@@ -300,6 +314,8 @@ func prepareConnectorCreateResponseWithNilSyncFrequency() string {
             "proxy_agent_id": "proxy_id",
             "private_link_id": "private_link_id",
             "networking_method": "networking_method",
+            "data_delay_threshold": 1,
+            "data_delay_sensitivity": "CUSTOM",
             "status": {
                 "setup_state": "incomplete",
                 "sync_state": "scheduled",
@@ -393,6 +409,8 @@ func assertConnectorRequest(t *testing.T, request map[string]interface{}) {
 	testutils.AssertKey(t, "proxy_agent_id", request, "proxy_id")
 	testutils.AssertKey(t, "private_link_id", request, "private_link_id")
 	testutils.AssertKey(t, "networking_method", request, "networking_method")
+	testutils.AssertKey(t, "data_delay_sensitivity", request, "CUSTOM")
+	testutils.AssertKey(t, "data_delay_threshold", request, float64(1))
 
 	config, ok := request["config"].(map[string]interface{})
 	testutils.AssertEqual(t, ok, true)
@@ -425,7 +443,7 @@ func assertConnectorRequestWithNilSyncFrequency(t *testing.T, request map[string
 	testutils.AssertKey(t, "proxy_agent_id", request, "proxy_id")
 	testutils.AssertKey(t, "private_link_id", request, "private_link_id")
 	testutils.AssertKey(t, "networking_method", request, "networking_method")
-
+	
 	config, ok := request["config"].(map[string]interface{})
 	testutils.AssertEqual(t, ok, true)
 
