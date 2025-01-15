@@ -19,7 +19,7 @@ func TestNewDestinationsListE2E(t *testing.T) {
 	testutils.AssertHasLength(t, result.Data.Items, 1)
 	testutils.AssertEmpty(t, result.Message)
 	testutils.AssertEqual(t, result.Code, "Success")
-	testutils.AssertEqual(t, result.Data.Items[0].ID, testutils.PredefinedGroupId)
+	testutils.AssertEqual(t, result.Data.Items[0].ID, destinationId)
 	testutils.AssertEqual(t, result.Data.Items[0].GroupID, testutils.PredefinedGroupId)
 	testutils.AssertEqual(t, result.Data.Items[0].Service, "snowflake")
 	testutils.AssertEqual(t, result.Data.Items[0].Region, "GCP_US_EAST4")
