@@ -84,3 +84,11 @@ type destinationSetupTestsRequest struct {
     TrustCertificates *bool `json:"trust_certificates,omitempty"`
     TrustFingerprints *bool `json:"trust_fingerprints,omitempty"`
 }
+
+type DestinationsListResponse struct {
+    common.CommonResponse
+    Data struct {
+        Items      []DestinationDetailsBase `json:"items"`
+        NextCursor string                   `json:"next_cursor"`
+    } `json:"data"`
+}
