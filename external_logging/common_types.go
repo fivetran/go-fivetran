@@ -164,3 +164,11 @@ type ExternalLoggingSetupTestsResponse struct {
 		SetupTests []common.SetupTestResponse `json:"setup_tests"`
 	} `json:"data"`
 }
+
+type ExternalLoggingListResponse struct {
+    common.CommonResponse
+    Data struct {
+        Items      []ExternalLoggingResponseBase `json:"items"`
+        NextCursor string                   	 `json:"next_cursor"`
+    } `json:"data"`
+}

@@ -109,6 +109,7 @@ REST API Endpoint | REST API Version | SDK Service
 
 REST API Endpoint | REST API Version | SDK Service/Config
 --- | --- | ---
+[List all destinations within account](https://fivetran.com/docs/rest-api/api-reference/destinations/list-destinations) | v1 | [DestinationsListService](https://pkg.go.dev/github.com/fivetran/go-fivetran#DestinationsListService)
 [Create a destination](https://fivetran.com/docs/rest-api/destinations#createadestination) | v1 | [DestinationCreateService](https://pkg.go.dev/github.com/fivetran/go-fivetran#DestinationCreateService)
 [Retrieve destination details](https://fivetran.com/docs/rest-api/destinations#retrievedestinationdetails) | v1 | [DestinationDetailsService](https://pkg.go.dev/github.com/fivetran/go-fivetran#DestinationDetailsService)
 [Modify a destination](https://fivetran.com/docs/rest-api/destinations#modifyadestination) | v1 | [DestinationModifyService](https://pkg.go.dev/github.com/fivetran/go-fivetran#DestinationModifyService)
@@ -120,6 +121,7 @@ REST API Endpoint | REST API Version | SDK Service/Config
 
 REST API Endpoint | REST API Version | SDK Service/Config/Auth
 --- | --- | ---
+[List all connectors within account](https://fivetran.com/docs/rest-api/api-reference/connectors/list-connectors) | v1 | [ConnectorsListService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ConnectorsListService)
 [Retrieve source metadata](https://fivetran.com/docs/rest-api/connectors#retrievesourcemetadata) | v1 | [ConnectorsSourceMetadataService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ConnectorsSourceMetadataService)
 [Create a connector](https://fivetran.com/docs/rest-api/connectors#createaconnector) | v2 | [ConnectorCreateService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ConnectorCreateService)
 [Retrieve connector details](https://fivetran.com/docs/rest-api/connectors#retrieveconnectordetails) | v2 | [ConnectorDetailsService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ConnectorDetailsService)
@@ -180,6 +182,7 @@ REST API Endpoint | REST API Version | SDK Service
 
 REST API Endpoint | REST API Version | SDK Service/Config
 --- | --- | ---
+[List all Log Services](https://fivetran.com/docs/rest-api/api-reference/log-service-management/list-log-services) | v1 | [ExternalLoggingListService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ExternalLoggingListService)
 [Create a Log Service](https://fivetran.com/docs/rest-api/log-service-management#createalogservice) | v1 | [ExternalLoggingCreateService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ExternalLoggingCreateService)
 [Retrieve Log Service Details](https://fivetran.com/docs/rest-api/log-service-management#retrievelogservicedetails) | v1 | [ExternalLoggingDetailsService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ExternalLoggingDetailsService)
 [Update a Log Service](https://fivetran.com/docs/rest-api/log-service-management#updatealogservice) | v1 | [ExternalLoggingModifyService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ExternalLoggingModifyService)
@@ -190,9 +193,9 @@ REST API Endpoint | REST API Version | SDK Service/Config
 
 REST API Endpoint | REST API Version | SDK Service/Config
 --- | --- | ---
-[Retrieve schema metadata](https://fivetran.com/docs/rest-api/metadata#retrieveschemametadata) | v1 | [MetadataSchemaListService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ExternalLoggingCreateService)
-[Retrieve table metadata](https://fivetran.com/docs/rest-api/metadata#retrievetablemetadata) | v1 | [MetadataTablesListService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ExternalLoggingCreateService)
-[Retrieve column metadata](https://fivetran.com/docs/rest-api/metadata#retrievecolumnmetadata) | v1 | [MetadataColumnListService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ExternalLoggingCreateService)
+[Retrieve schema metadata](https://fivetran.com/docs/rest-api/metadata#retrieveschemametadata) | v1 | [MetadataSchemaListService](https://pkg.go.dev/github.com/fivetran/go-fivetran#MetadataSchemaListService)
+[Retrieve table metadata](https://fivetran.com/docs/rest-api/metadata#retrievetablemetadata) | v1 | [MetadataTablesListService](https://pkg.go.dev/github.com/fivetran/go-fivetran#MetadataTablesListService)
+[Retrieve column metadata](https://fivetran.com/docs/rest-api/metadata#retrievecolumnmetadata) | v1 | [MetadataColumnListService](https://pkg.go.dev/github.com/fivetran/go-fivetran#MetadataColumnListService)
 
 ### [Webhook Management](https://fivetran.com/docs/rest-api/webhooks#webhookmanagement)
 

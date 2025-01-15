@@ -214,3 +214,11 @@ type ConnectorsSourceMetadataResponse struct {
         NextCursor string `json:"next_cursor"`
     } `json:"data"`
 }
+
+type ConnectorsListResponse struct {
+    common.CommonResponse
+    Data struct {
+        Items      []DetailsResponseDataCommon `json:"items"`
+        NextCursor string                      `json:"next_cursor"`
+    } `json:"data"`
+}

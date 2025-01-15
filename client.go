@@ -37,7 +37,7 @@ const defaultBaseURL = "https://api.fivetran.com/v1"
 const restAPIv2 = "application/json;version=2"
 
 // WARNING: Update Agent version on each release!
-const defaultUserAgent = "Go-Fivetran/1.0.6"
+const defaultUserAgent = "Go-Fivetran/1.0.7"
 
 // New receives API Key and API Secret, and returns a new Client with the
 // default HTTP client
@@ -267,6 +267,10 @@ func (c *Client) NewExternalLoggingSetupTests() *externallogging.ExternalLogging
 	return &externallogging.ExternalLoggingSetupTestsService{HttpService: c.NewHttpService()}
 }
 
+func (c *Client) NewExternalLoggingList() *externallogging.ExternalLoggingListService {
+	return &externallogging.ExternalLoggingListService{HttpService: c.NewHttpService()}
+}
+
 /* Destinations */
 func (c *Client) NewDestinationCreate() *destinations.DestinationCreateService {
 	http := c.NewHttpService()
@@ -294,6 +298,10 @@ func (c *Client) NewDestinationSetupTests() *destinations.DestinationSetupTestsS
 	http := c.NewHttpService()
 	http.CommonHeaders["Accept"] = restAPIv2
 	return &destinations.DestinationSetupTestsService{HttpService: http}
+}
+
+func (c *Client) NewDestinationsList() *destinations.DestinationsListService {
+	return &destinations.DestinationsListService{HttpService: c.NewHttpService()}
 }
 
 /* Users */
@@ -589,6 +597,10 @@ func (c *Client) NewConnectorTableConfigModifyService() *connectors.ConnectorTab
 
 func (c *Client) NewConnectorsSourceMetadata() *connectors.ConnectorsSourceMetadataService {
 	return &connectors.ConnectorsSourceMetadataService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewConnectorsList() *connectors.ConnectorsListService {
+	return &connectors.ConnectorsListService{HttpService: c.NewHttpService()}
 }
 
 /* Private Links */
