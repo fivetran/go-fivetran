@@ -8,7 +8,7 @@ import (
 )
 
 func TestNewExternalLoggingListE2E(t *testing.T) {
-	externalLoggingId := testutils.CreateExternalLogging(t)
+	externalLoggingId := testutils.CreateTempExternalLogging(t)
 	result, err := testutils.Client.NewExternalLoggingList().Do(context.Background())
 	if err != nil {
 		t.Logf("%+v\n", result)

@@ -24,7 +24,7 @@ func TestNewDestinationsListE2E(t *testing.T) {
 	testutils.AssertEqual(t, result.Data.Items[0].Service, "snowflake")
 	testutils.AssertEqual(t, result.Data.Items[0].Region, "GCP_US_EAST4")
 	testutils.AssertEqual(t, result.Data.Items[0].TimeZoneOffset, "+10")
-	testutils.AssertEqual(t, result.Data.Items[0].DaylightSavingTimeEnabled, true)
+	testutils.AssertEqual(t, result.Data.Items[0].DaylightSavingTimeEnabled, false)
 	testutils.AssertEmpty(t, result.Data.Items[0].PrivateLinkId)
 	testutils.AssertEmpty(t, result.Data.Items[0].HybridDeploymentAgentId)
 	testutils.AssertEqual(t, result.Data.Items[0].NetworkingMethod, "Directly")

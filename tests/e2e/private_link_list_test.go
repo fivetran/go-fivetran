@@ -8,7 +8,7 @@ import (
 )
 
 func TestPrivateLinkListE2E(t *testing.T) {
-	//t.Skip("Private links have a strict limit on the number of requests per hour; to test changes in these modules, this Skip must be removed")
+	t.Skip("Passed in previous runs. Private links have a strict limit on the number of requests per hour; to test changes in these modules, this Skip must be removed")
 
 	linkId := testutils.CreatePrivateLink(t)
 
