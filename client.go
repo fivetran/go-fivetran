@@ -21,6 +21,7 @@ import (
 	"github.com/fivetran/go-fivetran/teams"
 	"github.com/fivetran/go-fivetran/users"
 	"github.com/fivetran/go-fivetran/webhooks"
+	"github.com/fivetran/go-fivetran/transformations"
 )
 
 // Client holds client configuration
@@ -668,4 +669,17 @@ func (c *Client) NewHybridDeploymentAgentReAuth() *hybriddeploymentagent.HybridD
 
 func (c *Client) NewHybridDeploymentAgentResetCredentials() *hybriddeploymentagent.HybridDeploymentAgentResetCredentialsService {
 	return &hybriddeploymentagent.HybridDeploymentAgentResetCredentialsService{HttpService: c.NewHttpService()}
+}
+
+/* Transformations */
+func (c *Client) NewTransformationProjectDetails() *transformations.TransformationProjectDetailsService {
+	return &transformations.TransformationProjectDetailsService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewTransformationProjectCreate() *transformations.TransformationProjectCreateService {
+	return &transformations.TransformationProjectCreateService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewTransformationProjectsList() *transformations.TransformationProjectsListService {
+	return &transformations.TransformationProjectsListService{HttpService: c.NewHttpService()}
 }
