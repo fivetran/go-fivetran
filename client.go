@@ -695,3 +695,15 @@ func (c *Client) NewTransformationProjectUpdate() *transformations.Transformatio
 func (c *Client) NewTransformationDelete() *transformations.TransformationDeleteService {
 	return &transformations.TransformationDeleteService{HttpService: c.NewHttpService()}
 }
+
+func (c *Client) NewTransformationRun() *transformations.TransformationRunService {
+	return &transformations.TransformationRunService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewTransformationCancel() *transformations.TransformationCancelService {
+	return &transformations.TransformationCancelService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewTransformationUpgradePackage() *transformations.TransformationUpgradePackageService {
+	return &transformations.TransformationUpgradePackageService{HttpService: c.NewHttpService()}
+}

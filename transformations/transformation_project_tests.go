@@ -24,7 +24,7 @@ func (s *TransformationProjectTestsService) Do(ctx context.Context) (Transformat
 		return response, fmt.Errorf("missing required projectId")
 	}
 
-	url := fmt.Sprintf("/external-logging/%v/test", *s.projectId)
+	url := fmt.Sprintf("/transformation-projects/%v/test", *s.projectId)
 	err := s.HttpService.Do(ctx, "POST", url, nil, nil, 200, &response)
 	return response, err
 }
