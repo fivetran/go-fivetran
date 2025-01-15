@@ -75,7 +75,20 @@ type transformationProjectCustomCreateRequest struct {
 	ProjectConfig *map[string]interface{} `json:"project_config,omitempty"`
 }
 
-/* List */
+type transformationProjectUpdateRequestBase struct {
+	RunTests *bool `json:"run_tests,omitempty"`
+}
+
+type transformationProjectUpdateRequest struct {
+	transformationProjectUpdateRequestBase
+	ProjectConfig any `json:"project_config,omitempty"`
+}
+
+type transformationProjectCustomUpdateRequest struct {
+	transformationProjectUpdateRequestBase
+	ProjectConfig *map[string]interface{} `json:"project_config,omitempty"`
+}
+
 type TransformationProjectsListResponse struct {
 	common.CommonResponse
 	Data struct {
@@ -84,7 +97,6 @@ type TransformationProjectsListResponse struct {
 	} `json:"data"`
 }
 
-/* Details */
 type TransformationProjectResponse struct {
 	common.CommonResponse
 	Data 	struct {
