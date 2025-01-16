@@ -71,6 +71,14 @@ func NewExternalLoggingConfig() *externallogging.ExternalLoggingConfig {
 	return &externallogging.ExternalLoggingConfig{}
 }
 
+func NewTransformationConfig() *transformations.TransformationConfig {
+	return &transformations.TransformationConfig{}
+}
+
+func NewTransformationSchedule() *transformations.TransformationSchedule {
+	return &transformations.TransformationSchedule{}
+}
+
 func NewTransformationProjectConfig() *transformations.TransformationProjectConfig {
 	return &transformations.TransformationProjectConfig{}
 }

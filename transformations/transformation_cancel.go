@@ -3,7 +3,7 @@ package transformations
 import (
 	"context"
 	"fmt"
-
+	"github.com/fivetran/go-fivetran/common"
 	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 

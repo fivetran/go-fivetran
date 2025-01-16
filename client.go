@@ -692,6 +692,10 @@ func (c *Client) NewTransformationProjectUpdate() *transformations.Transformatio
 	return &transformations.TransformationProjectUpdateService{HttpService: c.NewHttpService()}
 }
 
+func (c *Client) NewTransformationCreate() *transformations.TransformationCreateService {
+	return &transformations.TransformationCreateService{HttpService: c.NewHttpService()}
+}
+
 func (c *Client) NewTransformationDelete() *transformations.TransformationDeleteService {
 	return &transformations.TransformationDeleteService{HttpService: c.NewHttpService()}
 }
