@@ -142,7 +142,7 @@ REST API Endpoint | REST API Version | SDK Service/Config/Auth
 [Connector Auth](https://fivetran.com/docs/rest-api/connectors) | v1 | [ConnectorAuth](https://pkg.go.dev/github.com/fivetran/go-fivetran#ConnectorAuth)<br> [ConnectorAuthClientAccess](https://pkg.go.dev/github.com/fivetran/go-fivetran#ConnectorAuthClientAccess)
 [Connect Card](https://fivetran.com/docs/rest-api/connectors/connect-card) | v1 | [ConnectCardService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ConnectCardService)
 
-### [Transformations Management API](https://fivetran.com/docs/rest-api/dbt-transformation-management)
+### [(Deprecated) Transformations Management API](https://fivetran.com/docs/rest-api/dbt-transformation-management)
 REST API Endpoint | REST API Version | SDK Service
 --- | --- | ---
 [Create dbt Project](https://fivetran.com/docs/rest-api/dbt-transformation-management#createdbtproject) | v1 | [DbtProjectCreateService](https://pkg.go.dev/github.com/fivetran/go-fivetran#DbtProjectCreateService)
@@ -285,6 +285,10 @@ REST API Endpoint | REST API Version | SDK Service/Config
 [Retrieve Hybrid Deployment Agent Details](/docs/rest-api/hybrid-deployment-agent-management#retrievehybriddeploymentagentdetails) | v1 |  [HybridDeploymentAgentDetailsService](https://pkg.go.dev/github.com/fivetran/go-fivetran#HybridDeploymentAgentDetailsService)
 [Delete a Hybrid Deployment Agent](/docs/rest-api/lhybrid-deployment-agent-management#deleteahybriddeploymentagent) | v1 |  [HybridDeploymentAgentDeleteService](https://pkg.go.dev/github.com/fivetran/go-fivetran#HybridDeploymentAgentDeleteService)
 [Regenerate authentication keys for a Hybrid Deployment Agent](/docs/rest-api/hybrid-deployment-agent-management#regeneratekeys) | v1 |  [HybridDeploymentAgentReAuthService](https://pkg.go.dev/github.com/fivetran/go-fivetran#HybridDeploymentAgentReAuthService)
+
+
+
+
 
 ## Support
 

@@ -220,6 +220,18 @@ type TransformationResponse struct {
     }`json:"data"`
 }
 
+type TransformationsListResponse struct {
+    common.CommonResponse
+    Data struct {
+        Items      []struct {
+            transformationResponseBase          
+            TransformationConfig    transformationConfigResponse `json:"transformation_config,omitempty"`
+            TransformationSchedule  transformationScheduleResponse `json:"schedule,omitempty"`
+        } `json:"items"`
+        NextCursor string                              `json:"next_cursor"`
+    } `json:"data"`
+}
+
 type TransformationCustomResponse struct {
     common.CommonResponse
     Data    struct {
@@ -238,4 +250,44 @@ type TransformationCustomMergedResponse struct {
         TransformationSchedule          transformationScheduleResponse // no mapping here
         TransformationScheduleCustom    map[string]interface{} `json:"schedule"`
     }`json:"data"`
+}
+
+type transformationUpdateRequestBase struct {
+    Paused          *bool   `json:"paused,omitempty"`
+}
+
+type transformationUpdateRequest struct {
+    transformationUpdateRequestBase
+    TransformationSchedule  any     `json:"schedule,omitempty"`
+    TransformationConfig    any     `json:"transformation_config,omitempty"`
+}
+
+type transformationCustomUpdateRequest struct {
+    transformationUpdateRequestBase
+    TransformationSchedule  *map[string]interface{}     `json:"schedule,omitempty"`
+    TransformationConfig    *map[string]interface{}     `json:"transformation_config,omitempty"`
+}
+
+/* Quickstart metadata details*/
+type quickstartPackageResponseBase struct {
+    Id                  string      `json:"id,omitempty"`
+    Name                string      `json:"name,omitempty"`
+    Version             string      `json:"version,omitempty"`
+    ConnectorTypes      []string      `json:"connector_types,omitempty"`
+    OutputModelNames    []string    `json:"output_model_names,omitempty"`
+}
+
+type QuickstartPackageResponse struct {
+    common.CommonResponse
+    Data    struct {
+        quickstartPackageResponseBase          
+    }`json:"data"`
+}
+
+type QuickstartPackagesListResponse struct {
+    common.CommonResponse
+    Data struct {
+        Items      []quickstartPackageResponseBase `json:"items"`
+        NextCursor string                          `json:"next_cursor"`
+    } `json:"data"`
 }
