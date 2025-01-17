@@ -16,7 +16,7 @@ import (
 func TestNewTransformationUpdateFullMappingMock(t *testing.T) {
   // arrange
   ftClient, mockClient := testutils.CreateTestClient()
-  handler := mockClient.When(http.MethodPatch, "/v1/transformations/transforamtion_id").ThenCall(
+  handler := mockClient.When(http.MethodPatch, "/v1/transformations/transformation_id").ThenCall(
 
     func(req *http.Request) (*http.Response, error) {
       body := testutils.RequestBodyToJson(t, req)
@@ -27,7 +27,7 @@ func TestNewTransformationUpdateFullMappingMock(t *testing.T) {
 
   // act
   response, err := ftClient.NewTransformationUpdate().
-    TransformationId("transforamtion_id").
+    TransformationId("transformation_id").
     Paused(true).
     TransformationConfig(prepareTransformationUpdateConfig()).
     TransformationSchedule(prepareTransformationUpdateSchedule()).
@@ -50,7 +50,7 @@ func TestNewTransformationUpdateFullMappingMock(t *testing.T) {
 func TestNewTransformationCustomUpdateMappingMock(t *testing.T) {
   // arrange
   ftClient, mockClient := testutils.CreateTestClient()
-  handler := mockClient.When(http.MethodPatch, "/v1/transformations/transforamtion_id").ThenCall(
+  handler := mockClient.When(http.MethodPatch, "/v1/transformations/transformation_id").ThenCall(
 
     func(req *http.Request) (*http.Response, error) {
       body := testutils.RequestBodyToJson(t, req)
@@ -61,7 +61,7 @@ func TestNewTransformationCustomUpdateMappingMock(t *testing.T) {
 
   // act
   response, err := ftClient.NewTransformationUpdate().
-    TransformationId("transforamtion_id").
+    TransformationId("transformation_id").
     Paused(true).
     TransformationConfigCustom(prepareTransformationCustomMergedUpdateConfig()).
     TransformationScheduleCustom(prepareTransformationCustomMergedUpdateSchedule()).
@@ -84,7 +84,7 @@ func TestNewTransformationCustomUpdateMappingMock(t *testing.T) {
 func TestNewTransformationCustomMergedUpdateMappingMock(t *testing.T) {
   // arrange
   ftClient, mockClient := testutils.CreateTestClient()
-  handler := mockClient.When(http.MethodPatch, "/v1/transformations/transforamtion_id").ThenCall(
+  handler := mockClient.When(http.MethodPatch, "/v1/transformations/transformation_id").ThenCall(
 
     func(req *http.Request) (*http.Response, error) {
       body := testutils.RequestBodyToJson(t, req)
@@ -95,7 +95,7 @@ func TestNewTransformationCustomMergedUpdateMappingMock(t *testing.T) {
 
   // act
   response, err := ftClient.NewTransformationUpdate().
-    TransformationId("transforamtion_id").
+    TransformationId("transformation_id").
     Paused(true).
     TransformationConfig(prepareTransformationUpdateConfig()).
     TransformationConfigCustom(prepareTransformationCustomMergedUpdateConfig()).

@@ -161,25 +161,42 @@ type transformationScheduleResponse struct {
 }
 
 type TransformationConfig struct {
+    /* DBT_CORE */
     projectId       *string
     name            *string
     steps           *[]TransformationStep
+    /* QUICKSTART */
+    packageName     *string
+    connectionIds   *[]string
+    excludedModels  *[]string 
 }
 
 type transformationConfigRequest struct {
+    /* DBT_CORE */
     ProjectId       *string `json:"project_id,omitempty"`
     Name            *string `json:"name,omitempty"`
     Steps           *[]TransformationStep `json:"steps,omitempty"`
+    /* QUICKSTART */
+    PackageName     *string `json:"package_name,omitempty"`
+    ConnectionIds   *[]string `json:"connection_ids,omitempty"`
+    ExcludedModels  *[]string `json:"excluded_models,omitempty"`
 }
 
 type TransformationStep struct {
     Name        string `json:"name,omitempty"`
     Command     string `json:"command,omitempty"` 
 }
+
 type transformationConfigResponse struct {
-    ProjectId   string               `json:"project_id,omitempty"`
-    Name        string               `json:"name,omitempty"`
-    Steps       []TransformationStep `json:"steps,omitempty"`
+    /* DBT_CORE */
+    ProjectId           string               `json:"project_id,omitempty"`
+    Name                string               `json:"name,omitempty"`
+    Steps               []TransformationStep `json:"steps,omitempty"`
+    /* QUICKSTART */
+    PackageName         string               `json:"package_name,omitempty"`
+    ConnectionIds       []string             `json:"connection_ids,omitempty"`
+    ExcludedModels      []string             `json:"excluded_models,omitempty"`
+    UpgradeAvailable    bool               `json:"upgrade_available,omitempty"`
 }
 
 type transformationCreateRequest struct {

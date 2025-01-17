@@ -1,48 +1,48 @@
 package transformations_test
 
 import (
-	"context"
-	"net/http"
-	"testing"
+  "context"
+  "net/http"
+  "testing"
 
-	"github.com/fivetran/go-fivetran/transformations"
-	testutils "github.com/fivetran/go-fivetran/test_utils"
-	
-	"github.com/fivetran/go-fivetran/tests/mock"
+  "github.com/fivetran/go-fivetran/transformations"
+  testutils "github.com/fivetran/go-fivetran/test_utils"
+  
+  "github.com/fivetran/go-fivetran/tests/mock"
 )
 
 func TestTransformationsListServiceDo(t *testing.T) {
-	// arrange
-	limit := 10
-	cursor := "some_cursor"
+  // arrange
+  limit := 10
+  cursor := "some_cursor"
 
-	ftClient, mockClient := testutils.CreateTestClient()
-	handler := mockClient.When(http.MethodGet, "/v1/transformations").
-		ThenCall(func(req *http.Request) (*http.Response, error) {
-			response := mock.NewResponse(req, http.StatusOK, prepareTransformationsListResponse())
-			return response, nil
-		})
+  ftClient, mockClient := testutils.CreateTestClient()
+  handler := mockClient.When(http.MethodGet, "/v1/transformations").
+    ThenCall(func(req *http.Request) (*http.Response, error) {
+      response := mock.NewResponse(req, http.StatusOK, prepareTransformationsListResponse())
+      return response, nil
+    })
 
-	// act
-	response, err := ftClient.NewTransformationsList().
-		Limit(limit).
-		Cursor(cursor).
-		Do(context.Background())
+  // act
+  response, err := ftClient.NewTransformationsList().
+    Limit(limit).
+    Cursor(cursor).
+    Do(context.Background())
 
-	// assert
-	if err != nil {
-		t.Error(err)
-	}
+  // assert
+  if err != nil {
+    t.Error(err)
+  }
 
-	interactions := mockClient.Interactions()
-	testutils.AssertEqual(t, len(interactions), 1)
-	testutils.AssertEqual(t, interactions[0].Handler, handler)
-	testutils.AssertEqual(t, handler.Interactions, 1)
-	assertTransformationsListResponse(t, response)
+  interactions := mockClient.Interactions()
+  testutils.AssertEqual(t, len(interactions), 1)
+  testutils.AssertEqual(t, interactions[0].Handler, handler)
+  testutils.AssertEqual(t, handler.Interactions, 1)
+  assertTransformationsListResponse(t, response)
 }
 
 func prepareTransformationsListResponse() string {
-	return `{
+  return `{
   "code": "Success",
   "message": "Operation performed.",
   "data": {
@@ -81,7 +81,15 @@ func prepareTransformationsListResponse() string {
               "name": "string",
               "command": "string"
             }
-          ]
+          ],
+          "package_name": "string",
+          "connection_ids": [
+            "string"
+          ],
+          "excluded_models": [
+            "string"
+          ],
+          "upgrade_available": true
         }
       }
     ],
@@ -114,6 +122,10 @@ func assertTransformationsListResponse(t *testing.T, response transformations.Tr
     testutils.AssertEqual(t, response.Data.Items[0].TransformationConfig.Name, "string")
     testutils.AssertEqual(t, response.Data.Items[0].TransformationConfig.Steps[0].Name, "string")
     testutils.AssertEqual(t, response.Data.Items[0].TransformationConfig.Steps[0].Command, "string")
+    testutils.AssertEqual(t, response.Data.Items[0].TransformationConfig.PackageName, "string")
+    testutils.AssertEqual(t, response.Data.Items[0].TransformationConfig.ConnectionIds[0], "string")
+    testutils.AssertEqual(t, response.Data.Items[0].TransformationConfig.ExcludedModels[0], "string")
+    testutils.AssertEqual(t, response.Data.Items[0].TransformationConfig.UpgradeAvailable, true)
 
-		testutils.AssertEqual(t, response.Data.NextCursor, "cursor_value")
+    testutils.AssertEqual(t, response.Data.NextCursor, "cursor_value")
 }

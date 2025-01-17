@@ -77,7 +77,15 @@ func prepareTransformationDetailsResponse() string {
           "name": "string",
           "command": "string"
         }
-      ]
+      ],
+          "package_name": "string",
+          "connection_ids": [
+            "string"
+          ],
+          "excluded_models": [
+            "string"
+          ],
+          "upgrade_available": true
     }
   }
 }`
@@ -107,4 +115,8 @@ func assertTransformationDetailsResponse(t *testing.T, response transformations.
     testutils.AssertEqual(t, response.Data.TransformationConfig.Name, "string")
     testutils.AssertEqual(t, response.Data.TransformationConfig.Steps[0].Name, "string")
     testutils.AssertEqual(t, response.Data.TransformationConfig.Steps[0].Command, "string")
+    testutils.AssertEqual(t, response.Data.TransformationConfig.PackageName, "string")
+    testutils.AssertEqual(t, response.Data.TransformationConfig.ConnectionIds[0], "string")
+    testutils.AssertEqual(t, response.Data.TransformationConfig.ExcludedModels[0], "string")
+    testutils.AssertEqual(t, response.Data.TransformationConfig.UpgradeAvailable, true)
 }

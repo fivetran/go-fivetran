@@ -156,6 +156,14 @@ func prepareTransformationResponse() string {
           "command": "string"
         }
       ],
+      "package_name": "string",
+      "connection_ids": [
+        "string"
+      ],
+      "excluded_models": [
+        "string"
+      ],
+      "upgrade_available": true,
       "fake_field": "unmapped-value"
     }
   }
@@ -167,6 +175,9 @@ func prepareTransformationConfig() *transformations.TransformationConfig {
   config.ProjectId("string")
   config.Name("string")
   config.Steps([]transformations.TransformationStep{{Name: "string", Command: "string"}})
+  config.PackageName("string")
+  config.ConnectionIds([]string{"string"})
+  config.ExcludedModels([]string{"string"})
 
   return config
 }
@@ -219,6 +230,9 @@ func assertTransformationFullRequest(t *testing.T, request map[string]interface{
     testutils.AssertKey(t, "project_id", config, "string")
     testutils.AssertKey(t, "name", config, "string")
     testutils.AssertHasKey(t, config, "steps")
+    testutils.AssertKey(t, "package_name", config, "string")
+    testutils.AssertHasKey(t, config, "connection_ids")
+    testutils.AssertHasKey(t, config, "excluded_models")
 }
 
 func assertTransformationCustomRequest(t *testing.T, request map[string]interface{}) {
@@ -254,6 +268,9 @@ func assertTransformationCustomMergedRequest(t *testing.T, request map[string]in
     testutils.AssertKey(t, "project_id", config, "string")
     testutils.AssertKey(t, "name", config, "string")
     testutils.AssertHasKey(t, config, "steps")
+    testutils.AssertKey(t, "package_name", config, "string")
+    testutils.AssertHasKey(t, config, "connection_ids")
+    testutils.AssertHasKey(t, config, "excluded_models")
     testutils.AssertKey(t, "fake_field", config, "unmapped-value")
 }
 
@@ -280,7 +297,10 @@ func assertTransformationResponse(t *testing.T, response transformations.Transfo
     testutils.AssertEqual(t, response.Data.TransformationConfig.ProjectId, "string")
     testutils.AssertEqual(t, response.Data.TransformationConfig.Name, "string")
     testutils.AssertEqual(t, response.Data.TransformationConfig.Steps[0].Name, "string")
-    testutils.AssertEqual(t, response.Data.TransformationConfig.Steps[0].Command, "string")
+    testutils.AssertEqual(t, response.Data.TransformationConfig.PackageName, "string")
+    testutils.AssertEqual(t, response.Data.TransformationConfig.ConnectionIds[0], "string")
+    testutils.AssertEqual(t, response.Data.TransformationConfig.ExcludedModels[0], "string")
+    testutils.AssertEqual(t, response.Data.TransformationConfig.UpgradeAvailable, true)
 }
 
 func assertTransformationCustomResponse(t *testing.T, response transformations.TransformationCustomResponse) {
@@ -305,6 +325,10 @@ func assertTransformationCustomResponse(t *testing.T, response transformations.T
     testutils.AssertEqual(t, response.Data.TransformationConfig["project_id"], "string")
     testutils.AssertEqual(t, response.Data.TransformationConfig["name"], "string")
     testutils.AssertHasKey(t, response.Data.TransformationConfig, "steps")
+    testutils.AssertEqual(t, response.Data.TransformationConfig["package_name"], "string")
+    testutils.AssertEqual(t, response.Data.TransformationConfig["upgrade_available"], true)
+    testutils.AssertHasKey(t, response.Data.TransformationConfig, "connection_ids")
+    testutils.AssertHasKey(t, response.Data.TransformationConfig, "excluded_models")
 }
 
 func assertTransformationCustomMergedResponse(t *testing.T, response transformations.TransformationCustomMergedResponse) {
@@ -333,6 +357,10 @@ func assertTransformationCustomMergedResponse(t *testing.T, response transformat
     testutils.AssertEqual(t, response.Data.TransformationConfig.Name, "string")
     testutils.AssertEqual(t, response.Data.TransformationConfig.Steps[0].Name, "string")
     testutils.AssertEqual(t, response.Data.TransformationConfig.Steps[0].Command, "string")
+    testutils.AssertEqual(t, response.Data.TransformationConfig.PackageName, "string")
+    testutils.AssertEqual(t, response.Data.TransformationConfig.ConnectionIds[0], "string")
+    testutils.AssertEqual(t, response.Data.TransformationConfig.ExcludedModels[0], "string")
+    testutils.AssertEqual(t, response.Data.TransformationConfig.UpgradeAvailable, true)
 
     testutils.AssertKey(t, "fake_field", response.Data.TransformationConfigCustom, "unmapped-value")
 }
