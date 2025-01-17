@@ -9,6 +9,7 @@ import (
 )
 
 func TestNewTransformationProjectCreateE2E(t *testing.T) {
+    t.Skip("Destination must be CONNECTED")
     groupId := testutils.CreateGroup(t)
     destinationId := testutils.CreateDestination(t)
 
