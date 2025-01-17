@@ -1,26 +1,27 @@
 package fivetran_test
 
 import (
-	"context"
-	"testing"
+    "context"
+    "testing"
 
-	testutils "github.com/fivetran/go-fivetran/test_utils"
+    testutils "github.com/fivetran/go-fivetran/test_utils"
 )
 
 func TestNewTransformationProjectDetailsE2E(t *testing.T) {
     groupId := testutils.CreateGroup(t)
+    destinationId := testutils.CreateDestination(t)
     projectId := testutils.CreateTransformationProject(t)
 
-	result, err := testutils.Client.NewTransformationProjectDetails().
+    result, err := testutils.Client.NewTransformationProjectDetails().
         ProjectId(projectId).
         Do(context.Background())
-	if err != nil {
-		t.Logf("%+v\n", result)
-		t.Error(err)
-	}
+    if err != nil {
+        t.Logf("%+v\n", result)
+        t.Error(err)
+    }
 
-	testutils.AssertEqual(t, result.Code, "Success")
-	testutils.AssertEqual(t, result.Data.Id, projectId)
+    testutils.AssertEqual(t, result.Code, "Success")
+    testutils.AssertEqual(t, result.Data.Id, projectId)
     testutils.AssertNotEmpty(t, result.Data.Id)
     testutils.AssertEqual(t, result.Data.ProjectType, "DBT_GIT")
     testutils.AssertNotEmpty(t, result.Data.CreatedAt)
@@ -32,7 +33,8 @@ func TestNewTransformationProjectDetailsE2E(t *testing.T) {
     testutils.AssertEqual(t, result.Data.ProjectConfig.Threads, 1)
 
     t.Cleanup(func() { 
-        testutils.DeleteTransformationProject(t, projectId) 
+        testutils.DeleteTransformationProject(t, projectId)
+        testutils.DeleteDestination(t, destinationId)
         testutils.DeleteGroup(t, groupId)
     })
 }

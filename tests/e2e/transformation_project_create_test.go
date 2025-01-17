@@ -10,6 +10,7 @@ import (
 
 func TestNewTransformationProjectCreateE2E(t *testing.T) {
     groupId := testutils.CreateGroup(t)
+    destinationId := testutils.CreateDestination(t)
 
     created, err := testutils.Client.NewTransformationProjectCreate().
         GroupId(groupId).
@@ -39,7 +40,8 @@ func TestNewTransformationProjectCreateE2E(t *testing.T) {
     testutils.AssertEqual(t, created.Data.ProjectConfig.Threads, 1)
 
     t.Cleanup(func() { 
-        testutils.DeleteTransformationProject(t, created.Data.Id) 
+        testutils.DeleteTransformationProject(t, created.Data.Id)
+        testutils.DeleteDestination(t, destinationId)
         testutils.DeleteGroup(t, groupId)
     })
 }
