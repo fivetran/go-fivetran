@@ -1101,33 +1101,6 @@ func DeleteTransformationProject(t *testing.T, id string) {
     }
 }
 
-
-/*
-func CreateTransformation(t *testing.T) string {
-    t.Helper()
-    created, err := Client.NewTransformationCreate().
-        ProjectType("QUICKSTART").
-        Paused(true).
-        ProjectConfig(fivetran.NewTransformationProjectConfig().
-                            DbtVersion("1.0.1").
-                            GitRemoteUrl("git@some-host.com/project.git").
-                            Threads(1)).
-        Do(context.Background())
-
-    if err != nil {
-        t.Logf("%+v\n", created)
-        t.Error(err)
-    }
-    return created.Data.Id
-}
-
-func CreateTempTransformation(t *testing.T) string {
-    t.Helper()
-    transformationId := CreateTransformation(t)
-    t.Cleanup(func() { DeleteTransformationProject(t, transformationId) })
-    return transformationId
-}
-*/
 func DeleteTransformation(t *testing.T, id string) {
     t.Helper()
     deleted, err := Client.NewTransformationDelete().
