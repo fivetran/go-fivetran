@@ -14,6 +14,24 @@ Supported the following Fivetran API endpoints:
 - [List all connectors within account](https://fivetran.com/docs/rest-api/api-reference/connectors/list-connectors)
 - [List all Log Services](https://fivetran.com/docs/rest-api/api-reference/log-service-management/list-log-services)
 
+Our old API for dbt projects and transformations is marked as deprecated. Supported the following Fivetran API endpoints:
+- [Create Transformation Project](https://fivetran.com/docs/rest-api/api-reference/transformation-projects-management/create-transformation-project)
+- [Delete Transformation Project](https://fivetran.com/docs/rest-api/api-reference/transformation-projects-management/delete-transformation-project)
+- [List all Transformation Projects within Account](https://fivetran.com/docs/rest-api/api-reference/transformation-projects-management/list-all-transformation-projects)
+- [Retrieve Transformation Project Details](https://fivetran.com/docs/rest-api/api-reference/transformation-projects-management/transformation-project-details)
+- [Test Transformation Project](https://fivetran.com/docs/rest-api/api-reference/transformation-projects-management/test-transformation-project)
+- [Update Transformation Project](https://fivetran.com/docs/rest-api/api-reference/transformation-projects-management/modify-transformation-project)
+- [Create Transformation](https://fivetran.com/docs/rest-api/api-reference/transformation-management/create-transformation)
+- [Update Transformation](https://fivetran.com/docs/rest-api/api-reference/transformation-management/update-transformation)
+- [Delete Transformation](https://fivetran.com/docs/rest-api/api-reference/transformation-management/delete-transformation)
+- [Retrieve Transformation Details](https://fivetran.com/docs/rest-api/api-reference/transformation-management/transformation-details)
+- [List all Transformations within Account](https://fivetran.com/docs/rest-api/api-reference/transformation-management/transformations-list)
+- [Upgrade Transformation Package](https://fivetran.com/docs/rest-api/api-reference/transformation-management/upgrade-transformation-package)
+- [Run Transformation](https://fivetran.com/docs/rest-api/api-reference/transformation-management/run-transformation)
+- [Cancel Transformation](https://fivetran.com/docs/rest-api/api-reference/transformation-management/cancel-transformation)
+- [List All Quickstart Package Metadata](https://fivetran.com/docs/rest-api/api-reference/transformation-management/transformation-package-metadata-list)
+- [Retrieve Quickstart Package Metadata Details](https://fivetran.com/docs/rest-api/api-reference/transformation-management/transformation-package-metadata-details)
+
 ## [1.0.6](https://github.com/fivetran/go-fivetran/compare/v1.0.5...v1.0.6)
 
 ## Added

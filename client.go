@@ -21,6 +21,7 @@ import (
 	"github.com/fivetran/go-fivetran/teams"
 	"github.com/fivetran/go-fivetran/users"
 	"github.com/fivetran/go-fivetran/webhooks"
+	"github.com/fivetran/go-fivetran/transformations"
 )
 
 // Client holds client configuration
@@ -668,4 +669,65 @@ func (c *Client) NewHybridDeploymentAgentReAuth() *hybriddeploymentagent.HybridD
 
 func (c *Client) NewHybridDeploymentAgentResetCredentials() *hybriddeploymentagent.HybridDeploymentAgentResetCredentialsService {
 	return &hybriddeploymentagent.HybridDeploymentAgentResetCredentialsService{HttpService: c.NewHttpService()}
+}
+
+/* Transformations */
+func (c *Client) NewTransformationProjectDetails() *transformations.TransformationProjectDetailsService {
+	return &transformations.TransformationProjectDetailsService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewTransformationProjectCreate() *transformations.TransformationProjectCreateService {
+	return &transformations.TransformationProjectCreateService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewTransformationProjectsList() *transformations.TransformationProjectsListService {
+	return &transformations.TransformationProjectsListService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewTransformationProjectDelete() *transformations.TransformationProjectDeleteService {
+	return &transformations.TransformationProjectDeleteService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewTransformationProjectUpdate() *transformations.TransformationProjectUpdateService {
+	return &transformations.TransformationProjectUpdateService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewTransformationCreate() *transformations.TransformationCreateService {
+	return &transformations.TransformationCreateService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewTransformationUpdate() *transformations.TransformationUpdateService {
+	return &transformations.TransformationUpdateService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewTransformationDelete() *transformations.TransformationDeleteService {
+	return &transformations.TransformationDeleteService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewTransformationsList() *transformations.TransformationsListService {
+	return &transformations.TransformationsListService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewTransformationDetails() *transformations.TransformationDetailsService {
+	return &transformations.TransformationDetailsService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewTransformationRun() *transformations.TransformationRunService {
+	return &transformations.TransformationRunService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewTransformationCancel() *transformations.TransformationCancelService {
+	return &transformations.TransformationCancelService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewTransformationUpgradePackage() *transformations.TransformationUpgradePackageService {
+	return &transformations.TransformationUpgradePackageService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewQuickstartPackagesList() *transformations.QuickstartPackagesListService {
+	return &transformations.QuickstartPackagesListService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewQuickstartPackageDetails() *transformations.QuickstartPackageDetailsService {
+	return &transformations.QuickstartPackageDetailsService{HttpService: c.NewHttpService()}
 }

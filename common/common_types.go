@@ -11,6 +11,7 @@ type SetupTestResponse struct {
 	Title   string `json:"title"`
 	Status  string `json:"status"`
 	Message string `json:"message"`
+	Details string `json:"details"`
 }
 
 type NullableString struct {

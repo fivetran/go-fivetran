@@ -4,6 +4,7 @@ import (
 	"github.com/fivetran/go-fivetran/connectors"
 	"github.com/fivetran/go-fivetran/dbt"
 	"github.com/fivetran/go-fivetran/destinations"
+	"github.com/fivetran/go-fivetran/transformations"
 	"github.com/fivetran/go-fivetran/connect_card"
 	externallogging "github.com/fivetran/go-fivetran/external_logging"
 	"github.com/fivetran/go-fivetran/private_link"
@@ -68,6 +69,18 @@ func NewDestinationConfig() *destinations.DestinationConfig {
 
 func NewExternalLoggingConfig() *externallogging.ExternalLoggingConfig {
 	return &externallogging.ExternalLoggingConfig{}
+}
+
+func NewTransformationConfig() *transformations.TransformationConfig {
+	return &transformations.TransformationConfig{}
+}
+
+func NewTransformationSchedule() *transformations.TransformationSchedule {
+	return &transformations.TransformationSchedule{}
+}
+
+func NewTransformationProjectConfig() *transformations.TransformationProjectConfig {
+	return &transformations.TransformationProjectConfig{}
 }
 
 func NewConnectCardConfig() *connectcard.ConnectCardConfig {
