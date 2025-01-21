@@ -19,7 +19,6 @@ type TransformationProjectConfig struct {
     gitBranch       *string
     targetName      *string
     environmentVars *[]string
-    publicKey       *string
     threads         *int
 }
 
@@ -43,7 +42,6 @@ type transformationProjectConfigCreateRequest struct {
     GitBranch       *string `json:"git_branch,omitempty"`
     TargetName      *string `json:"target_name,omitempty"`
     EnvironmentVars *[]string `json:"environment_vars,omitempty"`
-    PublicKey       *string `json:"public_key,omitempty"`
     Threads         *int    `json:"threads,omitempty"`
 }
 
