@@ -53,7 +53,7 @@ func TestTransformationProjectCustomUpdateService(t *testing.T) {
 		func(req *http.Request) (*http.Response, error) {
 			body := testutils.RequestBodyToJson(t, req)
 			assertTransformationProjectUpdateCustomRequest(t, body)
-			response := mock.NewResponse(req, http.StatusOK, prepareTransformationProjectUpdateMergedResponse())
+			response := mock.NewResponse(req, http.StatusOK, prepareTransformationProjectUpdateResponse())
 			return response, nil
 		})
 
@@ -86,7 +86,7 @@ func TestTransformationProjectCustomMergedUpdateService(t *testing.T) {
 		func(req *http.Request) (*http.Response, error) {
 			body := testutils.RequestBodyToJson(t, req)
 			assertTransformationProjectUpdateCustomMergedRequest(t, body)
-			response := mock.NewResponse(req, http.StatusOK, prepareTransformationProjectUpdateMergedResponse())
+			response := mock.NewResponse(req, http.StatusOK, prepareTransformationProjectUpdateResponse())
 			return response, nil
 		})
 
@@ -114,35 +114,6 @@ func TestTransformationProjectCustomMergedUpdateService(t *testing.T) {
 
 func prepareTransformationProjectUpdateResponse() string {
 	return  `{
-  "code": "Success",
-  "message": "Operation performed.",
-  "data": {
-    "id": "project_id",
-    "type": "DBT_GIT",
-    "status": "NOT_READY",
-    "errors": [
-      "string"
-    ],
-    "created_at": "2019-08-24T14:15:22Z",
-    "group_id": "string",
-    "setup_tests": [
-      {
-        "title": "Test Title",
-        "status": "FAILED",
-        "message": "Error message",
-        "details": "Error details"
-      }
-    ],
-    "created_by_id": "string",
-    "project_config": {
-      "folder_path": "folder_path"
-    }
-  }
-}`
-}
-
-func prepareTransformationProjectUpdateMergedResponse() string {
-	return `{
   "code": "Success",
   "message": "Operation performed.",
   "data": {

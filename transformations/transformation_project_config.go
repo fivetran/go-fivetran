@@ -71,7 +71,7 @@ func (elc *TransformationProjectConfig) TargetName(value string) *Transformation
 	return elc
 }
 
-func (elc *TransformationProjectConfig) EnvironmentVars(value string) *TransformationProjectConfig {
+func (elc *TransformationProjectConfig) EnvironmentVars(value []string) *TransformationProjectConfig {
 	elc.environmentVars = &value
 	return elc
 }

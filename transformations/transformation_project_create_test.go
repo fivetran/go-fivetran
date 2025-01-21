@@ -89,7 +89,7 @@ func TestNewTransformationProjectCustomMergedMappingMock(t *testing.T) {
     func(req *http.Request) (*http.Response, error) {
       body := testutils.RequestBodyToJson(t, req)
       assertTransformationProjectCustomMergedRequest(t, body)
-      response := mock.NewResponse(req, http.StatusCreated, prepareTransformationProjectMergedResponse())
+      response := mock.NewResponse(req, http.StatusCreated, prepareTransformationProjectResponse())
       return response, nil
     })
 
@@ -138,38 +138,17 @@ func prepareTransformationProjectResponse() string {
     ],
     "created_by_id": "string",
     "project_config": {
-      "dbt_version": "1.0.0",
-      "default_schema": "schema"
-    }
-  }
-}`
-}
-
-func prepareTransformationProjectMergedResponse() string {
-  return `{
-  "code": "Success",
-  "message": "Operation performed.",
-  "data": {
-    "id": "string",
-    "type": "DBT_GIT",
-    "status": "NOT_READY",
-    "errors": [
-      "string"
-    ],
-    "created_at": "2019-08-24T14:15:22Z",
-    "group_id": "string",
-    "setup_tests": [
-      {
-        "title": "Test Title",
-        "status": "FAILED",
-        "message": "Error message",
-        "details": "Error details"
-      }
-    ],
-    "created_by_id": "string",
-    "project_config": {
-      "dbt_version": "1.0.0",
-      "default_schema": "schema",
+      "dbt_version": "string",
+      "default_schema": "string",
+      "git_remote_url": "string",
+      "folder_path": "string",
+      "git_branch": "string",
+      "threads": 0,
+      "target_name": "string",
+      "environment_vars": [
+        "string"
+      ],
+      "public_key": "string",
       "fake_field": "unmapped-value"
     }
   }
@@ -240,8 +219,9 @@ func assertTransformationProjectResponse(t *testing.T, response transformations.
     testutils.AssertEqual(t, response.Data.SetupTests[0].Message, "Error message")
     testutils.AssertEqual(t, response.Data.SetupTests[0].Details, "Error details")
     testutils.AssertEqual(t, response.Data.Errors[0], "string")
-    testutils.AssertEqual(t, response.Data.ProjectConfig.DbtVersion, "1.0.0")
-    testutils.AssertEqual(t, response.Data.ProjectConfig.DefaultSchema, "schema")
+    testutils.AssertEqual(t, response.Data.ProjectConfig.DbtVersion, "string")
+    testutils.AssertEqual(t, response.Data.ProjectConfig.DefaultSchema, "string")
+    testutils.AssertEqual(t, response.Data.ProjectConfig.PublicKey, "string")
 }
 
 func assertTransformationProjectCustomResponse(t *testing.T, response transformations.TransformationProjectCustomResponse) {
@@ -258,8 +238,9 @@ func assertTransformationProjectCustomResponse(t *testing.T, response transforma
     testutils.AssertEqual(t, response.Data.SetupTests[0].Message, "Error message")
     testutils.AssertEqual(t, response.Data.SetupTests[0].Details, "Error details")
     testutils.AssertEqual(t, response.Data.Errors[0], "string")
-    testutils.AssertEqual(t, response.Data.ProjectConfig["dbt_version"], "1.0.0")
-    testutils.AssertEqual(t, response.Data.ProjectConfig["default_schema"], "schema")
+    testutils.AssertEqual(t, response.Data.ProjectConfig["dbt_version"], "string")
+    testutils.AssertEqual(t, response.Data.ProjectConfig["default_schema"], "string")
+    testutils.AssertEqual(t, response.Data.ProjectConfig["public_key"], "string")
 }
 
 func assertTransformationProjectCustomMergedResponse(t *testing.T, response transformations.TransformationProjectCustomMergedResponse) {
@@ -276,7 +257,7 @@ func assertTransformationProjectCustomMergedResponse(t *testing.T, response tran
     testutils.AssertEqual(t, response.Data.SetupTests[0].Message, "Error message")
     testutils.AssertEqual(t, response.Data.SetupTests[0].Details, "Error details")
     testutils.AssertEqual(t, response.Data.Errors[0], "string")
-    testutils.AssertEqual(t, response.Data.ProjectConfig.DbtVersion, "1.0.0")
-    testutils.AssertEqual(t, response.Data.ProjectConfig.DefaultSchema, "schema")
+    testutils.AssertEqual(t, response.Data.ProjectConfig.DbtVersion, "string")
+    testutils.AssertEqual(t, response.Data.ProjectConfig.DefaultSchema, "string")
     testutils.AssertKey(t, "fake_field", response.Data.ProjectConfigCustom, "unmapped-value")
 }

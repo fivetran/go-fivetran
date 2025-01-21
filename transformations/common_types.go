@@ -18,7 +18,8 @@ type TransformationProjectConfig struct {
     folderPath      *string
     gitBranch       *string
     targetName      *string
-    environmentVars *string
+    environmentVars *[]string
+    publicKey       *string
     threads         *int
 }
 
@@ -29,7 +30,8 @@ type transformationProjectConfigResponse struct {
     FolderPath      string `json:"folder_path,omitempty"`
     GitBranch       string `json:"git_branch,omitempty"`
     TargetName      string `json:"target_name,omitempty"`
-    EnvironmentVars string `json:"environment_vars,omitempty"`
+    EnvironmentVars []string `json:"environment_vars,omitempty"`
+    PublicKey       string `json:"public_key,omitempty"`
     Threads         int    `json:"threads,omitempty"`
 }
 
@@ -40,7 +42,8 @@ type transformationProjectConfigCreateRequest struct {
     FolderPath      *string `json:"folder_path,omitempty"`
     GitBranch       *string `json:"git_branch,omitempty"`
     TargetName      *string `json:"target_name,omitempty"`
-    EnvironmentVars *string `json:"environment_vars,omitempty"`
+    EnvironmentVars *[]string `json:"environment_vars,omitempty"`
+    PublicKey       *string `json:"public_key,omitempty"`
     Threads         *int    `json:"threads,omitempty"`
 }
 
@@ -48,7 +51,7 @@ type transformationProjectConfigUpdateRequest struct {
     FolderPath      *string `json:"folder_path,omitempty"`
     GitBranch       *string `json:"git_branch,omitempty"`
     TargetName      *string `json:"target_name,omitempty"`
-    EnvironmentVars *string `json:"environment_vars,omitempty"`
+    EnvironmentVars *[]string `json:"environment_vars,omitempty"`
     Threads         *int    `json:"threads,omitempty"`
 }
 

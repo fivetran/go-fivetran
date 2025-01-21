@@ -70,7 +70,9 @@ func prepareTransformationProjectDetailsResponse() string {
       "git_branch": "string",
       "threads": 0,
       "target_name": "string",
-      "environment_vars": "string",
+      "environment_vars": [
+        "string"
+      ],
       "public_key": "string"
     }
   }
@@ -96,6 +98,7 @@ func assertTransformationProjectDetailsResponse(t *testing.T, response transform
     testutils.AssertEqual(t, response.Data.ProjectConfig.FolderPath, "string")
     testutils.AssertEqual(t, response.Data.ProjectConfig.GitBranch, "string")
     testutils.AssertEqual(t, response.Data.ProjectConfig.TargetName, "string")
-    testutils.AssertEqual(t, response.Data.ProjectConfig.EnvironmentVars, "string")
+    testutils.AssertEqual(t, response.Data.ProjectConfig.EnvironmentVars[0], "string")
+    testutils.AssertEqual(t, response.Data.ProjectConfig.PublicKey, "string")
     testutils.AssertEqual(t, response.Data.ProjectConfig.Threads, 0)
 }
