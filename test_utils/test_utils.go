@@ -109,32 +109,6 @@ func RequestBodyToJson(t *testing.T, req *http.Request) map[string]interface{} {
     return result
 }
 
-func CreateDbtDestination(t *testing.T) {
-    t.Helper()
-    destination, err := Client.NewDestinationCreate().
-        GroupID(PredefinedGroupId).
-        Service("big_query").
-        Region("GCP_US_EAST4").
-        RunSetupTests(true).
-        TimeZoneOffset("-5").
-        Config(
-            fivetran.NewDestinationConfig().
-                ProjectID(BqProjectId).
-                DataSetLocation("US")).
-        Do(context.Background())
-    if err != nil {
-        t.Logf("%+v\n", destination)
-        t.Error(err)
-    }
-}
-
-func DeleteDbtDestination() {
-    resp, err := Client.NewDestinationDelete().DestinationID(PredefinedGroupId).Do(context.Background())
-    if err != nil {
-        log.Fatal(resp, err)
-    }
-}
-
 func CreateUser(t *testing.T) string {
     t.Helper()
     user, err := Client.NewUserInvite().
@@ -176,70 +150,6 @@ func CreateGroup(t *testing.T) string {
         t.Error(err)
     }
     return created.Data.ID
-}
-
-func CreateDbtProject(t *testing.T) string {
-    t.Helper()
-    CreateDbtDestination(t)
-    created, err := Client.NewDbtProjectCreate().
-        GroupID(PredefinedGroupId).
-        DbtVersion("1.3.1").
-        ProjectConfig(fivetran.NewDbtProjectConfig().
-            GitRemoteUrl("https://github.com/fivetran/dbt_demo").
-            FolderPath("").
-            GitBranch("main")).
-        DefaultSchema("test_schema").
-        TargetName("").
-        Threads(4).
-        Do(context.Background())
-    if err != nil {
-        t.Logf("%+v\n", created)
-        t.Error(err)
-    }
-    return created.Data.ID
-}
-
-func CleanupDbtProjects() {
-    projects, err := Client.NewDbtProjectsList().Do(context.Background())
-    if err != nil {
-        log.Fatal(err)
-    }
-    for _, project := range projects.Data.Items {
-        CleanupDbtTransformations(project.ID, "")
-        _, err := Client.NewDbtProjectDelete().DbtProjectID(project.ID).Do(context.Background())
-        if err != nil && err.Error() != "status code: 404; expected: 200" {
-            log.Fatal(err)
-        }
-    }
-    if projects.Data.NextCursor != "" {
-        CleanupDbtProjects()
-    }
-}
-
-func CleanupDbtTransformations(projectId, nextCursor string) {
-    svc := Client.NewDbtModelsList().ProjectId(projectId)
-
-    if nextCursor != "" {
-        svc.Cursor(nextCursor)
-    }
-
-    models, err := svc.Do(context.Background())
-    if err != nil {
-        log.Fatal(err)
-    }
-
-    for _, model := range models.Data.Items {
-        if model.Scheduled {
-            _, err := Client.NewDbtTransformationDeleteService().TransformationId(model.ID).Do(context.Background())
-            if err != nil && err.Error() != "status code: 404; expected: 200" {
-                log.Fatal(err)
-            }
-        }
-    }
-
-    if models.Data.NextCursor != "" {
-        CleanupDbtTransformations(projectId, models.Data.NextCursor)
-    }
 }
 
 func CreateTempGroup(t *testing.T) string {
@@ -315,45 +225,6 @@ func CreateTempDestination(t *testing.T) string {
     destinationId := CreateDestination(t)
     t.Cleanup(func() { DeleteDestination(t, destinationId) })
     return destinationId
-}
-
-func CreateDbtTransformation(t *testing.T) string {
-    t.Helper()
-    created, err := Client.NewDbtTransformationCreateService().
-        DbtModelId("").
-        Schedule(fivetran.NewDbtTransformationSchedule().
-            ScheduleType("INTEGRATED").
-            DaysOfWeek([]string{}).
-            Interval(0).
-            TimeOfDay("")).
-        RunTests(true).
-        Paused(true).
-        Do(context.Background())
-
-    if err != nil {
-        t.Logf("%+v\n", created)
-        t.Error(err)
-    }
-    return created.Data.ID
-}
-
-func CreateTempDbtTransformation(t *testing.T) string {
-    t.Helper()
-    dbtTransformationId := CreateDbtTransformation(t)
-    t.Cleanup(func() { DeleteDbtTransformation(t, dbtTransformationId) })
-    return dbtTransformationId
-}
-
-func DeleteDbtTransformation(t *testing.T, id string) {
-    t.Helper()
-    deleted, err := Client.NewDbtTransformationDeleteService().
-        TransformationId(id).
-        Do(context.Background())
-
-    if err != nil {
-        t.Logf("%+v\n", deleted)
-        t.Error(err)
-    }
 }
 
 func CreateConnector(t *testing.T) string {
@@ -518,7 +389,6 @@ func isEmpty(actual interface{}) bool {
 func CleanupAccount() {
     CleanupUsers()
     CleanupDestinations()
-    CleanupDbtProjects()
     CleanupGroups()
     CleanupExternalLogging()
     CleanupPrivateLinks()

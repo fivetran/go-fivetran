@@ -5,7 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/fivetran/go-fivetran/compare/v1.0.7...HEAD)
+## [Unreleased](https://github.com/fivetran/go-fivetran/compare/v1.1.0...HEAD)
+
+## [1.1.0](https://github.com/fivetran/go-fivetran/compare/v1.0.6...v1.1.0)
+
+## Removed
+Removed the following Fivetran API endpoints:
+- [Retrieve dbt model details](https://fivetran.com/docs/rest-api/dbt-transformation-management#retrievedbtprojectmodeldetails)
+- [Retrieve dbt models list](https://fivetran.com/docs/rest-api/dbt-transformation-management#retrievedbtprojectmodels)
+- [Create dbt project](https://fivetran.com/docs/rest-api/dbt-transformation-management#createdbtproject)
+- [Retrieve dbt projects list](https://fivetran.com/docs/rest-api/dbt-transformation-management#retrievedbtprojects)
+- [Retrieve dbt project details](https://fivetran.com/docs/rest-api/dbt-transformation-management#retrievedbtprojectdetails)
+- [Update dbt project](https://fivetran.com/docs/rest-api/dbt-transformation-management#modifydbtproject)
+- [Delete dbt project](https://fivetran.com/docs/rest-api/dbt-transformation-management#deletedbtproject)
+- [Test dbt Project](https://fivetran.com/docs/rest-api/transformations-for-dbt-core-management#testdbtproject)
 
 ## [1.0.7](https://github.com/fivetran/go-fivetran/compare/v1.0.6...v1.0.7)
 
