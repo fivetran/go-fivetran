@@ -23,7 +23,7 @@ func TestNewUserConnectorMebershipDeleteE2E(t *testing.T) {
 	}
 
 	testutils.AssertEqual(t, deleted.Code, "Success")
-	testutils.AssertNotEmpty(t, created.Message)
+	testutils.AssertNotEmpty(t, deleted.Message)
 
 	t.Cleanup(func() {
 		testutils.DeleteConnector(t, connectorId)
