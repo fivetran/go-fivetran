@@ -8,7 +8,6 @@ import (
 	"github.com/fivetran/go-fivetran/certificates"
 	connectcard "github.com/fivetran/go-fivetran/connect_card"
 	"github.com/fivetran/go-fivetran/connectors"
-	"github.com/fivetran/go-fivetran/dbt"
 	"github.com/fivetran/go-fivetran/destinations"
 	externallogging "github.com/fivetran/go-fivetran/external_logging"
 	"github.com/fivetran/go-fivetran/fingerprints"
@@ -364,55 +363,6 @@ func (c *Client) NewUserConnectorMembershipDelete() *users.UserConnectorMembersh
 
 func (c *Client) NewUserConnectorMembershipDetails() *users.UserConnectorMembershipDetailsService {
 	return &users.UserConnectorMembershipDetailsService{HttpService: c.NewHttpService()}
-}
-
-/* DBT */
-func (c *Client) NewDbtModelDetails() *dbt.DbtModelDetailsService {
-	return &dbt.DbtModelDetailsService{HttpService: c.NewHttpService()}
-}
-
-func (c *Client) NewDbtModelsList() *dbt.DbtModelsListService {
-	return &dbt.DbtModelsListService{HttpService: c.NewHttpService()}
-}
-
-func (c *Client) NewDbtProjectDetails() *dbt.DbtProjectDetailsService {
-	return &dbt.DbtProjectDetailsService{HttpService: c.NewHttpService()}
-}
-
-func (c *Client) NewDbtProjectDelete() *dbt.DbtProjectDeleteService {
-	return &dbt.DbtProjectDeleteService{HttpService: c.NewHttpService()}
-}
-
-func (c *Client) NewDbtProjectCreate() *dbt.DbtProjectCreateService {
-	return &dbt.DbtProjectCreateService{HttpService: c.NewHttpService()}
-}
-
-func (c *Client) NewDbtProjectModify() *dbt.DbtProjectModifyService {
-	return &dbt.DbtProjectModifyService{HttpService: c.NewHttpService()}
-}
-
-func (c *Client) NewDbtProjectsList() *dbt.DbtProjectsListService {
-	return &dbt.DbtProjectsListService{HttpService: c.NewHttpService()}
-}
-
-func (c *Client) NewDbtProjectTest() *dbt.DbtProjectTestService {
-	return &dbt.DbtProjectTestService{HttpService: c.NewHttpService()}
-}
-
-func (c *Client) NewDbtTransformationCreateService() *dbt.DbtTransformationCreateService {
-	return &dbt.DbtTransformationCreateService{HttpService: c.NewHttpService()}
-}
-
-func (c *Client) NewDbtTransformationDeleteService() *dbt.DbtTransformationDeleteService {
-	return &dbt.DbtTransformationDeleteService{HttpService: c.NewHttpService()}
-}
-
-func (c *Client) NewDbtTransformationDetailsService() *dbt.DbtTransformationDetailsService {
-	return &dbt.DbtTransformationDetailsService{HttpService: c.NewHttpService()}
-}
-
-func (c *Client) NewDbtTransformationModifyService() *dbt.DbtTransformationModifyService {
-	return &dbt.DbtTransformationModifyService{HttpService: c.NewHttpService()}
 }
 
 /* Webhooks */

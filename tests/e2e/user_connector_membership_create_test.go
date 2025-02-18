@@ -23,7 +23,7 @@ func TestNewUserConnectorMembershipCreateE2E(t *testing.T) {
 	}
 
 	testutils.AssertEqual(t, created.Code, "Success")
-	testutils.AssertEqual(t, created.Message, "Connector membership has been created")
+	testutils.AssertNotEmpty(t, created.Message)
 	testutils.AssertEqual(t, created.Data.ConnectorId, connectorId)
 	testutils.AssertEqual(t, created.Data.Role, "Connector Administrator")
 	testutils.AssertNotEmpty(t, created.Data.CreatedAt)

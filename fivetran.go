@@ -2,7 +2,6 @@ package fivetran
 
 import (
 	"github.com/fivetran/go-fivetran/connectors"
-	"github.com/fivetran/go-fivetran/dbt"
 	"github.com/fivetran/go-fivetran/destinations"
 	"github.com/fivetran/go-fivetran/transformations"
 	"github.com/fivetran/go-fivetran/connect_card"
@@ -53,14 +52,6 @@ func NewConnectorSchemaConfigSchema() *connectors.ConnectorSchemaConfigSchema {
 
 func NewConnectorSchemaConfigTable() *connectors.ConnectorSchemaConfigTable {
 	return &connectors.ConnectorSchemaConfigTable{}
-}
-
-func NewDbtProjectConfig() *dbt.DbtProjectConfig {
-	return &dbt.DbtProjectConfig{}
-}
-
-func NewDbtTransformationSchedule() *dbt.DbtTransformationSchedule {
-	return &dbt.DbtTransformationSchedule{}
 }
 
 func NewDestinationConfig() *destinations.DestinationConfig {

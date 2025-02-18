@@ -290,22 +290,6 @@ REST API Endpoint | REST API Version | SDK Service/Config
 [Delete a Hybrid Deployment Agent](/docs/rest-api/lhybrid-deployment-agent-management#deleteahybriddeploymentagent) | v1 |  [HybridDeploymentAgentDeleteService](https://pkg.go.dev/github.com/fivetran/go-fivetran#HybridDeploymentAgentDeleteService)
 [Regenerate authentication keys for a Hybrid Deployment Agent](/docs/rest-api/hybrid-deployment-agent-management#regeneratekeys) | v1 |  [HybridDeploymentAgentReAuthService](https://pkg.go.dev/github.com/fivetran/go-fivetran#HybridDeploymentAgentReAuthService)
 
-### [(Deprecated) Transformations Management API](https://fivetran.com/docs/rest-api/dbt-transformation-management)
-REST API Endpoint | REST API Version | SDK Service
---- | --- | ---
-[Create dbt Project](https://fivetran.com/docs/rest-api/dbt-transformation-management#createdbtproject) | v1 | [DbtProjectCreateService](https://pkg.go.dev/github.com/fivetran/go-fivetran#DbtProjectCreateService)
-[Retrieve dbt Project Details](https://fivetran.com/docs/rest-api/dbt-transformation-management#retrievedbtprojectdetails) | v1 | [DbtProjectDetailsService](https://pkg.go.dev/github.com/fivetran/go-fivetran#DbtProjectDetailsService)
-[Retrieve dbt Projects List](https://fivetran.com/docs/rest-api/dbt-transformation-management#retrievedbtprojects) | v1 | [DbtProjectsListService](https://pkg.go.dev/github.com/fivetran/go-fivetran#DbtProjectsListService)
-[Retrieve dbt Model Details](https://fivetran.com/docs/rest-api/dbt-transformation-management#retrievedbtprojectmodeldetails) | v1 | [DbtModelDetailsService](https://pkg.go.dev/github.com/fivetran/go-fivetran#DbtModelDetailsService)
-[Retrieve dbt Models List](https://fivetran.com/docs/rest-api/dbt-transformation-management#retrievedbtprojectmodels) | v1 | [DbtModelsListService](https://pkg.go.dev/github.com/fivetran/go-fivetran#DbtModelsListService)
-[Update dbt Project](https://fivetran.com/docs/rest-api/dbt-transformation-management#modifydbtproject) | v1 | [DbtProjectModifyService](https://pkg.go.dev/github.com/fivetran/go-fivetran#DbtProjectModifyService)
-[Delete dbt Project](https://fivetran.com/docs/rest-api/dbt-transformation-management#deletedbtproject) | v1 | [DbtProjectDeleteService](https://pkg.go.dev/github.com/fivetran/go-fivetran#DbtProjectDeleteService)
-[Create dbt Transformation](https://fivetran.com/docs/rest-api/dbt-transformation-management#createdbttransformation) | v1 | [DbtTransformationCreateService](https://pkg.go.dev/github.com/fivetran/go-fivetran#DbtTransformationCreateService)
-[Retrieve dbt Transformation Details](https://fivetran.com/docs/rest-api/dbt-transformation-management#retrievedbttransformationdetails) | v1 | [DbtTransformationDetailsService](https://pkg.go.dev/github.com/fivetran/go-fivetran#DbtTransformationDetailsService)
-[Update dbt Transformation](https://fivetran.com/docs/rest-api/dbt-transformation-management#modifydbttransformation) | v1 | [DbtTransformationModifyService](https://pkg.go.dev/github.com/fivetran/go-fivetran#DbtTransformationModifyService)
-[Delete dbt Transformation](https://fivetran.com/docs/rest-api/dbt-transformation-management#deletedbttransformation) | v1 | [DbtTransformationDeleteService](https://pkg.go.dev/github.com/fivetran/go-fivetran#DbtTransformationDeleteService)
-[Test dbt Project](https://fivetran.com/docs/rest-api/transformations-for-dbt-core-management#testdbtproject) | v1 | [DbtProjectTestService](https://pkg.go.dev/github.com/fivetran/go-fivetran#DbtProjectTestService)
-
 ## Support
 
 Please get in touch with us through our [Support Portal](https://support.fivetran.com/) if you 
