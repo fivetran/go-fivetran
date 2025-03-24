@@ -1,7 +1,7 @@
 package fivetran
 
 import (
-	"github.com/fivetran/go-fivetran/connectors"
+	"github.com/fivetran/go-fivetran/connections"
 	"github.com/fivetran/go-fivetran/destinations"
 	"github.com/fivetran/go-fivetran/transformations"
 	"github.com/fivetran/go-fivetran/connect_card"
@@ -10,48 +10,48 @@ import (
 	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
-func NewFunctionSecret() *connectors.FunctionSecret {
-	return &connectors.FunctionSecret{}
+func NewFunctionSecret() *connections.FunctionSecret {
+	return &connections.FunctionSecret{}
 }
 
-func NewConnectorConfig() *connectors.ConnectorConfig {
-	return &connectors.ConnectorConfig{}
+func NewConnectionConfig() *connections.ConnectionConfig {
+	return &connections.ConnectionConfig{}
 }
 
-func NewConnectorAuth() *connectors.ConnectorAuth {
-	return &connectors.ConnectorAuth{}
+func NewConnectionAuth() *connections.ConnectionAuth {
+	return &connections.ConnectionAuth{}
 }
 
-func NewConnectorConfigReports() *connectors.ConnectorConfigReports {
-	return &connectors.ConnectorConfigReports{}
+func NewConnectionConfigReports() *connections.ConnectionConfigReports {
+	return &connections.ConnectionConfigReports{}
 }
 
-func NewConnectorConfigProjectCredentials() *connectors.ConnectorConfigProjectCredentials {
-	return &connectors.ConnectorConfigProjectCredentials{}
+func NewConnectionConfigProjectCredentials() *connections.ConnectionConfigProjectCredentials {
+	return &connections.ConnectionConfigProjectCredentials{}
 }
 
-func NewConnectorConfigCustomTables() *connectors.ConnectorConfigCustomTables {
-	return &connectors.ConnectorConfigCustomTables{}
+func NewConnectionConfigCustomTables() *connections.ConnectionConfigCustomTables {
+	return &connections.ConnectionConfigCustomTables{}
 }
 
-func NewConnectorConfigAdobeAnalyticsConfiguration() *connectors.ConnectorConfigAdobeAnalyticsConfiguration {
-	return &connectors.ConnectorConfigAdobeAnalyticsConfiguration{}
+func NewConnectionConfigAdobeAnalyticsConfiguration() *connections.ConnectionConfigAdobeAnalyticsConfiguration {
+	return &connections.ConnectionConfigAdobeAnalyticsConfiguration{}
 }
 
-func NewConnectorAuthClientAccess() *connectors.ConnectorAuthClientAccess {
-	return &connectors.ConnectorAuthClientAccess{}
+func NewConnectionAuthClientAccess() *connections.ConnectionAuthClientAccess {
+	return &connections.ConnectionAuthClientAccess{}
 }
 
-func NewConnectorSchemaConfigColumn() *connectors.ConnectorSchemaConfigColumn {
-	return &connectors.ConnectorSchemaConfigColumn{}
+func NewConnectionSchemaConfigColumn() *connections.ConnectionSchemaConfigColumn {
+	return &connections.ConnectionSchemaConfigColumn{}
 }
 
-func NewConnectorSchemaConfigSchema() *connectors.ConnectorSchemaConfigSchema {
-	return &connectors.ConnectorSchemaConfigSchema{}
+func NewConnectionSchemaConfigSchema() *connections.ConnectionSchemaConfigSchema {
+	return &connections.ConnectionSchemaConfigSchema{}
 }
 
-func NewConnectorSchemaConfigTable() *connectors.ConnectorSchemaConfigTable {
-	return &connectors.ConnectorSchemaConfigTable{}
+func NewConnectionSchemaConfigTable() *connections.ConnectionSchemaConfigTable {
+	return &connections.ConnectionSchemaConfigTable{}
 }
 
 func NewDestinationConfig() *destinations.DestinationConfig {
