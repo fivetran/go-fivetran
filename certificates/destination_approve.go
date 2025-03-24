@@ -7,8 +7,6 @@ import (
 	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
-// CertificateConnectorCertificateApproveService implements the Certificate Management, Approve a connector certificate API.
-// Ref. https://fivetran.com/docs/rest-api/certificates#approveaconnectorcertificate
 type DestinationCertificateApproveService struct {
 	httputils.HttpService
 	destinationID *string

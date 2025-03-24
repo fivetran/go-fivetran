@@ -11,11 +11,11 @@ import (
 	"github.com/fivetran/go-fivetran/tests/mock"
 )
 
-func TestNewConnectorCertificatesListMock(t *testing.T) {
+func TestNewConnectionCertificatesListMock(t *testing.T) {
 	// arrange
 	validatedBy := "user_name"
 	validatedDate := "validated_date"
-	testConnectorId := "connector_id"
+	testConnectionId := "connection_id"
 	testHash := "hash"
 
 	testPublicKey := "test_public_key"
@@ -26,7 +26,7 @@ func TestNewConnectorCertificatesListMock(t *testing.T) {
 	limit := 1
 
 	ftClient, mockClient := testutils.CreateTestClient()
-	handler := mockClient.When(http.MethodGet, fmt.Sprintf("/v1/connectors/%v/certificates", testConnectorId)).ThenCall(
+	handler := mockClient.When(http.MethodGet, fmt.Sprintf("/v1/connections/%v/certificates", testConnectionId)).ThenCall(
 
 		func(req *http.Request) (*http.Response, error) {
 			var query = req.URL.Query()
@@ -56,8 +56,8 @@ func TestNewConnectorCertificatesListMock(t *testing.T) {
 		})
 
 	// act & assert
-	response, err := ftClient.NewConnectorCertificatesList().
-		ConnectorID(testConnectorId).
+	response, err := ftClient.NewConnectionCertificatesList().
+		ConnectionID(testConnectionId).
 		Cursor(cursor).
 		Limit(limit).
 		Do(context.Background())

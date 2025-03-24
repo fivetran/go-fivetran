@@ -11,13 +11,13 @@ import (
 	"github.com/fivetran/go-fivetran/tests/mock"
 )
 
-func TestNewCertificateConnectorCertificateRevokeMock(t *testing.T) {
+func TestNewCertificateConnectionCertificateRevokeMock(t *testing.T) {
 	// arrange
-	testConnectorId := "connector_id"
+	testConnectionId := "connection_id"
 	testHash := "hash"
 
 	ftClient, mockClient := testutils.CreateTestClient()
-	handler := mockClient.When(http.MethodDelete, fmt.Sprintf("/v1/connectors/%v/certificates/%v", testConnectorId, testHash)).ThenCall(
+	handler := mockClient.When(http.MethodDelete, fmt.Sprintf("/v1/connections/%v/certificates/%v", testConnectionId, testHash)).ThenCall(
 		func(req *http.Request) (*http.Response, error) {
 			response := mock.NewResponse(req, http.StatusOK,
 				`{
@@ -29,8 +29,8 @@ func TestNewCertificateConnectorCertificateRevokeMock(t *testing.T) {
 		})
 
 	// act & assert
-	response, err := ftClient.NewConnectorCertificateRevoke().
-		ConnectorID(testConnectorId).
+	response, err := ftClient.NewConnectionCertificateRevoke().
+		ConnectionID(testConnectionId).
 		Hash(testHash).
 		Do(context.Background())
 

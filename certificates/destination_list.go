@@ -7,7 +7,6 @@ import (
 	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
-// https://fivetran.com/docs/rest-api/certificates#listallapprovedcertificatesfordestination
 type DestinationCertificatesListService struct {
 	httputils.HttpService
 	destinationID *string

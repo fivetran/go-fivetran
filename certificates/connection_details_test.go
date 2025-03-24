@@ -10,32 +10,24 @@ import (
 	"github.com/fivetran/go-fivetran/tests/mock"
 )
 
-func TestNewCertificateConnectorCertificateApproveMock(t *testing.T) {
+func TestNewConnectionCertificateDetailsMock(t *testing.T) {
 	// arrange
 	validatedBy := "user_name"
 	validatedDate := "validated_date"
-	testConnectorId := "connector_id"
+	testConnectionId := "connection_id"
 	testHash := "hash"
-	testEncodedCert := "encoded_cert"
 
 	testPublicKey := "test_public_key"
 	testName := "name"
 	testType := "type"
 
 	ftClient, mockClient := testutils.CreateTestClient()
-	handler := mockClient.When(http.MethodPost, fmt.Sprintf("/v1/connectors/%v/certificates", testConnectorId)).ThenCall(
+	handler := mockClient.When(http.MethodGet, fmt.Sprintf("/v1/connections/%v/certificates/%v", testConnectionId, testHash)).ThenCall(
 
 		func(req *http.Request) (*http.Response, error) {
-			body := testutils.RequestBodyToJson(t, req)
-
-			testutils.AssertEqual(t, len(body), 2)
-			testutils.AssertEqual(t, body["hash"], testHash)
-			testutils.AssertEqual(t, body["encoded_cert"], testEncodedCert)
-
-			response := mock.NewResponse(req, http.StatusCreated, fmt.Sprintf(`
+			response := mock.NewResponse(req, http.StatusOK, fmt.Sprintf(`
 				{
 					"code": "Success", 
-					"message": "The certificate has been approved",
 					"data": {
 						"hash": "%v",
 						"public_key": "%v",
@@ -51,10 +43,9 @@ func TestNewCertificateConnectorCertificateApproveMock(t *testing.T) {
 		})
 
 	// act & assert
-	response, err := ftClient.NewCertificateConnectorCertificateApprove().
-		ConnectorID(testConnectorId).
+	response, err := ftClient.NewConnectionCertificateDetails().
+		ConnectionID(testConnectionId).
 		Hash(testHash).
-		EncodedCert(testEncodedCert).
 		Do(context.Background())
 
 	if err != nil {
@@ -74,5 +65,5 @@ func TestNewCertificateConnectorCertificateApproveMock(t *testing.T) {
 	testutils.AssertEqual(t, response.Data.Name, testName)
 	testutils.AssertEqual(t, response.Data.Type, testType)
 	testutils.AssertEqual(t, response.Data.ValidatedDate, validatedDate)
-	testutils.AssertNotEmpty(t, response.Message)
+	testutils.AssertEmpty(t, response.Message)
 }
