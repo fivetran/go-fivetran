@@ -7,7 +7,7 @@ import (
 	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
-§type UserConnectionMembershipCreateService struct {
+type UserConnectionMembershipCreateService struct {
 	httputils.HttpService
 	userId      *string
 	connectionId *string

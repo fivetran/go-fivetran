@@ -132,7 +132,7 @@ type connectionCustomCreateRequest struct {
     Auth   *map[string]interface{} `json:"auth,omitempty"`
 }
 
-type connectionSchemaConfigUpdateRequest struct {
+type connectionSchemaConfigTableUpdateRequest struct {
     Enabled *bool                                         `json:"enabled,omitempty"`
     Tables  map[string]*ConnectionSchemaConfigTableRequest `json:"tables,omitempty"`
 }

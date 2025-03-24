@@ -15,7 +15,7 @@ type ConnectionDatabaseSchemaConfigUpdateService struct {
     tables              map[string]*ConnectionSchemaConfigTable
 }
 
-func (csu *ConnectionDatabaseSchemaConfigUpdateService) request() *connectionSchemaConfigUpdateRequest {
+func (csu *ConnectionDatabaseSchemaConfigUpdateService) request() *connectionSchemaConfigTableUpdateRequest {
     var tables map[string]*ConnectionSchemaConfigTableRequest
     if csu.tables != nil && len(csu.tables) != 0 {
         tables = make(map[string]*ConnectionSchemaConfigTableRequest)
@@ -24,7 +24,7 @@ func (csu *ConnectionDatabaseSchemaConfigUpdateService) request() *connectionSch
         }
     }
 
-    return &connectionSchemaConfigUpdateRequest{
+    return &connectionSchemaConfigTableUpdateRequest{
         Enabled:       csu.enabled,
         Tables:       tables,
     }

@@ -11,7 +11,7 @@ import (
 type TeamConnectionMembershipDeleteService struct {
 	httputils.HttpService
 	teamId      *string
-	ConnectionId *string
+	connectionId *string
 }
 
 func (s *TeamConnectionMembershipDeleteService) TeamId(value string) *TeamConnectionMembershipDeleteService {
@@ -20,7 +20,7 @@ func (s *TeamConnectionMembershipDeleteService) TeamId(value string) *TeamConnec
 }
 
 func (s *TeamConnectionMembershipDeleteService) ConnectionId(value string) *TeamConnectionMembershipDeleteService {
-	s.ConnectionId = &value
+	s.connectionId = &value
 	return s
 }
 
@@ -31,11 +31,11 @@ func (s *TeamConnectionMembershipDeleteService) Do(ctx context.Context) (common.
 		return response, fmt.Errorf("missing required teamId")
 	}
 
-	if s.ConnectionId == nil {
+	if s.connectionId == nil {
 		return response, fmt.Errorf("missing required ConnectionId")
 	}
 
-	url := fmt.Sprintf("/teams/%v/Connections/%v", *s.teamId, *s.ConnectionId)
+	url := fmt.Sprintf("/teams/%v/Connections/%v", *s.teamId, *s.connectionId)
 	err := s.HttpService.Do(ctx, "DELETE", url, nil, nil, 200, &response)
 	return response, err
 }
