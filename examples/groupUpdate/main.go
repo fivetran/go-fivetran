@@ -16,11 +16,9 @@ func main() {
 
 	client := fivetran.New(apiKey, apiSecret)
 
-	svc := client.NewGroupListConnections()
+	svc := client.NewGroupUpdate()
 
-	svc.GroupID("replying_ministry")
-
-	value, err := svc.Do(context.Background())
+	value, err := svc.GroupID("flavorful_guesses").Name("My_new_GRoUP_name").Do(context.Background())
 	if err != nil {
 		fmt.Printf("%+v\n", value)
 		log.Fatal(err)

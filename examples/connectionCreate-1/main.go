@@ -16,9 +16,20 @@ func main() {
 
 	client := fivetran.New(apiKey, apiSecret)
 
-	svc := client.NewGroupListConnections()
+	connConfig := fivetran.NewConnectionConfig().
+		Schema("google_sheets2").
+		Table("table").
+		SheetID("1Rmq_FN2kTNwWiT4adZKBxHBRmvfeBTIfKWi5B8ii9qk").
+		NamedRange("range1")
 
-	svc.GroupID("replying_ministry")
+	svc := client.NewConnectionCreate().
+		GroupID("replying_ministry").
+		Service("google_sheets").
+		Config(connConfig).
+		Paused(false).
+		TrustCertificates(true).
+		TrustFingerprints(true).
+		RunSetupTests(true)
 
 	value, err := svc.Do(context.Background())
 	if err != nil {

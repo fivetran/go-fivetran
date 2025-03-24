@@ -16,9 +16,20 @@ func main() {
 
 	client := fivetran.New(apiKey, apiSecret)
 
-	svc := client.NewGroupListConnections()
+	svc := client.NewDestinationUpdate()
 
-	svc.GroupID("replying_ministry")
+	destConfig := fivetran.NewDestinationConfig().
+		Host("10.99.99.99").
+		Port(443).
+		Database("myNewDatabase").
+		User("myNewUser").
+		Password("MyNewPass").
+		Auth("PASSWORD")
+
+	svc.DestinationID("replying_ministry")
+	svc.Region("EU")
+	svc.TimeZoneOffset("0")
+	svc.Config(destConfig)
 
 	value, err := svc.Do(context.Background())
 	if err != nil {

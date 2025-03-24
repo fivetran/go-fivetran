@@ -16,11 +16,9 @@ func main() {
 
 	client := fivetran.New(apiKey, apiSecret)
 
-	svc := client.NewGroupListConnections()
+	svc := client.NewConnectionDelete()
 
-	svc.GroupID("replying_ministry")
-
-	value, err := svc.Do(context.Background())
+	value, err := svc.ConnectionID("pool_cleanse").Do(context.Background())
 	if err != nil {
 		fmt.Printf("%+v\n", value)
 		log.Fatal(err)

@@ -16,11 +16,12 @@ func main() {
 
 	client := fivetran.New(apiKey, apiSecret)
 
-	svc := client.NewGroupListConnections()
+	svc := client.NewConnectionSetupTests()
 
-	svc.GroupID("replying_ministry")
+	svc.TrustCertificates(true)
+	svc.TrustFingerprints(false)
 
-	value, err := svc.Do(context.Background())
+	value, err := svc.ConnectionID("pack_lingual").Do(context.Background())
 	if err != nil {
 		fmt.Printf("%+v\n", value)
 		log.Fatal(err)

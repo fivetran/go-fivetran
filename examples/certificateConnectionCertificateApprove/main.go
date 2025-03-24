@@ -15,10 +15,10 @@ func main() {
 	fivetran.Debug(true)
 
 	client := fivetran.New(apiKey, apiSecret)
-
-	svc := client.NewGroupListConnections()
-
-	svc.GroupID("replying_ministry")
+	svc := client.NewCertificateConnectionCertificateApprove().
+		ConnectionID("relocate_sharpened").
+		Hash("r+u4QL4MGvZe...").
+		EncodedCert("MIID9DCCAtygAwIBAgIBQjANBgkqhkiG9w0BAQUFADCBijELMAkGA1UEBhMCVVMxEzARBgNVBAgMCldhc2hpbmd0b24xEDAOBgNVBAcMB1NlYXR0bGUxIjAgBgNVBAoMGUFtYXpvbiBXZWIgU2VydmljZXMsIEluYy4xEzARBgNVBAsMCkFtYXpvbiBSRFMxGzAZBgNVBAMMEkFtYXpvbiBSRF...")
 
 	value, err := svc.Do(context.Background())
 	if err != nil {

@@ -16,11 +16,12 @@ func main() {
 
 	client := fivetran.New(apiKey, apiSecret)
 
-	svc := client.NewGroupListConnections()
+	svc := client.NewConnectionReSyncTable()
 
-	svc.GroupID("replying_ministry")
-
-	value, err := svc.Do(context.Background())
+	value, err := svc.ConnectionID("pack_lingual").
+		Table("table1").
+		Schema("schema1").
+		Do(context.Background())
 	if err != nil {
 		fmt.Printf("%+v\n", value)
 		log.Fatal(err)

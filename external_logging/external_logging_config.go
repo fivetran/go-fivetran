@@ -2,8 +2,6 @@ package externallogging
 
 import "github.com/fivetran/go-fivetran/utils"
 
-// ExternalLoggingConfig builds Log Management, Log Config.
-// Ref. https://fivetran.com/docs/rest-api/log-service-management#logservicesetupconfigurations
 func (elc *ExternalLoggingConfig) Request() *externalLoggingConfigRequest {
 	return &externalLoggingConfigRequest{
 		WorkspaceId:  elc.workspaceId,

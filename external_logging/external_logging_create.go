@@ -7,8 +7,6 @@ import (
 	"github.com/fivetran/go-fivetran/utils"
 )
 
-// ExternalLoggingCreateService implements the Log Management, Create a Log Service API.
-// Ref. https://fivetran.com/docs/rest-api/log-service-management#createalogservice
 type ExternalLoggingCreateService struct {
 	httputils.HttpService
 	groupId      *string

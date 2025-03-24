@@ -7,8 +7,6 @@ import (
 	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
-// ExternalLoggingDetailsService implements the Log Management, Retrieve Log Service details API.
-// Ref. https://fivetran.com/docs/rest-api/log-service-management#retrievelogservicedetails
 type ExternalLoggingDetailsService struct {
 	httputils.HttpService
 	externalLoggingId *string

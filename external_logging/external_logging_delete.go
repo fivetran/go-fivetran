@@ -8,8 +8,6 @@ import (
 	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
-// ExternalLoggingDeleteService implements the Log Management, Delete a Log Service API.
-// Ref. https://fivetran.com/docs/rest-api/log-service-management#deletealogservice
 type ExternalLoggingDeleteService struct {
 	httputils.HttpService
 	externalLoggingId *string
