@@ -69,7 +69,7 @@ You can find examples for all services in the [examples](examples/) directory.
 
 The following [Fivetran REST API](https://fivetran.com/docs/rest-api) endpoints are implemented by the Fivetran SDK for Go: 
 
-### [User Management API](https://fivetran.com/docs/rest-api/api-reference/users)
+### [User](https://fivetran.com/docs/rest-api/api-reference/users)
 
 REST API Endpoint | REST API Version | SDK Service
 --- | --- | ---
@@ -89,7 +89,7 @@ REST API Endpoint | REST API Version | SDK Service
 [Update group membership](https://fivetran.com/docs/rest-api/api-reference/users/update-user-membership-in-group) | v1 | [UserGroupMembershipUpdateService](https://pkg.go.dev/github.com/fivetran/go-fivetran#UserGroupMembershipUpdateService)
 [Delete group membership](https://fivetran.com/docs/rest-api/api-reference/users/delete-user-membership-in-group) | v1 | [UserGroupMembershipDeleteService](https://pkg.go.dev/github.com/fivetran/go-fivetran#UserGroupMembershipDeleteService)
 
-### [Group Management API](https://fivetran.com/docs/rest-api/api-reference/groups)
+### [Group](https://fivetran.com/docs/rest-api/api-reference/groups)
 
 REST API Endpoint | REST API Version | SDK Service
 --- | --- | ---
@@ -105,7 +105,7 @@ REST API Endpoint | REST API Version | SDK Service
 [Retrieve Group Public SSH Key](https://fivetran.com/docs/rest-api/api-reference/groups/group-ssh-public-key) | v1 | [GroupSshKeyService](https://pkg.go.dev/github.com/fivetran/go-fivetran/groups#GroupSshKeyService)
 [Retrieve Group Service Account](https://fivetran.com/docs/rest-api/api-reference/groups/group-service-account) | v1 | [GroupServiceAccountService](https://pkg.go.dev/github.com/fivetran/go-fivetran/groups#GroupServiceAccountService)
 
-### [Destination Management API](https://fivetran.com/docs/rest-api/api-reference/destinations)
+### [Destination](https://fivetran.com/docs/rest-api/api-reference/destinations)
 
 REST API Endpoint | REST API Version | SDK Service/Config
 --- | --- | ---
@@ -116,7 +116,7 @@ REST API Endpoint | REST API Version | SDK Service/Config
 [Run destination setup tests](https://fivetran.com/docs/rest-api/api-reference/destinations/run-destination-setup-tests) | v1 | [DestinationSetupTestsService](https://pkg.go.dev/github.com/fivetran/go-fivetran#DestinationSetupTestsService)
 [Delete a destination](https://fivetran.com/docs/rest-api/api-reference/destinations/delete-destination) | v1 | [DestinationDeleteService](https://pkg.go.dev/github.com/fivetran/go-fivetran#DestinationDeleteService)
 
-### [Transformations Management API](https://fivetran.com/docs/rest-api/api-reference/transformation-management)
+### [Transformations](https://fivetran.com/docs/rest-api/api-reference/transformation-management)
 REST API Endpoint | REST API Version | SDK Service
 --- | --- | ---
 [Create Transformation Project](https://fivetran.com/docs/rest-api/api-reference/transformation-projects-management/create-transformation-project) | v1 | [TransformationProjectCreateService](https://pkg.go.dev/github.com/fivetran/go-fivetran#TransformationProjectCreateService)
@@ -136,7 +136,7 @@ REST API Endpoint | REST API Version | SDK Service
 [List All Quickstart Package Metadata](https://fivetran.com/docs/rest-api/api-reference/transformation-management/transformation-package-metadata-list) | v1 | [QuickstartPackagesListService](https://pkg.go.dev/github.com/fivetran/go-fivetran#QuickstartPackagesListService)
 [Retrieve Quickstart Package Metadata Details](https://fivetran.com/docs/rest-api/api-reference/transformation-management/transformation-package-metadata-details) | v1 | [QuickstartPackagesDetailsService](https://pkg.go.dev/github.com/fivetran/go-fivetran#QuickstartPackagesDetailsService)
 
-### [Connection Management API](https://fivetran.com/docs/rest-api/api-reference/connections)
+### [Connection](https://fivetran.com/docs/rest-api/api-reference/connections)
 
 REST API Endpoint | REST API Version | SDK Service/Config/Auth
 --- | --- | ---
@@ -147,31 +147,24 @@ REST API Endpoint | REST API Version | SDK Service/Config/Auth
 [Run connection setup tests](https://fivetran.com/docs/rest-api/api-reference/connections/run-setup-tests) | v2 | [ConnectionSetupTestsService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ConnectionSetupTestsService)
 [Sync connection data](https://fivetran.com/docs/rest-api/api-reference/connections/sync-connection) | v1 | [ConnectionSyncService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ConnectionSyncService)
 [Update a connection](https://fivetran.com/docs/rest-api/api-reference/connections/modify-connection) | v2 | [ConnectionUpdateService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ConnectionUpdateService)
-[Re-sync connection data](https://fivetran.com/docs/rest-api/api-reference/connections/resync-connection) | v1 | [ConnectionReSyncTableService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ConnectionReSyncTableService)
 [Connect Card](https://fivetran.com/docs/rest-api/api-reference/connections/connect-card) | v1 | [ConnectCardService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ConnectCardService)
-
+[Retrieve source metadata](https://fivetran.com/docs/rest-api/api-reference/connector-metadata/metadata-connectors) | v1 | [ConnectionsSourceMetadataService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ConnectionsSourceMetadataService)
 
 ### [Connection Schema](https://fivetran.com/docs/rest-api/api-reference/connection-schema)
 
 REST API Endpoint | REST API Version | SDK Service/Config/Auth
 --- | --- | ---
 [Setup a Connection Schema Config for a connection that doesn't have schema settings yet.](https://fivetran.com/docs/rest-api/api-reference/connection-schema/pre-create-connection-schema-config) | v1 | [ConnectionSchemaConfigCreateService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ConnectionSchemaConfigCreateService)
-
-
-
-[Retrieve source metadata](https://fivetran.com/docs/rest-api/connections#retrievesourcemetadata) | v1 | [ConnectionsSourceMetadataService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ConnectionsSourceMetadataService)
-[Retrieve a connection schema config](https://fivetran.com/docs/rest-api/connections#retrieveaconnectionschemaconfig) | v1 | [ConnectionSchemaDetailsService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ConnectionSchemaDetailsService)
-[Retrieve source table columns config](https://fivetran.com/docs/rest-api/connections#retrievesourcetablecolumnsconfig) | v1 | [ConnectionColumnConfigListService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ConnectionColumnConfigListService)
-[Reload a connection schema config](https://fivetran.com/docs/rest-api/connections#reloadaconnectionschemaconfig) | v1 | [ConnectionSchemaReloadService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ConnectionSchemaReloadService)
-
 [Update a connection schema config](https://fivetran.com/docs/rest-api/api-reference/connection-schema/modify-connection-schema-config) | v1 | [ConnectionSchemaConfigUpdateService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ConnectionSchemaConfigUpdateService)
 [Update a connection database schema config](https://fivetran.com/docs/rest-api/api-reference/connection-schema/modify-connection-database-schema-config) | v1 | [ConnectionDatabaseSchemaConfigUpdateService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ConnectionDatabaseSchemaConfigUpdateService)
-[Update a connection table config](https://fivetran.com/docs/rest-api/connections#modifyaconnectiontableconfig) | v1 | [ConnectionTableConfigUpdateService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ConnectionTableConfigUpdateService)
+[Update a connection table config](https://fivetran.com/docs/rest-api/api-reference/connection-schema/modify-connection-table-config) | v1 | [ConnectionTableConfigUpdateService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ConnectionTableConfigUpdateService)
 [Update a connection column config](https://fivetran.com/docs/rest-api/api-reference/connection-schema/modify-connection-column-config) | v1 | [ConnectionColumnConfigUpdateService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ConnectionColumnConfigUpdateService)
+[Re-sync Connection Table Data](https://fivetran.com/docs/rest-api/api-reference/connection-schema/resync-tables) | v1 | [ConnectionReSyncTableService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ConnectionReSyncTableService)
+[Reload a connection schema config](https://fivetran.com/docs/rest-api/api-reference/connection-schema/reload-connection-schema-config) | v1 | [ConnectionSchemaReloadService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ConnectionSchemaReloadService)
+[Retrieve a connection schema config](https://fivetran.com/docs/rest-api/api-reference/connection-schema/connection-schema-config) | v1 | [ConnectionSchemaDetailsService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ConnectionSchemaDetailsService)
+[Retrieve source table columns config](https://fivetran.com/docs/rest-api/api-reference/connection-schema/connection-column-config) | v1 | [ConnectionColumnConfigListService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ConnectionColumnConfigListService)
 
-
-
-### [Certificate Management API](https://fivetran.com/docs/rest-api/certificates)
+### [Certificate](https://fivetran.com/docs/rest-api/certificates)
 REST API Endpoint | REST API Version | SDK Service
 --- | --- | ---
 [Approve a certificate for the connection](https://fivetran.com/docs/rest-api/api-reference/certificates/approve-connection-certificate) | v1 | [ConnectionCertificateApproveService](https://pkg.go.dev/github.com/fivetran/go-fivetran/certificates#ConnectionCertificateApproveService)
@@ -191,7 +184,7 @@ REST API Endpoint | REST API Version | SDK Service
 [Revoke destination certificate](https://fivetran.com/docs/rest-api/api-reference/certificates/revoke-destination-certificate) | v1 | [DestinationCertificateRevokeService](https://pkg.go.dev/github.com/fivetran/go-fivetran/certificates#DestinationCertificateRevokeService)
 [Revoke destination fingerprint](https://fivetran.com/docs/rest-api/api-reference/certificates/revoke-destination-fingerprint) | v1 | [DestinationFingerprintRevokeService](https://pkg.go.dev/github.com/fivetran/go-fivetran/fingerprints#DestinationFingerprintRevokeService)
 
-### [Log Service Management](https://fivetran.com/docs/rest-api/log-service-management)
+### [Log Service](https://fivetran.com/docs/rest-api/log-service-management)
 
 REST API Endpoint | REST API Version | SDK Service/Config
 --- | --- | ---
@@ -202,7 +195,7 @@ REST API Endpoint | REST API Version | SDK Service/Config
 [Delete a Log Service](https://fivetran.com/docs/rest-api/api-reference/log-service-management/delete-log-service) | v1 | [ExternalLoggingDeleteService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ExternalLoggingDeleteService)
 [Run Log Service Setup Tests](https://fivetran.com/docs/rest-api/api-reference/log-service-management/run-setup-tests-log-service) | v1 | [ExternalLoggingSetupTestsService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ExternalLoggingSetupTestsService)
 
-### [Webhook Management](https://fivetran.com/docs/rest-api/api-reference/webhooks)
+### [Webhook](https://fivetran.com/docs/rest-api/api-reference/webhooks)
 
 REST API Endpoint | REST API Version | SDK Service/Config
 --- | --- | ---
@@ -214,54 +207,40 @@ REST API Endpoint | REST API Version | SDK Service/Config
 [Retrieve the list of webhooks](https://fivetran.com/docs/rest-api/api-reference/webhooks/list-all-webhooks) | v1 | [WebhookListService](https://pkg.go.dev/github.com/fivetran/go-fivetran#WebhookListService)
 [Test webhook](https://fivetran.com/docs/rest-api/api-reference/webhooks/test-webhook) | v1 | [WebhookTestService](https://pkg.go.dev/github.com/fivetran/go-fivetran#WebhookTestService)
 
-### [Role Management](https://fivetran.com/docs/rest-api/api-reference/roles)
+### [Role](https://fivetran.com/docs/rest-api/api-reference/roles)
 
 REST API Endpoint | REST API Version | SDK Service/Config
 --- | --- | ---
 [List all roles](https://fivetran.com/docs/rest-api/api-reference/roles/list-all-roles) | v1 | [RolesListService](https://pkg.go.dev/github.com/fivetran/go-fivetran#RolesListService)
 
-### [Team Management](https://fivetran.com/docs/rest-api/teams)
+### [Team](https://fivetran.com/docs/rest-api/api-reference/teams)
 
 REST API Endpoint | REST API Version | SDK Service/Config
 --- | --- | ---
-[List all teams](https://fivetran.com/docs/rest-api/teams#listallteams) | v1 | [TeamsListService](https://pkg.go.dev/github.com/fivetran/go-fivetran#TeamsListService)
-[Retrieve team details](https://fivetran.com/docs/rest-api/teams#retrieveteamdetails) | v1 | [TeamsDetailsService](https://pkg.go.dev/github.com/fivetran/go-fivetran#TeamsDetailsService)
-[Create a team](https://fivetran.com/docs/rest-api/teams#createateam) | v1 | [TeamsCreateService](https://pkg.go.dev/github.com/fivetran/go-fivetran#TeamsCreateService)
-[Update a team](https://fivetran.com/docs/rest-api/teams#modifyateam) | v1 | [TeamsUpdateService](https://pkg.go.dev/github.com/fivetran/go-fivetran#TeamsUpdateService)
-[Delete a team role in the account](https://fivetran.com/docs/rest-api/teams#deleteteamroleinaccount) | v1 | [TeamsDeleteRoleInAccountService](https://pkg.go.dev/github.com/fivetran/go-fivetran#TeamsDeleteRoleInAccountService)
-[Delete a team](https://fivetran.com/docs/rest-api/teams#deleteateam) | v1 | [TeamsDeleteService](https://pkg.go.dev/github.com/fivetran/go-fivetran#TeamsDeleteService)
 
-### [Team Management User memberships](https://fivetran.com/docs/rest-api/teams#usermemberships)
+[Create a team](https://fivetran.com/docs/rest-api/api-reference/teams/create-team) | v1 | [TeamsCreateService](https://pkg.go.dev/github.com/fivetran/go-fivetran#TeamsCreateService)
+[Add a user to a team](hhttps://fivetran.com/docs/rest-api/api-reference/teams/add-user-to-team) | v1 | [TeamUserMembershipCreateService](https://pkg.go.dev/github.com/fivetran/go-fivetran#TeamUserMembershipCreateService)
+[Add connection membership](https://fivetran.com/docs/rest-api/api-reference/teams/add-team-membership-in-connection) | v1 | [TeamConnectionMembershipCreateService](https://pkg.go.dev/github.com/fivetran/go-fivetran#TeamConnectionMembershipCreateService)
+[Add group membership](https://fivetran.com/docs/rest-api/api-reference/teams/add-team-membership-in-group) | v1 | [TeamGroupMembershipCreateService](https://pkg.go.dev/github.com/fivetran/go-fivetran#TeamGroupMembershipCreateService)
+[Delete a team](https://fivetran.com/docs/rest-api/api-reference/teams/delete-team) | v1 | [TeamsDeleteService](https://pkg.go.dev/github.com/fivetran/go-fivetran#TeamsDeleteService)
+[Delete a user from a team](https://fivetran.com/docs/rest-api/api-reference/teams/delete-user-from-team) | v1 | [TeamUserMembershipDeleteService](https://pkg.go.dev/github.com/fivetran/go-fivetran#TeamUserMembershipDeleteService)
+[Delete connection membership](https://fivetran.com/docs/rest-api/api-reference/teams/delete-team-membership-in-connection) | v1 | [TeamConnectionMembershipDeleteService](https://pkg.go.dev/github.com/fivetran/go-fivetran#TeamConnectionMembershipDeleteService)
+[Delete group membership](https://fivetran.com/docs/rest-api/api-reference/teams/delete-team-membership-in-group) | v1 | [TeamGroupMembershipDeleteService](https://pkg.go.dev/github.com/fivetran/go-fivetran#TeamGroupMembershipDeleteService)
+[Delete a team role in the account](https://fivetran.com/docs/rest-api/api-reference/teams/delete-team-membership-in-account) | v1 | [TeamsDeleteRoleInAccountService](https://pkg.go.dev/github.com/fivetran/go-fivetran#TeamsDeleteRoleInAccountService)
+[List all connection memberships](https://fivetran.com/docs/rest-api/api-reference/teams/get-team-memberships-in-connections) | v1 | [TeamConnectionMembershipsListService](https://pkg.go.dev/github.com/fivetran/go-fivetran#TeamConnectionMembershipsListService)
+[List all group memberships](https://fivetran.com/docs/rest-api/api-reference/teams/get-team-memberships-in-groups) | v1 | [TeamGroupMembershipsService](https://pkg.go.dev/github.com/fivetran/go-fivetran#TeamGroupMembershipsService)
+[List all teams](https://fivetran.com/docs/rest-api/api-reference/teams/list-all-teams) | v1 | [TeamsListService](https://pkg.go.dev/github.com/fivetran/go-fivetran#TeamsListService)
+[List all user memberships](https://fivetran.com/docs/rest-api/api-reference/teams/list-users-in-team) | v1 | [TeamUserMembershipsListService](https://pkg.go.dev/github.com/fivetran/go-fivetran#TeamUserMembershipsListService)
+[Retrieve connection membership](https://fivetran.com/docs/rest-api/api-reference/teams/get-team-membership-in-connection) | v1 | [TeamConnectionMembershipDetailsService](https://pkg.go.dev/github.com/fivetran/go-fivetran#TeamConnectionMembershipDetailsService)
+[Retrieve group membership](https://fivetran.com/docs/rest-api/api-reference/teams/get-team-membership-in-group) | v1 | [TeamGroupMembershipDetailsService](https://pkg.go.dev/github.com/fivetran/go-fivetran#TeamGroupMembershipDetailsService)
+[Retrieve team details](https://fivetran.com/docs/rest-api/api-reference/teams/team-details) | v1 | [TeamsDetailsService](https://pkg.go.dev/github.com/fivetran/go-fivetran#TeamsDetailsService)
+[Retrieve user membership](https://fivetran.com/docs/rest-api/api-reference/teams/get-user-in-team) | v1 | [TeamUserMembershipDetailsService](https://pkg.go.dev/github.com/fivetran/go-fivetran#TeamUserMembershipDetailsService)
+[Update a team](https://fivetran.com/docs/rest-api/api-reference/teams/modify-team) | v1 | [TeamsUpdateService](https://pkg.go.dev/github.com/fivetran/go-fivetran#TeamsUpdateService)
+[Update a user membership](https://fivetran.com/docs/rest-api/api-reference/teams/update-user-membership) | v1 | [TeamUserMembershipUpdateService](https://pkg.go.dev/github.com/fivetran/go-fivetran#TeamUserMembershipUpdateService)
+[Update connection membership](https://fivetran.com/docs/rest-api/api-reference/teams/update-team-membership-in-connection) | v1 | [TeamConnectionMembershipUpdateService](https://pkg.go.dev/github.com/fivetran/go-fivetran#TeamConnectionMembershipUpdateService)
+[Update group membership](https://fivetran.com/docs/rest-api/api-reference/teams/update-team-membership-in-group) | v1 | [TeamGroupMembershipUpdateService](https://pkg.go.dev/github.com/fivetran/go-fivetran#TeamGroupMembershipUpdateService)
 
-REST API Endpoint | REST API Version | SDK Service/Config
---- | --- | ---
-[List all user memberships](https://fivetran.com/docs/rest-api/teams#listallusermemberships) | v1 | [TeamUserMembershipsListService](https://pkg.go.dev/github.com/fivetran/go-fivetran#TeamUserMembershipsListService)
-[Retrieve user membership](https://fivetran.com/docs/rest-api/teams#retrieveusermembershipinateam) | v1 | [TeamUserMembershipDetailsService](https://pkg.go.dev/github.com/fivetran/go-fivetran#TeamUserMembershipDetailsService)
-[Add a user to a team](https://fivetran.com/docs/rest-api/teams#addausertoateam) | v1 | [TeamUserMembershipCreateService](https://pkg.go.dev/github.com/fivetran/go-fivetran#TeamUserMembershipCreateService)
-[Update a user membership](https://fivetran.com/docs/rest-api/teams#modifyausermembership) | v1 | [TeamUserMembershipUpdateService](https://pkg.go.dev/github.com/fivetran/go-fivetran#TeamUserMembershipUpdateService)
-[Delete a user from a team](https://fivetran.com/docs/rest-api/teams#deleteauserfromateam) | v1 | [TeamUserMembershipDeleteService](https://pkg.go.dev/github.com/fivetran/go-fivetran#TeamUserMembershipDeleteService)
-
-### [Team Management Connection memberships](https://fivetran.com/docs/rest-api/teams#connectionmemberships)
-
-REST API Endpoint | REST API Version | SDK Service/Config
---- | --- | ---
-[List all connection memberships](https://fivetran.com/docs/rest-api/teams#listallconnectionmemberships) | v1 | [TeamConnectionMembershipsListService](https://pkg.go.dev/github.com/fivetran/go-fivetran#TeamConnectionMembershipsListService)
-[Retrieve connection membership](https://fivetran.com/docs/rest-api/teams#retrieveconnectionmembership) | v1 | [TeamConnectionMembershipDetailsService](https://pkg.go.dev/github.com/fivetran/go-fivetran#TeamConnectionMembershipDetailsService)
-[Add connection membership](https://fivetran.com/docs/rest-api/teams#addconnectionmembership) | v1 | [TeamConnectionMembershipCreateService](https://pkg.go.dev/github.com/fivetran/go-fivetran#TeamConnectionMembershipCreateService)
-[Update connection membership](https://fivetran.com/docs/rest-api/teams#updateconnectionmembership) | v1 | [TeamConnectionMembershipUpdateService](https://pkg.go.dev/github.com/fivetran/go-fivetran#TeamConnectionMembershipUpdateService)
-[Delete connection membership](https://fivetran.com/docs/rest-api/teams#deleteconnectionmembership) | v1 | [TeamConnectionMembershipDeleteService](https://pkg.go.dev/github.com/fivetran/go-fivetran#TeamConnectionMembershipDeleteService)
-
-### [Team Management Group memberships](https://fivetran.com/docs/rest-api/teams#groupmemberships)
-
-REST API Endpoint | REST API Version | SDK Service/Config
---- | --- | ---
-[List all group memberships](https://fivetran.com/docs/rest-api/teams#listallgroupmemberships) | v1 | [TeamGroupMembershipsService](https://pkg.go.dev/github.com/fivetran/go-fivetran#TeamGroupMembershipsService)
-[Retrieve group membership](https://fivetran.com/docs/rest-api/teams#retrievegroupmembership) | v1 | [TeamGroupMembershipDetailsService](https://pkg.go.dev/github.com/fivetran/go-fivetran#TeamGroupMembershipDetailsService)
-[Add group membership](https://fivetran.com/docs/rest-api/teams#addgroupmembership) | v1 | [TeamGroupMembershipCreateService](https://pkg.go.dev/github.com/fivetran/go-fivetran#TeamGroupMembershipCreateService)
-[Update group membership](https://fivetran.com/docs/rest-api/teams#updategroupmembership) | v1 | [TeamGroupMembershipUpdateService](https://pkg.go.dev/github.com/fivetran/go-fivetran#TeamGroupMembershipUpdateService)
-[Delete group membership](https://fivetran.com/docs/rest-api/teams#deletegroupmembership) | v1 | [TeamGroupMembershipDeleteService](https://pkg.go.dev/github.com/fivetran/go-fivetran#TeamGroupMembershipDeleteService)
-
-### [Private Links Management](https://fivetran.com/docs/rest-api/api-reference/private-links)
+### [Private Links](https://fivetran.com/docs/rest-api/api-reference/private-links)
 
 REST API Endpoint | REST API Version | SDK Service/Config
 --- | --- | ---
@@ -271,7 +250,7 @@ REST API Endpoint | REST API Version | SDK Service/Config
 [Update a Private Link](https://fivetran.com/docs/rest-api/api-reference/private-links/modify-private-link) | v1 |  [PrivateLinksUpdateService](https://pkg.go.dev/github.com/fivetran/go-fivetran#PrivateLinksUpdateService)
 [Delete a Private Link](https://fivetran.com/docs/rest-api/api-reference/private-links/delete-private-link) | v1 |  [PrivateLinksDeleteService](https://pkg.go.dev/github.com/fivetran/go-fivetran#PrivateLinksDeleteService)
 
-### [Proxy Agents Management](https://fivetran.com/docs/rest-api/api-reference/proxy-agent)
+### [Proxy Agents](https://fivetran.com/docs/rest-api/api-reference/proxy-agent)
 
 REST API Endpoint | REST API Version | SDK Service/Config
 --- | --- | ---
@@ -281,7 +260,7 @@ REST API Endpoint | REST API Version | SDK Service/Config
 [Delete a Proxy Agent](https://fivetran.com/docs/rest-api/api-reference/proxy-agent/delete-proxy-agent) | v1 |  [ProxyDeleteService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ProxyDeleteService)
 [Return all connections attached to the proxy agent](https://fivetran.com/docs/rest-api/api-reference/proxy-agent/get-proxy-agent-connections) | v1 |  [ProxyConnectionMembershipsListService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ProxyConnectionMembershipsListService)
 
-### [Hybrid Deployment Agent Management](https://fivetran.com/docs/rest-api/api-reference/hybrid-deployment-agent-management)
+### [Hybrid Deployment Agent](https://fivetran.com/docs/rest-api/api-reference/hybrid-deployment-agent-management)
 
 REST API Endpoint | REST API Version | SDK Service/Config
 --- | --- | ---
