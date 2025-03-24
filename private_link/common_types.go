@@ -65,10 +65,10 @@ type privateLinkCustomCreateRequest struct {
     Config *map[string]interface{} `json:"config,omitempty"`
 }
 
-type privateLinkModifyRequest struct {
+type privateLinkUpdateRequest struct {
     Config          any     `json:"config,omitempty"`
 }
 
-type privateLinkCustomModifyRequest struct {
+type privateLinkCustomUpdateRequest struct {
     Config *map[string]interface{} `json:"config,omitempty"`
 }

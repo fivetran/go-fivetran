@@ -7,8 +7,6 @@ import (
 	"github.com/fivetran/go-fivetran/utils"
 )
 
-// PrivateLinkCreateService implements the Log Management, Create a Log Service API.
-// Ref. https://fivetran.com/docs/rest-api/log-service-management#createalogservice
 type PrivateLinkCreateService struct {
 	httputils.HttpService
 	name      	 *string

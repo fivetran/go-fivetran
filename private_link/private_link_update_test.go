@@ -10,20 +10,20 @@ import (
 	testutils "github.com/fivetran/go-fivetran/test_utils"
 )
 
-func TestPrivateLinkModifyServiceDo(t *testing.T) {
+func TestPrivateLinkUpdateServiceDo(t *testing.T) {
 	// arrange
 
 	ftClient, mockClient := testutils.CreateTestClient()
 	handler := mockClient.When(http.MethodPatch, "/v1/private-links/private_link_id").
 		ThenCall(func(req *http.Request) (*http.Response, error) {
-			response := mock.NewResponse(req, http.StatusOK, preparePrivateLinkModifyResponse())
+			response := mock.NewResponse(req, http.StatusOK, preparePrivateLinkUpdateResponse())
 			return response, nil
 		})
 
 	// act
-	response, err := ftClient.NewPrivateLinkModify().
+	response, err := ftClient.NewPrivateLinkUpdate().
 		PrivateLinkId("private_link_id").
-		Config(preparePrivateLinkModifyConfig()).
+		Config(preparePrivateLinkUpdateConfig()).
 		Do(context.Background())
 
 	// assert
@@ -35,22 +35,22 @@ func TestPrivateLinkModifyServiceDo(t *testing.T) {
 	testutils.AssertEqual(t, len(interactions), 1)
 	testutils.AssertEqual(t, interactions[0].Handler, handler)
 	testutils.AssertEqual(t, handler.Interactions, 1)
-	assertPrivateLinkModifyResponse(t, response)
+	assertPrivateLinkUpdateResponse(t, response)
 }
 
-func TestPrivateLinkCustomModifyService(t *testing.T) {
+func TestPrivateLinkCustomUpdateService(t *testing.T) {
 	// arrange
 	ftClient, mockClient := testutils.CreateTestClient()
 	handler := mockClient.When(http.MethodPatch, "/v1/private-links/private_link_id").ThenCall(
 		func(req *http.Request) (*http.Response, error) {
 			body := testutils.RequestBodyToJson(t, req)
-			assertPrivateLinkModifyCustomRequest(t, body)
-			response := mock.NewResponse(req, http.StatusOK, preparePrivateLinkModifyCustomResponse())
+			assertPrivateLinkUpdateCustomRequest(t, body)
+			response := mock.NewResponse(req, http.StatusOK, preparePrivateLinkUpdateCustomResponse())
 			return response, nil
 		})
 
 	// act
-	response, err := ftClient.NewPrivateLinkModify().
+	response, err := ftClient.NewPrivateLinkUpdate().
 		PrivateLinkId("private_link_id").
 		ConfigCustom(preparePrivateLinkCustomConfig()).
 		DoCustom(context.Background())
@@ -66,24 +66,24 @@ func TestPrivateLinkCustomModifyService(t *testing.T) {
 	testutils.AssertEqual(t, interactions[0].Handler, handler)
 	testutils.AssertEqual(t, handler.Interactions, 1)
 
-	assertPrivateLinkModifyCustomResponse(t, response)
+	assertPrivateLinkUpdateCustomResponse(t, response)
 }
 
-func TestPrivateLinkCustomMergedModifyService(t *testing.T) {
+func TestPrivateLinkCustomMergedUpdateService(t *testing.T) {
 	// arrange
 	ftClient, mockClient := testutils.CreateTestClient()
 	handler := mockClient.When(http.MethodPatch, "/v1/private-links/private_link_id").
 	ThenCall(func(req *http.Request) (*http.Response, error) {
 			body := testutils.RequestBodyToJson(t, req)
-			assertPrivateLinkModifyCustomMergedRequest(t, body)
-			response := mock.NewResponse(req, http.StatusOK, preparePrivateLinkModifyMergedResponse())
+			assertPrivateLinkUpdateCustomMergedRequest(t, body)
+			response := mock.NewResponse(req, http.StatusOK, preparePrivateLinkUpdateMergedResponse())
 			return response, nil
 		})
 
 	// act
-	response, err := ftClient.NewPrivateLinkModify().
+	response, err := ftClient.NewPrivateLinkUpdate().
 		PrivateLinkId("private_link_id").
-		Config(preparePrivateLinkModifyConfig()).
+		Config(preparePrivateLinkUpdateConfig()).
 		ConfigCustom(preparePrivateLinkCustomConfig()).
 		DoCustomMerged(context.Background())
 
@@ -98,10 +98,10 @@ func TestPrivateLinkCustomMergedModifyService(t *testing.T) {
 	testutils.AssertEqual(t, interactions[0].Handler, handler)
 	testutils.AssertEqual(t, handler.Interactions, 1)
 
-	assertPrivateLinkModifyCustomMergedResponse(t, response)
+	assertPrivateLinkUpdateCustomMergedResponse(t, response)
 }
 
-func preparePrivateLinkModifyResponse() string {
+func preparePrivateLinkUpdateResponse() string {
 	return `{
   "code": "Success",
   "data": {
@@ -122,7 +122,7 @@ func preparePrivateLinkModifyResponse() string {
 }`
 }
 
-func preparePrivateLinkModifyCustomResponse() string {
+func preparePrivateLinkUpdateCustomResponse() string {
 	return `{
   "code": "Success",
   "data": {
@@ -143,7 +143,7 @@ func preparePrivateLinkModifyCustomResponse() string {
 }`
 }
 
-func preparePrivateLinkModifyMergedResponse() string {
+func preparePrivateLinkUpdateMergedResponse() string {
 	return `{
   "code": "Success",
   "data": {
@@ -165,7 +165,7 @@ func preparePrivateLinkModifyMergedResponse() string {
 }`
 }
 
-func preparePrivateLinkModifyConfig() *privatelink.PrivateLinkConfig {
+func preparePrivateLinkUpdateConfig() *privatelink.PrivateLinkConfig {
 	config := fivetran.NewPrivateLinkConfig()
 	config.ConnectionServiceName("connection_service_name")
 
@@ -181,14 +181,14 @@ func preparePrivateLinkCustomConfig() *map[string]interface{} {
 }
 
 // assert Requests
-func assertPrivateLinkModifyRequest(t *testing.T, request map[string]interface{}) {
+func assertPrivateLinkUpdateRequest(t *testing.T, request map[string]interface{}) {
 	config, ok := request["config"].(map[string]interface{})
 	testutils.AssertEqual(t, ok, true)
 
 	testutils.AssertKey(t, "connection_service_name", config, "connection_service_name")
 }
 
-func assertPrivateLinkModifyCustomRequest(t *testing.T, request map[string]interface{}) {
+func assertPrivateLinkUpdateCustomRequest(t *testing.T, request map[string]interface{}) {
 	config, ok := request["config"].(map[string]interface{})
 
 	testutils.AssertEqual(t, ok, true)
@@ -196,7 +196,7 @@ func assertPrivateLinkModifyCustomRequest(t *testing.T, request map[string]inter
 	testutils.AssertKey(t, "connection_service_name_fake", config, "connection_service_name_fake")
 }
 
-func assertPrivateLinkModifyCustomMergedRequest(t *testing.T, request map[string]interface{}) {
+func assertPrivateLinkUpdateCustomMergedRequest(t *testing.T, request map[string]interface{}) {
 	config, ok := request["config"].(map[string]interface{})
 
 	testutils.AssertEqual(t, ok, true)
@@ -206,7 +206,7 @@ func assertPrivateLinkModifyCustomMergedRequest(t *testing.T, request map[string
 }
 
 // assert Response
-func assertPrivateLinkModifyResponse(t *testing.T, response privatelink.PrivateLinkResponse) {
+func assertPrivateLinkUpdateResponse(t *testing.T, response privatelink.PrivateLinkResponse) {
 	testutils.AssertEqual(t, response.Code, "Success")
 	testutils.AssertEqual(t, response.Data.Id, "private_link_id")
 	testutils.AssertEqual(t, response.Data.Name, "name")
@@ -220,7 +220,7 @@ func assertPrivateLinkModifyResponse(t *testing.T, response privatelink.PrivateL
 	testutils.AssertEqual(t, response.Data.Config.ConnectionServiceName, "connection_service_name")
 }
 
-func assertPrivateLinkModifyCustomResponse(t *testing.T, response privatelink.PrivateLinkCustomResponse) {
+func assertPrivateLinkUpdateCustomResponse(t *testing.T, response privatelink.PrivateLinkCustomResponse) {
 	testutils.AssertEqual(t, response.Code, "Success")
 	testutils.AssertEqual(t, response.Data.Id, "private_link_id")
 	testutils.AssertEqual(t, response.Data.Name, "name")
@@ -235,7 +235,7 @@ func assertPrivateLinkModifyCustomResponse(t *testing.T, response privatelink.Pr
 	testutils.AssertKey(t, "connection_service_name_fake", response.Data.Config, "connection_service_name_fake")
 }
 
-func assertPrivateLinkModifyCustomMergedResponse(t *testing.T, response privatelink.PrivateLinkCustomMergedResponse) {
+func assertPrivateLinkUpdateCustomMergedResponse(t *testing.T, response privatelink.PrivateLinkCustomMergedResponse) {
 	testutils.AssertEqual(t, response.Code, "Success")
 	testutils.AssertEqual(t, response.Data.Id, "private_link_id")
 	testutils.AssertEqual(t, response.Data.Name, "name")

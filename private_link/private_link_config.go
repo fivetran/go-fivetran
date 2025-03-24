@@ -2,8 +2,6 @@ package privatelink
 
 import "github.com/fivetran/go-fivetran/utils"
 
-// PrivateLinkConfig builds Private Link Management, Private Link Config.
-// Ref. https://fivetran.com/docs/rest-api/private-link-management#privatelinketupconfigurations
 type PrivateLinkConfig struct {
     connectionServiceName       *string
     connectionServiceId         *string

@@ -7,8 +7,6 @@ import (
 	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
-// HybridDeploymentAgentReAuthService Regenerates authentication keys for the specified local processing agent.
-// Ref. https://fivetran.com/docs/rest-api/hybrid-deployment-agent-management#regeneratekeys
 type HybridDeploymentAgentReAuthService struct {
 	httputils.HttpService
 	agentId 	*string

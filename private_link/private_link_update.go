@@ -8,34 +8,32 @@ import (
 	"github.com/fivetran/go-fivetran/utils"
 )
 
-// PrivateLinkModifyService implements the Private Link Management, Modify a Private Link Service API.
-// Ref. https://fivetran.com/docs/rest-api/private-link-management#updateaprivatelink
-type PrivateLinkModifyService struct {
+type PrivateLinkUpdateService struct {
 	httputils.HttpService
 	privateLinkId 	  *string
 	config            *PrivateLinkConfig
 	configCustom      *map[string]interface{}
 }
 
-func (s *PrivateLinkModifyService) request() *privateLinkModifyRequest {
+func (s *PrivateLinkUpdateService) request() *privateLinkUpdateRequest {
 	var config interface{}
 
 	if s.config != nil {
 		config = s.config.Request()
 	}
 
-	return &privateLinkModifyRequest{
+	return &privateLinkUpdateRequest{
 		Config:                       config,
 	}
 }
 
-func (s *PrivateLinkModifyService) requestCustom() *privateLinkCustomModifyRequest {
-	return &privateLinkCustomModifyRequest{
+func (s *PrivateLinkUpdateService) requestCustom() *privateLinkCustomUpdateRequest {
+	return &privateLinkCustomUpdateRequest{
 		Config:                       s.configCustom,
 	}
 }
 
-func (s *PrivateLinkModifyService) requestCustomMerged() (*privateLinkCustomModifyRequest, error) {
+func (s *PrivateLinkUpdateService) requestCustomMerged() (*privateLinkCustomUpdateRequest, error) {
 	currentConfig := s.configCustom
 
 	if s.config != nil {
@@ -46,27 +44,27 @@ func (s *PrivateLinkModifyService) requestCustomMerged() (*privateLinkCustomModi
 		}
 	}
 
-	return &privateLinkCustomModifyRequest{
+	return &privateLinkCustomUpdateRequest{
 		Config:                           currentConfig,
 	}, nil
 }
 
-func (s *PrivateLinkModifyService) PrivateLinkId(value string) *PrivateLinkModifyService {
+func (s *PrivateLinkUpdateService) PrivateLinkId(value string) *PrivateLinkUpdateService {
 	s.privateLinkId = &value
 	return s
 }
 
-func (s *PrivateLinkModifyService) Config(value *PrivateLinkConfig) *PrivateLinkModifyService {
+func (s *PrivateLinkUpdateService) Config(value *PrivateLinkConfig) *PrivateLinkUpdateService {
 	s.config = value
 	return s
 }
 
-func (s *PrivateLinkModifyService) ConfigCustom(value *map[string]interface{}) *PrivateLinkModifyService {
+func (s *PrivateLinkUpdateService) ConfigCustom(value *map[string]interface{}) *PrivateLinkUpdateService {
 	s.configCustom = value
 	return s
 }
 
-func (s *PrivateLinkModifyService) do(ctx context.Context, req, response any) error {
+func (s *PrivateLinkUpdateService) do(ctx context.Context, req, response any) error {
 	if s.privateLinkId == nil {
 		return fmt.Errorf("missing required privateLinkId")
 	}
@@ -76,7 +74,7 @@ func (s *PrivateLinkModifyService) do(ctx context.Context, req, response any) er
 	return err
 }
 
-func (s *PrivateLinkModifyService) Do(ctx context.Context) (PrivateLinkResponse, error) {
+func (s *PrivateLinkUpdateService) Do(ctx context.Context) (PrivateLinkResponse, error) {
 	var response PrivateLinkResponse
 
 	err := s.do(ctx, s.request(), &response)
@@ -84,7 +82,7 @@ func (s *PrivateLinkModifyService) Do(ctx context.Context) (PrivateLinkResponse,
 	return response, err
 }
 
-func (s *PrivateLinkModifyService) DoCustom(ctx context.Context) (PrivateLinkCustomResponse, error) {
+func (s *PrivateLinkUpdateService) DoCustom(ctx context.Context) (PrivateLinkCustomResponse, error) {
 	var response PrivateLinkCustomResponse
 
 	err := s.do(ctx, s.requestCustom(), &response)
@@ -92,7 +90,7 @@ func (s *PrivateLinkModifyService) DoCustom(ctx context.Context) (PrivateLinkCus
 	return response, err
 }
 
-func (s *PrivateLinkModifyService) DoCustomMerged(ctx context.Context) (PrivateLinkCustomMergedResponse, error) {
+func (s *PrivateLinkUpdateService) DoCustomMerged(ctx context.Context) (PrivateLinkCustomMergedResponse, error) {
 	var response PrivateLinkCustomMergedResponse
 
 	req, err := s.requestCustomMerged()

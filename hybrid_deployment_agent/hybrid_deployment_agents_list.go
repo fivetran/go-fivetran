@@ -7,8 +7,6 @@ import (
 	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
-// HybridDeploymentAgentListService Returns a list of local processing agents with usage within your Fivetran account.
-// Ref. https://fivetran.com/docs/rest-api/hybrid-deployment-agent-management#listhybriddeploymentagents
 type HybridDeploymentAgentListService struct {
 	httputils.HttpService
 	limit  *int

@@ -8,8 +8,6 @@ import (
 	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
-// HybridDeploymentAgentDeleteService Deletes the specified local processing agent from your Fivetran account.
-// Ref. https://fivetran.com/docs/rest-api/hybrid-deployment-agent-management#deleteahybriddeploymentagent
 type HybridDeploymentAgentDeleteService struct {
 	httputils.HttpService
 	agentId   *string
