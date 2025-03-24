@@ -8,8 +8,6 @@ import (
 	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
-// CertificateConnectorCertificateApproveService implements the Certificate Management, Revoke certificate for connector API.
-// Ref. https://fivetran.com/docs/rest-api/certificates#revokeaconnectorcertificate
 type ConnectorCertificateRevokeService struct {
 	httputils.HttpService
 	connectorID *string

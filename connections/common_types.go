@@ -1,4 +1,4 @@
-package connectors
+package connections
 
 import (
     "time"
@@ -48,7 +48,7 @@ type DetailsWithConfigResponse struct {
     common.CommonResponse
     Data struct {
         DetailsAndSetupTestsResponseDataCommon
-        Config ConnectorConfigResponse `json:"config"`
+        Config ConnectionConfigResponse `json:"config"`
     } `json:"data"`
 }
 
@@ -65,7 +65,7 @@ type DetailsWithCustomMergedConfigResponse struct {
     Data struct {
         DetailsAndSetupTestsResponseDataCommon
         CustomConfig map[string]interface{}  `json:"config"`
-        Config       ConnectorConfigResponse // no mapping here
+        Config       ConnectionConfigResponse // no mapping here
     } `json:"data"`
 }
 
@@ -73,7 +73,7 @@ type DetailsWithConfigNoTestsResponse struct {
     common.CommonResponse
     Data struct {
         DetailsResponseDataCommon
-        Config ConnectorConfigResponse `json:"config"`
+        Config ConnectionConfigResponse `json:"config"`
     } `json:"data"`
 }
 
@@ -90,19 +90,19 @@ type DetailsWithCustomMergedConfigNoTestsResponse struct {
     Data struct {
         DetailsResponseDataCommon
         CustomConfig map[string]interface{}  `json:"config"`
-        Config       ConnectorConfigResponse // no mapping here
+        Config       ConnectionConfigResponse // no mapping here
     } `json:"data"`
 }
 
-type ConnectorSchemaDetailsResponse struct {
+type ConnectionSchemaDetailsResponse struct {
     common.CommonResponse
     Data struct {
         SchemaChangeHandling string                                          `json:"schema_change_handling"`
-        Schemas              map[string]*ConnectorSchemaConfigSchemaResponse `json:"schemas"`
+        Schemas              map[string]*ConnectionSchemaConfigSchemaResponse `json:"schemas"`
     } `json:"data"`
 }
 
-type connectorCreateRequestBase struct {
+type connectionCreateRequestBase struct {
     Service                 *string `json:"service,omitempty"`
     GroupID                 *string `json:"group_id,omitempty"`
     TrustCertificates       *bool   `json:"trust_certificates,omitempty"`
@@ -120,36 +120,36 @@ type connectorCreateRequestBase struct {
     DataDelayThreshold      *int    `json:"data_delay_threshold"`
 }
 
-type connectorCreateRequest struct {
-    connectorCreateRequestBase
+type connectionCreateRequest struct {
+    connectionCreateRequestBase
     Config any `json:"config,omitempty"`
     Auth   any `json:"auth,omitempty"`
 }
 
-type connectorCustomCreateRequest struct {
-    connectorCreateRequestBase
+type connectionCustomCreateRequest struct {
+    connectionCreateRequestBase
     Config *map[string]interface{} `json:"config,omitempty"`
     Auth   *map[string]interface{} `json:"auth,omitempty"`
 }
 
-type connectorSchemaConfigModifyRequest struct {
+type connectionSchemaConfigUpdateRequest struct {
     Enabled *bool                                         `json:"enabled,omitempty"`
-    Tables  map[string]*ConnectorSchemaConfigTableRequest `json:"tables,omitempty"`
+    Tables  map[string]*ConnectionSchemaConfigTableRequest `json:"tables,omitempty"`
 }
 
-type ConnectorColumnConfigListResponse struct {
+type ConnectionColumnConfigListResponse struct {
     common.CommonResponse
     Data struct {
-        Columns map[string]*ConnectorSchemaConfigColumnResponse `json:"columns"`
+        Columns map[string]*ConnectionSchemaConfigColumnResponse `json:"columns"`
     } `json:"data"`
 }
 
-type connectorColumnConfigModifyRequest struct {
+type connectionColumnConfigUpdateRequest struct {
     Enabled *bool `json:"enabled,omitempty"`
     Hashed  *bool `json:"hashed,omitempty"`
 }
 
-type connectorModifyRequestBase struct {
+type connectionUpdateRequestBase struct {
     Paused                  *bool   `json:"paused,omitempty"`
     SyncFrequency           *int    `json:"sync_frequency,omitempty"`
     DailySyncTime           *string `json:"daily_sync_time,omitempty"`
@@ -167,39 +167,39 @@ type connectorModifyRequestBase struct {
     DataDelayThreshold      *int    `json:"data_delay_threshold,omitempty"`
 }
 
-type connectorModifyRequest struct {
-    connectorModifyRequestBase
+type connectionUpdateRequest struct {
+    connectionUpdateRequestBase
     Config any `json:"config,omitempty"`
     Auth   any `json:"auth,omitempty"`
 }
 
-type connectorCustomModifyRequest struct {
-    connectorModifyRequestBase
+type connectionCustomUpdateRequest struct {
+    connectionUpdateRequestBase
     Config *map[string]interface{} `json:"config,omitempty"`
     Auth   *map[string]interface{} `json:"auth,omitempty"`
 }
 
-type connectorSchemaReloadRequest struct {
+type connectionSchemaReloadRequest struct {
     ExcludeMode *string `json:"exclude_mode,omitempty"`
 }
 
-type connectorSchemaConfigUpdateRequest struct {
+type connectionSchemaConfigUpdateRequest struct {
     SchemaChangeHandling *string                                        `json:"schema_change_handling,omitempty"`
-    Schemas              map[string]*ConnectorSchemaConfigSchemaRequest `json:"schemas,omitempty"`
+    Schemas              map[string]*ConnectionSchemaConfigSchemaRequest `json:"schemas,omitempty"`
 }
 
-type connectorSetupTestsRequest struct {
+type connectionSetupTestsRequest struct {
     TrustCertificates *bool `json:"trust_certificates,omitempty"`
     TrustFingerprints *bool `json:"trust_fingerprints,omitempty"`
 }
 
-type connectorTableConfigModifyRequest struct {
+type connectionTableConfigUpdateRequest struct {
     Enabled  *bool                                          `json:"enabled,omitempty"`
     SyncMode *string                                        `json:"sync_mode,omitempty"`
-    Columns  map[string]*ConnectorSchemaConfigColumnRequest `json:"columns,omitempty"`
+    Columns  map[string]*ConnectionSchemaConfigColumnRequest `json:"columns,omitempty"`
 }
 
-type ConnectorsSourceMetadataResponse struct {
+type ConnectionsSourceMetadataResponse struct {
     common.CommonResponse
     Data struct {
         Items []struct {
@@ -215,7 +215,7 @@ type ConnectorsSourceMetadataResponse struct {
     } `json:"data"`
 }
 
-type ConnectorsListResponse struct {
+type ConnectionsListResponse struct {
     common.CommonResponse
     Data struct {
         Items      []DetailsResponseDataCommon `json:"items"`

@@ -1,4 +1,4 @@
-package connectors
+package connections
 
 type FunctionSecret struct {
 	key   *string
