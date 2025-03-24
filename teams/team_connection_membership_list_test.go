@@ -13,18 +13,18 @@ import (
     testutils "github.com/fivetran/go-fivetran/test_utils"
 )
 
-func TestTeamConnectorListServiceDo(t *testing.T) {
+func TestTeamConnectionListServiceDo(t *testing.T) {
 	// arrange
 
 	ftClient, mockClient := testutils.CreateTestClient()
-	handler := mockClient.When(http.MethodGet, "/v1/teams/team_id/connectors").
+	handler := mockClient.When(http.MethodGet, "/v1/teams/team_id/connections").
 		ThenCall(func(req *http.Request) (*http.Response, error) {
-			response := mock.NewResponse(req, http.StatusOK, prepareTeamConnectorListResponse())
+			response := mock.NewResponse(req, http.StatusOK, prepareTeamConnectionListResponse())
 			return response, nil
 		})
 
 	// act
-	response, err := ftClient.NewTeamConnectorMembershipsList().
+	response, err := ftClient.NewTeamConnectionMembershipsList().
 		TeamId("team_id").
 		Do(context.Background())
 
@@ -37,22 +37,22 @@ func TestTeamConnectorListServiceDo(t *testing.T) {
 	testutils.AssertEqual(t, len(interactions), 1)
 	testutils.AssertEqual(t, interactions[0].Handler, handler)
 	testutils.AssertEqual(t, handler.Interactions, 1)
-	assertTeamConnectorListResponse(t, response)
+	assertTeamConnectionListResponse(t, response)
 }
 
-func prepareTeamConnectorListResponse() string {
+func prepareTeamConnectionListResponse() string {
 	return fmt.Sprintf(`{
     		"code": "Success",
     		"data": {
       		"items": [
         		{
-          			"id": "connector_id_1",
-          			"role": "Connector Administrator",
+          			"id": "connection_id_1",
+          			"role": "Connection Administrator",
           			"created_at": "2020-05-25T15:26:47.306509Z"
         		},
         		{
-          			"id": "connector_id_2",
-          			"role": "Connector Reviewer",
+          			"id": "connection_id_2",
+          			"role": "Connection Reviewer",
           			"created_at": "2020-05-25T15:26:47.306509Z"
         		}
       		],
@@ -61,13 +61,13 @@ func prepareTeamConnectorListResponse() string {
 		}`)
 }
 
-func assertTeamConnectorListResponse(t *testing.T, response teams.TeamConnectorMembershipsListResponse) {
+func assertTeamConnectionListResponse(t *testing.T, response teams.TeamConnectionMembershipsListResponse) {
 	testutils.AssertEqual(t, response.Code, "Success")
-	testutils.AssertEqual(t, response.Data.Items[0].ConnectorId, "connector_id_1")
-	testutils.AssertEqual(t, response.Data.Items[0].Role, "Connector Administrator")
+	testutils.AssertEqual(t, response.Data.Items[0].ConnectionId, "connection_id_1")
+	testutils.AssertEqual(t, response.Data.Items[0].Role, "Connection Administrator")
 	testutils.AssertEqual(t, response.Data.Items[0].CreatedAt, "2020-05-25T15:26:47.306509Z")
 
-	testutils.AssertEqual(t, response.Data.Items[1].ConnectorId, "connector_id_2")
-	testutils.AssertEqual(t, response.Data.Items[1].Role, "Connector Reviewer")
+	testutils.AssertEqual(t, response.Data.Items[1].ConnectionId, "connection_id_2")
+	testutils.AssertEqual(t, response.Data.Items[1].Role, "Connection Reviewer")
 	testutils.AssertEqual(t, response.Data.Items[1].CreatedAt, "2020-05-25T15:26:47.306509Z")
 }

@@ -7,8 +7,6 @@ import (
 	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
-// TeamGroupMembershipDetailsService implements the Team Management, Retrieve group membership
-// Ref. https://fivetran.com/docs/rest-api/teams#retrievegroupmembership
 type TeamGroupMembershipDetailsService struct {
 	httputils.HttpService
 	teamId  *string

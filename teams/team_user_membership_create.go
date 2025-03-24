@@ -7,8 +7,6 @@ import (
 	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
-// TeamUserMembershipCreateService implements the Team Management, Add a user to a team
-// Ref. https://fivetran.com/docs/rest-api/teams#addausertoateam
 type TeamUserMembershipCreateService struct {
 	httputils.HttpService
 	teamId *string

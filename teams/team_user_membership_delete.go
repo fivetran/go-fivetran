@@ -8,8 +8,6 @@ import (
 	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
-// TeamUserMembershipDeleteService implements the Team Management, Delete a user from a team
-// Ref. https://fivetran.com/docs/rest-api/teams#deleteauserfromateam
 type TeamUserMembershipDeleteService struct {
 	httputils.HttpService
 	teamId *string

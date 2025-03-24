@@ -8,8 +8,6 @@ import (
 	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
-// TeamRoleDeleteService implements the Team Management, Delete team role in account
-// Ref. https://fivetran.com/docs/rest-api/teams#deleteteamroleinaccount
 type TeamsDeleteRoleInAccountService struct {
 	httputils.HttpService
 	teamId *string

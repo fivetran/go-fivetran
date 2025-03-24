@@ -57,7 +57,7 @@ func TestTeamUserDeleteServiceDoMissingId(t *testing.T) {
 	testutils.AssertEqual(t, err, expectedError)
 }
 
-func TestTeamUserDeleteServiceDoMissingConnectorId(t *testing.T) {
+func TestTeamUserDeleteServiceDoMissingConnectionId(t *testing.T) {
 	// Create a test client
 	ftClient, _ := testutils.CreateTestClient()
 

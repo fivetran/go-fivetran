@@ -13,22 +13,22 @@ import (
     testutils "github.com/fivetran/go-fivetran/test_utils"
 )
 
-func TestNewTeamConnectorModify(t *testing.T) {
+func TestNewTeamUserUpdate(t *testing.T) {
 	// arrange
 	ftClient, mockClient := testutils.CreateTestClient()
-	handler := mockClient.When(http.MethodPatch, "/v1/teams/team_id/connectors/connector_id").ThenCall(
+	handler := mockClient.When(http.MethodPatch, "/v1/teams/team_id/users/user_id").ThenCall(
 
 		func(req *http.Request) (*http.Response, error) {
 			body := testutils.RequestBodyToJson(t, req)
-			assertTeamConnectorModifyRequest(t, body)
-			response := mock.NewResponse(req, http.StatusOK, prepareTeamConnectorModifyResponse())
+			assertTeamUserUpdateRequest(t, body)
+			response := mock.NewResponse(req, http.StatusOK, prepareTeamUserUpdateResponse())
 			return response, nil
 		})
 
 	// act
-	response, err := ftClient.NewTeamConnectorMembershipModify().
+	response, err := ftClient.NewTeamUserMembershipUpdate().
 		TeamId("team_id").
-		ConnectorId("connector_id").
+		UserId("user_id").
 		Role("Changed role").
 		Do(context.Background())
 
@@ -43,23 +43,23 @@ func TestNewTeamConnectorModify(t *testing.T) {
 	testutils.AssertEqual(t, interactions[0].Handler, handler)
 	testutils.AssertEqual(t, handler.Interactions, 1)
 
-	assertTeamConnectorModifyResponse(t, response)
+	assertTeamUserUpdateResponse(t, response)
 }
 
-func prepareTeamConnectorModifyResponse() string {
+func prepareTeamUserUpdateResponse() string {
 	return fmt.Sprintf(
 		`{
             "code": "Success",
-            "message": "Connector membership has been updated"
+            "message": "User role has been updated"
         }`,
 	)
 }
 
-func assertTeamConnectorModifyRequest(t *testing.T, request map[string]interface{}) {
+func assertTeamUserUpdateRequest(t *testing.T, request map[string]interface{}) {
 	testutils.AssertKey(t, "role", request, "Changed role")
 }
 
-func assertTeamConnectorModifyResponse(t *testing.T, response common.CommonResponse) {
+func assertTeamUserUpdateResponse(t *testing.T, response common.CommonResponse) {
 	testutils.AssertEqual(t, response.Code, "Success")
 	testutils.AssertNotEmpty(t, response.Message)
 }

@@ -8,8 +8,6 @@ import (
 	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
-// TeamGroupMembershipDeleteService implements the Team Management, Delete group membership
-// Ref. https://fivetran.com/docs/rest-api/teams#deletegroupmembership
 type TeamGroupMembershipDeleteService struct {
 	httputils.HttpService
 	teamId  *string

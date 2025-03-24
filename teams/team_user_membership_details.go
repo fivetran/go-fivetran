@@ -7,8 +7,6 @@ import (
 	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
-// TeamUserMembershipDetailsService implements the Team Management, retrieve Team Details.
-// Ref. https://fivetran.com/docs/rest-api/teams#retrieveusermembershipinateam
 type TeamUserMembershipDetailsService struct {
 	httputils.HttpService
 	teamId *string

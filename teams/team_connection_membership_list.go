@@ -7,36 +7,36 @@ import (
 	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
-type TeamUserMembershipsListService struct {
+type TeamConnectionMembershipsListService struct {
 	httputils.HttpService
 	teamId *string
 	limit  *int
 	cursor *string
 }
 
-func (s *TeamUserMembershipsListService) TeamId(value string) *TeamUserMembershipsListService {
+func (s *TeamConnectionMembershipsListService) TeamId(value string) *TeamConnectionMembershipsListService {
 	s.teamId = &value
 	return s
 }
 
-func (s *TeamUserMembershipsListService) Limit(value int) *TeamUserMembershipsListService {
+func (s *TeamConnectionMembershipsListService) Limit(value int) *TeamConnectionMembershipsListService {
 	s.limit = &value
 	return s
 }
 
-func (s *TeamUserMembershipsListService) Cursor(value string) *TeamUserMembershipsListService {
+func (s *TeamConnectionMembershipsListService) Cursor(value string) *TeamConnectionMembershipsListService {
 	s.cursor = &value
 	return s
 }
 
-func (s *TeamUserMembershipsListService) Do(ctx context.Context) (TeamUserMembershipsListResponse, error) {
-	var response TeamUserMembershipsListResponse
+func (s *TeamConnectionMembershipsListService) Do(ctx context.Context) (TeamConnectionMembershipsListResponse, error) {
+	var response TeamConnectionMembershipsListResponse
 
 	if s.teamId == nil {
 		return response, fmt.Errorf("missing required teamId")
 	}
 
-	url := fmt.Sprintf("/teams/%v/users", *s.teamId)
+	url := fmt.Sprintf("/teams/%v/connections", *s.teamId)
 	var queries map[string]string = nil
 	if s.cursor != nil || s.limit != nil {
 		queries = make(map[string]string)

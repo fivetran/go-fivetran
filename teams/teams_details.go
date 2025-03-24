@@ -7,8 +7,6 @@ import (
 	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
-// TeamsDetailsService implements the Team Management, retrieve Team Details.
-// Ref. https://fivetran.com/docs/rest-api/teams#retrieveteamdetails
 type TeamsDetailsService struct {
 	httputils.HttpService
 	teamId *string

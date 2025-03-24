@@ -13,20 +13,20 @@ import (
     testutils "github.com/fivetran/go-fivetran/test_utils"
 )
 
-func TestNewTeamGroupModify(t *testing.T) {
+func TestNewTeamGroupUpdate(t *testing.T) {
 	// arrange
 	ftClient, mockClient := testutils.CreateTestClient()
 	handler := mockClient.When(http.MethodPatch, "/v1/teams/team_id/groups/group_id").ThenCall(
 
 		func(req *http.Request) (*http.Response, error) {
 			body := testutils.RequestBodyToJson(t, req)
-			assertTeamGroupModifyRequest(t, body)
-			response := mock.NewResponse(req, http.StatusOK, prepareTeamGroupModifyResponse())
+			assertTeamGroupUpdateRequest(t, body)
+			response := mock.NewResponse(req, http.StatusOK, prepareTeamGroupUpdateResponse())
 			return response, nil
 		})
 
 	// act
-	response, err := ftClient.NewTeamGroupMembershipModify().
+	response, err := ftClient.NewTeamGroupMembershipUpdate().
 		TeamId("team_id").
 		GroupId("group_id").
 		Role("Changed role").
@@ -43,10 +43,10 @@ func TestNewTeamGroupModify(t *testing.T) {
 	testutils.AssertEqual(t, interactions[0].Handler, handler)
 	testutils.AssertEqual(t, handler.Interactions, 1)
 
-	assertTeamGroupModifyResponse(t, response)
+	assertTeamGroupUpdateResponse(t, response)
 }
 
-func prepareTeamGroupModifyResponse() string {
+func prepareTeamGroupUpdateResponse() string {
 	return fmt.Sprintf(
 		`{
             "code": "Success",
@@ -55,11 +55,11 @@ func prepareTeamGroupModifyResponse() string {
 	)
 }
 
-func assertTeamGroupModifyRequest(t *testing.T, request map[string]interface{}) {
+func assertTeamGroupUpdateRequest(t *testing.T, request map[string]interface{}) {
 	testutils.AssertKey(t, "role", request, "Changed role")
 }
 
-func assertTeamGroupModifyResponse(t *testing.T, response common.CommonResponse) {
+func assertTeamGroupUpdateResponse(t *testing.T, response common.CommonResponse) {
 	testutils.AssertEqual(t, response.Code, "Success")
 	testutils.AssertNotEmpty(t, response.Message)
 }

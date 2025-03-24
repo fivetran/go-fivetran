@@ -14,26 +14,26 @@ import (
 )
 
 const (
-	TEAM_CONNECTOR_ROLE = "Connector Collaborator"
+	TEAM_CONNECTION_ROLE = "Connection Collaborator"
 )
 
-func TestNewTeamConnectorCreate(t *testing.T) {
+func TestNewTeamConnectionCreate(t *testing.T) {
 	// arrange
 	ftClient, mockClient := testutils.CreateTestClient()
-	handler := mockClient.When(http.MethodPost, "/v1/teams/team_id/connectors").ThenCall(
+	handler := mockClient.When(http.MethodPost, "/v1/teams/team_id/connections").ThenCall(
 
 		func(req *http.Request) (*http.Response, error) {
 			body := testutils.RequestBodyToJson(t, req)
-			assertTeamConnectorCreateRequest(t, body)
-			response := mock.NewResponse(req, http.StatusCreated, prepareTeamConnectorCreateResponse())
+			assertTeamConnectionCreateRequest(t, body)
+			response := mock.NewResponse(req, http.StatusCreated, prepareTeamConnectionCreateResponse())
 			return response, nil
 		})
 
 	// act
-	response, err := ftClient.NewTeamConnectorMembershipCreate().
+	response, err := ftClient.NewTeamConnectionMembershipCreate().
 		TeamId("team_id").
-		ConnectorId("connector_id").
-		Role(TEAM_CONNECTOR_ROLE).
+		ConnectionId("connection_id").
+		Role(TEAM_CONNECTION_ROLE).
 		Do(context.Background())
 
 	if err != nil {
@@ -47,33 +47,33 @@ func TestNewTeamConnectorCreate(t *testing.T) {
 	testutils.AssertEqual(t, interactions[0].Handler, handler)
 	testutils.AssertEqual(t, handler.Interactions, 1)
 
-	assertTeamConnectorCreateResponse(t, response)
+	assertTeamConnectionCreateResponse(t, response)
 }
 
-func prepareTeamConnectorCreateResponse() string {
+func prepareTeamConnectionCreateResponse() string {
 	return fmt.Sprintf(
 		`{
             "code": "Created",
-            "message": "Connector membership has been created",
+            "message": "Connection membership has been created",
             "data": {
-                "id": "connector_id",
+                "id": "connection_id",
                 "role": "%v",
                 "created_at": "2021-09-29T10:50:51.397153Z"
             }
         }`,
-		TEAM_CONNECTOR_ROLE,
+		TEAM_CONNECTION_ROLE,
 	)
 }
 
-func assertTeamConnectorCreateRequest(t *testing.T, request map[string]interface{}) {
-	testutils.AssertKey(t, "id", request, "connector_id")
-	testutils.AssertKey(t, "role", request, TEAM_CONNECTOR_ROLE)
+func assertTeamConnectionCreateRequest(t *testing.T, request map[string]interface{}) {
+	testutils.AssertKey(t, "id", request, "connection_id")
+	testutils.AssertKey(t, "role", request, TEAM_CONNECTION_ROLE)
 }
 
-func assertTeamConnectorCreateResponse(t *testing.T, response teams.TeamConnectorMembershipCreateResponse) {
+func assertTeamConnectionCreateResponse(t *testing.T, response teams.TeamConnectionMembershipCreateResponse) {
 	testutils.AssertEqual(t, response.Code, "Created")
 	testutils.AssertNotEmpty(t, response.Message)
-	testutils.AssertEqual(t, response.Data.ConnectorId, "connector_id")
-	testutils.AssertEqual(t, response.Data.Role, TEAM_CONNECTOR_ROLE)
+	testutils.AssertEqual(t, response.Data.ConnectionId, "connection_id")
+	testutils.AssertEqual(t, response.Data.Role, TEAM_CONNECTION_ROLE)
 	testutils.AssertNotEmpty(t, response.Data.CreatedAt)
 }

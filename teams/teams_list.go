@@ -7,8 +7,6 @@ import (
 	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
-// TeamsListService implements the Team Management, retrieve List all Teams.
-// Ref. https://fivetran.com/docs/rest-api/teams#listallteams
 type TeamsListService struct {
 	httputils.HttpService
 	limit  *int

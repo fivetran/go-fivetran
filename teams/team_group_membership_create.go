@@ -7,8 +7,6 @@ import (
 	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
-// TeamGroupMembershipCreateService implements the Team Management, Add group membership
-// Ref. https://fivetran.com/docs/rest-api/teams#addgroupmembership
 type TeamGroupMembershipCreateService struct {
 	httputils.HttpService
 	teamId  *string

@@ -13,20 +13,20 @@ import (
     testutils "github.com/fivetran/go-fivetran/test_utils"
 )
 
-func TestNewTeamModify(t *testing.T) {
+func TestNewTeamUpdate(t *testing.T) {
 	// arrange
 	ftClient, mockClient := testutils.CreateTestClient()
 	handler := mockClient.When(http.MethodPatch, "/v1/teams/clarification_expand").ThenCall(
 
 		func(req *http.Request) (*http.Response, error) {
 			body := testutils.RequestBodyToJson(t, req)
-			assertTeamModifyRequest(t, body)
-			response := mock.NewResponse(req, http.StatusOK, prepareTeamModifyResponse())
+			assertTeamUpdateRequest(t, body)
+			response := mock.NewResponse(req, http.StatusOK, prepareTeamUpdateResponse())
 			return response, nil
 		})
 
 	// act
-	response, err := ftClient.NewTeamsModify().
+	response, err := ftClient.NewTeamsUpdate().
 		TeamId("clarification_expand").
 		Description("Finance Team Updated").
 		Do(context.Background())
@@ -42,10 +42,10 @@ func TestNewTeamModify(t *testing.T) {
 	testutils.AssertEqual(t, interactions[0].Handler, handler)
 	testutils.AssertEqual(t, handler.Interactions, 1)
 
-	assertTeamModifyResponse(t, response)
+	assertTeamUpdateResponse(t, response)
 }
 
-func prepareTeamModifyResponse() string {
+func prepareTeamUpdateResponse() string {
 	return fmt.Sprintf(
 		`{
             "code": "Success",
@@ -63,11 +63,11 @@ func prepareTeamModifyResponse() string {
 	)
 }
 
-func assertTeamModifyRequest(t *testing.T, request map[string]interface{}) {
+func assertTeamUpdateRequest(t *testing.T, request map[string]interface{}) {
 	testutils.AssertKey(t, "description", request, "Finance Team Updated")
 }
 
-func assertTeamModifyResponse(t *testing.T, response teams.TeamsModifyResponse) {
+func assertTeamUpdateResponse(t *testing.T, response teams.TeamsUpdateResponse) {
 	testutils.AssertEqual(t, response.Code, "Success")
 	testutils.AssertNotEmpty(t, response.Message)
 
