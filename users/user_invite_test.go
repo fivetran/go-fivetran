@@ -25,18 +25,18 @@ const (
 	EXPECTED_USER_MODIFY_EMAIL         = "john.white@mycompany.com"
 )
 
-func TestUserModifyServiceDo(t *testing.T) {
+func TestUserUpdateServiceDo(t *testing.T) {
 	ftClient, mockClient := testutils.CreateTestClient()
 
 	handler := mockClient.When(http.MethodPatch, fmt.Sprintf("/v1/users/%s", EXPECTED_USER_MODIFY_USER_ID)).ThenCall(
 		func(req *http.Request) (*http.Response, error) {
-			responseData := prepareUserModifyResponse()
+			responseData := prepareUserUpdateResponse()
 			response := mock.NewResponse(req, http.StatusOK, responseData)
 			return response, nil
 		},
 	)
 
-	service := ftClient.NewUserModify().
+	service := ftClient.NewUserUpdate().
 		UserID(EXPECTED_USER_MODIFY_USER_ID).
 		GivenName(EXPECTED_USER_MODIFY_GIVEN_NAME).
 		FamilyName(EXPECTED_USER_MODIFY_FAMILY_NAME).
@@ -50,8 +50,8 @@ func TestUserModifyServiceDo(t *testing.T) {
 		t.Error(err)
 	}
 
-	expectedResponse := prepareExpectedUserModifyResponse()
-	assertUserModifyResponse(t, response, expectedResponse)
+	expectedResponse := prepareExpectedUserUpdateResponse()
+	assertUserUpdateResponse(t, response, expectedResponse)
 
 	interactions := mockClient.Interactions()
 	testutils.AssertEqual(t, len(interactions), 1)
@@ -59,7 +59,7 @@ func TestUserModifyServiceDo(t *testing.T) {
 	testutils.AssertEqual(t, handler.Interactions, 1)
 }
 
-func prepareUserModifyResponse() string {
+func prepareUserUpdateResponse() string {
 	return fmt.Sprintf(`{
 		"code": "%s",
 		"message": "User has been invited to the account",
@@ -86,7 +86,7 @@ func prepareUserModifyResponse() string {
 		EXPECTED_USER_MODIFY_ROLE)
 }
 
-func prepareExpectedUserModifyResponse() users.UserDetailsResponse {
+func prepareExpectedUserUpdateResponse() users.UserDetailsResponse {
 	var verifyFlag = false
 	return users.UserDetailsResponse{
 		CommonResponse: common.CommonResponse{
@@ -107,7 +107,7 @@ func prepareExpectedUserModifyResponse() users.UserDetailsResponse {
 	}
 }
 
-func assertUserModifyResponse(t *testing.T, actual, expected users.UserDetailsResponse) {
+func assertUserUpdateResponse(t *testing.T, actual, expected users.UserDetailsResponse) {
 	testutils.AssertEqual(t, actual.Code, expected.Code)
 	testutils.AssertEqual(t, actual.Message, expected.Message)
 	testutils.AssertEqual(t, actual.Data.ID, expected.Data.ID)

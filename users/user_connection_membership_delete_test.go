@@ -13,17 +13,17 @@ import (
     testutils "github.com/fivetran/go-fivetran/test_utils"
 )
 
-func TestUserGroupDeleteServiceDo(t *testing.T) {
+func TestUserConnectionDeleteServiceDo(t *testing.T) {
 	// arrange
 	ftClient, mockClient := testutils.CreateTestClient()
-	handler := mockClient.When(http.MethodDelete, "/v1/users/user_id/groups/group_id").ThenCall(
+	handler := mockClient.When(http.MethodDelete, "/v1/users/user_id/connections/connection_id").ThenCall(
 		func(req *http.Request) (*http.Response, error) {
-			response := mock.NewResponse(req, http.StatusOK, `{"code": "Success", "message": "Group membership has been deleted"}`)
+			response := mock.NewResponse(req, http.StatusOK, `{"code": "Success", "message": "Connection membership has been deleted"}`)
 			return response, nil
 		},
 	)
 
-	service := ftClient.NewUserGroupMembershipDelete().UserId("user_id").GroupId("group_id")
+	service := ftClient.NewUserConnectionMembershipDelete().UserId("user_id").ConnectionId("connection_id")
 
 	// act
 	response, err := service.Do(context.Background())
@@ -33,7 +33,7 @@ func TestUserGroupDeleteServiceDo(t *testing.T) {
 		t.Error(err)
 	}
 
-	assertUserGroupDeleteResponse(t, response, "Success", "Group membership has been deleted")
+	assertUserConnectionDeleteResponse(t, response, "Success", "Connection membership has been deleted")
 
 	// Check that the expected interactions with the mock client occurred
 	interactions := mockClient.Interactions()
@@ -42,12 +42,12 @@ func TestUserGroupDeleteServiceDo(t *testing.T) {
 	testutils.AssertEqual(t, handler.Interactions, 1)
 }
 
-func TestUserGroupDeleteServiceDoMissingId(t *testing.T) {
+func TestUserConnectionDeleteServiceDoMissingId(t *testing.T) {
 	// Create a test client
 	ftClient, _ := testutils.CreateTestClient()
 
 	// Create the UserDeleteService without setting the User ID
-	service := ftClient.NewUserGroupMembershipDelete()
+	service := ftClient.NewUserConnectionMembershipDelete()
 
 	// Call the Do method to execute the request
 	_, err := service.Do(context.Background())
@@ -57,21 +57,21 @@ func TestUserGroupDeleteServiceDoMissingId(t *testing.T) {
 	testutils.AssertEqual(t, err, expectedError)
 }
 
-func TestUserGroupDeleteServiceDoMissingConnectionId(t *testing.T) {
+func TestUserConnectionDeleteServiceDoMissingConnectionId(t *testing.T) {
 	// Create a test client
 	ftClient, _ := testutils.CreateTestClient()
 
-	service := ftClient.NewUserGroupMembershipDelete().UserId("user_id")
+	service := ftClient.NewUserConnectionMembershipDelete().UserId("user_id")
 
 	// Call the Do method to execute the request
 	_, err := service.Do(context.Background())
 
 	// Check for expected error
-	expectedError := fmt.Errorf("missing required groupId")
+	expectedError := fmt.Errorf("missing required connectionId")
 	testutils.AssertEqual(t, err, expectedError)
 }
 
-func assertUserGroupDeleteResponse(t *testing.T, response common.CommonResponse, code string, massage string) {
+func assertUserConnectionDeleteResponse(t *testing.T, response common.CommonResponse, code string, massage string) {
 	testutils.AssertEqual(t, response.Code, code)
 	testutils.AssertEqual(t, response.Message, massage)
 }

@@ -7,10 +7,10 @@ import (
 	testutils "github.com/fivetran/go-fivetran/test_utils"
 )
 
-func TestNewTeamsModifyE2E(t *testing.T) {
+func TestNewTeamsUpdateE2E(t *testing.T) {
 	teamId := testutils.CreateTeam(t)
 
-	modified, err := testutils.Client.NewTeamsModify().
+	modified, err := testutils.Client.NewTeamsUpdate().
 		TeamId(teamId).
 		Name("test_team").
 		Description("test_description_2").

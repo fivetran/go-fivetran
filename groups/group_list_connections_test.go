@@ -15,20 +15,20 @@ import (
 )
 
 const (
-	LIST_CONNECTORS_ID                 = "iodize_impressive"
-	LIST_CONNECTORS_GROUP_ID           = "projected_sickle"
-	LIST_CONNECTORS_SERVICE            = "salesforce"
-	LIST_CONNECTORS_SERVICE_VERSION    = 1
-	LIST_CONNECTORS_SCHEMA             = "salesforce"
-	LIST_CONNECTORS_CONNECTED_BY       = "concerning_batch"
-	LIST_CONNECTORS_CREATED_AT         = "2018-07-21T22:55:21.724201Z"
-	LIST_CONNECTORS_SUCCEEDED_AT       = "2018-12-26T17:58:18.245Z"
-	LIST_CONNECTORS_FAILED_AT          = "2018-08-24T15:24:58.872491Z"
-	LIST_CONNECTORS_SYNC_FREQUENCY     = 60
-	LIST_CONNECTORS_SETUP_STATE        = "connected"
-	LIST_CONNECTORS_SYNC_STATE         = "paused"
-	LIST_CONNECTORS_UPDATE_STATE       = "delayed"
-	LIST_CONNECTORS_IS_HISTORICAL_SYNC = false
+	LIST_CONNECTIONS_ID                 = "iodize_impressive"
+	LIST_CONNECTIONS_GROUP_ID           = "projected_sickle"
+	LIST_CONNECTIONS_SERVICE            = "salesforce"
+	LIST_CONNECTIONS_SERVICE_VERSION    = 1
+	LIST_CONNECTIONS_SCHEMA             = "salesforce"
+	LIST_CONNECTIONS_CONNECTED_BY       = "concerning_batch"
+	LIST_CONNECTIONS_CREATED_AT         = "2018-07-21T22:55:21.724201Z"
+	LIST_CONNECTIONS_SUCCEEDED_AT       = "2018-12-26T17:58:18.245Z"
+	LIST_CONNECTIONS_FAILED_AT          = "2018-08-24T15:24:58.872491Z"
+	LIST_CONNECTIONS_SYNC_FREQUENCY     = 60
+	LIST_CONNECTIONS_SETUP_STATE        = "connected"
+	LIST_CONNECTIONS_SYNC_STATE         = "paused"
+	LIST_CONNECTIONS_UPDATE_STATE       = "delayed"
+	LIST_CONNECTIONS_IS_HISTORICAL_SYNC = false
 )
 
 func TestGroupListConnectionsServiceDo(t *testing.T) {
@@ -94,20 +94,20 @@ func prepareGroupListConnectionsResponse() string {
 				"next_cursor": "eyJza2lwIjoxfQ"
 			}		
 			}`,
-		LIST_CONNECTORS_ID,
-		LIST_CONNECTORS_GROUP_ID,
-		LIST_CONNECTORS_SERVICE,
-		LIST_CONNECTORS_SERVICE_VERSION,
-		LIST_CONNECTORS_SCHEMA,
-		LIST_CONNECTORS_CONNECTED_BY,
-		LIST_CONNECTORS_CREATED_AT,
-		LIST_CONNECTORS_SUCCEEDED_AT,
-		LIST_CONNECTORS_FAILED_AT,
-		LIST_CONNECTORS_SYNC_FREQUENCY,
-		LIST_CONNECTORS_SETUP_STATE,
-		LIST_CONNECTORS_SYNC_STATE,
-		LIST_CONNECTORS_UPDATE_STATE,
-		LIST_CONNECTORS_IS_HISTORICAL_SYNC,
+		LIST_CONNECTIONS_ID,
+		LIST_CONNECTIONS_GROUP_ID,
+		LIST_CONNECTIONS_SERVICE,
+		LIST_CONNECTIONS_SERVICE_VERSION,
+		LIST_CONNECTIONS_SCHEMA,
+		LIST_CONNECTIONS_CONNECTED_BY,
+		LIST_CONNECTIONS_CREATED_AT,
+		LIST_CONNECTIONS_SUCCEEDED_AT,
+		LIST_CONNECTIONS_FAILED_AT,
+		LIST_CONNECTIONS_SYNC_FREQUENCY,
+		LIST_CONNECTIONS_SETUP_STATE,
+		LIST_CONNECTIONS_SYNC_STATE,
+		LIST_CONNECTIONS_UPDATE_STATE,
+		LIST_CONNECTIONS_IS_HISTORICAL_SYNC,
 	)
 	return value
 }
@@ -118,20 +118,20 @@ func assertGroupListConnectionsResponse(t *testing.T, response groups.GroupListC
 	testutils.AssertEqual(t, len(response.Data.Items), 1)
 	item := response.Data.Items[0]
 
-	testutils.AssertEqual(t, item.ID, LIST_CONNECTORS_ID)
-	testutils.AssertEqual(t, item.GroupID, LIST_CONNECTORS_GROUP_ID)
-	testutils.AssertEqual(t, item.Service, LIST_CONNECTORS_SERVICE)
-	testutils.AssertEqual(t, *item.ServiceVersion, LIST_CONNECTORS_SERVICE_VERSION)
-	testutils.AssertEqual(t, item.Schema, LIST_CONNECTORS_SCHEMA)
-	testutils.AssertEqual(t, item.ConnectedBy, LIST_CONNECTORS_CONNECTED_BY)
-	testutils.AssertTimeEqual(t, item.CreatedAt, LIST_CONNECTORS_CREATED_AT)
-	testutils.AssertTimeEqual(t, item.SucceededAt, LIST_CONNECTORS_SUCCEEDED_AT)
-	testutils.AssertTimeEqual(t, item.FailedAt, LIST_CONNECTORS_FAILED_AT)
-	testutils.AssertEqual(t, *item.SyncFrequency, LIST_CONNECTORS_SYNC_FREQUENCY)
-	testutils.AssertEqual(t, *item.Status.IsHistoricalSync, LIST_CONNECTORS_IS_HISTORICAL_SYNC)
-	testutils.AssertEqual(t, item.Status.SetupState, LIST_CONNECTORS_SETUP_STATE)
-	testutils.AssertEqual(t, item.Status.SyncState, LIST_CONNECTORS_SYNC_STATE)
+	testutils.AssertEqual(t, item.ID, LIST_CONNECTIONS_ID)
+	testutils.AssertEqual(t, item.GroupID, LIST_CONNECTIONS_GROUP_ID)
+	testutils.AssertEqual(t, item.Service, LIST_CONNECTIONS_SERVICE)
+	testutils.AssertEqual(t, *item.ServiceVersion, LIST_CONNECTIONS_SERVICE_VERSION)
+	testutils.AssertEqual(t, item.Schema, LIST_CONNECTIONS_SCHEMA)
+	testutils.AssertEqual(t, item.ConnectedBy, LIST_CONNECTIONS_CONNECTED_BY)
+	testutils.AssertTimeEqual(t, item.CreatedAt, LIST_CONNECTIONS_CREATED_AT)
+	testutils.AssertTimeEqual(t, item.SucceededAt, LIST_CONNECTIONS_SUCCEEDED_AT)
+	testutils.AssertTimeEqual(t, item.FailedAt, LIST_CONNECTIONS_FAILED_AT)
+	testutils.AssertEqual(t, *item.SyncFrequency, LIST_CONNECTIONS_SYNC_FREQUENCY)
+	testutils.AssertEqual(t, *item.Status.IsHistoricalSync, LIST_CONNECTIONS_IS_HISTORICAL_SYNC)
+	testutils.AssertEqual(t, item.Status.SetupState, LIST_CONNECTIONS_SETUP_STATE)
+	testutils.AssertEqual(t, item.Status.SyncState, LIST_CONNECTIONS_SYNC_STATE)
 	testutils.AssertEqual(t, item.Status.Tasks, []common.CommonResponse{})
-	testutils.AssertEqual(t, item.Status.UpdateState, LIST_CONNECTORS_UPDATE_STATE)
+	testutils.AssertEqual(t, item.Status.UpdateState, LIST_CONNECTIONS_UPDATE_STATE)
 	testutils.AssertEqual(t, item.Status.Warnings, []common.CommonResponse{})
 }
