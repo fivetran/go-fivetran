@@ -32,10 +32,10 @@ func (s *TeamConnectionMembershipDeleteService) Do(ctx context.Context) (common.
 	}
 
 	if s.connectionId == nil {
-		return response, fmt.Errorf("missing required ConnectionId")
+		return response, fmt.Errorf("missing required connectionId")
 	}
 
-	url := fmt.Sprintf("/teams/%v/Connections/%v", *s.teamId, *s.connectionId)
+	url := fmt.Sprintf("/teams/%v/connections/%v", *s.teamId, *s.connectionId)
 	err := s.HttpService.Do(ctx, "DELETE", url, nil, nil, 200, &response)
 	return response, err
 }

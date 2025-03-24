@@ -20,7 +20,7 @@ func TestUserConnectionMembershipsListE2E(t *testing.T) {
 
 	testutils.AssertEqual(t, result.Code, "Success")
 	testutils.AssertEqual(t, result.Data.Items[0].ConnectionId, ConnectionId)
-	testutils.AssertEqual(t, result.Data.Items[0].Role, "Connection Administrator")
+	testutils.AssertEqual(t, result.Data.Items[0].Role, "Connector Administrator")
 	testutils.AssertNotEmpty(t, result.Data.Items[0].CreatedAt)
 
 	t.Cleanup(func() {

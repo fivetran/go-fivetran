@@ -757,7 +757,7 @@ func CreateTeamConnection(t *testing.T, teamId string, connectionId string) {
     created, err := Client.NewTeamConnectionMembershipCreate().
         TeamId(teamId).
         ConnectionId(connectionId).
-        Role("Connection Administrator").
+        Role("Connector Administrator").
         Do(context.Background())
 
     if err != nil {
@@ -847,7 +847,7 @@ func CreateUserConnection(t *testing.T, userId string, connectionId string) {
     created, err := Client.NewUserConnectionMembershipCreate().
         UserId(userId).
         ConnectionId(connectionId).
-        Role("Connection Administrator").
+        Role("Connector Administrator").
         Do(context.Background())
 
     if err != nil {

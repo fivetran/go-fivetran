@@ -47,7 +47,7 @@ func prepareUserConnectionListResponse() string {
       		"items": [
         		{
           			"id": "connection_id_1",
-          			"role": "Connection Administrator",
+          			"role": "Connector Administrator",
           			"created_at": "2020-05-25T15:26:47.306509Z"
         		},
         		{
@@ -64,7 +64,7 @@ func prepareUserConnectionListResponse() string {
 func assertUserConnectionListResponse(t *testing.T, response users.UserConnectionMembershipsListResponse) {
 	testutils.AssertEqual(t, response.Code, "Success")
 	testutils.AssertEqual(t, response.Data.Items[0].ConnectionId, "connection_id_1")
-	testutils.AssertEqual(t, response.Data.Items[0].Role, "Connection Administrator")
+	testutils.AssertEqual(t, response.Data.Items[0].Role, "Connector Administrator")
 	testutils.AssertEqual(t, response.Data.Items[0].CreatedAt, "2020-05-25T15:26:47.306509Z")
 
 	testutils.AssertEqual(t, response.Data.Items[1].ConnectionId, "connection_id_2")

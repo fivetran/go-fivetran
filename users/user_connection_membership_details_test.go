@@ -46,7 +46,7 @@ func prepareUserConnectionDetailsResponse() string {
     		"code": "Success",
     		"data": {
           		"id": "connection_id",
-          		"role": "Connection Administrator",
+          		"role": "Connector Administrator",
           		"created_at": "2020-05-25T15:26:47.306509Z"
     		}
 		}`)
@@ -55,6 +55,6 @@ func prepareUserConnectionDetailsResponse() string {
 func assertUserConnectionDetailsResponse(t *testing.T, response users.UserConnectionMembershipDetailsResponse) {
 	testutils.AssertEqual(t, response.Code, "Success")
 	testutils.AssertEqual(t, response.Data.ConnectionId, "connection_id")
-	testutils.AssertEqual(t, response.Data.Role, "Connection Administrator")
+	testutils.AssertEqual(t, response.Data.Role, "Connector Administrator")
 	testutils.AssertEqual(t, response.Data.CreatedAt, "2020-05-25T15:26:47.306509Z")
 }

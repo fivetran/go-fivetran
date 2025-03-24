@@ -14,7 +14,7 @@ func TestNewUserConnectionMembershipCreateE2E(t *testing.T) {
 	created, err := testutils.Client.NewUserConnectionMembershipCreate().
 		UserId(userId).
 		ConnectionId(ConnectionId).
-		Role("Connection Administrator").
+		Role("Connector Administrator").
 		Do(context.Background())
 
 	if err != nil {
@@ -25,7 +25,7 @@ func TestNewUserConnectionMembershipCreateE2E(t *testing.T) {
 	testutils.AssertEqual(t, created.Code, "Success")
 	testutils.AssertNotEmpty(t, created.Message)
 	testutils.AssertEqual(t, created.Data.ConnectionId, ConnectionId)
-	testutils.AssertEqual(t, created.Data.Role, "Connection Administrator")
+	testutils.AssertEqual(t, created.Data.Role, "Connector Administrator")
 	testutils.AssertNotEmpty(t, created.Data.CreatedAt)
 
 	t.Cleanup(func() {

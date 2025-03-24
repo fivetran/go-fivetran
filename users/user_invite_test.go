@@ -30,7 +30,7 @@ func TestUserUpdateServiceDo(t *testing.T) {
 
 	handler := mockClient.When(http.MethodPatch, fmt.Sprintf("/v1/users/%s", EXPECTED_USER_UPDATE_USER_ID)).ThenCall(
 		func(req *http.Request) (*http.Response, error) {
-			responseData := prepareUserUpdateResponse()
+			responseData := prepareUserInviteResponse()
 			response := mock.NewResponse(req, http.StatusOK, responseData)
 			return response, nil
 		},
@@ -59,7 +59,7 @@ func TestUserUpdateServiceDo(t *testing.T) {
 	testutils.AssertEqual(t, handler.Interactions, 1)
 }
 
-func prepareUserUpdateResponse() string {
+func prepareUserInviteResponse() string {
 	return fmt.Sprintf(`{
 		"code": "%s",
 		"message": "User has been invited to the account",
