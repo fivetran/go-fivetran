@@ -7,8 +7,6 @@ import (
 	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
-// ProxyConnectionMembershipsListService implements the Proxy Agent Management, Return all connections attached to the proxy agent
-// Ref. https://fivetran.com/docs/rest-api/proxy-management#returnallconnectionsattachedtotheproxyagent
 type ProxyConnectionMembershipsListService struct {
 	httputils.HttpService
 	proxyId *string

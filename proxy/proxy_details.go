@@ -7,8 +7,6 @@ import (
 	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
-// ProxyDetailsService implements the Proxy Agent Management, Retrieve Proxy Agent Details.
-// Ref. https://fivetran.com/docs/rest-api/proxy-management#retrieveproxyagentdetails
 type ProxyDetailsService struct {
 	httputils.HttpService
 	proxyId 	*string

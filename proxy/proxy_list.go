@@ -7,8 +7,6 @@ import (
 	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
-// ProxyListService implements the Proxy Agent Management, retrieve List all Proxy Agents.
-// Ref. https://fivetran.com/docs/rest-api/proxy-management#listallproxyagents
 type ProxyListService struct {
 	httputils.HttpService
 	limit  *int

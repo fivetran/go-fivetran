@@ -8,8 +8,6 @@ import (
 	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
-// ProxyDeleteService implements the Proxy Agent Management, Delete a Proxy Agent.
-// Ref. https://fivetran.com/docs/rest-api/proxy-management#deleteaproxyagent
 type ProxyDeleteService struct {
 	httputils.HttpService
 	proxyId       *string
