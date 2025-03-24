@@ -7,8 +7,6 @@ import (
 	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
-// CertificateConnectionFingerprintApproveService implements the Certificate Management, Approve a connection fingerprint API.
-// Ref. https://fivetran.com/docs/rest-api/certificates#approveaconnectionfingerprint
 type ConnectionFingerprintApproveService struct {
 	httputils.HttpService
 	connectionID *string

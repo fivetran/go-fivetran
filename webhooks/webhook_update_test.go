@@ -13,16 +13,16 @@ import (
 	testutils "github.com/fivetran/go-fivetran/test_utils"
 )
 
-func TestWebhookModifyService(t *testing.T) {
+func TestWebhookUpdateService(t *testing.T) {
 	// arrange
 	ftClient, mockClient := testutils.CreateTestClient()
 	handler := mockClient.When(http.MethodPatch, "/v1/webhooks/webhook_id").ThenCall(
 		func(req *http.Request) (*http.Response, error) {
-			response := mock.NewResponse(req, http.StatusOK, prepareWebhookModifyResponse())
+			response := mock.NewResponse(req, http.StatusOK, prepareWebhookUpdateResponse())
 			return response, nil
 		})
 
-	service := ftClient.NewWebhookModify().
+	service := ftClient.NewWebhookUpdate().
 		WebhookId("webhook_id").
 		Url(WEBHOOK_URL).
 		Secret(WEBHOOK_SECRET).
@@ -43,10 +43,10 @@ func TestWebhookModifyService(t *testing.T) {
 	testutils.AssertEqual(t, interactions[0].Handler, handler)
 	testutils.AssertEqual(t, handler.Interactions, 1)
 
-	assertWebhookModifyResponse(t, response)
+	assertWebhookUpdateResponse(t, response)
 }
 
-func prepareWebhookModifyResponse() string {
+func prepareWebhookUpdateResponse() string {
 	return fmt.Sprintf(
 		`{
             "code": "Success",
@@ -72,7 +72,7 @@ func prepareWebhookModifyResponse() string {
 	)
 }
 
-func assertWebhookModifyResponse(t *testing.T, response webhooks.WebhookResponse) {
+func assertWebhookUpdateResponse(t *testing.T, response webhooks.WebhookResponse) {
 	testutils.AssertEqual(t, response.Code, "Success")
 	testutils.AssertNotEmpty(t, response.Message)
 

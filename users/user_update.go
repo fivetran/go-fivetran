@@ -9,8 +9,6 @@ import (
 	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
-// UserUpdateService implements the User Management, Update a User API.
-// Ref. https://fivetran.com/docs/rest-api/users#modifyauser
 type UserUpdateService struct {
 	httputils.HttpService
 	userID       *string

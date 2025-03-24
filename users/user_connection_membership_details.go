@@ -7,8 +7,6 @@ import (
 	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
-// UserConnectionMembershipDetailsService implements the User Management, Retrieve connection membership
-// Ref. https://fivetran.com/docs/rest-api/users#retrieveconnectionmembership
 type UserConnectionMembershipDetailsService struct {
 	httputils.HttpService
 	userId      *string

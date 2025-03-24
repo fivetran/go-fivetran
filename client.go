@@ -222,8 +222,8 @@ func (c *Client) NewGroupDelete() *groups.GroupDeleteService {
 	return &groups.GroupDeleteService{HttpService: c.NewHttpService()}
 }
 
-func (c *Client) NewGroupModify() *groups.GroupModifyService {
-	return &groups.GroupModifyService{HttpService: c.NewHttpService()}
+func (c *Client) NewGroupUpdate() *groups.GroupUpdateService {
+	return &groups.GroupUpdateService{HttpService: c.NewHttpService()}
 }
 
 func (c *Client) NewGroupListConnections() *groups.GroupListConnectionsService {
@@ -259,8 +259,8 @@ func (c *Client) NewExternalLoggingDetails() *externallogging.ExternalLoggingDet
 	return &externallogging.ExternalLoggingDetailsService{HttpService: c.NewHttpService()}
 }
 
-func (c *Client) NewExternalLoggingModify() *externallogging.ExternalLoggingModifyService {
-	return &externallogging.ExternalLoggingModifyService{HttpService: c.NewHttpService()}
+func (c *Client) NewExternalLoggingUpdate() *externallogging.ExternalLoggingUpdateService {
+	return &externallogging.ExternalLoggingUpdateService{HttpService: c.NewHttpService()}
 }
 
 func (c *Client) NewExternalLoggingSetupTests() *externallogging.ExternalLoggingSetupTestsService {
@@ -288,10 +288,10 @@ func (c *Client) NewDestinationDetails() *destinations.DestinationDetailsService
 	return &destinations.DestinationDetailsService{HttpService: http}
 }
 
-func (c *Client) NewDestinationModify() *destinations.DestinationModifyService {
+func (c *Client) NewDestinationUpdate() *destinations.DestinationUpdateService {
 	http := c.NewHttpService()
 	http.CommonHeaders["Accept"] = restAPIv2
-	return &destinations.DestinationModifyService{HttpService: http}
+	return &destinations.DestinationUpdateService{HttpService: http}
 }
 
 func (c *Client) NewDestinationSetupTests() *destinations.DestinationSetupTestsService {
@@ -313,8 +313,8 @@ func (c *Client) NewUserDetails() *users.UserDetailsService {
 	return &users.UserDetailsService{HttpService: c.NewHttpService()}
 }
 
-func (c *Client) NewUserModify() *users.UserModifyService {
-	return &users.UserModifyService{HttpService: c.NewHttpService()}
+func (c *Client) NewUserUpdate() *users.UserUpdateService {
+	return &users.UserUpdateService{HttpService: c.NewHttpService()}
 }
 
 func (c *Client) NewUserInvite() *users.UserInviteService {
@@ -341,16 +341,16 @@ func (c *Client) NewUserGroupMembershipsList() *users.UserGroupMembershipsListSe
 	return &users.UserGroupMembershipsListService{HttpService: c.NewHttpService()}
 }
 
-func (c *Client) NewUserGroupMembershipModify() *users.UserGroupMembershipModifyService {
-	return &users.UserGroupMembershipModifyService{HttpService: c.NewHttpService()}
+func (c *Client) NewUserGroupMembershipUpdate() *users.UserGroupMembershipUpdateService {
+	return &users.UserGroupMembershipUpdateService{HttpService: c.NewHttpService()}
 }
 
 func (c *Client) NewUserConnectionMembershipsList() *users.UserConnectionMembershipsListService {
 	return &users.UserConnectionMembershipsListService{HttpService: c.NewHttpService()}
 }
 
-func (c *Client) NewUserConnectionMembershipModify() *users.UserConnectionMembershipModifyService {
-	return &users.UserConnectionMembershipModifyService{HttpService: c.NewHttpService()}
+func (c *Client) NewUserConnectionMembershipUpdate() *users.UserConnectionMembershipUpdateService {
+	return &users.UserConnectionMembershipUpdateService{HttpService: c.NewHttpService()}
 }
 
 func (c *Client) NewUserConnectionMembershipCreate() *users.UserConnectionMembershipCreateService {
@@ -370,8 +370,8 @@ func (c *Client) NewWebhookDelete() *webhooks.WebhookDeleteService {
 	return &webhooks.WebhookDeleteService{HttpService: c.NewHttpService()}
 }
 
-func (c *Client) NewWebhookModify() *webhooks.WebhookModifyService {
-	return &webhooks.WebhookModifyService{HttpService: c.NewHttpService()}
+func (c *Client) NewWebhookUpdate() *webhooks.WebhookUpdateService {
+	return &webhooks.WebhookUpdateService{HttpService: c.NewHttpService()}
 }
 
 func (c *Client) NewWebhookGroupCreate() *webhooks.WebhookGroupCreateService {
@@ -411,8 +411,8 @@ func (c *Client) NewTeamsList() *teams.TeamsListService {
 	return &teams.TeamsListService{HttpService: c.NewHttpService()}
 }
 
-func (c *Client) NewTeamsModify() *teams.TeamsModifyService {
-	return &teams.TeamsModifyService{HttpService: c.NewHttpService()}
+func (c *Client) NewTeamsUpdate() *teams.TeamsUpdateService {
+	return &teams.TeamsUpdateService{HttpService: c.NewHttpService()}
 }
 
 func (c *Client) NewTeamConnectionMembershipCreate() *teams.TeamConnectionMembershipCreateService {
@@ -431,8 +431,8 @@ func (c *Client) NewTeamConnectionMembershipsList() *teams.TeamConnectionMembers
 	return &teams.TeamConnectionMembershipsListService{HttpService: c.NewHttpService()}
 }
 
-func (c *Client) NewTeamConnectionMembershipModify() *teams.TeamConnectionMembershipModifyService {
-	return &teams.TeamConnectionMembershipModifyService{HttpService: c.NewHttpService()}
+func (c *Client) NewTeamConnectionMembershipUpdate() *teams.TeamConnectionMembershipUpdateService {
+	return &teams.TeamConnectionMembershipUpdateService{HttpService: c.NewHttpService()}
 }
 
 func (c *Client) NewTeamGroupMembershipCreate() *teams.TeamGroupMembershipCreateService {
@@ -451,8 +451,8 @@ func (c *Client) NewTeamGroupMembershipsList() *teams.TeamGroupMembershipsListSe
 	return &teams.TeamGroupMembershipsListService{HttpService: c.NewHttpService()}
 }
 
-func (c *Client) NewTeamGroupMembershipModify() *teams.TeamGroupMembershipModifyService {
-	return &teams.TeamGroupMembershipModifyService{HttpService: c.NewHttpService()}
+func (c *Client) NewTeamGroupMembershipUpdate() *teams.TeamGroupMembershipUpdateService {
+	return &teams.TeamGroupMembershipUpdateService{HttpService: c.NewHttpService()}
 }
 
 func (c *Client) NewTeamUserMembershipCreate() *teams.TeamUserMembershipCreateService {
@@ -471,8 +471,8 @@ func (c *Client) NewTeamUserMembershipsList() *teams.TeamUserMembershipsListServ
 	return &teams.TeamUserMembershipsListService{HttpService: c.NewHttpService()}
 }
 
-func (c *Client) NewTeamUserMembershipModify() *teams.TeamUserMembershipModifyService {
-	return &teams.TeamUserMembershipModifyService{HttpService: c.NewHttpService()}
+func (c *Client) NewTeamUserMembershipUpdate() *teams.TeamUserMembershipUpdateService {
+	return &teams.TeamUserMembershipUpdateService{HttpService: c.NewHttpService()}
 }
 
 func (c *Client) NewTeamsDeleteRoleInAccount() *teams.TeamsDeleteRoleInAccountService {
@@ -498,8 +498,8 @@ func (c *Client) NewConnectionDetails() *connections.ConnectionDetailsService {
 	return &connections.ConnectionDetailsService{HttpService: http}
 }
 
-func (c *Client) NewConnectionModify() *connections.ConnectionModifyService {
-	return &connections.ConnectionModifyService{HttpService: c.NewHttpService()}
+func (c *Client) NewConnectionUpdate() *connections.ConnectionUpdateService {
+	return &connections.ConnectionUpdateService{HttpService: c.NewHttpService()}
 }
 
 func (c *Client) NewConnectionDelete() *connections.ConnectionDeleteService {
@@ -514,12 +514,12 @@ func (c *Client) NewConnectionColumnConfigListService() *connections.ConnectionC
 	return &connections.ConnectionColumnConfigListService{HttpService: c.NewHttpService()}
 }
 
-func (c *Client) NewConnectionColumnConfigModifyService() *connections.ConnectionColumnConfigModifyService {
-	return &connections.ConnectionColumnConfigModifyService{HttpService: c.NewHttpService()}
+func (c *Client) NewConnectionColumnConfigUpdateService() *connections.ConnectionColumnConfigUpdateService {
+	return &connections.ConnectionColumnConfigUpdateService{HttpService: c.NewHttpService()}
 }
 
-func (c *Client) NewConnectionDatabaseSchemaConfigModifyService() *connections.ConnectionDatabaseSchemaConfigModifyService {
-	return &connections.ConnectionDatabaseSchemaConfigModifyService{HttpService: c.NewHttpService()}
+func (c *Client) NewConnectionDatabaseSchemaConfigUpdateService() *connections.ConnectionDatabaseSchemaConfigUpdateService {
+	return &connections.ConnectionDatabaseSchemaConfigUpdateService{HttpService: c.NewHttpService()}
 }
 
 func (c *Client) NewConnectionReSyncTable() *connections.ConnectionReSyncTableService {
@@ -542,8 +542,8 @@ func (c *Client) NewConnectionSchemaCreateService() *connections.ConnectionSchem
 	return &connections.ConnectionSchemaConfigCreateService{HttpService: c.NewHttpService()}
 }
 
-func (c *Client) NewConnectionTableConfigModifyService() *connections.ConnectionTableConfigModifyService {
-	return &connections.ConnectionTableConfigModifyService{HttpService: c.NewHttpService()}
+func (c *Client) NewConnectionTableConfigUpdateService() *connections.ConnectionTableConfigUpdateService {
+	return &connections.ConnectionTableConfigUpdateService{HttpService: c.NewHttpService()}
 }
 
 func (c *Client) NewConnectionsSourceMetadata() *connections.ConnectionsSourceMetadataService {
@@ -571,8 +571,8 @@ func (c *Client) NewPrivateLinkDetails() *privatelink.PrivateLinkDetailsService 
 	return &privatelink.PrivateLinkDetailsService{HttpService: c.NewHttpService()}
 }
 
-func (c *Client) NewPrivateLinkModify() *privatelink.PrivateLinkModifyService {
-	return &privatelink.PrivateLinkModifyService{HttpService: c.NewHttpService()}
+func (c *Client) NewPrivateLinkUpdate() *privatelink.PrivateLinkUpdateService {
+	return &privatelink.PrivateLinkUpdateService{HttpService: c.NewHttpService()}
 }
 
 /* Proxy */

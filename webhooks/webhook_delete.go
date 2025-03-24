@@ -8,8 +8,6 @@ import (
 	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
-// WebhookDeleteService implements the Webhook Management, Delete a Webhook.
-// Ref. https://fivetran.com/docs/rest-api/webhooks#deletewebhook
 type WebhookDeleteService struct {
 	httputils.HttpService
 	webhookId *string

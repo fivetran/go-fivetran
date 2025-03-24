@@ -8,8 +8,6 @@ import (
 	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
-// UserConnectionMembershipDeleteService implements the User Management, Delete connection membership
-// Ref. https://fivetran.com/docs/rest-api/users#deleteconnectionmembership
 type UserConnectionMembershipDeleteService struct {
 	httputils.HttpService
 	userId      *string

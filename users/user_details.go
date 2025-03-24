@@ -7,8 +7,6 @@ import (
 	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
-// UserDetailsService implements the User Management, Retrieve user details API.
-// Ref. https://fivetran.com/docs/rest-api/users#retrieveuserdetails
 type UserDetailsService struct {
 	httputils.HttpService
 	userID *string

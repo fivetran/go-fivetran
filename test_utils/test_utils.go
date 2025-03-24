@@ -46,7 +46,7 @@ var (
     TEST_KEY    = "test_key"
     TEST_SECRET = "test_secret"
 
-    TEST_CONNECTOR_ID = "test_connector_id"
+    TEST_CONNECTOR_ID = "test_connection_id"
     TEST_HASH         = "test_hash"
     TEST_PUBLIC_KEY   = "test_public_key"
 )
@@ -227,13 +227,13 @@ func CreateTempDestination(t *testing.T) string {
     return destinationId
 }
 
-func CreateConnector(t *testing.T) string {
+func CreateConnection(t *testing.T) string {
     t.Helper()
-    created, err := Client.NewConnectorCreate().
+    created, err := Client.NewConnectionCreate().
         GroupID(PredefinedGroupId).
         Service("itunes_connect").
         RunSetupTests(false).
-        Config(fivetran.NewConnectorConfig().
+        Config(fivetran.NewConnectionConfig().
             Schema("itunes_e2e_connect").
             Username("fivetran").
             Password("fivetran-api-e2e")).
@@ -247,16 +247,16 @@ func CreateConnector(t *testing.T) string {
     return created.Data.ID
 }
 
-func CreateTempConnector(t *testing.T) string {
+func CreateTempConnection(t *testing.T) string {
     t.Helper()
-    connectorId := CreateConnector(t)
-    t.Cleanup(func() { DeleteConnector(t, connectorId) })
-    return connectorId
+    connectionId := CreateConnection(t)
+    t.Cleanup(func() { DeleteConnection(t, connectionId) })
+    return connectionId
 }
 
-func DeleteConnector(t *testing.T, id string) {
+func DeleteConnection(t *testing.T, id string) {
     t.Helper()
-    deleted, err := Client.NewConnectorDelete().ConnectorID(id).Do(context.Background())
+    deleted, err := Client.NewConnectionDelete().ConnectionID(id).Do(context.Background())
 
     if err != nil {
         t.Logf("%+v\n", deleted)
@@ -453,7 +453,7 @@ func CleanupGroups() {
         log.Fatal(err)
     }
     for _, group := range groups.Data.Items {
-        CleanupConnectors(group.ID)
+        CleanupConnections(group.ID)
         if group.ID != PredefinedGroupId {
             _, err := Client.NewGroupDelete().GroupID(group.ID).Do(context.Background())
             if err != nil {
@@ -466,13 +466,13 @@ func CleanupGroups() {
     }
 }
 
-func CleanupConnectors(groupId string) {
-    connectors, err := Client.NewGroupListConnectors().GroupID(groupId).Do(context.Background())
+func CleanupConnections(groupId string) {
+    connections, err := Client.NewGroupListConnections().GroupID(groupId).Do(context.Background())
     if err != nil {
         log.Fatal(err)
     }
-    for _, connector := range connectors.Data.Items {
-        _, err := Client.NewConnectorDelete().ConnectorID(connector.ID).Do(context.Background())
+    for _, connection := range connections.Data.Items {
+        _, err := Client.NewConnectionDelete().ConnectionID(connection.ID).Do(context.Background())
         if err != nil {
             log.Fatal(err)
         }
@@ -742,9 +742,9 @@ func CreateTeam(t *testing.T) string {
     return created.Data.Id
 }
 
-func DeleteTeamConnector(t *testing.T, teamId string, connectorId string) {
+func DeleteTeamConnection(t *testing.T, teamId string, connectionId string) {
     t.Helper()
-    deleted, err := Client.NewTeamConnectorMembershipDelete().TeamId(teamId).ConnectorId(connectorId).Do(context.Background())
+    deleted, err := Client.NewTeamConnectionMembershipDelete().TeamId(teamId).ConnectionId(connectionId).Do(context.Background())
 
     if err != nil {
         t.Logf("%+v\n", deleted)
@@ -752,12 +752,12 @@ func DeleteTeamConnector(t *testing.T, teamId string, connectorId string) {
     }
 }
 
-func CreateTeamConnector(t *testing.T, teamId string, connectorId string) {
+func CreateTeamConnection(t *testing.T, teamId string, connectionId string) {
     t.Helper()
-    created, err := Client.NewTeamConnectorMembershipCreate().
+    created, err := Client.NewTeamConnectionMembershipCreate().
         TeamId(teamId).
-        ConnectorId(connectorId).
-        Role("Connector Administrator").
+        ConnectionId(connectionId).
+        Role("Connection Administrator").
         Do(context.Background())
 
     if err != nil {
@@ -832,9 +832,9 @@ func DeleteTeam(t *testing.T, id string) {
 
 /* End Team Management */
 
-func DeleteUserConnector(t *testing.T, userId string, connectorId string) {
+func DeleteUserConnection(t *testing.T, userId string, connectionId string) {
     t.Helper()
-    deleted, err := Client.NewUserConnectorMembershipDelete().UserId(userId).ConnectorId(connectorId).Do(context.Background())
+    deleted, err := Client.NewUserConnectionMembershipDelete().UserId(userId).ConnectionId(connectionId).Do(context.Background())
 
     if err != nil {
         t.Logf("%+v\n", deleted)
@@ -842,12 +842,12 @@ func DeleteUserConnector(t *testing.T, userId string, connectorId string) {
     }
 }
 
-func CreateUserConnector(t *testing.T, userId string, connectorId string) {
+func CreateUserConnection(t *testing.T, userId string, connectionId string) {
     t.Helper()
-    created, err := Client.NewUserConnectorMembershipCreate().
+    created, err := Client.NewUserConnectionMembershipCreate().
         UserId(userId).
-        ConnectorId(connectorId).
-        Role("Connector Administrator").
+        ConnectionId(connectionId).
+        Role("Connection Administrator").
         Do(context.Background())
 
     if err != nil {

@@ -7,8 +7,6 @@ import (
     httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
-// ConnectCardService implements the https://fivetran.com/docs/rest-api/getting-started/connect-card#connectcards
-// Ref.https://fivetran.com/docs/rest-api/getting-started/connect-card
 type ConnectCardService struct {
     httputils.HttpService
     connectorId        *string

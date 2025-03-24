@@ -7,8 +7,6 @@ import (
 	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
-// WebhookGroupCreateService implements the Webhook Management, Create a Group Webhook.
-// Ref. https://fivetran.com/docs/rest-api/webhooks#creategroupwebhook
 type WebhookGroupCreateService struct {
 	httputils.HttpService
 	groupId *string

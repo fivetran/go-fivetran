@@ -7,8 +7,6 @@ import (
 	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
-// UsersListService implements the User Management, List All Users API.
-// Ref. https://fivetran.com/docs/rest-api/users#listallusers
 type UsersListService struct {
 	httputils.HttpService
 	limit  *int

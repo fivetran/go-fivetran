@@ -7,8 +7,6 @@ import (
 	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
-// WebhookListService implements the Webhook Management, retrieve List Webhook.
-// Ref. https://fivetran.com/docs/rest-api/webhooks#retrievethelistofwebhooks
 type WebhookListService struct {
 	httputils.HttpService
 	limit  *int

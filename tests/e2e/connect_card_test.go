@@ -9,14 +9,14 @@ import (
 )
 
 func TestNewConnectCardE2E(t *testing.T) {
-    connectorId := testutils.CreateTempConnector(t)
+    connectionId := testutils.CreateTempConnection(t)
 
     config := fivetran.NewConnectCardConfig().
         RedirectUri("http://test_domain.com").
         HideSetupGuide(false)
 
     created, err := testutils.Client.NewConnectCard().
-        ConnectorId(connectorId).
+        ConnectorId(connectionId).
         Config(config).
         Do(context.Background())
 

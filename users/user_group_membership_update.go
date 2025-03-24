@@ -8,8 +8,6 @@ import (
 	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
-// UserGroupMembershipUpdateService implements the User Management, Update group membership
-// Ref. https://fivetran.com/docs/rest-api/users#updategroupmembership
 type UserGroupMembershipUpdateService struct {
 	httputils.HttpService
 	userId  *string
