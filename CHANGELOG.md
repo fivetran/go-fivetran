@@ -9,6 +9,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.1.0](https://github.com/fivetran/go-fivetran/compare/v1.0.6...v1.1.0)
 
+## Updated
+In order to synchronize terminology, we have renamed all services and structures that use incorrect terminology:
+- `connectors` package is now called `connections`. All services, data structures, methods with names like `Connector*` are now named `Connection*`
+- `teams` package - all nested services, data structures, methods with names like `TeamConnector*` are now named `TeamConnection*`
+- `users` package - all nested services, data structures, methods with names like `UserConnector*` are now named `UserConnection*`
+- `certificates` package - all nested services, data structures, methods with names like `ConnectorCertificate*` are now named `ConnectionCertificate*`
+- `fingerprints` package - all nested services, data structures, methods with names like `ConnectorFingerprint*` are now named `ConnectionFingerprint*`
+- `GroupListConnectorsService`  are now named `GroupListConnectionsService`
+- all services, data structures, methods with names like `*Modify*` are now named `*Update*`
+
 ## Removed
 Removed the following Fivetran API endpoints:
 - [Retrieve dbt model details](https://fivetran.com/docs/rest-api/dbt-transformation-management#retrievedbtprojectmodeldetails)
@@ -56,8 +66,6 @@ Our old API for dbt projects and transformations is marked as deprecated. Suppor
 ## Added
 -  Add `is_primary_key` to `ConnectorSchemaConfigColumn`
 
-## [Unreleased](https://github.com/fivetran/go-fivetran/compare/v1.0.4...HEAD)
-
 ## [1.0.4](https://github.com/fivetran/go-fivetran/compare/v1.0.3...v1.0.4)
 
 ## Added
@@ -85,8 +93,6 @@ Support for custom config (`map[string]interface{}`) for private links:
 - `PrivateDnsRegions` field in `privatelink.PrivateLinkConfig`
 
 ## [1.0.0](https://github.com/fivetran/go-fivetran/compare/v0.9.4...v1.0.0)
-
-Release version
 
 Renamed the following service from Local Processing Agent to Hybrid Deployment Agent:
 - LocalProcessingAgentCreateService to HybridDeploymentAgentCreateService
