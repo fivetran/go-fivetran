@@ -15,7 +15,7 @@ func TestNewUserConnectionMembershipUpdateE2E(t *testing.T) {
 	modified, err := testutils.Client.NewUserConnectionMembershipUpdate().
 		UserId(userId).
 		ConnectionId(ConnectionId).
-		Role("Connection Collaborator").
+		Role("Connector Collaborator").
 		Do(context.Background())
 
 	if err != nil {

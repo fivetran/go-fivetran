@@ -14,7 +14,7 @@ import (
 )
 
 const (
-	TEAM_CONNECTION_ROLE = "Connection Collaborator"
+	TEAM_CONNECTION_ROLE = "Connector Collaborator"
 )
 
 func TestNewUserConnectionCreate(t *testing.T) {
