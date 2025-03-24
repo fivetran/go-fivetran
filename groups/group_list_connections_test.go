@@ -31,7 +31,7 @@ const (
 	LIST_CONNECTORS_IS_HISTORICAL_SYNC = false
 )
 
-func TestGroupListConnectorsServiceDo(t *testing.T) {
+func TestGroupListConnectionsServiceDo(t *testing.T) {
 	// arrange
 	groupID := "projected_sickle"
 	limit := 10
@@ -39,14 +39,14 @@ func TestGroupListConnectorsServiceDo(t *testing.T) {
 	schema := "salesforce"
 
 	ftClient, mockClient := testutils.CreateTestClient()
-	handler := mockClient.When(http.MethodGet, fmt.Sprintf("/v1/groups/%s/connectors", groupID)).
+	handler := mockClient.When(http.MethodGet, fmt.Sprintf("/v1/groups/%s/connections", groupID)).
 		ThenCall(func(req *http.Request) (*http.Response, error) {
-			response := mock.NewResponse(req, http.StatusOK, prepareGroupListConnectorsResponse())
+			response := mock.NewResponse(req, http.StatusOK, prepareGroupListConnectionsResponse())
 			return response, nil
 		})
 
 	// act
-	response, err := ftClient.NewGroupListConnectors().
+	response, err := ftClient.NewGroupListConnections().
 		GroupID(groupID).
 		Limit(limit).
 		Cursor(cursor).
@@ -62,10 +62,10 @@ func TestGroupListConnectorsServiceDo(t *testing.T) {
 	testutils.AssertEqual(t, len(interactions), 1)
 	testutils.AssertEqual(t, interactions[0].Handler, handler)
 	testutils.AssertEqual(t, handler.Interactions, 1)
-	assertGroupListConnectorsResponse(t, response)
+	assertGroupListConnectionsResponse(t, response)
 }
 
-func prepareGroupListConnectorsResponse() string {
+func prepareGroupListConnectionsResponse() string {
 	value := fmt.Sprintf(`{
 		"code": "Success",
 		"data": {
@@ -112,7 +112,7 @@ func prepareGroupListConnectorsResponse() string {
 	return value
 }
 
-func assertGroupListConnectorsResponse(t *testing.T, response groups.GroupListConnectorsResponse) {
+func assertGroupListConnectionsResponse(t *testing.T, response groups.GroupListConnectionsResponse) {
 
 	testutils.AssertEqual(t, response.Code, "Success")
 	testutils.AssertEqual(t, len(response.Data.Items), 1)

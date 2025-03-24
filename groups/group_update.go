@@ -7,29 +7,29 @@ import (
 	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
-type GroupModifyService struct {
+type GroupUpdateService struct {
 	httputils.HttpService
 	groupID *string
 	name    *string
 }
 
-func (s *GroupModifyService) request() *groupModifyRequest {
-	return &groupModifyRequest{
+func (s *GroupUpdateService) request() *groupUpdateRequest {
+	return &groupUpdateRequest{
 		Name: s.name,
 	}
 }
 
-func (s *GroupModifyService) GroupID(value string) *GroupModifyService {
+func (s *GroupUpdateService) GroupID(value string) *GroupUpdateService {
 	s.groupID = &value
 	return s
 }
 
-func (s *GroupModifyService) Name(value string) *GroupModifyService {
+func (s *GroupUpdateService) Name(value string) *GroupUpdateService {
 	s.name = &value
 	return s
 }
 
-func (s *GroupModifyService) Do(ctx context.Context) (GroupDetailsResponse, error) {
+func (s *GroupUpdateService) Do(ctx context.Context) (GroupDetailsResponse, error) {
 	var response GroupDetailsResponse
 	if s.groupID == nil {
 		return response, fmt.Errorf("missing required groupID")

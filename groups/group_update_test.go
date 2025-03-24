@@ -11,7 +11,7 @@ import (
 	"github.com/fivetran/go-fivetran/tests/mock"
 )
 
-func TestGroupModifyServiceDo(t *testing.T) {
+func TestGroupUpdateServiceDo(t *testing.T) {
 	// arrange
 	const GROUP_MODIFY_GROUP_ID = "decent_dropsy"
 	const GROUP_MODIFY_EXPECTED_GROUP_NAME = "New_Group_Name"
@@ -40,7 +40,7 @@ func TestGroupModifyServiceDo(t *testing.T) {
 		})
 
 	// act
-	response, err := ftClient.NewGroupModify().
+	response, err := ftClient.NewGroupUpdate().
 		GroupID(GROUP_MODIFY_GROUP_ID).
 		Name(GROUP_MODIFY_EXPECTED_GROUP_NAME).
 		Do(context.Background())

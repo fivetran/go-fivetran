@@ -7,7 +7,7 @@ import (
 	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
-type GroupListConnectorsService struct {
+type GroupListConnectionsService struct {
 	httputils.HttpService
 	groupID *string
 	limit   *int
@@ -15,29 +15,29 @@ type GroupListConnectorsService struct {
 	schema  *string
 }
 
-func (s *GroupListConnectorsService) GroupID(value string) *GroupListConnectorsService {
+func (s *GroupListConnectionsService) GroupID(value string) *GroupListConnectionsService {
 	s.groupID = &value
 	return s
 }
 
-func (s *GroupListConnectorsService) Limit(value int) *GroupListConnectorsService {
+func (s *GroupListConnectionsService) Limit(value int) *GroupListConnectionsService {
 	s.limit = &value
 	return s
 }
 
-func (s *GroupListConnectorsService) Cursor(value string) *GroupListConnectorsService {
+func (s *GroupListConnectionsService) Cursor(value string) *GroupListConnectionsService {
 	s.cursor = &value
 	return s
 }
 
-func (s *GroupListConnectorsService) Schema(value string) *GroupListConnectorsService {
+func (s *GroupListConnectionsService) Schema(value string) *GroupListConnectionsService {
 	s.schema = &value
 	return s
 }
 
-func (s *GroupListConnectorsService) Do(ctx context.Context) (GroupListConnectorsResponse, error) {
-	var response GroupListConnectorsResponse
-	url := fmt.Sprintf("/groups/%v/connectors", *s.groupID)
+func (s *GroupListConnectionsService) Do(ctx context.Context) (GroupListConnectionsResponse, error) {
+	var response GroupListConnectionsResponse
+	url := fmt.Sprintf("/groups/%v/connections", *s.groupID)
 	var queries map[string]string = nil
 	if s.cursor != nil || s.limit != nil || s.schema != nil {
 		queries = make(map[string]string)
