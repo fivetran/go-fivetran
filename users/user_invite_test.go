@@ -15,20 +15,20 @@ import (
 )
 
 const (
-	EXPECTED_USER_MODIFY_RESPONSE_CODE = "Success"
-	EXPECTED_USER_MODIFY_USER_ID       = "firewood_martial"
-	EXPECTED_USER_MODIFY_GIVEN_NAME    = "John"
-	EXPECTED_USER_MODIFY_FAMILY_NAME   = "White"
-	EXPECTED_USER_MODIFY_PHONE         = "+123456789"
-	EXPECTED_USER_MODIFY_PICTURE       = "http://mycompany.com/avatars/john_white.png"
-	EXPECTED_USER_MODIFY_ROLE          = "Account Administrator"
-	EXPECTED_USER_MODIFY_EMAIL         = "john.white@mycompany.com"
+	EXPECTED_USER_UPDATE_RESPONSE_CODE = "Success"
+	EXPECTED_USER_UPDATE_USER_ID       = "firewood_martial"
+	EXPECTED_USER_UPDATE_GIVEN_NAME    = "John"
+	EXPECTED_USER_UPDATE_FAMILY_NAME   = "White"
+	EXPECTED_USER_UPDATE_PHONE         = "+123456789"
+	EXPECTED_USER_UPDATE_PICTURE       = "http://mycompany.com/avatars/john_white.png"
+	EXPECTED_USER_UPDATE_ROLE          = "Account Administrator"
+	EXPECTED_USER_UPDATE_EMAIL         = "john.white@mycompany.com"
 )
 
 func TestUserUpdateServiceDo(t *testing.T) {
 	ftClient, mockClient := testutils.CreateTestClient()
 
-	handler := mockClient.When(http.MethodPatch, fmt.Sprintf("/v1/users/%s", EXPECTED_USER_MODIFY_USER_ID)).ThenCall(
+	handler := mockClient.When(http.MethodPatch, fmt.Sprintf("/v1/users/%s", EXPECTED_USER_UPDATE_USER_ID)).ThenCall(
 		func(req *http.Request) (*http.Response, error) {
 			responseData := prepareUserUpdateResponse()
 			response := mock.NewResponse(req, http.StatusOK, responseData)
@@ -37,12 +37,12 @@ func TestUserUpdateServiceDo(t *testing.T) {
 	)
 
 	service := ftClient.NewUserUpdate().
-		UserID(EXPECTED_USER_MODIFY_USER_ID).
-		GivenName(EXPECTED_USER_MODIFY_GIVEN_NAME).
-		FamilyName(EXPECTED_USER_MODIFY_FAMILY_NAME).
-		Phone(EXPECTED_USER_MODIFY_PHONE).
-		Picture(EXPECTED_USER_MODIFY_PICTURE).
-		Role(EXPECTED_USER_MODIFY_ROLE)
+		UserID(EXPECTED_USER_UPDATE_USER_ID).
+		GivenName(EXPECTED_USER_UPDATE_GIVEN_NAME).
+		FamilyName(EXPECTED_USER_UPDATE_FAMILY_NAME).
+		Phone(EXPECTED_USER_UPDATE_PHONE).
+		Picture(EXPECTED_USER_UPDATE_PICTURE).
+		Role(EXPECTED_USER_UPDATE_ROLE)
 
 	response, err := service.Do(context.Background())
 
@@ -77,32 +77,32 @@ func prepareUserUpdateResponse() string {
 			"active": true,
 			"role": "%s"
 		}
-	}`, EXPECTED_USER_MODIFY_RESPONSE_CODE,
-		EXPECTED_USER_MODIFY_USER_ID, EXPECTED_USER_MODIFY_EMAIL,
-		EXPECTED_USER_MODIFY_GIVEN_NAME,
-		EXPECTED_USER_MODIFY_FAMILY_NAME,
-		EXPECTED_USER_MODIFY_PICTURE,
-		EXPECTED_USER_MODIFY_PHONE,
-		EXPECTED_USER_MODIFY_ROLE)
+	}`, EXPECTED_USER_UPDATE_RESPONSE_CODE,
+		EXPECTED_USER_UPDATE_USER_ID, EXPECTED_USER_UPDATE_EMAIL,
+		EXPECTED_USER_UPDATE_GIVEN_NAME,
+		EXPECTED_USER_UPDATE_FAMILY_NAME,
+		EXPECTED_USER_UPDATE_PICTURE,
+		EXPECTED_USER_UPDATE_PHONE,
+		EXPECTED_USER_UPDATE_ROLE)
 }
 
 func prepareExpectedUserUpdateResponse() users.UserDetailsResponse {
 	var verifyFlag = false
 	return users.UserDetailsResponse{
 		CommonResponse: common.CommonResponse{
-			Code:    EXPECTED_USER_MODIFY_RESPONSE_CODE,
+			Code:    EXPECTED_USER_UPDATE_RESPONSE_CODE,
 			Message: "User has been invited to the account",
 		},
 		Data: users.UserDetailsData{
-			ID:         EXPECTED_USER_MODIFY_USER_ID,
-			Email:      EXPECTED_USER_MODIFY_EMAIL,
-			GivenName:  EXPECTED_USER_MODIFY_GIVEN_NAME,
-			FamilyName: EXPECTED_USER_MODIFY_FAMILY_NAME,
+			ID:         EXPECTED_USER_UPDATE_USER_ID,
+			Email:      EXPECTED_USER_UPDATE_EMAIL,
+			GivenName:  EXPECTED_USER_UPDATE_GIVEN_NAME,
+			FamilyName: EXPECTED_USER_UPDATE_FAMILY_NAME,
 			Verified:   &verifyFlag,
 			Invited:    &verifyFlag,
-			Picture:    EXPECTED_USER_MODIFY_PICTURE,
-			Phone:      EXPECTED_USER_MODIFY_PHONE,
-			Role:       EXPECTED_USER_MODIFY_ROLE,
+			Picture:    EXPECTED_USER_UPDATE_PICTURE,
+			Phone:      EXPECTED_USER_UPDATE_PHONE,
+			Role:       EXPECTED_USER_UPDATE_ROLE,
 		},
 	}
 }

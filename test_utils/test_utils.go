@@ -46,9 +46,9 @@ var (
     TEST_KEY    = "test_key"
     TEST_SECRET = "test_secret"
 
-    TEST_CONNECTOR_ID = "test_connection_id"
-    TEST_HASH         = "test_hash"
-    TEST_PUBLIC_KEY   = "test_public_key"
+    TEST_CONNECTION_ID = "test_connection_id"
+    TEST_HASH          = "test_hash"
+    TEST_PUBLIC_KEY    = "test_public_key"
 )
 
 func InitE2E() {

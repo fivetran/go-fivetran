@@ -13,15 +13,15 @@ import (
 
 func TestGroupUpdateServiceDo(t *testing.T) {
 	// arrange
-	const GROUP_MODIFY_GROUP_ID = "decent_dropsy"
-	const GROUP_MODIFY_EXPECTED_GROUP_NAME = "New_Group_Name"
-	const GROUP_MODIFY_CREATED_TIME = "2020-05-25T15:26:47.306509Z"
+	const GROUP_UPDATE_GROUP_ID = "decent_dropsy"
+	const GROUP_UPDATE_EXPECTED_GROUP_NAME = "New_Group_Name"
+	const GROUP_UPDATE_CREATED_TIME = "2020-05-25T15:26:47.306509Z"
 
 	ftClient, mockClient := testutils.CreateTestClient()
-	handler := mockClient.When(http.MethodPatch, "/v1/groups/"+GROUP_MODIFY_GROUP_ID).
+	handler := mockClient.When(http.MethodPatch, "/v1/groups/"+GROUP_UPDATE_GROUP_ID).
 		ThenCall(func(req *http.Request) (*http.Response, error) {
 			body := testutils.RequestBodyToJson(t, req)
-			testutils.AssertKey(t, "name", body, GROUP_MODIFY_EXPECTED_GROUP_NAME)
+			testutils.AssertKey(t, "name", body, GROUP_UPDATE_EXPECTED_GROUP_NAME)
 
 			response := mock.NewResponse(req, http.StatusOK, fmt.Sprintf(`
 				{
@@ -33,16 +33,16 @@ func TestGroupUpdateServiceDo(t *testing.T) {
 						"created_at": "%s"
 					}
 				}`,
-				GROUP_MODIFY_GROUP_ID,
-				GROUP_MODIFY_EXPECTED_GROUP_NAME,
-				GROUP_MODIFY_CREATED_TIME))
+				GROUP_UPDATE_GROUP_ID,
+				GROUP_UPDATE_EXPECTED_GROUP_NAME,
+				GROUP_UPDATE_CREATED_TIME))
 			return response, nil
 		})
 
 	// act
 	response, err := ftClient.NewGroupUpdate().
-		GroupID(GROUP_MODIFY_GROUP_ID).
-		Name(GROUP_MODIFY_EXPECTED_GROUP_NAME).
+		GroupID(GROUP_UPDATE_GROUP_ID).
+		Name(GROUP_UPDATE_EXPECTED_GROUP_NAME).
 		Do(context.Background())
 
 	// assert
@@ -56,7 +56,7 @@ func TestGroupUpdateServiceDo(t *testing.T) {
 	testutils.AssertEqual(t, handler.Interactions, 1)
 	testutils.AssertEqual(t, response.Code, "Success")
 	testutils.AssertEqual(t, response.Message, "Group has been updated")
-	testutils.AssertEqual(t, response.Data.ID, GROUP_MODIFY_GROUP_ID)
-	testutils.AssertEqual(t, response.Data.Name, GROUP_MODIFY_EXPECTED_GROUP_NAME)
-	testutils.AssertTimeEqual(t, response.Data.CreatedAt, GROUP_MODIFY_CREATED_TIME)
+	testutils.AssertEqual(t, response.Data.ID, GROUP_UPDATE_GROUP_ID)
+	testutils.AssertEqual(t, response.Data.Name, GROUP_UPDATE_EXPECTED_GROUP_NAME)
+	testutils.AssertTimeEqual(t, response.Data.CreatedAt, GROUP_UPDATE_CREATED_TIME)
 }
