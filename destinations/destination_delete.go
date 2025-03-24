@@ -8,8 +8,6 @@ import (
 	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
-// DestinationDeleteService implements the Destination Management, Delete a destination API.
-// Ref. https://fivetran.com/docs/rest-api/destinations#deleteadestination
 type DestinationDeleteService struct {
 	httputils.HttpService
 	destinationID *string

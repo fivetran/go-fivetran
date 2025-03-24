@@ -7,9 +7,7 @@ import (
     httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
-// DestinationModifyService implements the Destination Management, Modify a Destination API.
-// Ref. https://fivetran.com/docs/rest-api/destinations#modifyadestination
-type DestinationModifyService struct {
+type DestinationUpdateService struct {
     httputils.HttpService
     destinationID               *string
     region                      *string
@@ -25,14 +23,14 @@ type DestinationModifyService struct {
     privateLinkId               *string
 }
 
-func (s *DestinationModifyService) request() *destinationModifyRequest {
+func (s *DestinationUpdateService) request() *destinationUpdateRequest {
     var config interface{}
 
     if s.config != nil {
         config = s.config.Request()
     }
 
-    return &destinationModifyRequest{
+    return &destinationUpdateRequest{
         Region:                         s.region,
         TimeZoneOffset:                 s.timeZoneOffset,
         Config:                         config,
@@ -46,8 +44,8 @@ func (s *DestinationModifyService) request() *destinationModifyRequest {
     }
 }
 
-func (s *DestinationModifyService) requestCustom() *destinationModifyRequest {
-    return &destinationModifyRequest{
+func (s *DestinationUpdateService) requestCustom() *destinationUpdateRequest {
+    return &destinationUpdateRequest{
         Region:                         s.region,
         TimeZoneOffset:                 s.timeZoneOffset,
         Config:                         s.configCustom,
@@ -61,67 +59,67 @@ func (s *DestinationModifyService) requestCustom() *destinationModifyRequest {
     }
 }
 
-func (s *DestinationModifyService) DestinationID(value string) *DestinationModifyService {
+func (s *DestinationUpdateService) DestinationID(value string) *DestinationUpdateService {
     s.destinationID = &value
     return s
 }
 
-func (s *DestinationModifyService) Region(value string) *DestinationModifyService {
+func (s *DestinationUpdateService) Region(value string) *DestinationUpdateService {
     s.region = &value
     return s
 }
 
-func (s *DestinationModifyService) TimeZoneOffset(value string) *DestinationModifyService {
+func (s *DestinationUpdateService) TimeZoneOffset(value string) *DestinationUpdateService {
     s.timeZoneOffset = &value
     return s
 }
 
-func (s *DestinationModifyService) Config(value *DestinationConfig) *DestinationModifyService {
+func (s *DestinationUpdateService) Config(value *DestinationConfig) *DestinationUpdateService {
     s.config = value
     return s
 }
 
-func (s *DestinationModifyService) ConfigCustom(value *map[string]interface{}) *DestinationModifyService {
+func (s *DestinationUpdateService) ConfigCustom(value *map[string]interface{}) *DestinationUpdateService {
     s.configCustom = value
     return s
 }
 
-func (s *DestinationModifyService) TrustCertificates(value bool) *DestinationModifyService {
+func (s *DestinationUpdateService) TrustCertificates(value bool) *DestinationUpdateService {
     s.trustCertificates = &value
     return s
 }
 
-func (s *DestinationModifyService) TrustFingerprints(value bool) *DestinationModifyService {
+func (s *DestinationUpdateService) TrustFingerprints(value bool) *DestinationUpdateService {
     s.trustFingerprints = &value
     return s
 }
 
-func (s *DestinationModifyService) RunSetupTests(value bool) *DestinationModifyService {
+func (s *DestinationUpdateService) RunSetupTests(value bool) *DestinationUpdateService {
     s.runSetupTests = &value
     return s
 }
 
-func (s *DestinationModifyService) DaylightSavingTimeEnabled(value bool) *DestinationModifyService {
+func (s *DestinationUpdateService) DaylightSavingTimeEnabled(value bool) *DestinationUpdateService {
     s.daylightSavingTimeEnabled = &value
     return s
 }
 
-func (s *DestinationModifyService) HybridDeploymentAgentId(value string) *DestinationModifyService {
+func (s *DestinationUpdateService) HybridDeploymentAgentId(value string) *DestinationUpdateService {
     s.hybridDeploymentAgentId = &value
     return s
 }
 
-func (s *DestinationModifyService) PrivateLinkId(value string) *DestinationModifyService {
+func (s *DestinationUpdateService) PrivateLinkId(value string) *DestinationUpdateService {
     s.privateLinkId = &value
     return s
 }
 
-func (s *DestinationModifyService) NetworkingMethod(value string) *DestinationModifyService {
+func (s *DestinationUpdateService) NetworkingMethod(value string) *DestinationUpdateService {
     s.networkingMethod = &value
     return s
 }
 
-func (s *DestinationModifyService) Do(ctx context.Context) (DestinationDetailsWithSetupTestsResponse, error) {
+func (s *DestinationUpdateService) Do(ctx context.Context) (DestinationDetailsWithSetupTestsResponse, error) {
     var response DestinationDetailsWithSetupTestsResponse
 
     if s.destinationID == nil {
@@ -133,7 +131,7 @@ func (s *DestinationModifyService) Do(ctx context.Context) (DestinationDetailsWi
     return response, err
 }
 
-func (s *DestinationModifyService) DoCustom(ctx context.Context) (DestinationDetailsWithSetupTestsCustomResponse, error) {
+func (s *DestinationUpdateService) DoCustom(ctx context.Context) (DestinationDetailsWithSetupTestsCustomResponse, error) {
     var response DestinationDetailsWithSetupTestsCustomResponse
 
     if s.destinationID == nil {

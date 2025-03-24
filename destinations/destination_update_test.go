@@ -37,14 +37,14 @@ const (
 	DESTINATION_MODIFY_MASKED             		= "******"
 )
 
-func TestDestinationModifyService(t *testing.T) {
+func TestDestinationUpdateService(t *testing.T) {
 	// arrange
 	ftClient, mockClient := testutils.CreateTestClient()
 	handler := mockClient.When(http.MethodPatch, "/v1/destinations/decent_dropsy").ThenCall(
 		func(req *http.Request) (*http.Response, error) {
 			body := testutils.RequestBodyToJson(t, req)
-			assertModifyRequest(t, body)
-			response := mock.NewResponse(req, http.StatusOK, prepareDestinationModifyResponse())
+			assertUpdateRequest(t, body)
+			response := mock.NewResponse(req, http.StatusOK, prepareDestinationUpdateResponse())
 			return response, nil
 		})
 
@@ -57,7 +57,7 @@ func TestDestinationModifyService(t *testing.T) {
 		User(DESTINATION_MODIFY_USER).
 		Password(DESTINATION_MODIFY_PASSWORD)
 
-	service := ftClient.NewDestinationModify().
+	service := ftClient.NewDestinationUpdate().
 		DestinationID(DESTINATION_MODIFY_ID).
 		Region(DESTINATION_MODIFY_REGION).
 		TimeZoneOffset(DESTINATION_MODIFY_TIME_ZONE_OFFSET).
@@ -84,21 +84,21 @@ func TestDestinationModifyService(t *testing.T) {
 	testutils.AssertEqual(t, interactions[0].Handler, handler)
 	testutils.AssertEqual(t, handler.Interactions, 1)
 
-	assertDestinationModifyResponse(t, response)
+	assertDestinationUpdateResponse(t, response)
 }
 
-func TestDestinationModifyCustomService(t *testing.T) {
+func TestDestinationUpdateCustomService(t *testing.T) {
 	// arrange
 	ftClient, mockClient := testutils.CreateTestClient()
 	handler := mockClient.When(http.MethodPatch, "/v1/destinations/decent_dropsy").ThenCall(
 		func(req *http.Request) (*http.Response, error) {
 			body := testutils.RequestBodyToJson(t, req)
-			assertModifyRequest(t, body)
-			response := mock.NewResponse(req, http.StatusOK, prepareDestinationModifyResponse())
+			assertUpdateRequest(t, body)
+			response := mock.NewResponse(req, http.StatusOK, prepareDestinationUpdateResponse())
 			return response, nil
 		})
 
-	service := ftClient.NewDestinationModify().
+	service := ftClient.NewDestinationUpdate().
 		DestinationID(DESTINATION_MODIFY_ID).
 		Region(DESTINATION_MODIFY_REGION).
 		DaylightSavingTimeEnabled(DESTINATION_MODIFY_DAYLIGHT).
@@ -132,10 +132,10 @@ func TestDestinationModifyCustomService(t *testing.T) {
 	testutils.AssertEqual(t, interactions[0].Handler, handler)
 	testutils.AssertEqual(t, handler.Interactions, 1)
 
-	assertDestinationModifyCustomResponse(t, response)
+	assertDestinationUpdateCustomResponse(t, response)
 }
 
-func prepareDestinationModifyResponse() string {
+func prepareDestinationUpdateResponse() string {
 	return fmt.Sprintf(`{
 		"code": "Success",
 		"message": "Destination has been updated",
@@ -201,7 +201,7 @@ func prepareDestinationModifyResponse() string {
 		DESTINATION_MODIFY_MASKED)
 }
 
-func assertDestinationModifyResponse(t *testing.T, response destinations.DestinationDetailsWithSetupTestsResponse) {
+func assertDestinationUpdateResponse(t *testing.T, response destinations.DestinationDetailsWithSetupTestsResponse) {
 	testutils.AssertEqual(t, response.Code, "Success")
 	testutils.AssertEqual(t, response.Message, "Destination has been updated")
 	testutils.AssertEqual(t, response.Data.ID, DESTINATION_MODIFY_ID)
@@ -233,7 +233,7 @@ func assertDestinationModifyResponse(t *testing.T, response destinations.Destina
 	testutils.AssertEqual(t, response.Data.Config.Password, DESTINATION_MODIFY_MASKED)
 }
 
-func assertDestinationModifyCustomResponse(t *testing.T, response destinations.DestinationDetailsWithSetupTestsCustomResponse) {
+func assertDestinationUpdateCustomResponse(t *testing.T, response destinations.DestinationDetailsWithSetupTestsCustomResponse) {
 	testutils.AssertEqual(t, response.Code, "Success")
 	testutils.AssertEqual(t, response.Message, "Destination has been updated")
 	testutils.AssertEqual(t, response.Data.ID, DESTINATION_MODIFY_ID)
@@ -265,7 +265,7 @@ func assertDestinationModifyCustomResponse(t *testing.T, response destinations.D
 	testutils.AssertEqual(t, response.Data.Config["password"], DESTINATION_MODIFY_MASKED)
 }
 
-func assertModifyRequest(t *testing.T, request map[string]interface{}) {
+func assertUpdateRequest(t *testing.T, request map[string]interface{}) {
 	c, ok := request["config"]
 	testutils.AssertEqual(t, ok, true)
 	config, ok := c.(map[string]interface{})
