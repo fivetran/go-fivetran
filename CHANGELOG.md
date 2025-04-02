@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.1.0](https://github.com/fivetran/go-fivetran/compare/v1.0.6...v1.1.0)
 
+## Added
+-  Add `IsDeprecated`, `ReplacementRoleName` to `RolesListResponse`
+
 ## Updated
 In order to synchronize terminology, we have renamed all services and structures that use incorrect terminology:
 - `connectors` package is now called `connections`. All services, data structures, methods with names like `Connector*` are now named `Connection*`
