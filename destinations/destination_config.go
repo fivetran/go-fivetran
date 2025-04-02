@@ -1,7 +1,5 @@
 package destinations
 
-// DestinationConfig builds Destination Management, Destination Config.
-// Ref. https://fivetran.com/docs/rest-api/destinations/config
 type DestinationConfig struct {
     host                  *string
     port                  *int

@@ -7,8 +7,6 @@ import (
 	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
-// WebhookTestService implements the test method for Webhook Management API.
-// Ref. https://fivetran.com/docs/rest-api/webhooks#testwebhook
 type WebhookTestService struct {
 	httputils.HttpService
 	webhookId *string

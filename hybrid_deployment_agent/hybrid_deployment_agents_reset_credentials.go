@@ -8,8 +8,6 @@ import (
 	"github.com/fivetran/go-fivetran/common"
 )
 
-// HybridDeploymentAgentResetCredentialsService Regenerates authentication keys for the specified hybrid deployment agent.
-// Ref. https://fivetran.com/docs/rest-api/api-reference/hybrid-deployment-agent-management/reset-local-processing-agent-credentials
 type HybridDeploymentAgentResetCredentialsService struct {
 	httputils.HttpService
 	agentId *string

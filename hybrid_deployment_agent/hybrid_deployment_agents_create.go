@@ -6,8 +6,6 @@ import (
 	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
-// HybridDeploymentAgentCreateService Creates a new local processing agent within your Fivetran account.
-// Ref. https://fivetran.com/docs/rest-api/hybrid-deployment-agent-management#createahybriddeploymentagent
 type HybridDeploymentAgentCreateService struct {
 	httputils.HttpService
 	groupId 	     *string

@@ -8,8 +8,6 @@ import (
 	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
-// PrivateLinkDeleteService implements the Private Link Management, Delete a Private Link
-// Ref. https://fivetran.com/docs/rest-api/private-link-management#deleteaprivatelink
 type PrivateLinkDeleteService struct {
 	httputils.HttpService
 	privateLinkId 	  *string

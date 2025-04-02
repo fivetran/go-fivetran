@@ -6,8 +6,6 @@ import (
 	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
-// WebhookAccountCreateService implements the Webhook Management, Create a Account Webhook.
-// Ref. https://fivetran.com/docs/rest-api/webhooks#createaccountwebhook
 type WebhookAccountCreateService struct {
 	httputils.HttpService
 	url    *string

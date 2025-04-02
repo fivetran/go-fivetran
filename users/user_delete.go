@@ -8,8 +8,6 @@ import (
 	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
-// UserDeleteService implements the User Management, Delete a user API.
-// Ref. https://fivetran.com/docs/rest-api/users#deleteauser
 type UserDeleteService struct {
 	httputils.HttpService
 	userID *string

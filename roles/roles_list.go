@@ -7,8 +7,6 @@ import (
 	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
-// RolesListService implements the Group Management, List All Roles API.
-// Ref. https://fivetran.com/docs/rest-api/roles
 type RolesListService struct {
 	httputils.HttpService
 	limit  *int

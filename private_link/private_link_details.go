@@ -7,8 +7,6 @@ import (
 	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
-// PrivateLinkDetailsService implements the Private Link Management, Retrieve Private Link details API.
-// Ref. https://fivetran.com/docs/rest-api/private-link-management#retrieveprivatelinkdetails
 type PrivateLinkDetailsService struct {
 	httputils.HttpService
 	privateLinkId 	  *string

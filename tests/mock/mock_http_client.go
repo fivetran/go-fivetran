@@ -19,8 +19,8 @@ package mock
 //
 // Alternatively you can stub using the wildcard symbols ('*' and '?'):
 //
-//   mockClient.WhenWc(http.MethodGet, "/v1/connectors/*")
-//   mockClient.WhenAnyMethodWc("/v?/connectors/*")
+//   mockClient.WhenWc(http.MethodGet, "/v1/connections/*")
+//   mockClient.WhenAnyMethodWc("/v?/connections/*")
 //
 // Now you need to return something from the stabbed methods.
 // If you need just the HTTP status code, the following is enough:
@@ -37,7 +37,7 @@ package mock
 //
 // Alternatively you can use a supplied function to create the response:
 //
-//   mockClient.WhenAnyMethod("/v1/connectors/*").ThenCall(
+//   mockClient.WhenAnyMethod("/v1/connections/*").ThenCall(
 //       func(req *http.Request) (*http.Response, error) {
 //           resp := mock.NewResponse(req, "OK", 200, "{}")
 //           return resp, nil

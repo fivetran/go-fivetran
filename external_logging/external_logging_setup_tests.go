@@ -7,8 +7,6 @@ import (
 	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
-// ExternalLoggingSetupTestsService implements the Log Management, Run Log service setup tests API.
-// Ref. https://fivetran.com/docs/rest-api/log-service-management#runlogservicesetuptests
 type ExternalLoggingSetupTestsService struct {
 	httputils.HttpService
 	externalLoggingId *string

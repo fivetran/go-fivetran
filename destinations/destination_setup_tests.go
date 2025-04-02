@@ -7,8 +7,6 @@ import (
 	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
-// DestinationSetupTestsService implements the Destination Management, Run destination setup tests API.
-// Ref. https://fivetran.com/docs/rest-api/destinations#rundestinationsetuptests
 type DestinationSetupTestsService struct {
 	httputils.HttpService
 	destinationID     *string

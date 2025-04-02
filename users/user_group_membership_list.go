@@ -7,8 +7,6 @@ import (
 	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
-// UserListGroupsService implements the User Management, List all group memberships
-// Ref. https://fivetran.com/docs/rest-api/users#listallgroupmemberships
 type UserGroupMembershipsListService struct {
 	httputils.HttpService
 	userId *string

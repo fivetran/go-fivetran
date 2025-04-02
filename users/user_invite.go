@@ -6,8 +6,6 @@ import (
 	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
-// UserInviteService implements the User Management, Invite a User API.
-// Ref. https://fivetran.com/docs/rest-api/users#inviteauser
 type UserInviteService struct {
 	httputils.HttpService
 	email      *string

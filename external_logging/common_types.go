@@ -49,18 +49,18 @@ type externalLoggingCustomCreateRequest struct {
 	Config *map[string]interface{} `json:"config,omitempty"`
 }
 
-type externalLoggingModifyRequestBase struct {
+type externalLoggingUpdateRequestBase struct {
 	Enabled       *bool `json:"enabled,omitempty"`
 	RunSetupTests *bool `json:"run_setup_tests,omitempty"`
 }
 
-type externalLoggingModifyRequest struct {
-	externalLoggingModifyRequestBase
+type externalLoggingUpdateRequest struct {
+	externalLoggingUpdateRequestBase
 	Config any `json:"config,omitempty"`
 }
 
-type externalLoggingCustomModifyRequest struct {
-	externalLoggingModifyRequestBase
+type externalLoggingCustomUpdateRequest struct {
+	externalLoggingUpdateRequestBase
 	Config *map[string]interface{} `json:"config,omitempty"`
 }
 
@@ -124,35 +124,35 @@ type externalLoggingCreateRequestBase struct {
 	Enabled *bool   `json:"enabled,omitempty"`
 }
 
-type ExternalLoggingModifyResponseDataBased struct {
+type ExternalLoggingUpdateResponseDataBased struct {
 	Id      string `json:"id"`
 	Service string `json:"service"`
 	Enabled bool   `json:"enabled"`
 }
 
-type ExternalLoggingModifyResponse struct {
+type ExternalLoggingUpdateResponse struct {
 	Code    string `json:"code"`
 	Message string `json:"message"`
 	Data    struct {
-		ExternalLoggingModifyResponseDataBased
+		ExternalLoggingUpdateResponseDataBased
 		Config ExternalLoggingConfigResponse `json:"config"`
 	} `json:"data"`
 }
 
-type ExternalLoggingModifyCustomResponse struct {
+type ExternalLoggingUpdateCustomResponse struct {
 	Code    string `json:"code"`
 	Message string `json:"message"`
 	Data    struct {
-		ExternalLoggingModifyResponseDataBased
+		ExternalLoggingUpdateResponseDataBased
 		Config map[string]interface{} `json:"config"`
 	} `json:"data"`
 }
 
-type ExternalLoggingModifyCustomMergedResponse struct {
+type ExternalLoggingUpdateCustomMergedResponse struct {
 	Code    string `json:"code"`
 	Message string `json:"message"`
 	Data    struct {
-		ExternalLoggingModifyResponseDataBased
+		ExternalLoggingUpdateResponseDataBased
 		CustomConfig map[string]interface{}                        `json:"config"`
 		Config       ExternalLoggingConfigResponse // no mapping here
 	} `json:"data"`

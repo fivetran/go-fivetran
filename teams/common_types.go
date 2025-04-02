@@ -16,8 +16,8 @@ type TeamMembership struct {
 	CreatedAt string `json:"created_at"`
 }
 
-type TeamConnectorMembership struct {
-	ConnectorId string `json:"id"`
+type TeamConnectionMembership struct {
+	ConnectionId string `json:"id"`
 	TeamMembership
 }
 
@@ -42,30 +42,30 @@ type TeamsCreateResponse struct {
 	Data TeamData `json:"data"`
 }
 
-type teamConnectorMembershipCreateRequest struct {
-	ConnectorId *string `json:"id,omitempty"`
+type teamConnectionMembershipCreateRequest struct {
+	ConnectionId *string `json:"id,omitempty"`
 	Role        *string `json:"role,omitempty"`
 }
 
-type TeamConnectorMembershipCreateResponse struct {
+type TeamConnectionMembershipCreateResponse struct {
 	common.CommonResponse
-	Data TeamConnectorMembership `json:"data"`
+	Data TeamConnectionMembership `json:"data"`
 }
 
-type TeamConnectorMembershipDetailsResponse struct {
+type TeamConnectionMembershipDetailsResponse struct {
 	Code string                        `json:"code"`
-	Data TeamConnectorMembership `json:"data"`
+	Data TeamConnectionMembership `json:"data"`
 }
 
-type TeamConnectorMembershipsListResponse struct {
+type TeamConnectionMembershipsListResponse struct {
 	Code string `json:"code"`
 	Data struct {
-		Items      []TeamConnectorMembership `json:"items"`
+		Items      []TeamConnectionMembership `json:"items"`
 		NextCursor string                          `json:"next_cursor"`
 	} `json:"data"`
 }
 
-type teamConnectorMembershipModifyRequest struct {
+type teamConnectionMembershipUpdateRequest struct {
 	Role *string `json:"role,omitempty"`
 }
 
@@ -92,7 +92,7 @@ type TeamGroupMembershipsListResponse struct {
 	} `json:"data"`
 }
 
-type teamGroupMembershipModifyRequest struct {
+type teamGroupMembershipUpdateRequest struct {
 	Role *string `json:"role,omitempty"`
 }
 
@@ -119,7 +119,7 @@ type TeamUserMembershipsListResponse struct {
 	} `json:"data"`
 }
 
-type teamUserMembershipModifyRequest struct {
+type teamUserMembershipUpdateRequest struct {
 	Role *string `json:"role,omitempty"`
 }
 
@@ -136,13 +136,13 @@ type TeamsListResponse struct {
 	} `json:"data"`
 }
 
-type teamsModifyRequest struct {
+type teamsUpdateRequest struct {
 	Name        *string `json:"name,omitempty"`
 	Description *string `json:"description,omitempty"`
 	Role        *string `json:"role,omitempty"`
 }
 
-type TeamsModifyResponse struct {
+type TeamsUpdateResponse struct {
 	common.CommonResponse
 	Data TeamData `json:"data"`
 }

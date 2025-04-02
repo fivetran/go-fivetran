@@ -7,8 +7,6 @@ import (
 	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
-// WebhookDetailsService implements the Webhook Management, retrieve Webhook Details.
-// Ref. https://fivetran.com/docs/rest-api/webhooks#retrievewebhookdetails
 type WebhookDetailsService struct {
 	httputils.HttpService
 	webhookId *string

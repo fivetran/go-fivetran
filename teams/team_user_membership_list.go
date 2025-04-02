@@ -7,8 +7,6 @@ import (
 	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
-// TeamUserMembershipsListService implements the Team Management, List all user memberships
-// Ref. https://fivetran.com/docs/rest-api/teams#listallusermemberships
 type TeamUserMembershipsListService struct {
 	httputils.HttpService
 	teamId *string

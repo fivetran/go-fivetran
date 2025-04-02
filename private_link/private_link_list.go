@@ -7,8 +7,6 @@ import (
 	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
-// PrivateLinkListService Returns a list of all private links within your Fivetran account.
-// Ref. https://fivetran.com/docs/rest-api/private-links-management#listallprivatelinkswithinaccount
 type PrivateLinkListService struct {
 	httputils.HttpService
 	limit  *int

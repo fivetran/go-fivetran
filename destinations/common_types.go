@@ -67,7 +67,7 @@ type destinationCreateRequest struct {
     
 }
 
-type destinationModifyRequest struct {
+type destinationUpdateRequest struct {
     Region                      *string `json:"region,omitempty"`
     TimeZoneOffset              *string `json:"time_zone_offset,omitempty"`
     Config                      any     `json:"config,omitempty"`

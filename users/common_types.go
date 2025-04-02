@@ -16,7 +16,7 @@ type userInviteRequest struct {
 	Role       *string `json:"role,omitempty"`
 }
 
-type userModifyRequest struct {
+type userUpdateRequest struct {
 	GivenName  *string                `json:"given_name,omitempty"`
 	FamilyName *string                `json:"family_name,omitempty"`
 	Phone      *common.NullableString `json:"phone,omitempty"`
@@ -29,16 +29,16 @@ type userGroupMembershipCreateRequest struct {
 	Role    *string `json:"role,omitempty"`
 }
 
-type userGroupMembershipModifyRequest struct {
+type userGroupMembershipUpdateRequest struct {
 	Role *string `json:"role,omitempty"`
 }
 
-type userConnectorMembershipCreateRequest struct {
-	ConnectorId *string `json:"id,omitempty"`
+type userConnectionMembershipCreateRequest struct {
+	ConnectionId *string `json:"id,omitempty"`
 	Role        *string `json:"role,omitempty"`
 }
 
-type userConnectorMembershipModifyRequest struct {
+type userConnectionMembershipUpdateRequest struct {
 	Role *string `json:"role,omitempty"`
 }
 
@@ -72,22 +72,22 @@ type UsersListResponse struct {
 	} `json:"data"`
 }
 
-type UserConnectorMembershipCreateResponse struct {
+type UserConnectionMembershipCreateResponse struct {
 	common.CommonResponse
-	Data UserConnectorMembership `json:"data"`
+	Data UserConnectionMembership `json:"data"`
 }
 
 
-type UserConnectorMembershipDetailsResponse struct {
+type UserConnectionMembershipDetailsResponse struct {
 	Code string                        `json:"code"`
-	Data UserConnectorMembership       `json:"data"`
+	Data UserConnectionMembership       `json:"data"`
 }
 
 
-type UserConnectorMembershipsListResponse struct {
+type UserConnectionMembershipsListResponse struct {
 	Code string `json:"code"`
 	Data struct {
-		Items      []UserConnectorMembership `json:"items"`
+		Items      []UserConnectionMembership `json:"items"`
 		NextCursor string                    `json:"next_cursor"`
 	} `json:"data"`
 }
@@ -115,8 +115,8 @@ type UserMembership struct {
 	CreatedAt string `json:"created_at"`
 }
 
-type UserConnectorMembership struct {
-	ConnectorId string `json:"id"`
+type UserConnectionMembership struct {
+	ConnectionId string `json:"id"`
 	UserMembership
 }
 

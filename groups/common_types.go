@@ -4,7 +4,7 @@ import (
 	"time"
 
 	"github.com/fivetran/go-fivetran/common"
-	"github.com/fivetran/go-fivetran/connectors"
+	"github.com/fivetran/go-fivetran/connections"
 	"github.com/fivetran/go-fivetran/users"
 )
 
@@ -33,10 +33,10 @@ type GroupServiceAccountResponse struct {
 	}
 }
 
-type GroupListConnectorsResponse struct {
+type GroupListConnectionsResponse struct {
 	common.CommonResponse
 	Data struct {
-		Items      []connectors.DetailsResponseDataCommon `json:"items"`
+		Items      []connections.DetailsResponseDataCommon `json:"items"`
 		NextCursor string                                 `json:"next_cursor"`
 	} `json:"data"`
 }
@@ -66,6 +66,6 @@ type groupAddUserRequest struct {
 	Role  *string `json:"role,omitempty"`
 }
 
-type groupModifyRequest struct {
+type groupUpdateRequest struct {
 	Name *string `json:"name,omitempty"`
 }

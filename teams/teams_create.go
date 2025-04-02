@@ -6,8 +6,6 @@ import (
 	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
-// TeamsCreateService implements the Team Management, Create a Team.
-// Ref. https://fivetran.com/docs/rest-api/teams#createateam
 type TeamsCreateService struct {
 	httputils.HttpService
 	name        *string

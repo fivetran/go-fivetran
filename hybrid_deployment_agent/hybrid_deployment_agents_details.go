@@ -7,8 +7,6 @@ import (
 	httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
-// HybridDeploymentAgentDetailsService Retrieves the details of the specified local processing agent.
-// Ref. https://fivetran.com/docs/rest-api/hybrid-deployment-agent-management#retrievehybriddeploymentagentdetails
 type HybridDeploymentAgentDetailsService struct {
 	httputils.HttpService
 	agentId *string

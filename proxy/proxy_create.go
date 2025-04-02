@@ -6,8 +6,6 @@ import (
     httputils "github.com/fivetran/go-fivetran/http_utils"
 )
 
-// ProxyCreateService implements the Proxy Agent Management, Create a Proxy Agent.
-// Ref. https://fivetran.com/docs/rest-api/proxy-management#createaproxyagent
 type ProxyCreateService struct {
     httputils.HttpService
     display_name     *string

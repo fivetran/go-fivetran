@@ -13,13 +13,13 @@ import (
     testutils "github.com/fivetran/go-fivetran/test_utils"
 )
 
-func TestProxyConnectorListServiceDo(t *testing.T) {
+func TestProxyConnectionListServiceDo(t *testing.T) {
 	// arrange
 
 	ftClient, mockClient := testutils.CreateTestClient()
 	handler := mockClient.When(http.MethodGet, "/v1/proxy/proxy_id/connections").
 		ThenCall(func(req *http.Request) (*http.Response, error) {
-			response := mock.NewResponse(req, http.StatusOK, prepareProxyConnectorListResponse())
+			response := mock.NewResponse(req, http.StatusOK, prepareProxyConnectionListResponse())
 			return response, nil
 		})
 
@@ -40,7 +40,7 @@ func TestProxyConnectorListServiceDo(t *testing.T) {
 	assertProxyConnectionListResponse(t, response)
 }
 
-func prepareProxyConnectorListResponse() string {
+func prepareProxyConnectionListResponse() string {
 	return fmt.Sprintf(`{
     			"code": "Success",
     			"data": {

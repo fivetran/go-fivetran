@@ -16,7 +16,7 @@ func main() {
 
 	client := fivetran.New(apiKey, apiSecret)
 
-	svc := client.NewGroupListConnectors()
+	svc := client.NewGroupListConnections()
 
 	svc.GroupID("replying_ministry")
 

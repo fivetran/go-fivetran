@@ -49,7 +49,7 @@ type WebhookTestResponse struct {
 	} `json:"data"`
 }
 
-type webhookModifyRequest struct {
+type webhookUpdateRequest struct {
 	Url      *string   `json:"url,omitempty"`
 	Events   *[]string `json:"events,omitempty"`
 	Active   *bool     `json:"active,omitempty"`
