@@ -22,13 +22,17 @@ func TestRolesListServiceDo(t *testing.T) {
             "name": "Account Administrator",
             "description": "Can view and change account information, including billing, users, roles, API access, and security settings. Can create, manage, and delete destinations and connectors. Can manage transformations and logs.",
             "is_custom": false,
-            "scope": ["ACCOUNT"]
+            "scope": ["ACCOUNT"],
+            "is_deprecated": null,
+            "replacement_role_name": null
         },
         {
             "name": "Destination Reviewer",
             "description": "Can view the destinations that you are invited to and their associated connectors. Cannot create, delete, or manage destinations or connectors. Cannot access account information.",
             "is_custom": false,
-            "scope": ["DESTINATION"]
+            "scope": ["DESTINATION"],
+            "is_deprecated": false,
+            "replacement_role_name": "test"
         }
         ],
         "next_cursor": "eyJza2lwIjoxfQ"
@@ -54,30 +58,38 @@ func TestRolesListServiceDo(t *testing.T) {
         Code: "Success",
         Data: struct {
             Items []struct {
-                Name            string    `json:"name"`
-                Description     string    `json:"description"`
-                IsCustom        *bool     `json:"is_custom"`
-                Scope           []string  `json:"scope"`
+                Name                string    `json:"name"`
+                Description         string    `json:"description"`
+                IsCustom            *bool     `json:"is_custom"`
+                Scope               []string  `json:"scope"`
+                IsDeprecated        *bool     `json:"is_deprecated"`
+                ReplacementRoleName string    `json:"replacement_role_name"`
             } `json:"items"`
             NextCursor string `json:"next_cursor"`
         }{
             Items: []struct {
-                Name            string    `json:"name"`
-                Description     string    `json:"description"`
-                IsCustom        *bool     `json:"is_custom"`
-                Scope           []string  `json:"scope"`
+                Name                string    `json:"name"`
+                Description         string    `json:"description"`
+                IsCustom            *bool     `json:"is_custom"`
+                Scope               []string  `json:"scope"`
+                IsDeprecated        *bool     `json:"is_deprecated"`
+                ReplacementRoleName string    `json:"replacement_role_name"`
             }{
                 {
-                    Name:           "Account Administrator",
-                    Description:    "Can view and change account information, including billing, users, roles, API access, and security settings. Can create, manage, and delete destinations and connectors. Can manage transformations and logs.",
-                    IsCustom:       &flag,
-                    Scope:          []string{"ACCOUNT"},
+                    Name:                   "Account Administrator",
+                    Description:            "Can view and change account information, including billing, users, roles, API access, and security settings. Can create, manage, and delete destinations and connectors. Can manage transformations and logs.",
+                    IsCustom:               &flag,
+                    Scope:                  []string{"ACCOUNT"},
+                    IsDeprecated:           nil,
+                    ReplacementRoleName:    "",
                 },
                 {
-                    Name:           "Destination Reviewer",
-                    Description:    "Can view the destinations that you are invited to and their associated connectors. Cannot create, delete, or manage destinations or connectors. Cannot access account information.",
-                    IsCustom:       &flag,
-                    Scope:          []string{"DESTINATION"},
+                    Name:                   "Destination Reviewer",
+                    Description:            "Can view the destinations that you are invited to and their associated connectors. Cannot create, delete, or manage destinations or connectors. Cannot access account information.",
+                    IsCustom:               &flag,
+                    Scope:                  []string{"DESTINATION"},
+                    IsDeprecated:           &flag,
+                    ReplacementRoleName:    "test",
                 },
             },
             NextCursor: "eyJza2lwIjoxfQ",
@@ -104,5 +116,7 @@ func assertRolesListResponse(t *testing.T, response roles.RolesListResponse, exp
         testutils.AssertEqual(t, item.Description, expected.Data.Items[i].Description)
         testutils.AssertEqual(t, item.IsCustom, expected.Data.Items[i].IsCustom)
         testutils.AssertEqual(t, item.Scope, expected.Data.Items[i].Scope)
+        testutils.AssertEqual(t, item.IsDeprecated, expected.Data.Items[i].IsDeprecated)
+        testutils.AssertEqual(t, item.ReplacementRoleName, expected.Data.Items[i].ReplacementRoleName)
     }
 }

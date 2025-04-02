@@ -17,10 +17,12 @@ type RolesListResponse struct {
 	Code string `json:"code"`
 	Data struct {
 		Items []struct {
-			Name        string   `json:"name"`
-			Description string   `json:"description"`
-			IsCustom    *bool    `json:"is_custom"`
-			Scope       []string `json:"scope"`
+			Name        		string   `json:"name"`
+			Description 		string   `json:"description"`
+			IsCustom    		*bool    `json:"is_custom"`
+			Scope       		[]string `json:"scope"`
+			IsDeprecated    	*bool    `json:"is_deprecated"`
+			ReplacementRoleName string   `json:"replacement_role_name"`
 		} `json:"items"`
 		NextCursor string `json:"next_cursor"`
 	} `json:"data"`

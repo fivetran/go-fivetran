@@ -18,4 +18,5 @@ func TestNewRolesListE2E(t *testing.T) {
 	testutils.AssertNotEmpty(t, result.Data.Items[0].Name)
 	testutils.AssertNotEmpty(t, result.Data.Items[0].Description)
 	testutils.AssertNotEmpty(t, result.Data.Items[0].Scope)
+	testutils.AssertEmpty(t, result.Data.Items[0].ReplacementRoleName)
 }
