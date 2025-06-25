@@ -5,7 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/fivetran/go-fivetran/compare/v1.1.1...HEAD)
+## [Unreleased](https://github.com/fivetran/go-fivetran/compare/v1.2.0...HEAD)
+
+## [1.2.0](https://github.com/fivetran/go-fivetran/compare/v1.1.1...v1.2.0)
+
+## Removed
+- field `ProxyServerUri` from `proxy.ProxyCreateData`
+
+## Added
+- fields `ClientCert` and `ClientPrivateKey` from `proxy.ProxyCreateData`
+
+Supported the following Fivetran API endpoint for Proxy Agents Management:
+- [Regenerate Secrets for Proxy Agent](https://fivetran.com/docs/rest-api/api-reference/proxy-agent/regenerate-secrets-proxy-agent)
 
 ## [1.1.1](https://github.com/fivetran/go-fivetran/compare/v1.1.0...v1.1.1)
 

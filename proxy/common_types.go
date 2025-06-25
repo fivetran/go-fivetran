@@ -5,9 +5,10 @@ import (
 )
 
 type ProxyCreateData struct {
-	AgentId        string `json:"agent_id"`
-	AuthToken      string `json:"auth_token"`
-	ProxyServerUri string `json:"proxy_server_uri"`
+	AgentId          string `json:"agent_id"`
+	AuthToken        string `json:"auth_token"`
+	ClientCert 		 string `json:"client_cert"`
+	ClientPrivateKey string `json:"client_private_key"`
 }
 
 type ProxyData struct {
