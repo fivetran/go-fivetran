@@ -19,7 +19,7 @@ func TestProxyRegeneratesSecretsServiceDo(t *testing.T) {
 	ftClient, mockClient := testutils.CreateTestClient()
 	handler := mockClient.When(http.MethodPatch, "/v1/proxy/proxy_id").
 		ThenCall(func(req *http.Request) (*http.Response, error) {
-			response := mock.NewResponse(req, http.StatusOK, prepareResponse())
+			response := mock.NewResponse(req, http.StatusOK, prepareProxyRegenerateResponse())
 			return response, nil
 		})
 
@@ -37,10 +37,10 @@ func TestProxyRegeneratesSecretsServiceDo(t *testing.T) {
 	testutils.AssertEqual(t, len(interactions), 1)
 	testutils.AssertEqual(t, interactions[0].Handler, handler)
 	testutils.AssertEqual(t, handler.Interactions, 1)
-	assertProxyDetailsResponse(t, response)
+	assertProxyRegenerateResponse(t, response)
 }
 
-func prepareResponse() string {
+func prepareProxyRegenerateResponse() string {
 	return fmt.Sprintf(`{
   				"code": "Created",
   				"message": "Operation performed.",
@@ -54,7 +54,7 @@ func prepareResponse() string {
 			}`)
 }
 
-func assertProxyDetailsResponse(t *testing.T, response proxy.ProxyDetailsResponse) {
+func assertProxyRegenerateResponse(t *testing.T, response proxy.ProxyCreateResponse) {
 	testutils.AssertEqual(t, response.Code, "Success")
 	testutils.AssertEqual(t, response.Data.AgentId, "agent_id")
 	testutils.AssertEqual(t, response.Data.AuthToken, "auth_token")
