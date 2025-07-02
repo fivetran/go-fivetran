@@ -24,7 +24,7 @@ func (s *ProxyRegenerateSecretsService) Do(ctx context.Context) (ProxyCreateResp
         return response, fmt.Errorf("missing required proxyId")
     }
 
-    url := fmt.Sprintf("/proxy/%v", *s.proxyId)
+    url := fmt.Sprintf("/proxy/%v/regenerate-secrets", *s.proxyId)
     err := s.HttpService.Do(ctx, "PATCH", url, nil, nil, 200, &response)
     return response, err
 }
