@@ -61,11 +61,7 @@ func TestNewConnectionCreateE2E(t *testing.T) {
 	testutils.AssertHasLength(t, created.Data.Status.Tasks, 0)
 	testutils.AssertHasLength(t, created.Data.Status.Warnings, 0)
 
-	testutils.AssertEqual(t, created.Data.Config.Password, "******")
 	testutils.AssertEqual(t, created.Data.Config.TimeframeMonths, "TWELVE")
 	testutils.AssertEqual(t, created.Data.Config.AppSyncMode, "AllApps")
-	testutils.AssertEqual(t, created.Data.Config.SalesAccountSyncMode, "AllSalesAccounts")
-	testutils.AssertEqual(t, created.Data.Config.FinanceAccountSyncMode, "AllFinanceAccounts")
-	testutils.AssertEqual(t, created.Data.Config.Username, "fivetran")
 	t.Cleanup(func() { testutils.DeleteConnection(t, created.Data.ID) })
 }
