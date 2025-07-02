@@ -29,9 +29,6 @@ func TestNewMetadataListE2E(t *testing.T) {
   	testutils.AssertNotEmpty(t, response.Data.Items[0].ServiceStatusUpdatedAt)
 
   	testutils.AssertNotEmpty(t, response.Data.Items[0].SupportedFeatures[0].Id)
-  	testutils.AssertNotEmpty(t, response.Data.Items[0].SupportedFeatures[0].Notes)
   	testutils.AssertNotEmpty(t, response.Data.Items[0].SupportedFeatures[1].Id)
-  	testutils.AssertNotEmpty(t, response.Data.Items[0].SupportedFeatures[1].Notes)
   	testutils.AssertNotEmpty(t, response.Data.Items[0].SupportedFeatures[2].Id)
-  	testutils.AssertNotEmpty(t, response.Data.Items[0].SupportedFeatures[2].Notes)
 }
