@@ -199,22 +199,6 @@ type connectionTableConfigUpdateRequest struct {
     Columns  map[string]*ConnectionSchemaConfigColumnRequest `json:"columns,omitempty"`
 }
 
-type ConnectionsSourceMetadataResponse struct {
-    common.CommonResponse
-    Data struct {
-        Items []struct {
-            ID          string `json:"id"`
-            Name        string `json:"name"`
-            Type        string `json:"type"`
-            Description string `json:"description"`
-            IconURL     string `json:"icon_url"`
-            LinkToDocs  string `json:"link_to_docs"`
-            LinkToErd   string `json:"link_to_erd"`
-        } `json:"items"`
-        NextCursor string `json:"next_cursor"`
-    } `json:"data"`
-}
-
 type ConnectionsListResponse struct {
     common.CommonResponse
     Data struct {

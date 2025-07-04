@@ -148,7 +148,6 @@ REST API Endpoint | REST API Version | SDK Service/Config/Auth
 [Sync connection data](https://fivetran.com/docs/rest-api/api-reference/connections/sync-connection) | v1 | [ConnectionSyncService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ConnectionSyncService)
 [Update a connection](https://fivetran.com/docs/rest-api/api-reference/connections/modify-connection) | v2 | [ConnectionUpdateService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ConnectionUpdateService)
 [Connect Card](https://fivetran.com/docs/rest-api/api-reference/connections/connect-card) | v1 | [ConnectCardService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ConnectCardService)
-[Retrieve source metadata](https://fivetran.com/docs/rest-api/api-reference/connector-metadata/metadata-connectors) | v1 | [ConnectionsSourceMetadataService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ConnectionsSourceMetadataService)
 
 ### [Connection Schema](https://fivetran.com/docs/rest-api/api-reference/connection-schema)
 
@@ -270,6 +269,13 @@ REST API Endpoint | REST API Version | SDK Service/Config
 [Delete a Hybrid Deployment Agent](https://fivetran.com/docs/rest-api/api-reference/hybrid-deployment-agent-management/delete-local-processing-agent) | v1 |  [HybridDeploymentAgentDeleteService](https://pkg.go.dev/github.com/fivetran/go-fivetran#HybridDeploymentAgentDeleteService)
 [Regenerate authentication keys](https://fivetran.com/docs/rest-api/api-reference/hybrid-deployment-agent-management/re-auth-local-processing-agent) | v1 |  [HybridDeploymentAgentReAuthService](https://pkg.go.dev/github.com/fivetran/go-fivetran#HybridDeploymentAgentReAuthService)
 [Reset credentials](https://fivetran.com/docs/rest-api/api-reference/hybrid-deployment-agent-management/reset-local-processing-agent-credentials) | v1 |  [HybridDeploymentAgentResetCredentialsService](https://pkg.go.dev/github.com/fivetran/go-fivetran#HybridDeploymentAgentResetCredentialsService)
+
+### [Connector Metadata](https://fivetran.com/docs/rest-api/api-reference/connector-metadata)
+
+REST API Endpoint | REST API Version | SDK Service/Config
+--- | --- | ---
+[Retrieve connector configuration metadata](https://fivetran.com/docs/rest-api/api-reference/connector-metadata/metadata-connector-config) | v1 |  [MetadataDetailsService](https://pkg.go.dev/github.com/fivetran/go-fivetran#MetadataDetailsService)
+[Retrieve source metadata](https://fivetran.com/docs/rest-api/api-reference/connector-metadata/metadata-connectors) | v1 |  [MetadataListService](https://pkg.go.dev/github.com/fivetran/go-fivetran#MetadataListService)
 
 ## Support
 

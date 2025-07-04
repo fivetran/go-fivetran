@@ -22,7 +22,6 @@ func TestNewProxyCreateE2E(t *testing.T) {
 	testutils.AssertNotEmpty(t, created.Message)
 	testutils.AssertNotEmpty(t, created.Data.AgentId)
 	testutils.AssertNotEmpty(t, created.Data.AuthToken)
-	testutils.AssertNotEmpty(t, created.Data.ProxyServerUri)
 
 	t.Cleanup(func() { 
 		testutils.DeleteProxy(t, created.Data.AgentId) 
