@@ -42,7 +42,7 @@ func TestProxyRegeneratesSecretsServiceDo(t *testing.T) {
 
 func prepareProxyRegenerateResponse() string {
 	return fmt.Sprintf(`{
-  				"code": "Created",
+  				"code": "Success",
   				"message": "Operation performed.",
   				"data": {
     				"client_cert": "client_cert",
@@ -56,7 +56,7 @@ func prepareProxyRegenerateResponse() string {
 
 func assertProxyRegenerateResponse(t *testing.T, response proxy.ProxyCreateResponse) {
 	testutils.AssertEqual(t, response.Code, "Success")
-	testutils.AssertEqual(t, response.Data.AgentId, "agent_id")
+	testutils.AssertEqual(t, response.Data.AgentId, "proxy_id")
 	testutils.AssertEqual(t, response.Data.AuthToken, "auth_token")
 	testutils.AssertEqual(t, response.Data.ClientCert, "client_cert")
 	testutils.AssertEqual(t, response.Data.ClientPrivateKey, "client_private_key")
