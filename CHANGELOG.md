@@ -10,9 +10,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.2.0](https://github.com/fivetran/go-fivetran/compare/v1.1.1...v1.2.0)
 
 ## Added
+- fields `ClientCert` and `ClientPrivateKey` from `proxy.ProxyCreateData`
+Supported the following Fivetran API endpoint for Proxy Agents Management:
+- [Regenerate Secrets for Proxy Agent](https://fivetran.com/docs/rest-api/api-reference/proxy-agent/regenerate-secrets-proxy-agent)
 Supported the following Fivetran API endpoints:
 - [Retrieve connector configuration metadata](https://fivetran.com/docs/rest-api/api-reference/connector-metadata/metadata-connector-config)
 - [Retrieve source metadata](https://fivetran.com/docs/rest-api/api-reference/connector-metadata/metadata-connectors)
+
+## Removed
+- field `ProxyServerUri` from `proxy.ProxyCreateData`
 
 ## Breaking changes
 - Service `ConnectionsSourceMetadataService` replaced with `MetadataListService`

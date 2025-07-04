@@ -258,6 +258,7 @@ REST API Endpoint | REST API Version | SDK Service/Config
 [Retrieve Proxy Agent Details](https://fivetran.com/docs/rest-api/api-reference/proxy-agent/get-proxy-agent-details) | v1 |  [ProxyDetailsService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ProxyDetailsService)
 [Delete a Proxy Agent](https://fivetran.com/docs/rest-api/api-reference/proxy-agent/delete-proxy-agent) | v1 |  [ProxyDeleteService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ProxyDeleteService)
 [Return all connections attached to the proxy agent](https://fivetran.com/docs/rest-api/api-reference/proxy-agent/get-proxy-agent-connections) | v1 |  [ProxyConnectionMembershipsListService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ProxyConnectionMembershipsListService)
+[Regenerate Secrets for Proxy Agent](https://fivetran.com/docs/rest-api/api-reference/proxy-agent/regenerate-secrets-proxy-agent) | v1 |  [ProxyRegenerateSecretsService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ProxyRegenerateSecretsService)
 
 ### [Hybrid Deployment Agent](https://fivetran.com/docs/rest-api/api-reference/hybrid-deployment-agent-management)
 

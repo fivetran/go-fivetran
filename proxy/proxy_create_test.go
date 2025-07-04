@@ -51,9 +51,11 @@ func prepareProxyCreateResponse() string {
 	return `{
     		"code": "Success",
     		"data": {
-        		"agent_id": "id",
-        		"auth_token": "auth_token",
-        		"proxy_server_uri": "proxy_server_uri"
+    			"client_cert": "client_cert",
+    			"agent_id": "agent_id",
+    			"proxy_server_uri": "proxy_server_uri",
+    			"auth_token": "auth_token",
+    			"client_private_key": "client_private_key"
     		}
 		}`
 }
@@ -66,7 +68,8 @@ func assertProxyCreateRequest(t *testing.T, request map[string]interface{}) {
 func assertProxyCreateResponse(t *testing.T, response proxy.ProxyCreateResponse) {
 	testutils.AssertEqual(t, response.Code, "Success")
 
-	testutils.AssertEqual(t, response.Data.AgentId, "id")
+	testutils.AssertEqual(t, response.Data.AgentId, "agent_id")
 	testutils.AssertEqual(t, response.Data.AuthToken, "auth_token")
-	testutils.AssertEqual(t, response.Data.ProxyServerUri, "proxy_server_uri")
+	testutils.AssertEqual(t, response.Data.ClientCert, "client_cert")
+	testutils.AssertEqual(t, response.Data.ClientPrivateKey, "client_private_key")
 }

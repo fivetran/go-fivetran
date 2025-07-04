@@ -7,11 +7,10 @@ import (
 	testutils "github.com/fivetran/go-fivetran/test_utils"
 )
 
-func TestNewProxyCreateE2E(t *testing.T) {
-	created, err := testutils.Client.NewProxyCreate().
-		DisplayName("go_sdk_test_proxy").
-		GroupRegion("GCP_US_EAST4").
-		Do(context.Background())
+func TestNewProxyRegenerateE2E(t *testing.T) {
+	proxyId := testutils.CreateProxy(t)
+
+	created, err := testutils.Client.NewProxyRegenerateSecrets().ProxyId(proxyId).Do(context.Background())
 
 	if err != nil {
 		t.Logf("%+v\n", created)
@@ -19,13 +18,10 @@ func TestNewProxyCreateE2E(t *testing.T) {
 	}
 
 	testutils.AssertEqual(t, created.Code, "Success")
+	testutils.AssertEqual(t, created.Code, "Success")
 	testutils.AssertNotEmpty(t, created.Message)
 	testutils.AssertNotEmpty(t, created.Data.AgentId)
 	testutils.AssertNotEmpty(t, created.Data.AuthToken)
 	testutils.AssertNotEmpty(t, created.Data.ClientCert)
 	testutils.AssertNotEmpty(t, created.Data.ClientPrivateKey)
-
-	t.Cleanup(func() { 
-		testutils.DeleteProxy(t, created.Data.AgentId) 
-	})
 }
