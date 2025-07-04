@@ -21,6 +21,7 @@ import (
 	"github.com/fivetran/go-fivetran/users"
 	"github.com/fivetran/go-fivetran/webhooks"
 	"github.com/fivetran/go-fivetran/transformations"
+	"github.com/fivetran/go-fivetran/metadata"
 )
 
 // Client holds client configuration
@@ -546,10 +547,6 @@ func (c *Client) NewConnectionTableConfigUpdateService() *connections.Connection
 	return &connections.ConnectionTableConfigUpdateService{HttpService: c.NewHttpService()}
 }
 
-func (c *Client) NewConnectionsSourceMetadata() *connections.ConnectionsSourceMetadataService {
-	return &connections.ConnectionsSourceMetadataService{HttpService: c.NewHttpService()}
-}
-
 func (c *Client) NewConnectionsList() *connections.ConnectionsListService {
 	return &connections.ConnectionsListService{HttpService: c.NewHttpService()}
 }
@@ -684,4 +681,12 @@ func (c *Client) NewQuickstartPackagesList() *transformations.QuickstartPackages
 
 func (c *Client) NewQuickstartPackageDetails() *transformations.QuickstartPackageDetailsService {
 	return &transformations.QuickstartPackageDetailsService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewMetadataDetails() *metadata.MetadataDetailsService {
+	return &metadata.MetadataDetailsService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewMetadataList() *metadata.MetadataListService {
+	return &metadata.MetadataListService{HttpService: c.NewHttpService()}
 }
