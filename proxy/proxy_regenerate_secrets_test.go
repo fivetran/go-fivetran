@@ -17,7 +17,7 @@ func TestProxyRegeneratesSecretsServiceDo(t *testing.T) {
 	// arrange
 
 	ftClient, mockClient := testutils.CreateTestClient()
-	handler := mockClient.When(http.MethodPatch, "/v1/proxy/proxy_id/regenerate-secrets").
+	handler := mockClient.When(http.MethodPost, "/v1/proxy/proxy_id/regenerate-secrets").
 		ThenCall(func(req *http.Request) (*http.Response, error) {
 			response := mock.NewResponse(req, http.StatusOK, prepareProxyRegenerateResponse())
 			return response, nil
