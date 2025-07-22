@@ -48,6 +48,7 @@ func preparePrivateLinkListResponse() string {
 	            "service": "service",
 	            "account_id": "account_id",
 	            "cloud_provider": "cloud_provider",
+	            "host": "host",
 	            "state": "state",
 	            "state_summary": "state_summary",
 	            "created_at": "2022-04-29T09:41:08.583Z",
@@ -66,6 +67,7 @@ func assertPrivateLinkListResponse(t *testing.T, response privatelink.PrivateLin
 	testutils.AssertEqual(t, response.Data.Items[0].Region, "region")
 	testutils.AssertEqual(t, response.Data.Items[0].Service, "service")
 	testutils.AssertEqual(t, response.Data.Items[0].CloudProvider, "cloud_provider")
+	testutils.AssertEqual(t, response.Data.Items[0].Host, "host")
 	testutils.AssertEqual(t, response.Data.Items[0].State, "state")
 	testutils.AssertEqual(t, response.Data.Items[0].StateSummary, "state_summary")
 	testutils.AssertEqual(t, response.Data.Items[0].CreatedAt, "2022-04-29T09:41:08.583Z")

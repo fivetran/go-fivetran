@@ -73,6 +73,7 @@ func preparePrivateLinkDetailsResponse() string {
     "service": "service",
     "account_id": "account_id",
     "cloud_provider": "cloud_provider",
+    "host": "host",
     "state": "state",
     "state_summary": "state_summary",
     "created_at": "2022-04-29T09:41:08.583Z",
@@ -91,6 +92,7 @@ func assertPrivateLinkDetailsResponse(t *testing.T, response privatelink.Private
 	testutils.AssertEqual(t, response.Data.Region, "region")
 	testutils.AssertEqual(t, response.Data.Service, "service")
 	testutils.AssertEqual(t, response.Data.CloudProvider, "cloud_provider")
+	testutils.AssertEqual(t, response.Data.Host, "host")
 	testutils.AssertEqual(t, response.Data.State, "state")
 	testutils.AssertEqual(t, response.Data.StateSummary, "state_summary")
 	testutils.AssertEqual(t, response.Data.CreatedAt, "2022-04-29T09:41:08.583Z")
@@ -105,6 +107,7 @@ func assertPrivateLinkCustomDetailsResponse(t *testing.T, response privatelink.P
 	testutils.AssertEqual(t, response.Data.Region, "region")
 	testutils.AssertEqual(t, response.Data.Service, "service")
 	testutils.AssertEqual(t, response.Data.CloudProvider, "cloud_provider")
+	testutils.AssertEqual(t, response.Data.Host, "host")
 	testutils.AssertEqual(t, response.Data.State, "state")
 	testutils.AssertEqual(t, response.Data.StateSummary, "state_summary")
 	testutils.AssertEqual(t, response.Data.CreatedAt, "2022-04-29T09:41:08.583Z")
