@@ -5,6 +5,7 @@ type PrivateLinkResponseBase struct {
     Name            string `json:"name"`
     Region          string `json:"region"`
     Service         string `json:"service"`
+    Host            string `json:"host"`
     AccountId       string `json:"account_id"`
     CloudProvider   string `json:"cloud_provider"`
     State           string `json:"state"`
