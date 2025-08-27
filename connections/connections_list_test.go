@@ -7,12 +7,14 @@ import (
 
 	"github.com/fivetran/go-fivetran/connections"
 	testutils "github.com/fivetran/go-fivetran/test_utils"
-	
+
 	"github.com/fivetran/go-fivetran/tests/mock"
 )
 
 func TestConnectionsListServiceDo(t *testing.T) {
 	// arrange
+	groupId := "group_id"
+	schema := "test_schema"
 	limit := 10
 	cursor := "some_cursor"
 
@@ -25,6 +27,8 @@ func TestConnectionsListServiceDo(t *testing.T) {
 
 	// act
 	response, err := ftClient.NewConnectionsList().
+		GroupID(groupId).
+		Schema(schema).
 		Limit(limit).
 		Cursor(cursor).
 		Do(context.Background())
@@ -38,6 +42,12 @@ func TestConnectionsListServiceDo(t *testing.T) {
 	testutils.AssertEqual(t, len(interactions), 1)
 	testutils.AssertEqual(t, interactions[0].Handler, handler)
 	testutils.AssertEqual(t, handler.Interactions, 1)
+	queryParameters := interactions[0].Req.URL.Query()
+	testutils.AssertEqual(t, len(queryParameters), 4)
+	testutils.AssertEqual(t, queryParameters.Get("group_id"), groupId)
+	testutils.AssertEqual(t, queryParameters.Get("schema"), schema)
+	testutils.AssertEqual(t, queryParameters.Get("limit"), "10")
+	testutils.AssertEqual(t, queryParameters.Get("cursor"), "some_cursor")
 	assertConnectionsListResponse(t, response)
 }
 
