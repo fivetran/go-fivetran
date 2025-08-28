@@ -14,14 +14,14 @@ import (
 	"github.com/fivetran/go-fivetran/groups"
 	httputils "github.com/fivetran/go-fivetran/http_utils"
 	hybriddeploymentagent "github.com/fivetran/go-fivetran/hybrid_deployment_agent"
+	"github.com/fivetran/go-fivetran/metadata"
 	privatelink "github.com/fivetran/go-fivetran/private_link"
 	"github.com/fivetran/go-fivetran/proxy"
 	"github.com/fivetran/go-fivetran/roles"
 	"github.com/fivetran/go-fivetran/teams"
+	"github.com/fivetran/go-fivetran/transformations"
 	"github.com/fivetran/go-fivetran/users"
 	"github.com/fivetran/go-fivetran/webhooks"
-	"github.com/fivetran/go-fivetran/transformations"
-	"github.com/fivetran/go-fivetran/metadata"
 )
 
 // Client holds client configuration
@@ -38,7 +38,7 @@ const defaultBaseURL = "https://api.fivetran.com/v1"
 const restAPIv2 = "application/json;version=2"
 
 // WARNING: Update Agent version on each release!
-const defaultUserAgent = "Go-Fivetran/1.2.2"
+const defaultUserAgent = "Go-Fivetran/1.2.3"
 
 // New receives API Key and API Secret, and returns a new Client with the
 // default HTTP client
