@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 
+	account "github.com/fivetran/go-fivetran/account"
 	"github.com/fivetran/go-fivetran/certificates"
 	connectcard "github.com/fivetran/go-fivetran/connect_card"
 	"github.com/fivetran/go-fivetran/connections"
@@ -38,7 +39,7 @@ const defaultBaseURL = "https://api.fivetran.com/v1"
 const restAPIv2 = "application/json;version=2"
 
 // WARNING: Update Agent version on each release!
-const defaultUserAgent = "Go-Fivetran/1.2.3"
+const defaultUserAgent = "Go-Fivetran/1.2.4"
 
 // New receives API Key and API Secret, and returns a new Client with the
 // default HTTP client
@@ -689,4 +690,9 @@ func (c *Client) NewMetadataDetails() *metadata.MetadataDetailsService {
 
 func (c *Client) NewMetadataList() *metadata.MetadataListService {
 	return &metadata.MetadataListService{HttpService: c.NewHttpService()}
+}
+
+/* Account Info */
+func (c *Client) AccountInfo() *account.AccountInfoService {
+	return &account.AccountInfoService{HttpService: c.NewHttpService()}
 }
