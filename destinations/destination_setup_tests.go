@@ -47,3 +47,15 @@ func (s *DestinationSetupTestsService) Do(ctx context.Context) (DestinationDetai
 	err := s.HttpService.Do(ctx, "POST", url, s.request(), nil, 200, &response)
 	return response, err
 }
+
+func (s *DestinationSetupTestsService) DoCustom(ctx context.Context) (DestinationDetailsWithSetupTestsCustomResponse, error) {
+	var response DestinationDetailsWithSetupTestsCustomResponse
+
+	if s.destinationID == nil {
+		return response, fmt.Errorf("missing required destinationID")
+	}
+
+	url := fmt.Sprintf("/destinations/%v/test", *s.destinationID)
+	err := s.HttpService.Do(ctx, "POST", url, s.request(), nil, 200, &response)
+	return response, err
+}
