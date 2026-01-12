@@ -2,9 +2,8 @@ package destinations_test
 
 import (
 	"context"
-	"fmt"
-	"net/http"
 	"strconv"
+	"net/http"
 	"testing"
 
 	"github.com/fivetran/go-fivetran/destinations"
@@ -14,32 +13,16 @@ import (
 	testutils "github.com/fivetran/go-fivetran/test_utils"
 )
 
-const DESTINATION_DETAILS_SERVICE = "snowflake"
-const DESTINATION_DETAILS_ID = "decent_dropsy"
-const DESTINATION_DETAILS_REGION = "GCP_US_EAST4"
-const DESTINATION_DETAILS_TIME_ZONE = "-5"
-const DESTINATION_DETAILS_SETUP_STATUS = "connected"
-const DESTINATION_DETAILS_DAYLIGHT = true
-const DESTINATION_DETAILS_HYBRIDDEPLOYMENTAGENTID = "hybrid_deployment_agent_id"
-const DESTINATION_DETAILS_PRIVATELINKID = "private_link_id"
-const DESTINATION_DETAILS_NETWORKINGMETHOD = "Direct"
-const DESTINATION_DETAILS_HOST = "your-account.snowflakecomputing.com"
-const DESTINATION_DETAILS_PORT = "443"
-const DESTINATION_DETAILS_DATABASE = "fivetran"
-const DESTINATION_DETAILS_AUTH = "PASSWORD"
-const DESTINATION_DETAILS_USER = "fivetran_user"
-const DESTINATION_DETAILS_MASKED_PASSWORD = "******"
-
-func TestDestinationDetailsService(t *testing.T) {
+func TestDestinationSetupTestsDetailsService(t *testing.T) {
 	// arrange
 	ftClient, mockClient := testutils.CreateTestClient()
-	handler := mockClient.When(http.MethodGet, "/v1/destinations/"+ID).ThenCall(
+	handler := mockClient.When(http.MethodPost, "/v1/destinations/"+ID+"/test").ThenCall(
 		func(req *http.Request) (*http.Response, error) {
 			response := mock.NewResponse(req, http.StatusOK, prepareDestinationDetailsResponse())
 			return response, nil
 		})
 
-	service := ftClient.NewDestinationDetails().DestinationID(ID)
+	service := ftClient.NewDestinationSetupTests().DestinationID(ID)
 
 	// act
 	response, err := service.Do(context.Background())
@@ -55,19 +38,19 @@ func TestDestinationDetailsService(t *testing.T) {
 	testutils.AssertEqual(t, interactions[0].Handler, handler)
 	testutils.AssertEqual(t, handler.Interactions, 1)
 
-	assertDestinationDetailsResponse(t, response)
+	assertDestinationDetailsWithSetupTestsResponse(t, response)
 }
 
-func TestDestinationDetailsCustomService(t *testing.T) {
+func TestDestinationSetupTestsDetailsCustomService(t *testing.T) {
 	// arrange
 	ftClient, mockClient := testutils.CreateTestClient()
-	handler := mockClient.When(http.MethodGet, "/v1/destinations/"+ID).ThenCall(
+	handler := mockClient.When(http.MethodPost, "/v1/destinations/"+ID+"/test").ThenCall(
 		func(req *http.Request) (*http.Response, error) {
 			response := mock.NewResponse(req, http.StatusOK, prepareDestinationDetailsResponse())
 			return response, nil
 		})
 
-	service := ftClient.NewDestinationDetails().DestinationID(ID)
+	service := ftClient.NewDestinationSetupTests().DestinationID(ID)
 
 	// act
 	response, err := service.DoCustom(context.Background())
@@ -83,19 +66,19 @@ func TestDestinationDetailsCustomService(t *testing.T) {
 	testutils.AssertEqual(t, interactions[0].Handler, handler)
 	testutils.AssertEqual(t, handler.Interactions, 1)
 
-	assertDestinationDetailsCustomResponse(t, response)
+	assertDestinationDetailsWithSetupTestsCustomResponse(t, response)
 }
 
-func TestDestinationDetailsCustomServiceIntPort(t *testing.T) {
+func TestDestinationSetupTestsDetailsCustomServiceIntPort(t *testing.T) {
 	// arrange
 	ftClient, mockClient := testutils.CreateTestClient()
-	handler := mockClient.When(http.MethodGet, "/v1/destinations/"+ID).ThenCall(
+	handler := mockClient.When(http.MethodPost, "/v1/destinations/"+ID+"/test").ThenCall(
 		func(req *http.Request) (*http.Response, error) {
 			response := mock.NewResponse(req, http.StatusOK, prepareDestinationDetailsResponseIntPort())
 			return response, nil
 		})
 
-	service := ftClient.NewDestinationDetails().DestinationID(ID)
+	service := ftClient.NewDestinationSetupTests().DestinationID(ID)
 
 	// act
 	response, err := service.DoCustom(context.Background())
@@ -111,94 +94,10 @@ func TestDestinationDetailsCustomServiceIntPort(t *testing.T) {
 	testutils.AssertEqual(t, interactions[0].Handler, handler)
 	testutils.AssertEqual(t, handler.Interactions, 1)
 
-	assertDestinationDetailsCustomResponseIntPort(t, response)
+	assertDestinationDetailsWithSetupTestsCustomResponseIntPort(t, response)
 }
 
-func prepareDestinationDetailsResponse() string {
-	return fmt.Sprintf(`{
-		"code": "Success",
-		"data": {
-			"id": "%s",
-			"group_id": "%s",
-			"service": "%s",
-			"region": "%s",
-			"daylight_saving_time_enabled": %v,
-            "hybrid_deployment_agent_id":   "%v",
-            "private_link_id":              "%v",
-            "networking_method":            "%v",
-			"time_zone_offset": "%s",
-			"setup_status": "%s",
-			"config": {
-				"host": "%s",
-				"port": "%s",
-				"database": "%s",
-				"auth": "%s",
-				"user": "%s",
-				"password": "%s"
-			}
-		}
-	}`,
-		DESTINATION_DETAILS_ID,
-		DESTINATION_DETAILS_ID,
-		DESTINATION_DETAILS_SERVICE,
-		DESTINATION_DETAILS_REGION,
-		DESTINATION_DETAILS_DAYLIGHT,
-		DESTINATION_DETAILS_HYBRIDDEPLOYMENTAGENTID,
-		DESTINATION_DETAILS_PRIVATELINKID,
-		DESTINATION_DETAILS_NETWORKINGMETHOD,
-		DESTINATION_DETAILS_TIME_ZONE,
-		DESTINATION_DETAILS_SETUP_STATUS,
-		DESTINATION_DETAILS_HOST,
-		DESTINATION_DETAILS_PORT,
-		DESTINATION_DETAILS_DATABASE,
-		DESTINATION_DETAILS_AUTH,
-		DESTINATION_DETAILS_USER,
-		DESTINATION_DETAILS_MASKED_PASSWORD)
-}
-
-func prepareDestinationDetailsResponseIntPort() string {
-	return fmt.Sprintf(`{
-		"code": "Success",
-		"data": {
-			"id": "%s",
-			"group_id": "%s",
-			"service": "%s",
-			"region": "%s",
-			"daylight_saving_time_enabled": %v,
-            "hybrid_deployment_agent_id":   "%v",
-            "private_link_id":              "%v",
-            "networking_method":            "%v",
-			"time_zone_offset": "%s",
-			"setup_status": "%s",
-			"config": {
-				"host": "%s",
-				"port": %s,
-				"database": "%s",
-				"auth": "%s",
-				"user": "%s",
-				"password": "%s"
-			}
-		}
-	}`,
-		DESTINATION_DETAILS_ID,
-		DESTINATION_DETAILS_ID,
-		DESTINATION_DETAILS_SERVICE,
-		DESTINATION_DETAILS_REGION,
-		DESTINATION_DETAILS_DAYLIGHT,
-		DESTINATION_DETAILS_HYBRIDDEPLOYMENTAGENTID,
-		DESTINATION_DETAILS_PRIVATELINKID,
-		DESTINATION_DETAILS_NETWORKINGMETHOD,
-		DESTINATION_DETAILS_TIME_ZONE,
-		DESTINATION_DETAILS_SETUP_STATUS,
-		DESTINATION_DETAILS_HOST,
-		DESTINATION_DETAILS_PORT,
-		DESTINATION_DETAILS_DATABASE,
-		DESTINATION_DETAILS_AUTH,
-		DESTINATION_DETAILS_USER,
-		DESTINATION_DETAILS_MASKED_PASSWORD)
-}
-
-func assertDestinationDetailsResponse(t *testing.T, response destinations.DestinationDetailsResponse) {
+func assertDestinationDetailsWithSetupTestsResponse(t *testing.T, response destinations.DestinationDetailsWithSetupTestsResponse) {
 	testutils.AssertEqual(t, response.Code, "Success")
 	testutils.AssertEqual(t, response.Data.ID, DESTINATION_DETAILS_ID)
 	testutils.AssertEqual(t, response.Data.GroupID, DESTINATION_DETAILS_ID)
@@ -218,7 +117,7 @@ func assertDestinationDetailsResponse(t *testing.T, response destinations.Destin
 	testutils.AssertEqual(t, response.Data.Config.Password, DESTINATION_DETAILS_MASKED_PASSWORD)
 }
 
-func assertDestinationDetailsCustomResponse(t *testing.T, response destinations.DestinationDetailsCustomResponse) {
+func assertDestinationDetailsWithSetupTestsCustomResponse(t *testing.T, response destinations.DestinationDetailsWithSetupTestsCustomResponse) {
 	testutils.AssertEqual(t, response.Code, "Success")
 	testutils.AssertEqual(t, response.Data.ID, DESTINATION_DETAILS_ID)
 	testutils.AssertEqual(t, response.Data.GroupID, DESTINATION_DETAILS_ID)
@@ -238,7 +137,7 @@ func assertDestinationDetailsCustomResponse(t *testing.T, response destinations.
 	testutils.AssertEqual(t, response.Data.Config["password"], DESTINATION_DETAILS_MASKED_PASSWORD)
 }
 
-func assertDestinationDetailsCustomResponseIntPort(t *testing.T, response destinations.DestinationDetailsCustomResponse) {
+func assertDestinationDetailsWithSetupTestsCustomResponseIntPort(t *testing.T, response destinations.DestinationDetailsWithSetupTestsCustomResponse) {
 	testutils.AssertEqual(t, response.Code, "Success")
 	testutils.AssertEqual(t, response.Data.ID, DESTINATION_DETAILS_ID)
 	testutils.AssertEqual(t, response.Data.GroupID, DESTINATION_DETAILS_ID)
