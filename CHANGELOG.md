@@ -5,7 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/fivetran/go-fivetran/compare/v1.2.5...HEAD)
+## [Unreleased](https://github.com/fivetran/go-fivetran/compare/v1.2.6...HEAD)
+
+## [1.2.6](https://github.com/fivetran/go-fivetran/compare/v1.2.5...v1.2.6)
+
+## Added
+Support for custom config (`map[string]interface{}`) for external log details:
+- `ExternalLoggingDetailsService.DoCustom` method
+- `ExternalLoggingDetailsService.DoCustomMerged` method
 
 ## [1.2.5](https://github.com/fivetran/go-fivetran/compare/v1.2.4...v1.2.5)
 
