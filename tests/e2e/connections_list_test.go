@@ -17,7 +17,7 @@ func TestNewConnectionsListE2E(t *testing.T) {
 
 	testutils.AssertEqual(t, result.Code, "Success")
 	testutils.AssertHasLength(t, result.Data.Items, 1)
-	testutils.AssertEmpty(t, result.Message)
+	testutils.AssertEqual(t, result.Message, "Connections list retrieved successfully")
 	testutils.AssertEqual(t, result.Data.Items[0].ID, ConnectionId)
 	testutils.AssertEqual(t, result.Data.Items[0].GroupID, testutils.PredefinedGroupId)
 	testutils.AssertEqual(t, result.Data.Items[0].Service, "itunes_connect")
@@ -39,7 +39,7 @@ func TestNewConnectionsListFilterByGroupAndSchemaE2E(t *testing.T) {
 
 	testutils.AssertEqual(t, result.Code, "Success")
 	testutils.AssertHasLength(t, result.Data.Items, 1)
-	testutils.AssertEmpty(t, result.Message)
+	testutils.AssertEqual(t, result.Message, "Connections list retrieved successfully")
 	testutils.AssertEqual(t, result.Data.Items[0].ID, ConnectionId)
 	testutils.AssertEqual(t, result.Data.Items[0].GroupID, testutils.PredefinedGroupId)
 	testutils.AssertEqual(t, result.Data.Items[0].Service, "itunes_connect")

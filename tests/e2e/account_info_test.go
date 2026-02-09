@@ -18,7 +18,7 @@ func TestNewConnectCardE2E(t *testing.T) {
     }
 
     testutils.AssertEqual(t, accountInfo.Code, "Success")
-    testutils.AssertEmpty(t, accountInfo.Message)
+    testutils.AssertEqual(t, accountInfo.Message, "Account information retrieved successfully")
     testutils.AssertNotEmpty(t, accountInfo.Data.AccountId)
     testutils.AssertNotEmpty(t, accountInfo.Data.AccountName)
     testutils.AssertEqual(t, accountInfo.Data.UserId, testutils.PredefinedUserId)

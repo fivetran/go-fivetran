@@ -17,7 +17,7 @@ func TestNewDestinationsListE2E(t *testing.T) {
 
 	testutils.AssertEqual(t, result.Code, "Success")
 	testutils.AssertHasLength(t, result.Data.Items, 1)
-	testutils.AssertEmpty(t, result.Message)
+	testutils.AssertEqual(t, result.Message, "Destinations list retrieved successfully")
 	testutils.AssertEqual(t, result.Code, "Success")
 	testutils.AssertEqual(t, result.Data.Items[0].ID, destinationId)
 	testutils.AssertEqual(t, result.Data.Items[0].GroupID, testutils.PredefinedGroupId)
