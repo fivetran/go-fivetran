@@ -26,6 +26,7 @@ func TestNewDestinationsListE2E(t *testing.T) {
 	testutils.AssertEqual(t, result.Data.Items[0].TimeZoneOffset, "+10")
 	testutils.AssertEqual(t, result.Data.Items[0].DaylightSavingTimeEnabled, false)
 	testutils.AssertEmpty(t, result.Data.Items[0].PrivateLinkId)
+	testutils.AssertEmpty(t, result.Data.Items[0].ProxyAgentId)
 	testutils.AssertEmpty(t, result.Data.Items[0].HybridDeploymentAgentId)
 	testutils.AssertEqual(t, result.Data.Items[0].NetworkingMethod, "Directly")
 	testutils.AssertEqual(t, result.Data.Items[0].SetupStatus, "incomplete")

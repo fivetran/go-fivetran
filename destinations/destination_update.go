@@ -21,6 +21,7 @@ type DestinationUpdateService struct {
     hybridDeploymentAgentId     *string
     networkingMethod            *string
     privateLinkId               *string
+    proxyAgentId                *string
 }
 
 func (s *DestinationUpdateService) request() *destinationUpdateRequest {
@@ -41,6 +42,7 @@ func (s *DestinationUpdateService) request() *destinationUpdateRequest {
         PrivateLinkId:                  s.privateLinkId,
         HybridDeploymentAgentId:        s.hybridDeploymentAgentId,
         NetworkingMethod:               s.networkingMethod,
+        ProxyAgentId:                   s.proxyAgentId,
     }
 }
 
@@ -56,6 +58,7 @@ func (s *DestinationUpdateService) requestCustom() *destinationUpdateRequest {
         PrivateLinkId:                  s.privateLinkId,
         HybridDeploymentAgentId:        s.hybridDeploymentAgentId,
         NetworkingMethod:               s.networkingMethod,
+        ProxyAgentId:                   s.proxyAgentId,
     }
 }
 
@@ -111,6 +114,11 @@ func (s *DestinationUpdateService) HybridDeploymentAgentId(value string) *Destin
 
 func (s *DestinationUpdateService) PrivateLinkId(value string) *DestinationUpdateService {
     s.privateLinkId = &value
+    return s
+}
+
+func (s *DestinationUpdateService) ProxyAgentId(value string) *DestinationUpdateService {
+    s.proxyAgentId = &value
     return s
 }
 
