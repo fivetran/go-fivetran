@@ -56,6 +56,7 @@ func prepareDestinationsListResponse() string {
         "daylight_saving_time_enabled": true,
         "local_processing_agent_id": "local_processing_agent_id",
         "private_link_id": "private_link_id",
+		"proxy_agent_id": "proxy_agent_id",
         "group_id": "group_id",
         "time_zone_offset": "+3",
         "hybrid_deployment_agent_id": "hybrid_deployment_agent_id"
@@ -76,6 +77,7 @@ func assertDestinationsListResponse(t *testing.T, response destinations.Destinat
   testutils.AssertEqual(t, response.Data.Items[0].DaylightSavingTimeEnabled, true)
   testutils.AssertEqual(t, response.Data.Items[0].HybridDeploymentAgentId, "hybrid_deployment_agent_id")
   testutils.AssertEqual(t, response.Data.Items[0].PrivateLinkId, "private_link_id")
+  testutils.AssertEqual(t, response.Data.Items[0].ProxyAgentId, "proxy_agent_id")
   testutils.AssertEqual(t, response.Data.Items[0].NetworkingMethod, "Directly")
   testutils.AssertEqual(t, response.Data.Items[0].Region, "GCP_US_EAST4")
   testutils.AssertEqual(t, response.Data.Items[0].TimeZoneOffset, "+3")

@@ -16,7 +16,7 @@ func TestNewGroupsListE2E(t *testing.T) {
 
 	testutils.AssertEqual(t, result.Code, "Success")
 	testutils.AssertHasLength(t, result.Data.Items, 1)
-	testutils.AssertEmpty(t, result.Message)
+	testutils.AssertEqual(t, result.Message, "Groups retrieved successfully")
 	testutils.AssertEqual(t, result.Data.Items[0].ID, testutils.PredefinedGroupId)
 	testutils.AssertEqual(t, result.Data.Items[0].Name, testutils.PredefinedGroupName)
 	testutils.AssertEqual(t, result.Data.Items[0].CreatedAt.IsZero(), false)

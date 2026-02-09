@@ -71,6 +71,7 @@ const (
     HYBRIDDEPLOYMENTAGENTID   = "hybrid_deployment_agent_id"
     PRIVATELINKID             = "private_link_id"
     NETWORKINGMETHOD          = "Direct"
+    PROXY_AGENT_ID            = "proxy_agent_id"
 )
 
 func TestNewDestinationCreateFullMappingMock(t *testing.T) {
@@ -95,6 +96,7 @@ func TestNewDestinationCreateFullMappingMock(t *testing.T) {
         DaylightSavingTimeEnabled(DAYLIGHTSAVINGTIMEENABLED).
         HybridDeploymentAgentId(HYBRIDDEPLOYMENTAGENTID).
         PrivateLinkId(PRIVATELINKID).
+        ProxyAgentId(PROXY_AGENT_ID).
         NetworkingMethod(NETWORKINGMETHOD).
         GroupID(ID).
         Config(prepareConfig()).
@@ -135,6 +137,7 @@ func TestNewDestinationCreateCustomFullMappingMock(t *testing.T) {
         DaylightSavingTimeEnabled(DAYLIGHTSAVINGTIMEENABLED).
         HybridDeploymentAgentId(HYBRIDDEPLOYMENTAGENTID).
         PrivateLinkId(PRIVATELINKID).
+        ProxyAgentId(PROXY_AGENT_ID).
         NetworkingMethod(NETWORKINGMETHOD).
         GroupID(ID).
         ConfigCustom(prepareConfigCustom()).
@@ -167,6 +170,7 @@ func prepareDestinationResponse() string {
                 "daylight_saving_time_enabled": %v,
                 "hybrid_deployment_agent_id":   "%v",
                 "private_link_id":              "%v",
+                "proxy_agent_id":               "%v",
                 "networking_method":            "%v",
                 "setup_status":                 "%v",
                 "setup_tests":[
@@ -228,6 +232,7 @@ func prepareDestinationResponse() string {
         DAYLIGHTSAVINGTIMEENABLED,
         HYBRIDDEPLOYMENTAGENTID,
         PRIVATELINKID,
+        PROXY_AGENT_ID,
         NETWORKINGMETHOD,
         SETUP_STATUS,
         TEST_TITLE,
@@ -371,6 +376,7 @@ func assertRequest(t *testing.T, request map[string]interface{}) {
     testutils.AssertKey(t, "daylight_saving_time_enabled", request, DAYLIGHTSAVINGTIMEENABLED)
     testutils.AssertKey(t, "hybrid_deployment_agent_id", request, HYBRIDDEPLOYMENTAGENTID)
     testutils.AssertKey(t, "private_link_id", request, PRIVATELINKID)
+    testutils.AssertKey(t, "proxy_agent_id", request, PROXY_AGENT_ID)
     testutils.AssertKey(t, "networking_method", request, NETWORKINGMETHOD)
     testutils.AssertKey(t, "group_id", request, ID)
 
@@ -429,6 +435,7 @@ func asserResponseCustom(t *testing.T, response destinations.DestinationDetailsW
     testutils.AssertEqual(t, response.Data.DaylightSavingTimeEnabled, DAYLIGHTSAVINGTIMEENABLED)
     testutils.AssertEqual(t, response.Data.HybridDeploymentAgentId, HYBRIDDEPLOYMENTAGENTID)
     testutils.AssertEqual(t, response.Data.PrivateLinkId, PRIVATELINKID)
+    testutils.AssertEqual(t, response.Data.ProxyAgentId, PROXY_AGENT_ID)
     testutils.AssertEqual(t, response.Data.NetworkingMethod, NETWORKINGMETHOD)
     testutils.AssertEqual(t, response.Data.SetupStatus, SETUP_STATUS)
     testutils.AssertEqual(t, response.Data.TimeZoneOffset, TIME_ZONE)
@@ -492,6 +499,7 @@ func assertResponse(t *testing.T, response destinations.DestinationDetailsWithSe
     testutils.AssertEqual(t, response.Data.DaylightSavingTimeEnabled, DAYLIGHTSAVINGTIMEENABLED)
     testutils.AssertEqual(t, response.Data.HybridDeploymentAgentId, HYBRIDDEPLOYMENTAGENTID)
     testutils.AssertEqual(t, response.Data.PrivateLinkId, PRIVATELINKID)
+    testutils.AssertEqual(t, response.Data.ProxyAgentId, PROXY_AGENT_ID)
     testutils.AssertEqual(t, response.Data.NetworkingMethod, NETWORKINGMETHOD)
     testutils.AssertEqual(t, response.Data.SetupStatus, SETUP_STATUS)
     testutils.AssertEqual(t, response.Data.TimeZoneOffset, TIME_ZONE)
