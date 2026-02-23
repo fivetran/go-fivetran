@@ -6,28 +6,38 @@ import (
     "github.com/fivetran/go-fivetran/common"
 )
 
+// ConnectorSchedule represents the flexible sync schedule for a connector.
+type ConnectorSchedule struct {
+    ScheduleType *string  `json:"schedule_type,omitempty"`
+    Cron         *string  `json:"cron,omitempty"`
+    DaysOfWeek   []string `json:"days_of_week,omitempty"`
+    Interval     *int     `json:"interval,omitempty"`
+    TimeOfDay    *string  `json:"time_of_day,omitempty"`
+}
+
 type DetailsResponseDataCommon struct {
-    ID                      string         `json:"id"`
-    GroupID                 string         `json:"group_id"`
-    Service                 string         `json:"service"`
-    ServiceVersion          *int           `json:"service_version"`
-    Schema                  string         `json:"schema"`
-    ConnectedBy             string         `json:"connected_by"`
-    CreatedAt               time.Time      `json:"created_at"`
-    SucceededAt             time.Time      `json:"succeeded_at"`
-    FailedAt                time.Time      `json:"failed_at"`
-    SyncFrequency           *int           `json:"sync_frequency"`
-    ScheduleType            string         `json:"schedule_type"`
-    Paused                  *bool          `json:"paused"`
-    PauseAfterTrial         *bool          `json:"pause_after_trial"`
-    DailySyncTime           string         `json:"daily_sync_time"`
-    PrivateLinkId           string         `json:"private_link_id"`
-    HybridDeploymentAgentId string         `json:"hybrid_deployment_agent_id"`
-    ProxyAgentId            string         `json:"proxy_agent_id"`
-    NetworkingMethod        string         `json:"networking_method"`
-    DataDelaySensitivity    string         `json:"data_delay_sensitivity"`
-    DataDelayThreshold      *int           `json:"data_delay_threshold"`
-    Status                  StatusResponse `json:"status"`
+    ID                      string             `json:"id"`
+    GroupID                 string             `json:"group_id"`
+    Service                 string             `json:"service"`
+    ServiceVersion          *int               `json:"service_version"`
+    Schema                  string             `json:"schema"`
+    ConnectedBy             string             `json:"connected_by"`
+    CreatedAt               time.Time          `json:"created_at"`
+    SucceededAt             time.Time          `json:"succeeded_at"`
+    FailedAt                time.Time          `json:"failed_at"`
+    SyncFrequency           *int               `json:"sync_frequency"`
+    ScheduleType            string             `json:"schedule_type"`
+    Paused                  *bool              `json:"paused"`
+    PauseAfterTrial         *bool              `json:"pause_after_trial"`
+    DailySyncTime           string             `json:"daily_sync_time"`
+    PrivateLinkId           string             `json:"private_link_id"`
+    HybridDeploymentAgentId string             `json:"hybrid_deployment_agent_id"`
+    ProxyAgentId            string             `json:"proxy_agent_id"`
+    NetworkingMethod        string             `json:"networking_method"`
+    DataDelaySensitivity    string             `json:"data_delay_sensitivity"`
+    DataDelayThreshold      *int               `json:"data_delay_threshold"`
+    Schedule                *ConnectorSchedule `json:"schedule,omitempty"`
+    Status                  StatusResponse     `json:"status"`
 }
 
 type DetailsAndSetupTestsResponseDataCommon struct {
@@ -150,21 +160,22 @@ type connectionColumnConfigUpdateRequest struct {
 }
 
 type connectionUpdateRequestBase struct {
-    Paused                  *bool   `json:"paused,omitempty"`
-    SyncFrequency           *int    `json:"sync_frequency,omitempty"`
-    DailySyncTime           *string `json:"daily_sync_time,omitempty"`
-    TrustCertificates       *bool   `json:"trust_certificates,omitempty"`
-    TrustFingerprints       *bool   `json:"trust_fingerprints,omitempty"`
-    IsHistoricalSync        *bool   `json:"is_historical_sync,omitempty"`
-    ScheduleType            *string `json:"schedule_type,omitempty"`
-    RunSetupTests           *bool   `json:"run_setup_tests,omitempty"`
-    PauseAfterTrial         *bool   `json:"pause_after_trial,omitempty"`
-    ProxyAgentId            *string `json:"proxy_agent_id,omitempty"`
-    PrivateLinkId           *string `json:"private_link_id,omitempty"`
-    HybridDeploymentAgentId *string `json:"hybrid_deployment_agent_id,omitempty"`
-    NetworkingMethod        *string `json:"networking_method,omitempty"`
-    DataDelaySensitivity    *string `json:"data_delay_sensitivity,omitempty"`
-    DataDelayThreshold      *int    `json:"data_delay_threshold,omitempty"`
+    Paused                  *bool              `json:"paused,omitempty"`
+    SyncFrequency           *int               `json:"sync_frequency,omitempty"`
+    DailySyncTime           *string            `json:"daily_sync_time,omitempty"`
+    TrustCertificates       *bool              `json:"trust_certificates,omitempty"`
+    TrustFingerprints       *bool              `json:"trust_fingerprints,omitempty"`
+    IsHistoricalSync        *bool              `json:"is_historical_sync,omitempty"`
+    ScheduleType            *string            `json:"schedule_type,omitempty"`
+    RunSetupTests           *bool              `json:"run_setup_tests,omitempty"`
+    PauseAfterTrial         *bool              `json:"pause_after_trial,omitempty"`
+    ProxyAgentId            *string            `json:"proxy_agent_id,omitempty"`
+    PrivateLinkId           *string            `json:"private_link_id,omitempty"`
+    HybridDeploymentAgentId *string            `json:"hybrid_deployment_agent_id,omitempty"`
+    NetworkingMethod        *string            `json:"networking_method,omitempty"`
+    DataDelaySensitivity    *string            `json:"data_delay_sensitivity,omitempty"`
+    DataDelayThreshold      *int               `json:"data_delay_threshold,omitempty"`
+    Schedule                *ConnectorSchedule `json:"schedule,omitempty"`
 }
 
 type connectionUpdateRequest struct {

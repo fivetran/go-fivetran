@@ -5,7 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/fivetran/go-fivetran/compare/v1.2.7...HEAD)
+## [Unreleased](https://github.com/fivetran/go-fivetran/compare/v1.2.8...HEAD)
+
+## [1.2.8](https://github.com/fivetran/go-fivetran/compare/v1.2.7...v1.2.8)
+
+## Added
+Support flexible sync schedule for connector:
+- `ConnectorSchedule` struct with fields `ScheduleType`, `Cron`, `DaysOfWeek`, `Interval`, `TimeOfDay`
+- `ConnectionUpdateService.Schedule` method
+- `DetailsResponseDataCommon.Schedule` field in response
 
 ## [1.2.7](https://github.com/fivetran/go-fivetran/compare/v1.2.6...v1.2.7)
 
