@@ -24,6 +24,7 @@ type ConnectionCreateService struct {
     proxyAgentId             *string
     dataDelaySensitivity     *string
     dataDelayThreshold       *int
+    destinationSchemaNames   *string
     config                   *ConnectionConfig
     auth                     *ConnectionAuth
     configCustom             *map[string]interface{}
@@ -47,6 +48,7 @@ func (s *ConnectionCreateService) requestBase() connectionCreateRequestBase {
         ProxyAgentId:               s.proxyAgentId,
         DataDelaySensitivity:       s.dataDelaySensitivity,
         DataDelayThreshold:         s.dataDelayThreshold,
+        DestinationSchemaNames:     s.destinationSchemaNames,
     }
 }
 
@@ -197,6 +199,12 @@ func (s *ConnectionCreateService) DataDelaySensitivity(value string) *Connection
     s.dataDelaySensitivity = &value
     return s
 }
+
+func (s *ConnectionCreateService) DestinationSchemaNames(value string) *ConnectionCreateService {
+    s.destinationSchemaNames = &value
+    return s
+}
+
 func (s *ConnectionCreateService) do(ctx context.Context, req, response any) error {
     err := s.HttpService.Do(ctx, "POST", "/connections", req, nil, 201, &response)
     return err

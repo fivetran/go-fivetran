@@ -44,6 +44,7 @@ func TestNewConnectionSecretsListMappingMock(t *testing.T) {
 		NetworkingMethod("networking_method").
         DataDelayThreshold(&dataDelayThreshold).
         DataDelaySensitivity("CUSTOM").
+		DestinationSchemaNames("FIVETRAN_NAMING").
 		Config(prepareConnectionConfig()).
 		Auth(prepareConnectionAuth()).
 		Do(context.Background())
@@ -87,6 +88,7 @@ func TestNewConnectionCustomSecretsListMappingMock(t *testing.T) {
 		NetworkingMethod("networking_method").
         DataDelayThreshold(&dataDelayThreshold).
         DataDelaySensitivity("CUSTOM").
+		DestinationSchemaNames("FIVETRAN_NAMING").
 		ConfigCustom(prepareConnectionCustomConfig()).
 		AuthCustom(prepareConnectionCustomAuth()).
 		DoCustom(context.Background())
@@ -129,6 +131,7 @@ func TestNewConnectionCustomMergedMappingMock(t *testing.T) {
 		NetworkingMethod("networking_method").
         DataDelayThreshold(&dataDelayThreshold).
         DataDelaySensitivity("CUSTOM").
+		DestinationSchemaNames("FIVETRAN_NAMING").
 		Config(prepareConnectionConfig()).
 		ConfigCustom(prepareConnectionCustomMergedConfig()).
 		AuthCustom(prepareConnectionCustomAuth()).
@@ -168,6 +171,7 @@ func TestNewConnectionWihtNilSyncFrequency(t *testing.T) {
 		ProxyAgentId("proxy_id").
 		PrivateLinkId("private_link_id").
 		NetworkingMethod("networking_method").
+		DestinationSchemaNames("FIVETRAN_NAMING").
 		Config(prepareConnectionConfig()).
 		Auth(prepareConnectionAuth()).
 		Do(context.Background())

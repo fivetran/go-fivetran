@@ -128,6 +128,7 @@ type connectionCreateRequestBase struct {
     NetworkingMethod        *string `json:"networking_method,omitempty"`
     DataDelaySensitivity    *string `json:"data_delay_sensitivity"`
     DataDelayThreshold      *int    `json:"data_delay_threshold"`
+    DestinationSchemaNames  *string `json:"destination_schema_names,omitempty"`
 }
 
 type connectionCreateRequest struct {
