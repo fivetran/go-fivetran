@@ -56,7 +56,14 @@ func prepareQuickstartPackagesListResponse() string {
         ],
         "output_model_names": [
           "string"
-        ]
+        ],
+        "configurable_variables": {
+          "start_date": {
+            "type": "DATE",
+            "description": "The start date for historical data",
+            "allowed_values": ["2020-01-01", "2021-01-01"]
+          }
+        }
       }
     ],
     "next_cursor": "cursor_value"
@@ -72,6 +79,9 @@ func assertQuickstartPackagesListResponse(t *testing.T, response transformations
     testutils.AssertEqual(t, response.Data.Items[0].Version, "version")
     testutils.AssertEqual(t, response.Data.Items[0].ConnectorTypes[0], "string")
     testutils.AssertEqual(t, response.Data.Items[0].OutputModelNames[0], "string")
-
-		testutils.AssertEqual(t, response.Data.NextCursor, "cursor_value")
+    testutils.AssertEqual(t, response.Data.Items[0].ConfigurableVars["start_date"].Type, "DATE")
+    testutils.AssertEqual(t, response.Data.Items[0].ConfigurableVars["start_date"].Description, "The start date for historical data")
+    testutils.AssertEqual(t, response.Data.Items[0].ConfigurableVars["start_date"].AllowedValues[0], "2020-01-01")
+    testutils.AssertEqual(t, response.Data.Items[0].ConfigurableVars["start_date"].AllowedValues[1], "2021-01-01")
+    testutils.AssertEqual(t, response.Data.NextCursor, "cursor_value")
 }
