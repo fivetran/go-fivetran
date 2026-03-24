@@ -5,7 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/fivetran/go-fivetran/compare/v1.2.9...HEAD)
+## [Unreleased](https://github.com/fivetran/go-fivetran/compare/v1.3.0...HEAD)
+
+## [1.3.0](https://github.com/fivetran/go-fivetran/compare/v1.2.9...v1.3.0)
+
+## Added
+- `ConfigurableVarDefinition` struct with fields `Type`, `Description`, `AllowedValues` for Quickstart package configurable variable definitions.
+- `ConfigurableVars` field (`map[string]ConfigurableVarDefinition`) to `quickstartPackageResponseBase`, deserializing `configurable_variables` from `GET /transformations/package-metadata/{id}` and `GET /transformations/package-metadata` responses.
 
 ## [1.2.9](https://github.com/fivetran/go-fivetran/compare/v1.2.8...v1.2.9)
 
