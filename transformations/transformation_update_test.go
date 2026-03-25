@@ -156,6 +156,10 @@ func prepareTransformationUpdateResponse() string {
           "command": "string"
         }
       ],
+      "configurable_variables": {
+        "start_date": "2020-01-01",
+        "use_full_refresh": true
+      },
       "fake_field": "unmapped-value"
     }
   }
@@ -167,6 +171,7 @@ func prepareTransformationUpdateConfig() *transformations.TransformationConfig {
   config.ProjectId("string")
   config.Name("string")
   config.Steps([]transformations.TransformationStep{{Name: "string", Command: "string"}})
+  config.ConfigurableVariables(map[string]interface{}{"start_date": "2020-01-01", "use_full_refresh": true})
 
   return config
 }
@@ -218,6 +223,7 @@ func assertTransformationFullUpdateRequest(t *testing.T, request map[string]inte
     testutils.AssertKey(t, "project_id", config, "string")
     testutils.AssertKey(t, "name", config, "string")
     testutils.AssertHasKey(t, config, "steps")
+    testutils.AssertHasKey(t, config, "configurable_variables")
 }
 
 func assertTransformationCustomUpdateRequest(t *testing.T, request map[string]interface{}) {
@@ -251,6 +257,7 @@ func assertTransformationCustomMergedUpdateRequest(t *testing.T, request map[str
     testutils.AssertKey(t, "project_id", config, "string")
     testutils.AssertKey(t, "name", config, "string")
     testutils.AssertHasKey(t, config, "steps")
+    testutils.AssertHasKey(t, config, "configurable_variables")
     testutils.AssertKey(t, "fake_field", config, "unmapped-value")
 }
 
@@ -278,6 +285,8 @@ func assertTransformationUpdateResponse(t *testing.T, response transformations.T
     testutils.AssertEqual(t, response.Data.TransformationConfig.Name, "string")
     testutils.AssertEqual(t, response.Data.TransformationConfig.Steps[0].Name, "string")
     testutils.AssertEqual(t, response.Data.TransformationConfig.Steps[0].Command, "string")
+    testutils.AssertEqual(t, response.Data.TransformationConfig.ConfigurableVariables["start_date"], "2020-01-01")
+    testutils.AssertEqual(t, response.Data.TransformationConfig.ConfigurableVariables["use_full_refresh"], true)
 }
 
 func assertTransformationCustomUpdateResponse(t *testing.T, response transformations.TransformationCustomResponse) {
@@ -330,6 +339,8 @@ func assertTransformationCustomMergedUpdateResponse(t *testing.T, response trans
     testutils.AssertEqual(t, response.Data.TransformationConfig.Name, "string")
     testutils.AssertEqual(t, response.Data.TransformationConfig.Steps[0].Name, "string")
     testutils.AssertEqual(t, response.Data.TransformationConfig.Steps[0].Command, "string")
+    testutils.AssertEqual(t, response.Data.TransformationConfig.ConfigurableVariables["start_date"], "2020-01-01")
+    testutils.AssertEqual(t, response.Data.TransformationConfig.ConfigurableVariables["use_full_refresh"], true)
 
     testutils.AssertKey(t, "fake_field", response.Data.TransformationConfigCustom, "unmapped-value")
 }

@@ -167,9 +167,10 @@ type TransformationConfig struct {
 	name      *string
 	steps     *[]TransformationStep
 	/* QUICKSTART */
-	packageName    *string
-	connectionIds  *[]string
-	excludedModels *[]string
+	packageName           *string
+	connectionIds         *[]string
+	excludedModels        *[]string
+	configurableVariables *map[string]interface{}
 }
 
 type transformationConfigRequest struct {
@@ -178,9 +179,10 @@ type transformationConfigRequest struct {
 	Name      *string               `json:"name,omitempty"`
 	Steps     *[]TransformationStep `json:"steps,omitempty"`
 	/* QUICKSTART */
-	PackageName    *string   `json:"package_name,omitempty"`
-	ConnectionIds  *[]string `json:"connection_ids,omitempty"`
-	ExcludedModels *[]string `json:"excluded_models,omitempty"`
+	PackageName           *string                 `json:"package_name,omitempty"`
+	ConnectionIds         *[]string               `json:"connection_ids,omitempty"`
+	ExcludedModels        *[]string               `json:"excluded_models,omitempty"`
+	ConfigurableVariables *map[string]interface{} `json:"configurable_variables,omitempty"`
 }
 
 type TransformationStep struct {
@@ -194,10 +196,11 @@ type transformationConfigResponse struct {
 	Name      string               `json:"name,omitempty"`
 	Steps     []TransformationStep `json:"steps,omitempty"`
 	/* QUICKSTART */
-	PackageName      string   `json:"package_name,omitempty"`
-	ConnectionIds    []string `json:"connection_ids,omitempty"`
-	ExcludedModels   []string `json:"excluded_models,omitempty"`
-	UpgradeAvailable bool     `json:"upgrade_available,omitempty"`
+	PackageName           string                 `json:"package_name,omitempty"`
+	ConnectionIds         []string               `json:"connection_ids,omitempty"`
+	ExcludedModels        []string               `json:"excluded_models,omitempty"`
+	UpgradeAvailable      bool                   `json:"upgrade_available,omitempty"`
+	ConfigurableVariables map[string]interface{} `json:"configurable_variables,omitempty"`
 }
 
 type transformationCreateRequest struct {

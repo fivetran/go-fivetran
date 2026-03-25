@@ -85,7 +85,11 @@ func prepareTransformationDetailsResponse() string {
           "excluded_models": [
             "string"
           ],
-          "upgrade_available": true
+          "upgrade_available": true,
+          "configurable_variables": {
+            "start_date": "2020-01-01",
+            "use_full_refresh": true
+          }
     }
   }
 }`
@@ -119,4 +123,6 @@ func assertTransformationDetailsResponse(t *testing.T, response transformations.
     testutils.AssertEqual(t, response.Data.TransformationConfig.ConnectionIds[0], "string")
     testutils.AssertEqual(t, response.Data.TransformationConfig.ExcludedModels[0], "string")
     testutils.AssertEqual(t, response.Data.TransformationConfig.UpgradeAvailable, true)
+    testutils.AssertEqual(t, response.Data.TransformationConfig.ConfigurableVariables["start_date"], "2020-01-01")
+    testutils.AssertEqual(t, response.Data.TransformationConfig.ConfigurableVariables["use_full_refresh"], true)
 }
