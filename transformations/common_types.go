@@ -288,19 +288,19 @@ type transformationCustomUpdateRequest struct {
 
 /* Quickstart metadata details*/
 
-type ConfigurableVarDefinition struct {
+type ConfigurableVariableDefinition struct {
 	Type          string   `json:"type,omitempty"`
 	Description   string   `json:"description,omitempty"`
 	AllowedValues []string `json:"allowed_values,omitempty"`
 }
 
 type quickstartPackageResponseBase struct {
-	Id               string                               `json:"id,omitempty"`
-	Name             string                               `json:"name,omitempty"`
-	Version          string                               `json:"version,omitempty"`
-	ConnectorTypes   []string                             `json:"connector_types,omitempty"`
-	OutputModelNames []string                             `json:"output_model_names,omitempty"`
-	ConfigurableVars map[string]ConfigurableVarDefinition `json:"configurable_variables,omitempty"`
+	Id                    string                                    `json:"id,omitempty"`
+	Name                  string                                    `json:"name,omitempty"`
+	Version               string                                    `json:"version,omitempty"`
+	ConnectorTypes        []string                                  `json:"connector_types,omitempty"`
+	OutputModelNames      []string                                  `json:"output_model_names,omitempty"`
+	ConfigurableVariables map[string]ConfigurableVariableDefinition `json:"configurable_variables,omitempty"`
 }
 
 type QuickstartPackageResponse struct {
