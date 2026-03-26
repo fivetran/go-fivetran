@@ -62,7 +62,7 @@ func prepareQuickstartPackageDetailsResponse() string {
 }`
 }
 
-func assertQuickstartPackageDetailsResponse(t *testing.T, response transformations.QuickstartPackageResponse) {
+func assertQuickstartPackageDetailsResponse(t *testing.T, response transformations.QuickstartPackageMetadataResponse) {
     testutils.AssertEqual(t, response.Code, "Success")
     testutils.AssertNotEmpty(t, response.Message)
     testutils.AssertEqual(t, response.Data.Id, "package_definition_id")

@@ -297,7 +297,7 @@ type ConfigurableVariableDefinition struct {
 	AllowedValues []string `json:"allowed_values,omitempty"`
 }
 
-type quickstartPackageResponseBase struct {
+type quickstartPackageMetadataResponseBase struct {
 	Id                    string                                    `json:"id,omitempty"`
 	Name                  string                                    `json:"name,omitempty"`
 	Version               string                                    `json:"version,omitempty"`
@@ -306,17 +306,17 @@ type quickstartPackageResponseBase struct {
 	ConfigurableVariables map[string]ConfigurableVariableDefinition `json:"configurable_variables,omitempty"`
 }
 
-type QuickstartPackageResponse struct {
+type QuickstartPackageMetadataResponse struct {
 	common.CommonResponse
 	Data struct {
-		quickstartPackageResponseBase
+		quickstartPackageMetadataResponseBase
 	} `json:"data"`
 }
 
-type QuickstartPackagesListResponse struct {
+type QuickstartPackagesMetadataListResponse struct {
 	common.CommonResponse
 	Data struct {
-		Items      []quickstartPackageResponseBase `json:"items"`
+		Items      []quickstartPackageMetadataResponseBase `json:"items"`
 		NextCursor string                          `json:"next_cursor"`
 	} `json:"data"`
 }

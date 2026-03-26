@@ -23,8 +23,8 @@ func (s *QuickstartPackagesListService) Cursor(value string) *QuickstartPackages
 	return s
 }
 
-func (s *QuickstartPackagesListService) Do(ctx context.Context) (QuickstartPackagesListResponse, error) {
-	var response QuickstartPackagesListResponse
+func (s *QuickstartPackagesListService) Do(ctx context.Context) (QuickstartPackagesMetadataListResponse, error) {
+	var response QuickstartPackagesMetadataListResponse
 	var queries map[string]string = nil
 	if s.cursor != nil || s.limit != nil {
 		queries = make(map[string]string)
