@@ -167,9 +167,10 @@ type TransformationConfig struct {
 	name      *string
 	steps     *[]TransformationStep
 	/* QUICKSTART */
-	packageName    *string
-	connectionIds  *[]string
-	excludedModels *[]string
+	packageName           *string
+	connectionIds         *[]string
+	excludedModels        *[]string
+	configurableVariables *map[string]interface{}
 }
 
 type transformationConfigRequest struct {
@@ -178,9 +179,10 @@ type transformationConfigRequest struct {
 	Name      *string               `json:"name,omitempty"`
 	Steps     *[]TransformationStep `json:"steps,omitempty"`
 	/* QUICKSTART */
-	PackageName    *string   `json:"package_name,omitempty"`
-	ConnectionIds  *[]string `json:"connection_ids,omitempty"`
-	ExcludedModels *[]string `json:"excluded_models,omitempty"`
+	PackageName           *string                 `json:"package_name,omitempty"`
+	ConnectionIds         *[]string               `json:"connection_ids,omitempty"`
+	ExcludedModels        *[]string               `json:"excluded_models,omitempty"`
+	ConfigurableVariables *map[string]interface{} `json:"configurable_variables,omitempty"`
 }
 
 type TransformationStep struct {
@@ -194,10 +196,11 @@ type transformationConfigResponse struct {
 	Name      string               `json:"name,omitempty"`
 	Steps     []TransformationStep `json:"steps,omitempty"`
 	/* QUICKSTART */
-	PackageName      string   `json:"package_name,omitempty"`
-	ConnectionIds    []string `json:"connection_ids,omitempty"`
-	ExcludedModels   []string `json:"excluded_models,omitempty"`
-	UpgradeAvailable bool     `json:"upgrade_available,omitempty"`
+	PackageName           string                 `json:"package_name,omitempty"`
+	ConnectionIds         []string               `json:"connection_ids,omitempty"`
+	ExcludedModels        []string               `json:"excluded_models,omitempty"`
+	UpgradeAvailable      bool                   `json:"upgrade_available,omitempty"`
+	ConfigurableVariables map[string]interface{} `json:"configurable_variables,omitempty"`
 }
 
 type transformationCreateRequest struct {
@@ -288,32 +291,32 @@ type transformationCustomUpdateRequest struct {
 
 /* Quickstart metadata details*/
 
-type ConfigurableVarDefinition struct {
+type ConfigurableVariableDefinition struct {
 	Type          string   `json:"type,omitempty"`
 	Description   string   `json:"description,omitempty"`
 	AllowedValues []string `json:"allowed_values,omitempty"`
 }
 
-type quickstartPackageResponseBase struct {
-	Id               string                               `json:"id,omitempty"`
-	Name             string                               `json:"name,omitempty"`
-	Version          string                               `json:"version,omitempty"`
-	ConnectorTypes   []string                             `json:"connector_types,omitempty"`
-	OutputModelNames []string                             `json:"output_model_names,omitempty"`
-	ConfigurableVars map[string]ConfigurableVarDefinition `json:"configurable_variables,omitempty"`
+type quickstartPackageMetadataResponseBase struct {
+	Id                    string                                    `json:"id,omitempty"`
+	Name                  string                                    `json:"name,omitempty"`
+	Version               string                                    `json:"version,omitempty"`
+	ConnectorTypes        []string                                  `json:"connector_types,omitempty"`
+	OutputModelNames      []string                                  `json:"output_model_names,omitempty"`
+	ConfigurableVariables map[string]ConfigurableVariableDefinition `json:"configurable_variables,omitempty"`
 }
 
-type QuickstartPackageResponse struct {
+type QuickstartPackageMetadataResponse struct {
 	common.CommonResponse
 	Data struct {
-		quickstartPackageResponseBase
+		quickstartPackageMetadataResponseBase
 	} `json:"data"`
 }
 
-type QuickstartPackagesListResponse struct {
+type QuickstartPackagesMetadataListResponse struct {
 	common.CommonResponse
 	Data struct {
-		Items      []quickstartPackageResponseBase `json:"items"`
+		Items      []quickstartPackageMetadataResponseBase `json:"items"`
 		NextCursor string                          `json:"next_cursor"`
 	} `json:"data"`
 }

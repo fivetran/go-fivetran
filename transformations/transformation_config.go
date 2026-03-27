@@ -4,13 +4,14 @@ import "github.com/fivetran/go-fivetran/utils"
 
 func (elc *TransformationConfig) Request() *transformationConfigRequest {
 	return &transformationConfigRequest{
-		ProjectId:  	elc.projectId,
-		Name:  			elc.name,
-		Steps: 			elc.steps,
-		PackageName:    elc.packageName,
-    	ConnectionIds:  elc.connectionIds,
-    	ExcludedModels: elc.excludedModels,
-    }
+		ProjectId:             elc.projectId,
+		Name:                  elc.name,
+		Steps:                 elc.steps,
+		PackageName:           elc.packageName,
+		ConnectionIds:         elc.connectionIds,
+		ExcludedModels:        elc.excludedModels,
+		ConfigurableVariables: elc.configurableVariables,
+	}
 }
 
 func (elc *TransformationConfig) Merge(customConfig *map[string]interface{}) (*map[string]interface{}, error) {
@@ -48,5 +49,10 @@ func (elc *TransformationConfig) ConnectionIds(value []string) *TransformationCo
 
 func (elc *TransformationConfig) ExcludedModels(value []string) *TransformationConfig {
 	elc.excludedModels = &value
+	return elc
+}
+
+func (elc *TransformationConfig) ConfigurableVariables(value map[string]interface{}) *TransformationConfig {
+	elc.configurableVariables = &value
 	return elc
 }

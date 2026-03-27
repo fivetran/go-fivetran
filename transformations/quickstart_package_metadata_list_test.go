@@ -19,7 +19,7 @@ func TestQuickstartPackagesListServiceDo(t *testing.T) {
 	ftClient, mockClient := testutils.CreateTestClient()
 	handler := mockClient.When(http.MethodGet, "/v1/transformations/package-metadata").
 		ThenCall(func(req *http.Request) (*http.Response, error) {
-			response := mock.NewResponse(req, http.StatusOK, prepareQuickstartPackagesListResponse())
+			response := mock.NewResponse(req, http.StatusOK, prepareQuickstartPackagesMetadataListResponse())
 			return response, nil
 		})
 
@@ -38,10 +38,10 @@ func TestQuickstartPackagesListServiceDo(t *testing.T) {
 	testutils.AssertEqual(t, len(interactions), 1)
 	testutils.AssertEqual(t, interactions[0].Handler, handler)
 	testutils.AssertEqual(t, handler.Interactions, 1)
-	assertQuickstartPackagesListResponse(t, response)
+	assertQuickstartPackagesMetadataListResponse(t, response)
 }
 
-func prepareQuickstartPackagesListResponse() string {
+func prepareQuickstartPackagesMetadataListResponse() string {
 	return `{
   "code": "Success",
   "message": "Operation performed.",
@@ -71,7 +71,7 @@ func prepareQuickstartPackagesListResponse() string {
 }`
 }
 
-func assertQuickstartPackagesListResponse(t *testing.T, response transformations.QuickstartPackagesListResponse) {
+func assertQuickstartPackagesMetadataListResponse(t *testing.T, response transformations.QuickstartPackagesMetadataListResponse) {
     testutils.AssertEqual(t, response.Code, "Success")
     testutils.AssertNotEmpty(t, response.Message)
     testutils.AssertEqual(t, response.Data.Items[0].Id, "package_definition_id")
@@ -79,9 +79,9 @@ func assertQuickstartPackagesListResponse(t *testing.T, response transformations
     testutils.AssertEqual(t, response.Data.Items[0].Version, "version")
     testutils.AssertEqual(t, response.Data.Items[0].ConnectorTypes[0], "string")
     testutils.AssertEqual(t, response.Data.Items[0].OutputModelNames[0], "string")
-    testutils.AssertEqual(t, response.Data.Items[0].ConfigurableVars["start_date"].Type, "DATE")
-    testutils.AssertEqual(t, response.Data.Items[0].ConfigurableVars["start_date"].Description, "The start date for historical data")
-    testutils.AssertEqual(t, response.Data.Items[0].ConfigurableVars["start_date"].AllowedValues[0], "2020-01-01")
-    testutils.AssertEqual(t, response.Data.Items[0].ConfigurableVars["start_date"].AllowedValues[1], "2021-01-01")
+    testutils.AssertEqual(t, response.Data.Items[0].ConfigurableVariables["start_date"].Type, "DATE")
+    testutils.AssertEqual(t, response.Data.Items[0].ConfigurableVariables["start_date"].Description, "The start date for historical data")
+    testutils.AssertEqual(t, response.Data.Items[0].ConfigurableVariables["start_date"].AllowedValues[0], "2020-01-01")
+    testutils.AssertEqual(t, response.Data.Items[0].ConfigurableVariables["start_date"].AllowedValues[1], "2021-01-01")
     testutils.AssertEqual(t, response.Data.NextCursor, "cursor_value")
 }

@@ -17,8 +17,8 @@ func (s *QuickstartPackageDetailsService) PackageDefinitionId(value string) *Qui
 	return s
 }
 
-func (s *QuickstartPackageDetailsService) Do(ctx context.Context) (QuickstartPackageResponse, error) {
-	var response QuickstartPackageResponse
+func (s *QuickstartPackageDetailsService) Do(ctx context.Context) (QuickstartPackageMetadataResponse, error) {
+	var response QuickstartPackageMetadataResponse
 
 	if s.packageDefinitionId == nil {
 		return response, fmt.Errorf("missing required packageDefinitionId")
