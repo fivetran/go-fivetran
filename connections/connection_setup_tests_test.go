@@ -87,6 +87,21 @@ func assertConnectionSetupTestsResponse(t *testing.T, response connections.Detai
 		testutils.AssertNotEmpty(t, test.Message)
 	}
 
+	testutils.AssertEqual(t, response.Data.SetupTests[0].Title, "Validate Login")
+	testutils.AssertEqual(t, response.Data.SetupTests[0].Status, "FAILED")
+	testutils.AssertEqual(t, response.Data.SetupTests[0].Message, "Invalid login credentials")
+	testutils.AssertEqual(t, response.Data.SetupTests[0].Details, "Some details about the failure")
+	
+	testutils.AssertEqual(t, response.Data.SetupTests[1].Title, "Connecting to database")
+	testutils.AssertEqual(t, response.Data.SetupTests[1].Status, "FAILED")
+	testutils.AssertEqual(t, response.Data.SetupTests[1].Message, "Failed verifying trust anchor signature: TLS verification failed: Signature does not match.")
+	testutils.AssertEqual(t, response.Data.SetupTests[1].Details, []interface{}{
+		map[string]interface{}{
+			"name": "some name",
+			"hash": "abc123=",
+		},
+	})
+
 	testutils.AssertEqual(t, response.Data.Config.Username, "newuser")
 	testutils.AssertEqual(t, response.Data.Config.Password, "******")
 	testutils.AssertEqual(t, response.Data.Config.APIToken, "******")
@@ -121,7 +136,16 @@ func prepareConnectionSetupTestsResponse() string {
 			"setup_tests": [{
 				"title": "Validate Login",
 				"status": "FAILED",
-				"message": "Invalid login credentials"
+				"message": "Invalid login credentials",
+				"details": "Some details about the failure"
+			}, {
+				"title": "Connecting to database",
+				"status": "FAILED",
+				"message": "Failed verifying trust anchor signature: TLS verification failed: Signature does not match.",
+				"details": [{
+					"name": "some name",
+					"hash": "abc123="
+				}]
 			}],
 			"config": {
 				"username": "newuser",
