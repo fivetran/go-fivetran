@@ -9,6 +9,7 @@ import (
 	"github.com/fivetran/go-fivetran/certificates"
 	connectcard "github.com/fivetran/go-fivetran/connect_card"
 	"github.com/fivetran/go-fivetran/connections"
+	connectorsdk "github.com/fivetran/go-fivetran/connector_sdk"
 	"github.com/fivetran/go-fivetran/destinations"
 	externallogging "github.com/fivetran/go-fivetran/external_logging"
 	"github.com/fivetran/go-fivetran/fingerprints"
@@ -39,7 +40,7 @@ const defaultBaseURL = "https://api.fivetran.com/v1"
 const restAPIv2 = "application/json;version=2"
 
 // WARNING: Update Agent version on each release!
-const defaultUserAgent = "Go-Fivetran/1.3.1"
+const defaultUserAgent = "Go-Fivetran/1.3.2"
 
 // New receives API Key and API Secret, and returns a new Client with the
 // default HTTP client
@@ -246,6 +247,27 @@ func (c *Client) NewGroupSshPublicKey() *groups.GroupSshKeyService {
 
 func (c *Client) NewGroupServiceAccount() *groups.GroupServiceAccountService {
 	return &groups.GroupServiceAccountService{HttpService: c.NewHttpService()}
+}
+
+/* Connector SDK Packages */
+func (c *Client) NewConnectorSdkPackageCreate() *connectorsdk.ConnectorSdkPackageCreateService {
+	return &connectorsdk.ConnectorSdkPackageCreateService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewConnectorSdkPackageDetails() *connectorsdk.ConnectorSdkPackageDetailsService {
+	return &connectorsdk.ConnectorSdkPackageDetailsService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewConnectorSdkPackageUpdate() *connectorsdk.ConnectorSdkPackageUpdateService {
+	return &connectorsdk.ConnectorSdkPackageUpdateService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewConnectorSdkPackageDelete() *connectorsdk.ConnectorSdkPackageDeleteService {
+	return &connectorsdk.ConnectorSdkPackageDeleteService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewConnectorSdkPackageList() *connectorsdk.ConnectorSdkPackageListService {
+	return &connectorsdk.ConnectorSdkPackageListService{HttpService: c.NewHttpService()}
 }
 
 /* External Logging */
