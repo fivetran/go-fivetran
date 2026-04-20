@@ -5,7 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/fivetran/go-fivetran/compare/v1.3.1...HEAD)
+## [Unreleased](https://github.com/fivetran/go-fivetran/compare/v1.3.2...HEAD)
+
+## [1.3.2](https://github.com/fivetran/go-fivetran/compare/v1.3.1...v1.3.2)
+
+## Added
+- `connector_sdk` module with full Connector SDK package CRUD support: Create, Get, List, Update, Delete.
+- `ConnectorSdkPackageData` type with `FileSha256Hash` field for package integrity verification.
+- `DoMultipart()` method on `HttpService` for `multipart/form-data` file uploads (used by package Create and Update).
+- Client methods: `NewConnectorSdkPackageCreate()`, `NewConnectorSdkPackageDetails()`, `NewConnectorSdkPackageUpdate()`, `NewConnectorSdkPackageDelete()`, `NewConnectorSdkPackageList()`.
 
 ## [1.3.1](https://github.com/fivetran/go-fivetran/compare/v1.3.0...v1.3.1)
 
