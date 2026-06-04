@@ -103,7 +103,9 @@ func prepareMetadataDetailsResponse() string {
                     "description": "Destination schema. Schema is permanent and cannot be changed after connection creation",
                     "title": "Destination schema",
                     "example": "schema_name",
-                    "readonly": false
+                    "readonly": false,
+                    "nullable": false,
+                    "immutable": true
                 },
                 "reports": {
                     "type": "array",
@@ -220,7 +222,10 @@ func prepareMetadataDetailsResponse() string {
                     "type": "string",
                     "description": "refresh_token",
                     "example": "my_refresh_token",
-                    "readonly": false
+                    "readonly": false,
+                    "nullable": true,
+                    "format": "password",
+                    "immutable": false
                 },
                 "client_access": {
                     "type": "object",
@@ -231,7 +236,10 @@ func prepareMetadataDetailsResponse() string {
                             "type": "string",
                             "description": "developer_token",
                             "example": "string",
-                            "readonly": false
+                            "readonly": false,
+                            "nullable": true,
+                            "format": "password",
+                            "immutable": true
                         }
                     }
                 }
@@ -275,14 +283,24 @@ func assertMetadataDetailsResponse(t *testing.T, response metadata.ConnectorMeta
   testutils.AssertEqual(t, response.Data.Config.Description, "")
   testutils.AssertEqual(t, response.Data.Config.Title, "Google Ads config object")
   testutils.AssertEqual(t, response.Data.Config.Readonly, false)
+  testutils.AssertEqual(t, response.Data.Config.Nullable, false)
+  testutils.AssertEqual(t, response.Data.Config.Format, "")
+  testutils.AssertEqual(t, response.Data.Config.Immutable, false)
   testutils.AssertEqual(t, response.Data.Config.Required[0], "schema")
 
   testutils.AssertEqual(t, response.Data.Config.Properties["sync_mode"].Type, "string")
   testutils.AssertEqual(t, response.Data.Config.Properties["sync_mode"].Description, "Whether to sync all accounts or specific accounts.")
   testutils.AssertEqual(t, response.Data.Config.Properties["sync_mode"].Readonly, false)
+  testutils.AssertEqual(t, response.Data.Config.Properties["sync_mode"].Nullable, false)
+  testutils.AssertEqual(t, response.Data.Config.Properties["sync_mode"].Format, "")
+  testutils.AssertEqual(t, response.Data.Config.Properties["sync_mode"].Immutable, false)
   testutils.AssertEqual(t, response.Data.Config.Properties["sync_mode"].Enum[0], "ManagerAccounts")
   testutils.AssertEqual(t, response.Data.Config.Properties["sync_mode"].Enum[1], "AllAccounts")
   testutils.AssertEqual(t, response.Data.Config.Properties["sync_mode"].Enum[2], "SpecificAccounts")
+
+  testutils.AssertEqual(t, response.Data.Config.Properties["schema"].Nullable, false)
+  testutils.AssertEqual(t, response.Data.Config.Properties["schema"].Format, "")
+  testutils.AssertEqual(t, response.Data.Config.Properties["schema"].Immutable, true)
 
   testutils.AssertEqual(t, response.Data.Config.Properties["manager_accounts"].Type, "array")
   testutils.AssertEqual(t, response.Data.Config.Properties["manager_accounts"].Description, "manager_accounts")
@@ -314,6 +332,9 @@ func assertMetadataDetailsResponse(t *testing.T, response metadata.ConnectorMeta
   testutils.AssertEqual(t, response.Data.Auth.Properties["refresh_token"].Type, "string")
   testutils.AssertEqual(t, response.Data.Auth.Properties["refresh_token"].Description, "refresh_token")
   testutils.AssertEqual(t, response.Data.Auth.Properties["refresh_token"].Readonly, false)
+  testutils.AssertEqual(t, response.Data.Auth.Properties["refresh_token"].Nullable, true)
+  testutils.AssertEqual(t, response.Data.Auth.Properties["refresh_token"].Format, "password")
+  testutils.AssertEqual(t, response.Data.Auth.Properties["refresh_token"].Immutable, false)
 
   testutils.AssertEqual(t, response.Data.Auth.Properties["client_access"].Type, "object")
   testutils.AssertEqual(t, response.Data.Auth.Properties["client_access"].Description, "")
@@ -321,4 +342,7 @@ func assertMetadataDetailsResponse(t *testing.T, response metadata.ConnectorMeta
   testutils.AssertEqual(t, response.Data.Auth.Properties["client_access"].Properties["developer_token"].Type, "string")
   testutils.AssertEqual(t, response.Data.Auth.Properties["client_access"].Properties["developer_token"].Description, "developer_token")
   testutils.AssertEqual(t, response.Data.Auth.Properties["client_access"].Properties["developer_token"].Readonly, false)
+  testutils.AssertEqual(t, response.Data.Auth.Properties["client_access"].Properties["developer_token"].Nullable, true)
+  testutils.AssertEqual(t, response.Data.Auth.Properties["client_access"].Properties["developer_token"].Format, "password")
+  testutils.AssertEqual(t, response.Data.Auth.Properties["client_access"].Properties["developer_token"].Immutable, true)
 }
