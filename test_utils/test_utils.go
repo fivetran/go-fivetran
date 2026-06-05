@@ -713,7 +713,7 @@ func DeleteWebhook(t *testing.T, id string) {
 func CreateWebhookAccount(t *testing.T) string {
     t.Helper()
     created, err := Client.NewWebhookAccountCreate().
-        Url("https://example.com").
+        Url("https://localhost:12345").
         Secret("my_secret").
         Active(false).
         Events([]string{"sync_start", "sync_end"}).

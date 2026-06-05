@@ -9,7 +9,7 @@ import (
 
 func TestNewWebhookGroupCreateE2E(t *testing.T) {
 	created, err := testutils.Client.NewWebhookGroupCreate().
-		Url("https://example.com").
+		Url("https://localhost:12345").
 		Secret("my_secret").
 		GroupId(testutils.PredefinedGroupId).
 		Active(false).
@@ -31,7 +31,7 @@ func TestNewWebhookGroupCreateE2E(t *testing.T) {
 	testutils.AssertEqual(t, created.Data.Active, false)
 	testutils.AssertEqual(t, created.Data.GroupId, testutils.PredefinedGroupId)
 	testutils.AssertEqual(t, created.Data.Secret, "******")
-	testutils.AssertEqual(t, created.Data.Url, "https://example.com")
+	testutils.AssertEqual(t, created.Data.Url, "https://localhost:12345")
 	testutils.AssertEqual(t, created.Data.Events, []string{"sync_start", "sync_end"})
 
 	t.Cleanup(func() { testutils.DeleteWebhook(t, created.Data.Id) })
