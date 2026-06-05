@@ -9,7 +9,7 @@ import (
 
 func TestNewWebhookAccountCreateE2E(t *testing.T) {
 	created, err := testutils.Client.NewWebhookAccountCreate().
-		Url("https://localhost:12345").
+		Url("https://example.com").
 		Secret("my_secret").
 		Active(false).
 		Events([]string{"sync_start", "sync_end"}).
@@ -29,7 +29,7 @@ func TestNewWebhookAccountCreateE2E(t *testing.T) {
 	testutils.AssertEqual(t, created.Data.Type, "account")
 	testutils.AssertEqual(t, created.Data.Active, false)
 	testutils.AssertEqual(t, created.Data.Secret, "******")
-	testutils.AssertEqual(t, created.Data.Url, "https://localhost:12345")
+	testutils.AssertEqual(t, created.Data.Url, "https://example.com")
 	testutils.AssertEqual(t, created.Data.Events, []string{"sync_start", "sync_end"})
 
 	t.Cleanup(func() { testutils.DeleteWebhook(t, created.Data.Id) })

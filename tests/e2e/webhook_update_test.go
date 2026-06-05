@@ -12,7 +12,7 @@ func TestWebhookUpdateE2E(t *testing.T) {
 
 	updated, err := testutils.Client.NewWebhookUpdate().
 		WebhookId(webhookId).
-		Url("https://localhost:12345").
+		Url("https://example.com").
 		Secret("my_secret").
 		Active(false).
 		Events([]string{"sync_start", "sync_end"}).
@@ -31,7 +31,7 @@ func TestWebhookUpdateE2E(t *testing.T) {
 	testutils.AssertNotEmpty(t, updated.Data.Type)
 	testutils.AssertEqual(t, updated.Data.Active, false)
 	testutils.AssertEqual(t, updated.Data.Secret, "******")
-	testutils.AssertEqual(t, updated.Data.Url, "https://localhost:12345")
+	testutils.AssertEqual(t, updated.Data.Url, "https://example.com")
 	testutils.AssertEqual(t, updated.Data.Events, []string{"sync_start", "sync_end"})
 
 	t.Cleanup(func() { testutils.DeleteWebhook(t, webhookId) })
