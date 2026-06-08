@@ -23,7 +23,7 @@ func TestWebhookDetailsE2E(t *testing.T) {
 	testutils.AssertEmpty(t, result.Data.GroupId)
 	testutils.AssertEqual(t, result.Data.Type, "account")
 	testutils.AssertEqual(t, result.Data.Secret, "******")
-	testutils.AssertEqual(t, result.Data.Url, "https://localhost:12345")
+	testutils.AssertEqual(t, result.Data.Url, "https://example.com")
 	testutils.AssertEqual(t, result.Data.Events, []string{"sync_start", "sync_end"})
 	testutils.AssertEqual(t, result.Data.Active, false)
 
