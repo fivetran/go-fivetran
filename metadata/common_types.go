@@ -14,6 +14,9 @@ type Property struct {
     Description    string               `json:"description"`
     Title          string               `json:"title"`
     Readonly       bool                 `json:"readonly"`
+    Nullable       bool                 `json:"nullable"`
+    Format         string               `json:"format"`
+    Immutable      bool                 `json:"immutable"`
     Properties     map[string]*Property `json:"properties"`
     Enum           []string             `json:"enum"`
     Items          *Property            `json:"items"`     // for array properties
