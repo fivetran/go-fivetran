@@ -1,46 +1,46 @@
 package metadata_test
 
 import (
-  "context"
-  "net/http"
-  "testing"
-  //"fmt"
+	"context"
+	"net/http"
+	"testing"
+	//"fmt"
 
-  "github.com/fivetran/go-fivetran/metadata"
-  testutils "github.com/fivetran/go-fivetran/test_utils"
-  
-  "github.com/fivetran/go-fivetran/tests/mock"
+	"github.com/fivetran/go-fivetran/metadata"
+	testutils "github.com/fivetran/go-fivetran/test_utils"
+
+	"github.com/fivetran/go-fivetran/tests/mock"
 )
 
 func TestMetadataDetailsServiceDo(t *testing.T) {
-  // arrange
+	// arrange
 
-  ftClient, mockClient := testutils.CreateTestClient()
-  handler := mockClient.When(http.MethodGet, "/v1/metadata/connector-types/google_ads").
-    ThenCall(func(req *http.Request) (*http.Response, error) {
-      response := mock.NewResponse(req, http.StatusOK, prepareMetadataDetailsResponse())
-      return response, nil
-    })
+	ftClient, mockClient := testutils.CreateTestClient()
+	handler := mockClient.When(http.MethodGet, "/v1/metadata/connector-types/google_ads").
+		ThenCall(func(req *http.Request) (*http.Response, error) {
+			response := mock.NewResponse(req, http.StatusOK, prepareMetadataDetailsResponse())
+			return response, nil
+		})
 
-  // act
-  response, err := ftClient.NewMetadataDetails().
-    Service("google_ads").
-    Do(context.Background())
+	// act
+	response, err := ftClient.NewMetadataDetails().
+		Service("google_ads").
+		Do(context.Background())
 
-  // assert
-  if err != nil {
-    t.Error(err)
-  }
+	// assert
+	if err != nil {
+		t.Error(err)
+	}
 
-  interactions := mockClient.Interactions()
-  testutils.AssertEqual(t, len(interactions), 1)
-  testutils.AssertEqual(t, interactions[0].Handler, handler)
-  testutils.AssertEqual(t, handler.Interactions, 1)
-  assertMetadataDetailsResponse(t, response)
+	interactions := mockClient.Interactions()
+	testutils.AssertEqual(t, len(interactions), 1)
+	testutils.AssertEqual(t, interactions[0].Handler, handler)
+	testutils.AssertEqual(t, handler.Interactions, 1)
+	assertMetadataDetailsResponse(t, response)
 }
 
 func prepareMetadataDetailsResponse() string {
-  return `{
+	return `{
     "code": "Success",
     "data": {
         "id": "google_ads",
@@ -92,6 +92,7 @@ func prepareMetadataDetailsResponse() string {
                     "description": "Whether to sync all accounts or specific accounts.",
                     "example": "ManagerAccounts | AllAccounts | SpecificAccounts",
                     "readonly": false,
+                    "fieldStatus": "general_availability",
                     "enum": [
                         "ManagerAccounts",
                         "AllAccounts",
@@ -105,7 +106,8 @@ func prepareMetadataDetailsResponse() string {
                     "example": "schema_name",
                     "readonly": false,
                     "nullable": false,
-                    "immutable": true
+                    "immutable": true,
+                    "fieldStatus": "private_preview"
                 },
                 "reports": {
                     "type": "array",
@@ -124,7 +126,8 @@ func prepareMetadataDetailsResponse() string {
                                 "type": "string",
                                 "description": "The name of the Google Ads report from which the connector will sync the data. [Possible report_type values](https://developers.google.com/adwords/api/docs/appendix/reports#report-types).",
                                 "example": "campaign",
-                                "readonly": false
+                                "readonly": false,
+                                "fieldStatus": "development"
                             },
                             "fields": {
                                 "type": "array",
@@ -225,7 +228,8 @@ func prepareMetadataDetailsResponse() string {
                     "readonly": false,
                     "nullable": true,
                     "format": "password",
-                    "immutable": false
+                    "immutable": false,
+                    "fieldStatus": "sunset"
                 },
                 "client_access": {
                     "type": "object",
@@ -239,7 +243,8 @@ func prepareMetadataDetailsResponse() string {
                             "readonly": false,
                             "nullable": true,
                             "format": "password",
-                            "immutable": true
+                            "immutable": true,
+                            "fieldStatus": "private_preview"
                         }
                     }
                 }
@@ -253,96 +258,102 @@ func prepareMetadataDetailsResponse() string {
 }
 
 func assertMetadataDetailsResponse(t *testing.T, response metadata.ConnectorMetadataResponse) {
-  testutils.AssertEqual(t, response.Code, "Success")
-  testutils.AssertEqual(t, response.Data.ID, "google_ads")
-  testutils.AssertEqual(t, response.Data.Type,"Marketing")
-  testutils.AssertEqual(t, response.Data.Name, "Google Ads")
-  testutils.AssertEqual(t, response.Data.Description, "Google Ads is an online advertising platform")
-  testutils.AssertEqual(t, response.Data.IconURL, "https://fivetran.com/integrations/google_ads/resources/google-ads.png")
-  testutils.AssertEqual(t, response.Data.LinkToDocs, "https://fivetran.com/docs/connectors/applications/google-ads")
-  testutils.AssertEqual(t, response.Data.LinkToErd, "https://fivetran.com/docs/connectors/applications/google-ads#schemainformation")
-  testutils.AssertEqual(t, response.Data.Icons[0], "https://fivetran.com/integrations/google_ads/resources/google-ads_512.png")
-  testutils.AssertEqual(t, response.Data.Icons[1],"https://fivetran.com/integrations/google_ads/resources/google-ads_40.svg")
-  testutils.AssertEqual(t, response.Data.ConnectorClass, "standard")
-  testutils.AssertEqual(t, response.Data.ServiceStatus, "general_availability")
-  testutils.AssertEqual(t, response.Data.ServiceStatusUpdatedAt,"2022-06-10")
-  testutils.AssertEqual(t, response.Data.SupportedFeatures[0].Id, "API_CONFIGURABLE")
-  testutils.AssertEqual(t, response.Data.SupportedFeatures[0].Notes, "")
-  testutils.AssertEqual(t, response.Data.SupportedFeatures[1].Id, "COLUMN_HASHING")
-  testutils.AssertEqual(t, response.Data.SupportedFeatures[1].Notes, "")
-  testutils.AssertEqual(t, response.Data.SupportedFeatures[2].Id, "DATA_BLOCKING")
-  testutils.AssertEqual(t, response.Data.SupportedFeatures[2].Notes, "Column level and table level")
-  testutils.AssertEqual(t, response.Data.SupportedFeatures[3].Id, "FIVETRAN_DATA_MODELS")
-  testutils.AssertEqual(t, response.Data.SupportedFeatures[3].Notes, "FIVETRAN_DATA_MODELS_Notes")
-  testutils.AssertEqual(t, response.Data.SupportedFeatures[4].Id, "RE_SYNC")
-  testutils.AssertEqual(t, response.Data.SupportedFeatures[4].Notes, "Connection and table level")
-  testutils.AssertEqual(t, response.Data.SupportedFeatures[5].Id, "AUTHORIZATION_VIA_API")
-  testutils.AssertEqual(t, response.Data.SupportedFeatures[5].Notes, "")
+	testutils.AssertEqual(t, response.Code, "Success")
+	testutils.AssertEqual(t, response.Data.ID, "google_ads")
+	testutils.AssertEqual(t, response.Data.Type, "Marketing")
+	testutils.AssertEqual(t, response.Data.Name, "Google Ads")
+	testutils.AssertEqual(t, response.Data.Description, "Google Ads is an online advertising platform")
+	testutils.AssertEqual(t, response.Data.IconURL, "https://fivetran.com/integrations/google_ads/resources/google-ads.png")
+	testutils.AssertEqual(t, response.Data.LinkToDocs, "https://fivetran.com/docs/connectors/applications/google-ads")
+	testutils.AssertEqual(t, response.Data.LinkToErd, "https://fivetran.com/docs/connectors/applications/google-ads#schemainformation")
+	testutils.AssertEqual(t, response.Data.Icons[0], "https://fivetran.com/integrations/google_ads/resources/google-ads_512.png")
+	testutils.AssertEqual(t, response.Data.Icons[1], "https://fivetran.com/integrations/google_ads/resources/google-ads_40.svg")
+	testutils.AssertEqual(t, response.Data.ConnectorClass, "standard")
+	testutils.AssertEqual(t, response.Data.ServiceStatus, "general_availability")
+	testutils.AssertEqual(t, response.Data.ServiceStatusUpdatedAt, "2022-06-10")
+	testutils.AssertEqual(t, response.Data.SupportedFeatures[0].Id, "API_CONFIGURABLE")
+	testutils.AssertEqual(t, response.Data.SupportedFeatures[0].Notes, "")
+	testutils.AssertEqual(t, response.Data.SupportedFeatures[1].Id, "COLUMN_HASHING")
+	testutils.AssertEqual(t, response.Data.SupportedFeatures[1].Notes, "")
+	testutils.AssertEqual(t, response.Data.SupportedFeatures[2].Id, "DATA_BLOCKING")
+	testutils.AssertEqual(t, response.Data.SupportedFeatures[2].Notes, "Column level and table level")
+	testutils.AssertEqual(t, response.Data.SupportedFeatures[3].Id, "FIVETRAN_DATA_MODELS")
+	testutils.AssertEqual(t, response.Data.SupportedFeatures[3].Notes, "FIVETRAN_DATA_MODELS_Notes")
+	testutils.AssertEqual(t, response.Data.SupportedFeatures[4].Id, "RE_SYNC")
+	testutils.AssertEqual(t, response.Data.SupportedFeatures[4].Notes, "Connection and table level")
+	testutils.AssertEqual(t, response.Data.SupportedFeatures[5].Id, "AUTHORIZATION_VIA_API")
+	testutils.AssertEqual(t, response.Data.SupportedFeatures[5].Notes, "")
 
-  testutils.AssertEqual(t, response.Data.Config.Type, "object")
-  testutils.AssertEqual(t, response.Data.Config.Description, "")
-  testutils.AssertEqual(t, response.Data.Config.Title, "Google Ads config object")
-  testutils.AssertEqual(t, response.Data.Config.Readonly, false)
-  testutils.AssertEqual(t, response.Data.Config.Nullable, false)
-  testutils.AssertEqual(t, response.Data.Config.Format, "")
-  testutils.AssertEqual(t, response.Data.Config.Immutable, false)
-  testutils.AssertEqual(t, response.Data.Config.Required[0], "schema")
+	testutils.AssertEqual(t, response.Data.Config.Type, "object")
+	testutils.AssertEqual(t, response.Data.Config.Description, "")
+	testutils.AssertEqual(t, response.Data.Config.Title, "Google Ads config object")
+	testutils.AssertEqual(t, response.Data.Config.Readonly, false)
+	testutils.AssertEqual(t, response.Data.Config.Nullable, false)
+	testutils.AssertEqual(t, response.Data.Config.Format, "")
+	testutils.AssertEqual(t, response.Data.Config.Immutable, false)
+	testutils.AssertEqual(t, response.Data.Config.FieldStatus, "")
+	testutils.AssertEqual(t, response.Data.Config.Required[0], "schema")
 
-  testutils.AssertEqual(t, response.Data.Config.Properties["sync_mode"].Type, "string")
-  testutils.AssertEqual(t, response.Data.Config.Properties["sync_mode"].Description, "Whether to sync all accounts or specific accounts.")
-  testutils.AssertEqual(t, response.Data.Config.Properties["sync_mode"].Readonly, false)
-  testutils.AssertEqual(t, response.Data.Config.Properties["sync_mode"].Nullable, false)
-  testutils.AssertEqual(t, response.Data.Config.Properties["sync_mode"].Format, "")
-  testutils.AssertEqual(t, response.Data.Config.Properties["sync_mode"].Immutable, false)
-  testutils.AssertEqual(t, response.Data.Config.Properties["sync_mode"].Enum[0], "ManagerAccounts")
-  testutils.AssertEqual(t, response.Data.Config.Properties["sync_mode"].Enum[1], "AllAccounts")
-  testutils.AssertEqual(t, response.Data.Config.Properties["sync_mode"].Enum[2], "SpecificAccounts")
+	testutils.AssertEqual(t, response.Data.Config.Properties["sync_mode"].Type, "string")
+	testutils.AssertEqual(t, response.Data.Config.Properties["sync_mode"].Description, "Whether to sync all accounts or specific accounts.")
+	testutils.AssertEqual(t, response.Data.Config.Properties["sync_mode"].Readonly, false)
+	testutils.AssertEqual(t, response.Data.Config.Properties["sync_mode"].Nullable, false)
+	testutils.AssertEqual(t, response.Data.Config.Properties["sync_mode"].Format, "")
+	testutils.AssertEqual(t, response.Data.Config.Properties["sync_mode"].Immutable, false)
+	testutils.AssertEqual(t, response.Data.Config.Properties["sync_mode"].FieldStatus, "general_availability")
+	testutils.AssertEqual(t, response.Data.Config.Properties["sync_mode"].Enum[0], "ManagerAccounts")
+	testutils.AssertEqual(t, response.Data.Config.Properties["sync_mode"].Enum[1], "AllAccounts")
+	testutils.AssertEqual(t, response.Data.Config.Properties["sync_mode"].Enum[2], "SpecificAccounts")
 
-  testutils.AssertEqual(t, response.Data.Config.Properties["schema"].Nullable, false)
-  testutils.AssertEqual(t, response.Data.Config.Properties["schema"].Format, "")
-  testutils.AssertEqual(t, response.Data.Config.Properties["schema"].Immutable, true)
+	testutils.AssertEqual(t, response.Data.Config.Properties["schema"].Nullable, false)
+	testutils.AssertEqual(t, response.Data.Config.Properties["schema"].Format, "")
+	testutils.AssertEqual(t, response.Data.Config.Properties["schema"].Immutable, true)
+	testutils.AssertEqual(t, response.Data.Config.Properties["schema"].FieldStatus, "private_preview")
 
-  testutils.AssertEqual(t, response.Data.Config.Properties["manager_accounts"].Type, "array")
-  testutils.AssertEqual(t, response.Data.Config.Properties["manager_accounts"].Description, "manager_accounts")
-  testutils.AssertEqual(t, response.Data.Config.Properties["manager_accounts"].Readonly, false)
-  testutils.AssertEqual(t, response.Data.Config.Properties["manager_accounts"].Items.Type, "string")
-  testutils.AssertEqual(t, response.Data.Config.Properties["manager_accounts"].Items.Description, "")
-  testutils.AssertEqual(t, response.Data.Config.Properties["manager_accounts"].Items.Readonly, false)
+	testutils.AssertEqual(t, response.Data.Config.Properties["manager_accounts"].Type, "array")
+	testutils.AssertEqual(t, response.Data.Config.Properties["manager_accounts"].Description, "manager_accounts")
+	testutils.AssertEqual(t, response.Data.Config.Properties["manager_accounts"].Readonly, false)
+	testutils.AssertEqual(t, response.Data.Config.Properties["manager_accounts"].Items.Type, "string")
+	testutils.AssertEqual(t, response.Data.Config.Properties["manager_accounts"].Items.Description, "")
+	testutils.AssertEqual(t, response.Data.Config.Properties["manager_accounts"].Items.Readonly, false)
+	testutils.AssertEqual(t, response.Data.Config.Properties["skip_empty_reports"].FieldStatus, "")
 
+	testutils.AssertEqual(t, response.Data.Config.Properties["reports"].Type, "array")
+	testutils.AssertEqual(t, response.Data.Config.Properties["reports"].Description, "The list of reports. Each report corresponds to a table within the schema to which connector will sync the data.")
+	testutils.AssertEqual(t, response.Data.Config.Properties["reports"].Readonly, false)
+	testutils.AssertEqual(t, response.Data.Config.Properties["reports"].Items.Type, "object")
+	testutils.AssertEqual(t, response.Data.Config.Properties["reports"].Items.Description, "The list of reports. Each report corresponds to a table within the schema to which connector will sync the data.")
+	testutils.AssertEqual(t, response.Data.Config.Properties["reports"].Items.Readonly, false)
+	testutils.AssertEqual(t, response.Data.Config.Properties["reports"].Items.Properties["report_type"].Type, "string")
+	testutils.AssertEqual(t, response.Data.Config.Properties["reports"].Items.Properties["report_type"].Description, "The name of the Google Ads report from which the connector will sync the data. [Possible report_type values](https://developers.google.com/adwords/api/docs/appendix/reports#report-types).")
+	testutils.AssertEqual(t, response.Data.Config.Properties["reports"].Items.Properties["report_type"].Readonly, false)
+	testutils.AssertEqual(t, response.Data.Config.Properties["reports"].Items.Properties["report_type"].FieldStatus, "development")
+	testutils.AssertEqual(t, response.Data.Config.Properties["reports"].Items.Properties["fields"].Type, "array")
+	testutils.AssertEqual(t, response.Data.Config.Properties["reports"].Items.Properties["fields"].Description, "fields")
+	testutils.AssertEqual(t, response.Data.Config.Properties["reports"].Items.Properties["fields"].Readonly, false)
+	testutils.AssertEqual(t, response.Data.Config.Properties["reports"].Items.Properties["fields"].Items.Type, "string")
+	testutils.AssertEqual(t, response.Data.Config.Properties["reports"].Items.Properties["fields"].Items.Description, "")
+	testutils.AssertEqual(t, response.Data.Config.Properties["reports"].Items.Properties["fields"].Items.Readonly, false)
 
-  testutils.AssertEqual(t, response.Data.Config.Properties["reports"].Type, "array")
-  testutils.AssertEqual(t, response.Data.Config.Properties["reports"].Description, "The list of reports. Each report corresponds to a table within the schema to which connector will sync the data.")
-  testutils.AssertEqual(t, response.Data.Config.Properties["reports"].Readonly, false)
-  testutils.AssertEqual(t, response.Data.Config.Properties["reports"].Items.Type, "object")
-  testutils.AssertEqual(t, response.Data.Config.Properties["reports"].Items.Description, "The list of reports. Each report corresponds to a table within the schema to which connector will sync the data.")
-  testutils.AssertEqual(t, response.Data.Config.Properties["reports"].Items.Readonly, false)
-  testutils.AssertEqual(t, response.Data.Config.Properties["reports"].Items.Properties["report_type"].Type, "string")
-  testutils.AssertEqual(t, response.Data.Config.Properties["reports"].Items.Properties["report_type"].Description, "The name of the Google Ads report from which the connector will sync the data. [Possible report_type values](https://developers.google.com/adwords/api/docs/appendix/reports#report-types).")
-  testutils.AssertEqual(t, response.Data.Config.Properties["reports"].Items.Properties["report_type"].Readonly, false)
-  testutils.AssertEqual(t, response.Data.Config.Properties["reports"].Items.Properties["fields"].Type, "array")
-  testutils.AssertEqual(t, response.Data.Config.Properties["reports"].Items.Properties["fields"].Description, "fields")
-  testutils.AssertEqual(t, response.Data.Config.Properties["reports"].Items.Properties["fields"].Readonly, false)
-  testutils.AssertEqual(t, response.Data.Config.Properties["reports"].Items.Properties["fields"].Items.Type, "string")
-  testutils.AssertEqual(t, response.Data.Config.Properties["reports"].Items.Properties["fields"].Items.Description, "")
-  testutils.AssertEqual(t, response.Data.Config.Properties["reports"].Items.Properties["fields"].Items.Readonly, false)
+	testutils.AssertEqual(t, response.Data.Auth.Type, "object")
+	testutils.AssertEqual(t, response.Data.Auth.Description, "")
+	testutils.AssertEqual(t, response.Data.Auth.Readonly, false)
+	testutils.AssertEqual(t, response.Data.Auth.Properties["refresh_token"].Type, "string")
+	testutils.AssertEqual(t, response.Data.Auth.Properties["refresh_token"].Description, "refresh_token")
+	testutils.AssertEqual(t, response.Data.Auth.Properties["refresh_token"].Readonly, false)
+	testutils.AssertEqual(t, response.Data.Auth.Properties["refresh_token"].Nullable, true)
+	testutils.AssertEqual(t, response.Data.Auth.Properties["refresh_token"].Format, "password")
+	testutils.AssertEqual(t, response.Data.Auth.Properties["refresh_token"].Immutable, false)
+	testutils.AssertEqual(t, response.Data.Auth.Properties["refresh_token"].FieldStatus, "sunset")
 
-  testutils.AssertEqual(t, response.Data.Auth.Type, "object")
-  testutils.AssertEqual(t, response.Data.Auth.Description, "")
-  testutils.AssertEqual(t, response.Data.Auth.Readonly, false)
-  testutils.AssertEqual(t, response.Data.Auth.Properties["refresh_token"].Type, "string")
-  testutils.AssertEqual(t, response.Data.Auth.Properties["refresh_token"].Description, "refresh_token")
-  testutils.AssertEqual(t, response.Data.Auth.Properties["refresh_token"].Readonly, false)
-  testutils.AssertEqual(t, response.Data.Auth.Properties["refresh_token"].Nullable, true)
-  testutils.AssertEqual(t, response.Data.Auth.Properties["refresh_token"].Format, "password")
-  testutils.AssertEqual(t, response.Data.Auth.Properties["refresh_token"].Immutable, false)
-
-  testutils.AssertEqual(t, response.Data.Auth.Properties["client_access"].Type, "object")
-  testutils.AssertEqual(t, response.Data.Auth.Properties["client_access"].Description, "")
-  testutils.AssertEqual(t, response.Data.Auth.Properties["client_access"].Readonly, false)
-  testutils.AssertEqual(t, response.Data.Auth.Properties["client_access"].Properties["developer_token"].Type, "string")
-  testutils.AssertEqual(t, response.Data.Auth.Properties["client_access"].Properties["developer_token"].Description, "developer_token")
-  testutils.AssertEqual(t, response.Data.Auth.Properties["client_access"].Properties["developer_token"].Readonly, false)
-  testutils.AssertEqual(t, response.Data.Auth.Properties["client_access"].Properties["developer_token"].Nullable, true)
-  testutils.AssertEqual(t, response.Data.Auth.Properties["client_access"].Properties["developer_token"].Format, "password")
-  testutils.AssertEqual(t, response.Data.Auth.Properties["client_access"].Properties["developer_token"].Immutable, true)
+	testutils.AssertEqual(t, response.Data.Auth.Properties["client_access"].Type, "object")
+	testutils.AssertEqual(t, response.Data.Auth.Properties["client_access"].Description, "")
+	testutils.AssertEqual(t, response.Data.Auth.Properties["client_access"].Readonly, false)
+	testutils.AssertEqual(t, response.Data.Auth.Properties["client_access"].Properties["developer_token"].Type, "string")
+	testutils.AssertEqual(t, response.Data.Auth.Properties["client_access"].Properties["developer_token"].Description, "developer_token")
+	testutils.AssertEqual(t, response.Data.Auth.Properties["client_access"].Properties["developer_token"].Readonly, false)
+	testutils.AssertEqual(t, response.Data.Auth.Properties["client_access"].Properties["developer_token"].Nullable, true)
+	testutils.AssertEqual(t, response.Data.Auth.Properties["client_access"].Properties["developer_token"].Format, "password")
+	testutils.AssertEqual(t, response.Data.Auth.Properties["client_access"].Properties["developer_token"].Immutable, true)
+	testutils.AssertEqual(t, response.Data.Auth.Properties["client_access"].Properties["developer_token"].FieldStatus, "private_preview")
 }
