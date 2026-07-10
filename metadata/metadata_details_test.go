@@ -39,6 +39,35 @@ func TestMetadataDetailsServiceDo(t *testing.T) {
 	assertMetadataDetailsResponse(t, response)
 }
 
+func TestMetadataDetailsServiceDoWithUserAgentSuffix(t *testing.T) {
+	// arrange
+
+	ftClient, mockClient := testutils.CreateTestClient()
+	ftClient.CustomUserAgent("terraform-provider-fivetran/1.9.37")
+	handler := mockClient.When(http.MethodGet, "/v1/metadata/connector-types/google_ads").
+		ThenCall(func(req *http.Request) (*http.Response, error) {
+			testutils.AssertEqual(t, req.Header.Get("User-Agent"), "Go-Fivetran/1.3.3 terraform-provider-fivetran/1.9.37 fivetran_connection_v2")
+			response := mock.NewResponse(req, http.StatusOK, prepareMetadataDetailsResponse())
+			return response, nil
+		})
+
+	// act
+	response, err := ftClient.NewMetadataDetails().
+		Service("google_ads").
+		DoWithUserAgentSuffix(context.Background(), "fivetran_connection_v2")
+
+	// assert
+	if err != nil {
+		t.Error(err)
+	}
+
+	interactions := mockClient.Interactions()
+	testutils.AssertEqual(t, len(interactions), 1)
+	testutils.AssertEqual(t, interactions[0].Handler, handler)
+	testutils.AssertEqual(t, handler.Interactions, 1)
+	assertMetadataDetailsResponse(t, response)
+}
+
 func prepareMetadataDetailsResponse() string {
 	return `{
     "code": "Success",
