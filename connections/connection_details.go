@@ -4,12 +4,12 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/fivetran/go-fivetran/utils"
 	httputils "github.com/fivetran/go-fivetran/http_utils"
+	"github.com/fivetran/go-fivetran/utils"
 )
 
 type ConnectionDetailsService struct {
-    httputils.HttpService
+	httputils.HttpService
 	connectionID *string
 }
 
@@ -22,9 +22,16 @@ func (s *ConnectionDetailsService) do(ctx context.Context, response any) error {
 	if s.connectionID == nil {
 		return fmt.Errorf("missing required ConnectionID")
 	}
-    url := fmt.Sprintf("/connections/%v", *s.connectionID)
-    err := s.HttpService.Do(ctx, "GET", url, nil, nil, 200, &response)
-    return err
+	url := fmt.Sprintf("/connections/%v", *s.connectionID)
+	return s.HttpService.Do(ctx, "GET", url, nil, nil, 200, &response)
+}
+
+func (s *ConnectionDetailsService) doWithUserAgentSuffix(ctx context.Context, userAgentSuffix string, response any) error {
+	if s.connectionID == nil {
+		return fmt.Errorf("missing required ConnectionID")
+	}
+	url := fmt.Sprintf("/connections/%v", *s.connectionID)
+	return s.HttpService.DoWithUserAgentSuffix(ctx, userAgentSuffix, "GET", url, nil, nil, 200, &response)
 }
 
 func (s *ConnectionDetailsService) Do(ctx context.Context) (DetailsWithConfigNoTestsResponse, error) {
@@ -39,6 +46,14 @@ func (s *ConnectionDetailsService) DoCustom(ctx context.Context) (DetailsWithCus
 	var response DetailsWithCustomConfigNoTestsResponse
 
 	err := s.do(ctx, &response)
+
+	return response, err
+}
+
+func (s *ConnectionDetailsService) DoCustomWithUserAgentSuffix(ctx context.Context, userAgentSuffix string) (DetailsWithCustomConfigNoTestsResponse, error) {
+	var response DetailsWithCustomConfigNoTestsResponse
+
+	err := s.doWithUserAgentSuffix(ctx, userAgentSuffix, &response)
 
 	return response, err
 }

@@ -22,7 +22,53 @@ func (s HttpService) Do(
 	queries map[string]string,
 	expectedStatus int,
 	response any) error {
+	return s.do(ctx, method, url, requestBody, queries, expectedStatus, response)
+}
 
+func (s HttpService) DoWithUserAgentSuffix(
+	ctx context.Context,
+	userAgentSuffix,
+	method,
+	url string,
+	requestBody any,
+	queries map[string]string,
+	expectedStatus int,
+	response any) error {
+	return s.doWithUserAgentSuffix(ctx, userAgentSuffix, method, url, requestBody, queries, expectedStatus, response)
+}
+
+func (s HttpService) do(
+	ctx context.Context,
+	method,
+	url string,
+	requestBody any,
+	queries map[string]string,
+	expectedStatus int,
+	response any) error {
+	return s.send(ctx, nil, method, url, requestBody, queries, expectedStatus, response)
+}
+
+func (s HttpService) doWithUserAgentSuffix(
+	ctx context.Context,
+	userAgentSuffix,
+	method,
+	url string,
+	requestBody any,
+	queries map[string]string,
+	expectedStatus int,
+	response any) error {
+	return s.send(ctx, &userAgentSuffix, method, url, requestBody, queries, expectedStatus, response)
+}
+
+func (s HttpService) send(
+	ctx context.Context,
+	userAgentSuffix *string,
+	method,
+	url string,
+	requestBody any,
+	queries map[string]string,
+	expectedStatus int,
+	response any) error {
 	var body []byte = nil
 	var err error = nil
 
@@ -33,8 +79,17 @@ func (s HttpService) Do(
 		}
 	}
 
+	headers := copyHeaders(s.CommonHeaders)
+	if userAgentSuffix != nil && *userAgentSuffix != "" {
+		if headers["User-Agent"] == "" {
+			headers["User-Agent"] = *userAgentSuffix
+		} else {
+			headers["User-Agent"] += " " + *userAgentSuffix
+		}
+	}
+
 	if method == "POST" || method == "PATCH" {
-		s.CommonHeaders["Content-Type"] = "application/json"
+		headers["Content-Type"] = "application/json"
 	}
 
 	r := Request{
@@ -42,7 +97,7 @@ func (s HttpService) Do(
 		Url:              s.BaseUrl + url,
 		Body:             body,
 		Queries:          queries,
-		Headers:          s.CommonHeaders,
+		Headers:          headers,
 		Client:           s.Client,
 		HandleRateLimits: s.HandleRateLimits,
 		MaxRetryAttempts: s.MaxRetryAttempts,
@@ -62,4 +117,12 @@ func (s HttpService) Do(
 		return err
 	}
 	return nil
+}
+
+func copyHeaders(headers map[string]string) map[string]string {
+	result := make(map[string]string, len(headers))
+	for k, v := range headers {
+		result[k] = v
+	}
+	return result
 }

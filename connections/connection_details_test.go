@@ -1,100 +1,128 @@
 package connections_test
 
 import (
-    "context"
-    "net/http"
-    "testing"
+	"context"
+	"net/http"
+	"testing"
 
-    "github.com/fivetran/go-fivetran/connections"
-    
-    "github.com/fivetran/go-fivetran/tests/mock"
+	"github.com/fivetran/go-fivetran/connections"
 
-    testutils "github.com/fivetran/go-fivetran/test_utils"
+	"github.com/fivetran/go-fivetran/tests/mock"
+
+	testutils "github.com/fivetran/go-fivetran/test_utils"
 )
 
 func TestConnectionDetailsMock(t *testing.T) {
-    // arrange
-    ftClient, mockClient := testutils.CreateTestClient()
-    handler := mockClient.When(http.MethodGet, "/v1/connections/connection_id").ThenCall(
+	// arrange
+	ftClient, mockClient := testutils.CreateTestClient()
+	handler := mockClient.When(http.MethodGet, "/v1/connections/connection_id").ThenCall(
 
-        func(req *http.Request) (*http.Response, error) {
-            response := mock.NewResponse(req, http.StatusOK, prepareConnectionDetailsResponse())
-            return response, nil
-        })
+		func(req *http.Request) (*http.Response, error) {
+			response := mock.NewResponse(req, http.StatusOK, prepareConnectionDetailsResponse())
+			return response, nil
+		})
 
-    // act
-    response, err := ftClient.NewConnectionDetails().ConnectionID("connection_id").Do(context.Background())
+	// act
+	response, err := ftClient.NewConnectionDetails().ConnectionID("connection_id").Do(context.Background())
 
-    if err != nil {
-        t.Logf("%+v\n", response)
-        t.Error(err)
-    }
+	if err != nil {
+		t.Logf("%+v\n", response)
+		t.Error(err)
+	}
 
-    // assert
-    interactions := mockClient.Interactions()
-    testutils.AssertEqual(t, len(interactions), 1)
-    testutils.AssertEqual(t, interactions[0].Handler, handler)
-    testutils.AssertEqual(t, handler.Interactions, 1)
+	// assert
+	interactions := mockClient.Interactions()
+	testutils.AssertEqual(t, len(interactions), 1)
+	testutils.AssertEqual(t, interactions[0].Handler, handler)
+	testutils.AssertEqual(t, handler.Interactions, 1)
 
-    assertConnectionDetailsResponse(t, response)
+	assertConnectionDetailsResponse(t, response)
 }
 
 func TestCustomConnectionDetailsMock(t *testing.T) {
-    // arrange
-    ftClient, mockClient := testutils.CreateTestClient()
-    handler := mockClient.When(http.MethodGet, "/v1/connections/connection_id").ThenCall(
+	// arrange
+	ftClient, mockClient := testutils.CreateTestClient()
+	handler := mockClient.When(http.MethodGet, "/v1/connections/connection_id").ThenCall(
 
-        func(req *http.Request) (*http.Response, error) {
-            response := mock.NewResponse(req, http.StatusOK, prepareConnectionDetailsResponse())
-            return response, nil
-        })
+		func(req *http.Request) (*http.Response, error) {
+			response := mock.NewResponse(req, http.StatusOK, prepareConnectionDetailsResponse())
+			return response, nil
+		})
 
-    // act
-    response, err := ftClient.NewConnectionDetails().ConnectionID("connection_id").DoCustom(context.Background())
+	// act
+	response, err := ftClient.NewConnectionDetails().ConnectionID("connection_id").DoCustom(context.Background())
 
-    if err != nil {
-        t.Logf("%+v\n", response)
-        t.Error(err)
-    }
+	if err != nil {
+		t.Logf("%+v\n", response)
+		t.Error(err)
+	}
 
-    // assert
-    interactions := mockClient.Interactions()
-    testutils.AssertEqual(t, len(interactions), 1)
-    testutils.AssertEqual(t, interactions[0].Handler, handler)
-    testutils.AssertEqual(t, handler.Interactions, 1)
+	// assert
+	interactions := mockClient.Interactions()
+	testutils.AssertEqual(t, len(interactions), 1)
+	testutils.AssertEqual(t, interactions[0].Handler, handler)
+	testutils.AssertEqual(t, handler.Interactions, 1)
 
-    assertCustomConnectionDetailsResponse(t, response)
+	assertCustomConnectionDetailsResponse(t, response)
+}
+
+func TestCustomConnectionDetailsWithUserAgentSuffixMock(t *testing.T) {
+	// arrange
+	ftClient, mockClient := testutils.CreateTestClient()
+	ftClient.CustomUserAgent("terraform-provider-fivetran/1.9.37")
+	handler := mockClient.When(http.MethodGet, "/v1/connections/connection_id").ThenCall(
+		func(req *http.Request) (*http.Response, error) {
+			testutils.AssertEqual(t, req.Header.Get("User-Agent"), "Go-Fivetran/1.3.3 terraform-provider-fivetran/1.9.37 fivetran_connection_v2")
+			response := mock.NewResponse(req, http.StatusOK, prepareConnectionDetailsResponse())
+			return response, nil
+		})
+
+	// act
+	response, err := ftClient.NewConnectionDetails().ConnectionID("connection_id").DoCustomWithUserAgentSuffix(context.Background(), "fivetran_connection_v2")
+
+	if err != nil {
+		t.Logf("%+v\n", response)
+		t.Error(err)
+	}
+
+	// assert
+	interactions := mockClient.Interactions()
+	testutils.AssertEqual(t, len(interactions), 1)
+	testutils.AssertEqual(t, interactions[0].Handler, handler)
+	testutils.AssertEqual(t, handler.Interactions, 1)
+
+	assertCustomConnectionDetailsResponse(t, response)
 }
 
 func TestCustomMergedConnectionDetailsMock(t *testing.T) {
-    // arrange
-    ftClient, mockClient := testutils.CreateTestClient()
-    handler := mockClient.When(http.MethodGet, "/v1/connections/connection_id").ThenCall(
+	// arrange
+	ftClient, mockClient := testutils.CreateTestClient()
+	handler := mockClient.When(http.MethodGet, "/v1/connections/connection_id").ThenCall(
 
-        func(req *http.Request) (*http.Response, error) {
-            response := mock.NewResponse(req, http.StatusOK, prepareConnectionDetailsResponse())
-            return response, nil
-        })
+		func(req *http.Request) (*http.Response, error) {
+			response := mock.NewResponse(req, http.StatusOK, prepareConnectionDetailsResponse())
+			return response, nil
+		})
 
-    // act
-    response, err := ftClient.NewConnectionDetails().ConnectionID("connection_id").DoCustomMerged(context.Background())
+	// act
+	response, err := ftClient.NewConnectionDetails().ConnectionID("connection_id").DoCustomMerged(context.Background())
 
-    if err != nil {
-        t.Logf("%+v\n", response)
-        t.Error(err)
-    }
+	if err != nil {
+		t.Logf("%+v\n", response)
+		t.Error(err)
+	}
 
-    // assert
-    interactions := mockClient.Interactions()
-    testutils.AssertEqual(t, len(interactions), 1)
-    testutils.AssertEqual(t, interactions[0].Handler, handler)
-    testutils.AssertEqual(t, handler.Interactions, 1)
+	// assert
+	interactions := mockClient.Interactions()
+	testutils.AssertEqual(t, len(interactions), 1)
+	testutils.AssertEqual(t, interactions[0].Handler, handler)
+	testutils.AssertEqual(t, handler.Interactions, 1)
 
-    assertCustomMergedConnectionDetailsResponse(t, response)
+	assertCustomMergedConnectionDetailsResponse(t, response)
 }
 
 func prepareConnectionDetailsResponse() string {
-    return `{
+	return `{
         "code": "Success",
         "data": {
             "id": "speak_inexpensive",
@@ -144,45 +172,45 @@ func prepareConnectionDetailsResponse() string {
 
 func assertConnectionDetailsResponse(t *testing.T, response connections.DetailsWithConfigNoTestsResponse) {
 
-    testutils.AssertEqual(t, response.Code, "Success")
+	testutils.AssertEqual(t, response.Code, "Success")
 
-    testutils.AssertEqual(t, response.Data.Config.SecretsList[0].Key, "key")
-    testutils.AssertEqual(t, response.Data.Config.SecretsList[0].Value, "value")
-    testutils.AssertEqual(t, response.Data.Config.ShareURL, "share_url")
-    testutils.AssertEqual(t, *response.Data.Config.IsKeypair, true)
+	testutils.AssertEqual(t, response.Data.Config.SecretsList[0].Key, "key")
+	testutils.AssertEqual(t, response.Data.Config.SecretsList[0].Value, "value")
+	testutils.AssertEqual(t, response.Data.Config.ShareURL, "share_url")
+	testutils.AssertEqual(t, *response.Data.Config.IsKeypair, true)
 }
 
 func assertCustomConnectionDetailsResponse(t *testing.T, response connections.DetailsWithCustomConfigNoTestsResponse) {
 
-    testutils.AssertEqual(t, response.Code, "Success")
+	testutils.AssertEqual(t, response.Code, "Success")
 
-    testutils.AssertKey(t, "share_url", response.Data.Config, "share_url")
-    testutils.AssertKey(t, "is_keypair", response.Data.Config, true)
+	testutils.AssertKey(t, "share_url", response.Data.Config, "share_url")
+	testutils.AssertKey(t, "is_keypair", response.Data.Config, true)
 
-    secretsList, ok := response.Data.Config["secrets_list"].([]interface{})
+	secretsList, ok := response.Data.Config["secrets_list"].([]interface{})
 
-    testutils.AssertEqual(t, ok, true)
-    testutils.AssertEqual(t, len(secretsList), 1)
+	testutils.AssertEqual(t, ok, true)
+	testutils.AssertEqual(t, len(secretsList), 1)
 
-    secret := secretsList[0].(map[string]interface{})
+	secret := secretsList[0].(map[string]interface{})
 
-    testutils.AssertKey(t, "key", secret, "key")
-    testutils.AssertKey(t, "value", secret, "value")
+	testutils.AssertKey(t, "key", secret, "key")
+	testutils.AssertKey(t, "value", secret, "value")
 }
 
 func assertCustomMergedConnectionDetailsResponse(t *testing.T, response connections.DetailsWithCustomMergedConfigNoTestsResponse) {
 
-    testutils.AssertEqual(t, response.Code, "Success")
+	testutils.AssertEqual(t, response.Code, "Success")
 
-    testutils.AssertHasNoKey(t, response.Data.CustomConfig, "share_url")
-    testutils.AssertHasNoKey(t, response.Data.CustomConfig, "is_keypair")
-    testutils.AssertHasNoKey(t, response.Data.CustomConfig, "secrets_list")
+	testutils.AssertHasNoKey(t, response.Data.CustomConfig, "share_url")
+	testutils.AssertHasNoKey(t, response.Data.CustomConfig, "is_keypair")
+	testutils.AssertHasNoKey(t, response.Data.CustomConfig, "secrets_list")
 
-    testutils.AssertKeyValue(t, response.Data.CustomConfig, "fake_field", "unmapped-value")
+	testutils.AssertKeyValue(t, response.Data.CustomConfig, "fake_field", "unmapped-value")
 
-    testutils.AssertEqual(t, response.Data.Config.SecretsList[0].Key, "key")
-    testutils.AssertEqual(t, response.Data.Config.SecretsList[0].Value, "value")
-    testutils.AssertEqual(t, response.Data.Config.ShareURL, "share_url")
-    testutils.AssertEqual(t, *response.Data.Config.IsKeypair, true)
+	testutils.AssertEqual(t, response.Data.Config.SecretsList[0].Key, "key")
+	testutils.AssertEqual(t, response.Data.Config.SecretsList[0].Value, "value")
+	testutils.AssertEqual(t, response.Data.Config.ShareURL, "share_url")
+	testutils.AssertEqual(t, *response.Data.Config.IsKeypair, true)
 
 }
