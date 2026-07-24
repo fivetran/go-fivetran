@@ -11,11 +11,12 @@ import (
 func TestNewExternalLoggingCreateE2E(t *testing.T) {
 	created, err := testutils.Client.NewExternalLoggingCreate().
 		GroupId(testutils.PredefinedGroupId).
-		Service("azure_monitor_log").
+		Service("cloudwatch").
 		Enabled(true).
 		Config(fivetran.NewExternalLoggingConfig().
-			WorkspaceId("12345678-1234-1234-1234-123456789012").
-			PrimaryKey("PASSWORD")).
+			RoleArn("arn:aws:iam::123456789012:role/FivetranLogRole").
+			Region("us-east-1").
+			LogGroupName("fivetran_log")).
 		Do(context.Background())
 
 	if err != nil {
@@ -26,10 +27,10 @@ func TestNewExternalLoggingCreateE2E(t *testing.T) {
 	testutils.AssertEqual(t, created.Code, "Success")
 	testutils.AssertNotEmpty(t, created.Message)
 	testutils.AssertEqual(t, created.Data.Id, testutils.PredefinedGroupId)
-	testutils.AssertEqual(t, created.Data.Service, "azure_monitor_log")
+	testutils.AssertEqual(t, created.Data.Service, "cloudwatch")
 	testutils.AssertEqual(t, created.Data.Enabled, true)
-	testutils.AssertEqual(t, created.Data.Config.WorkspaceId, "12345678-1234-1234-1234-123456789012")
-	testutils.AssertEqual(t, created.Data.Config.PrimaryKey, "******")
+	testutils.AssertEqual(t, created.Data.Config.RoleArn, "arn:aws:iam::123456789012:role/FivetranLogRole")
+	testutils.AssertEqual(t, created.Data.Config.Region, "us-east-1")
 
 	t.Cleanup(func() { testutils.DeleteExternalLogging(t, testutils.PredefinedGroupId) })
 }

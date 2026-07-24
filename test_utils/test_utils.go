@@ -638,11 +638,12 @@ func CreateExternalLogging(t *testing.T) string {
     t.Helper()
     created, err := Client.NewExternalLoggingCreate().
         GroupId(PredefinedGroupId).
-        Service("azure_monitor_log").
+        Service("cloudwatch").
         Enabled(true).
         Config(fivetran.NewExternalLoggingConfig().
-            WorkspaceId("12345678-1234-1234-1234-123456789012").
-            PrimaryKey("PASSWORD")).
+            RoleArn("arn:aws:iam::123456789012:role/FivetranLogRole").
+            Region("us-east-1").
+            LogGroupName("fivetran_log")).
         Do(context.Background())
 
     if err != nil {

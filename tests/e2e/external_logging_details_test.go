@@ -19,8 +19,8 @@ func TestNewExternalLoggingDetailsE2E(t *testing.T) {
 
 	testutils.AssertEqual(t, details.Code, "Success")
 	testutils.AssertEqual(t, details.Data.Id, testutils.PredefinedGroupId)
-	testutils.AssertEqual(t, details.Data.Service, "azure_monitor_log")
+	testutils.AssertEqual(t, details.Data.Service, "cloudwatch")
 	testutils.AssertEqual(t, details.Data.Enabled, true)
-	testutils.AssertEqual(t, details.Data.Config.WorkspaceId, "12345678-1234-1234-1234-123456789012")
-	testutils.AssertEqual(t, details.Data.Config.PrimaryKey, "******")
+	testutils.AssertEqual(t, details.Data.Config.RoleArn, "arn:aws:iam::123456789012:role/FivetranLogRole")
+	testutils.AssertEqual(t, details.Data.Config.Region, "us-east-1")
 }
