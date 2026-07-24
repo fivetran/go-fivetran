@@ -36,6 +36,9 @@ type DetailsResponseDataCommon struct {
     NetworkingMethod        string             `json:"networking_method"`
     DataDelaySensitivity    string             `json:"data_delay_sensitivity"`
     DataDelayThreshold      *int               `json:"data_delay_threshold"`
+    RunSetupTests           *bool              `json:"run_setup_tests,omitempty"`
+    TrustCertificates       *bool              `json:"trust_certificates,omitempty"`
+    TrustFingerprints       *bool              `json:"trust_fingerprints,omitempty"`
     Schedule                *ConnectorSchedule `json:"schedule,omitempty"`
     Status                  StatusResponse     `json:"status"`
 }
