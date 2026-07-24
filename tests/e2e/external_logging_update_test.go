@@ -13,8 +13,9 @@ func TestNewExternalLoggingUpdateE2E(t *testing.T) {
 	details, err := testutils.Client.NewExternalLoggingUpdate().ExternalLoggingId(externalLoggingId).
 		Enabled(true).
 		Config(fivetran.NewExternalLoggingConfig().
-			WorkspaceId("test").
-			PrimaryKey("12345678")).
+			RoleArn("arn:aws:iam::123456789012:role/FivetranLogRoleUpdated").
+			Region("us-west-2").
+			LogGroupName("fivetran_log_updated")).
 		Do(context.Background())
 
 	if err != nil {
@@ -26,7 +27,7 @@ func TestNewExternalLoggingUpdateE2E(t *testing.T) {
 	testutils.AssertNotEmpty(t, details.Message)
 	testutils.AssertEqual(t, details.Data.Id, externalLoggingId)
 	testutils.AssertEqual(t, details.Data.Enabled, true)
-	testutils.AssertEqual(t, details.Data.Service, "azure_monitor_log")
-	testutils.AssertEqual(t, details.Data.Config.WorkspaceId, "test")
-	testutils.AssertEqual(t, details.Data.Config.PrimaryKey, "******")
+	testutils.AssertEqual(t, details.Data.Service, "cloudwatch")
+	testutils.AssertEqual(t, details.Data.Config.RoleArn, "arn:aws:iam::123456789012:role/FivetranLogRoleUpdated")
+	testutils.AssertEqual(t, details.Data.Config.Region, "us-west-2")
 }

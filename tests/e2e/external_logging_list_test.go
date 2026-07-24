@@ -19,7 +19,7 @@ func TestNewExternalLoggingListE2E(t *testing.T) {
 	testutils.AssertHasLength(t, result.Data.Items, 1)
 	testutils.AssertEqual(t, result.Message, "External logging services retrieved successfully")
 	testutils.AssertEqual(t, result.Data.Items[0].Id, externalLoggingId)
-	testutils.AssertEqual(t, result.Data.Items[0].Service, "azure_monitor_log")
+	testutils.AssertEqual(t, result.Data.Items[0].Service, "cloudwatch")
 	testutils.AssertEqual(t, result.Data.Items[0].Enabled, true)
 
 	testutils.AssertEmpty(t, result.Data.NextCursor)
