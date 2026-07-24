@@ -14,7 +14,7 @@ func TestNewExternalLoggingCreateE2E(t *testing.T) {
 		Service("azure_monitor_log").
 		Enabled(true).
 		Config(fivetran.NewExternalLoggingConfig().
-			WorkspaceId("workspace_id").
+			WorkspaceId("12345678-1234-1234-1234-123456789012").
 			PrimaryKey("PASSWORD")).
 		Do(context.Background())
 
@@ -28,7 +28,7 @@ func TestNewExternalLoggingCreateE2E(t *testing.T) {
 	testutils.AssertEqual(t, created.Data.Id, testutils.PredefinedGroupId)
 	testutils.AssertEqual(t, created.Data.Service, "azure_monitor_log")
 	testutils.AssertEqual(t, created.Data.Enabled, true)
-	testutils.AssertEqual(t, created.Data.Config.WorkspaceId, "workspace_id")
+	testutils.AssertEqual(t, created.Data.Config.WorkspaceId, "12345678-1234-1234-1234-123456789012")
 	testutils.AssertEqual(t, created.Data.Config.PrimaryKey, "******")
 
 	t.Cleanup(func() { testutils.DeleteExternalLogging(t, testutils.PredefinedGroupId) })

@@ -641,7 +641,7 @@ func CreateExternalLogging(t *testing.T) string {
         Service("azure_monitor_log").
         Enabled(true).
         Config(fivetran.NewExternalLoggingConfig().
-            WorkspaceId("workspace_id").
+            WorkspaceId("12345678-1234-1234-1234-123456789012").
             PrimaryKey("PASSWORD")).
         Do(context.Background())
 

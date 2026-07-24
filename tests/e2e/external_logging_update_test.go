@@ -13,7 +13,7 @@ func TestNewExternalLoggingUpdateE2E(t *testing.T) {
 	details, err := testutils.Client.NewExternalLoggingUpdate().ExternalLoggingId(externalLoggingId).
 		Enabled(true).
 		Config(fivetran.NewExternalLoggingConfig().
-			WorkspaceId("test").
+			WorkspaceId("12345678-1234-1234-1234-123456789012").
 			PrimaryKey("12345678")).
 		Do(context.Background())
 
@@ -27,6 +27,6 @@ func TestNewExternalLoggingUpdateE2E(t *testing.T) {
 	testutils.AssertEqual(t, details.Data.Id, externalLoggingId)
 	testutils.AssertEqual(t, details.Data.Enabled, true)
 	testutils.AssertEqual(t, details.Data.Service, "azure_monitor_log")
-	testutils.AssertEqual(t, details.Data.Config.WorkspaceId, "test")
+	testutils.AssertEqual(t, details.Data.Config.WorkspaceId, "12345678-1234-1234-1234-123456789012")
 	testutils.AssertEqual(t, details.Data.Config.PrimaryKey, "******")
 }
