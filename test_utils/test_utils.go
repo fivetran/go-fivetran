@@ -642,6 +642,7 @@ func CreateExternalLogging(t *testing.T) string {
         Enabled(true).
         Config(fivetran.NewExternalLoggingConfig().
             RoleArn("arn:aws:iam::123456789012:role/FivetranLogRole").
+            ExternalId("fivetran_external_id").
             Region("us-east-1").
             LogGroupName("fivetran_log")).
         Do(context.Background())
