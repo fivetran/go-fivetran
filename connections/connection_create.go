@@ -9,46 +9,52 @@ import (
 
 type ConnectionCreateService struct {
 	httputils.HttpService
-	service                 *string
-	groupID                 *string
-	trustCertificates       *bool
-	trustFingerprints       *bool
-	runSetupTests           *bool
-	paused                  *bool
-	syncFrequency           *int
-	dailySyncTime           *string
-	pauseAfterTrial         *bool
-	hybridDeploymentAgentId *string
-	networkingMethod        *string
-	privateLinkId           *string
-	proxyAgentId            *string
-	dataDelaySensitivity    *string
-	dataDelayThreshold      *int
-	destinationSchemaNames  *string
-	config                  *ConnectionConfig
-	auth                    *ConnectionAuth
-	configCustom            *map[string]interface{}
-	authCustom              *map[string]interface{}
+	service                  *string
+	groupID                  *string
+	trustCertificates        *bool
+	trustFingerprints        *bool
+	runSetupTests            *bool
+	paused                   *bool
+	syncFrequency            *int
+	scheduleType             *string
+	dailySyncTime            *string
+	pauseAfterTrial          *bool
+	hybridDeploymentAgentId  *string
+	networkingMethod         *string
+	privateLinkId            *string
+	proxyAgentId             *string
+	dataDelaySensitivity     *string
+	dataDelayThreshold       *int
+	connectCardConfig        *ConnectCardConfig
+	destinationSchemaNames   *string
+	destinationConfiguration *DestinationConfiguration
+	config                   *ConnectionConfig
+	auth                     *ConnectionAuth
+	configCustom             *map[string]interface{}
+	authCustom               *map[string]interface{}
 }
 
 func (s *ConnectionCreateService) requestBase() connectionCreateRequestBase {
 	return connectionCreateRequestBase{
-		Service:                 s.service,
-		GroupID:                 s.groupID,
-		TrustCertificates:       s.trustCertificates,
-		TrustFingerprints:       s.trustFingerprints,
-		RunSetupTests:           s.runSetupTests,
-		Paused:                  s.paused,
-		SyncFrequency:           s.syncFrequency,
-		DailySyncTime:           s.dailySyncTime,
-		PauseAfterTrial:         s.pauseAfterTrial,
-		PrivateLinkId:           s.privateLinkId,
-		HybridDeploymentAgentId: s.hybridDeploymentAgentId,
-		NetworkingMethod:        s.networkingMethod,
-		ProxyAgentId:            s.proxyAgentId,
-		DataDelaySensitivity:    s.dataDelaySensitivity,
-		DataDelayThreshold:      s.dataDelayThreshold,
-		DestinationSchemaNames:  s.destinationSchemaNames,
+		Service:                  s.service,
+		GroupID:                  s.groupID,
+		TrustCertificates:        s.trustCertificates,
+		TrustFingerprints:        s.trustFingerprints,
+		RunSetupTests:            s.runSetupTests,
+		Paused:                   s.paused,
+		SyncFrequency:            s.syncFrequency,
+		ScheduleType:             s.scheduleType,
+		DailySyncTime:            s.dailySyncTime,
+		PauseAfterTrial:          s.pauseAfterTrial,
+		PrivateLinkId:            s.privateLinkId,
+		HybridDeploymentAgentId:  s.hybridDeploymentAgentId,
+		NetworkingMethod:         s.networkingMethod,
+		ProxyAgentId:             s.proxyAgentId,
+		DataDelaySensitivity:     s.dataDelaySensitivity,
+		DataDelayThreshold:       s.dataDelayThreshold,
+		ConnectCardConfig:        s.connectCardConfig,
+		DestinationSchemaNames:   s.destinationSchemaNames,
+		DestinationConfiguration: s.destinationConfiguration,
 	}
 }
 
@@ -162,6 +168,11 @@ func (s *ConnectionCreateService) SyncFrequency(value *int) *ConnectionCreateSer
 	return s
 }
 
+func (s *ConnectionCreateService) ScheduleType(value string) *ConnectionCreateService {
+	s.scheduleType = &value
+	return s
+}
+
 func (s *ConnectionCreateService) DailySyncTime(value string) *ConnectionCreateService {
 	s.dailySyncTime = &value
 	return s
@@ -200,8 +211,18 @@ func (s *ConnectionCreateService) DataDelaySensitivity(value string) *Connection
 	return s
 }
 
+func (s *ConnectionCreateService) ConnectCardConfig(value *ConnectCardConfig) *ConnectionCreateService {
+	s.connectCardConfig = value
+	return s
+}
+
 func (s *ConnectionCreateService) DestinationSchemaNames(value string) *ConnectionCreateService {
 	s.destinationSchemaNames = &value
+	return s
+}
+
+func (s *ConnectionCreateService) DestinationConfiguration(value *DestinationConfiguration) *ConnectionCreateService {
+	s.destinationConfiguration = value
 	return s
 }
 

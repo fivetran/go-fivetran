@@ -14,8 +14,8 @@ import (
 )
 
 const (
-	CONNECTION_SERVICE = "test_service"
-	SYNC_FREQUENCY    = 5
+	CONNECTION_SERVICE   = "test_service"
+	SYNC_FREQUENCY       = 5
 	DATA_DELAY_THRESHOLD = 1
 )
 
@@ -38,13 +38,16 @@ func TestNewConnectionSecretsListMappingMock(t *testing.T) {
 		Service(CONNECTION_SERVICE).
 		GroupID("test_id").
 		SyncFrequency(&syncFrequency).
+		ScheduleType("auto").
 		HybridDeploymentAgentId("lpa_id").
 		ProxyAgentId("proxy_id").
 		PrivateLinkId("private_link_id").
 		NetworkingMethod("networking_method").
-        DataDelayThreshold(&dataDelayThreshold).
-        DataDelaySensitivity("CUSTOM").
+		DataDelayThreshold(&dataDelayThreshold).
+		DataDelaySensitivity("CUSTOM").
+		ConnectCardConfig(prepareConnectCardConfig()).
 		DestinationSchemaNames("FIVETRAN_NAMING").
+		DestinationConfiguration(prepareDestinationConfiguration()).
 		Config(prepareConnectionConfig()).
 		Auth(prepareConnectionAuth()).
 		Do(context.Background())
@@ -82,13 +85,16 @@ func TestNewConnectionCustomSecretsListMappingMock(t *testing.T) {
 		Service(CONNECTION_SERVICE).
 		GroupID("test_id").
 		SyncFrequency(&syncFrequency).
+		ScheduleType("auto").
 		HybridDeploymentAgentId("lpa_id").
 		ProxyAgentId("proxy_id").
 		PrivateLinkId("private_link_id").
 		NetworkingMethod("networking_method").
-        DataDelayThreshold(&dataDelayThreshold).
-        DataDelaySensitivity("CUSTOM").
+		DataDelayThreshold(&dataDelayThreshold).
+		DataDelaySensitivity("CUSTOM").
+		ConnectCardConfig(prepareConnectCardConfig()).
 		DestinationSchemaNames("FIVETRAN_NAMING").
+		DestinationConfiguration(prepareDestinationConfiguration()).
 		ConfigCustom(prepareConnectionCustomConfig()).
 		AuthCustom(prepareConnectionCustomAuth()).
 		DoCustom(context.Background())
@@ -125,13 +131,16 @@ func TestNewConnectionCustomMergedMappingMock(t *testing.T) {
 		Service(CONNECTION_SERVICE).
 		GroupID("test_id").
 		SyncFrequency(&syncFrequency).
+		ScheduleType("auto").
 		HybridDeploymentAgentId("lpa_id").
 		ProxyAgentId("proxy_id").
 		PrivateLinkId("private_link_id").
 		NetworkingMethod("networking_method").
-        DataDelayThreshold(&dataDelayThreshold).
-        DataDelaySensitivity("CUSTOM").
+		DataDelayThreshold(&dataDelayThreshold).
+		DataDelaySensitivity("CUSTOM").
+		ConnectCardConfig(prepareConnectCardConfig()).
 		DestinationSchemaNames("FIVETRAN_NAMING").
+		DestinationConfiguration(prepareDestinationConfiguration()).
 		Config(prepareConnectionConfig()).
 		ConfigCustom(prepareConnectionCustomMergedConfig()).
 		AuthCustom(prepareConnectionCustomAuth()).
@@ -405,16 +414,44 @@ func prepareConnectionCustomAuth() *map[string]interface{} {
 	return &auth
 }
 
+func prepareConnectCardConfig() *connections.ConnectCardConfig {
+	redirectUri := "https://example.com/callback"
+	hideSetupGuide := true
+	allFields := true
+	return &connections.ConnectCardConfig{
+		RedirectUri:    &redirectUri,
+		HideSetupGuide: &hideSetupGuide,
+		AllFields:      &allFields,
+	}
+}
+
+func prepareDestinationConfiguration() *connections.DestinationConfiguration {
+	virtualWarehouse := "virtual_warehouse"
+	return &connections.DestinationConfiguration{VirtualWarehouse: &virtualWarehouse}
+}
+
 func assertConnectionRequest(t *testing.T, request map[string]interface{}) {
 	testutils.AssertKey(t, "service", request, CONNECTION_SERVICE)
 	testutils.AssertKey(t, "group_id", request, "test_id")
 	testutils.AssertKey(t, "sync_frequency", request, float64(5))
+	testutils.AssertKey(t, "schedule_type", request, "auto")
 	testutils.AssertKey(t, "hybrid_deployment_agent_id", request, "lpa_id")
 	testutils.AssertKey(t, "proxy_agent_id", request, "proxy_id")
 	testutils.AssertKey(t, "private_link_id", request, "private_link_id")
 	testutils.AssertKey(t, "networking_method", request, "networking_method")
 	testutils.AssertKey(t, "data_delay_sensitivity", request, "CUSTOM")
 	testutils.AssertKey(t, "data_delay_threshold", request, float64(1))
+	testutils.AssertKey(t, "destination_schema_names", request, "FIVETRAN_NAMING")
+
+	connectCardConfig, ok := request["connect_card_config"].(map[string]interface{})
+	testutils.AssertEqual(t, ok, true)
+	testutils.AssertKey(t, "redirect_uri", connectCardConfig, "https://example.com/callback")
+	testutils.AssertKey(t, "hide_setup_guide", connectCardConfig, true)
+	testutils.AssertKey(t, "all_fields", connectCardConfig, true)
+
+	destinationConfiguration, ok := request["destination_configuration"].(map[string]interface{})
+	testutils.AssertEqual(t, ok, true)
+	testutils.AssertKey(t, "virtual_warehouse", destinationConfiguration, "virtual_warehouse")
 
 	config, ok := request["config"].(map[string]interface{})
 	testutils.AssertEqual(t, ok, true)
@@ -447,7 +484,7 @@ func assertConnectionRequestWithNilSyncFrequency(t *testing.T, request map[strin
 	testutils.AssertKey(t, "proxy_agent_id", request, "proxy_id")
 	testutils.AssertKey(t, "private_link_id", request, "private_link_id")
 	testutils.AssertKey(t, "networking_method", request, "networking_method")
-	
+
 	config, ok := request["config"].(map[string]interface{})
 	testutils.AssertEqual(t, ok, true)
 
