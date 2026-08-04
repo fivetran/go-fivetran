@@ -10,47 +10,49 @@ import (
 
 type ConnectionUpdateService struct {
 	httputils.HttpService
-	connectionID            *string
-	paused                  *bool
-	syncFrequency           *int
-	dailySyncTime           *string
-	trustCertificates       *bool
-	trustFingerprints       *bool
-	isHistoricalSync        *bool
-	scheduleType            *string
-	runSetupTests           *bool
-	pauseAfterTrial         *bool
-	hybridDeploymentAgentId *string
-	networkingMethod        *string
-	privateLinkId           *string
-	proxyAgentId            *string
-	dataDelaySensitivity    *string
-	dataDelayThreshold      *int
-	schedule                *ConnectorSchedule
-	config                  *ConnectionConfig
-	auth                    *ConnectionAuth
-	configCustom            *map[string]interface{}
-	authCustom              *map[string]interface{}
+	connectionID             *string
+	paused                   *bool
+	syncFrequency            *int
+	dailySyncTime            *string
+	trustCertificates        *bool
+	trustFingerprints        *bool
+	isHistoricalSync         *bool
+	scheduleType             *string
+	runSetupTests            *bool
+	pauseAfterTrial          *bool
+	hybridDeploymentAgentId  *string
+	networkingMethod         *string
+	privateLinkId            *string
+	proxyAgentId             *string
+	dataDelaySensitivity     *string
+	dataDelayThreshold       *int
+	destinationConfiguration *DestinationConfiguration
+	schedule                 *ConnectorSchedule
+	config                   *ConnectionConfig
+	auth                     *ConnectionAuth
+	configCustom             *map[string]interface{}
+	authCustom               *map[string]interface{}
 }
 
 func (s *ConnectionUpdateService) requestBase() connectionUpdateRequestBase {
 	return connectionUpdateRequestBase{
-		Paused:                  s.paused,
-		SyncFrequency:           s.syncFrequency,
-		DailySyncTime:           s.dailySyncTime,
-		TrustCertificates:       s.trustCertificates,
-		TrustFingerprints:       s.trustFingerprints,
-		IsHistoricalSync:        s.isHistoricalSync,
-		ScheduleType:            s.scheduleType,
-		RunSetupTests:           s.runSetupTests,
-		PauseAfterTrial:         s.pauseAfterTrial,
-		PrivateLinkId:           s.privateLinkId,
-		HybridDeploymentAgentId: s.hybridDeploymentAgentId,
-		NetworkingMethod:        s.networkingMethod,
-		ProxyAgentId:            s.proxyAgentId,
-		DataDelaySensitivity:    s.dataDelaySensitivity,
-		DataDelayThreshold:      s.dataDelayThreshold,
-		Schedule:                s.schedule,
+		Paused:                   s.paused,
+		SyncFrequency:            s.syncFrequency,
+		DailySyncTime:            s.dailySyncTime,
+		TrustCertificates:        s.trustCertificates,
+		TrustFingerprints:        s.trustFingerprints,
+		IsHistoricalSync:         s.isHistoricalSync,
+		ScheduleType:             s.scheduleType,
+		RunSetupTests:            s.runSetupTests,
+		PauseAfterTrial:          s.pauseAfterTrial,
+		PrivateLinkId:            s.privateLinkId,
+		HybridDeploymentAgentId:  s.hybridDeploymentAgentId,
+		NetworkingMethod:         s.networkingMethod,
+		ProxyAgentId:             s.proxyAgentId,
+		DataDelaySensitivity:     s.dataDelaySensitivity,
+		DataDelayThreshold:       s.dataDelayThreshold,
+		DestinationConfiguration: s.destinationConfiguration,
+		Schedule:                 s.schedule,
 	}
 }
 
@@ -202,6 +204,11 @@ func (s *ConnectionUpdateService) DataDelayThreshold(value *int) *ConnectionUpda
 }
 func (s *ConnectionUpdateService) DataDelaySensitivity(value string) *ConnectionUpdateService {
 	s.dataDelaySensitivity = &value
+	return s
+}
+
+func (s *ConnectionUpdateService) DestinationConfiguration(value *DestinationConfiguration) *ConnectionUpdateService {
+	s.destinationConfiguration = value
 	return s
 }
 

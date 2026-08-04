@@ -46,7 +46,7 @@ func TestMetadataDetailsServiceDoWithUserAgentSuffix(t *testing.T) {
 	ftClient.CustomUserAgent("terraform-provider-fivetran/1.9.37")
 	handler := mockClient.When(http.MethodGet, "/v1/metadata/connector-types/google_ads").
 		ThenCall(func(req *http.Request) (*http.Response, error) {
-			testutils.AssertEqual(t, req.Header.Get("User-Agent"), "Go-Fivetran/1.3.3 terraform-provider-fivetran/1.9.37 fivetran_connection_v2")
+			testutils.AssertEqual(t, req.Header.Get("User-Agent"), "Go-Fivetran/1.3.8 terraform-provider-fivetran/1.9.37 fivetran_connection_v2")
 			response := mock.NewResponse(req, http.StatusOK, prepareMetadataDetailsResponse())
 			return response, nil
 		})

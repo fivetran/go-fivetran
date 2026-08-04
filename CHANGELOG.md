@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased](https://github.com/fivetran/go-fivetran/compare/v1.3.7...HEAD)
 
+## Added
+- Connection create/update/details support for Terraform-managed connection v2 fields:
+  `schedule_type`, `connect_card_config`, `destination_schema_names`, and `destination_configuration`.
+
 ## [1.3.7](https://github.com/fivetran/go-fivetran/compare/v1.3.6...v1.3.7)
 
 ## Added
