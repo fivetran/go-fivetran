@@ -5,7 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/fivetran/go-fivetran/compare/v1.3.7...HEAD)
+## [Unreleased](https://github.com/fivetran/go-fivetran/compare/v1.3.9...HEAD)
+
+## [1.3.9](https://github.com/fivetran/go-fivetran/compare/v1.3.8...v1.3.9)
+
+## Added
+- `ParentTable` field to `ConnectionSchemaConfigTableResponse` for deserializing core-table/child-table grouping from connection schema config responses.
+
+## [1.3.8](https://github.com/fivetran/go-fivetran/compare/v1.3.7...v1.3.8)
 
 ## Added
 - Connection create/update/details support for Terraform-managed connection v2 fields:

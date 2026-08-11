@@ -18,6 +18,7 @@ type ConnectionSchemaConfigTableResponse struct {
 	SyncMode              *string                                         `json:"sync_mode"`
 	Columns               map[string]*ConnectionSchemaConfigColumnResponse `json:"columns"`
 	SupportsColumnsConfig *bool                                           `json:"supports_columns_config"`
+	ParentTable           *string                                         `json:"parent_table"`
 	EnabledPatchSettings  struct {
 		Allowed    *bool   `json:"allowed"`
 		ReasonCode *string `json:"reason_code"`

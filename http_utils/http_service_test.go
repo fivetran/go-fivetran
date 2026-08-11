@@ -26,7 +26,7 @@ func TestDoWithUserAgentSuffixAppendsSuffixWithoutMutatingCommonHeaders(t *testi
 		BaseUrl: "https://api.example.com/v1",
 		CommonHeaders: map[string]string{
 			"Authorization": "Basic token",
-			"User-Agent":    "Go-Fivetran/1.3.8 terraform-provider-fivetran/1.9.37",
+			"User-Agent":    "Go-Fivetran/1.3.9 terraform-provider-fivetran/1.9.37",
 		},
 		Client: client,
 	}
@@ -46,10 +46,10 @@ func TestDoWithUserAgentSuffixAppendsSuffixWithoutMutatingCommonHeaders(t *testi
 		t.Fatalf("DoWithUserAgentSuffix returned error: %v", err)
 	}
 
-	if got, want := client.request.Header.Get("User-Agent"), "Go-Fivetran/1.3.8 terraform-provider-fivetran/1.9.37 fivetran_connection_v2"; got != want {
+	if got, want := client.request.Header.Get("User-Agent"), "Go-Fivetran/1.3.9 terraform-provider-fivetran/1.9.37 fivetran_connection_v2"; got != want {
 		t.Fatalf("request User-Agent = %q, want %q", got, want)
 	}
-	if got, want := service.CommonHeaders["User-Agent"], "Go-Fivetran/1.3.8 terraform-provider-fivetran/1.9.37"; got != want {
+	if got, want := service.CommonHeaders["User-Agent"], "Go-Fivetran/1.3.9 terraform-provider-fivetran/1.9.37"; got != want {
 		t.Fatalf("common User-Agent = %q, want %q", got, want)
 	}
 }
