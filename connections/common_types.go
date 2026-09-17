@@ -174,6 +174,13 @@ type ConnectionColumnConfigListResponse struct {
 	} `json:"data"`
 }
 
+type MultipleTableColumnsConfigResponse struct {
+	common.CommonResponse
+	Data struct {
+		Tables map[string]map[string]*ConnectionSchemaConfigColumnResponse `json:"tables"`
+	} `json:"data"`
+}
+
 type connectionColumnConfigUpdateRequest struct {
 	Enabled *bool `json:"enabled,omitempty"`
 	Hashed  *bool `json:"hashed,omitempty"`
