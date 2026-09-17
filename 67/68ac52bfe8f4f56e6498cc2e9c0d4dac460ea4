@@ -1,0 +1,19 @@
+connections/common_types.go
+  s_25888f4502cfc7::t_e91421caa254b6 127
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.1",
+  "base_commit_sha": "6768ac52bfe8f4f56e6498cc2e9c0d4dac460ea4",
+  "prompts": {},
+  "sessions": {
+    "s_25888f4502cfc7": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "7e5607d9-6fa1-4200-aa12-061052bd08a6",
+        "model": "claude-haiku-4-5-20251001"
+      },
+      "human_author": "jovan.manojlovic <jovan.manojlovic@fivetran.com>"
+    }
+  }
+}
