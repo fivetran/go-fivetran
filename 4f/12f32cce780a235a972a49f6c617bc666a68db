@@ -1,0 +1,42 @@
+connections/common_types.go
+  s_5780f9c753f569::t_145028ca0a2cc7 177-183
+connections/fetch_source_columns.go
+  s_5780f9c753f569::t_6ba04f72fa8294 1-41,43-44
+  s_5780f9c753f569::t_df082264f13e72 42
+client.go
+  s_5780f9c753f569::t_a0200f7cb6dbc2 541-544
+  3ebeddfe1e475316 721-724
+connections/fetch_source_columns_test.go
+  s_5780f9c753f569::t_5e82f2c2953e39 1-119
+connections/fetch_source_columns_integration_example_test.go
+  s_5780f9c753f569::t_437b9c0fc00aba 1-23
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.1",
+  "base_commit_sha": "4f12f32cce780a235a972a49f6c617bc666a68db",
+  "prompts": {
+    "3ebeddfe1e475316": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "358bae4f-a87e-46bb-8e4f-fe5b01ed0b7e",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "jovan.manojlovic <jovan.manojlovic@fivetran.com>",
+      "total_additions": 0,
+      "total_deletions": 0,
+      "accepted_lines": 102,
+      "overriden_lines": 0
+    }
+  },
+  "sessions": {
+    "s_5780f9c753f569": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "c77c20e8-3982-4cda-8ab5-d96236511083",
+        "model": "claude-haiku-4-5-20251001"
+      },
+      "human_author": "jovan.manojlovic <jovan.manojlovic@fivetran.com>"
+    }
+  }
+}
