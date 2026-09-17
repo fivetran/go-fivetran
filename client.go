@@ -538,6 +538,10 @@ func (c *Client) NewConnectionColumnConfigListService() *connections.ConnectionC
 	return &connections.ConnectionColumnConfigListService{HttpService: c.NewHttpService()}
 }
 
+func (c *Client) NewFetchSourceColumnsService() *connections.FetchSourceColumnsService {
+	return &connections.FetchSourceColumnsService{HttpService: c.NewHttpService()}
+}
+
 func (c *Client) NewConnectionColumnConfigUpdateService() *connections.ConnectionColumnConfigUpdateService {
 	return &connections.ConnectionColumnConfigUpdateService{HttpService: c.NewHttpService()}
 }
@@ -712,6 +716,10 @@ func (c *Client) NewMetadataDetails() *metadata.MetadataDetailsService {
 
 func (c *Client) NewMetadataList() *metadata.MetadataListService {
 	return &metadata.MetadataListService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewDestinationMetadataDetails() *metadata.DestinationMetadataDetailsService {
+	return &metadata.DestinationMetadataDetailsService{HttpService: c.NewHttpService()}
 }
 
 /* Account Info */
