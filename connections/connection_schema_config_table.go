@@ -1,24 +1,29 @@
 package connections
 
+import "encoding/json"
+
 type ConnectionSchemaConfigTable struct {
-	enabled  *bool
-	syncMode *string
-	columns  map[string]*ConnectionSchemaConfigColumn
+	rowFilter json.RawMessage
+	enabled   *bool
+	syncMode  *string
+	columns   map[string]*ConnectionSchemaConfigColumn
 }
 
 type ConnectionSchemaConfigTableRequest struct {
-	Enabled  *bool                                          `json:"enabled,omitempty"`
-	SyncMode *string                                        `json:"sync_mode,omitempty"`
-	Columns  map[string]*ConnectionSchemaConfigColumnRequest `json:"columns,omitempty"`
+	RowFilter json.RawMessage                                 `json:"row_filter,omitempty"`
+	Enabled   *bool                                           `json:"enabled,omitempty"`
+	SyncMode  *string                                         `json:"sync_mode,omitempty"`
+	Columns   map[string]*ConnectionSchemaConfigColumnRequest `json:"columns,omitempty"`
 }
 
 type ConnectionSchemaConfigTableResponse struct {
-	NameInDestination     *string                                         `json:"name_in_destination"`
-	Enabled               *bool                                           `json:"enabled"`
-	SyncMode              *string                                         `json:"sync_mode"`
+	RowFilter             json.RawMessage                                  `json:"row_filter,omitempty"`
+	NameInDestination     *string                                          `json:"name_in_destination"`
+	Enabled               *bool                                            `json:"enabled"`
+	SyncMode              *string                                          `json:"sync_mode"`
 	Columns               map[string]*ConnectionSchemaConfigColumnResponse `json:"columns"`
-	SupportsColumnsConfig *bool                                           `json:"supports_columns_config"`
-	ParentTable           *string                                         `json:"parent_table"`
+	SupportsColumnsConfig *bool                                            `json:"supports_columns_config"`
+	ParentTable           *string                                          `json:"parent_table"`
 	EnabledPatchSettings  struct {
 		Allowed    *bool   `json:"allowed"`
 		ReasonCode *string `json:"reason_code"`
@@ -36,9 +41,10 @@ func (cst *ConnectionSchemaConfigTable) Request() *ConnectionSchemaConfigTableRe
 	}
 
 	return &ConnectionSchemaConfigTableRequest{
-		Enabled:  cst.enabled,
-		SyncMode: cst.syncMode,
-		Columns:  columns,
+		RowFilter: cst.rowFilter,
+		Enabled:   cst.enabled,
+		SyncMode:  cst.syncMode,
+		Columns:   columns,
 	}
 }
 
@@ -57,5 +63,12 @@ func (cst *ConnectionSchemaConfigTable) Column(name string, value *ConnectionSch
 		cst.columns = make(map[string]*ConnectionSchemaConfigColumn)
 	}
 	cst.columns[name] = value
+	return cst
+}
+
+// RowFilter sets the table row filter. A nil value omits the field; JSON null
+// deletes the existing filter. An object creates or replaces the filter.
+func (cst *ConnectionSchemaConfigTable) RowFilter(value json.RawMessage) *ConnectionSchemaConfigTable {
+	cst.rowFilter = value
 	return cst
 }
