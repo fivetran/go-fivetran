@@ -11,8 +11,8 @@ func TestNewCertificateConnectionFingerprintApproveE2E(t *testing.T) {
 	ConnectionId := testutils.CreateTempConnection(t)
 	response, err := testutils.Client.NewCertificateConnectionFingerprintApprove().
 		ConnectionID(ConnectionId).
-		Hash(testutils.FingerprintHash).
-		PublicKey(testutils.FingerprintPublicKey).
+		Hash("test_hash").
+		PublicKey("ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDK3K7vPLVzJ7zE2YvZ5K8vK9m9L2vM3nO4pP5qR6sT7uV8wX9yZ0aB1cD2eF3gH4iJ5kL6mN7oP8qR9sT0uV1wX2yZ3aB4cD5eF6gH7iJ8kL9mN0oP1qR2sT3uV4wX5yZ6aB7cD8eF9gH0iJ1kL2mN3oP4qR5sT6uV7wX8yZ7aB0cD1eF2gH3iJ4kL5mN6oP7qR8sT9uV8wX9yZ8 test@example.com").
 		Do(context.Background())
 
 	if err != nil {
