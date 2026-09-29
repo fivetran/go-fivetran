@@ -23,6 +23,8 @@ var Client *fivetran.Client
 
 var CertificateHash string
 var EncodedCertificate string
+var FingerprintHash string
+var FingerprintPublicKey string
 var SeededRand *rand.Rand = rand.New(rand.NewSource(time.Now().UnixNano()))
 
 // Tests should be re-written to not use a pre-defined user and group
@@ -57,11 +59,13 @@ func InitE2E() {
     var apiSecret string
 
     valuesToLoad := map[string]*string{
-        "FIVETRAN_API_URL":               &apiUrl,
-        "FIVETRAN_APIKEY":                &apiKey,
-        "FIVETRAN_APISECRET":             &apiSecret,
-        "FIVETRAN_TEST_CERTIFICATE_HASH": &CertificateHash,
-        "FIVETRAN_TEST_CERTIFICATE":      &EncodedCertificate,
+        "FIVETRAN_API_URL":                   &apiUrl,
+        "FIVETRAN_APIKEY":                    &apiKey,
+        "FIVETRAN_APISECRET":                 &apiSecret,
+        "FIVETRAN_TEST_CERTIFICATE_HASH":    &CertificateHash,
+        "FIVETRAN_TEST_CERTIFICATE":         &EncodedCertificate,
+        "FIVETRAN_TEST_FINGERPRINT_HASH":    &FingerprintHash,
+        "FIVETRAN_TEST_FINGERPRINT_PUBKEY":  &FingerprintPublicKey,
     }
 
     for name, value := range valuesToLoad {

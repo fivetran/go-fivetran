@@ -11,8 +11,8 @@ func TestNewCertificateDestinationFingerprintApproveE2E(t *testing.T) {
 	destinationId := testutils.CreateTempDestination(t)
 	response, err := testutils.Client.NewCertificateDestinationFingerprintApprove().
 		DestinationID(destinationId).
-		Hash(testutils.CertificateHash).
-		PublicKey(testutils.TEST_PUBLIC_KEY).
+		Hash(testutils.FingerprintHash).
+		PublicKey(testutils.FingerprintPublicKey).
 		Do(context.Background())
 
 	if err != nil {
