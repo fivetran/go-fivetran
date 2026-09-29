@@ -11,8 +11,8 @@ func TestNewCertificateConnectionFingerprintApproveE2E(t *testing.T) {
 	ConnectionId := testutils.CreateTempConnection(t)
 	response, err := testutils.Client.NewCertificateConnectionFingerprintApprove().
 		ConnectionID(ConnectionId).
-		Hash("test_hash").
-		PublicKey("test_public_key").
+		Hash(testutils.CertificateHash).
+		PublicKey(testutils.EncodedCertificate).
 		Do(context.Background())
 
 	if err != nil {
