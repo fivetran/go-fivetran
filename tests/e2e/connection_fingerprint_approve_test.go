@@ -12,7 +12,7 @@ func TestNewCertificateConnectionFingerprintApproveE2E(t *testing.T) {
 	response, err := testutils.Client.NewCertificateConnectionFingerprintApprove().
 		ConnectionID(ConnectionId).
 		Hash(testutils.CertificateHash).
-		PublicKey(testutils.EncodedCertificate).
+		PublicKey(testutils.TEST_PUBLIC_KEY).
 		Do(context.Background())
 
 	if err != nil {
