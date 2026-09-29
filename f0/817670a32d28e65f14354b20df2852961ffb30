@@ -1,0 +1,21 @@
+tests/e2e/connection_fingerprint_approve_test.go
+  s_851410ddeb0c42::t_9f63a9e0ddd488 14-15
+tests/e2e/destination_fingerprint_approve_test.go
+  s_851410ddeb0c42::t_d4bca98b5acd91 14-15
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.1",
+  "base_commit_sha": "f0817670a32d28e65f14354b20df2852961ffb30",
+  "prompts": {},
+  "sessions": {
+    "s_851410ddeb0c42": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "6b8ae122-0416-4c2c-adfc-c957073c1768",
+        "model": "claude-haiku-4-5-20251001"
+      },
+      "human_author": "jovan.manojlovic <jovan.manojlovic@fivetran.com>"
+    }
+  }
+}
