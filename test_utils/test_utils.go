@@ -23,8 +23,6 @@ var Client *fivetran.Client
 
 var CertificateHash string
 var EncodedCertificate string
-var FingerprintHash string
-var FingerprintPublicKey string
 var SeededRand *rand.Rand = rand.New(rand.NewSource(time.Now().UnixNano()))
 
 // Tests should be re-written to not use a pre-defined user and group
@@ -50,7 +48,7 @@ var (
 
     TEST_CONNECTION_ID = "test_connection_id"
     TEST_HASH          = "test_hash"
-    TEST_PUBLIC_KEY    = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDK3K7vPLVzJ7zE2YvZ5K8vK9m9L2vM3nO4pP5qR6sT7uV8wX9yZ0aB1cD2eF3gH4iJ5kL6mN7oP8qR9sT0uV1wX2yZ3aB4cD5eF6gH7iJ8kL9mN0oP1qR2sT3uV4wX5yZ6aB7cD8eF9gH0iJ1kL2mN3oP4qR5sT6uV7wX8yZ7aB0cD1eF2gH3iJ4kL5mN6oP7qR8sT9uV8wX9yZ8 test@example.com"
+    TEST_PUBLIC_KEY    = "test_public_key"
 )
 
 func InitE2E() {
@@ -59,13 +57,11 @@ func InitE2E() {
     var apiSecret string
 
     valuesToLoad := map[string]*string{
-        "FIVETRAN_API_URL":                   &apiUrl,
-        "FIVETRAN_APIKEY":                    &apiKey,
-        "FIVETRAN_APISECRET":                 &apiSecret,
-        "FIVETRAN_TEST_CERTIFICATE_HASH":    &CertificateHash,
-        "FIVETRAN_TEST_CERTIFICATE":         &EncodedCertificate,
-        "FIVETRAN_TEST_FINGERPRINT_HASH":    &FingerprintHash,
-        "FIVETRAN_TEST_FINGERPRINT_PUBKEY":  &FingerprintPublicKey,
+        "FIVETRAN_API_URL":               &apiUrl,
+        "FIVETRAN_APIKEY":                &apiKey,
+        "FIVETRAN_APISECRET":             &apiSecret,
+        "FIVETRAN_TEST_CERTIFICATE_HASH": &CertificateHash,
+        "FIVETRAN_TEST_CERTIFICATE":      &EncodedCertificate,
     }
 
     for name, value := range valuesToLoad {
