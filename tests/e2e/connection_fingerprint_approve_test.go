@@ -11,8 +11,8 @@ func TestNewCertificateConnectionFingerprintApproveE2E(t *testing.T) {
 	ConnectionId := testutils.CreateTempConnection(t)
 	response, err := testutils.Client.NewCertificateConnectionFingerprintApprove().
 		ConnectionID(ConnectionId).
-		Hash("test_hash").
-		PublicKey("ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDK3K7vPLVzJ7zE2YvZ5K8vK9m9L2vM3nO4pP5qR6sT7uV8wX9yZ0aB1cD2eF3gH4iJ5kL6mN7oP8qR9sT0uV1wX2yZ3aB4cD5eF6gH7iJ8kL9mN0oP1qR2sT3uV4wX5yZ6aB7cD8eF9gH0iJ1kL2mN3oP4qR5sT6uV7wX8yZ7aB0cD1eF2gH3iJ4kL5mN6oP7qR8sT9uV8wX9yZ8 test@example.com").
+		Hash("mYHp22TZYjGxOzvJZouuU9OG5v2iciu3mGc9gIQtU0o").
+		PublicKey("ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCxYiAoxFhLmEPfzUSOToeDH+C5A33zzLT9CX5HHGZyvngXLEm6p4RcQn4xsenz73OQMCgOpbOAYFVD70YWNa1gMQr30Zm5M8tH5EPVAraT3tSyMKEDEULql74sBdIGlvYyOOjD7bw4b/PUw0hpqoZ6ZvZoa4bS/9GEv0mHELJCtcxpXEBYaThJZfq/KaXEjSNQZ6g30TPx7ZoFQBIDDpVHWoH5JyVE2pzxaqn30CX+LqZmlF97ys1fI71w/a0A2wJ2NRWSLq2oLoFERa+CbZMDAFoIoyIMFPDyBnQgPFo4BgQbcnzE+BUnnYbL5+ONCPf3gVtoIx+X8Ex/IfjieWxZ test@example.com").
 		Do(context.Background())
 
 	if err != nil {
