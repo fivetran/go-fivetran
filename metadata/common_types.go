@@ -37,6 +37,7 @@ type ConnectorMetadata struct {
 	ServiceStatus          string              `json:"service_status"`
 	ServiceStatusUpdatedAt string              `json:"service_status_updated_at"`
 	SupportedFeatures      []SupportedFeatures `json:"supported_features"`
+	SupportsSchemaReload   *bool               `json:"supports_schema_reload,omitempty"`
 	Config                 Property            `json:"config"`
 	Auth                   Property            `json:"auth"`
 }
