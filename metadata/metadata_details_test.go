@@ -2,7 +2,6 @@ package metadata_test
 
 import (
 	"context"
-	"fmt"
 	"net/http"
 	"testing"
 
@@ -440,6 +439,10 @@ func assertMetadataDetailsResponse(t *testing.T, response metadata.ConnectorMeta
 }
 
 func prepareMetadataDetailsResponseWithSupportsSchemaReload(supportsSchemaReload bool) string {
+	reloadValue := "true"
+	if !supportsSchemaReload {
+		reloadValue = "false"
+	}
 	return `{
     "code": "Success",
     "data": {
@@ -456,7 +459,7 @@ func prepareMetadataDetailsResponseWithSupportsSchemaReload(supportsSchemaReload
         "link_to_erd": "https://fivetran.com/docs/connectors/applications/google-ads#schemainformation",
         "connector_class": "standard",
         "supported_features": [],
-        "supports_schema_reload": ` + fmt.Sprintf("%v", supportsSchemaReload) + `,
+        "supports_schema_reload": ` + reloadValue + `,
         "config": {
             "type": "object",
             "description": "",
