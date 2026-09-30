@@ -1,0 +1,20 @@
+metadata/metadata_details_test.go
+  s_c57f50abc780ba::t_41804b8df9dba7 443-446,463
+  s_c57f50abc780ba::t_6837e7338088b7 7
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.1",
+  "base_commit_sha": "5a1073d79c8399c413e7d3b36a9aa78941879aab",
+  "prompts": {},
+  "sessions": {
+    "s_c57f50abc780ba": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "34184872-453b-462b-bac2-e865f64be3a8",
+        "model": "claude-haiku-4-5-20251001"
+      },
+      "human_author": "jovan.manojlovic <jovan.manojlovic@fivetran.com>"
+    }
+  }
+}
