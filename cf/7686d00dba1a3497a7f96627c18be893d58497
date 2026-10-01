@@ -1,0 +1,19 @@
+CHANGELOG.md
+  s_625580c56eb200::t_bf73f36194246c 8-10
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.1",
+  "base_commit_sha": "cf7686d00dba1a3497a7f96627c18be893d58497",
+  "prompts": {},
+  "sessions": {
+    "s_625580c56eb200": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "2e04b2f3-608f-4d3c-baaa-7372dc0aa999",
+        "model": "claude-haiku-4-5-20251001"
+      },
+      "human_author": "jovan.manojlovic <jovan.manojlovic@fivetran.com>"
+    }
+  }
+}
