@@ -432,19 +432,19 @@ func CleanupUsers() {
 }
 
 func CleanupDestinations() {
-    groups, err := Client.NewGroupsList().Do(context.Background())
+    destinations, err := Client.NewDestinationsList().Do(context.Background())
     if err != nil {
         log.Fatal(err)
     }
-    for _, group := range groups.Data.Items {
-        _, err := Client.NewDestinationDelete().DestinationID(group.ID).Do(context.Background())
+    for _, destination := range destinations.Data.Items {
+        _, err := Client.NewDestinationDelete().DestinationID(destination.ID).Do(context.Background())
         if err != nil && err.Error() != "status code: 404; expected: 200" {
             log.Fatal(err)
         }
     }
-    if groups.Data.NextCursor != "" {
+    if destinations.Data.NextCursor != "" {
         CleanupDestinations()
-    }   
+    }
 }
 
 func CleanupGroups() {
