@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - `SupportsSchemaReload` field to `ConnectorMetadata` for checking if a connector type supports the schema reload endpoint. Clients can use this flag to determine upfront whether schema reload is supported (UCM = false, others = true).
+- `FetchSourceColumnsService` for batch source column fetching via the new batch columns endpoint.
 
 ## [1.3.9](https://github.com/fivetran/go-fivetran/compare/v1.3.8...v1.3.9)
 
