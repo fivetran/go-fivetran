@@ -4,7 +4,6 @@ import (
 	"context"
 	"net/http"
 	"testing"
-	//"fmt"
 
 	"github.com/fivetran/go-fivetran/metadata"
 	testutils "github.com/fivetran/go-fivetran/test_utils"
@@ -286,6 +285,58 @@ func prepareMetadataDetailsResponse() string {
 }`
 }
 
+func TestMetadataDetailsServiceSupportsSchemaReload(t *testing.T) {
+	// arrange
+	ftClient, mockClient := testutils.CreateTestClient()
+	handler := mockClient.When(http.MethodGet, "/v1/metadata/connector-types/ucm_connector").
+		ThenCall(func(req *http.Request) (*http.Response, error) {
+			response := mock.NewResponse(req, http.StatusOK, prepareMetadataDetailsResponseWithSupportsSchemaReload(false))
+			return response, nil
+		})
+
+	// act
+	response, err := ftClient.NewMetadataDetails().
+		Service("ucm_connector").
+		Do(context.Background())
+
+	// assert
+	if err != nil {
+		t.Error(err)
+	}
+
+	interactions := mockClient.Interactions()
+	testutils.AssertEqual(t, len(interactions), 1)
+	testutils.AssertEqual(t, interactions[0].Handler, handler)
+	testutils.AssertEqual(t, handler.Interactions, 1)
+	testutils.AssertEqual(t, *response.Data.SupportsSchemaReload, false)
+}
+
+func TestMetadataDetailsServiceSupportsSchemaReloadTrue(t *testing.T) {
+	// arrange
+	ftClient, mockClient := testutils.CreateTestClient()
+	handler := mockClient.When(http.MethodGet, "/v1/metadata/connector-types/google_ads").
+		ThenCall(func(req *http.Request) (*http.Response, error) {
+			response := mock.NewResponse(req, http.StatusOK, prepareMetadataDetailsResponseWithSupportsSchemaReload(true))
+			return response, nil
+		})
+
+	// act
+	response, err := ftClient.NewMetadataDetails().
+		Service("google_ads").
+		Do(context.Background())
+
+	// assert
+	if err != nil {
+		t.Error(err)
+	}
+
+	interactions := mockClient.Interactions()
+	testutils.AssertEqual(t, len(interactions), 1)
+	testutils.AssertEqual(t, interactions[0].Handler, handler)
+	testutils.AssertEqual(t, handler.Interactions, 1)
+	testutils.AssertEqual(t, *response.Data.SupportsSchemaReload, true)
+}
+
 func assertMetadataDetailsResponse(t *testing.T, response metadata.ConnectorMetadataResponse) {
 	testutils.AssertEqual(t, response.Code, "Success")
 	testutils.AssertEqual(t, response.Data.ID, "google_ads")
@@ -385,4 +436,46 @@ func assertMetadataDetailsResponse(t *testing.T, response metadata.ConnectorMeta
 	testutils.AssertEqual(t, response.Data.Auth.Properties["client_access"].Properties["developer_token"].Format, "password")
 	testutils.AssertEqual(t, response.Data.Auth.Properties["client_access"].Properties["developer_token"].Immutable, true)
 	testutils.AssertEqual(t, response.Data.Auth.Properties["client_access"].Properties["developer_token"].FieldStatus, "private_preview")
+}
+
+func prepareMetadataDetailsResponseWithSupportsSchemaReload(supportsSchemaReload bool) string {
+	reloadValue := "true"
+	if !supportsSchemaReload {
+		reloadValue = "false"
+	}
+	return `{
+    "code": "Success",
+    "data": {
+        "id": "google_ads",
+        "name": "Google Ads",
+        "type": "Marketing",
+        "description": "Google Ads is an online advertising platform",
+        "icon_url": "https://fivetran.com/integrations/google_ads/resources/google-ads.png",
+        "icons": [
+            "https://fivetran.com/integrations/google_ads/resources/google-ads_512.png",
+            "https://fivetran.com/integrations/google_ads/resources/google-ads_40.svg"
+        ],
+        "link_to_docs": "https://fivetran.com/docs/connectors/applications/google-ads",
+        "link_to_erd": "https://fivetran.com/docs/connectors/applications/google-ads#schemainformation",
+        "connector_class": "standard",
+        "supported_features": [],
+        "supports_schema_reload": ` + reloadValue + `,
+        "config": {
+            "type": "object",
+            "description": "",
+            "title": "Google Ads config object",
+            "readonly": false,
+            "properties": {},
+            "required": []
+        },
+        "auth": {
+            "type": "object",
+            "description": "",
+            "readonly": false,
+            "properties": {}
+        },
+        "service_status": "general_availability",
+        "service_status_updated_at": "2022-06-10"
+    }
+}`
 }
