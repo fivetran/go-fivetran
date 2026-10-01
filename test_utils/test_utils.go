@@ -438,7 +438,7 @@ func CleanupDestinations() {
     }
     for _, destination := range destinations.Data.Items {
         _, err := Client.NewDestinationDelete().DestinationID(destination.ID).Do(context.Background())
-        if err != nil && err.Error() != "status code: 404; expected: 200" && err.Error() != "status code: 409; expected: 200" {
+        if err != nil && err.Error() != "status code: 404; expected: 200" {
             log.Fatal(err)
         }
     }
@@ -456,7 +456,7 @@ func CleanupGroups() {
         CleanupConnections(group.ID)
         if group.ID != PredefinedGroupId {
             _, err := Client.NewGroupDelete().GroupID(group.ID).Do(context.Background())
-            if err != nil && err.Error() != "status code: 404; expected: 200" && err.Error() != "status code: 409; expected: 200" {
+            if err != nil {
                 log.Fatal(err)
             }
         }
@@ -473,7 +473,7 @@ func CleanupConnections(groupId string) {
     }
     for _, connection := range connections.Data.Items {
         _, err := Client.NewConnectionDelete().ConnectionID(connection.ID).Do(context.Background())
-        if err != nil && err.Error() != "status code: 404; expected: 200" && err.Error() != "status code: 409; expected: 200" {
+        if err != nil {
             log.Fatal(err)
         }
     }
