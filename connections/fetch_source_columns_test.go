@@ -52,23 +52,23 @@ func assertFetchSourceColumnsResponse(t *testing.T, response connections.Multipl
 	testutils.AssertEqual(t, len(response.Data.Tables), 2)
 
 	table_1 := response.Data.Tables["table_1"]
-	testutils.AssertEqual(t, len(table_1), 2)
+	testutils.AssertEqual(t, len(table_1.Columns), 2)
 
-	column_1 := table_1["column_1"]
+	column_1 := table_1.Columns["column_1"]
 	testutils.AssertEqual(t, *column_1.NameInDestination, "column_1")
 	testutils.AssertEqual(t, *column_1.IsPrimaryKey, true)
 	testutils.AssertEqual(t, *column_1.Enabled, true)
 	testutils.AssertEqual(t, *column_1.Hashed, false)
 
-	column_2 := table_1["column_2"]
+	column_2 := table_1.Columns["column_2"]
 	testutils.AssertEqual(t, *column_2.NameInDestination, "column_2")
 	testutils.AssertEqual(t, *column_2.IsPrimaryKey, false)
 	testutils.AssertEqual(t, *column_2.Enabled, true)
 
 	table_2 := response.Data.Tables["table_2"]
-	testutils.AssertEqual(t, len(table_2), 1)
+	testutils.AssertEqual(t, len(table_2.Columns), 1)
 
-	table_2_column := table_2["column_1"]
+	table_2_column := table_2.Columns["column_1"]
 	testutils.AssertEqual(t, *table_2_column.NameInDestination, "column_1")
 	testutils.AssertEqual(t, *table_2_column.IsPrimaryKey, false)
 	testutils.AssertEqual(t, *table_2_column.Enabled, false)
@@ -80,36 +80,40 @@ func prepareFetchSourceColumnsResponse() string {
     "data":{
         "tables": {
             "table_1": {
-                "column_1": {
-                    "name_in_destination": "column_1",
-                    "enabled": true,
-                    "hashed": false,
-                    "enabled_patch_settings": {
-                        "allowed": false,
-                        "reason_code": "SYSTEM_COLUMN",
-                        "reason": "The column does not support exclusion as it is a Primary Key"
+                "columns": {
+                    "column_1": {
+                        "name_in_destination": "column_1",
+                        "enabled": true,
+                        "hashed": false,
+                        "enabled_patch_settings": {
+                            "allowed": false,
+                            "reason_code": "SYSTEM_COLUMN",
+                            "reason": "The column does not support exclusion as it is a Primary Key"
+                        },
+                        "is_primary_key" : true
                     },
-                    "is_primary_key" : true
-                },
-                "column_2": {
-                    "name_in_destination": "column_2",
-                    "enabled": true,
-                    "hashed": false,
-                    "enabled_patch_settings": {
-                        "allowed": true
-                    },
-                    "is_primary_key" : false
+                    "column_2": {
+                        "name_in_destination": "column_2",
+                        "enabled": true,
+                        "hashed": false,
+                        "enabled_patch_settings": {
+                            "allowed": true
+                        },
+                        "is_primary_key" : false
+                    }
                 }
             },
             "table_2": {
-                "column_1": {
-                    "name_in_destination": "column_1",
-                    "enabled": false,
-                    "hashed": false,
-                    "enabled_patch_settings": {
-                        "allowed": true
-                    },
-                    "is_primary_key" : false
+                "columns": {
+                    "column_1": {
+                        "name_in_destination": "column_1",
+                        "enabled": false,
+                        "hashed": false,
+                        "enabled_patch_settings": {
+                            "allowed": true
+                        },
+                        "is_primary_key" : false
+                    }
                 }
             }
         }
