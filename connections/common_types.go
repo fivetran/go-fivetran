@@ -177,7 +177,9 @@ type ConnectionColumnConfigListResponse struct {
 type MultipleTableColumnsConfigResponse struct {
 	common.CommonResponse
 	Data struct {
-		Tables map[string]map[string]*ConnectionSchemaConfigColumnResponse `json:"tables"`
+		Tables map[string]struct {
+			Columns map[string]*ConnectionSchemaConfigColumnResponse `json:"columns"`
+		} `json:"tables"`
 	} `json:"data"`
 }
 
