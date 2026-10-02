@@ -1,0 +1,24 @@
+connections/fetch_source_columns_test.go
+  s_02a3440498e6ff::t_3757685dc862f7 55,57,63,69,71
+  s_02a3440498e6ff::t_72674c5f3ee2cc 83-93,95-103,107-116
+connections/common_types.go
+  s_02a3440498e6ff::t_622823979a0623 180-182
+CHANGELOG.md
+  s_02a3440498e6ff::t_f7022ab74406c8 8-13
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.1",
+  "base_commit_sha": "1786cba3dc4fe9482cb69542dbe654b8cd6c085c",
+  "prompts": {},
+  "sessions": {
+    "s_02a3440498e6ff": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "76e64d80-3238-444e-9c55-1b60ea5054d3",
+        "model": "claude-haiku-4-5-20251001"
+      },
+      "human_author": null
+    }
+  }
+}
