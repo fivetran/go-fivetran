@@ -40,7 +40,7 @@ const defaultBaseURL = "https://api.fivetran.com/v1"
 const restAPIv2 = "application/json;version=2"
 
 // WARNING: Update Agent version on each release!
-const defaultUserAgent = "Go-Fivetran/1.3.9"
+const defaultUserAgent = "Go-Fivetran/1.3.10"
 
 // New receives API Key and API Secret, and returns a new Client with the
 // default HTTP client
@@ -536,6 +536,10 @@ func (c *Client) NewConnectionSetupTests() *connections.ConnectionSetupTestsServ
 
 func (c *Client) NewConnectionColumnConfigListService() *connections.ConnectionColumnConfigListService {
 	return &connections.ConnectionColumnConfigListService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewFetchSourceColumnsService() *connections.FetchSourceColumnsService {
+	return &connections.FetchSourceColumnsService{HttpService: c.NewHttpService()}
 }
 
 func (c *Client) NewConnectionColumnConfigUpdateService() *connections.ConnectionColumnConfigUpdateService {

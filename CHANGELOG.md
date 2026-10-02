@@ -5,10 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/fivetran/go-fivetran/compare/v1.3.9...HEAD)
+## [Unreleased](https://github.com/fivetran/go-fivetran/compare/v1.3.10...HEAD)
+
+## [1.3.10](https://github.com/fivetran/go-fivetran/compare/v1.3.9...v1.3.10)
 
 ### Added
 - `SupportsSchemaReload` field to `ConnectorMetadata` for checking if a connector type supports the schema reload endpoint. Clients can use this flag to determine upfront whether schema reload is supported (UCM = false, others = true).
+- `FetchSourceColumnsService` for batch source column fetching via the new batch columns endpoint.
 
 ## [1.3.9](https://github.com/fivetran/go-fivetran/compare/v1.3.8...v1.3.9)
 
