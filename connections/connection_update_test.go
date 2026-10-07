@@ -35,6 +35,7 @@ func TestConnectionUpdateMock(t *testing.T) {
 		NetworkingMethod("networking_method").
 		DataDelayThreshold(&dataDelayThreshold).
 		DataDelaySensitivity("CUSTOM").
+		DataChecks(true).
 		DestinationConfiguration(prepareDestinationConfiguration()).
 		Paused(false).
 		Config(prepareConfigUpdate()).
@@ -77,6 +78,7 @@ func TestCustomConnectionUpdateMock(t *testing.T) {
 		NetworkingMethod("networking_method").
 		DataDelayThreshold(&dataDelayThreshold).
 		DataDelaySensitivity("CUSTOM").
+		DataChecks(true).
 		DestinationConfiguration(prepareDestinationConfiguration()).
 		Paused(false).
 		ConfigCustom(prepareCustomUpdateConfig()).
@@ -133,6 +135,7 @@ func TestCustomMergedConnectionUpdateMock(t *testing.T) {
 		NetworkingMethod("networking_method").
 		DataDelayThreshold(&dataDelayThreshold).
 		DataDelaySensitivity("CUSTOM").
+		DataChecks(true).
 		DestinationConfiguration(prepareDestinationConfiguration()).
 		ConfigCustom(prepareCustomMergedUpdateConfigMap()).
 		Config(prepareCustomMergedConfigUpdate()).
@@ -244,6 +247,7 @@ func prepareConnectionUpdateResponse() string {
             "networking_method": "networking_method",
             "data_delay_threshold": 1,
             "data_delay_sensitivity": "CUSTOM",
+            "data_checks": true,
             "status": {
                 "setup_state": "incomplete",
                 "sync_state": "scheduled",
@@ -289,6 +293,7 @@ func assertConnectionUpdateResponse(t *testing.T, response connections.DetailsWi
 	testutils.AssertEqual(t, response.Data.NetworkingMethod, "networking_method")
 	testutils.AssertEqual(t, *response.Data.DataDelayThreshold, 1)
 	testutils.AssertEqual(t, response.Data.DataDelaySensitivity, "CUSTOM")
+	testutils.AssertEqual(t, *response.Data.DataChecks, true)
 
 	assertConnectionConfig(t, response.Data.Config)
 }
@@ -303,6 +308,7 @@ func assertCustomConnectionUpdateResponse(t *testing.T, response connections.Det
 	testutils.AssertEqual(t, response.Data.NetworkingMethod, "networking_method")
 	testutils.AssertEqual(t, *response.Data.DataDelayThreshold, 1)
 	testutils.AssertEqual(t, response.Data.DataDelaySensitivity, "CUSTOM")
+	testutils.AssertEqual(t, *response.Data.DataChecks, true)
 
 	testutils.AssertKey(t, "share_url", response.Data.Config, "share_url")
 	testutils.AssertKey(t, "is_keypair", response.Data.Config, true)
@@ -328,6 +334,7 @@ func assertCustomMergedConnectionUpdateResponse(t *testing.T, response connectio
 	testutils.AssertEqual(t, response.Data.NetworkingMethod, "networking_method")
 	testutils.AssertEqual(t, *response.Data.DataDelayThreshold, 1)
 	testutils.AssertEqual(t, response.Data.DataDelaySensitivity, "CUSTOM")
+	testutils.AssertEqual(t, *response.Data.DataChecks, true)
 
 	assertConnectionConfig(t, response.Data.Config)
 
@@ -340,6 +347,7 @@ func assertConnectionUpdateRequest(t *testing.T, request map[string]interface{})
 	testutils.AssertKeyValue(t, request, "proxy_agent_id", "proxy_id")
 	testutils.AssertKeyValue(t, request, "private_link_id", "private_link_id")
 	testutils.AssertKeyValue(t, request, "networking_method", "networking_method")
+	testutils.AssertKeyValue(t, request, "data_checks", true)
 
 	destinationConfiguration, ok := request["destination_configuration"].(map[string]interface{})
 	testutils.AssertEqual(t, ok, true)

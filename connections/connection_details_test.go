@@ -142,6 +142,7 @@ func prepareConnectionDetailsResponse() string {
             "proxy_agent_id": "proxy_id",
             "private_link_id": "private_link_id",
             "networking_method": "networking_method",
+            "data_checks": true,
             "status": {
                 "setup_state": "incomplete",
                 "sync_state": "scheduled",
@@ -178,6 +179,7 @@ func assertConnectionDetailsResponse(t *testing.T, response connections.DetailsW
 	testutils.AssertEqual(t, response.Data.Config.SecretsList[0].Value, "value")
 	testutils.AssertEqual(t, response.Data.Config.ShareURL, "share_url")
 	testutils.AssertEqual(t, *response.Data.Config.IsKeypair, true)
+	testutils.AssertEqual(t, *response.Data.DataChecks, true)
 }
 
 func assertCustomConnectionDetailsResponse(t *testing.T, response connections.DetailsWithCustomConfigNoTestsResponse) {
