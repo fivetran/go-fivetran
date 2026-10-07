@@ -25,6 +25,7 @@ type ConnectionCreateService struct {
 	proxyAgentId             *string
 	dataDelaySensitivity     *string
 	dataDelayThreshold       *int
+	dataChecks               *bool
 	connectCardConfig        *ConnectCardConfig
 	destinationSchemaNames   *string
 	destinationConfiguration *DestinationConfiguration
@@ -52,6 +53,7 @@ func (s *ConnectionCreateService) requestBase() connectionCreateRequestBase {
 		ProxyAgentId:             s.proxyAgentId,
 		DataDelaySensitivity:     s.dataDelaySensitivity,
 		DataDelayThreshold:       s.dataDelayThreshold,
+		DataChecks:               s.dataChecks,
 		ConnectCardConfig:        s.connectCardConfig,
 		DestinationSchemaNames:   s.destinationSchemaNames,
 		DestinationConfiguration: s.destinationConfiguration,
@@ -208,6 +210,11 @@ func (s *ConnectionCreateService) DataDelayThreshold(value *int) *ConnectionCrea
 }
 func (s *ConnectionCreateService) DataDelaySensitivity(value string) *ConnectionCreateService {
 	s.dataDelaySensitivity = &value
+	return s
+}
+
+func (s *ConnectionCreateService) DataChecks(value bool) *ConnectionCreateService {
+	s.dataChecks = &value
 	return s
 }
 

@@ -2,9 +2,11 @@ package connections_test
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 	"testing"
 
+	fivetran "github.com/fivetran/go-fivetran"
 	"github.com/fivetran/go-fivetran/connections"
 
 	"github.com/fivetran/go-fivetran/tests/mock"
@@ -72,7 +74,7 @@ func TestCustomConnectionDetailsWithUserAgentSuffixMock(t *testing.T) {
 	ftClient.CustomUserAgent("terraform-provider-fivetran/1.9.37")
 	handler := mockClient.When(http.MethodGet, "/v1/connections/connection_id").ThenCall(
 		func(req *http.Request) (*http.Response, error) {
-			testutils.AssertEqual(t, req.Header.Get("User-Agent"), "Go-Fivetran/1.3.10 terraform-provider-fivetran/1.9.37 fivetran_connection_v2")
+			testutils.AssertEqual(t, req.Header.Get("User-Agent"), fmt.Sprintf("%s terraform-provider-fivetran/1.9.37 fivetran_connection_v2", fivetran.DefaultUserAgent))
 			response := mock.NewResponse(req, http.StatusOK, prepareConnectionDetailsResponse())
 			return response, nil
 		})
@@ -142,6 +144,7 @@ func prepareConnectionDetailsResponse() string {
             "proxy_agent_id": "proxy_id",
             "private_link_id": "private_link_id",
             "networking_method": "networking_method",
+            "data_checks": true,
             "status": {
                 "setup_state": "incomplete",
                 "sync_state": "scheduled",
@@ -178,6 +181,7 @@ func assertConnectionDetailsResponse(t *testing.T, response connections.DetailsW
 	testutils.AssertEqual(t, response.Data.Config.SecretsList[0].Value, "value")
 	testutils.AssertEqual(t, response.Data.Config.ShareURL, "share_url")
 	testutils.AssertEqual(t, *response.Data.Config.IsKeypair, true)
+	testutils.AssertEqual(t, *response.Data.DataChecks, true)
 }
 
 func assertCustomConnectionDetailsResponse(t *testing.T, response connections.DetailsWithCustomConfigNoTestsResponse) {

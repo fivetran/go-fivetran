@@ -45,6 +45,7 @@ func TestNewConnectionSecretsListMappingMock(t *testing.T) {
 		NetworkingMethod("networking_method").
 		DataDelayThreshold(&dataDelayThreshold).
 		DataDelaySensitivity("CUSTOM").
+		DataChecks(true).
 		ConnectCardConfig(prepareConnectCardConfig()).
 		DestinationSchemaNames("FIVETRAN_NAMING").
 		DestinationConfiguration(prepareDestinationConfiguration()).
@@ -92,6 +93,7 @@ func TestNewConnectionCustomSecretsListMappingMock(t *testing.T) {
 		NetworkingMethod("networking_method").
 		DataDelayThreshold(&dataDelayThreshold).
 		DataDelaySensitivity("CUSTOM").
+		DataChecks(true).
 		ConnectCardConfig(prepareConnectCardConfig()).
 		DestinationSchemaNames("FIVETRAN_NAMING").
 		DestinationConfiguration(prepareDestinationConfiguration()).
@@ -138,6 +140,7 @@ func TestNewConnectionCustomMergedMappingMock(t *testing.T) {
 		NetworkingMethod("networking_method").
 		DataDelayThreshold(&dataDelayThreshold).
 		DataDelaySensitivity("CUSTOM").
+		DataChecks(true).
 		ConnectCardConfig(prepareConnectCardConfig()).
 		DestinationSchemaNames("FIVETRAN_NAMING").
 		DestinationConfiguration(prepareDestinationConfiguration()).
@@ -224,6 +227,7 @@ func prepareConnectionCreateResponse() string {
             "networking_method": "networking_method",
             "data_delay_threshold": 1,
             "data_delay_sensitivity": "CUSTOM",
+            "data_checks": true,
             "status": {
                 "setup_state": "incomplete",
                 "sync_state": "scheduled",
@@ -240,7 +244,7 @@ func prepareConnectionCreateResponse() string {
             "config": {
                 "secrets_list": [
                     {
-                        "key": "key", 
+                        "key": "key",
                         "value": "value"
                     }
                 ]
@@ -329,6 +333,7 @@ func prepareConnectionCreateResponseWithNilSyncFrequency() string {
             "networking_method": "networking_method",
             "data_delay_threshold": 1,
             "data_delay_sensitivity": "CUSTOM",
+            "data_checks": true,
             "status": {
                 "setup_state": "incomplete",
                 "sync_state": "scheduled",
@@ -345,7 +350,7 @@ func prepareConnectionCreateResponseWithNilSyncFrequency() string {
             "config": {
                 "secrets_list": [
                     {
-                        "key": "key", 
+                        "key": "key",
                         "value": "value"
                     }
                 ]
@@ -441,6 +446,7 @@ func assertConnectionRequest(t *testing.T, request map[string]interface{}) {
 	testutils.AssertKey(t, "networking_method", request, "networking_method")
 	testutils.AssertKey(t, "data_delay_sensitivity", request, "CUSTOM")
 	testutils.AssertKey(t, "data_delay_threshold", request, float64(1))
+	testutils.AssertKey(t, "data_checks", request, true)
 	testutils.AssertKey(t, "destination_schema_names", request, "FIVETRAN_NAMING")
 
 	connectCardConfig, ok := request["connect_card_config"].(map[string]interface{})
@@ -516,6 +522,7 @@ func assertConnectionResponse(t *testing.T, response connections.DetailsWithConf
 
 	testutils.AssertEqual(t, response.Data.Config.SecretsList[0].Key, "key")
 	testutils.AssertEqual(t, response.Data.Config.SecretsList[0].Value, "value")
+	testutils.AssertEqual(t, *response.Data.DataChecks, true)
 }
 
 func assertConnectionCustomResponse(t *testing.T, response connections.DetailsWithCustomConfigResponse) {

@@ -46,6 +46,7 @@ type DetailsResponseDataCommon struct {
 	NetworkingMethod         string                    `json:"networking_method"`
 	DataDelaySensitivity     string                    `json:"data_delay_sensitivity"`
 	DataDelayThreshold       *int                      `json:"data_delay_threshold"`
+	DataChecks               *bool                     `json:"data_checks,omitempty"`
 	RunSetupTests            *bool                     `json:"run_setup_tests,omitempty"`
 	TrustCertificates        *bool                     `json:"trust_certificates,omitempty"`
 	TrustFingerprints        *bool                     `json:"trust_fingerprints,omitempty"`
@@ -145,6 +146,7 @@ type connectionCreateRequestBase struct {
 	NetworkingMethod         *string                   `json:"networking_method,omitempty"`
 	DataDelaySensitivity     *string                   `json:"data_delay_sensitivity"`
 	DataDelayThreshold       *int                      `json:"data_delay_threshold"`
+	DataChecks               *bool                     `json:"data_checks,omitempty"`
 	ConnectCardConfig        *ConnectCardConfig        `json:"connect_card_config,omitempty"`
 	DestinationSchemaNames   *string                   `json:"destination_schema_names,omitempty"`
 	DestinationConfiguration *DestinationConfiguration `json:"destination_configuration,omitempty"`
@@ -204,6 +206,7 @@ type connectionUpdateRequestBase struct {
 	NetworkingMethod         *string                   `json:"networking_method,omitempty"`
 	DataDelaySensitivity     *string                   `json:"data_delay_sensitivity,omitempty"`
 	DataDelayThreshold       *int                      `json:"data_delay_threshold,omitempty"`
+	DataChecks               *bool                     `json:"data_checks,omitempty"`
 	DestinationConfiguration *DestinationConfiguration `json:"destination_configuration,omitempty"`
 	Schedule                 *ConnectorSchedule        `json:"schedule,omitempty"`
 }

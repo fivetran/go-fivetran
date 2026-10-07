@@ -26,6 +26,7 @@ type ConnectionUpdateService struct {
 	proxyAgentId             *string
 	dataDelaySensitivity     *string
 	dataDelayThreshold       *int
+	dataChecks               *bool
 	destinationConfiguration *DestinationConfiguration
 	schedule                 *ConnectorSchedule
 	config                   *ConnectionConfig
@@ -51,6 +52,7 @@ func (s *ConnectionUpdateService) requestBase() connectionUpdateRequestBase {
 		ProxyAgentId:             s.proxyAgentId,
 		DataDelaySensitivity:     s.dataDelaySensitivity,
 		DataDelayThreshold:       s.dataDelayThreshold,
+		DataChecks:               s.dataChecks,
 		DestinationConfiguration: s.destinationConfiguration,
 		Schedule:                 s.schedule,
 	}
@@ -204,6 +206,11 @@ func (s *ConnectionUpdateService) DataDelayThreshold(value *int) *ConnectionUpda
 }
 func (s *ConnectionUpdateService) DataDelaySensitivity(value string) *ConnectionUpdateService {
 	s.dataDelaySensitivity = &value
+	return s
+}
+
+func (s *ConnectionUpdateService) DataChecks(value bool) *ConnectionUpdateService {
+	s.dataChecks = &value
 	return s
 }
 
