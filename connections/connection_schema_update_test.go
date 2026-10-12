@@ -2,6 +2,7 @@ package connections_test
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"testing"
@@ -64,6 +65,100 @@ func TestConnectionSchemaUpdateFullMappingMock(t *testing.T) {
 	testutils.AssertEqual(t, interactions[0].Handler, handler)
 	testutils.AssertEqual(t, handler.Interactions, 1)
 	assertSchemaResponse(t, response)
+}
+
+func TestConnectionSchemaUpdateRowFilterMock(t *testing.T) {
+	// arrange
+	ftClient, mockClient := testutils.CreateTestClient()
+	handler := mockClient.When(http.MethodPatch, fmt.Sprintf("/v1/connections/%v/schemas", testutils.TEST_CONNECTION_ID)).ThenCall(
+
+		func(req *http.Request) (*http.Response, error) {
+			body := testutils.RequestBodyToJson(t, req)
+			schema := body["schemas"].(map[string]interface{})["schema_1"].(map[string]interface{})
+			tables := schema["tables"].(map[string]interface{})
+
+			filtered := tables["table_1"].(map[string]interface{})
+			testutils.AssertKey(t, "enabled", filtered, true)
+			rowFilter := filtered["row_filter"].(map[string]interface{})
+			testutils.AssertKey(t, "name", rowFilter, "active_only")
+			testutils.AssertKey(t, "description", rowFilter, "Only active rows")
+
+			deleted := tables["table_2"].(map[string]interface{})
+			testutils.AssertHasKey(t, deleted, "row_filter")
+			testutils.AssertEqual(t, deleted["row_filter"], nil)
+
+			untouched := tables["table_3"].(map[string]interface{})
+			testutils.AssertHasNoKey(t, untouched, "row_filter")
+
+			response := mock.NewResponse(req, http.StatusOK, prepareSchemaRowFilterResponse())
+			return response, nil
+		})
+
+	schema := fivetran.NewConnectionSchemaConfigSchema().
+		Enabled(true).
+		Table("table_1", fivetran.NewConnectionSchemaConfigTable().
+			Enabled(true).
+			RowFilter(json.RawMessage(`{"name":"active_only","description":"Only active rows"}`))).
+		Table("table_2", fivetran.NewConnectionSchemaConfigTable().
+			RowFilter(json.RawMessage(`null`))).
+		Table("table_3", fivetran.NewConnectionSchemaConfigTable().
+			Enabled(false))
+
+	svc := ftClient.
+		NewConnectionSchemaUpdateService().
+		ConnectionID(testutils.TEST_CONNECTION_ID).
+		Schema("schema_1", schema)
+
+	//act
+	response, err := svc.
+		Do(context.Background())
+
+	// assert
+	if err != nil {
+		t.Logf("%+v\n", response)
+		t.Error(err)
+	}
+
+	interactions := mockClient.Interactions()
+	testutils.AssertEqual(t, len(interactions), 1)
+	testutils.AssertEqual(t, interactions[0].Handler, handler)
+	testutils.AssertEqual(t, handler.Interactions, 1)
+
+	testutils.AssertEqual(t, *response.Data.RowFilteringSupported, true)
+	tables := response.Data.Schemas["schema_1"].Tables
+	testutils.AssertEqual(t, string(tables["table_1"].RowFilter), `{"name":"active_only","description":"Only active rows"}`)
+	testutils.AssertEqual(t, len(tables["table_2"].RowFilter), 0)
+}
+
+func prepareSchemaRowFilterResponse() string {
+	return `{
+				"code":"Success",
+				"data":{
+					"schema_change_handling": "ALLOW_ALL",
+					"row_filtering_supported": true,
+					"schemas": {
+						"schema_1": {
+							"name_in_destination": "schema_1",
+							"enabled": true,
+							"tables": {
+								"table_1": {
+									"name_in_destination": "table_1",
+									"enabled": true,
+									"row_filter": {"name":"active_only","description":"Only active rows"}
+								},
+								"table_2": {
+									"name_in_destination": "table_2",
+									"enabled": true
+								},
+								"table_3": {
+									"name_in_destination": "table_3",
+									"enabled": false
+								}
+							}
+						}
+					}
+				}
+			}`
 }
 
 func assertSchemaRequest(t *testing.T, request map[string]interface{}) {
