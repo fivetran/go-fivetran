@@ -124,8 +124,9 @@ type DetailsWithCustomMergedConfigNoTestsResponse struct {
 type ConnectionSchemaDetailsResponse struct {
 	common.CommonResponse
 	Data struct {
-		SchemaChangeHandling string                                           `json:"schema_change_handling"`
-		Schemas              map[string]*ConnectionSchemaConfigSchemaResponse `json:"schemas"`
+		SchemaChangeHandling  string                                           `json:"schema_change_handling"`
+		RowFilteringSupported *bool                                            `json:"row_filtering_supported"`
+		Schemas               map[string]*ConnectionSchemaConfigSchemaResponse `json:"schemas"`
 	} `json:"data"`
 }
 

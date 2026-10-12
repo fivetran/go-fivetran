@@ -47,3 +47,14 @@ func TestSchemaTableRowFilterRequest(t *testing.T) {
 		})
 	}
 }
+
+func TestSchemaTableRowFilterReadNull(t *testing.T) {
+	var table ConnectionSchemaConfigTableResponse
+	if err := json.Unmarshal([]byte(`{"row_filter":null}`), &table); err != nil {
+		t.Fatal(err)
+	}
+	// json.RawMessage implements json.Unmarshaler, so an explicit null is kept as the literal "null".
+	if string(table.RowFilter) != `null` {
+		t.Fatalf("got %q, want %q", table.RowFilter, `null`)
+	}
+}

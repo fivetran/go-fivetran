@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased](https://github.com/fivetran/go-fivetran/compare/v1.3.12...HEAD)
 
+### Added
+- `RowFilter` table-level setting for connection schema config: `ConnectionSchemaConfigTable.RowFilter(json.RawMessage)` setter, plus `RowFilter` fields on `ConnectionSchemaConfigTableRequest` and `ConnectionSchemaConfigTableResponse`. A nil value omits `row_filter` (existing filter unchanged), `json.RawMessage("null")` deletes the filter, and an object creates or replaces it.
+- `RowFilteringSupported` field to `ConnectionSchemaDetailsResponse` data.
+
 ## [1.3.12](https://github.com/fivetran/go-fivetran/compare/v1.3.11...v1.3.12)
 
 ### Added
