@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased](https://github.com/fivetran/go-fivetran/compare/v1.3.13...HEAD)
 
+### Fixed
+- Private link config field `private_dns_regions` renamed to `private_dns_records` to match the API: `PrivateLinkConfig.PrivateDnsRecords` setter added, `PrivateLinkConfigResponse.PrivateDnsRegions` renamed to `PrivateDnsRecords`.
+
+### Deprecated
+- `PrivateLinkConfig.PrivateDnsRegions` setter; use `PrivateLinkConfig.PrivateDnsRecords`.
+
 ## [1.3.13](https://github.com/fivetran/go-fivetran/compare/v1.3.12...v1.3.13)
 
 ### Added
