@@ -13,7 +13,7 @@ type PrivateLinkConfig struct {
     awsAccountId                *string
     clusterIdentifier           *string
     subResourceName             *string
-    privateDnsRegions           *string
+    privateDnsRecords           *string
     privateConnectionServiceId  *string
 }
 
@@ -28,7 +28,7 @@ type privateLinkConfigRequest struct {
     AwsAccountId                *string `json:"aws_account_id,omitempty"`
     ClusterIdentifier           *string `json:"cluster_identifier,omitempty"`
     SubResourceName             *string `json:"sub_resource_name,omitempty"`
-    PrivateDnsRegions           *string `json:"private_dns_regions,omitempty"`
+    PrivateDnsRecords           *string `json:"private_dns_records,omitempty"`
     PrivateConnectionServiceId  *string `json:"private_connection_service_id,omitempty"`
 }
  
@@ -43,7 +43,7 @@ type PrivateLinkConfigResponse struct {
     AwsAccountId                string `json:"aws_account_id"`
     ClusterIdentifier           string `json:"cluster_identifier"`
     SubResourceName             string `json:"sub_resource_name"`
-    PrivateDnsRegions           string `json:"private_dns_regions"`
+    PrivateDnsRecords           string `json:"private_dns_records"`
     PrivateConnectionServiceId  string `json:"private_connection_service_id,omitempty"`
 
 }
@@ -60,7 +60,7 @@ func (plc *PrivateLinkConfig) Request() *privateLinkConfigRequest {
         AwsAccountId:                       plc.awsAccountId,
         ClusterIdentifier:                  plc.clusterIdentifier,
         SubResourceName:                    plc.subResourceName,
-        PrivateDnsRegions:                  plc.privateDnsRegions,
+        PrivateDnsRecords:                  plc.privateDnsRecords,
         PrivateConnectionServiceId:         plc.privateConnectionServiceId,
     }
 }
@@ -123,9 +123,14 @@ func (plc *PrivateLinkConfig) SubResourceName(value string) *PrivateLinkConfig {
     return plc
 }
 
-func (plc *PrivateLinkConfig) PrivateDnsRegions(value string) *PrivateLinkConfig {
-    plc.privateDnsRegions = &value
+func (plc *PrivateLinkConfig) PrivateDnsRecords(value string) *PrivateLinkConfig {
+    plc.privateDnsRecords = &value
     return plc
+}
+
+// Deprecated: use PrivateDnsRecords instead.
+func (plc *PrivateLinkConfig) PrivateDnsRegions(value string) *PrivateLinkConfig {
+    return plc.PrivateDnsRecords(value)
 }
 
 func (plc *PrivateLinkConfig) PrivateConnectionServiceId(value string) *PrivateLinkConfig {
