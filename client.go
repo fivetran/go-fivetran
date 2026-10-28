@@ -718,6 +718,14 @@ func (c *Client) NewMetadataList() *metadata.MetadataListService {
 	return &metadata.MetadataListService{HttpService: c.NewHttpService()}
 }
 
+func (c *Client) NewDestinationMetadataDetails() *metadata.DestinationMetadataDetailsService {
+	return &metadata.DestinationMetadataDetailsService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewDestinationMetadataList() *metadata.DestinationMetadataListService {
+	return &metadata.DestinationMetadataListService{HttpService: c.NewHttpService()}
+}
+
 /* Account Info */
 func (c *Client) AccountInfo() *account.AccountInfoService {
 	return &account.AccountInfoService{HttpService: c.NewHttpService()}
