@@ -106,6 +106,12 @@ func (s *DestinationCreateService) DoCustom(ctx context.Context) (DestinationDet
     return response, err
 }
 
+func (s *DestinationCreateService) DoCustomWithUserAgentSuffix(ctx context.Context, userAgentSuffix string) (DestinationDetailsWithSetupTestsCustomResponse, error) {
+    var response DestinationDetailsWithSetupTestsCustomResponse
+    err := s.HttpService.DoWithUserAgentSuffix(ctx, userAgentSuffix, "POST", "/destinations", s.requestCustom(), nil, 201, &response)
+    return response, err
+}
+
 func (s *DestinationCreateService) request() *destinationCreateRequest {
     var config interface{}
     if s.config != nil {

@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased](https://github.com/fivetran/go-fivetran/compare/v1.3.13...HEAD)
 
+### Added
+- Destination types metadata support, mirroring the connector types metadata endpoints:
+  - `DestinationMetadataDetailsService` (`client.NewDestinationMetadataDetails()`) for `GET /v1/metadata/destination-types/{service}`, with `Do` and `DoWithUserAgentSuffix`.
+  - `DestinationMetadataListService` (`client.NewDestinationMetadataList()`) for `GET /v1/metadata/destination-types`, with `Limit` and `Cursor`.
+  - `DestinationMetadata`, `DestinationMetadataResponse` and `DestinationMetadataListResponse` types. Besides the fields shared with `ConnectorMetadata`, `DestinationMetadata` carries `SupportedRegions`, `SupportsHybridDeployment`, `SupportedNetworkingMethods`, `SupportsPrivateLink`, `PrivateLinkTypes` and `ExternalSecretsKeysConfig`. `Config` and `ExternalSecretsKeysConfig` are returned by the details endpoint only; `ExternalSecretsKeysConfig` is returned for internal accounts only.
+- User agent suffix variants for the destination services, matching the connection ones, so callers such as the Terraform provider can tag requests per resource:
+  - `DestinationCreateService.DoCustomWithUserAgentSuffix`
+  - `DestinationUpdateService.DoCustomWithUserAgentSuffix`
+  - `DestinationDetailsService.DoCustomWithUserAgentSuffix`
+  - `DestinationDeleteService.DoWithUserAgentSuffix`
+
 ### Fixed
 - Private link config field `private_dns_regions` renamed to `private_dns_records` to match the API: `PrivateLinkConfig.PrivateDnsRecords` setter added, `PrivateLinkConfigResponse.PrivateDnsRegions` renamed to `PrivateDnsRecords`.
 

@@ -150,3 +150,15 @@ func (s *DestinationUpdateService) DoCustom(ctx context.Context) (DestinationDet
     err := s.HttpService.Do(ctx, "PATCH", url, s.requestCustom(), nil, 200, &response)
     return response, err
 }
+
+func (s *DestinationUpdateService) DoCustomWithUserAgentSuffix(ctx context.Context, userAgentSuffix string) (DestinationDetailsWithSetupTestsCustomResponse, error) {
+    var response DestinationDetailsWithSetupTestsCustomResponse
+
+    if s.destinationID == nil {
+        return response, fmt.Errorf("missing required DestinationID")
+    }
+
+    url := fmt.Sprintf("/destinations/%v", *s.destinationID)
+    err := s.HttpService.DoWithUserAgentSuffix(ctx, userAgentSuffix, "PATCH", url, s.requestCustom(), nil, 200, &response)
+    return response, err
+}

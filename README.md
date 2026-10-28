@@ -278,6 +278,13 @@ REST API Endpoint | REST API Version | SDK Service/Config
 [Retrieve connector configuration metadata](https://fivetran.com/docs/rest-api/api-reference/connector-metadata/metadata-connector-config) | v1 |  [MetadataDetailsService](https://pkg.go.dev/github.com/fivetran/go-fivetran#MetadataDetailsService)
 [Retrieve source metadata](https://fivetran.com/docs/rest-api/api-reference/connector-metadata/metadata-connectors) | v1 |  [MetadataListService](https://pkg.go.dev/github.com/fivetran/go-fivetran#MetadataListService)
 
+### Destination Metadata
+
+REST API Endpoint | REST API Version | SDK Service/Config
+--- | --- | ---
+Retrieve destination configuration metadata | v1 |  [DestinationMetadataDetailsService](https://pkg.go.dev/github.com/fivetran/go-fivetran#DestinationMetadataDetailsService)
+Retrieve destination metadata | v1 |  [DestinationMetadataListService](https://pkg.go.dev/github.com/fivetran/go-fivetran#DestinationMetadataListService)
+
 ## Support
 
 Please get in touch with us through our [Support Portal](https://support.fivetran.com/) if you 
