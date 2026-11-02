@@ -1,0 +1,19 @@
+client.go
+  s_625580c56eb200::t_44a4ee7becc390 43
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.1",
+  "base_commit_sha": "356a7262424cef8b6005e29f60d7e04e849bb3dd",
+  "prompts": {},
+  "sessions": {
+    "s_625580c56eb200": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "2e04b2f3-608f-4d3c-baaa-7372dc0aa999",
+        "model": "claude-haiku-4-5-20251001"
+      },
+      "human_author": "jovan.manojlovic <jovan.manojlovic@fivetran.com>"
+    }
+  }
+}

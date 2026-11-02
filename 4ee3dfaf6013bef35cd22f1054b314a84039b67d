@@ -1,0 +1,25 @@
+tests/e2e/external_logging_create_test.go
+  fa2ffaff1f474939 18
+test_utils/test_utils.go
+  fa2ffaff1f474939 645
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.3",
+  "base_commit_sha": "4ee3dfaf6013bef35cd22f1054b314a84039b67d",
+  "prompts": {
+    "fa2ffaff1f474939": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "a888c29f-199a-4ea3-9714-4bbd858fc9e9",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "jovan.manojlovic <jovan.manojlovic@fivetran.com>",
+      "messages": [],
+      "total_additions": 2,
+      "total_deletions": 0,
+      "accepted_lines": 2,
+      "overriden_lines": 0
+    }
+  }
+}

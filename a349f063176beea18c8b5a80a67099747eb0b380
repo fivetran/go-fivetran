@@ -1,0 +1,35 @@
+connections/connection_create.go
+  52ed4640f8f31cb6 28,56,216-217
+connections/connection_update_test.go
+  52ed4640f8f31cb6 38,81,138,250,296,311,337,350
+connections/connection_create_test.go
+  52ed4640f8f31cb6 48,96,143,230,336,449,525
+connections/connection_details_test.go
+  52ed4640f8f31cb6 145,182
+CHANGELOG.md
+  52ed4640f8f31cb6 10-12
+connections/common_types.go
+  52ed4640f8f31cb6 49,149,209
+connections/connection_update.go
+  52ed4640f8f31cb6 29,55,212-216
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.1",
+  "base_commit_sha": "a349f063176beea18c8b5a80a67099747eb0b380",
+  "prompts": {
+    "52ed4640f8f31cb6": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "2c8b00b3-5b86-477d-a6cf-a379b58fee7a",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "IgorShirinsky <igor.shirinsky@fivetran.com>",
+      "messages": [],
+      "total_additions": 39,
+      "total_deletions": 2,
+      "accepted_lines": 37,
+      "overriden_lines": 0
+    }
+  }
+}

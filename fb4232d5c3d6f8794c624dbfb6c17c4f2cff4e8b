@@ -1,0 +1,21 @@
+tests/e2e/destination_certificate_approve_test.go
+  s_c57f50abc780ba::t_6d08b95fb6eeeb 11
+tests/e2e/connection_certificate_approve_test.go
+  s_c57f50abc780ba::t_7beb1ac60c2e7e 11
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.1",
+  "base_commit_sha": "fb4232d5c3d6f8794c624dbfb6c17c4f2cff4e8b",
+  "prompts": {},
+  "sessions": {
+    "s_c57f50abc780ba": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "34184872-453b-462b-bac2-e865f64be3a8",
+        "model": "claude-haiku-4-5-20251001"
+      },
+      "human_author": "jovan.manojlovic <jovan.manojlovic@fivetran.com>"
+    }
+  }
+}
