@@ -32,6 +32,7 @@ type DetailsResponseDataCommon struct {
 	ServiceVersion           *int                      `json:"service_version"`
 	Schema                   string                    `json:"schema"`
 	ConnectedBy              string                    `json:"connected_by"`
+	ConnectorSdkPackageId    *string                   `json:"connector_sdk_package_id,omitempty"`
 	CreatedAt                time.Time                 `json:"created_at"`
 	SucceededAt              time.Time                 `json:"succeeded_at"`
 	FailedAt                 time.Time                 `json:"failed_at"`

@@ -5,7 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/fivetran/go-fivetran/compare/v1.3.15...HEAD)
+## [Unreleased](https://github.com/fivetran/go-fivetran/compare/v1.3.16...HEAD)
+
+## [1.3.16](https://github.com/fivetran/go-fivetran/compare/v1.3.15...v1.3.16)
+
+### Added
+- `DetailsResponseDataCommon.ConnectorSdkPackageId`: the ID of the package deployed to a Connector SDK connection, returned by the connection details endpoint. Not set for other connections or when no package is deployed.
 
 ## [1.3.15](https://github.com/fivetran/go-fivetran/compare/v1.3.14...v1.3.15)
 
