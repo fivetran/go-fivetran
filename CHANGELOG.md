@@ -5,7 +5,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/fivetran/go-fivetran/compare/v1.3.13...HEAD)
+## [Unreleased](https://github.com/fivetran/go-fivetran/compare/v1.3.15...HEAD)
+
+## [1.3.15](https://github.com/fivetran/go-fivetran/compare/v1.3.14...v1.3.15)
 
 ### Added
 - Destination types metadata support, mirroring the connector types metadata endpoints:
@@ -17,6 +19,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `DestinationUpdateService.DoCustomWithUserAgentSuffix`
   - `DestinationDetailsService.DoCustomWithUserAgentSuffix`
   - `DestinationDeleteService.DoWithUserAgentSuffix`
+
+### Changed
+- CI now runs on Go 1.26.10 (eMudhra certificate compromise). The `go.mod` minimum version is unchanged.
+
+## [1.3.14](https://github.com/fivetran/go-fivetran/compare/v1.3.13...v1.3.14)
 
 ### Fixed
 - Private link config field `private_dns_regions` renamed to `private_dns_records` to match the API: `PrivateLinkConfig.PrivateDnsRecords` setter added, `PrivateLinkConfigResponse.PrivateDnsRegions` renamed to `PrivateDnsRecords`.
