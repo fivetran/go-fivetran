@@ -285,6 +285,13 @@ REST API Endpoint | REST API Version | SDK Service/Config
 Retrieve destination configuration metadata | v1 |  [DestinationMetadataDetailsService](https://pkg.go.dev/github.com/fivetran/go-fivetran#DestinationMetadataDetailsService)
 Retrieve destination metadata | v1 |  [DestinationMetadataListService](https://pkg.go.dev/github.com/fivetran/go-fivetran#DestinationMetadataListService)
 
+### Log Service Metadata
+
+REST API Endpoint | REST API Version | SDK Service/Config
+--- | --- | ---
+Retrieve log service configuration metadata | v1 |  [LogServiceMetadataDetailsService](https://pkg.go.dev/github.com/fivetran/go-fivetran#LogServiceMetadataDetailsService)
+Retrieve log service metadata | v1 |  [LogServiceMetadataListService](https://pkg.go.dev/github.com/fivetran/go-fivetran#LogServiceMetadataListService)
+
 ## Support
 
 Please get in touch with us through our [Support Portal](https://support.fivetran.com/) if you 
