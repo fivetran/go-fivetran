@@ -95,3 +95,33 @@ type DestinationMetadataListResponse struct {
 		NextCursor string                `json:"next_cursor"`
 	} `json:"data"`
 }
+
+// LogServiceMetadata describes a log service type and the fields accepted in its config.
+// Config is returned only by the details endpoint; the list endpoint omits it.
+type LogServiceMetadata struct {
+	ID                     string   `json:"id"`
+	Name                   string   `json:"name"`
+	Type                   string   `json:"type"`
+	Description            string   `json:"description"`
+	IconURL                string   `json:"icon_url"`
+	LinkToDocs             string   `json:"link_to_docs"`
+	Icons                  []string `json:"icons"`
+	ServiceStatus          string   `json:"service_status"`
+	ServiceStatusUpdatedAt string   `json:"service_status_updated_at"`
+	Config                 Property `json:"config"`
+}
+
+type LogServiceMetadataResponse struct {
+	common.CommonResponse
+	Data struct {
+		LogServiceMetadata
+	} `json:"data"`
+}
+
+type LogServiceMetadataListResponse struct {
+	common.CommonResponse
+	Data struct {
+		Items      []LogServiceMetadata `json:"items"`
+		NextCursor string               `json:"next_cursor"`
+	} `json:"data"`
+}
