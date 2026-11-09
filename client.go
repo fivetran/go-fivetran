@@ -40,7 +40,7 @@ const defaultBaseURL = "https://api.fivetran.com/v1"
 const restAPIv2 = "application/json;version=2"
 
 // WARNING: Update Agent version on each release!
-const DefaultUserAgent = "Go-Fivetran/1.3.16"
+const DefaultUserAgent = "Go-Fivetran/1.3.17"
 
 // New receives API Key and API Secret, and returns a new Client with the
 // default HTTP client
@@ -724,6 +724,14 @@ func (c *Client) NewDestinationMetadataDetails() *metadata.DestinationMetadataDe
 
 func (c *Client) NewDestinationMetadataList() *metadata.DestinationMetadataListService {
 	return &metadata.DestinationMetadataListService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewLogServiceMetadataDetails() *metadata.LogServiceMetadataDetailsService {
+	return &metadata.LogServiceMetadataDetailsService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewLogServiceMetadataList() *metadata.LogServiceMetadataListService {
+	return &metadata.LogServiceMetadataListService{HttpService: c.NewHttpService()}
 }
 
 /* Account Info */
