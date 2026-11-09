@@ -14,6 +14,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `LogServiceMetadataDetailsService` (`client.NewLogServiceMetadataDetails()`) for `GET /v1/metadata/log-service-types/{service}`, with `Do` and `DoWithUserAgentSuffix`.
   - `LogServiceMetadataListService` (`client.NewLogServiceMetadataList()`) for `GET /v1/metadata/log-service-types`, with `Limit` and `Cursor`.
   - `LogServiceMetadata`, `LogServiceMetadataResponse` and `LogServiceMetadataListResponse` types. `Config` is returned by the details endpoint only.
+- `SetupTests` field on the log service create, details and update responses, including the custom (`DoCustom`) and custom merged ones, so setup test results from a create or update can be shown.
+- User agent suffix variants for the group-level log service services, matching the destination and connection ones, so callers such as the Terraform provider can tag requests per resource:
+  - `ExternalLoggingCreateService`, `ExternalLoggingDetailsService` and `ExternalLoggingUpdateService`: `DoWithUserAgentSuffix`, `DoCustomWithUserAgentSuffix` and `DoCustomMergedWithUserAgentSuffix`.
+  - `ExternalLoggingDeleteService`, `ExternalLoggingSetupTestsService` and `ExternalLoggingListService`: `DoWithUserAgentSuffix`.
+
+### Fixed
+- `ExternalLoggingUpdateService.RunSetupTests` value was never sent in the request.
 
 ## [1.3.16](https://github.com/fivetran/go-fivetran/compare/v1.3.15...v1.3.16)
 
