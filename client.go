@@ -295,6 +295,26 @@ func (c *Client) NewExternalLoggingList() *externallogging.ExternalLoggingListSe
 	return &externallogging.ExternalLoggingListService{HttpService: c.NewHttpService()}
 }
 
+func (c *Client) NewExternalLoggingAccountCreate() *externallogging.ExternalLoggingAccountCreateService {
+	return &externallogging.ExternalLoggingAccountCreateService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewExternalLoggingAccountDetails() *externallogging.ExternalLoggingAccountDetailsService {
+	return &externallogging.ExternalLoggingAccountDetailsService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewExternalLoggingAccountUpdate() *externallogging.ExternalLoggingAccountUpdateService {
+	return &externallogging.ExternalLoggingAccountUpdateService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewExternalLoggingAccountDelete() *externallogging.ExternalLoggingAccountDeleteService {
+	return &externallogging.ExternalLoggingAccountDeleteService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewExternalLoggingAccountSetupTests() *externallogging.ExternalLoggingAccountSetupTestsService {
+	return &externallogging.ExternalLoggingAccountSetupTestsService{HttpService: c.NewHttpService()}
+}
+
 /* Destinations */
 func (c *Client) NewDestinationCreate() *destinations.DestinationCreateService {
 	http := c.NewHttpService()
