@@ -19,13 +19,21 @@ func (s *ExternalLoggingDeleteService) ExternalLoggingId(value string) *External
 }
 
 func (s *ExternalLoggingDeleteService) Do(ctx context.Context) (common.CommonResponse, error) {
+	return s.do(ctx, nil)
+}
+
+func (s *ExternalLoggingDeleteService) DoWithUserAgentSuffix(ctx context.Context, userAgentSuffix string) (common.CommonResponse, error) {
+	return s.do(ctx, &userAgentSuffix)
+}
+
+func (s *ExternalLoggingDeleteService) do(ctx context.Context, userAgentSuffix *string) (common.CommonResponse, error) {
 	var response common.CommonResponse
-	
+
 	if s.externalLoggingId == nil {
 		return response, fmt.Errorf("missing required externalLoggingId")
 	}
 
 	url := fmt.Sprintf("/external-logging/%v", *s.externalLoggingId)
-	err := s.HttpService.Do(ctx, "DELETE", url, nil, nil, 200, &response)
+	err := send(ctx, s.HttpService, userAgentSuffix, "DELETE", url, nil, nil, 200, &response)
 	return response, err
 }

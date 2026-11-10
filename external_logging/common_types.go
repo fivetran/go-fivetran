@@ -94,7 +94,8 @@ type ExternalLoggingResponse struct {
 	Message string `json:"message"`
 	Data    struct {
 		ExternalLoggingResponseBase
-		Config ExternalLoggingConfigResponse `json:"config"`
+		SetupTests []common.SetupTestResponse    `json:"setup_tests"`
+		Config     ExternalLoggingConfigResponse `json:"config"`
 	} `json:"data"`
 }
 
@@ -103,7 +104,8 @@ type ExternalLoggingCustomResponse struct {
 	Message string `json:"message"`
 	Data    struct {
 		ExternalLoggingResponseBase
-		Config map[string]interface{} `json:"config"`
+		SetupTests []common.SetupTestResponse `json:"setup_tests"`
+		Config     map[string]interface{}     `json:"config"`
 	} `json:"data"`
 }
 
@@ -112,6 +114,7 @@ type ExternalLoggingCustomMergedResponse struct {
 	Message string `json:"message"`
 	Data    struct {
 		ExternalLoggingResponseBase
+		SetupTests   []common.SetupTestResponse    `json:"setup_tests"`
 		CustomConfig map[string]interface{}        `json:"config"`
 		Config       ExternalLoggingConfigResponse // no mapping here
 	} `json:"data"`
@@ -135,7 +138,8 @@ type ExternalLoggingUpdateResponse struct {
 	Message string `json:"message"`
 	Data    struct {
 		ExternalLoggingUpdateResponseDataBased
-		Config ExternalLoggingConfigResponse `json:"config"`
+		SetupTests []common.SetupTestResponse    `json:"setup_tests"`
+		Config     ExternalLoggingConfigResponse `json:"config"`
 	} `json:"data"`
 }
 
@@ -144,7 +148,8 @@ type ExternalLoggingUpdateCustomResponse struct {
 	Message string `json:"message"`
 	Data    struct {
 		ExternalLoggingUpdateResponseDataBased
-		Config map[string]interface{} `json:"config"`
+		SetupTests []common.SetupTestResponse `json:"setup_tests"`
+		Config     map[string]interface{}     `json:"config"`
 	} `json:"data"`
 }
 
@@ -153,7 +158,8 @@ type ExternalLoggingUpdateCustomMergedResponse struct {
 	Message string `json:"message"`
 	Data    struct {
 		ExternalLoggingUpdateResponseDataBased
-		CustomConfig map[string]interface{}                        `json:"config"`
+		SetupTests   []common.SetupTestResponse    `json:"setup_tests"`
+		CustomConfig map[string]interface{}        `json:"config"`
 		Config       ExternalLoggingConfigResponse // no mapping here
 	} `json:"data"`
 }
@@ -166,9 +172,9 @@ type ExternalLoggingSetupTestsResponse struct {
 }
 
 type ExternalLoggingListResponse struct {
-    common.CommonResponse
-    Data struct {
-        Items      []ExternalLoggingResponseBase `json:"items"`
-        NextCursor string                   	 `json:"next_cursor"`
-    } `json:"data"`
+	common.CommonResponse
+	Data struct {
+		Items      []ExternalLoggingResponseBase `json:"items"`
+		NextCursor string                        `json:"next_cursor"`
+	} `json:"data"`
 }

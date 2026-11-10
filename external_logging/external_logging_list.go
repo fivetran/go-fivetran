@@ -24,6 +24,14 @@ func (s *ExternalLoggingListService) Cursor(value string) *ExternalLoggingListSe
 }
 
 func (s *ExternalLoggingListService) Do(ctx context.Context) (ExternalLoggingListResponse, error) {
+	return s.do(ctx, nil)
+}
+
+func (s *ExternalLoggingListService) DoWithUserAgentSuffix(ctx context.Context, userAgentSuffix string) (ExternalLoggingListResponse, error) {
+	return s.do(ctx, &userAgentSuffix)
+}
+
+func (s *ExternalLoggingListService) do(ctx context.Context, userAgentSuffix *string) (ExternalLoggingListResponse, error) {
 	var response ExternalLoggingListResponse
 	var queries map[string]string = nil
 	if s.cursor != nil || s.limit != nil {
@@ -35,6 +43,6 @@ func (s *ExternalLoggingListService) Do(ctx context.Context) (ExternalLoggingLis
 			queries["limit"] = fmt.Sprintf("%v", *s.limit)
 		}
 	}
-	err := s.HttpService.Do(ctx, "GET", "/external-logging", nil, queries, 200, &response)
+	err := send(ctx, s.HttpService, userAgentSuffix, "GET", "/external-logging", nil, queries, 200, &response)
 	return response, err
 }

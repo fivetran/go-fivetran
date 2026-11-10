@@ -19,7 +19,8 @@ type ExternalLoggingUpdateService struct {
 
 func (s *ExternalLoggingUpdateService) requestBase() externalLoggingUpdateRequestBase {
 	return externalLoggingUpdateRequestBase{
-		Enabled: s.enabled,
+		Enabled:       s.enabled,
+		RunSetupTests: s.runSetupTests,
 	}
 }
 
@@ -85,20 +86,19 @@ func (s *ExternalLoggingUpdateService) RunSetupTests(value bool) *ExternalLoggin
 	return s
 }
 
-func (s *ExternalLoggingUpdateService) do(ctx context.Context, req, response any) error {
+func (s *ExternalLoggingUpdateService) do(ctx context.Context, userAgentSuffix *string, req, response any) error {
 	if s.externalLoggingId == nil {
 		return fmt.Errorf("missing required externalLoggingId")
 	}
 
 	url := fmt.Sprintf("/external-logging/%v", *s.externalLoggingId)
-	err := s.HttpService.Do(ctx, "PATCH", url, req, nil, 200, &response)
-	return err
+	return send(ctx, s.HttpService, userAgentSuffix, "PATCH", url, req, nil, 200, &response)
 }
 
 func (s *ExternalLoggingUpdateService) Do(ctx context.Context) (ExternalLoggingResponse, error) {
 	var response ExternalLoggingResponse
 
-	err := s.do(ctx, s.request(), &response)
+	err := s.do(ctx, nil, s.request(), &response)
 
 	return response, err
 }
@@ -106,12 +106,16 @@ func (s *ExternalLoggingUpdateService) Do(ctx context.Context) (ExternalLoggingR
 func (s *ExternalLoggingUpdateService) DoCustom(ctx context.Context) (ExternalLoggingCustomResponse, error) {
 	var response ExternalLoggingCustomResponse
 
-	err := s.do(ctx, s.requestCustom(), &response)
+	err := s.do(ctx, nil, s.requestCustom(), &response)
 
 	return response, err
 }
 
 func (s *ExternalLoggingUpdateService) DoCustomMerged(ctx context.Context) (ExternalLoggingCustomMergedResponse, error) {
+	return s.doCustomMerged(ctx, nil)
+}
+
+func (s *ExternalLoggingUpdateService) doCustomMerged(ctx context.Context, userAgentSuffix *string) (ExternalLoggingCustomMergedResponse, error) {
 	var response ExternalLoggingCustomMergedResponse
 
 	req, err := s.requestCustomMerged()
@@ -120,11 +124,31 @@ func (s *ExternalLoggingUpdateService) DoCustomMerged(ctx context.Context) (Exte
 		return response, err
 	}
 
-	err = s.do(ctx, req, &response)
+	err = s.do(ctx, userAgentSuffix, req, &response)
 
 	if err == nil {
 		err = utils.FetchFromMap(&response.Data.CustomConfig, &response.Data.Config)
 	}
 
 	return response, err
+}
+
+func (s *ExternalLoggingUpdateService) DoWithUserAgentSuffix(ctx context.Context, userAgentSuffix string) (ExternalLoggingResponse, error) {
+	var response ExternalLoggingResponse
+
+	err := s.do(ctx, &userAgentSuffix, s.request(), &response)
+
+	return response, err
+}
+
+func (s *ExternalLoggingUpdateService) DoCustomWithUserAgentSuffix(ctx context.Context, userAgentSuffix string) (ExternalLoggingCustomResponse, error) {
+	var response ExternalLoggingCustomResponse
+
+	err := s.do(ctx, &userAgentSuffix, s.requestCustom(), &response)
+
+	return response, err
+}
+
+func (s *ExternalLoggingUpdateService) DoCustomMergedWithUserAgentSuffix(ctx context.Context, userAgentSuffix string) (ExternalLoggingCustomMergedResponse, error) {
+	return s.doCustomMerged(ctx, &userAgentSuffix)
 }
