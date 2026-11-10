@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased](https://github.com/fivetran/go-fivetran/compare/v1.3.17...HEAD)
 
+### Added
+- Account-level log service support. The config is sent with `ConfigCustom` and returned as a map in `ExternalLoggingCustomResponse`; there is no typed `ExternalLoggingConfig` variant.
+  - `ExternalLoggingAccountCreateService` (`client.NewExternalLoggingAccountCreate()`) for `POST /v1/external-logging/account`, with `RunSetupTests`, `DoCustom` and `DoCustomWithUserAgentSuffix`.
+  - `ExternalLoggingAccountDetailsService` (`client.NewExternalLoggingAccountDetails()`) for `GET /v1/external-logging/account`, with `DoCustom` and `DoCustomWithUserAgentSuffix`.
+  - `ExternalLoggingAccountUpdateService` (`client.NewExternalLoggingAccountUpdate()`) for `PATCH /v1/external-logging/account`, with `RunSetupTests`, `DoCustom` and `DoCustomWithUserAgentSuffix`.
+  - `ExternalLoggingAccountDeleteService` (`client.NewExternalLoggingAccountDelete()`) for `DELETE /v1/external-logging/account`, with `Do` and `DoWithUserAgentSuffix`.
+  - `ExternalLoggingAccountSetupTestsService` (`client.NewExternalLoggingAccountSetupTests()`) for `POST /v1/external-logging/account/test`, with `Do` and `DoWithUserAgentSuffix`.
+
 ## [1.3.17](https://github.com/fivetran/go-fivetran/compare/v1.3.16...v1.3.17)
 
 ### Added
