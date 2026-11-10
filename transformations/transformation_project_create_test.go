@@ -159,6 +159,8 @@ func prepareTransformationProjectConfig() *transformations.TransformationProject
   config := fivetran.NewTransformationProjectConfig()
   config.DbtVersion("1.0.0")
   config.DefaultSchema("schema")
+  config.UseLatestPatchVersion(false)
+  config.ShouldRunDbtDeps(false)
 
   return config
 }
@@ -180,6 +182,8 @@ func assertTransformationProjectFullRequest(t *testing.T, request map[string]int
     testutils.AssertEqual(t, ok, true)
     testutils.AssertKey(t, "dbt_version", config, "1.0.0")
     testutils.AssertKey(t, "default_schema", config, "schema")
+    testutils.AssertKey(t, "use_latest_patch_version", config, false)
+    testutils.AssertKey(t, "should_run_dbt_deps", config, false)
 }
 
 func assertTransformationProjectCustomRequest(t *testing.T, request map[string]interface{}) {

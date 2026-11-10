@@ -73,7 +73,9 @@ func prepareTransformationProjectDetailsResponse() string {
       "environment_vars": [
         "string"
       ],
-      "public_key": "string"
+      "public_key": "string",
+      "use_latest_patch_version": true,
+      "should_run_dbt_deps": true
     }
   }
 }`)
@@ -101,4 +103,6 @@ func assertTransformationProjectDetailsResponse(t *testing.T, response transform
     testutils.AssertEqual(t, response.Data.ProjectConfig.EnvironmentVars[0], "string")
     testutils.AssertEqual(t, response.Data.ProjectConfig.PublicKey, "string")
     testutils.AssertEqual(t, response.Data.ProjectConfig.Threads, 0)
+    testutils.AssertEqual(t, response.Data.ProjectConfig.UseLatestPatchVersion, true)
+    testutils.AssertEqual(t, response.Data.ProjectConfig.ShouldRunDbtDeps, true)
 }
