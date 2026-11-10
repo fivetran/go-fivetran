@@ -135,7 +135,6 @@ func prepareConnectionDetailsResponse() string {
             "paused": true,
             "pause_after_trial": true,
             "connected_by": "interment_burdensome",
-            "connector_sdk_package_id": "pkg_abc123",
             "created_at": "2018-12-01T15:43:29.013729Z",
             "succeeded_at": null,
             "failed_at": null,
@@ -183,7 +182,6 @@ func assertConnectionDetailsResponse(t *testing.T, response connections.DetailsW
 	testutils.AssertEqual(t, response.Data.Config.ShareURL, "share_url")
 	testutils.AssertEqual(t, *response.Data.Config.IsKeypair, true)
 	testutils.AssertEqual(t, *response.Data.DataChecks, true)
-	testutils.AssertEqual(t, *response.Data.ConnectorSdkPackageId, "pkg_abc123")
 }
 
 func assertCustomConnectionDetailsResponse(t *testing.T, response connections.DetailsWithCustomConfigNoTestsResponse) {
