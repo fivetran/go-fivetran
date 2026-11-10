@@ -22,6 +22,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - `ExternalLoggingUpdateService.RunSetupTests` value was never sent in the request.
 
+### Added
+- `TransformationProjectConfig.ShouldRunDbtDeps`: whether `dbt deps` installs the dbt packages before each transformation run. Returned as `ShouldRunDbtDeps` in the project config response.
+
 ## [1.3.16](https://github.com/fivetran/go-fivetran/compare/v1.3.15...v1.3.16)
 
 ### Added
