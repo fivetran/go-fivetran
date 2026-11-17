@@ -12,7 +12,6 @@ func (elc *TransformationProjectConfig) CreateRequest() *transformationProjectCo
 		TargetName:     	elc.targetName,
 		EnvironmentVars:	elc.environmentVars,
 		Threads:    		elc.threads,
-		UseLatestPatchVersion:	elc.useLatestPatchVersion,
 		ShouldRunDbtDeps:	elc.shouldRunDbtDeps,
 	}
 }
@@ -24,7 +23,6 @@ func (elc *TransformationProjectConfig) UpdateRequest() *transformationProjectCo
 		TargetName:     	elc.targetName,
 		EnvironmentVars:	elc.environmentVars,
 		Threads:    		elc.threads,
-		UseLatestPatchVersion:	elc.useLatestPatchVersion,
 		ShouldRunDbtDeps:	elc.shouldRunDbtDeps,
 	}
 }
@@ -82,14 +80,6 @@ func (elc *TransformationProjectConfig) EnvironmentVars(value []string) *Transfo
 
 func (elc *TransformationProjectConfig) Threads(value int) *TransformationProjectConfig {
 	elc.threads = &value
-	return elc
-}
-
-// UseLatestPatchVersion sets whether the project runs on the latest patch version of its dbt minor version.
-// Only the accounts that Fivetran doesn't keep on the latest patch version can set it to false,
-// and setting it to false requires a full dbt version, for example 1.11.7.
-func (elc *TransformationProjectConfig) UseLatestPatchVersion(value bool) *TransformationProjectConfig {
-	elc.useLatestPatchVersion = &value
 	return elc
 }
 

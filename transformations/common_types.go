@@ -21,8 +21,7 @@ type TransformationProjectConfig struct {
 	environmentVars *[]string
 	threads         *int
 
-	useLatestPatchVersion *bool
-	shouldRunDbtDeps      *bool
+	shouldRunDbtDeps *bool
 }
 
 type transformationProjectConfigResponse struct {
@@ -36,8 +35,7 @@ type transformationProjectConfigResponse struct {
 	PublicKey       string   `json:"public_key,omitempty"`
 	Threads         int      `json:"threads,omitempty"`
 
-	UseLatestPatchVersion bool `json:"use_latest_patch_version,omitempty"`
-	ShouldRunDbtDeps      bool `json:"should_run_dbt_deps,omitempty"`
+	ShouldRunDbtDeps bool `json:"should_run_dbt_deps,omitempty"`
 }
 
 type transformationProjectConfigCreateRequest struct {
@@ -50,8 +48,7 @@ type transformationProjectConfigCreateRequest struct {
 	EnvironmentVars *[]string `json:"environment_vars,omitempty"`
 	Threads         *int      `json:"threads,omitempty"`
 
-	UseLatestPatchVersion *bool `json:"use_latest_patch_version,omitempty"`
-	ShouldRunDbtDeps      *bool `json:"should_run_dbt_deps,omitempty"`
+	ShouldRunDbtDeps *bool `json:"should_run_dbt_deps,omitempty"`
 }
 
 type transformationProjectConfigUpdateRequest struct {
@@ -61,8 +58,7 @@ type transformationProjectConfigUpdateRequest struct {
 	EnvironmentVars *[]string `json:"environment_vars,omitempty"`
 	Threads         *int      `json:"threads,omitempty"`
 
-	UseLatestPatchVersion *bool `json:"use_latest_patch_version,omitempty"`
-	ShouldRunDbtDeps      *bool `json:"should_run_dbt_deps,omitempty"`
+	ShouldRunDbtDeps *bool `json:"should_run_dbt_deps,omitempty"`
 }
 
 type transformationProjectResponse struct {
