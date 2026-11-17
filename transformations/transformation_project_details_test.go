@@ -40,6 +40,41 @@ func TestTransformationProjectDetailsServiceDo(t *testing.T) {
     assertTransformationProjectDetailsResponse(t, response)
 }
 
+func TestTransformationProjectDetailsServiceDoCustomMerged(t *testing.T) {
+    for _, value := range []bool{false, true} {
+        t.Run(fmt.Sprint(value), func(t *testing.T) {
+            ftClient, mockClient := testutils.CreateTestClient()
+            mockClient.When(http.MethodGet, "/v1/transformation-projects/project_id").
+                ThenCall(func(req *http.Request) (*http.Response, error) {
+                    body := fmt.Sprintf(`{
+                        "code": "Success",
+                        "data": {
+                            "id": "project_id",
+                            "project_config": {
+                                "dbt_version": "1.11.7",
+                                "should_run_dbt_deps": %t,
+                                "custom_bool": %t
+                            }
+                        }
+                    }`, value, value)
+                    return mock.NewResponse(req, http.StatusOK, body), nil
+                })
+
+            response, err := ftClient.NewTransformationProjectDetails().
+                ProjectId("project_id").
+                DoCustomMerged(context.Background())
+            if err != nil {
+                t.Fatal(err)
+            }
+
+            testutils.AssertEqual(t, response.Data.Id, "project_id")
+            testutils.AssertEqual(t, response.Data.ProjectConfig.DbtVersion, "1.11.7")
+            testutils.AssertEqual(t, response.Data.ProjectConfig.ShouldRunDbtDeps, value)
+            testutils.AssertKey(t, "custom_bool", response.Data.ProjectConfigCustom, value)
+        })
+    }
+}
+
 func prepareTransformationProjectDetailsResponse() string {
     return fmt.Sprintf(`{
   "code": "Success",
@@ -73,7 +108,8 @@ func prepareTransformationProjectDetailsResponse() string {
       "environment_vars": [
         "string"
       ],
-      "public_key": "string"
+      "public_key": "string",
+      "should_run_dbt_deps": true
     }
   }
 }`)
@@ -101,4 +137,5 @@ func assertTransformationProjectDetailsResponse(t *testing.T, response transform
     testutils.AssertEqual(t, response.Data.ProjectConfig.EnvironmentVars[0], "string")
     testutils.AssertEqual(t, response.Data.ProjectConfig.PublicKey, "string")
     testutils.AssertEqual(t, response.Data.ProjectConfig.Threads, 0)
+    testutils.AssertEqual(t, response.Data.ProjectConfig.ShouldRunDbtDeps, true)
 }

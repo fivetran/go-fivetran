@@ -12,6 +12,7 @@ func (elc *TransformationProjectConfig) CreateRequest() *transformationProjectCo
 		TargetName:     	elc.targetName,
 		EnvironmentVars:	elc.environmentVars,
 		Threads:    		elc.threads,
+		ShouldRunDbtDeps:	elc.shouldRunDbtDeps,
 	}
 }
 
@@ -22,6 +23,7 @@ func (elc *TransformationProjectConfig) UpdateRequest() *transformationProjectCo
 		TargetName:     	elc.targetName,
 		EnvironmentVars:	elc.environmentVars,
 		Threads:    		elc.threads,
+		ShouldRunDbtDeps:	elc.shouldRunDbtDeps,
 	}
 }
 
@@ -78,5 +80,11 @@ func (elc *TransformationProjectConfig) EnvironmentVars(value []string) *Transfo
 
 func (elc *TransformationProjectConfig) Threads(value int) *TransformationProjectConfig {
 	elc.threads = &value
+	return elc
+}
+
+// ShouldRunDbtDeps sets whether `dbt deps` installs the dbt packages before each transformation run.
+func (elc *TransformationProjectConfig) ShouldRunDbtDeps(value bool) *TransformationProjectConfig {
+	elc.shouldRunDbtDeps = &value
 	return elc
 }

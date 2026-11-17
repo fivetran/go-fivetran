@@ -20,6 +20,8 @@ type TransformationProjectConfig struct {
 	targetName      *string
 	environmentVars *[]string
 	threads         *int
+
+	shouldRunDbtDeps *bool
 }
 
 type transformationProjectConfigResponse struct {
@@ -32,6 +34,8 @@ type transformationProjectConfigResponse struct {
 	EnvironmentVars []string `json:"environment_vars,omitempty"`
 	PublicKey       string   `json:"public_key,omitempty"`
 	Threads         int      `json:"threads,omitempty"`
+
+	ShouldRunDbtDeps bool `json:"should_run_dbt_deps,omitempty"`
 }
 
 type transformationProjectConfigCreateRequest struct {
@@ -43,6 +47,8 @@ type transformationProjectConfigCreateRequest struct {
 	TargetName      *string   `json:"target_name,omitempty"`
 	EnvironmentVars *[]string `json:"environment_vars,omitempty"`
 	Threads         *int      `json:"threads,omitempty"`
+
+	ShouldRunDbtDeps *bool `json:"should_run_dbt_deps,omitempty"`
 }
 
 type transformationProjectConfigUpdateRequest struct {
@@ -51,6 +57,8 @@ type transformationProjectConfigUpdateRequest struct {
 	TargetName      *string   `json:"target_name,omitempty"`
 	EnvironmentVars *[]string `json:"environment_vars,omitempty"`
 	Threads         *int      `json:"threads,omitempty"`
+
+	ShouldRunDbtDeps *bool `json:"should_run_dbt_deps,omitempty"`
 }
 
 type transformationProjectResponse struct {
