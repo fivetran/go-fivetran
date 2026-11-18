@@ -5,7 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/fivetran/go-fivetran/compare/v1.3.19...HEAD)
+## [Unreleased](https://github.com/fivetran/go-fivetran/compare/v1.3.20...HEAD)
+
+## [1.3.20](https://github.com/fivetran/go-fivetran/compare/v1.3.19...v1.3.20)
+
+### Added
+- `TransformationProjectConfig.UseLatestPatchVersion` (Private Preview): whether the project runs on the latest patch version of its dbt minor version. Setting it to false requires a full dbt version. Returned as `UseLatestPatchVersion` in the project config response.
 
 ## [1.3.19](https://github.com/fivetran/go-fivetran/compare/v1.3.18...v1.3.19)
 
