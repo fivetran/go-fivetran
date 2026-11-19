@@ -180,6 +180,7 @@ type TransformationConfig struct {
 	steps     *[]TransformationStep
 	/* QUICKSTART */
 	packageName           *string
+	schemaName            *string
 	connectionIds         *[]string
 	excludedModels        *[]string
 	configurableVariables *map[string]interface{}
@@ -192,6 +193,7 @@ type transformationConfigRequest struct {
 	Steps     *[]TransformationStep `json:"steps,omitempty"`
 	/* QUICKSTART */
 	PackageName           *string                 `json:"package_name,omitempty"`
+	SchemaName            *string                 `json:"schema_name,omitempty"`
 	ConnectionIds         *[]string               `json:"connection_ids,omitempty"`
 	ExcludedModels        *[]string               `json:"excluded_models,omitempty"`
 	ConfigurableVariables *map[string]interface{} `json:"configurable_variables,omitempty"`
@@ -209,6 +211,7 @@ type transformationConfigResponse struct {
 	Steps     []TransformationStep `json:"steps,omitempty"`
 	/* QUICKSTART */
 	PackageName           string                 `json:"package_name,omitempty"`
+	SchemaName            string                 `json:"schema_name,omitempty"`
 	ConnectionIds         []string               `json:"connection_ids,omitempty"`
 	ExcludedModels        []string               `json:"excluded_models,omitempty"`
 	UpgradeAvailable      bool                   `json:"upgrade_available,omitempty"`

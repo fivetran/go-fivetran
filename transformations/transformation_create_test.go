@@ -157,6 +157,7 @@ func prepareTransformationResponse() string {
         }
       ],
       "package_name": "string",
+      "schema_name": "quickstart_schema",
       "connection_ids": [
         "string"
       ],
@@ -180,6 +181,7 @@ func prepareTransformationConfig() *transformations.TransformationConfig {
   config.Name("string")
   config.Steps([]transformations.TransformationStep{{Name: "string", Command: "string"}})
   config.PackageName("string")
+  config.SchemaName("quickstart_schema")
   config.ConnectionIds([]string{"string"})
   config.ExcludedModels([]string{"string"})
   config.ConfigurableVariables(map[string]interface{}{"start_date": "2020-01-01", "use_full_refresh": true})
@@ -236,6 +238,7 @@ func assertTransformationFullRequest(t *testing.T, request map[string]interface{
     testutils.AssertKey(t, "name", config, "string")
     testutils.AssertHasKey(t, config, "steps")
     testutils.AssertKey(t, "package_name", config, "string")
+    testutils.AssertKey(t, "schema_name", config, "quickstart_schema")
     testutils.AssertHasKey(t, config, "connection_ids")
     testutils.AssertHasKey(t, config, "excluded_models")
     testutils.AssertHasKey(t, config, "configurable_variables")
@@ -275,6 +278,7 @@ func assertTransformationCustomMergedRequest(t *testing.T, request map[string]in
     testutils.AssertKey(t, "name", config, "string")
     testutils.AssertHasKey(t, config, "steps")
     testutils.AssertKey(t, "package_name", config, "string")
+    testutils.AssertKey(t, "schema_name", config, "quickstart_schema")
     testutils.AssertHasKey(t, config, "connection_ids")
     testutils.AssertHasKey(t, config, "excluded_models")
     testutils.AssertHasKey(t, config, "configurable_variables")
@@ -305,6 +309,7 @@ func assertTransformationResponse(t *testing.T, response transformations.Transfo
     testutils.AssertEqual(t, response.Data.TransformationConfig.Name, "string")
     testutils.AssertEqual(t, response.Data.TransformationConfig.Steps[0].Name, "string")
     testutils.AssertEqual(t, response.Data.TransformationConfig.PackageName, "string")
+    testutils.AssertEqual(t, response.Data.TransformationConfig.SchemaName, "quickstart_schema")
     testutils.AssertEqual(t, response.Data.TransformationConfig.ConnectionIds[0], "string")
     testutils.AssertEqual(t, response.Data.TransformationConfig.ExcludedModels[0], "string")
     testutils.AssertEqual(t, response.Data.TransformationConfig.UpgradeAvailable, true)
@@ -335,6 +340,7 @@ func assertTransformationCustomResponse(t *testing.T, response transformations.T
     testutils.AssertEqual(t, response.Data.TransformationConfig["name"], "string")
     testutils.AssertHasKey(t, response.Data.TransformationConfig, "steps")
     testutils.AssertEqual(t, response.Data.TransformationConfig["package_name"], "string")
+    testutils.AssertEqual(t, response.Data.TransformationConfig["schema_name"], "quickstart_schema")
     testutils.AssertEqual(t, response.Data.TransformationConfig["upgrade_available"], true)
     testutils.AssertHasKey(t, response.Data.TransformationConfig, "connection_ids")
     testutils.AssertHasKey(t, response.Data.TransformationConfig, "excluded_models")
@@ -367,6 +373,7 @@ func assertTransformationCustomMergedResponse(t *testing.T, response transformat
     testutils.AssertEqual(t, response.Data.TransformationConfig.Steps[0].Name, "string")
     testutils.AssertEqual(t, response.Data.TransformationConfig.Steps[0].Command, "string")
     testutils.AssertEqual(t, response.Data.TransformationConfig.PackageName, "string")
+    testutils.AssertEqual(t, response.Data.TransformationConfig.SchemaName, "quickstart_schema")
     testutils.AssertEqual(t, response.Data.TransformationConfig.ConnectionIds[0], "string")
     testutils.AssertEqual(t, response.Data.TransformationConfig.ExcludedModels[0], "string")
     testutils.AssertEqual(t, response.Data.TransformationConfig.UpgradeAvailable, true)

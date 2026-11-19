@@ -79,6 +79,7 @@ func prepareTransformationDetailsResponse() string {
         }
       ],
           "package_name": "string",
+          "schema_name": "quickstart_schema",
           "connection_ids": [
             "string"
           ],
@@ -120,6 +121,7 @@ func assertTransformationDetailsResponse(t *testing.T, response transformations.
     testutils.AssertEqual(t, response.Data.TransformationConfig.Steps[0].Name, "string")
     testutils.AssertEqual(t, response.Data.TransformationConfig.Steps[0].Command, "string")
     testutils.AssertEqual(t, response.Data.TransformationConfig.PackageName, "string")
+    testutils.AssertEqual(t, response.Data.TransformationConfig.SchemaName, "quickstart_schema")
     testutils.AssertEqual(t, response.Data.TransformationConfig.ConnectionIds[0], "string")
     testutils.AssertEqual(t, response.Data.TransformationConfig.ExcludedModels[0], "string")
     testutils.AssertEqual(t, response.Data.TransformationConfig.UpgradeAvailable, true)
