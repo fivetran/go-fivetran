@@ -1,0 +1,29 @@
+CHANGELOG.md
+  s_5aa00b85cedeff::t_1cd0c59c2f4db4 10-12
+transformations/common_types.go
+  s_5aa00b85cedeff::t_768a42c50b0355 183,196,214
+transformations/transformation_config.go
+  s_5aa00b85cedeff::t_92156fde822172 11,46-53
+transformations/transformation_create_test.go
+  s_5aa00b85cedeff::t_d1c0c1625c1ca3 160,184,241,281,312,343,376
+transformations/transformation_details_test.go
+  s_5aa00b85cedeff::t_56dc9fe5019bd0 82,124
+transformations/transformation_update_test.go
+  s_5aa00b85cedeff::t_6ce9432dcb87f5 159,175,229,264,292,347
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "8a1014d491506474f91965dca6fb06b9090c750a",
+  "prompts": {},
+  "sessions": {
+    "s_5aa00b85cedeff": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "1039602a-fc8c-43f3-8ed0-270240e75e50",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Jovan Manojlovic <jovan.manojlovic@fivetran.com>"
+    }
+  }
+}
