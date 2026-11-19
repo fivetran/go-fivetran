@@ -8,6 +8,7 @@ func (elc *TransformationConfig) Request() *transformationConfigRequest {
 		Name:                  elc.name,
 		Steps:                 elc.steps,
 		PackageName:           elc.packageName,
+		SchemaName:            elc.schemaName,
 		ConnectionIds:         elc.connectionIds,
 		ExcludedModels:        elc.excludedModels,
 		ConfigurableVariables: elc.configurableVariables,
@@ -39,6 +40,14 @@ func (elc *TransformationConfig) Steps(value []TransformationStep) *Transformati
 
 func (elc *TransformationConfig) PackageName(value string) *TransformationConfig {
 	elc.packageName = &value
+	return elc
+}
+
+// SchemaName sets the base schema name of a QUICKSTART transformation. Models are written to
+// <schema_name>_staging and <schema_name>_reports. Changing it on update flags all models for a
+// full refresh.
+func (elc *TransformationConfig) SchemaName(value string) *TransformationConfig {
+	elc.schemaName = &value
 	return elc
 }
 

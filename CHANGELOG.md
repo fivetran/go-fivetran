@@ -5,7 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/fivetran/go-fivetran/compare/v1.3.20...HEAD)
+## [Unreleased](https://github.com/fivetran/go-fivetran/compare/v1.3.21...HEAD)
+
+## [1.3.21](https://github.com/fivetran/go-fivetran/compare/v1.3.20...v1.3.21)
+
+### Added
+- `TransformationConfig.SchemaName`: the base schema name of a QUICKSTART transformation. Models are written to `<schema_name>_staging` and `<schema_name>_reports`. Optional on create, where the default name is used when it is omitted; changing it on update flags all models for a full refresh. Returned as `SchemaName` in the transformation config response, which always holds the resolved name.
 
 ## [1.3.20](https://github.com/fivetran/go-fivetran/compare/v1.3.19...v1.3.20)
 
