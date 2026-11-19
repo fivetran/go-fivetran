@@ -52,11 +52,12 @@ func TestTransformationProjectDetailsServiceDoCustomMerged(t *testing.T) {
                             "id": "project_id",
                             "project_config": {
                                 "dbt_version": "1.11.7",
+                                "use_latest_patch_version": %t,
                                 "should_run_dbt_deps": %t,
                                 "custom_bool": %t
                             }
                         }
-                    }`, value, value)
+                    }`, value, value, value)
                     return mock.NewResponse(req, http.StatusOK, body), nil
                 })
 
@@ -69,6 +70,7 @@ func TestTransformationProjectDetailsServiceDoCustomMerged(t *testing.T) {
 
             testutils.AssertEqual(t, response.Data.Id, "project_id")
             testutils.AssertEqual(t, response.Data.ProjectConfig.DbtVersion, "1.11.7")
+            testutils.AssertEqual(t, response.Data.ProjectConfig.UseLatestPatchVersion, value)
             testutils.AssertEqual(t, response.Data.ProjectConfig.ShouldRunDbtDeps, value)
             testutils.AssertKey(t, "custom_bool", response.Data.ProjectConfigCustom, value)
         })
@@ -109,6 +111,7 @@ func prepareTransformationProjectDetailsResponse() string {
         "string"
       ],
       "public_key": "string",
+      "use_latest_patch_version": true,
       "should_run_dbt_deps": true
     }
   }
@@ -137,5 +140,6 @@ func assertTransformationProjectDetailsResponse(t *testing.T, response transform
     testutils.AssertEqual(t, response.Data.ProjectConfig.EnvironmentVars[0], "string")
     testutils.AssertEqual(t, response.Data.ProjectConfig.PublicKey, "string")
     testutils.AssertEqual(t, response.Data.ProjectConfig.Threads, 0)
+    testutils.AssertEqual(t, response.Data.ProjectConfig.UseLatestPatchVersion, true)
     testutils.AssertEqual(t, response.Data.ProjectConfig.ShouldRunDbtDeps, true)
 }
