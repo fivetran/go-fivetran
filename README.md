@@ -193,6 +193,11 @@ REST API Endpoint | REST API Version | SDK Service/Config
 [Update a Log Service](https://fivetran.com/docs/rest-api/api-reference/log-service-management/update-log-service) | v1 | [ExternalLoggingUpdateService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ExternalLoggingUpdateService)
 [Delete a Log Service](https://fivetran.com/docs/rest-api/api-reference/log-service-management/delete-log-service) | v1 | [ExternalLoggingDeleteService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ExternalLoggingDeleteService)
 [Run Log Service Setup Tests](https://fivetran.com/docs/rest-api/api-reference/log-service-management/run-setup-tests-log-service) | v1 | [ExternalLoggingSetupTestsService](https://pkg.go.dev/github.com/fivetran/go-fivetran#ExternalLoggingSetupTestsService)
+[Create an Account Log Service](https://fivetran.com/docs/rest-api/api-reference/log-service-management/add-account-log-service) | v1 | [ExternalLoggingAccountCreateService](https://pkg.go.dev/github.com/fivetran/go-fivetran/external_logging#ExternalLoggingAccountCreateService)
+[Retrieve Account Log Service Details](https://fivetran.com/docs/rest-api/api-reference/log-service-management/get-account-log-service-details) | v1 | [ExternalLoggingAccountDetailsService](https://pkg.go.dev/github.com/fivetran/go-fivetran/external_logging#ExternalLoggingAccountDetailsService)
+[Update an Account Log Service](https://fivetran.com/docs/rest-api/api-reference/log-service-management/update-account-log-service) | v1 | [ExternalLoggingAccountUpdateService](https://pkg.go.dev/github.com/fivetran/go-fivetran/external_logging#ExternalLoggingAccountUpdateService)
+[Delete an Account Log Service](https://fivetran.com/docs/rest-api/api-reference/log-service-management/delete-account-log-service) | v1 | [ExternalLoggingAccountDeleteService](https://pkg.go.dev/github.com/fivetran/go-fivetran/external_logging#ExternalLoggingAccountDeleteService)
+[Run Account Log Service Setup Tests](https://fivetran.com/docs/rest-api/api-reference/log-service-management/run-setup-tests-account-log-service) | v1 | [ExternalLoggingAccountSetupTestsService](https://pkg.go.dev/github.com/fivetran/go-fivetran/external_logging#ExternalLoggingAccountSetupTestsService)
 
 ### [Webhook](https://fivetran.com/docs/rest-api/api-reference/webhooks)
 

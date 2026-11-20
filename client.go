@@ -40,7 +40,7 @@ const defaultBaseURL = "https://api.fivetran.com/v1"
 const restAPIv2 = "application/json;version=2"
 
 // WARNING: Update Agent version on each release!
-const DefaultUserAgent = "Go-Fivetran/1.3.20"
+const DefaultUserAgent = "Go-Fivetran/1.3.21"
 
 // New receives API Key and API Secret, and returns a new Client with the
 // default HTTP client
@@ -293,6 +293,26 @@ func (c *Client) NewExternalLoggingSetupTests() *externallogging.ExternalLogging
 
 func (c *Client) NewExternalLoggingList() *externallogging.ExternalLoggingListService {
 	return &externallogging.ExternalLoggingListService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewExternalLoggingAccountCreate() *externallogging.ExternalLoggingAccountCreateService {
+	return &externallogging.ExternalLoggingAccountCreateService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewExternalLoggingAccountDetails() *externallogging.ExternalLoggingAccountDetailsService {
+	return &externallogging.ExternalLoggingAccountDetailsService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewExternalLoggingAccountUpdate() *externallogging.ExternalLoggingAccountUpdateService {
+	return &externallogging.ExternalLoggingAccountUpdateService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewExternalLoggingAccountDelete() *externallogging.ExternalLoggingAccountDeleteService {
+	return &externallogging.ExternalLoggingAccountDeleteService{HttpService: c.NewHttpService()}
+}
+
+func (c *Client) NewExternalLoggingAccountSetupTests() *externallogging.ExternalLoggingAccountSetupTestsService {
+	return &externallogging.ExternalLoggingAccountSetupTestsService{HttpService: c.NewHttpService()}
 }
 
 /* Destinations */
